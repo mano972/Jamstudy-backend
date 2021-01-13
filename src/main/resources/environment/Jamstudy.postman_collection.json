@@ -1,0 +1,2822 @@
+{
+	"info": {
+		"_postman_id": "9fe0e610-827f-d09d-70fb-bc62b79ddec4",
+		"name": "Jamstudy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "university",
+			"item": [
+				{
+					"name": "create university (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"universityName\": \"Universitatea Politehnica Bucuresti\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/university",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"university"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update university (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"universityName\": \"Universitatea Politehnica Bucuresti\"\n    }"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/university/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"university",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get university",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/university/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"university",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get university 1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8080/Jamstudy/university/UNI_Sagpz6kuv4",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8080",
+									"path": [
+										"Jamstudy",
+										"university",
+										"UNI_Sagpz6kuv4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "187"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 27 Jan 2020 18:09:42 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"universityName\": \"Academia Forţelor Terestre \\\"Nicolae Bălcescu\\\" din Sibiu\",\n        \"universityId\": \"UNI_Sagpz6kuv4\"\n    },\n    \"control\": {\n        \"date\": \"Mon Jan 27 20:09:42 EET 2020\",\n        \"errorCode\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get universities",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/university",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"university"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get universities 1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8080/Jamstudy/university",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8080",
+									"path": [
+										"Jamstudy",
+										"university"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "17478"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 27 Jan 2020 18:08:34 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"universities\": [\n            {\n                \"universityName\": \"Academia Forţelor Terestre \\\"Nicolae Bălcescu\\\" din Sibiu\",\n                \"universityId\": \"UNI_Sagpz6kuv4\",\n                \"universityCity\": \"Sibiu, Sibiu\"\n            },\n            {\n                \"universityName\": \"Academia Forțelor Aeriene \\\"Henri Coandă\\\"\",\n                \"universityId\": \"UNI_jbu8IwoaPg\",\n                \"universityCity\": \"Brasov, Brasov\"\n            },\n            {\n                \"universityName\": \"Academia Navală \\\"Mircea Cel Bătrân\\\"\",\n                \"universityId\": \"UNI_oAlQ3H4dW6\",\n                \"universityCity\": \"Constanta, Constanta\"\n            },\n            {\n                \"universityName\": \"Academia Naţională de Informaţii \\\"Mihai Viteazul\\\" din Bucureşti\",\n                \"universityId\": \"UNI_741xYkr6gv\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Academia Tehnică Militară din Bucureşti\",\n                \"universityId\": \"UNI_K8G9lJkCUR\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Academia de Muzică \\\"Gheorghe Dima\\\" din Cluj-Napoca\",\n                \"universityId\": \"UNI_GCzvTJvATO\",\n                \"universityCity\": \"Cluj-Napoca, Cluj\"\n            },\n            {\n                \"universityName\": \"Academia de Poliție \\\"Alexandru Ioan Cuza\\\" din Bucureşti\",\n                \"universityId\": \"UNI_8O4eUPLbvP\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Academia de Studii Economice (ASE) - extensie Buzău\",\n                \"universityId\": \"UNI_hth3EGgxaW\",\n                \"universityCity\": \"Buzau, Buzau\"\n            },\n            {\n                \"universityName\": \"Academia de Studii Economice (ASE) - extensie Deva\",\n                \"universityId\": \"UNI_UPPDn9pzMF\",\n                \"universityCity\": \"Deva, Hunedoara\"\n            },\n            {\n                \"universityName\": \"Academia de Studii Economice (ASE) - extensie Piatra Neamț\",\n                \"universityId\": \"UNI_d5iK5plJS4\",\n                \"universityCity\": \"Piatra Neamt, Neamt\"\n            },\n            {\n                \"universityName\": \"Academia de Studii Economice din Bucureşti (ASE)\",\n                \"universityId\": \"UNI_ClaYAGZefn\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Fundația \\\"Gaudeamus\\\" - Universitatea \\\"Tomis\\\" din Constanța\",\n                \"universityId\": \"UNI_GopWxY6zqq\",\n                \"universityCity\": \"Constanta, Constanta\"\n            },\n            {\n                \"universityName\": \"Fundația Universitară \\\"Alma Mater\\\" - Universitatea \\\"Alma Mater\\\" din Sibiu\",\n                \"universityId\": \"UNI_jM3fE2PHVO\",\n                \"universityCity\": \"Hunedoara, Hunedoara\"\n            },\n            {\n                \"universityName\": \"Institutul Teologic Baptist din București\",\n                \"universityId\": \"UNI_U7VMQQBibG\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Institutul Teologic Penticostal\",\n                \"universityId\": \"UNI_yUjx7Xeq4h\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Institutul Teologic Protestant din Cluj-Napoca\",\n                \"universityId\": \"UNI_iJH9ur6WMm\",\n                \"universityCity\": \"Cluj-Napoca, Cluj\"\n            },\n            {\n                \"universityName\": \"Institutul Teologic Romano-Catolic Franciscan din Roman\",\n                \"universityId\": \"UNI_1nMdjcXF7H\",\n                \"universityCity\": \"Roman, Neamt\"\n            },\n            {\n                \"universityName\": \"The Entrepreneurship Academy\",\n                \"universityId\": \"UNI_jTekXsY4JM\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"1 Decembrie 1918\\\" din Alba Iulia\",\n                \"universityId\": \"UNI_Poxm2sIYiD\",\n                \"universityCity\": \"Alba Iulia, Alba\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Agora\\\" din Municipiul Oradea\",\n                \"universityId\": \"UNI_A1iTe2IJzP\",\n                \"universityCity\": \"Oradea, Bihor\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Alexandru Ioan Cuza\\\" din Iaşi (UAIC)\",\n                \"universityId\": \"UNI_KyyoNKzP5f\",\n                \"universityCity\": \"Iasi, Iasi\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Andrei Şaguna\\\" din Constanţa\",\n                \"universityId\": \"UNI_CzXjKVJCRZ\",\n                \"universityCity\": \"Constanta, Constanta\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Apollonia\\\" din Iaşi\",\n                \"universityId\": \"UNI_WbOldmH106\",\n                \"universityCity\": \"Iasi, Iasi\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Artifex\\\" din Bucureşti\",\n                \"universityId\": \"UNI_5m9qqGz20o\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Athenaeum\\\" din Bucureşti\",\n                \"universityId\": \"UNI_UXlfWmLGgB\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Aurel Vlaicu\\\" din Arad\",\n                \"universityId\": \"UNI_6oCDV15RLv\",\n                \"universityCity\": \"Arad, Arad\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"BIOTERRA\\\" din București\",\n                \"universityId\": \"UNI_EFnaEITdar\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Babeş-Bolyai\\\" din Cluj-Napoca (UBB)\",\n                \"universityId\": \"UNI_qaqcpY1n2J\",\n                \"universityCity\": \"Cluj-Napoca, Cluj\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Babeș Bolyai” Cluj Napoca (UBB) - extensia Târgu Mureș\",\n                \"universityId\": \"UNI_wAFOZW2UDX\",\n                \"universityCity\": \"Targu Mures, Mures\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Bogdan Vodă\\\" din Cluj-Napoca\",\n                \"universityId\": \"UNI_wDtvDUfX2v\",\n                \"universityCity\": \"Cluj-Napoca, Cluj\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Constantin Brâncoveanu\\\" din Piteşti\",\n                \"universityId\": \"UNI_agexgLxcdo\",\n                \"universityCity\": \"Pitesti, Arges\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Constantin Brâncoveanu\\\" din Piteşti - extensia din Brăila\",\n                \"universityId\": \"UNI_MEZuq9kyqM\",\n                \"universityCity\": \"Braila, Braila\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Constantin Brâncoveanu\\\" din Pitești - extensia Râmnicu Vâlcea\",\n                \"universityId\": \"UNI_eYSeCm6jYw\",\n                \"universityCity\": \"Ramnicu Valcea, Valcea\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Constantin Brâncuşi\\\" din Târgu Jiu\",\n                \"universityId\": \"UNI_xZUaFCekE0\",\n                \"universityCity\": \"Targu Jiu, Gorj\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Danubius\\\" din Galaţi\",\n                \"universityId\": \"UNI_aNfdeBr8fz\",\n                \"universityCity\": \"Galati, Galati\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Dimitrie Cantemir\\\" din Târgu Mureş\",\n                \"universityId\": \"UNI_1bb5Rc4kZ3\",\n                \"universityCity\": \"Targu Mures, Mures\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Dunărea de Jos\\\" din Galaţi\",\n                \"universityId\": \"UNI_6S7rwPuMKD\",\n                \"universityCity\": \"Galati, Galati\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Eftimie Murgu\\\" din Reşiţa\",\n                \"universityId\": \"UNI_6UEBqrOFoC\",\n                \"universityCity\": \"Resita, Caras-Severin\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Emanuel\\\" din Oradea\",\n                \"universityId\": \"UNI_DfCpf63FX1\",\n                \"universityCity\": \"Oradea, Bihor\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"George Bacovia\\\" din Bacău\",\n                \"universityId\": \"UNI_U3vMzNjHJI\",\n                \"universityCity\": \"Bacau, Bacau\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Hyperion\\\" din Bucureşti\",\n                \"universityId\": \"UNI_BqwhlCnlVw\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Lucian Blaga\\\" din Sibiu (ULBS)\",\n                \"universityId\": \"UNI_8mBPxeEAm5\",\n                \"universityCity\": \"Sibiu, Sibiu\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Nicolae Titulescu\\\" din Bucureşti\",\n                \"universityId\": \"UNI_ud5Xu0nWrw\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Ovidius\\\" din Constanţa\",\n                \"universityId\": \"UNI_QgaHNnVd6P\",\n                \"universityCity\": \"Constanta, Constanta\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Petre Andrei\\\" din Iaşi\",\n                \"universityId\": \"UNI_7GgQJenDfZ\",\n                \"universityCity\": \"Iasi, Iasi\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Petru Maior\\\" din Târgu Mureş\",\n                \"universityId\": \"UNI_BNitpytRcR\",\n                \"universityCity\": \"Targu Mures, Mures\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Româno-Germană\\\" din Sibiu\",\n                \"universityId\": \"UNI_egMsGyAfJv\",\n                \"universityCity\": \"Sibiu, Sibiu\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Sapientia\\\" din Cluj-Napoca\",\n                \"universityId\": \"UNI_qVjdiCLskR\",\n                \"universityCity\": \"Miercurea Ciuc, Harghita\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Spiru Haret\\\" din Bucureşti\",\n                \"universityId\": \"UNI_5nCTJwFi3b\",\n                \"universityCity\": \"Craiova, Dolj\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Tibiscus\\\" din Timişoara\",\n                \"universityId\": \"UNI_J8pPNmVEpU\",\n                \"universityCity\": \"Timisoara, Timis\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Titu Maiorescu\\\" din Bucureşti\",\n                \"universityId\": \"UNI_xpGfPvK3cv\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Transilvania\\\" din Braşov\",\n                \"universityId\": \"UNI_AkDmelMTU4\",\n                \"universityCity\": \"Brasov, Brasov\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Valahia\\\" din Târgovişte\",\n                \"universityId\": \"UNI_WinoeNs4Wr\",\n                \"universityCity\": \"Targoviste, Dambovita\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Vasile Alecsandri\\\" din Bacău\",\n                \"universityId\": \"UNI_QSI8Uy9B9k\",\n                \"universityCity\": \"Bacau, Bacau\"\n            },\n            {\n                \"universityName\": \"Universitatea Creştină \\\"Dimitrie Cantemir\\\" din Bucureşti\",\n                \"universityId\": \"UNI_xBqD7pp2ZD\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea Creştină \\\"Partium\\\" din Oradea\",\n                \"universityId\": \"UNI_SCdribQ7yk\",\n                \"universityCity\": \"Oradea, Bihor\"\n            },\n            {\n                \"universityName\": \"Universitatea Ecologică din Bucureşti\",\n                \"universityId\": \"UNI_Udeg4tKdBB\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea Europeană \\\"Drăgan\\\" din Lugoj\",\n                \"universityId\": \"UNI_hKHGmrlhtV\",\n                \"universityCity\": \"Lugoj, Timis\"\n            },\n            {\n                \"universityName\": \"Universitatea Maritimă din Constanţa\",\n                \"universityId\": \"UNI_e8f5LmLzm9\",\n                \"universityCity\": \"Constanta, Constanta\"\n            },\n            {\n                \"universityName\": \"Universitatea Naţională de Apărare \\\"Carol I\\\" din Bucureşti\",\n                \"universityId\": \"UNI_78XVKd8v3d\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea Naţională de Artă Teatrală şi Cinematografică \\\"I. L. Caragiale\\\" din Bucureşti\",\n                \"universityId\": \"UNI_gjWDTEwHvu\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea Naţională de Educaţie Fizică şi Sport din Bucureşti\",\n                \"universityId\": \"UNI_tEdjrSYNWb\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea Naţională de Muzică din Bucureşti\",\n                \"universityId\": \"UNI_iCUjVleck9\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea Națională de Arte din București\",\n                \"universityId\": \"UNI_WCcptiIyFD\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea Petrol-Gaze din Ploieşti (UPG)\",\n                \"universityId\": \"UNI_A5u77Rem9g\",\n                \"universityCity\": \"Ploiesti, Prahova\"\n            },\n            {\n                \"universityName\": \"Universitatea Politehnica Timişoara (UPT)\",\n                \"universityId\": \"UNI_tmFSFHhUGM\",\n                \"universityCity\": \"Timisoara, Timis\"\n            },\n            {\n                \"universityName\": \"Universitatea Politehnica din Bucureşti (UPB)\",\n                \"universityId\": \"UNI_etMflOLkgY\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea Româno-Americană din Bucureşti\",\n                \"universityId\": \"UNI_nUNtFIRWBX\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea Tehnică \\\"Gheorghe Asachi\\\" din Iaşi (TUIASI)\",\n                \"universityId\": \"UNI_cmkIpIPoTd\",\n                \"universityCity\": \"Iasi, Iasi\"\n            },\n            {\n                \"universityName\": \"Universitatea Tehnică de Construcţii din Bucureşti (UTCB)\",\n                \"universityId\": \"UNI_3OSTRB8jiM\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea Tehnică din Cluj-Napoca - extensia Alba Iulia\",\n                \"universityId\": \"UNI_5IL2ZGWfpC\",\n                \"universityCity\": \"Alba Iulia, Alba\"\n            },\n            {\n                \"universityName\": \"Universitatea Tehnică din Cluj-Napoca - extensia Baia Mare\",\n                \"universityId\": \"UNI_j3ANog7o2m\",\n                \"universityCity\": \"Baia Mare, Maramures\"\n            },\n            {\n                \"universityName\": \"Universitatea Tehnică din Cluj-Napoca - extensia Bistriţa\",\n                \"universityId\": \"UNI_VFJpGQ5ZRk\",\n                \"universityCity\": \"Bistrita, Bistrita-Nasaud\"\n            },\n            {\n                \"universityName\": \"Universitatea Tehnică din Cluj-Napoca - extensia Satu Mare\",\n                \"universityId\": \"UNI_Bjnn3TZFFl\",\n                \"universityCity\": \"Satu Mare, Satu Mare\"\n            },\n            {\n                \"universityName\": \"Universitatea Tehnică din Cluj-Napoca - extensia Zalău\",\n                \"universityId\": \"UNI_w5ly3Ypma8\",\n                \"universityCity\": \"Zalau, Salaj\"\n            },\n            {\n                \"universityName\": \"Universitatea Tehnică din Cluj–Napoca (UTCN)\",\n                \"universityId\": \"UNI_GplL88xxLb\",\n                \"universityCity\": \"Cluj-Napoca, Cluj\"\n            },\n            {\n                \"universityName\": \"Universitatea de Arhitectură şi Urbanism \\\"Ion Mincu\\\", Bucureşti\",\n                \"universityId\": \"UNI_ka3YOcY5dn\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea de Arte \\\"George Enescu\\\" din Iaşi\",\n                \"universityId\": \"UNI_SJkyTIAYsY\",\n                \"universityCity\": \"Iasi, Iasi\"\n            },\n            {\n                \"universityName\": \"Universitatea de Arte din Târgu Mureş\",\n                \"universityId\": \"UNI_RllxVZwSOt\",\n                \"universityCity\": \"Targu Mures, Mures\"\n            },\n            {\n                \"universityName\": \"Universitatea de Artă şi Design din Cluj-Napoca\",\n                \"universityId\": \"UNI_t1j2GJauw4\",\n                \"universityCity\": \"Cluj-Napoca, Cluj\"\n            },\n            {\n                \"universityName\": \"Universitatea de Medicină şi Farmacie \\\"Carol Davila\\\" din Bucureşti\",\n                \"universityId\": \"UNI_BDmBo88wKe\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea de Medicină şi Farmacie \\\"Gr. T. Popa\\\" din Iaşi\",\n                \"universityId\": \"UNI_OMj47Vc47x\",\n                \"universityCity\": \"Iasi, Iasi\"\n            },\n            {\n                \"universityName\": \"Universitatea de Medicină şi Farmacie \\\"Iuliu Haţieganu\\\" din Cluj-Napoca\",\n                \"universityId\": \"UNI_Jr8oygQdc0\",\n                \"universityCity\": \"Cluj-Napoca, Cluj\"\n            },\n            {\n                \"universityName\": \"Universitatea de Medicină şi Farmacie din Târgu Mureş\",\n                \"universityId\": \"UNI_rhaj3JwuC9\",\n                \"universityCity\": \"Targu Mures, Mures\"\n            },\n            {\n                \"universityName\": \"Universitatea de Medicină și Farmacie \\\"Victor Babeș\\\" din Timișoara\",\n                \"universityId\": \"UNI_tqFXKEl0Hc\",\n                \"universityCity\": \"Timisoara, Timis\"\n            },\n            {\n                \"universityName\": \"Universitatea de Medicină și Farmacie din Craiova\",\n                \"universityId\": \"UNI_Oesl8RkIpT\",\n                \"universityCity\": \"Craiova, Dolj\"\n            },\n            {\n                \"universityName\": \"Universitatea de Vest \\\"Vasile Goldiş\\\" din Arad\",\n                \"universityId\": \"UNI_QcTyHeKn50\",\n                \"universityCity\": \"Arad, Arad\"\n            },\n            {\n                \"universityName\": \"Universitatea de Vest din Timişoara (UVT)\",\n                \"universityId\": \"UNI_oCtlb1p4lX\",\n                \"universityCity\": \"Timisoara, Timis\"\n            },\n            {\n                \"universityName\": \"Universitatea de Ştiinţe Agricole şi Medicină Veterinară \\\"Ion Ionescu de la Brad\\\" din Iaşi\",\n                \"universityId\": \"UNI_FrftiGsqM4\",\n                \"universityCity\": \"Iasi, Iasi\"\n            },\n            {\n                \"universityName\": \"Universitatea de Ştiinţe Agricole şi Medicină Veterinară a Banatului „Regele Mihai I Al României” din Timişoara\",\n                \"universityId\": \"UNI_4GvfG2Oy4w\",\n                \"universityCity\": \"Timisoara, Timis\"\n            },\n            {\n                \"universityName\": \"Universitatea de Ştiinţe Agricole şi Medicină Veterinară din Cluj-Napoca\",\n                \"universityId\": \"UNI_XxEfRngNLt\",\n                \"universityCity\": \"Cluj-Napoca, Cluj\"\n            },\n            {\n                \"universityName\": \"Universitatea de Ştiinţe Agronomice şi Medicină Veterinară din Bucureşti\",\n                \"universityId\": \"UNI_Z2wJigxgxM\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea din Bucureşti (UNIBUC)\",\n                \"universityId\": \"UNI_rYVDbgaTGO\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Universitatea din București (UNIBUC) - Extensia Buzău\",\n                \"universityId\": \"UNI_0DlGEuLsU7\",\n                \"universityCity\": \"Buzau, Buzau\"\n            },\n            {\n                \"universityName\": \"Universitatea din București (UNIBUC) - Extensia Călimănești\",\n                \"universityId\": \"UNI_M2NbhdZTyI\",\n                \"universityCity\": \"Calimanesti, Valcea\"\n            },\n            {\n                \"universityName\": \"Universitatea din București (UNIBUC) - Extensia Drobeta Turnu Severin\",\n                \"universityId\": \"UNI_7g4A3C3hhw\",\n                \"universityCity\": \"Drobeta Turnu Severin, Mehedinti\"\n            },\n            {\n                \"universityName\": \"Universitatea din București (UNIBUC) - Extensia Focșani\",\n                \"universityId\": \"UNI_kv0Jq005Fy\",\n                \"universityCity\": \"Focsani, Vrancea\"\n            },\n            {\n                \"universityName\": \"Universitatea din Craiova\",\n                \"universityId\": \"UNI_yvItYfaJnt\",\n                \"universityCity\": \"Craiova, Dolj\"\n            },\n            {\n                \"universityName\": \"Universitatea din Craiova - extensia Drobeta Turnu Severin\",\n                \"universityId\": \"UNI_2SrInTftfR\",\n                \"universityCity\": \"Drobeta Turnu Severin, Mehedinti\"\n            },\n            {\n                \"universityName\": \"Universitatea din Oradea\",\n                \"universityId\": \"UNI_a9LMLOBQw3\",\n                \"universityCity\": \"Oradea, Bihor\"\n            },\n            {\n                \"universityName\": \"Universitatea din Oradea - Extensia Beiuș\",\n                \"universityId\": \"UNI_2dxBTjqpLn\",\n                \"universityCity\": \"Beius, Bihor\"\n            },\n            {\n                \"universityName\": \"Universitatea din Petroşani\",\n                \"universityId\": \"UNI_WnWHuquDVF\",\n                \"universityCity\": \"Petrosani, Hunedoara\"\n            },\n            {\n                \"universityName\": \"Universitatea din Pitesti - Extensie Ramnicu Valcea\",\n                \"universityId\": \"UNI_iXznCNOCsU\",\n                \"universityCity\": \"Ramnicu Valcea, Valcea\"\n            },\n            {\n                \"universityName\": \"Universitatea din Pitești\",\n                \"universityId\": \"UNI_Zuew2ipoVv\",\n                \"universityCity\": \"Pitesti, Arges\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Alexandru Ioan Cuza” Iași (UAIC) - Centru Piatra Neamț\",\n                \"universityId\": \"UNI_Hkxz325N5R\",\n                \"universityCity\": \"Piatra-Neamt, Neamt\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Babes Bolyai” Cluj Napoca (UBB) - Centru Năsăud\",\n                \"universityId\": \"UNI_rhveJ0DhsI\",\n                \"universityCity\": \"Nasaud, Bistrita-Nasaud\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca (UBB) - Centru Alba Iulia\",\n                \"universityId\": \"UNI_FnSdjRSS7e\",\n                \"universityCity\": \"Alba Iulia, Alba\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca (UBB) - Centru Bistrița\",\n                \"universityId\": \"UNI_YsQAlP3Aef\",\n                \"universityCity\": \"Bistrita, Bistrita-Nasaud\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca (UBB) - Centru Blaj\",\n                \"universityId\": \"UNI_1KwXZY7scm\",\n                \"universityCity\": \"Blaj, Alba\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca (UBB) - Centru Gheorgheni\",\n                \"universityId\": \"UNI_tWp4429M8s\",\n                \"universityCity\": \"Gheorgheni, Harghita\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca (UBB) - Centru Odorheiu Secuiesc\",\n                \"universityId\": \"UNI_HX709AGfZq\",\n                \"universityCity\": \"Odorheiu Secuiesc, Harghita\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca (UBB) - Centru Oradea\",\n                \"universityId\": \"UNI_9H6eQbYQ9u\",\n                \"universityCity\": \"Oradea, Bihor\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca (UBB) - Centru Satu Mare\",\n                \"universityId\": \"UNI_98VRrNMXvh\",\n                \"universityCity\": \"Satu Mare, Satu Mare\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca (UBB) - Centru Sighetu Marmației\",\n                \"universityId\": \"UNI_GQHZjLzq7X\",\n                \"universityCity\": \"Sighetu Marmatiei, Maramures\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca - Centru Sfântu Gheorghe\",\n                \"universityId\": \"UNI_qkOXXRfgmI\",\n                \"universityCity\": \"Sfantu Gheorghe, Covasna\"\n            },\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca - Centru Zalău\",\n                \"universityId\": \"UNI_dLbYoR17jC\",\n                \"universityCity\": \"Zalau, Salaj\"\n            },\n            {\n                \"universityName\": \"Universitatea „Ștefan cel Mare” din Suceava\",\n                \"universityId\": \"UNI_zAOCxTAJDK\",\n                \"universityCity\": \"Suceava, Suceava\"\n            },\n            {\n                \"universityName\": \"Universitatea ROSIE\",\n                \"universityId\": \"UNI_rS4YG08WHy\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            },\n            {\n                \"universityName\": \"Şcoala Naţională de Studii Politice şi Administrative din Bucureşti (SNSPA)\",\n                \"universityId\": \"UNI_RiGznI5Ash\",\n                \"universityCity\": \"Bucuresti, Bucuresti\"\n            }\n        ]\n    },\n    \"control\": {\n        \"date\": \"Mon Jan 27 20:08:34 EET 2020\",\n        \"errorCode\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete universities (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/university",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"university"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "faculty",
+			"item": [
+				{
+					"name": "create faculty (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"facultyName\": \"Inginerie Medicala\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update faculty (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"facultyName\": \"Inginerie Medicala\"\n    }"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get faculty",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get faculty 1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8080/Jamstudy/faculty/FAC_VcJXz3ul61",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8080",
+									"path": [
+										"Jamstudy",
+										"faculty",
+										"FAC_VcJXz3ul61"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2475"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 27 Jan 2020 18:35:52 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"universityName\": \"Universitatea de Ştiinţe Agricole şi Medicină Veterinară a Banatului „Regele Mihai I Al României” din Timişoara\",\n        \"facultyCity\": \"Timisoara, Timis\",\n        \"countRev3Stars\": 0,\n        \"taxPlacesMaster\": 105,\n        \"countRev\": 0,\n        \"licensePrograms\": [\n            {\n                \"annualTax\": 2500,\n                \"programType\": \"LICENSE\",\n                \"domainOfLicenseOrMaster\": \"Zootehnie\",\n                \"programTaxPlaces\": 26,\n                \"programAvailablePlaces\": 80,\n                \"programName\": \"Zootehnie\",\n                \"programDomain\": \"Științe Agricole\",\n                \"specialization\": \"Zootehnie\",\n                \"programAccreditation\": \"Autorizat\",\n                \"lastGrade\": 7.76,\n                \"programBudgetPlaces\": 54,\n                \"admissionType\": \"Dosar\"\n            },\n            {\n                \"annualTax\": 2500,\n                \"programType\": \"LICENSE\",\n                \"domainOfLicenseOrMaster\": \"Biotehnologii\",\n                \"programTaxPlaces\": 39,\n                \"programAvailablePlaces\": 60,\n                \"programName\": \"Biotehnologii agricole\",\n                \"programDomain\": \"Științe Agricole\",\n                \"specialization\": \"Biotehnologii\",\n                \"programAccreditation\": \"Acreditat\",\n                \"lastGrade\": 7,\n                \"programBudgetPlaces\": 21,\n                \"admissionType\": \"Dosar\"\n            }\n        ],\n        \"countRev5Stars\": 0,\n        \"countRev2Stars\": 0,\n        \"budgetPlacesMaster\": 45,\n        \"facultyDomainsLicense\": [\n            \"Științe Agricole\"\n        ],\n        \"universityId\": \"UNI_4GvfG2Oy4w\",\n        \"facultyId\": \"FAC_VcJXz3ul61\",\n        \"budgetPlacesLicense\": 75,\n        \"masterPrograms\": [\n            {\n                \"annualTax\": 2100,\n                \"programType\": \"MASTER\",\n                \"domainOfLicenseOrMaster\": \"Zootehnie\",\n                \"programTaxPlaces\": 35,\n                \"programAvailablePlaces\": 50,\n                \"programName\": \"Proiectare si evaluare tehnico - economica a productiilor animaliere\",\n                \"programDomain\": \"Științe Agricole\",\n                \"specialization\": \"Zootehnie\",\n                \"programAccreditation\": \"Acreditat\",\n                \"programBudgetPlaces\": 15,\n                \"admissionType\": \"Examen\"\n            },\n            {\n                \"annualTax\": 21000,\n                \"programType\": \"MASTER\",\n                \"domainOfLicenseOrMaster\": \"Biotehnologii\",\n                \"programTaxPlaces\": 35,\n                \"programAvailablePlaces\": 50,\n                \"programName\": \"Biotehnologii de reproducere in ameliorarea animalelor\",\n                \"programDomain\": \"Științe Agricole\",\n                \"specialization\": \"Biotehnologii\",\n                \"programAccreditation\": \"Acreditat\",\n                \"programBudgetPlaces\": 15,\n                \"admissionType\": \"Examen\"\n            },\n            {\n                \"annualTax\": 21000,\n                \"programType\": \"MASTER\",\n                \"domainOfLicenseOrMaster\": \"Zootehnie\",\n                \"programTaxPlaces\": 35,\n                \"programAvailablePlaces\": 50,\n                \"programName\": \"Nutritie si baza furajera\",\n                \"programDomain\": \"Științe Agricole\",\n                \"specialization\": \"Zootehnie\",\n                \"programAccreditation\": \"Acreditat\",\n                \"programBudgetPlaces\": 15,\n                \"admissionType\": \"Examen\"\n            }\n        ],\n        \"facultyDomainsMaster\": [\n            \"Științe Agricole\"\n        ],\n        \"availablePlacesMaster\": 150,\n        \"countRev4Stars\": 0,\n        \"availablePlacesLicense\": 140,\n        \"countRev1Star\": 0,\n        \"facultyName\": \"Bioingineria Resurselor Animaliere\",\n        \"taxPlacesLicense\": 65\n    },\n    \"control\": {\n        \"date\": \"Mon Jan 27 20:35:52 EET 2020\",\n        \"errorCode\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get faculty review details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/1/reviewdetails",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty",
+								"1",
+								"reviewdetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get faculties (with join)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/v2?orderBy=f.facultyName,asc&limit=10&offset=0",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty",
+								"v2"
+							],
+							"query": [
+								{
+									"key": "searchBy",
+									"value": "ETTI",
+									"disabled": true
+								},
+								{
+									"key": "universityIds",
+									"value": "1, 2",
+									"disabled": true
+								},
+								{
+									"key": "facultyCities",
+									"value": "Bucuresti, Cluj",
+									"disabled": true
+								},
+								{
+									"key": "facultyDomains",
+									"value": "d1, d3",
+									"disabled": true
+								},
+								{
+									"key": "admissionType",
+									"value": "Examen, Dosar",
+									"disabled": true
+								},
+								{
+									"key": "ratingFrom",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "orderBy",
+									"value": "f.facultyName,asc"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get faculties",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty?orderBy=facultyName,asc&limit=10&offset=0",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty"
+							],
+							"query": [
+								{
+									"key": "searchBy",
+									"value": "ETTI",
+									"disabled": true
+								},
+								{
+									"key": "universityIds",
+									"value": "1, 2",
+									"disabled": true
+								},
+								{
+									"key": "facultyCities",
+									"value": "Bucuresti, Cluj",
+									"disabled": true
+								},
+								{
+									"key": "facultyDomains",
+									"value": "d1, d3",
+									"disabled": true
+								},
+								{
+									"key": "admissionType",
+									"value": "Examen, Dosar",
+									"disabled": true
+								},
+								{
+									"key": "ratingFrom",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "orderBy",
+									"value": "facultyName,asc"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get faculties 1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8080/Jamstudy/faculty?orderBy=facultyName,desc&limit=5&offset=0",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8080",
+									"path": [
+										"Jamstudy",
+										"faculty"
+									],
+									"query": [
+										{
+											"key": "searchBy",
+											"value": "ETTI",
+											"disabled": true
+										},
+										{
+											"key": "universityIds",
+											"value": "1, 2",
+											"disabled": true
+										},
+										{
+											"key": "facultyCities",
+											"value": "Bucuresti, Cluj",
+											"disabled": true
+										},
+										{
+											"key": "facultyDomains",
+											"value": "d1, d3",
+											"disabled": true
+										},
+										{
+											"key": "admissionType",
+											"value": "Examen, Dosar",
+											"disabled": true
+										},
+										{
+											"key": "ratingFrom",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "orderBy",
+											"value": "facultyName,desc"
+										},
+										{
+											"key": "limit",
+											"value": "5"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										},
+										{
+											"key": "pageNumber",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1301"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 27 Jan 2020 18:33:43 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"count\": 566,\n        \"faculties\": [\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca - Centru Sfântu Gheorghe\",\n                \"facultyCity\": \"Sfantu Gheorghe, Covasna\",\n                \"universityId\": \"UNI_qkOXXRfgmI\",\n                \"facultyId\": \"FAC_ekGr5VILNH\",\n                \"countRev\": 1,\n                \"avgRating\": 5,\n                \"facultyName\": \"Facultatea de Știință și Ingineria Mediului\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Valahia\\\" din Târgovişte\",\n                \"facultyCity\": \"Alexandria, Teleorman\",\n                \"universityId\": \"UNI_WinoeNs4Wr\",\n                \"facultyId\": \"FAC_b6Vx4IsPce\",\n                \"countRev\": 0,\n                \"facultyName\": \"Facultatea de Științe și Inginerie (Alexandria)\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Sapientia\\\" din Cluj-Napoca\",\n                \"facultyCity\": \"Cluj-Napoca, Cluj\",\n                \"universityId\": \"UNI_qVjdiCLskR\",\n                \"facultyId\": \"FAC_KskA1mEU9Z\",\n                \"countRev\": 0,\n                \"facultyName\": \"Facultatea de Științe și Arte\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Valahia\\\" din Târgovişte\",\n                \"facultyCity\": \"Targoviste, Dambovita\",\n                \"universityId\": \"UNI_WinoeNs4Wr\",\n                \"facultyId\": \"FAC_GAeGOxvlnP\",\n                \"countRev\": 0,\n                \"facultyName\": \"Facultatea de Științe și Arte\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Apollonia\\\" din Iaşi\",\n                \"facultyCity\": \"Iasi, Iasi\",\n                \"universityId\": \"UNI_WbOldmH106\",\n                \"facultyId\": \"FAC_08WoG93hcI\",\n                \"countRev\": 0,\n                \"facultyName\": \"Facultatea de Științe ale comunicării\"\n            }\n        ]\n    },\n    \"control\": {\n        \"date\": \"Mon Jan 27 20:33:43 EET 2020\",\n        \"errorCode\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get university filter (with join)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/universityfilter/v2?orderBy=countFac,desc&limit=15",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty",
+								"universityfilter",
+								"v2"
+							],
+							"query": [
+								{
+									"key": "searchBy",
+									"value": "ETTI",
+									"disabled": true
+								},
+								{
+									"key": "universityIds",
+									"value": "1, 2",
+									"disabled": true
+								},
+								{
+									"key": "facultyCities",
+									"value": "Bucuresti, Cluj",
+									"disabled": true
+								},
+								{
+									"key": "facultyDomains",
+									"value": "d1, d3",
+									"disabled": true
+								},
+								{
+									"key": "admissionType",
+									"value": "Examen, Dosar",
+									"disabled": true
+								},
+								{
+									"key": "ratingFrom",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "orderBy",
+									"value": "countFac,desc"
+								},
+								{
+									"key": "limit",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get university filter",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/universityfilter?orderBy=countFac,desc&limit=15",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty",
+								"universityfilter"
+							],
+							"query": [
+								{
+									"key": "searchBy",
+									"value": "ETTI",
+									"disabled": true
+								},
+								{
+									"key": "universityIds",
+									"value": "1, 2",
+									"disabled": true
+								},
+								{
+									"key": "facultyCities",
+									"value": "Bucuresti, Cluj",
+									"disabled": true
+								},
+								{
+									"key": "facultyDomains",
+									"value": "d1, d3",
+									"disabled": true
+								},
+								{
+									"key": "admissionType",
+									"value": "Examen, Dosar",
+									"disabled": true
+								},
+								{
+									"key": "ratingFrom",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "orderBy",
+									"value": "countFac,desc"
+								},
+								{
+									"key": "limit",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get city filter (with join)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/cityfilter/v2?orderBy=countFac,desc&limit=15",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty",
+								"cityfilter",
+								"v2"
+							],
+							"query": [
+								{
+									"key": "searchBy",
+									"value": "ETTI",
+									"disabled": true
+								},
+								{
+									"key": "universityIds",
+									"value": "1, 2",
+									"disabled": true
+								},
+								{
+									"key": "facultyCities",
+									"value": "Bucuresti, Cluj",
+									"disabled": true
+								},
+								{
+									"key": "facultyDomains",
+									"value": "d1, d3",
+									"disabled": true
+								},
+								{
+									"key": "admissionType",
+									"value": "Examen, Dosar",
+									"disabled": true
+								},
+								{
+									"key": "ratingFrom",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "orderBy",
+									"value": "countFac,desc"
+								},
+								{
+									"key": "limit",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get city filter",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/cityfilter?orderBy=countFac,desc&limit=15",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty",
+								"cityfilter"
+							],
+							"query": [
+								{
+									"key": "searchBy",
+									"value": "ETTI",
+									"disabled": true
+								},
+								{
+									"key": "universityIds",
+									"value": "1, 2",
+									"disabled": true
+								},
+								{
+									"key": "facultyCities",
+									"value": "Bucuresti, Cluj",
+									"disabled": true
+								},
+								{
+									"key": "facultyDomains",
+									"value": "d1, d3",
+									"disabled": true
+								},
+								{
+									"key": "admissionType",
+									"value": "Examen, Dosar",
+									"disabled": true
+								},
+								{
+									"key": "ratingFrom",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "orderBy",
+									"value": "countFac,desc"
+								},
+								{
+									"key": "limit",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get faculties by university",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/university/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty",
+								"university",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get faculty logo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/1/logo",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty",
+								"1",
+								"logo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete faculties (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/faculty",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"faculty"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "review",
+			"item": [
+				{
+					"name": "create review",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"generalRating\": 5,\n        \"reviewText\": \"This is a great faculty!\"\n    }"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/review/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"review",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update review",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"generalRating\": 4,\n        \"reviewText\": \"This is an ok faculty!\"\n    }"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/review/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"review",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "report review",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/review/1/report",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"review",
+								"1",
+								"report"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upvote review",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"upvote\": true\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/review/1/upvote",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"review",
+								"1",
+								"upvote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get review",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/review/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"review",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get reviews",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/review",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"review"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get reviews by faculty",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/review/faculty/FAC_MKm0IqFlzo?ratingFrom=1&ratingTo=5&orderBy=reviewDate,desc&limit=25&offset=0",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"review",
+								"faculty",
+								"FAC_MKm0IqFlzo"
+							],
+							"query": [
+								{
+									"key": "searchBy",
+									"value": "great",
+									"disabled": true
+								},
+								{
+									"key": "ratingFrom",
+									"value": "1"
+								},
+								{
+									"key": "ratingTo",
+									"value": "5"
+								},
+								{
+									"key": "orderBy",
+									"value": "reviewDate,desc"
+								},
+								{
+									"key": "limit",
+									"value": "25"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete reviews (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/review",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"review"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "question",
+			"item": [
+				{
+					"name": "create question",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"questionText\": \"Is this a question?\"\n    }"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/question/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"question",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create answer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"answerText\": \"This is an answer.\"\n    }"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/question/1/answer",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"question",
+								"1",
+								"answer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upvote question",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"upvote\": true\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/question/1/upvote",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"question",
+								"1",
+								"upvote"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upvote answer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"upvote\": true\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/question/1/upvoteanswer/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"question",
+								"1",
+								"upvoteanswer",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get questions by faculty",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/question/faculty/1?offset=0&limit=25&orderBy=questionDate,desc",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"question",
+								"faculty",
+								"1"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "25"
+								},
+								{
+									"key": "orderBy",
+									"value": "questionDate,desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete questions (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/question",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"question"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user profile",
+			"item": [
+				{
+					"name": "create user profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"andrei@yahoo.com\",\n\t\"password\": \"hashed\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/register",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"userprofile",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"andrei@yahoo.com\",\n\t\"password\": \"hashed\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"userprofile",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"userName\": \"userName1\"\n    }"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"userprofile",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add recent faculty",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/1/recentfaculty/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"userprofile",
+								"1",
+								"recentfaculty",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add favorite faculty",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"addFavoriteFaculty\": true\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/1/favoritefaculty/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"userprofile",
+								"1",
+								"favoritefaculty",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "allow notifications for favorite faculty",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"allowNotification\": true\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/1/notification/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"userprofile",
+								"1",
+								"notification",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"userprofile",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user profiles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"userprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user profiles to notify (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/notify",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"userprofile",
+								"notify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user profiles (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"userprofile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "config",
+			"item": [
+				{
+					"name": "create config",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"configKey\": \"key\",\n\t\"configValue\": \"value\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/config",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create configs",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"configKey\": \"faculties_licence_filepath\",\n\t\t\"configValue\": \"E:\\\\Jamstudy_data\\\\Fac12Sept2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"faculties_master_filepath\",\n\t\t\"configValue\": \"E:\\\\Jamstudy_data\\\\FacMasterPrograms04Oct2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_username\",\n\t\t\"configValue\": \"jamstudyadmin\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_pass\",\n\t\t\"configValue\": \"93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D\"\n\t}\n]"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/config/configs",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"config",
+								"configs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get configs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/config",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get config",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/config/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"config",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete configs (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/config",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"config"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "analytics",
+			"item": [
+				{
+					"name": "create analytics document (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/analytics",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"analytics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset analytics (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/analytics/reset",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"analytics",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "statistic 'homepage'",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/analytics/homepage",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"analytics",
+								"homepage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "statistic 'search'",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/analytics/search",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"analytics",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "statistic 'review intention'",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/analytics/revint",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"analytics",
+								"revint"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "statistic 'review added'",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/analytics/revadd",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"analytics",
+								"revadd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get analytics (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/analytics",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"analytics"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "newsletter",
+			"item": [
+				{
+					"name": "create newsletter (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/newsletter",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"newsletter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset newsletter (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/newsletter/reset",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"newsletter",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newsletter - add email",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"abc@xyz.com\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/newsletter/subscribe",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"newsletter",
+								"subscribe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get newsletter (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/newsletter",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"newsletter"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "init",
+			"item": [
+				{
+					"name": "init universities (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/init/inituniv",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"init",
+								"inituniv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "init faculties and license programs (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/init/initfac",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"init",
+								"initfac"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "job",
+			"item": [
+				{
+					"name": "update faculty review details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8080/Jamstudy/job/facultyreviewdetails",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"Jamstudy",
+								"job",
+								"facultyreviewdetails"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	]
+}
