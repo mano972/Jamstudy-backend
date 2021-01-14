@@ -49,44 +49,40 @@ public class ReviewDAO {
 			long countRev = jsonObject.getLong("countResults");
 			faculty.setCountRev((int) countRev);
 		}
-		if (jsonObject.containsKey("avgRating") && jsonObject.getDouble("avgRating") != null) {
-			double avgRating = jsonObject.getDouble("avgRating");
+		if (jsonObject.containsKey("avgRating")) {
+			Double avgRating = jsonObject.getDouble("avgRating");
 			faculty.setAvgRating(avgRating);
 		}
-		if (jsonObject.containsKey("avgDifficulty") && jsonObject.getDouble("avgDifficulty") != null) {
-			double avgDifficulty = jsonObject.getDouble("avgDifficulty");
+		if (jsonObject.containsKey("avgDifficulty")) {
+			Double avgDifficulty = jsonObject.getDouble("avgDifficulty");
 			faculty.setAvgDifficulty(avgDifficulty);
 		}
-		if (jsonObject.containsKey("avgRatingJobProspects") && jsonObject.getDouble("avgRatingJobProspects") != null) {
-			double avgRatingJobProspects = jsonObject.getDouble("avgRatingJobProspects");
+		if (jsonObject.containsKey("avgRatingJobProspects")) {
+			Double avgRatingJobProspects = jsonObject.getDouble("avgRatingJobProspects");
 			faculty.setAvgRatingJobProspects(avgRatingJobProspects);
 		}
-		if (jsonObject.containsKey("avgRatingCoursesAndLecturers")
-				&& jsonObject.getDouble("avgRatingCoursesAndLecturers") != null) {
-			double avgRatingCoursesAndLecturers = jsonObject.getDouble("avgRatingCoursesAndLecturers");
+		if (jsonObject.containsKey("avgRatingCoursesAndLecturers")) {
+			Double avgRatingCoursesAndLecturers = jsonObject.getDouble("avgRatingCoursesAndLecturers");
 			faculty.setAvgRatingCoursesAndLecturers(avgRatingCoursesAndLecturers);
 		}
-		if (jsonObject.containsKey("avgRatingStudentOrganisations")
-				&& jsonObject.getDouble("avgRatingStudentOrganisations") != null) {
-			double avgRatingStudentOrganisations = jsonObject.getDouble("avgRatingStudentOrganisations");
+		if (jsonObject.containsKey("avgRatingStudentOrganisations")) {
+			Double avgRatingStudentOrganisations = jsonObject.getDouble("avgRatingStudentOrganisations");
 			faculty.setAvgRatingStudentOrganisations(avgRatingStudentOrganisations);
 		}
-		if (jsonObject.containsKey("avgRatingAccomodation") && jsonObject.getDouble("avgRatingAccomodation") != null) {
-			double avgRatingAccomodation = jsonObject.getDouble("avgRatingAccomodation");
+		if (jsonObject.containsKey("avgRatingAccomodation")) {
+			Double avgRatingAccomodation = jsonObject.getDouble("avgRatingAccomodation");
 			faculty.setAvgRatingAccomodation(avgRatingAccomodation);
 		}
-		if (jsonObject.containsKey("avgRatingFacultyFacilities")
-				&& jsonObject.getDouble("avgRatingFacultyFacilities") != null) {
-			double avgRatingFacultyFacilities = jsonObject.getDouble("avgRatingFacultyFacilities");
+		if (jsonObject.containsKey("avgRatingFacultyFacilities")) {
+			Double avgRatingFacultyFacilities = jsonObject.getDouble("avgRatingFacultyFacilities");
 			faculty.setAvgRatingFacultyFacilities(avgRatingFacultyFacilities);
 		}
-		if (jsonObject.containsKey("avgRatingStudentSupport")
-				&& jsonObject.getDouble("avgRatingStudentSupport") != null) {
-			double avgRatingStudentSupport = jsonObject.getDouble("avgRatingStudentSupport");
+		if (jsonObject.containsKey("avgRatingStudentSupport")) {
+			Double avgRatingStudentSupport = jsonObject.getDouble("avgRatingStudentSupport");
 			faculty.setAvgRatingStudentSupport(avgRatingStudentSupport);
 		}
-		if (jsonObject.containsKey("avgRatingTimeBalance") && jsonObject.getDouble("avgRatingTimeBalance") != null) {
-			double avgRatingTimeBalance = jsonObject.getDouble("avgRatingTimeBalance");
+		if (jsonObject.containsKey("avgRatingTimeBalance")) {
+			Double avgRatingTimeBalance = jsonObject.getDouble("avgRatingTimeBalance");
 			faculty.setAvgRatingTimeBalance(avgRatingTimeBalance);
 		}
 
