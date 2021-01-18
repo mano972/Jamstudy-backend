@@ -62,7 +62,7 @@ public class InsertFacultiesAndLicensePrograms {
 		String cvsSplitBy = ";";
 		List<Faculty> facList = new ArrayList<>();
 
-		String filepath = "E:\\Jamstudy_data\\Fac12Sept2019.csv";
+		String filepath = "C:\\Jamstudy_data\\Fac12Sept2019.csv";
 
 		try {
 

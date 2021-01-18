@@ -11,7 +11,7 @@ public class Constants {
 
 	public static final String BUCKET = "JamstudyBucket";
 
-	public static final String LOGO_PATH_ROOT = "E:\\logos_jamstudy\\";
+	public static final String LOGO_PATH_ROOT = "C:\\logos_jamstudy\\";
 	public static final String LOGO_IMAGE_TYPE = ".png";
 
 	public static final String CONFIG_KEY_FACULTIES_LICENSE_FILEPATH = "faculties_licence_filepath";

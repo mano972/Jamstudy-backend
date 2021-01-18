@@ -1,4 +1,4 @@
-package com.app.studentromania.Jamstudy;
+	package com.app.studentromania.Jamstudy;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -61,7 +61,7 @@ public class UpdateFacultiesWithMasterPrograms {
 		String cvsSplitBy = ";";
 		List<Faculty> facList = new ArrayList<>();
 
-		String filepath = "E:\\Jamstudy_data\\FacMasterPrograms04Oct2019.csv";
+		String filepath = "C:\\Jamstudy_data\\FacMasterPrograms04Oct2019.csv";
 
 		try {
 

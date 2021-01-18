@@ -57,7 +57,7 @@ public class InsertUniversities {
 		String cvsSplitBy = ";";
 		List<University> univList = new ArrayList<>();
 
-		String filepath = "E:\\Jamstudy_data\\Fac12Sept2019.csv";
+		String filepath = "C:\\Jamstudy_data\\Fac12Sept2019.csv";
 
 		try {
 
