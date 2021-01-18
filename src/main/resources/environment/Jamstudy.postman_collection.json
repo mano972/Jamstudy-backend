@@ -2100,7 +2100,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t{\n\t\t\"configKey\": \"faculties_licence_filepath\",\n\t\t\"configValue\": \"E:\\\\Jamstudy_data\\\\Fac12Sept2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"faculties_master_filepath\",\n\t\t\"configValue\": \"E:\\\\Jamstudy_data\\\\FacMasterPrograms04Oct2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_username\",\n\t\t\"configValue\": \"jamstudyadmin\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_pass\",\n\t\t\"configValue\": \"93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D\"\n\t}\n]"
+							"raw": "[\n\t{\n\t\t\"configKey\": \"faculties_licence_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\Fac12Sept2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"faculties_master_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\FacMasterPrograms04Oct2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_username\",\n\t\t\"configValue\": \"jamstudyadmin\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_pass\",\n\t\t\"configValue\": \"93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D\"\n\t}\n]"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:8080/Jamstudy/config/configs",
@@ -2225,8 +2225,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "analytics",
@@ -2501,8 +2500,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "newsletter",
@@ -2678,8 +2676,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "init",
@@ -2780,8 +2777,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "job",
@@ -2815,8 +2811,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	]
 }
