@@ -1,0 +1,16 @@
+CREATE PRIMARY INDEX `#primary` ON `JamstudyBucket`;
+
+CREATE INDEX `idx_docType` ON `JamstudyBucket`(`docType`,(meta().`cas`));
+
+CREATE INDEX `idx_faculty_facultyId` ON `JamstudyBucket`(`facultyId`,(meta().`cas`)) WHERE (`docType` = "FACULTY");
+
+CREATE INDEX `idx_join_facultyId` ON `JamstudyBucket`(`facultyId`) WHERE (`docType` = "REVIEW");
+
+CREATE INDEX `idx_join_questionId` ON `JamstudyBucket`(`questionId`) WHERE (`docType` = "ANSWER");
+
+CREATE INDEX `idx_question_questionId` ON `JamstudyBucket`(`questionId`,(meta().`cas`)) WHERE (`docType` = "QUESTION");
+
+CREATE INDEX `idx_review_reviewId` ON `JamstudyBucket`(`reviewId`,(meta().`cas`)) WHERE (`docType` = "REVIEW");
+
+CREATE INDEX `idx_university_universityId` ON `JamstudyBucket`(`universityId`,(meta().`cas`)) WHERE (`docType` = "UNIVERSITY");
+
