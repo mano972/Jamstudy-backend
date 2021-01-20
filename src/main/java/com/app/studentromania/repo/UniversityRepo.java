@@ -41,7 +41,7 @@ public class UniversityRepo {
 				+ " WHERE docType = $1 AND universityId = $2 ";
 
 		return template.findByN1QL(
-				N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.FACULTY.getValue(), universityId)),
+				N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.UNIVERSITY.getValue(), universityId)),
 				University.class);
 	}
 

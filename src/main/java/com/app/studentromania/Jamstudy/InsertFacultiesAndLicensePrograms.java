@@ -52,7 +52,7 @@ public class InsertFacultiesAndLicensePrograms {
 
 	public static void main(String[] args) {
 		List<Faculty> facList = parseFaculties();
-//		insertFaculties(facList);
+		insertFaculties(facList);
 	}
 
 	private static List<Faculty> parseFaculties() {
@@ -80,28 +80,28 @@ public class InsertFacultiesAndLicensePrograms {
 
 				addLicenseData(column, facList, fac);
 				
-				if (facList.size() == 20) {
-					break;
-				}
+//				if (facList.size() == 20) {
+//					break;
+//				}
 
 			}
 
-			for (Faculty f : facList) {
-				System.out.println(
-						f.getFacultyName() + " //// " + f.getUniversityName() + " //// " + f.getAvailablePlacesLicense()
-								+ " //// " + f.getBudgetPlacesLicense() + " //// " + f.getTaxPlacesLicense());
-				System.out.println("-----------Domains-------------");
-				for (String facultyDomain : f.getFacultyDomainsLicense()) {
-					System.out.println(facultyDomain);
-				}
-				System.out.println("-----------Programs-------------");
-				for (FacultyProgram prog : f.getLicensePrograms()) {
-					System.out.println(prog.getProgramName() + " //// " + prog.getProgramDomain() + " //// "
-							+ prog.getAnnualTax());
-				}
-				System.out.println("------------------------");
-				System.out.println();
-			}
+//			for (Faculty f : facList) {
+//				System.out.println(
+//						f.getFacultyName() + " //// " + f.getUniversityName() + " //// " + f.getAvailablePlacesLicense()
+//								+ " //// " + f.getBudgetPlacesLicense() + " //// " + f.getTaxPlacesLicense());
+//				System.out.println("-----------Domains-------------");
+//				for (String facultyDomain : f.getFacultyDomainsLicense()) {
+//					System.out.println(facultyDomain);
+//				}
+//				System.out.println("-----------Programs-------------");
+//				for (FacultyProgram prog : f.getLicensePrograms()) {
+//					System.out.println(prog.getProgramName() + " //// " + prog.getProgramDomain() + " //// "
+//							+ prog.getAnnualTax());
+//				}
+//				System.out.println("------------------------");
+//				System.out.println();
+//			}
 			return facList;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
