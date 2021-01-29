@@ -66,7 +66,7 @@ public class InitController {
 	@Autowired
 	private UniversityDAO universityDAO;
 
-	@PostMapping("/inituniv")
+	@PostMapping(value = "inituniv", consumes = "application/json; charset=ISO-8859-2", produces = "application/json; charset=ISO-8859-2")
 	@RestCall
 	@VerifyAdmin
 	public void insertUniversities() {
@@ -74,7 +74,7 @@ public class InitController {
 		insertUniversities(universityDTOList);
 	}
 
-	@PostMapping("/initfac")
+	@PostMapping(value = "initfac", consumes = "application/json; charset=ISO-8859-2", produces = "application/json; charset=ISO-8859-2")
 	@RestCall
 	@VerifyAdmin
 	public void insertFaculties() {
@@ -102,7 +102,7 @@ public class InitController {
 				UniversityDTO universityDTO = new UniversityDTO();
 				universityDTO.setUniversityName(column[1]);
 //				univ.setType(column[8]);
-				universityDTO.setUniversityCity(column[2]);
+				universityDTO.setUniversityCity(adjustCityDiacritics(column[2]));
 				if (!containsUnivName(universityDTOList, universityDTO.getUniversityName())) {
 					universityDTOList.add(universityDTO);
 				}
@@ -146,7 +146,7 @@ public class InitController {
 				FacultyDTO facultyDTO = new FacultyDTO();
 				facultyDTO.setFacultyName(column[0]);
 				facultyDTO.setUniversityName(column[1]);
-				facultyDTO.setFacultyCity(column[2]);
+				facultyDTO.setFacultyCity(adjustCityDiacritics(column[2]));
 
 				addLicenseData(column, facultyDTOList, facultyDTO);
 
@@ -298,7 +298,7 @@ public class InitController {
 		if (fac.getFacultyDomainsLicense() == null) {
 			fac.setFacultyDomainsLicense(new ArrayList<>());
 		}
-		fac.getFacultyDomainsLicense().add(column[12]);
+		fac.getFacultyDomainsLicense().add(adjustDomain(column[12]));
 
 		if (!isTheSameFaculty(facList, fac.getFacultyName(), fac.getUniversityName())) {
 			// if it is the first occurrence of the faculty, add faculty
@@ -345,6 +345,87 @@ public class InitController {
 	private boolean isTheSameFaculty(final List<FacultyDTO> list, final String facName, final String univName) {
 		return list.stream().filter(f -> f.getFacultyName().equals(facName) && f.getUniversityName().equals(univName))
 				.findFirst().isPresent();
+	}
+
+	private static String adjustCityDiacritics(String city) {
+		String adjustedCity = null;
+
+		switch (city) {
+		case "Bucuresti, Bucuresti":
+			adjustedCity = "Bucureşti";
+			break;
+		case "Timisoara, Timis":
+			adjustedCity = "Timişoara, Timiş";
+			break;
+		case "Iasi, Iasi":
+			adjustedCity = "Iaşi, Iaşi";
+			break;
+		case "Constanta, Constanta":
+			adjustedCity = "Constanţa, Constanţa";
+			break;
+		case "Brasov, Brasov":
+			adjustedCity = "Braşov, Braşov";
+			break;
+		case "Pitesti, Arges":
+			adjustedCity = "Piteşti, Argeş";
+			break;
+		case "Targoviste, Dambovita":
+			adjustedCity = "Târgovişte, Damboviţa";
+			break;
+		case "Galati, Galati":
+			adjustedCity = "Galaţi, Galaţi";
+			break;
+		case "Targu Mures, Mures":
+			adjustedCity = "Târgu Mureş, Mureş";
+			break;
+		case "Baia Mare, Maramures":
+			adjustedCity = "Baia Mare, Maramureş";
+			break;
+		case "Drobeta Turnu Severin, Mehedinti":
+			adjustedCity = "Drobeta Turnu Severin, Mehedinţi";
+			break;
+		case "Bacau, Bacau":
+			adjustedCity = "Bacău, Bacău";
+			break;
+		case "Ploiesti, Prahova":
+			adjustedCity = "Ploieşti, Prahova";
+			break;
+		case "Targu Jiu, Gorj":
+			adjustedCity = "Târgu Jiu, Gorj";
+			break;
+		case "Buzau, Buzau":
+			adjustedCity = "Buzău, Buzău";
+			break;
+		case "Zalau, Salaj":
+			adjustedCity = "Zalău, Sălaj";
+			break;
+		case "Ramnicu Valcea, Valcea":
+			adjustedCity = "Râmnicu Vâlcea, Vâlcea";
+			break;
+		default:
+			adjustedCity = city;
+		}
+		// TODO Nasaud, Bistrita, Lugoj, Resita, Sfantu Gheorghe, Sighetu Marmatiei,
+		// Petrosani, Braila, Focsani, Slobozia (Ialomita), Beius;
+
+		return adjustedCity;
+	}
+
+	private static String adjustDomain(String domain) {
+		String adjustedDomain = null;
+
+		switch (domain) {
+		case "Arte, Arhitectură și Urbanism ":
+			adjustedDomain = "Arte Arhitectură și Urbanism";
+			break;
+		case "Ştiinţe Militare, Informaţii şi Ordine publică":
+			adjustedDomain = "Ştiinţe Militare Informaţii şi Ordine publică";
+			break;
+		default:
+			adjustedDomain = domain;
+		}
+
+		return adjustedDomain;
 	}
 
 }

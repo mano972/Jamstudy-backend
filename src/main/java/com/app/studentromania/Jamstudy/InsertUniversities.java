@@ -71,7 +71,7 @@ public class InsertUniversities {
 				University univ = new University();
 				univ.setUniversityName(column[1]);
 //				univ.setType(column[8]);
-				univ.setUniversityCity(column[2]);
+				univ.setUniversityCity(adjustCityDiacritics(column[2]));
 				if (!containsUnivName(univList, univ.getUniversityName())) {
 					univList.add(univ);
 				}
@@ -147,6 +147,70 @@ public class InsertUniversities {
 
 	private static boolean containsUnivName(final List<University> list, final String name) {
 		return list.stream().filter(u -> u.getUniversityName().equals(name)).findFirst().isPresent();
+	}
+
+	private static String adjustCityDiacritics(String city) {
+		String adjustedCity = null;
+
+		switch (city) {
+		case "Bucuresti, Bucuresti":
+			adjustedCity = "Bucureşti";
+			break;
+		case "Timisoara, Timis":
+			adjustedCity = "Timişoara, Timiş";
+			break;
+		case "Iasi, Iasi":
+			adjustedCity = "Iaşi, Iaşi";
+			break;
+		case "Constanta, Constanta":
+			adjustedCity = "Constanţa, Constanţa";
+			break;
+		case "Brasov, Brasov":
+			adjustedCity = "Braşov, Braşov";
+			break;
+		case "Pitesti, Arges":
+			adjustedCity = "Piteşti, Argeş";
+			break;
+		case "Targoviste, Dambovita":
+			adjustedCity = "Târgovişte, Damboviţa";
+			break;
+		case "Galati, Galati":
+			adjustedCity = "Galaţi, Galaţi";
+			break;
+		case "Targu Mures, Mures":
+			adjustedCity = "Târgu Mureş, Mureş";
+			break;
+		case "Baia Mare, Maramures":
+			adjustedCity = "Baia Mare, Maramureş";
+			break;
+		case "Drobeta Turnu Severin, Mehedinti":
+			adjustedCity = "Drobeta Turnu Severin, Mehedinţi";
+			break;
+		case "Bacau, Bacau":
+			adjustedCity = "Bacău, Bacău";
+			break;
+		case "Ploiesti, Prahova":
+			adjustedCity = "Ploieşti, Prahova";
+			break;
+		case "Targu Jiu, Gorj":
+			adjustedCity = "Târgu Jiu, Gorj";
+			break;
+		case "Buzau, Buzau":
+			adjustedCity = "Buzău, Buzău";
+			break;
+		case "Zalau, Salaj":
+			adjustedCity = "Zalău, Sălaj";
+			break;
+		case "Ramnicu Valcea, Valcea":
+			adjustedCity = "Râmnicu Vâlcea, Vâlcea";
+			break;
+		default:
+			adjustedCity = city;
+		}
+		// TODO Nasaud, Bistrita, Lugoj, Resita, Sfantu Gheorghe, Sighetu Marmatiei,
+		// Petrosani, Braila, Focsani, Slobozia (Ialomita), Beius;
+
+		return adjustedCity;
 	}
 
 }

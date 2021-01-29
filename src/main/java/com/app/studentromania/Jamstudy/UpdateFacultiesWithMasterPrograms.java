@@ -75,7 +75,7 @@ public class UpdateFacultiesWithMasterPrograms {
 				Faculty fac = new Faculty();
 				fac.setFacultyName(column[0]);
 				fac.setUniversityName(column[1]);
-				fac.setFacultyCity(column[2]);
+//				fac.setFacultyCity(column[2]);
 
 				addMasterData(column, facList, fac);
 
@@ -191,6 +191,8 @@ public class UpdateFacultiesWithMasterPrograms {
 					existingFac.setAvailablePlacesMaster(facFromCSV.getAvailablePlacesMaster());
 					existingFac.setBudgetPlacesMaster(facFromCSV.getBudgetPlacesMaster());
 					existingFac.setTaxPlacesMaster(facFromCSV.getTaxPlacesMaster());
+					// ca sa nu suprascriem campul
+					existingFac.setFacultyDomainsLicense(null);
 					break;
 				}
 			}
@@ -199,6 +201,9 @@ public class UpdateFacultiesWithMasterPrograms {
 		HttpURLConnection connPost = null;
 		try {
 			for (Faculty fac : existingFacList) {
+				if (fac.getFacultyDomainsMaster() == null || fac.getFacultyDomainsMaster().isEmpty()) {
+					continue;
+				}
 				String urlString = "http://localhost:8080/Jamstudy/faculty/" + fac.getFacultyId();
 				URL url = new URL(urlString);
 				connPost = (HttpURLConnection) url.openConnection();
@@ -309,7 +314,7 @@ public class UpdateFacultiesWithMasterPrograms {
 		if (fac.getFacultyDomainsMaster() == null) {
 			fac.setFacultyDomainsMaster(new ArrayList<>());
 		}
-		fac.getFacultyDomainsMaster().add(column[12]);
+		fac.getFacultyDomainsMaster().add(adjustDomain(column[12]));
 
 		if (!isTheSameFaculty(facList, fac.getFacultyName(), fac.getUniversityName())) {
 			// if it is the first occurrence of the faculty, add faculty
@@ -352,6 +357,24 @@ public class UpdateFacultiesWithMasterPrograms {
 	private static boolean isTheSameFaculty(final List<Faculty> list, final String facName, final String univName) {
 		return list.stream().filter(f -> f.getFacultyName().equals(facName) && f.getUniversityName().equals(univName))
 				.findFirst().isPresent();
+	}
+	
+	// Adjust only facultyDomainsMaster, not also the masterPrograms
+	private static String adjustDomain(String domain) {
+		String adjustedDomain = null;
+
+		switch (domain) {
+		case "Arte, Arhitectură și Urbanism ":
+			adjustedDomain = "Arte Arhitectură și Urbanism";
+			break;
+		case "Ştiinţe Militare, Informaţii şi Ordine publică":
+			adjustedDomain = "Ştiinţe Militare Informaţii şi Ordine publică";
+			break;
+		default:
+			adjustedDomain = domain;
+		}
+
+		return adjustedDomain;
 	}
 
 }
