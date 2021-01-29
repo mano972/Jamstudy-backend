@@ -52,7 +52,11 @@ public enum ErrorsEnumEng {
 	// Newsletter
 	NEWSLETTER_NOT_FOUND(HttpStatus.NOT_FOUND, "Newsletter was not found.", -80),
 	NEWSLETTER_EMAIL_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Email already exists.", -81),
-	NEWSLETTER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Newsletter document already exists.", -82);
+	NEWSLETTER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Newsletter document already exists.", -82),
+
+	// Feedback
+	FEEDBACK_NOT_FOUND(HttpStatus.NOT_FOUND, "Feedback was not found.", -90),
+	FEEDBACK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Feedback document already exists.", -91);
 
 	private String errorDescription;
 	private int errorCode;

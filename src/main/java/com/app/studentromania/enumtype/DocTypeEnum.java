@@ -10,7 +10,8 @@ public enum DocTypeEnum {
 	CONFIG("CONFIG"),
 	QUESTION("QUESTION"), 
 	ANALYTICS("ANALYTICS"), 
-	NEWSLETTER("NEWSLETTER");
+	NEWSLETTER("NEWSLETTER"),
+	FEEDBACK("FEEDBACK");
 	// @formatter:on
 
 	private final String docTypeText;
