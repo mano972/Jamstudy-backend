@@ -150,28 +150,34 @@ public class FacultyFilter {
 //		}
 //		if (isJoin()) {
 //			return " and (UPPER(f.facultyName) LIKE '%" + searchBy.toUpperCase()
-//					+ "%' or UPPER(f.facultyShortname) LIKE '%" + searchBy.toUpperCase() + "%') ";
+//					+ "%' or UPPER(f.facultyShortname) LIKE '%" + searchBy.toUpperCase()
+//					+ "%' or UPPER(f.universityName) LIKE '%" + searchBy.toUpperCase()
+//					+ "%' or UPPER(f.facultyCity) LIKE '%" + searchBy.toUpperCase() + "%')";
 //		}
 //		return " and (UPPER(facultyName) LIKE '%" + searchBy.toUpperCase() + "%' or UPPER(facultyShortname) LIKE '%"
-//				+ searchBy.toUpperCase() + "%') ";
+//				+ searchBy.toUpperCase() + "%' or UPPER(universityName) LIKE '%" + searchBy.toUpperCase() + "%' "
+//				+ " or UPPER(facultyCity) LIKE '%" + searchBy.toUpperCase() + "%') ";
 //	}
 
-	/*
-	 * Includes also universityName in the search
-	 */
 	public String getSearchByClause() {
 		if (StringUtils.isEmpty(searchBy)) {
 			return StringUtils.EMPTY;
 		}
+		searchBy = searchBy.replaceAll("[ĂăÂâ]", "A").replaceAll("[ŞşȘș]", "S").replaceAll("[ŢţȚț]", "T");
 		if (isJoin()) {
-			return " and (UPPER(f.facultyName) LIKE '%" + searchBy.toUpperCase()
-					+ "%' or UPPER(f.facultyShortname) LIKE '%" + searchBy.toUpperCase()
-					+ "%' or UPPER(f.universityName) LIKE '%" + searchBy.toUpperCase()
-					+ "%' or UPPER(f.facultyCity) LIKE '%" + searchBy.toUpperCase() + "%')";
+			return " and (UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.facultyName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+					+ searchBy.toUpperCase()
+					+ "%' or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.universityName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+					+ searchBy.toUpperCase() + "%' "
+					+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.facultyCity, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+					+ searchBy.toUpperCase() + "%') ";
 		}
-		return " and (UPPER(facultyName) LIKE '%" + searchBy.toUpperCase() + "%' or UPPER(facultyShortname) LIKE '%"
-				+ searchBy.toUpperCase() + "%' or UPPER(universityName) LIKE '%" + searchBy.toUpperCase() + "%' "
-				+ " or UPPER(facultyCity) LIKE '%" + searchBy.toUpperCase() + "%') ";
+		return " and (UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(facultyName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+				+ searchBy.toUpperCase()
+				+ "%' or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(universityName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+				+ searchBy.toUpperCase() + "%' "
+				+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(facultyCity, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+				+ searchBy.toUpperCase() + "%') ";
 	}
 
 	public String getUniversityIdsClause() {
@@ -244,7 +250,5 @@ public class FacultyFilter {
 				+ ", ratingFrom=" + ratingFrom + ", orderBy=" + orderBy + ", limit=" + limit + ", pageNumber="
 				+ pageNumber + ", offset=" + offset + ", join=" + join + "]";
 	}
-	
-	
 
 }
