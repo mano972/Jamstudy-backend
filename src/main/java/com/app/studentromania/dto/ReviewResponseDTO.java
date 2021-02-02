@@ -48,6 +48,8 @@ public class ReviewResponseDTO {
 
 	private String userProgramName;
 
+	private String userYear;
+
 	public String getReviewId() {
 		return reviewId;
 	}
@@ -214,6 +216,14 @@ public class ReviewResponseDTO {
 
 	public void setUserProgramName(String userProgramName) {
 		this.userProgramName = userProgramName;
+	}
+
+	public String getUserYear() {
+		return userYear;
+	}
+
+	public void setUserYear(String userYear) {
+		this.userYear = userYear;
 	}
 
 }

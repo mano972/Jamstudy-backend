@@ -7,11 +7,11 @@ public class ReviewDTO {
 	private String reviewId;
 
 	private String facultyId;
-	
+
 	private String userId;
-	
+
 	private String userName;
-	
+
 	private String userEmail;
 
 	private Integer generalRating;
@@ -31,7 +31,7 @@ public class ReviewDTO {
 	private CategoryReview facultyFacilitiesReview;
 
 	private CategoryReview studentSupportReview;
-	
+
 	private CategoryReview timeBalanceReview;
 
 	private Integer upvotes;
@@ -46,10 +46,12 @@ public class ReviewDTO {
 	private Boolean wouldRecommend;
 
 	private Integer difficulty;
-	
+
 	private String userDomainOfLicenseOrMaster;
-	
+
 	private String userProgramName;
+
+	private String userYear;
 
 	public String getReviewId() {
 		return reviewId;
@@ -227,6 +229,14 @@ public class ReviewDTO {
 		this.userProgramName = userProgramName;
 	}
 
+	public String getUserYear() {
+		return userYear;
+	}
+
+	public void setUserYear(String userYear) {
+		this.userYear = userYear;
+	}
+
 	@Override
 	public String toString() {
 		return "ReviewDTO [reviewId=" + reviewId + ", facultyId=" + facultyId + ", userId=" + userId + ", userName="
@@ -238,7 +248,7 @@ public class ReviewDTO {
 				+ studentSupportReview + ", timeBalanceReview=" + timeBalanceReview + ", upvotes=" + upvotes
 				+ ", upvote=" + upvote + ", userStatus=" + userStatus + ", wouldRecommend=" + wouldRecommend
 				+ ", difficulty=" + difficulty + ", userDomainOfLicenseOrMaster=" + userDomainOfLicenseOrMaster
-				+ ", userProgramName=" + userProgramName + "]";
+				+ ", userProgramName=" + userProgramName + ", userYear=" + userYear + "]";
 	}
 
 }

@@ -87,6 +87,9 @@ public class Review extends ParentEntity {
 	@Field
 	private String userProgramName;
 
+	@Field
+	private String userYear;
+
 	public String getReviewId() {
 		return reviewId;
 	}
@@ -277,6 +280,14 @@ public class Review extends ParentEntity {
 
 	public void setUserProgramName(String userProgramName) {
 		this.userProgramName = userProgramName;
+	}
+
+	public String getUserYear() {
+		return userYear;
+	}
+
+	public void setUserYear(String userYear) {
+		this.userYear = userYear;
 	}
 
 }
