@@ -72,6 +72,21 @@ public class ReviewRepo {
 	@Query
 	@LogExecutionTime
 	@LogParameters
+	public long countFilteredReviewsByFacultyId(String facultyId, ReviewFilter reviewFilter) {
+		String selectStatement = "SELECT count(*) as countResults FROM " + Constants.BUCKET
+				+ " WHERE docType = $1 AND facultyId = $2 ";
+		String query = selectStatement + getFilteredReviewsStatement(reviewFilter);
+
+		N1qlQueryResult result = template
+				.queryN1QL(N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue(), facultyId)));
+		long count = result.allRows().get(0).value().getLong("countResults");
+
+		return count;
+	}
+
+	@Query
+	@LogExecutionTime
+	@LogParameters
 	public N1qlQueryResult getReviewsDetailsByFacultyId(String facultyId) {
 		String query = "SELECT count(*) as countResults, avg(generalRating) as avgRating, "
 				+ " avg(jobProspectsReview.generalRating) as avgRatingJobProspects, "

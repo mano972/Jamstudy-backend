@@ -9,7 +9,7 @@ import com.couchbase.client.java.document.json.JsonArray;
 
 public class FacultyFilter {
 
-	private static final int DEFAULT_LIMIT = 999999;
+	private static final int DEFAULT_LIMIT = 20;
 	private static final String DEFAULT_SORT_FIELD = "facultyName";
 	private static final String DEFAULT_SORT_FIELD_JOIN = "f.facultyName";
 	private static final String DEFAULT_SORT_DIRECTION = "asc";
@@ -100,7 +100,7 @@ public class FacultyFilter {
 	}
 
 	public Integer getLimit() {
-		if (limit == null || limit == 0) {
+		if (limit == null || limit == 0 || limit > 30) {
 			return DEFAULT_LIMIT;
 		}
 		return limit;
@@ -166,18 +166,18 @@ public class FacultyFilter {
 		searchBy = searchBy.replaceAll("[ĂăÂâ]", "A").replaceAll("[ŞşȘș]", "S").replaceAll("[ŢţȚț]", "T");
 		if (isJoin()) {
 			return " and (UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.facultyName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
-					+ searchBy.toUpperCase()
+					+ searchBy.toUpperCase().trim()
 					+ "%' or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.universityName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
-					+ searchBy.toUpperCase() + "%' "
+					+ searchBy.toUpperCase().trim() + "%' "
 					+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.facultyCity, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
-					+ searchBy.toUpperCase() + "%') ";
+					+ searchBy.toUpperCase().trim() + "%') ";
 		}
 		return " and (UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(facultyName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
-				+ searchBy.toUpperCase()
+				+ searchBy.toUpperCase().trim()
 				+ "%' or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(universityName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
-				+ searchBy.toUpperCase() + "%' "
+				+ searchBy.toUpperCase().trim() + "%' "
 				+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(facultyCity, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
-				+ searchBy.toUpperCase() + "%') ";
+				+ searchBy.toUpperCase().trim() + "%') ";
 	}
 
 	public String getUniversityIdsClause() {

@@ -40,6 +40,10 @@ public class ReviewDAO {
 		return reviewRepo.getFilteredReviewsByFacultyId(facultyId, reviewFilter);
 	}
 
+	public long countFilteredReviews(String facultyId, ReviewFilter reviewFilter) {
+		return reviewRepo.countFilteredReviewsByFacultyId(facultyId, reviewFilter);
+	}
+
 	public void updateReviewsDetailsForFaculty(Faculty faculty) {
 
 		N1qlQueryResult result = reviewRepo.getReviewsDetailsByFacultyId(faculty.getFacultyId());

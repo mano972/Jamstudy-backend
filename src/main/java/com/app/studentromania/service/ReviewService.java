@@ -73,6 +73,7 @@ public class ReviewService {
 
 	public ResponseDTO getFilteredReviewsByFacultyId(String facultydId, ReviewFilter reviewFilters) {
 		List<Review> reviews = reviewDAO.getFilteredReviewsByFacultyId(facultydId, reviewFilters);
+		long count = reviewDAO.countFilteredReviews(facultydId, reviewFilters);
 		JSONArray reviewsArray = new JSONArray();
 		reviews.forEach(review -> {
 			ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
@@ -80,6 +81,7 @@ public class ReviewService {
 		});
 		JSONObject response = new JSONObject();
 		response.put("reviews", reviewsArray);
+		response.put("count", count);
 
 		return ResponseDTO.createSuccessResponse(response);
 	}
