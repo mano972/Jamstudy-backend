@@ -1,0 +1,1147 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" type="image/png" href="./assets/img/favicon.ico">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<title>UniStart</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    
+    <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet" />
+    <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
+    <link href="./assets/css/demo.css" rel="stylesheet" />
+    <link href="./assets/css/examples.css" rel="stylesheet" />
+        
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
+	<script src="https://kit.fontawesome.com/6f635d9dad.js" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      
+</head>
+<body>
+    
+    <nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+		  <a class="navbar-brand" href="./">UNISTART</a>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navigation-example-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="./" class="btn btn-simple">Acasă</a>
+            </li>
+            <li>
+                <a href="./search-results.html" class="btn btn-simple">Facultăți</a>
+            </li>
+            <li>
+                <a href="./contact-page.html" class="btn btn-simple">Contact</a>
+            </li>
+			<!-- <li> -->
+				<!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
+			<!-- </li> -->
+			<!-- <li> -->
+				 <!-- <a href="./add-review-full.html" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
+			<!-- </li> -->
+           </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-->
+    </nav>           
+    
+    <div class="wrapper">
+        <div class="section section-white">
+			<div class="container-fluid">
+			
+						<div class="add-review-floating-card-2 col-lg-6 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0">
+							<div class="row">
+								<div class="card text-center">
+									<div class="content">
+										<img id="floating-card-icon-2" src="./assets/img/floating-card-icon.png"></img>
+										<h4>Evaluează experienţa la această facultate</h4>
+										<h5>Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii ce se întâmplă în fiecare din cele pe care le urmarești. Să ai informații din interior despre cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum (sau, poate, o mie de elevi). Evaluarea ta poate face diferența între o decizie buna și o decizie total greșita a unui elev. Durează doar un minut.</h5>
+										<div id="progress-2" class="progress">
+											<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
+												<span><b>Pasul 1 din 3</b></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+						<div id="review-faculty-main" class="col-lg-6 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0">
+							<!-- populated dynamically -->
+						</div>
+						
+						
+						<div id="add-review-main-card" class="col-lg-6 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0">
+							<div class="row">
+								<div class="card">
+									<div class="content">
+					
+										<div class="tab">
+											<h4>Evaluare generală</h4>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="rating">
+														<input type="radio" name="rating" id="rating-5" value="5">
+														<label for="rating-5"></label>
+														<input type="radio" name="rating" id="rating-4" value="4">
+														<label for="rating-4"></label>
+														<input type="radio" name="rating" id="rating-3" value="3">
+														<label for="rating-3"></label>
+														<input type="radio" name="rating" id="rating-2" value="2">
+														<label for="rating-2"></label>
+														<input type="radio" name="rating" id="rating-1" value="1">
+														<label for="rating-1"></label>
+														<div class="emoji-wrapper">
+															<div class="emoji">
+																<div class="rating-0">
+																	<h4>Acordă o notă<h4>
+																</div>
+																<div>
+																	<h4>Foarte nemulțumit<h4>
+																</div>
+																<div>
+																	<h4>Nemulțumit<h4>
+																</div>
+																<div>
+																	<h4>Ok<h4>
+																</div>
+																<div>
+																	<h4>Mulțumit<h4>
+																</div>
+																<div>
+																	<h4>Foarte mulțumit<h4>
+																</div>
+															</div>
+														 </div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<textarea id="general-review-text" class="form-control" rows="4" minlength="150" maxlength="1400" required onkeyup="textCounter(this, 'counter', 'counter-row', 150);" oninvalid="this.setCustomValidity('Cel puțin 150 de caractere')" placeholder="Descrie experiența ta în cel puțin 150 de caractere..."></textarea>
+														
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div id="counter-row" class="col-md-4">
+													<small id="counter" class="text-muted" >150</small><small class="text-muted" > caractere obligatorii rămase</small>
+												</div>
+											</div>
+										</div>
+
+										<div class="tab">
+											<h4>Evaluare pe categorii. Această pagină este opțională.</h4>
+											<br>
+											<h5 id="horizontal-line-review"></h5>
+											<div class=" text-center col-md-12">
+												<div class="content">
+													<div class="row">
+														<div class="col-md-12">
+															<h3 style="color: #8e00c2">Profesori și cursuri</h3>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="rating-small">
+																<input type="radio" name="cat1-rating" id="cat1-rating-5" value="5">
+																<label for="cat1-rating-5"></label>
+																<input type="radio" name="cat1-rating" id="cat1-rating-4" value="4">
+																<label for="cat1-rating-4"></label>
+																<input type="radio" name="cat1-rating" id="cat1-rating-3" value="3">
+																<label for="cat1-rating-3"></label>
+																<input type="radio" name="cat1-rating" id="cat1-rating-2" value="2">
+																<label for="cat1-rating-2"></label>
+																<input type="radio" name="cat1-rating" id="cat1-rating-1" value="1">
+																<label for="cat1-rating-1"></label>
+															</div>
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="form-group">
+																<textarea id="cat1-review-text" class="form-control" rows="4" maxlength="800" placeholder="Cum sunt profesorii? Cum se desfasoară orele? Cum sunt materialele de studiu?"></textarea>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<h5 id="horizontal-line-review"></h5>
+											<div class=" text-center col-md-12">
+												<div class="content">
+													<div class="row">
+														<div class="col-md-12">
+															<h3 style="color: #2796DF">Oportunități în carieră</h3>	
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="rating-small">
+																<input type="radio" name="cat2-rating" id="cat2-rating-5" value="5">
+																<label for="cat2-rating-5"></label>
+																<input type="radio" name="cat2-rating" id="cat2-rating-4" value="4">
+																<label for="cat2-rating-4"></label>
+																<input type="radio" name="cat2-rating" id="cat2-rating-3" value="3">
+																<label for="cat2-rating-3"></label>
+																<input type="radio" name="cat2-rating" id="cat2-rating-2" value="2">
+																<label for="cat2-rating-2"></label>
+																<input type="radio" name="cat2-rating" id="cat2-rating-1" value="1">
+																<label for="cat2-rating-1"></label>
+															</div>
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="form-group">
+																<textarea id="cat2-review-text"  class="form-control" rows="4" maxlength="800" placeholder="Fie că ai terminat facultatea sau ești încă student, descrie experiența ta legată de oportunitățile de angajare..."></textarea>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<h5 id="horizontal-line-review"></h5>
+											<div class=" text-center col-md-12">
+												<div class="content">
+													<div class="row">
+														<div class="col-md-12">
+															<h3 style="color: #FFAA01">Cazare</h3>	
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="rating-small">
+																<input type="radio" name="cat3-rating" id="cat3-rating-5" value="5">
+																<label for="cat3-rating-5"></label>
+																<input type="radio" name="cat3-rating" id="cat3-rating-4" value="4">
+																<label for="cat3-rating-4"></label>
+																<input type="radio" name="cat3-rating" id="cat3-rating-3" value="3">
+																<label for="cat3-rating-3"></label>
+																<input type="radio" name="cat3-rating" id="cat3-rating-2" value="2">
+																<label for="cat3-rating-2"></label>
+																<input type="radio" name="cat3-rating" id="cat3-rating-1" value="1">
+																<label for="cat3-rating-1"></label>
+															</div>
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="form-group">
+																<textarea id="cat3-review-text"  class="form-control" rows="4" maxlength="800" placeholder="Locuiești în cămin sau în chirie? Descrie locuința, prețul, condițiile..."></textarea>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<h5 id="horizontal-line-review"></h5>
+											<div class=" text-center col-md-12">
+												<div class="content">
+													<div class="row">
+														<div class="col-md-12">
+															<h3 style="color: #E50063">Asociații studențești</h3>	
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="rating-small">
+																<input type="radio" name="cat4-rating" id="cat4-rating-5" value="5">
+																<label for="cat4-rating-5"></label>
+																<input type="radio" name="cat4-rating" id="cat4-rating-4" value="4">
+																<label for="cat4-rating-4"></label>
+																<input type="radio" name="cat4-rating" id="cat4-rating-3" value="3">
+																<label for="cat4-rating-3"></label>
+																<input type="radio" name="cat4-rating" id="cat4-rating-2" value="2">
+																<label for="cat4-rating-2"></label>
+																<input type="radio" name="cat4-rating" id="cat4-rating-1" value="1">
+																<label for="cat4-rating-1"></label>
+															</div>
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="form-group">
+																<textarea id="cat4-review-text"  class="form-control" rows="4" maxlength="800" placeholder="Cât de reprezentat te simți de asociațiile studențesti? Ce fel de activități si evenimente organizează?"></textarea>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<h5 id="horizontal-line-review"></h5>
+											<div class=" text-center col-md-12">
+												<div class="content">
+													<div class="row">
+														<div class="col-md-12">
+															<h3 style="color: #21AE83">Facilități</h3>	
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="rating-small">
+																<input type="radio" name="cat5-rating" id="cat5-rating-5" value="5">
+																<label for="cat5-rating-5"></label>
+																<input type="radio" name="cat5-rating" id="cat5-rating-4" value="4">
+																<label for="cat5-rating-4"></label>
+																<input type="radio" name="cat5-rating" id="cat5-rating-3" value="3">
+																<label for="cat5-rating-3"></label>
+																<input type="radio" name="cat5-rating" id="cat5-rating-2" value="2">
+																<label for="cat5-rating-2"></label>
+																<input type="radio" name="cat5-rating" id="cat5-rating-1" value="1">
+																<label for="cat5-rating-1"></label>
+															</div>
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="form-group">
+																<textarea id="cat5-review-text"  class="form-control" rows="4" maxlength="800" placeholder="Descrie facilitățile si starea lor (biblioteca, aula, laboratoarele, echipamentele etc.)."></textarea>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<h5 id="horizontal-line-review"></h5>
+											<div class=" text-center col-md-12">
+												<div class="content">
+													<div class="row">
+														<div class="col-md-12">
+															<h3 style="color: #8e00c2">Timp de studiu vs. timp liber</h3>	
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="rating-small">
+																<input type="radio" name="cat6-rating" id="cat6-rating-5" value="5">
+																<label for="cat6-rating-5"></label>
+																<input type="radio" name="cat6-rating" id="cat6-rating-4" value="4">
+																<label for="cat6-rating-4"></label>
+																<input type="radio" name="cat6-rating" id="cat6-rating-3" value="3">
+																<label for="cat6-rating-3"></label>
+																<input type="radio" name="cat6-rating" id="cat6-rating-2" value="2">
+																<label for="cat6-rating-2"></label>
+																<input type="radio" name="cat6-rating" id="cat6-rating-1" value="1">
+																<label for="cat6-rating-1"></label>
+															</div>
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="form-group">
+																<textarea id="cat6-review-text"  class="form-control" rows="4" maxlength="800" placeholder="Câte ore petreci pe săptamână la facultate? Câte ore studiezi sau lucrezi la proiecte?"></textarea>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<h5 id="horizontal-line-review"></h5>
+											<div class=" text-center col-md-12">
+												<div class="content">
+													<div class="row">
+														<div class="col-md-12">
+															<h3 style="color: #FFAA01">Dificultate</h3>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="difficulty-slider">
+																<input type="range" min="0" max="5" step="1" value="0">
+															</div>
+															<div class="difficulty-value">-</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<h5 id="horizontal-line-review"></h5>
+											<div class=" text-center col-md-12">
+												<div class="content">
+													<div class="row">
+														<div class="col-md-12">
+															<h3 style="color: #2796DF">Ai recomanda facultatea?</h3>	
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-xs-12">																
+															<div class="radio-toolbar">
+															  <input type="radio" id="would-recommend-yes" name="would-recommend-radio" value="true">
+															  <label for="would-recommend-yes">Da</label>
+
+															  <input type="radio" id="would-recommend-no" name="would-recommend-radio" value="false">
+															  <label for="would-recommend-no">Nu</label>
+															</div>
+														</div>
+													</div>
+													<br>
+												</div>
+											</div>
+											<h5 id="horizontal-line-review"></h5>
+										</div>
+										
+										<div class="tab">
+											<h4>Spune-ne câteva cuvinte despre tine</h4>
+											<br>
+											<h5>Status</h5>
+											<div class="row">
+												<div class="col-md-12">																							
+													<div class="radio-toolbar" onchange="showYears()">
+													  <input type="radio" id="status-student" name="status" value="STUDENT">
+													  <label for="status-student">Student</label>
+
+													  <input type="radio" id="status-master" name="status" value="MASTERAND">
+													  <label for="status-master">Masterand</label>
+
+													  <input type="radio" id="status-alumni" name="status" value="ABSOLVENT">
+													  <label for="status-alumni">Absolvent</label>
+													  
+													  <input type="radio" id="status-drop" name="status" value="DROP-OUT">
+													  <label for="status-drop">M-am retras</label>
+													  
+													  <input type="radio" id="status-other" name="status" value="ALTUL">
+													  <label for="status-other">Altul</label>
+													</div>
+													
+													<!-- <select id="user-status" name="status" class="selectpicker" data-style="form-control" data-menu-style="" onchange="showYears()"> -->
+														<!-- <option disabled selected>Alege</option> -->
+														<!-- <option value="STUDENT">Student </option> -->
+														<!-- <option value="MASTERAND">Masterand</option> -->
+														<!-- <option value="ABSOLVENT">Absolvent </option> -->
+														<!-- <option value="DROP-OUT">M-am retras de la aceasta facultate</option> -->
+														<!-- <option value="ALTUL">Altul</option> -->
+													<!-- </select> -->
+												</div>
+											</div>
+											<div id="user-years" style="display: none">
+												<br>
+												<h5>Anul</h5>
+												<div class="row">
+													<div class="col-md-12">																
+														<div class="radio-toolbar">
+														  <input type="radio" id="year1" name="years" value="Anul 1">
+														  <label for="year1">Anul 1</label>
+
+														  <input type="radio" id="year2" name="years" value="Anul 2">
+														  <label for="year2">Anul 2</label>
+
+														  <input type="radio" id="year3" name="years" value="Anul 3">
+														  <label for="year3">Anul 3</label>
+														  
+														  <input type="radio" id="year4" name="years" value="Anul 4+">
+														  <label for="year4">Anul 4+</label>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- <br> -->
+											<!-- <div class="row"> -->
+												<!-- <div class="col-md-4"> -->
+													<!-- <span><b>Domeniul de studiu</b></span><br> -->
+													<!-- <select id="user-domain" name="domain" class="selectpicker" data-style="form-control" data-menu-style=""> -->
+														<!-- <option disabled selected>Alege</option> -->
+														<!-- <option value="0">Da</option> -->
+														<!-- <option value="1">Nu</option> -->
+														<!-- <option value="2">Nu se aplica</option> -->
+													<!-- </select> -->
+												<!-- </div> -->
+											<!-- </div> -->
+											<!-- <br> -->
+											<!-- <div class="row"> -->
+												<!-- <div class="col-md-4"> -->
+													<!-- <span><b>Programul de studiu</b></span><br> -->
+													<!-- <select id="user-program" name="program" class="selectpicker" data-style="form-control" data-menu-style=""> -->
+														<!-- <option disabled selected>Alege</option> -->
+														<!-- <option value="0">Da</option> -->
+														<!-- <option value="1">Nu</option> -->
+													<!-- </select> -->
+												<!-- </div> -->
+											<!-- </div> -->
+											<!-- <br> -->
+											<!-- <div class="row"> -->
+												<!-- <div class="col-md-4"> -->
+													<!-- <span><b>Doresti sa evaluezi programul de studiu?</b></span><br> -->
+													<!-- <div class="col-md-12"> -->
+														<!-- <div class="rating-small" style="margin-top: 10px; margin-left: -35px;"> -->
+															<!-- <input type="radio" name="program-rating" id="program-rating-5" value="5"> -->
+															<!-- <label for="program-rating-5"></label> -->
+															<!-- <input type="radio" name="program-rating" id="program-rating-4" value="4"> -->
+															<!-- <label for="program-rating-4"></label> -->
+															<!-- <input type="radio" name="program-rating" id="program-rating-3" value="3"> -->
+															<!-- <label for="program-rating-3"></label> -->
+															<!-- <input type="radio" name="program-rating" id="program-rating-2" value="2"> -->
+															<!-- <label for="program-rating-2"></label> -->
+															<!-- <input type="radio" name="program-rating" id="program-rating-1" value="1"> -->
+															<!-- <label for="program-rating-1"></label> -->
+														<!-- </div> -->
+													<!-- </div> -->
+												<!-- </div> -->
+											<!-- </div> -->
+											<br>
+											<h5>Ai reușit să te angajezi, in domeniu, in timpul facultății sau la cel mult 6 luni dupa terminarea ei?</h5>
+											<div class="row">
+												<div class="col-md-12">															
+													<div class="radio-toolbar">
+													  <input type="radio" id="work-yes" name="work" value="0">
+													  <label for="work-yes">Da</label>
+
+													  <input type="radio" id="work-no" name="work" value="1">
+													  <label for="work-no">Nu</label>
+
+													  <input type="radio" id="work-not-applied" name="work" value="2">
+													  <label for="work-not-applied">Nu se aplica</label>
+													</div>
+												</div>
+												<!-- <select id="user-working" name="working" class="selectpicker" data-style="form-control" data-menu-style=""> -->
+													<!-- <option disabled selected>Alege</option> -->
+													<!-- <option value="0">Da</option> -->
+													<!-- <option value="1">Nu</option> -->
+													<!-- <option value="2">Nu se aplica</option> -->
+												<!-- </select> -->
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-md-5">
+													<h5>Email<em>*</em></h5>
+													<input id="user-email" required class="form-control" placeholder="Email">
+												</div>
+											</div>
+										</div>
+										
+										<br>
+										<div class="row">
+											<div class="col-md-4 col-md-offset-4 col-xs-5" style="text-align: end;">
+												<button id="previous-step" class="btn btn-info" onclick="nextPrev(-1)">Pasul anterior</button>
+											</div>
+											<div id="next-step-main" class="col-md-4 col-xs-7">
+												<button id="next-step" class="btn btn-info btn-fill btn-block" onclick="nextPrev(1)">Pasul următor</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+									
+						
+						<div class="add-review-floating-card col-lg-3 col-lg-offset-0 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0">
+							<div class="row">
+								<div class="card text-center">
+									<div class="content">
+										<img id="floating-card-icon" src="./assets/img/floating-card-icon.png"></img>
+										<h4>Evaluează experienţa la această facultate</h4>
+										<h5>Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii ce se întâmplă în fiecare din cele pe care le urmarești. Să ai informații din interior despre cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum (sau, poate, o mie de elevi). Evaluarea ta poate face diferența între o decizie buna și o decizie total greșita a unui elev. Durează doar un minut.</h5>
+										<div id="progress-1" class="progress">
+											<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
+												<span><b>Pasul 1 din 3</b></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="modal fade" id="add-review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								  <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<div id="add-review-header-text">
+										<i class="far fa-envelope fa-3x"></i>
+									</div>
+								  </div>
+								  <div id="add-review-modal-text" class="modal-body modal-info text-center">
+									&nbsp;
+								  </div>
+								  <div class="modal-footer">
+									   <button id="ok-button-modal" type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+								  </div>
+								</div>
+							 </div>
+						</div>
+
+			</div>
+        </div>
+		
+		
+		
+		
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-9">
+                <div class="links">
+                    <ul class="uppercase-links">
+                        <li>
+                            <a href="./">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./about-us.html">
+                                Despre Noi
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./search-results.html">
+                                Facultăți
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./contact-page.html">
+                               Contact
+                            </a>
+                        </li>
+
+                    </ul>
+                    <hr>
+
+                    <div class="copyright">
+                        © 2020 Jamstudy, din dragoste pentru educaţie
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-md-offset-2 col-sm-2 col-sm-offset-1">
+                <div class="social-area">
+                        <a href="http://twitter.com" target="_blank"><button class="btn btn-icon btn-fill btn-twitter">
+                            <i class="fa fa-twitter"></i>
+                        </button>    
+						</a>
+                        <a href="http://facebook.com" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
+                            <i class="fa fa-facebook"> </i>
+                        </button>
+						</a>
+                        <a href="http://instagram.com" target="_blank"><button class="btn btn-icon btn-fill btn-instagram">
+                            <i class="fa fa-instagram"></i>
+                        </button>
+						</a>
+                        <a href="http://youtube.com" target="_blank"><button class="btn btn-icon btn-fill btn-youtube">
+                            <i class="fa fa-youtube"></i>
+                        </button>
+						</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+</body>
+
+<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+
+<script src="./bootstrap3/js/bootstrap.js" type="text/javascript"></script>
+
+<!--  Plugins -->
+<script src="./assets/js/ct-paper-checkbox.js"></script>
+<script src="./assets/js/ct-paper-radio.js"></script>
+<script src="./assets/js/bootstrap-select.js"></script>
+<script src="./assets/js/bootstrap-datepicker.js"></script>
+
+<script src="./assets/js/ct-paper.js"></script>
+
+<script>
+var currentTab = 0; // Current tab is set to be the first tab (0)
+showTab(currentTab); // Display the current tab
+
+var facultyId;
+
+
+$(document).ready(function() {
+
+	var queryParams = new URLSearchParams(window.location.search);
+	facultyId = queryParams.get("id");
+
+	loadFaculty();
+	
+	<!-- loadFields(); -->
+});
+
+function loadFaculty(){
+		var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/faculty/" + facultyId);
+
+		  $.ajax({
+          url: backendUrl,
+          type: "GET",
+          success: function(response) {
+            console.log(response);
+			
+			if (response.control.errorCode === 0) {
+				var facultyName = response.result.facultyName;
+				var universityName = response.result.universityName;
+				var universityNameForLogo = universityName.replaceAll("\"", "_");
+				var logoName = facultyName + universityNameForLogo;
+				<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
+				var logoSrc = "http://localhost:8080/Jamstudy/v1/faculty/" + response.result.facultyId + "/logo";	
+				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
+				
+				var urlProfileRedirect = "./faculty-profile.html?id=" + facultyId;
+
+				
+				document.getElementById("review-faculty-main").innerHTML = '';
+				
+				document.getElementById("review-faculty-main").innerHTML += (	
+								'<div class="row">'
+									
+										+'<div class="card">'
+											+'<div class="content">			'	
+												+'<div class="row">'
+												+'	<div class="col-md-2 col-sm-2 col-xs-3">'
+												+'		<div class="row">'
+												+'			<a href="' + urlProfileRedirect + '">		'												
+												+'				<img id="review-faculty-logo" class="img-faculty-logo" src="' + logoSrc + '" style="max-width: 85%;"></img>'
+												+'			</a>'
+												+'		</div>'
+												+'	</div>'
+												+'	<div class="form-group col-md-10 col-xs-9" style="display:inline; vertical-align: middle;">'
+												+'		<h5>Numele facultății<em>*</em></h5>'
+												+'		<input id="review-faculty-name" type="text" value="' + facultyName + '" placeholder="" class="form-control" required oninvalid="this.setCustomValidity(\'Câmp obligatoriu\')" readonly/>'
+												+'	</div>'
+												+'</div>'
+											+'</div>'
+										+'</div>'
+								+'</div>');
+				
+			} 
+			<!-- else { -->
+				<!-- console.log(response.control.errorDescription); -->
+				<!-- var defaultErrorImg = "C://logos_jamstudy/default_image.png"; -->
+				
+				<!-- document.getElementById("review-faculty-main").innerHTML = ''; -->
+				<!-- document.getElementById("review-faculty-main").innerHTML += (							 -->
+							<!-- '<div class="row">' -->
+							<!-- +'	<div class="col-md-2 col-sm-2 col-xs-3">' -->
+							<!-- +'		<div class="row">' -->
+							<!-- +'			<a href="./faculty-profile.html">		'												 -->
+							<!-- +'				<img id="review-faculty-logo" class="img-faculty-logo" src="' + defaultErrorImg + '" onerror="this.onerror=null;this.src=' + defaultErrorImg + '" style="max-width: 85%;"></img>' -->
+							<!-- +'			</a>' -->
+							<!-- +'		</div>' -->
+							<!-- +'	</div>' -->
+							<!-- +'	<div class="form-group col-md-10 col-xs-9" style="display:inline; vertical-align: middle;">' -->
+							<!-- +'		<h5>Numele facultății*</h5>' -->
+							<!-- +'		<input id="review-faculty-name" type="text" value="" placeholder="" class="form-control" required oninvalid="this.setCustomValidity(\'Câmp obligatoriu\')" />' -->
+							<!-- +'	</div>' -->
+							<!-- +'</div>'); -->
+			<!-- } -->
+			
+			var licensePrograms = response.result.licensePrograms;
+			var masterPrograms = response.result.masterPrograms;
+			
+			var domainsOfLicense = [];
+			var domainsOfMaster = [];
+			var programNameLicense = new Map();
+			var programNameMaster = new Map();
+			
+			for (licenseProgram of licensePrograms) {
+				var domain = licenseProgram.domainOfLicenseOrMaster;
+				if (!domainsOfLicense.includes(domain)) {
+					domainsOfLicense.push(domain);
+				}
+			}
+			for (domain of domainsOfLicense) {
+			var programsForDomain = [];
+				for (licenseProgram of licensePrograms) {
+					if (licenseProgram.domainOfLicenseOrMaster === domain) {
+						programsForDomain.push(licenseProgram.programName);
+					}
+				}
+				programNameLicense.set(domain, programsForDomain);
+			}
+			for (masterProgram of masterPrograms) {
+				if (!domainsOfMaster.includes(masterProgram.domainOfLicenseOrMaster)) {
+					domainsOfMaster.push(masterProgram.domainOfLicenseOrMaster);
+				}
+			}
+			for (domain of domainsOfMaster) {
+			var programsForDomain = [];
+				for (masterProgram of masterPrograms) {
+					if (masterProgram.domainOfLicenseOrMaster === domain) {
+						programsForDomain.push(masterProgram.programName);
+					}
+				}
+				programNameMaster.set(domain, programsForDomain);
+			}
+			
+			console.log(domainsOfLicense);
+			console.log(programNameLicense);
+			console.log(domainsOfMaster);
+			console.log(programNameMaster);
+
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+}
+
+function showYears() {
+  var userStatusValue = document.querySelectorAll('input[name=status]:checked')[0].value;
+  var usearYearsComponent = document.getElementById("user-years");
+  var year3 = document.getElementById("year3");
+  var year4 = document.getElementById("year4");
+  
+  if (userStatusValue === 'STUDENT') {
+  	$("label[for='year3']").css("display", "inline-block");
+	$("label[for='year4']").css("display", "inline-block");
+	if (usearYearsComponent.style.display === "none") { 
+		usearYearsComponent.style.display = "inline";
+	}
+  } else if (userStatusValue === 'MASTERAND') {
+		$("label[for='year3']").css("display", "none");
+		$("label[for='year4']").css("display", "none");
+	if (usearYearsComponent.style.display === "none") { 
+		usearYearsComponent.style.display = "inline";
+	}
+  } else {
+		if (usearYearsComponent.style.display === "inline") { 
+		usearYearsComponent.style.display = "none";
+	}
+  }
+} 
+
+<!-- function loadFields() { -->
+	<!-- var userDomain = document.getElementById("user-domain"); -->
+	<!-- var option = document.createElement("option"); -->
+    <!-- option.value = "bla"; -->
+    <!-- option.text = "blaxx"; -->
+    <!-- userDomain.appendChild(option); -->
+	<!-- console.log(userDomain); -->
+<!-- } -->
+
+
+function postReview(){
+
+	var nextbutton = document.getElementById("next-step");
+	nextbutton.setAttribute("data-toggle", 'modal');
+	nextbutton.setAttribute("data-target", '#add-review-modal');
+
+	var userEmail = document.getElementById("user-email").value;
+	if (!validateEmail(userEmail)) {
+		document.getElementById('add-review-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+		document.getElementById('add-review-modal-text').innerHTML = "Adresa de email nu este valida";
+	} else {
+
+		var generalRating = document.querySelectorAll('input[name=rating]:checked')[0].value;
+		var reviewText = document.getElementById("general-review-text").value;
+		
+		var difficulty = document.querySelector('input[type="range"]').value != 0 ? document.querySelector('input[type="range"]').value : null;
+		
+		var wouldRecommendRadio = document.getElementsByName('would-recommend-radio');
+		var wouldRecommend;
+		for (var i = 0, length = wouldRecommendRadio.length; i < length; i++) {
+		  if (wouldRecommendRadio[i].checked) {
+			if(wouldRecommendRadio[i].value === "true") {
+				wouldRecommend = true;
+			} else {
+				wouldRecommend = false;
+			}
+			break;
+		  }
+		}
+		
+		var coursesAndLecturersReviewRating = document.querySelectorAll('input[name=cat1-rating]:checked')[0] ? document.querySelectorAll('input[name=cat1-rating]:checked')[0].value : null;
+		var coursesAndLecturersReviewText = document.getElementById("cat1-review-text").value ? document.getElementById("cat1-review-text").value : null;
+		
+		var jobProspectsReviewRating = document.querySelectorAll('input[name=cat2-rating]:checked')[0] ? document.querySelectorAll('input[name=cat2-rating]:checked')[0].value : null;
+		var jobProspectsReviewText = document.getElementById("cat2-review-text").value ? document.getElementById("cat2-review-text").value : null;
+		
+		var accomodationReviewRating = document.querySelectorAll('input[name=cat3-rating]:checked')[0] ? document.querySelectorAll('input[name=cat3-rating]:checked')[0].value : null;
+		var accomodationReviewText = document.getElementById("cat3-review-text").value ? document.getElementById("cat3-review-text").value : null;
+		
+		var studentOrganisationsReviewRating = document.querySelectorAll('input[name=cat4-rating]:checked')[0] ? document.querySelectorAll('input[name=cat4-rating]:checked')[0].value : null;
+		var studentOrganisationsReviewText = document.getElementById("cat4-review-text").value ? document.getElementById("cat4-review-text").value : null;
+		
+		var facultyFacilitiesReviewRating = document.querySelectorAll('input[name=cat5-rating]:checked')[0] ? document.querySelectorAll('input[name=cat5-rating]:checked')[0].value : null;
+		var facultyFacilitiesReviewText = document.getElementById("cat5-review-text").value ? document.getElementById("cat5-review-text").value : null;
+		
+		var timeBalanceReviewRating = document.querySelectorAll('input[name=cat6-rating]:checked')[0] ? document.querySelectorAll('input[name=cat6-rating]:checked')[0].value : null;
+		var timeBalanceReviewText = document.getElementById("cat6-review-text").value ? document.getElementById("cat6-review-text").value : null;
+		
+			<!-- var studentSupportReviewRating = document.querySelectorAll('input[name=cat7-rating]:checked')[0] ? document.querySelectorAll('input[name=cat7-rating]:checked')[0].value : null; -->
+			<!-- var studentSupportReviewText = document.getElementById("cat7-review-text").value ? document.getElementById("cat7-review-text").value : null; -->
+			
+		<!-- var userStatus = document.getElementById("user-status").value; -->
+		<!-- if (!userStatus || userStatus === "Alege") { -->
+			<!-- userStatus = null; -->
+		<!-- } -->
+		var userStatusRadio = document.getElementsByName('status');
+		var userStatus;
+		for (var i = 0, length = userStatusRadio.length; i < length; i++) {
+		  if (userStatusRadio[i].checked) {
+			userStatus = userStatusRadio[i].value;
+			break;
+		  }
+		}
+		var yearsRadio = document.getElementsByName('years');
+		var userYear;
+		for (var i = 0, length = yearsRadio.length; i < length; i++) {
+		  if (yearsRadio[i].checked) {
+			userYear = yearsRadio[i].value;
+			break;
+		  }
+		}
+		
+		<!-- var userDomain = document.getElementById("user-domain").value; -->
+		<!-- if (!userDomain || userDomain === "Alege") { -->
+			<!-- userDomain = null; -->
+		<!-- } -->
+		<!-- var userProgram = document.getElementById("user-program").value; -->
+		<!-- if (!userProgram || userProgram === "Alege") { -->
+			<!-- userProgram = null; -->
+		<!-- }	 -->
+		<!-- var userWorking = document.getElementById("user-working").value; -->
+		<!-- if (!userWorking || userWorking === "Alege") { -->
+			<!-- userWorking = null; -->
+		<!-- } else if (userWorking === 0) { -->
+			<!-- userWorking = true; -->
+		<!-- } else if (userWorking === 1) { -->
+			<!-- userWorking = false; -->
+		<!-- } -->
+		
+		var userWorkingRadio = document.getElementsByName('work');
+		var userWorking;
+		for (var i = 0, length = userWorkingRadio.length; i < length; i++) {
+		  if (userWorkingRadio[i].checked) {
+			userWorking = userWorkingRadio[i].value;
+			break;
+		  }
+		}
+		var review = {
+		   generalRating: generalRating,
+		   reviewText: reviewText,
+		   difficulty: difficulty,
+		   wouldRecommend: wouldRecommend,
+			coursesAndLecturersReview: {
+				generalRating: coursesAndLecturersReviewRating,
+				reviewText: coursesAndLecturersReviewText
+		   },
+		   jobProspectsReview: {
+				generalRating: jobProspectsReviewRating,
+				reviewText: jobProspectsReviewText
+		   },
+		   accomodationReview: {
+				generalRating: accomodationReviewRating,
+				reviewText: accomodationReviewText
+		   },
+		   studentOrganisationsReview: {
+				generalRating: studentOrganisationsReviewRating,
+				reviewText: studentOrganisationsReviewText
+		   },
+		   facultyFacilitiesReview: {
+				generalRating: facultyFacilitiesReviewRating,
+				reviewText: facultyFacilitiesReviewText
+		   },
+		   timeBalanceReview: {
+				generalRating: timeBalanceReviewRating,
+				reviewText: timeBalanceReviewText
+		   },
+		   userStatus: userStatus,
+		   userYear: userYear,
+		   <!-- userDomainOfLicenseOrMaster: userDomain, -->
+		   <!-- userProgramName: userProgram, -->
+		   isUserWorking: userWorking,
+		   userEmail: userEmail
+		};
+		console.log(review);
+		
+		var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/review/" + facultyId);
+		
+		$.ajax({
+			url: backendUrl,
+			type: 'POST',
+			dataType: 'json',
+			contentType: 'application/json',
+			crossDomain: true,
+			data: JSON.stringify(review),
+			success: function (data) {
+				document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost adaugata cu succes";
+				$("#add-review-modal").on("hidden.bs.modal", function () {
+    				var urlProfileRedirect = "./faculty-profile.html?id=" + facultyId;
+					location.href = urlProfileRedirect;
+				});
+			},
+			error: function(error) {
+				console.log(error);
+				document.getElementById('add-review-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+				document.getElementById('add-review-modal-text').innerHTML = "A aparut o eroare. Evaluarea nu a putut fi adaugata cu succes.";
+				$("#add-review-modal").on("hidden.bs.modal", function () {
+					var urlProfileRedirect = "./faculty-profile.html?id=" + facultyId;
+					location.href = urlProfileRedirect;
+				});
+		}
+		});
+	
+	}
+
+}
+
+function validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function showTab(n) {
+  // This function will display the specified tab of the form...
+  var x = document.getElementsByClassName("tab");
+  x[n].style.display = "block";
+  //... and fix the Previous/Next buttons:
+  var nextbutton = document.getElementById("next-step");
+  var previousbutton = document.getElementById("previous-step")
+  var nextbuttonmain = document.getElementById("next-step-main");
+  if (n == 0) {
+    previousbutton.style.display = "none";
+	nextbuttonmain.className = "col-md-4 col-xs-12";
+  } else {
+    previousbutton.style.display = "inline";
+	nextbuttonmain.className = "col-md-4 col-xs-7";
+  }
+  if (n == (x.length - 1)) {
+    nextbutton.innerHTML = "Postează evaluarea";
+  } else {
+    nextbutton.innerHTML = "Pasul următor";
+  }
+  //... and run a function that will display the correct step indicator:
+  fixProgressIndicator(n)
+}
+
+function nextPrev(n) {
+  // This function will figure out which tab to display
+  var x = document.getElementsByClassName("tab");
+  
+  if (n == 1 && !validateForm()) return false;
+  var previousTab = currentTab;
+  // Increase or decrease the current tab by 1:
+  currentTab = currentTab + n;
+  // if you have reached the end of the form...
+  if (currentTab >= x.length) {
+    // ... the form gets submitted:
+	postReview();
+   // document.getElementById("add-review-form").submit();
+    return false;
+  } else {
+	  // Hide the current tab:
+	x[previousTab].style.display = "none";
+  }
+  // Otherwise, display the correct tab:
+  showTab(currentTab);
+}
+
+function validateForm() {
+  // This function deals with validation of the form fields
+  var valid = true;
+  var generalReviewText = document.getElementById("general-review-text");
+  var facultyName = document.getElementById("review-faculty-name");
+    // If a field is empty...
+    if (facultyName.value == '' || generalReviewText.value.length < 150 || document.querySelectorAll('input[name=rating]:checked').length === 0) {
+      // and set the current valid status to false
+      valid = false;
+    }
+  return valid; // return the valid status
+}
+
+function fixProgressIndicator(n) {
+  var p1 = document.getElementById("progress-1");
+  var p2 = document.getElementById("progress-2");
+  
+  var x1 = p1.getElementsByClassName("progress-bar-info");
+  var x2 = p2.getElementsByClassName("progress-bar-info");
+  
+  if (n==0) {
+	x1[0].style.width="33%";
+	x1[0].innerHTML="Pasul 1 din 3";
+	x2[0].style.width="33%";
+	x2[0].innerHTML="Pasul 1 din 3";
+  }
+  if (n==1) {
+	x1[0].style.width="66%";
+	x1[0].innerHTML="Pasul 2 din 3";
+	x2[0].style.width="66%";
+	x2[0].innerHTML="Pasul 2 din 3";
+  }
+  if (n==2) {
+	x1[0].style.width="100%";
+	x1[0].innerHTML="Pasul 3 din 3";
+	x2[0].style.width="100%";
+	x2[0].innerHTML="Pasul 3 din 3";
+  }
+
+}
+
+  function textCounter(field, field2, field3, maxlimit) {
+    var countfield = document.getElementById(field2);
+	var countrow = document.getElementById(field3);
+    /* $(field2).html(text_remaining); */
+    if (field.value.length >= maxlimit) {
+		countrow.style.visibility = "hidden";
+    } else {
+		countrow.style.visibility = "visible";
+		countfield.innerHTML = maxlimit - field.value.length;
+    }
+  }
+  
+  var elem = document.querySelector('input[type="range"]');
+  var rangeValue = function(){
+	  var newValue = elem.value;
+	  var target = document.querySelector('.difficulty-value');
+	  var newText;
+	  var color;
+	  switch(newValue) {
+		case "0":
+			newText = "-";
+			color = "#cfcfcf";
+			elem.className = "";
+			break;
+		case "1":
+			newText = "Foarte redusă";
+			color = "#3e9c28";
+			elem.className = "veryeasy";
+			break;
+		case "2":
+			newText = "Redusă";
+			color = "#8ed41e";
+			elem.className = "easy";
+			break;
+		case "3":
+			newText = "Medie";
+			color = "#fabb0c";
+			elem.className = "medium";
+			break;
+		case "4":
+			newText = "Ridicată";
+			color = "#e06c00";
+			elem.className = "hard";
+			break;
+		case "5":
+			newText = "Foarte ridicată";
+			color = "#c91104";
+			elem.className = "veryhard";
+			break;
+		}
+	  target.innerHTML = newText;
+	  target.style.color = color;
+  }
+  elem.addEventListener("input", rangeValue);
+
+  
+
+</script>
+    
+</html>

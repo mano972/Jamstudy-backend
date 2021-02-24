@@ -20,7 +20,7 @@ import com.app.studentromania.util.ReviewFilter;
 
 @CrossOrigin()
 @RestController
-@RequestMapping("review")
+@RequestMapping("${base.path}/review")
 public class ReviewController {
 
 	@Autowired

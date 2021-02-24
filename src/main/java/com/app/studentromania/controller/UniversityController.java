@@ -19,7 +19,7 @@ import com.app.studentromania.service.UniversityService;
 
 @CrossOrigin()
 @RestController
-@RequestMapping("university")
+@RequestMapping("${base.path}/university")
 public class UniversityController {
 
 	@Autowired

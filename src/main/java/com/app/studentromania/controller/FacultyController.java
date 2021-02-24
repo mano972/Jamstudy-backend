@@ -25,7 +25,7 @@ import com.app.studentromania.util.FacultyFilter;
 
 @CrossOrigin()
 @RestController
-@RequestMapping("faculty")
+@RequestMapping("${base.path}/faculty")
 public class FacultyController {
 
 	@Autowired

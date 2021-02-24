@@ -38,17 +38,12 @@
 							"raw": "{\n\t\"universityName\": \"Universitatea Politehnica Bucuresti\"\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/university",
-							"protocol": "http",
+							"raw": "{{host}}/v1/university",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"university"
 							]
 						}
@@ -85,17 +80,12 @@
 							"raw": "{\n        \"universityName\": \"Universitatea Politehnica Bucuresti\"\n    }"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/university/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/university/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"university",
 								"1"
 							]
@@ -114,17 +104,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/university/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/university/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"university",
 								"1"
 							]
@@ -195,17 +180,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/university",
-							"protocol": "http",
+							"raw": "{{host}}/v1/university",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"university"
 							]
 						}
@@ -293,17 +273,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/university",
-							"protocol": "http",
+							"raw": "{{host}}/v1/university",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"university"
 							]
 						}
@@ -345,17 +320,12 @@
 							"raw": "{\n    \"facultyName\": \"Inginerie Medicala\"\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/faculty/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"faculty",
 								"1"
 							]
@@ -393,17 +363,12 @@
 							"raw": "{\n        \"facultyName\": \"Inginerie Medicala\"\n    }"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/faculty/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"faculty",
 								"1"
 							]
@@ -422,17 +387,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/faculty/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"faculty",
 								"1"
 							]
@@ -503,17 +463,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/1/reviewdetails",
-							"protocol": "http",
+							"raw": "{{host}}/v1/faculty/1/reviewdetails",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"faculty",
 								"1",
 								"reviewdetails"
@@ -533,17 +488,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/v2?orderBy=f.facultyName,asc&limit=10&offset=0",
-							"protocol": "http",
+							"raw": "{{host}}/v1/faculty/v2?orderBy=f.facultyName,asc&limit=10&offset=0",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"faculty",
 								"v2"
 							],
@@ -611,17 +561,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty?orderBy=facultyName,asc&limit=10&offset=0",
-							"protocol": "http",
+							"raw": "{{host}}/v1/faculty?orderBy=facultyName,asc&limit=10&offset=0",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"faculty"
 							],
 							"query": [
@@ -788,17 +733,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/universityfilter/v2?orderBy=countFac,desc&limit=15",
-							"protocol": "http",
+							"raw": "{{host}}/v1/faculty/universityfilter/v2?orderBy=countFac,desc&limit=15",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"faculty",
 								"universityfilter",
 								"v2"
@@ -858,17 +798,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/universityfilter?orderBy=countFac,desc&limit=15",
-							"protocol": "http",
+							"raw": "{{host}}/v1/faculty/universityfilter?orderBy=countFac,desc&limit=15",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"faculty",
 								"universityfilter"
 							],
@@ -927,16 +862,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/cityfilter/v2?orderBy=countFac,desc&limit=15",
-							"protocol": "http",
+							"raw": "{{host}}/v1/Jamstudy/faculty/cityfilter/v2?orderBy=countFac,desc&limit=15",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
+								"v1",
 								"Jamstudy",
 								"faculty",
 								"cityfilter",
@@ -997,17 +928,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/cityfilter?orderBy=countFac,desc&limit=15",
-							"protocol": "http",
+							"raw": "{{host}}/v1/faculty/cityfilter?orderBy=countFac,desc&limit=15",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"faculty",
 								"cityfilter"
 							],
@@ -1066,17 +992,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/university/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/faculty/university/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"faculty",
 								"university",
 								"1"
@@ -1096,16 +1017,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty/1/logo",
-							"protocol": "http",
+							"raw": "{{host}}/v1/Jamstudy/faculty/1/logo",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
+								"v1",
 								"Jamstudy",
 								"faculty",
 								"1",
@@ -1145,17 +1062,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/faculty",
-							"protocol": "http",
+							"raw": "{{host}}/v1/faculty",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"faculty"
 							]
 						}
@@ -1182,17 +1094,12 @@
 							"raw": "{\n        \"generalRating\": 5,\n        \"reviewText\": \"This is a great faculty!\"\n    }"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/review/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/review/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"review",
 								"1"
 							]
@@ -1215,17 +1122,12 @@
 							"raw": "{\n        \"generalRating\": 4,\n        \"reviewText\": \"This is an ok faculty!\"\n    }"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/review/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/review/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"review",
 								"1"
 							]
@@ -1248,17 +1150,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/review/1/report",
-							"protocol": "http",
+							"raw": "{{host}}/v1/review/1/report",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"review",
 								"1",
 								"report"
@@ -1282,17 +1179,12 @@
 							"raw": "{\n\t\"upvote\": true\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/review/1/upvote",
-							"protocol": "http",
+							"raw": "{{host}}/v1/review/1/upvote",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"review",
 								"1",
 								"upvote"
@@ -1312,17 +1204,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/review/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/review/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"review",
 								"1"
 							]
@@ -1341,17 +1228,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/review",
-							"protocol": "http",
+							"raw": "{{host}}/v1/review",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"review"
 							]
 						}
@@ -1369,17 +1251,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/review/faculty/FAC_MKm0IqFlzo?ratingFrom=1&ratingTo=5&orderBy=reviewDate,desc&limit=25&offset=0",
-							"protocol": "http",
+							"raw": "{{host}}/v1/review/faculty/FAC_MKm0IqFlzo?ratingFrom=1&ratingTo=5&orderBy=reviewDate,desc&limit=25&offset=0",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"review",
 								"faculty",
 								"FAC_MKm0IqFlzo"
@@ -1445,17 +1322,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/review",
-							"protocol": "http",
+							"raw": "{{host}}/v1/review",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"review"
 							]
 						}
@@ -1482,17 +1354,12 @@
 							"raw": "{\n        \"questionText\": \"Is this a question?\"\n    }"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/question/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/question/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"question",
 								"1"
 							]
@@ -1515,17 +1382,12 @@
 							"raw": "{\n        \"answerText\": \"This is an answer.\"\n    }"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/question/1/answer",
-							"protocol": "http",
+							"raw": "{{host}}/v1/question/1/answer",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"question",
 								"1",
 								"answer"
@@ -1549,17 +1411,12 @@
 							"raw": "{\n\t\"upvote\": true\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/question/1/upvote",
-							"protocol": "http",
+							"raw": "{{host}}/v1/question/1/upvote",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"question",
 								"1",
 								"upvote"
@@ -1583,17 +1440,12 @@
 							"raw": "{\n\t\"upvote\": true\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/question/1/upvoteanswer/2",
-							"protocol": "http",
+							"raw": "{{host}}/v1/question/1/upvoteanswer/2",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"question",
 								"1",
 								"upvoteanswer",
@@ -1614,17 +1466,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/question/faculty/1?offset=0&limit=25&orderBy=questionDate,desc",
-							"protocol": "http",
+							"raw": "{{host}}/v1/question/faculty/1?offset=0&limit=25&orderBy=questionDate,desc",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"question",
 								"faculty",
 								"1"
@@ -1677,17 +1524,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/question",
-							"protocol": "http",
+							"raw": "{{host}}/v1/question",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"question"
 							]
 						}
@@ -1714,17 +1556,12 @@
 							"raw": "{\n\t\"email\": \"andrei@yahoo.com\",\n\t\"password\": \"hashed\"\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/register",
-							"protocol": "http",
+							"raw": "{{host}}/v1/userprofile/register",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"userprofile",
 								"register"
 							]
@@ -1747,17 +1584,12 @@
 							"raw": "{\n\t\"email\": \"andrei@yahoo.com\",\n\t\"password\": \"hashed\"\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/login",
-							"protocol": "http",
+							"raw": "{{host}}/v1/userprofile/login",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"userprofile",
 								"login"
 							]
@@ -1780,17 +1612,12 @@
 							"raw": "{\n        \"userName\": \"userName1\"\n    }"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/userprofile/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"userprofile",
 								"1"
 							]
@@ -1813,17 +1640,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/1/recentfaculty/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/userprofile/1/recentfaculty/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"userprofile",
 								"1",
 								"recentfaculty",
@@ -1848,17 +1670,12 @@
 							"raw": "{\n\t\"addFavoriteFaculty\": true\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/1/favoritefaculty/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/userprofile/1/favoritefaculty/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"userprofile",
 								"1",
 								"favoritefaculty",
@@ -1883,17 +1700,12 @@
 							"raw": "{\n\t\"allowNotification\": true\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/1/notification/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/userprofile/1/notification/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"userprofile",
 								"1",
 								"notification",
@@ -1914,17 +1726,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/userprofile/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"userprofile",
 								"1"
 							]
@@ -1943,17 +1750,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile",
-							"protocol": "http",
+							"raw": "{{host}}/v1/userprofile",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"userprofile"
 							]
 						}
@@ -1986,17 +1788,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile/notify",
-							"protocol": "http",
+							"raw": "{{host}}/v1/userprofile/notify",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"userprofile",
 								"notify"
 							]
@@ -2034,17 +1831,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/userprofile",
-							"protocol": "http",
+							"raw": "{{host}}/v1/userprofile",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"userprofile"
 							]
 						}
@@ -2071,17 +1863,12 @@
 							"raw": "{\n\t\"configKey\": \"key\",\n\t\"configValue\": \"value\"\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/config",
-							"protocol": "http",
+							"raw": "{{host}}/v1/config",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"config"
 							]
 						}
@@ -2103,17 +1890,12 @@
 							"raw": "[\n\t{\n\t\t\"configKey\": \"faculties_licence_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\Fac12Sept2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"faculties_master_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\FacMasterPrograms04Oct2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_username\",\n\t\t\"configValue\": \"jamstudyadmin\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_pass\",\n\t\t\"configValue\": \"93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D\"\n\t}\n]"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/config/configs",
-							"protocol": "http",
+							"raw": "{{host}}/v1/config/configs",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"config",
 								"configs"
 							]
@@ -2132,17 +1914,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/config",
-							"protocol": "http",
+							"raw": "{{host}}/v1/config",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"config"
 							]
 						}
@@ -2160,17 +1937,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/config/1",
-							"protocol": "http",
+							"raw": "{{host}}/v1/config/1",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"config",
 								"1"
 							]
@@ -2208,17 +1980,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/config",
-							"protocol": "http",
+							"raw": "{{host}}/v1/config",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"config"
 							]
 						}
@@ -2260,17 +2027,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/analytics",
-							"protocol": "http",
+							"raw": "{{host}}/v1/analytics",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"analytics"
 							]
 						}
@@ -2307,17 +2069,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/analytics/reset",
-							"protocol": "http",
+							"raw": "{{host}}/v1/analytics/reset",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"analytics",
 								"reset"
 							]
@@ -2340,17 +2097,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/analytics/homepage",
-							"protocol": "http",
+							"raw": "{{host}}/v1/analytics/homepage",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"analytics",
 								"homepage"
 							]
@@ -2373,17 +2125,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/analytics/search",
-							"protocol": "http",
+							"raw": "{{host}}/v1/analytics/search",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"analytics",
 								"search"
 							]
@@ -2406,17 +2153,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/analytics/revint",
-							"protocol": "http",
+							"raw": "{{host}}/v1/analytics/revint",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"analytics",
 								"revint"
 							]
@@ -2439,17 +2181,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/analytics/revadd",
-							"protocol": "http",
+							"raw": "{{host}}/v1/analytics/revadd",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"analytics",
 								"revadd"
 							]
@@ -2483,17 +2220,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/analytics",
-							"protocol": "http",
+							"raw": "{{host}}/v1/analytics",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"analytics"
 							]
 						}
@@ -2535,16 +2267,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/newsletter",
-							"protocol": "http",
+							"raw": "{{host}}/v1/Jamstudy/newsletter",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
+								"v1",
 								"Jamstudy",
 								"newsletter"
 							]
@@ -2582,17 +2310,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/newsletter/reset",
-							"protocol": "http",
+							"raw": "{{host}}/v1/newsletter/reset",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"newsletter",
 								"reset"
 							]
@@ -2615,17 +2338,12 @@
 							"raw": "{\n\t\"email\": \"abc@xyz.com\"\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/newsletter/subscribe",
-							"protocol": "http",
+							"raw": "{{host}}/v1/newsletter/subscribe",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"newsletter",
 								"subscribe"
 							]
@@ -2659,18 +2377,169 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/newsletter",
-							"protocol": "http",
+							"raw": "{{host}}/v1/newsletter",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"newsletter"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "feedback",
+			"item": [
+				{
+					"name": "create feedback (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/v1/feedback",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset feedback (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/v1/feedback/reset",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"feedback",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "feedback - add entry",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"name\",\n\t\"email\": \"abc@xyz.com\",\n    \"message\": \"feedback message\"\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/feedback/add",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"feedback",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get feedback (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/v1/feedback",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"feedback"
 							]
 						}
 					},
@@ -2711,17 +2580,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/init/inituniv",
-							"protocol": "http",
+							"raw": "{{host}}/v1/init/inituniv",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"init",
 								"inituniv"
 							]
@@ -2759,17 +2623,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/init/initfac",
-							"protocol": "http",
+							"raw": "{{host}}/v1/init/initfac",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"init",
 								"initfac"
 							]
@@ -2793,17 +2652,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8080/Jamstudy/job/facultyreviewdetails",
-							"protocol": "http",
+							"raw": "{{host}}/v1/job/facultyreviewdetails",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"{{host}}"
 							],
-							"port": "8080",
 							"path": [
-								"Jamstudy",
+								"v1",
 								"job",
 								"facultyreviewdetails"
 							]

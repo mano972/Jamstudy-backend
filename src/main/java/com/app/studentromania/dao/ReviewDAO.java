@@ -40,7 +40,7 @@ public class ReviewDAO {
 		return reviewRepo.getFilteredReviewsByFacultyId(facultyId, reviewFilter);
 	}
 
-	public long countFilteredReviews(String facultyId, ReviewFilter reviewFilter) {
+	public long countFilteredReviews(String facultyId, ReviewFilter reviewFilter) { 
 		return reviewRepo.countFilteredReviewsByFacultyId(facultyId, reviewFilter);
 	}
 

@@ -26,7 +26,7 @@ import com.app.studentromania.service.UniversityService;
 import com.app.studentromania.util.Constants;
 
 @RestController
-@RequestMapping("init")
+@RequestMapping("${base.path}/init")
 public class InitController {
 
 	//@formatter:off

@@ -16,7 +16,7 @@ import com.app.studentromania.service.FeedbackService;
 
 @CrossOrigin()
 @RestController
-@RequestMapping("feedback")
+@RequestMapping("${base.path}/feedback")
 public class FeedbackController {
 
 	@Autowired

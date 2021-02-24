@@ -21,7 +21,7 @@ import com.app.studentromania.util.QuestionFilter;
 
 @CrossOrigin()
 @RestController
-@RequestMapping("question")
+@RequestMapping("${base.path}/question")
 public class QuestionController {
 
 	@Autowired

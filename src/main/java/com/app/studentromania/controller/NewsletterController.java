@@ -16,7 +16,7 @@ import com.app.studentromania.service.NewsletterService;
 
 @CrossOrigin()
 @RestController
-@RequestMapping("newsletter")
+@RequestMapping("${base.path}/newsletter")
 public class NewsletterController {
 
 	@Autowired

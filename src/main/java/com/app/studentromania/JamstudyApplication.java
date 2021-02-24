@@ -34,7 +34,7 @@ public class JamstudyApplication extends SpringBootServletInitializer {
 		@RequestMapping("/hello/{name}")
 		String hello(@PathVariable String name) {
 
-			return "Hi " + name + "!!! asdadsa";
+			return "Hi " + name + "!!!";
 
 		}
 	}

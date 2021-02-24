@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" type="image/png" href="./assets/img/favicon.ico">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<title>UniStart</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    
+    <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet" />
+    <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
+    <link href="./assets/css/demo.css" rel="stylesheet" />
+    <link href="./assets/css/examples.css" rel="stylesheet" />
+        
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
+	<script src="https://kit.fontawesome.com/6f635d9dad.js" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      
+</head>
+<body>
+    
+    <nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+		  <a class="navbar-brand" href="./">UNISTART</a>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navigation-example-2">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="./" class="btn btn-simple">Acasă</a>
+            </li>
+            <li>
+                <a href="./search-results.html" class="btn btn-simple">Facultăți</a>
+            </li>
+            <li>
+                <a href="./contact-page.html" class="btn btn-simple">Contact</a>
+            </li>
+			<!-- <li> -->
+				<!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
+			<!-- </li> -->
+			<!-- <li> -->
+				 <!-- <a href="./add-review-full.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
+			<!-- </li> -->
+           </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-->
+    </nav>
+    
+    <div class="wrapper">
+        <div class="main">
+            <div class="section section-white">
+                <div class="container-fluid">
+				
+							<div class="row">
+								<div class="faculty-search-filter-card-fixed col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-0">
+								<div class="content">
+								</div>
+								</div>
+								<div class="faculty-search-card-fixed col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-0 col-lg-7 col-lg-offset-0">
+									<div class="card">
+										<div class="content">
+											<div class="row">
+												<div class="list-options col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+													<!-- <div class="content"> -->
+														<!-- <div class="row"> -->
+															<div class ="col-md-6 col-md-offset-0 col-xs-6 col-xs-offset-0">
+																<span><b>Căutare</b></span><br>
+																<!-- <div class="form-group col-md-8 col-xs-10"> -->
+																	
+																	<!-- <input id="search-input-2" type="text" value="" placeholder="Facultate, Universitate, Oras etc." class="form-control" /> -->
+																<!-- </div> -->
+																<!-- <div class="col-md-3 col-xs-2"> -->
+																	<!-- <button id="search-button-2" class="btn btn-info btn-fill" type="submit">Caută</button> -->
+																<!-- </div> -->
+																<fieldset class="search-fieldset">
+																	<input id="search-input-2" class="form-control" type="text" value="" placeholder="Facultate, Universitate, Oraș ..." />
+																	<i id="search-button-2" class="fa fa-search inner-icon" aria-hidden="true"></i>
+																</fieldset>
+															</div>
+															<div class ="col-md-6 col-md-offset-0 col-xs-6 col-xs-offset-0">
+																<span><b>Sortare</b></span><br>
+																<select id="sorting" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadData(false)">
+																	<option value="facultyName,asc">Facultate ascendent</option>
+																	<option value="facultyName,desc">Facultate descendent</option>
+																	<option value="facultyCity,asc">Oraș ascendent</option>
+																	<option value="facultyCity,desc">Oraș descendent</option>
+																	<option value="avgRating,asc">Rating ascendent</option>
+																	<option value="avgRating,desc">Rating descendent</option>
+																</select>  
+															</div>
+														<!-- </div> -->
+													<!-- </div> -->
+												</div>
+											</div>		
+											<!-- <div class="row"> -->
+												<!-- <div class="content"> -->
+													<!-- <div class ="list-options col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12"> -->
+														<!-- <div class="results-on-page-main col-lg-offset-3 col-lg-4 col-md-offset-2 col-md-5 col-sm-6 col-xs-12"> -->
+																<!-- <span style="padding-right: 7px"><b>Rezultate pe pagină</b></span> -->
+																<!-- <select id="results-on-page" class="auto-width selectpicker" data-style="form-control" data-menu-style="" onchange="loadData(false)"> -->
+																	<!-- <option value="10">10</option> -->
+																	<!-- <option value="20">20</option> -->
+																	<!-- <option value="30">30</option> -->
+																<!-- </select>					   -->
+														<!-- </div> -->
+														<!-- <div class="sorting-main col-lg-5 col-md-5 col-sm-6 col-xs-12"> -->
+																<!-- <span style="padding-right: 7px"><b>Sortare după</b></span> -->
+																<!-- <select id="sorting" class="auto-width selectpicker" data-style="form-control" data-menu-style="" onchange="loadData(false)"> -->
+																	<!-- <option value="facultyName,asc">Facultate ascendent</option> -->
+																	<!-- <option value="facultyName,desc">Facultate descendent</option> -->
+																	<!-- <option value="facultyCity,asc">Oraș ascendent</option> -->
+																	<!-- <option value="facultyCity,desc">Oraș descendent</option> -->
+																	<!-- <option value="avgRating,asc">Rating ascendent</option> -->
+																	<!-- <option value="avgRating,desc">Rating descendent</option> -->
+																<!-- </select>   -->
+														<!-- </div> -->
+													<!-- </div> -->
+												<!-- </div> -->
+											<!-- </div> -->
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+									<div class="faculty-search-filter-card-fixed col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-0">
+										<div class="card">
+											<div class="content">
+												<div id="show-filter" data-toggle="collapse" data-target="#search-filter" onclick="changeCaret()">
+													<span style="padding-right: 3px"><b>Arata Filtru</b></span>
+													<span id="caret" class="caret" style="display: inline-block; "></span>
+												</div>
+												<div id="search-filter" class="collapse">	
+													<div style="display:inline-block; break-inside: avoid-column;">
+														<div class="row text-center">
+															<h5><b>Domenii de studiu</b></h5>
+														</div>
+														<label class="checkbox checkbox-blue" for="d1"><input type="checkbox" name="domeniu" value="Științe Economice" id="d1" data-toggle="checkbox">Științe Economice</label>
+														<label class="checkbox checkbox-blue" for="d2"><input type="checkbox" name="domeniu" value="Științe Inginerești" id="d2" data-toggle="checkbox">Științe Inginerești</label>
+														<label class="checkbox checkbox-blue" for="d3"><input type="checkbox" name="domeniu" value="Științe Politice și Comunicare" id="d3" data-toggle="checkbox">Științe Politice și Comunicare</label>
+														<label class="checkbox checkbox-blue" for="d4"><input type="checkbox" name="domeniu" value="Științe Umaniste" id="d4" data-toggle="checkbox">Științe Umaniste</label>
+														<label class="checkbox checkbox-blue" for="d5"><input type="checkbox" name="domeniu" value="Științe Juridice" id="d5" data-toggle="checkbox">Științe Juridice</label>
+														<label class="checkbox checkbox-blue" for="d6"><input type="checkbox" name="domeniu" value="Medicină" id="d6" data-toggle="checkbox">Medicină</label>
+														<label class="checkbox checkbox-blue" for="d7"><input type="checkbox" name="domeniu" value="Științe ale Naturii" id="d7" data-toggle="checkbox">Științe ale Naturii</label>
+														<label class="checkbox checkbox-blue" for="d8"><input type="checkbox" name="domeniu" value="Arte, Arhitectură și Urbanism " id="d8" data-toggle="checkbox">Arte, Arhitectură și Urbanism</label>
+														<label class="checkbox checkbox-blue" for="d9"><input type="checkbox" name="domeniu" value="Științe Exacte" id="d9" data-toggle="checkbox">Științe Exacte</label>
+														<label class="checkbox checkbox-blue" for="d10"><input type="checkbox" name="domeniu" value="Științe Sociale și Psihologie" id="d10" data-toggle="checkbox">Științe Sociale și Psihologie</label>
+														<label class="checkbox checkbox-blue" for="d11"><input type="checkbox" name="domeniu" value="Științe Agricole" id="d11" data-toggle="checkbox">Științe Agricole</label>
+														<label class="checkbox checkbox-blue" for="d12"><input type="checkbox" name="domeniu" value="Ştiinţa Sportului şi Educaţiei Fizice" id="d12" data-toggle="checkbox">Știința Sportului și Educației Fizice</label>
+														<label class="checkbox checkbox-blue" for="d13"><input type="checkbox" name="domeniu" value="Ştiinţe Militare, Informaţii şi Ordine publică" id="d13" data-toggle="checkbox">Științe Militare și de Informații</label>
+														<label class="checkbox checkbox-blue" for="d14"><input type="checkbox" name="domeniu" value="Teologie" id="d14" data-toggle="checkbox">Teologie</label>
+													</div>
+													<hr id="hr-filter-domains">
+													<div style="display:inline-block; break-inside: avoid-column;">
+														<div class="row text-center">
+															<h5><b>Orașe</b></h5>
+														</div>
+														<label class="checkbox checkbox-blue" for="c1"><input type="checkbox" name="oras" value="Bucureşti" id="c1" data-toggle="checkbox">Bucureşti</label>
+														<label class="checkbox checkbox-blue" for="c2"><input type="checkbox" name="oras" value="Cluj-Napoca, Cluj" id="c2" data-toggle="checkbox">Cluj-Napoca</label>
+														<label class="checkbox checkbox-blue" for="c3"><input type="checkbox" name="oras" value="Timişoara, Timiş" id="c3" data-toggle="checkbox">Timişoara</label>
+														<label class="checkbox checkbox-blue" for="c4"><input type="checkbox" name="oras" value="Iaşi, Iaşi" id="c4" data-toggle="checkbox">Iaşi</label>
+														<label class="checkbox checkbox-blue" for="c5"><input type="checkbox" name="oras" value="Constanţa, Constanţa" id="c5" data-toggle="checkbox">Constanţa</label>
+														<label class="checkbox checkbox-blue" for="c6"><input type="checkbox" name="oras" value="Craiova, Dolj" id="c6" data-toggle="checkbox">Craiova</label>
+														<label class="checkbox checkbox-blue" for="c10"><input type="checkbox" name="oras" value="Oradea, Bihor" id="c10" data-toggle="checkbox">Oradea</label>
+														<label class="checkbox checkbox-blue" for="c7"><input type="checkbox" name="oras" value="Braşov, Braşov" id="c7" data-toggle="checkbox">Braşov</label>
+														<label class="checkbox checkbox-blue" for="c8"><input type="checkbox" name="oras" value="Piteşti, Argeş" id="c8" data-toggle="checkbox">Piteşti</label>
+														<label class="checkbox checkbox-blue" for="c9"><input type="checkbox" name="oras" value="Târgovişte, Damboviţa" id="c9" data-toggle="checkbox">Târgovişte</label>
+														<label class="checkbox checkbox-blue" for="c11"><input type="checkbox" name="oras" value="Alba Iulia, Alba" id="c11" data-toggle="checkbox">Alba Iulia</label>
+														<label class="checkbox checkbox-blue" for="c12"><input type="checkbox" name="oras" value="Sibiu, Sibiu" id="c12" data-toggle="checkbox">Sibiu</label>
+														<label class="checkbox checkbox-blue" for="c13"><input type="checkbox" name="oras" value="Galaţi, Galaţi" id="c13" data-toggle="checkbox">Galaţi</label>
+														<label class="checkbox checkbox-blue" for="c14"><input type="checkbox" name="oras" value="Arad, Arad" id="c14" data-toggle="checkbox">Arad</label>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>			
+
+									<div id="faculty-entries" class="faculty-search-card-fixed col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-0 col-lg-7 col-lg-offset-0">
+										<div class="text-center">
+											<div class='uil-reload-css reload-background' style=''><div></div></div>
+										</div>
+											<!-- populated dynamically -->
+									</div>
+									
+							</div>
+							
+							<div class="row">
+								<div id="load-more-faculties-main" class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-3 col-lg-7 col-lg-offset-2">
+									<div class="card"> 
+										<div class="content"> 
+											<div class="text-center row"> 
+												<button id="load-more-faculties" class="btn btn-info btn-fill" type="submit" onclick="loadMore()">Încarcă mai multe rezultate</button>
+											</div> 
+										</div> 
+									</div>
+								</div> 
+							</div>
+							
+							<!-- <div class="row"> -->
+								<!-- <div class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-3 col-lg-7 col-lg-offset-2"> -->
+									<!-- <div class="card">  -->
+										<!-- <div class="content">  -->
+											<!-- <div class="row">  -->
+												<!-- <div class="col-md-offset-1" style="display:inline-block; vertical-align: middle;">  -->
+													<!-- <span>1-20 din 700 rezultate</span>  -->
+												<!-- </div>  -->
+												<!-- <div class="col-md-offset-5" style="display:inline-block; vertical-align: middle;">  -->
+													<!-- <ul class="pagination pagination-warning">   -->
+														<!-- <li><a href="#">&laquo;</a></li>   -->
+														<!-- <li class="active"><a href="#">1</a></li>   -->
+														<!-- <li><a href="#">2</a></li>  -->
+														<!-- <li><a href="#">3</a></li>  -->
+														<!-- <li><a href="#">4</a></li>  -->
+														<!-- <li><a href="#">5</a></li>  -->
+														<!-- <li><a href="#">&raquo;</a></li>   -->
+													<!-- </ul>  -->
+												<!-- </div>  -->
+											<!-- </div>  -->
+										<!-- </div>  -->
+									<!-- </div> -->
+								<!-- </div>  -->
+							<!-- </div> -->
+							
+				</div>  
+			</div>     
+		</div>
+		
+		<div class="floating-button">
+			<a href="./contact-page.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
+		</div>
+		
+	</div>
+    
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-9">
+                <div class="links">
+                    <ul class="uppercase-links">
+                        <li>
+                            <a href="./">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./about-us.html">
+                                Despre Noi
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./search-results.html">
+                                Facultăți
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./contact-page.html">
+                               Contact
+                            </a>
+                        </li>
+
+                    </ul>
+                    <hr>
+
+                    <div class="copyright">
+                        © 2020 Jamstudy, din dragoste pentru educaţie
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-md-offset-2 col-sm-2 col-sm-offset-1">
+                <div class="social-area">
+                        <a href="http://twitter.com" target="_blank"><button class="btn btn-icon btn-fill btn-twitter">
+                            <i class="fa fa-twitter"></i>
+                        </button>    
+						</a>
+                        <a href="http://facebook.com" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
+                            <i class="fa fa-facebook"> </i>
+                        </button>
+						</a>
+                        <a href="http://instagram.com" target="_blank"><button class="btn btn-icon btn-fill btn-instagram">
+                            <i class="fa fa-instagram"></i>
+                        </button>
+						</a>
+                        <a href="http://youtube.com" target="_blank"><button class="btn btn-icon btn-fill btn-youtube">
+                            <i class="fa fa-youtube"></i>
+                        </button>
+						</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+</body>
+
+<script>
+
+$body = $("body");
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+    ajaxStop: function() { $body.removeClass("loading"); }    
+});
+
+var queryParams = new URLSearchParams(window.location.search);
+var finalSearchInput;
+var urlDomainInput = [];
+var urlCityInput = [];
+var domainParams = [];
+var cityParams = [];
+var currentlyVisibleFacultiesNo = 0;
+
+window.addEventListener("resize", collapseExpand);
+window.addEventListener("load", collapseExpand);
+
+
+$(document).ready(function() {
+	finalSearchInput = queryParams.get("q");
+	if(queryParams.get("d")) {
+		urlDomainInput = queryParams.get("d").split(',');
+	}
+	if(queryParams.get("c")) {
+		urlCityInput = queryParams.get("c").split(',');
+	}
+	<!-- queryParams.delete("q");
+	<!-- queryParams.delete("d");
+	<!-- queryParams.delete("c");
+	<!-- history.replaceState(null, null, "?");
+	
+	if (finalSearchInput) {
+		document.getElementById("search-input-2").value = finalSearchInput;
+	}
+	
+	initializeCheckboxes();
+	
+	loadData(false);	
+});
+
+function initializeCheckboxes() {
+	var i;
+	for (i=0;i < urlDomainInput.length; i++) {
+		var domainId = urlDomainInput[i];
+		$("#" + domainId).prop('checked', true);
+		$("label[for='" + domainId + "']").addClass("checked");
+		domainParams.push(domainId);
+	}
+	var j;
+	for (j=0;j < urlCityInput.length; j++) {
+		var cityId = urlCityInput[j];
+		$("#" + cityId).prop('checked', true);
+		$("label[for='" + cityId + "']").addClass("checked");
+		cityParams.push(cityId);
+	}
+}
+
+function collapseExpand() {
+	$('#search-filter').toggleClass('in', $(window).width() > 992);
+}
+
+function changeCaret() {
+	$('#caret').toggleClass('caret-reversed');
+}
+
+document.getElementById("search-button-2").onclick = function () {
+	var input = document.getElementById("search-input-2").value;
+	queryParams.set("q", input);
+	queryParams.set("d", "");
+	queryParams.set("c", "");
+	domainParams = [];
+	cityParams = [];
+	history.replaceState(null, null, "?" + queryParams.toString());
+	finalSearchInput = input;
+	clearCheckboxes();
+    loadData(false);
+}
+
+document.getElementById("search-input-2").addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    document.getElementById("search-button-2").click();
+  }
+});
+
+function clearCheckboxes() {
+	$.each($("input:checked"), function(){
+		$("label[for='" + $(this).attr("id") + "']").removeClass("checked");
+	});
+	$("input:checkbox").attr('checked', false);
+}
+
+$.each($("input[name=domeniu]"), function(){
+	$("label[for='" + $(this).attr("id") + "']").click(function() {
+	
+	var checkBoxElementId = $(this).attr("for");
+	var checkBoxElement = $("input[id='" + checkBoxElementId + "']");
+	
+	if (checkBoxElement.prop("checked") === true) { //if it was already checked, it means now it is removed
+		domainParams = domainParams.filter(function(value, index, arr){ return value !== checkBoxElement.attr("id");});
+	} else { //if it was not checked, it means now it is checked
+			domainParams.push($(this).attr("for"));
+	}
+	queryParams.set("d", domainParams);
+	history.replaceState(null, null, "?" + queryParams.toString());
+
+	loadData(false);
+	});
+});
+
+$.each($("input[name=oras]"), function(){
+	$("label[for='" + $(this).attr("id") + "']").click(function() {
+	
+	var checkBoxElementId = $(this).attr("for");
+	var checkBoxElement = $("input[id='" + checkBoxElementId + "']");
+	
+	if (checkBoxElement.prop("checked") === true) { //if it was already checked, it means now it is removed
+		cityParams = cityParams.filter(function(value, index, arr){ return value !== checkBoxElement.attr("id");});
+	} else {
+		cityParams.push($(this).attr("for"));
+	}
+	queryParams.set("c", cityParams);
+	history.replaceState(null, null, "?" + queryParams.toString());
+
+	loadData(false);
+	});
+});
+
+
+function loadData(loadMore) {
+
+		<!-- var numberOfResultsPerPage = document.getElementById("results-on-page").value;	 -->
+		var numberOfResultsPerPage = 10;
+		var sortingOrder = document.getElementById("sorting").value;
+		
+		var offset;
+		if (loadMore) {
+			offset = currentlyVisibleFacultiesNo;
+		} else {
+			offset = 0;
+		}
+		
+		var dCounter;
+		var domainNames = [];
+		for (dCounter = 0;dCounter < domainParams.length; dCounter++) {
+			domainNames.push(document.getElementById(domainParams[dCounter]).value);
+		}
+		console.log(domainParams);
+		console.log(domainNames);
+		
+		var cCounter;
+		var cityNames = [];
+		for (cCounter = 0;cCounter < cityParams.length; cCounter++) {
+			cityNames.push(document.getElementById(cityParams[cCounter]).value);
+		}
+		
+		var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/faculty");
+		
+		if (offset) {
+			backendUrl.searchParams.append("offset", offset);
+		}
+		
+		if (numberOfResultsPerPage) {
+			backendUrl.searchParams.append("limit", numberOfResultsPerPage);
+		}
+		if (sortingOrder) {
+			backendUrl.searchParams.append("orderBy", sortingOrder);
+		}
+		if (finalSearchInput) {
+			 backendUrl.searchParams.append("searchBy", finalSearchInput);
+		}
+		if (domainNames.length !== 0) {
+			//backendUrl.searchParams.append("facultyDomains", domainNames);
+			for(var d = 0;d < domainNames.length; d++) {
+				backendUrl.searchParams.append("facultyDomains", domainNames[d]);
+			}
+		}
+		console.log(backendUrl);
+		if (cityNames.length !== 0) {
+			//backendUrl.searchParams.append("facultyCities", cityNames.join(','));
+			for(var c = 0;c < cityNames.length; c++) {
+				backendUrl.searchParams.append("facultyCities", cityNames[c]);
+			}
+		}
+
+	      $.ajax({
+          url: backendUrl,
+          type: "GET",
+          success: function(response) {
+            console.log(response);
+			
+			if (loadMore) {
+				currentlyVisibleFacultiesNo += response.result.faculties.length;
+			} else {
+				document.getElementById("faculty-entries").innerHTML = '';
+				currentlyVisibleFacultiesNo = response.result.faculties.length;
+			}
+			
+			if  (currentlyVisibleFacultiesNo >= response.result.count) {
+				document.getElementById("load-more-faculties-main").innerHTML = '';
+			} else {
+			document.getElementById("load-more-faculties-main").innerHTML = '<div class="card">'
+																				+ '<div class="content"> '
+																					+ '<div class="text-center row"> '
+																						+ '<button id="load-more-faculties" class="btn btn-info btn-fill" type="submit" onclick="loadMore()">Încarcă mai multe rezultate</button>'
+																					+ '</div> '
+																				+ '</div> '
+																			+ '</div>';
+			}
+			
+			var urlProfileRedirect = "./faculty-profile.html?id=";
+			
+			var i;
+			for (i in response.result.faculties) {
+			
+				var avgRating = response.result.faculties[i].avgRating;
+				if (!avgRating) {
+					avgRating = "N/A";
+				} else {
+					avgRating = avgRating.toFixed(1);
+				}
+				
+				var countRev = response.result.faculties[i].countRev;
+				var countRevText;
+				if (!countRev) {
+					countRevText = "";
+				} else if (countRev === 1) {
+					countRevText = "din 1 evaluare";
+				} else {
+					countRevText = "din " + countRev + " evaluări";
+				}
+				
+				var facultyId = response.result.faculties[i].facultyId;
+				var facultyName = response.result.faculties[i].facultyName;
+				var universityName = response.result.faculties[i].universityName;
+				var facultyCity = response.result.faculties[i].facultyCity;
+				
+				var universityNameForLogo = universityName.replaceAll("\"", "_");
+				var logoName = facultyName + universityNameForLogo;
+				<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
+				var logoSrc = "http://localhost:8080/Jamstudy/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";	
+				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
+				
+				var addReviewRedirectUrl = "./add-review-full.html?id=" + facultyId;
+		
+			
+			
+				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-3 col-xs-offset-0"> <a href="' + urlProfileRedirect + facultyId + '"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo"></img> </a> </div> <div class="col-xs-9 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <a href="#" id="university-name-main"> <h6 id="university-name-' + i + '">' + universityName + '</h6> </a> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6 save"> <i class="far fa-bookmark fa-lg" style="margin-right: 7px"></i><span>Salvează</span> </div> <div class="col-xs-6 compare compare-end" > <i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </div> </div> </div> </div> </div> </div>');
+
+			}
+			
+			
+			<!-- document.getElementById("faculty-entries").innerHTML += '<div class="card"> <div id="content-style-2" class="content">'; -->
+			<!-- var j; -->
+			<!-- for (j in response.result.faculties) { -->
+			
+			
+			<!-- var avgRating = response.result.faculties[j].avgRating; -->
+				<!-- if (!avgRating) { -->
+					<!-- avgRating = "N/A"; -->
+				<!-- } else { -->
+					<!-- avgRating = avgRating.toFixed(1); -->
+				<!-- } -->
+				
+				<!-- var countRev = response.result.faculties[j].countRev; -->
+				<!-- var countRevText; -->
+				<!-- if (!countRev) { -->
+					<!-- countRevText = ""; -->
+				<!-- } else if (countRev === 1) { -->
+					<!-- countRevText = "din 1 evaluare"; -->
+				<!-- } else { -->
+					<!-- countRevText = "din " + countRev + " evaluări"; -->
+				<!-- } -->
+				
+				
+				
+				<!-- var facultyId = response.result.faculties[j].facultyId; -->
+				<!-- var facultyName = response.result.faculties[j].facultyName; -->
+				<!-- var universityName = response.result.faculties[j].universityName; -->
+				<!-- var facultyCity = response.result.faculties[j].facultyCity; -->
+				
+				<!-- var universityNameForLogo = universityName.replaceAll("\"", "_"); -->
+				<!-- var logoName = facultyName + universityNameForLogo; -->
+				<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
+				<!-- //var imgSrc = "http://localhost:8080/Jamstudy/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";	 -->
+				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
+				
+				<!-- var addReviewRedirectUrl = "./add-review-full.html?id=" + facultyId; -->
+			
+				<!-- document.getElementById("content-style-2").innerHTML +=('		<div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-3 col-xs-offset-0"> <a href="' + urlProfileRedirect + facultyId + '"> <img id="logo" src="' + logoSrc + '" onerror="this.onerror=null;this.src=' + defaultErrorImg + '"  class="img-faculty-logo"></img> </a> </div> <div class="col-xs-9 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + j + '"><strong>' + facultyName + '</strong></h5> </a> <a href="#" id="university-name-main"> <h6 id="university-name-' + j + '">' + universityName + '</h6> </a> <small id="faculty-city-' + j + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6 save"> <i class="far fa-bookmark fa-lg" style="margin-right: 7px"></i><span>Salvează</span> </div> <div class="col-xs-6 compare compare-end"> <i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </div> </div> </div> </div>											<hr>'); -->
+			<!-- } -->
+			<!-- document.getElementById("content-style-2").innerHTML += ('<div class="row"> <div class="col-md-offset-1" style="display:inline-block; vertical-align: middle;"> <span>1-20 din 700 rezultate</span> </div> <div class="col-md-offset-5" style="display:inline-block; vertical-align: middle;"> <ul class="pagination pagination-warning">  <li><a href="#">&laquo;</a></li>  <li class="active"><a href="#">1</a></li>  <li><a href="#">2</a></li> <li><a href="#">3</a></li> <li><a href="#">4</a></li> <li><a href="#">5</a></li> <li><a href="#">&raquo;</a></li>  </ul> </div> </div>'); -->
+			<!-- document.getElementById("content-style-2").innerHTML += '</div> </div>'; -->
+			
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+}
+
+function loadMore() {
+	loadData(true);
+}
+
+
+</script>
+
+<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+
+<script src="./bootstrap3/js/bootstrap.js" type="text/javascript"></script>
+
+<!--  Plugins -->
+<script src="./assets/js/ct-paper-checkbox.js"></script>
+<script src="./assets/js/ct-paper-radio.js"></script>
+<script src="./assets/js/bootstrap-select.js"></script>
+<script src="./assets/js/bootstrap-datepicker.js"></script>
+
+<script src="./assets/js/ct-paper.js"></script>
+    
+</html>

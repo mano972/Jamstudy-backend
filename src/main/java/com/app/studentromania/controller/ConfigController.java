@@ -18,7 +18,7 @@ import com.app.studentromania.model.Config;
 import com.app.studentromania.service.ConfigService;
 
 @RestController
-@RequestMapping("config")
+@RequestMapping("${base.path}/config")
 public class ConfigController {
 
 	@Autowired

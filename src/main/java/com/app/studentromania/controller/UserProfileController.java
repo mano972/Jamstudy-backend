@@ -19,7 +19,7 @@ import com.app.studentromania.service.UserProfileService;
 
 @CrossOrigin()
 @RestController
-@RequestMapping("userprofile")
+@RequestMapping("${base.path}/userprofile")
 public class UserProfileController {
 
 	@Autowired

@@ -12,7 +12,7 @@ import com.app.studentromania.service.FacultyService;
 import com.app.studentromania.util.FacultyFilter;
 
 @RestController
-@RequestMapping("job")
+@RequestMapping("${base.path}/job")
 public class JobController {
 
 	@Autowired

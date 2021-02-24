@@ -165,7 +165,10 @@ public class FacultyService {
 			InputStream in = getClass().getClassLoader().getResourceAsStream(logoPath);
 			return ResponseDTO.createMediaSuccessResponse(IOUtils.toByteArray(in));
 		}
-		return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_LOGO_ERROR);
+		logoPath = Constants.LOGO_PATH_ROOT + Constants.DEFAULT_IMAGE + Constants.LOGO_IMAGE_TYPE;
+		tmpDir = new File(logoPath);
+		InputStream in = getClass().getClassLoader().getResourceAsStream(logoPath);
+		return ResponseDTO.createMediaSuccessResponse(IOUtils.toByteArray(in));
 	}
 
 	public ResponseDTO createFaculty(FacultyDTO facultyDTO) {

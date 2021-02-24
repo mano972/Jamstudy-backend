@@ -14,7 +14,7 @@ import com.app.studentromania.service.AnalyticsService;
 
 @CrossOrigin()
 @RestController
-@RequestMapping("analytics")
+@RequestMapping("${base.path}/analytics")
 public class AnalyticsController {
 
 	@Autowired
