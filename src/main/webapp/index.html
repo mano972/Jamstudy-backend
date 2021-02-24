@@ -17,7 +17,7 @@
         
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
 	<script src="https://kit.fontawesome.com/6f635d9dad.js" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       
@@ -284,11 +284,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="./about-us.html">
-                                Despre Noi
-                            </a>
-                        </li>
-                        <li>
                             <a href="./search-results.html">
                                 Facultăți
                             </a>
@@ -314,7 +309,7 @@
                             <i class="fa fa-twitter"></i>
                         </button>    
 						</a>
-                        <a href="http://facebook.com" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
+                        <a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
                             <i class="fa fa-facebook"> </i>
                         </button>
 						</a>
@@ -337,6 +332,8 @@
 
 <script>
 
+const backendUrlRoot = "http://unistart.westeurope.cloudapp.azure.com:8080/Jamstudy";
+
 $body = $("body");
 $(document).on({
     ajaxStart: function() { $body.addClass("loading");    },
@@ -349,7 +346,7 @@ $(document).ready(function() {
 
 function loadTopFaculties() {
 
-		var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/faculty");
+		var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
 		
 		var sortingOrder = "avgRating,desc";
 		backendUrl.searchParams.append("orderBy", sortingOrder);
@@ -410,13 +407,13 @@ function loadTopFaculties() {
 				var universityNameForLogoTop = universityNameTop.replaceAll("\"", "_");
 				var logoNameTop = facultyNameTop + universityNameForLogoTop;
 				<!-- var logoSrcTop = "C://logos_jamstudy/" + logoNameTop + ".png"; -->
-				var logoSrcTop = "http://localhost:8080/Jamstudy/v1/faculty/" + response.result.faculties[0].facultyId + "/logo";	
+				var logoSrcTop = backendUrlRoot + "/v1/faculty/" + response.result.faculties[0].facultyId + "/logo";	
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 				
 				var addReviewRedirectUrlTop = "./add-review-full.html?id=" + facultyIdTop;
 				
 				
-				var backendUrlReviews = new URL("http://localhost:8080/Jamstudy/v1/review/faculty/" + facultyIdTop);
+				var backendUrlReviews = new URL(backendUrlRoot + "/v1/review/faculty/" + facultyIdTop);
 				var limitReviews = 1;
 				var sortingOrderReviews = "generalRating,desc";
 				backendUrlReviews.searchParams.append("limit", limitReviews);
@@ -486,7 +483,7 @@ function loadTopFaculties() {
 				var universityNameForLogo = universityName.replaceAll("\"", "_");
 				var logoName = facultyName + universityNameForLogo;
 				<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
-				var logoSrc = "http://localhost:8080/Jamstudy/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";
+				var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";
 				
 				var addReviewRedirectUrl = "./add-review-full.html?id=" + facultyId;
 				
@@ -564,7 +561,7 @@ document.getElementById("newsletter-button").onclick = function (e) {
 	   email: email
 	};
 		
-	var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/newsletter/subscribe");
+	var backendUrl = new URL(backendUrlRoot + "/v1/newsletter/subscribe");
 	
 	$.ajax({
 		url: backendUrl,

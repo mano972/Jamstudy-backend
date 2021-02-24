@@ -77,7 +77,7 @@
 												<div class="list-options col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
 													<!-- <div class="content"> -->
 														<!-- <div class="row"> -->
-															<div class ="col-md-6 col-md-offset-0 col-xs-6 col-xs-offset-0">
+															<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12 col-xs-offset-0">
 																<span><b>Căutare</b></span><br>
 																<!-- <div class="form-group col-md-8 col-xs-10"> -->
 																	
@@ -91,7 +91,7 @@
 																	<i id="search-button-2" class="fa fa-search inner-icon" aria-hidden="true"></i>
 																</fieldset>
 															</div>
-															<div class ="col-md-6 col-md-offset-0 col-xs-6 col-xs-offset-0">
+															<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12 col-xs-offset-0">
 																<span><b>Sortare</b></span><br>
 																<select id="sorting" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadData(false)">
 																	<option value="facultyName,asc">Facultate ascendent</option>
@@ -257,11 +257,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="./about-us.html">
-                                Despre Noi
-                            </a>
-                        </li>
-                        <li>
                             <a href="./search-results.html">
                                 Facultăți
                             </a>
@@ -287,7 +282,7 @@
                             <i class="fa fa-twitter"></i>
                         </button>    
 						</a>
-                        <a href="http://facebook.com" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
+                        <a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
                             <i class="fa fa-facebook"> </i>
                         </button>
 						</a>
@@ -309,6 +304,8 @@
 </body>
 
 <script>
+
+const backendUrlRoot = "http://unistart.westeurope.cloudapp.azure.com:8080/Jamstudy";
 
 $body = $("body");
 $(document).on({
@@ -467,7 +464,7 @@ function loadData(loadMore) {
 			cityNames.push(document.getElementById(cityParams[cCounter]).value);
 		}
 		
-		var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/faculty");
+		var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
 		
 		if (offset) {
 			backendUrl.searchParams.append("offset", offset);
@@ -551,7 +548,7 @@ function loadData(loadMore) {
 				var universityNameForLogo = universityName.replaceAll("\"", "_");
 				var logoName = facultyName + universityNameForLogo;
 				<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
-				var logoSrc = "http://localhost:8080/Jamstudy/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";	
+				var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";	
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 				
 				var addReviewRedirectUrl = "./add-review-full.html?id=" + facultyId;
@@ -595,7 +592,7 @@ function loadData(loadMore) {
 				<!-- var universityNameForLogo = universityName.replaceAll("\"", "_"); -->
 				<!-- var logoName = facultyName + universityNameForLogo; -->
 				<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
-				<!-- //var imgSrc = "http://localhost:8080/Jamstudy/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";	 -->
+				<!-- //var imgSrc = backendUrlRoot + "/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";	 -->
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 				
 				<!-- var addReviewRedirectUrl = "./add-review-full.html?id=" + facultyId; -->

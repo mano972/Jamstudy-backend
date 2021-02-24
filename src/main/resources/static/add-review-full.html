@@ -594,11 +594,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="./about-us.html">
-                                Despre Noi
-                            </a>
-                        </li>
-                        <li>
                             <a href="./search-results.html">
                                 Facultăți
                             </a>
@@ -624,7 +619,7 @@
                             <i class="fa fa-twitter"></i>
                         </button>    
 						</a>
-                        <a href="http://facebook.com" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
+                        <a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
                             <i class="fa fa-facebook"> </i>
                         </button>
 						</a>
@@ -659,6 +654,9 @@
 <script src="./assets/js/ct-paper.js"></script>
 
 <script>
+
+const backendUrlRoot = "http://unistart.westeurope.cloudapp.azure.com:8080/Jamstudy";
+
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
 
@@ -676,7 +674,7 @@ $(document).ready(function() {
 });
 
 function loadFaculty(){
-		var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/faculty/" + facultyId);
+		var backendUrl = new URL(backendUrlRoot + "/v1/faculty/" + facultyId);
 
 		  $.ajax({
           url: backendUrl,
@@ -690,7 +688,7 @@ function loadFaculty(){
 				var universityNameForLogo = universityName.replaceAll("\"", "_");
 				var logoName = facultyName + universityNameForLogo;
 				<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
-				var logoSrc = "http://localhost:8080/Jamstudy/v1/faculty/" + response.result.facultyId + "/logo";	
+				var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 				
 				var urlProfileRedirect = "./faculty-profile.html?id=" + facultyId;
@@ -962,7 +960,7 @@ function postReview(){
 		};
 		console.log(review);
 		
-		var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/review/" + facultyId);
+		var backendUrl = new URL(backendUrlRoot + "/v1/review/" + facultyId);
 		
 		$.ajax({
 			url: backendUrl,

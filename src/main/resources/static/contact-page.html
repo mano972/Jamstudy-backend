@@ -42,21 +42,18 @@
             <li>
                 <a href="./" class="btn btn-simple">Acasă</a>
             </li>
-            <li>
-                <a href="./about.html" class="btn btn-simple">Despre Noi</a>
-            </li>
               <li>
                   <a href="./search-results.html" class="btn btn-simple">Facultăți</a>
               </li>
               <li>
                   <a href="./contact-page.html" class="btn btn-simple">Contact</a>
               </li>
-              <li>
-                  <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
-              </li>
-			  <li>
-                  <a href="./add-review-full.html" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a>
-              </li>
+              <!-- <li> -->
+                  <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
+              <!-- </li> -->
+			  <!-- <li> -->
+                  <!-- <a href="./add-review-full.html" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
+              <!-- </li> -->
            </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
@@ -132,11 +129,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="./about-us.html">
-                                Despre Noi
-                            </a>
-                        </li>
-                        <li>
                             <a href="./search-results.html">
                                 Facultăți
                             </a>
@@ -162,7 +154,7 @@
                             <i class="fa fa-twitter"></i>
                         </button>    
 						</a>
-                        <a href="http://facebook.com" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
+                        <a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
                             <i class="fa fa-facebook"> </i>
                         </button>
 						</a>
@@ -198,6 +190,9 @@
 <script src="./assets/js/demo.js"></script>
 
 <script type="text/javascript">
+
+const backendUrlRoot = "http://unistart.westeurope.cloudapp.azure.com:8080/Jamstudy";
+
 $().ready(function(){    
 	demo.initContactUsMap();
 });
@@ -220,7 +215,7 @@ document.getElementById("send-feedback-btn").onclick = function (e) {
 		message: message
 	};
 		
-	var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/feedback/add");
+	var backendUrl = new URL(backendUrlRoot + "/v1/feedback/add");
 	
 	$.ajax({
 		url: backendUrl,

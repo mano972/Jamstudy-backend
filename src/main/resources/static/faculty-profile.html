@@ -121,14 +121,14 @@
 												<div class="row">
 													<div class ="list-options col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 col-xs-12">
 														<div class="content">
-															<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-6">
+															<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12">
 																<span><b>Căutare</b></span><br>
 																<fieldset class="search-fieldset">
 																	<input id="search-review-keyword" class="form-control" type="text" value="" placeholder="Cuvânt cheie..." />
 																	<i id="search-reviews-icon" class="fa fa-search inner-icon" aria-hidden="true" onclick="getReviews(false)"></i>
 																</fieldset>
 															</div>
-															<div class="col-lg-offset-0 col-lg-6 col-md-offset-0 col-md-6 col-sm-6 col-xs-6">
+															<div class="col-lg-offset-0 col-lg-6 col-md-offset-0 col-md-6 col-sm-6 col-xs-12">
 																<!-- <div class="filter-block-entry"> -->
 																	<!-- <span style="padding-right: 7px"><b>Rezultate pe pagină</b></span> -->
 																	<!-- <select id="reviews-results-on-page" class="auto-width selectpicker" data-style="form-control" data-menu-style="" onchange="getReviews(false)"> -->
@@ -226,11 +226,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="./about-us.html">
-                                Despre Noi
-                            </a>
-                        </li>
-                        <li>
                             <a href="./search-results.html">
                                 Facultăți
                             </a>
@@ -256,7 +251,7 @@
                             <i class="fa fa-twitter"></i>
                         </button>    
 						</a>
-                        <a href="http://facebook.com" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
+                        <a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
                             <i class="fa fa-facebook"> </i>
                         </button>
 						</a>
@@ -278,6 +273,8 @@
 </body>
 
 <script>
+
+const backendUrlRoot = "http://unistart.westeurope.cloudapp.azure.com:8080/Jamstudy";
 
 $body = $("body");
 $(document).on({
@@ -351,7 +348,7 @@ function viewMore(i) {
 
 function getFaculty() {
 
-		var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/faculty/" + facultyId);
+		var backendUrl = new URL(backendUrlRoot + "/v1/faculty/" + facultyId);
 
 	      $.ajax({
           url: backendUrl,
@@ -387,7 +384,7 @@ function getReviews(loadMore) {
 		offset = 0;
 	}
 	
-	var backendUrlReviews = new URL("http://localhost:8080/Jamstudy/v1/review/faculty/" + facultyId);
+	var backendUrlReviews = new URL(backendUrlRoot + "/v1/review/faculty/" + facultyId);
 	
 	if (offset) {
 		backendUrlReviews.searchParams.append("offset", offset);
@@ -443,7 +440,7 @@ function loadProfileHeader(response) {
 			var universityNameForLogo = universityName.replaceAll("\"", "_");
 			var logoName = facultyName + universityNameForLogo;
 			<!-- var logoSrcTop = "C://logos_jamstudy/" + logoName + ".png"; -->
-			var logoSrcTop = "http://localhost:8080/Jamstudy/v1/faculty/" + response.result.facultyId + "/logo";	
+			var logoSrcTop = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
 			
 			var addReviewRedirectUrl = "./add-review-full.html?id=" + facultyId;
 			
@@ -554,7 +551,7 @@ function loadGeneralReviewCard(response) {
 		var countRev4StarsPercentage = totalCountRevStars !== 0 ? ((countRev4Stars * 100) / totalCountRevStars).toFixed(0): 0;
 		var countRev5StarsPercentage = totalCountRevStars !== 0 ? ((countRev5Stars * 100) / totalCountRevStars).toFixed(0): 0;
 		
-				var backendUrlTopReviews = new URL("http://localhost:8080/Jamstudy/v1/review/faculty/" + facultyId);
+				var backendUrlTopReviews = new URL(backendUrlRoot + "/v1/review/faculty/" + facultyId);
 				var limit = 2;
 				var sortingOrder = "generalRating,desc";
 				backendUrlTopReviews.searchParams.append("limit", limit);
@@ -1366,7 +1363,7 @@ function reportReview(el) {
 
 		var reviewId = $(el).parent().parent().parent().attr("data-reviewid");
 		
-		var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/review/" + reviewId + "/report");
+		var backendUrl = new URL(backendUrlRoot + "/v1/review/" + reviewId + "/report");
 		
 		$.ajax({
 			url: backendUrl,
@@ -1414,7 +1411,7 @@ console.log(el);
 
 		var reviewId = $(el).parent().parent().parent().attr("data-reviewid");
 		
-		var backendUrl = new URL("http://localhost:8080/Jamstudy/v1/review/" + reviewId + "/upvote");
+		var backendUrl = new URL(backendUrlRoot + "/v1/review/" + reviewId + "/upvote");
 		
 		var body = {
 			upvote: upvote
