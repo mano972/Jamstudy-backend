@@ -597,7 +597,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
   display: block;
   -webkit-appearance: none;
   background-color: #e6e3e3;
-  width: 400px;
+  /* width: 400px; */
   height: 18px;
   border-radius: 15px;
   margin: 0 auto;
@@ -2813,7 +2813,7 @@ textarea.form-control {
 }
 
 .navbar-default {
-  background-color: #ffdc2b ;
+  background-color: #ffca2b ;
   border-bottom: 0px solid rgba(0, 0, 0, 0.1);
 }
 .navbar-default .brand {

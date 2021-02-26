@@ -52,7 +52,7 @@
                   <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
               <!-- </li> -->
 			  <!-- <li> -->
-                  <!-- <a href="./add-review-full.html" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
+                  <!-- <a href="./add-review.html" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
               <!-- </li> -->
            </ul>
         </div><!-- /.navbar-collapse -->
@@ -204,9 +204,7 @@ document.getElementById("send-feedback-btn").onclick = function (e) {
 	var email = document.getElementById("feedback-email").value.trim();
 	var message = document.getElementById("feedback-message").value.trim();
 	if (!validateEmail(email)) {
-		console.log(document.getElementById('feedback-header-text').innerHTML);
 		document.getElementById('feedback-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
-		console.log(document.getElementById('feedback-header-text').innerHTML);
 		document.getElementById('feedback-modal-text').innerHTML = "Adresa de email nu este valida";
 	} else {
 	var body = {

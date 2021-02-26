@@ -53,7 +53,7 @@
 				<!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
 			<!-- </li> -->
 			<!-- <li> -->
-				 <!-- <a href="./add-review-full.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
+				 <!-- <a href="./add-review.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
 			<!-- </li> -->
            </ul>
         </div><!-- /.navbar-collapse -->
@@ -156,12 +156,12 @@
 														<label class="checkbox checkbox-blue" for="d5"><input type="checkbox" name="domeniu" value="Științe Juridice" id="d5" data-toggle="checkbox">Științe Juridice</label>
 														<label class="checkbox checkbox-blue" for="d6"><input type="checkbox" name="domeniu" value="Medicină" id="d6" data-toggle="checkbox">Medicină</label>
 														<label class="checkbox checkbox-blue" for="d7"><input type="checkbox" name="domeniu" value="Științe ale Naturii" id="d7" data-toggle="checkbox">Științe ale Naturii</label>
-														<label class="checkbox checkbox-blue" for="d8"><input type="checkbox" name="domeniu" value="Arte, Arhitectură și Urbanism " id="d8" data-toggle="checkbox">Arte, Arhitectură și Urbanism</label>
+														<label class="checkbox checkbox-blue" for="d8"><input type="checkbox" name="domeniu" value="Arte Arhitectură și Urbanism" id="d8" data-toggle="checkbox">Arte, Arhitectură și Urbanism</label>
 														<label class="checkbox checkbox-blue" for="d9"><input type="checkbox" name="domeniu" value="Științe Exacte" id="d9" data-toggle="checkbox">Științe Exacte</label>
 														<label class="checkbox checkbox-blue" for="d10"><input type="checkbox" name="domeniu" value="Științe Sociale și Psihologie" id="d10" data-toggle="checkbox">Științe Sociale și Psihologie</label>
 														<label class="checkbox checkbox-blue" for="d11"><input type="checkbox" name="domeniu" value="Științe Agricole" id="d11" data-toggle="checkbox">Științe Agricole</label>
 														<label class="checkbox checkbox-blue" for="d12"><input type="checkbox" name="domeniu" value="Ştiinţa Sportului şi Educaţiei Fizice" id="d12" data-toggle="checkbox">Știința Sportului și Educației Fizice</label>
-														<label class="checkbox checkbox-blue" for="d13"><input type="checkbox" name="domeniu" value="Ştiinţe Militare, Informaţii şi Ordine publică" id="d13" data-toggle="checkbox">Științe Militare și de Informații</label>
+														<label class="checkbox checkbox-blue" for="d13"><input type="checkbox" name="domeniu" value="Ştiinţe Militare Informaţii şi Ordine publică" id="d13" data-toggle="checkbox">Științe Militare și de Informații</label>
 														<label class="checkbox checkbox-blue" for="d14"><input type="checkbox" name="domeniu" value="Teologie" id="d14" data-toggle="checkbox">Teologie</label>
 													</div>
 													<hr id="hr-filter-domains">
@@ -455,8 +455,6 @@ function loadData(loadMore) {
 		for (dCounter = 0;dCounter < domainParams.length; dCounter++) {
 			domainNames.push(document.getElementById(domainParams[dCounter]).value);
 		}
-		console.log(domainParams);
-		console.log(domainNames);
 		
 		var cCounter;
 		var cityNames = [];
@@ -485,7 +483,6 @@ function loadData(loadMore) {
 				backendUrl.searchParams.append("facultyDomains", domainNames[d]);
 			}
 		}
-		console.log(backendUrl);
 		if (cityNames.length !== 0) {
 			//backendUrl.searchParams.append("facultyCities", cityNames.join(','));
 			for(var c = 0;c < cityNames.length; c++) {
@@ -497,7 +494,6 @@ function loadData(loadMore) {
           url: backendUrl,
           type: "GET",
           success: function(response) {
-            console.log(response);
 			
 			if (loadMore) {
 				currentlyVisibleFacultiesNo += response.result.faculties.length;
@@ -551,7 +547,7 @@ function loadData(loadMore) {
 				var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";	
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 				
-				var addReviewRedirectUrl = "./add-review-full.html?id=" + facultyId;
+				var addReviewRedirectUrl = "./add-review.html?id=" + facultyId;
 		
 			
 			
@@ -595,7 +591,7 @@ function loadData(loadMore) {
 				<!-- //var imgSrc = backendUrlRoot + "/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";	 -->
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 				
-				<!-- var addReviewRedirectUrl = "./add-review-full.html?id=" + facultyId; -->
+				<!-- var addReviewRedirectUrl = "./add-review.html?id=" + facultyId; -->
 			
 				<!-- document.getElementById("content-style-2").innerHTML +=('		<div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-3 col-xs-offset-0"> <a href="' + urlProfileRedirect + facultyId + '"> <img id="logo" src="' + logoSrc + '" onerror="this.onerror=null;this.src=' + defaultErrorImg + '"  class="img-faculty-logo"></img> </a> </div> <div class="col-xs-9 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + j + '"><strong>' + facultyName + '</strong></h5> </a> <a href="#" id="university-name-main"> <h6 id="university-name-' + j + '">' + universityName + '</h6> </a> <small id="faculty-city-' + j + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6 save"> <i class="far fa-bookmark fa-lg" style="margin-right: 7px"></i><span>Salvează</span> </div> <div class="col-xs-6 compare compare-end"> <i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </div> </div> </div> </div>											<hr>'); -->
 			<!-- } -->

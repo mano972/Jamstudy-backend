@@ -53,7 +53,7 @@
                   <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
               <!-- </li> -->
 			  <!-- <li> -->
-                  <!-- <a href="./add-review-full.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
+                  <!-- <a href="./add-review.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
               <!-- </li> -->
            </ul>
         </div><!-- /.navbar-collapse -->
@@ -90,12 +90,12 @@
 												<li><input type="checkbox" name="domeniu" id="d5" value="Științe Juridice"><label for="d5">Științe Juridice</label></li>
 												<li><input type="checkbox" name="domeniu" id="d6" value="Medicină"><label for="d6">Medicină</label></li>
 												<li><input type="checkbox" name="domeniu" id="d7" value="Științe ale Naturii"><label for="d7">Științe ale Naturii</label></li>
-												<li><input type="checkbox" name="domeniu" id="d8" value="Arte, Arhitectură și Urbanism "><label for="d8">Arte, Arhitectură și Urbanism</label></li>
+												<li><input type="checkbox" name="domeniu" id="d8" value="Arte Arhitectură și Urbanism"><label for="d8">Arte, Arhitectură și Urbanism</label></li>
 												<li><input type="checkbox" name="domeniu" id="d9" value="Științe Exacte"><label for="d9">Științe Exacte</label></li>
 												<li><input type="checkbox" name="domeniu" id="d10" value="Științe Sociale și Psihologie"><label for="d10">Științe Sociale și Psihologie</label></li>
 												<li><input type="checkbox" name="domeniu" id="d11" value="Științe Agricole"><label for="d11">Științe Agricole</label></li>
 												<li><input type="checkbox" name="domeniu" id="d12" value="Ştiința Sportului şi Educației Fizice"><label for="d12">Știința Sportului şi Educației Fizice</label></li>
-												<li><input type="checkbox" name="domeniu" id="d13" value="Ştiinţe Militare, Informaţii şi Ordine publică"><label for="d13">Științe Militare şi de Informații</label></li>
+												<li><input type="checkbox" name="domeniu" id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică"><label for="d13">Științe Militare şi de Informații</label></li>
 												<li><input type="checkbox" name="domeniu" id="d14" value="Teologie"><label for="d14">Teologie</label></li>
 											  </ul>
 										</div>
@@ -356,7 +356,6 @@ function loadTopFaculties() {
 		var topByDomain = document.getElementById("top-by-domain").value;
 		var topByCity = document.getElementById("top-by-city").value;
 		if (topByDomain !== "Toate") {
-		console.log(topByDomain);
 			backendUrl.searchParams.append("facultyDomains", topByDomain);
 		}
 		if (topByCity !== "Toate") {
@@ -375,7 +374,6 @@ function loadTopFaculties() {
 																			+'</div>';
 		  },
           success: function(response) {
-            console.log(response);
 			document.getElementById("content-top-faculty").innerHTML = '';
 			document.getElementById("content-runner-up-faculties").innerHTML = '';
 			
@@ -410,7 +408,7 @@ function loadTopFaculties() {
 				var logoSrcTop = backendUrlRoot + "/v1/faculty/" + response.result.faculties[0].facultyId + "/logo";	
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 				
-				var addReviewRedirectUrlTop = "./add-review-full.html?id=" + facultyIdTop;
+				var addReviewRedirectUrlTop = "./add-review.html?id=" + facultyIdTop;
 				
 				
 				var backendUrlReviews = new URL(backendUrlRoot + "/v1/review/faculty/" + facultyIdTop);
@@ -485,7 +483,7 @@ function loadTopFaculties() {
 				<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
 				var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";
 				
-				var addReviewRedirectUrl = "./add-review-full.html?id=" + facultyId;
+				var addReviewRedirectUrl = "./add-review.html?id=" + facultyId;
 				
 				var position = i + 1;
 				var labelClass = "label-primary";
@@ -552,9 +550,7 @@ document.getElementById("newsletter-button").onclick = function (e) {
 	e.preventDefault();
 	var email = document.getElementById("newsletter-email").value.trim();
 	if (!validateEmail(email)) {
-	console.log(document.getElementById('newsletter-header-text').innerHTML);
 		document.getElementById('newsletter-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
-		console.log(document.getElementById('newsletter-header-text').innerHTML);
 		document.getElementById('newsletter-modal-text').innerHTML = "Adresa de email nu este valida";
 	} else {
 	var body = {

@@ -54,7 +54,7 @@
 					  <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
 				  <!-- </li> -->
 				  <!-- <li> -->
-					  <!-- <a href="./add-review-full.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
+					  <!-- <a href="./add-review.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
 				  <!-- </li> -->
 			   </ul>
 			</div><!-- /.navbar-collapse -->
@@ -354,7 +354,6 @@ function getFaculty() {
           url: backendUrl,
           type: "GET",
           success: function(response) {
-            console.log(response);
 			
 			if (response.control.errorCode === 0) {
 				loadProfileHeader(response);
@@ -403,8 +402,7 @@ function getReviews(loadMore) {
 	  url: backendUrlReviews,
 	  type: "GET",
 	  success: function(response) {
-		console.log(response);
-		
+	  
 		loadReviewsTab(response, loadMore);
 
 	  },
@@ -442,7 +440,7 @@ function loadProfileHeader(response) {
 			<!-- var logoSrcTop = "C://logos_jamstudy/" + logoName + ".png"; -->
 			var logoSrcTop = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
 			
-			var addReviewRedirectUrl = "./add-review-full.html?id=" + facultyId;
+			var addReviewRedirectUrl = "./add-review.html?id=" + facultyId;
 			
 			document.getElementById("faculty-profile-header").innerHTML = '';
 			var facultyProfileHeaderString = (
@@ -560,7 +558,6 @@ function loadGeneralReviewCard(response) {
 				   url: backendUrlTopReviews,
 				   type: "GET",
 				   success: function(responseReview){
-				   console.log(responseReview);
 				   
 					   var reviewId, userName, reviewDate, generalRating, reviewText;
 					   var cardReviewStr = "";
@@ -1002,8 +999,6 @@ function loadProgramsCard(response) {
 			var facultyProgramsLicenseAndMaster = [];
 			facultyProgramsLicenseAndMaster = facultyProgramsLicenseAndMaster.concat(licensePrograms);
 			facultyProgramsLicenseAndMaster = facultyProgramsLicenseAndMaster.concat(masterPrograms);
-			console.log(facultyProgramsLicenseAndMaster);
-
 			
 			var facultyProfileProgramsString = '';
 			var i;
@@ -1393,9 +1388,6 @@ function reportReview(el) {
 }
 
 function upvoteReview(el) {
-
-console.log(el);
-	console.log(el.nextSibling.innerHTML);
 
 	var regularIcon = "far";
 	var solidIcon = "fas";
