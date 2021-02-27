@@ -63,35 +63,45 @@
 	<div class="wrapper">
 		<div class="main">
 			<div class="section-white">
-				<div class="container-fluid" style="margin-bottom: 80px;">
+				<div class="container-fluid">
 					<div class="row">
 						<div class="col-md-5 col-md-offset-1">
-							<h3>Contactează-ne / Raportează un bug</h3>
-							<form class="contact-form">
-								<div class="row">
-									<div class="col-md-6">
-										<label>Nume</label>
-										<input id='feedback-name' class="form-control" placeholder="Nume">
-									</div>
-									<div class="col-md-6">
-										<label>Email</label>
-										<input id='feedback-email' class="form-control" placeholder="Email">
+							<div class="card">
+								<div class="content">
+									<div class="row">
+										<div class="col-md-12 col-md-offset-0">
+											<h3>Contactează-ne / Raportează un bug</h3>
+											<form class="contact-form">
+												<div class="row">
+													<div class="col-md-6">
+														<label>Nume</label>
+														<input id='feedback-name' class="form-control" placeholder="Nume">
+													</div>
+													<div class="col-md-6">
+														<label>Email</label>
+														<input id='feedback-email' class="form-control" placeholder="Email">
+													</div>
+												</div>
+												<label>Mesaj</label>
+												<textarea id='feedback-message' class="form-control" rows="4" placeholder="Lasă-ne un feedback..."></textarea>
+												<div class="row">
+													<div class="col-md-4">
+														<button id="send-feedback-btn" class="btn btn-info btn-block btn-fill" data-toggle="modal" data-target="#feedback-modal">Trimite</button>
+													</div>
+												</div>
+											</form>
+										</div>
 									</div>
 								</div>
-								<label>Mesaj</label>
-								<textarea id='feedback-message' class="form-control" rows="4" placeholder="Lasă-ne un feedback..."></textarea>
-								<div class="row">
-									<div class="col-md-4">
-										<button id="send-feedback-btn" class="btn btn-info btn-block btn-fill" data-toggle="modal" data-target="#feedback-modal">Trimite</button>
-									</div>
-								</div>
-							</form>
-						</div>
+							</div>
+						</div>'
 						<div class="col-md-4 col-md-offset-1 col-sm-10">
 							<div class="content">
 								<img id="bug_report" style="max-width: 100%" src="./assets/img/newsletter_small.png" alt="..."/>
 							</div>
 						</div>
+						
+						
 					</div>  
 				</div>
 			</div>
@@ -204,7 +214,9 @@ document.getElementById("send-feedback-btn").onclick = function (e) {
 	var email = document.getElementById("feedback-email").value.trim();
 	var message = document.getElementById("feedback-message").value.trim();
 	if (!validateEmail(email)) {
+		console.log(document.getElementById('feedback-header-text').innerHTML);
 		document.getElementById('feedback-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+		console.log(document.getElementById('feedback-header-text').innerHTML);
 		document.getElementById('feedback-modal-text').innerHTML = "Adresa de email nu este valida";
 	} else {
 	var body = {

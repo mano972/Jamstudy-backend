@@ -58,7 +58,7 @@
     </nav>           
     
     <div class="wrapper">
-        <div class="section section-white">
+        <div class="section-white">
 			<div class="container-fluid">
 			
 						<div class="add-review-floating-card-2 col-lg-6 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0">
@@ -1045,7 +1045,7 @@ function validateForm() {
   var generalReviewText = document.getElementById("general-review-text");
   var facultyName = document.getElementById("review-faculty-name");
     // If a field is empty...
-    if (facultyName.value == '' || generalReviewText.value.length < 150 || document.querySelectorAll('input[name=rating]:checked').length === 0) {
+    if (!facultyName || facultyName.value == '' || generalReviewText.value.length < 150 || document.querySelectorAll('input[name=rating]:checked').length === 0) {
       // and set the current valid status to false
       valid = false;
     }
