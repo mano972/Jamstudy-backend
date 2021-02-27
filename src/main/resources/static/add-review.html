@@ -131,14 +131,13 @@
 											<div class="row">
 												<div class="col-md-12">
 													<div class="form-group">
-														<textarea id="general-review-text" class="form-control" rows="4" minlength="150" maxlength="1400" required onkeyup="textCounter(this, 'counter', 'counter-row', 150);" oninvalid="this.setCustomValidity('Cel puțin 150 de caractere')" placeholder="Descrie experiența ta în cel puțin 150 de caractere..."></textarea>
-														
+														<textarea id="general-review-text" class="form-control" rows="4" minlength="150" maxlength="1400" required onkeyup="textCounter(this, 'counter', 'counter-row', 'counter-text', 150);" oninvalid="this.setCustomValidity('Cel puțin 150 de caractere')" placeholder="Descrie experiența ta în cel puțin 150 de caractere..."></textarea>
 													</div>
 												</div>
 											</div>
 											<div class="row">
 												<div id="counter-row" class="col-md-4">
-													<small id="counter" class="text-muted" >150</small><small class="text-muted" > caractere obligatorii rămase</small>
+													<small id="counter" class="text-muted" >150</small><small id="counter-text" class="text-muted" > caractere obligatorii rămase</small>
 												</div>
 											</div>
 										</div>
@@ -520,6 +519,7 @@
 													<input id="user-email" required class="form-control" placeholder="Email">
 												</div>
 											</div>
+											<small id="error-email" class="error-message"></small>
 										</div>
 										
 										<br>
@@ -821,17 +821,17 @@ function showYears() {
 	<!-- console.log(userDomain); -->
 <!-- } -->
 
+document.getElementById("user-email").oninput = function () {
+	document.getElementById('error-email').innerHTML = "";
+}
 
 function postReview(){
 
 	var nextbutton = document.getElementById("next-step");
-	nextbutton.setAttribute("data-toggle", 'modal');
-	nextbutton.setAttribute("data-target", '#add-review-modal');
 
 	var userEmail = document.getElementById("user-email").value;
 	if (!validateEmail(userEmail)) {
-		document.getElementById('add-review-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
-		document.getElementById('add-review-modal-text').innerHTML = "Adresa de email nu este valida";
+		document.getElementById('error-email').innerHTML = "Adresa de email nu este validă";
 	} else {
 
 		var generalRating = document.querySelectorAll('input[name=rating]:checked')[0].value;
@@ -967,7 +967,9 @@ function postReview(){
 			crossDomain: true,
 			data: JSON.stringify(review),
 			success: function (data) {
-				document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost adaugata cu succes";
+				nextbutton.setAttribute("data-toggle", 'modal');
+				nextbutton.setAttribute("data-target", '#add-review-modal');
+				document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost adăugată cu succes";
 				$("#add-review-modal").on("hidden.bs.modal", function () {
     				var urlProfileRedirect = "./faculty-profile.html?id=" + facultyId;
 					location.href = urlProfileRedirect;
@@ -975,8 +977,10 @@ function postReview(){
 			},
 			error: function(error) {
 				console.log(error);
+				nextbutton.setAttribute("data-toggle", 'modal');
+				nextbutton.setAttribute("data-target", '#add-review-modal');
 				document.getElementById('add-review-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
-				document.getElementById('add-review-modal-text').innerHTML = "A aparut o eroare. Evaluarea nu a putut fi adaugata cu succes.";
+				document.getElementById('add-review-modal-text').innerHTML = "A apărut o eroare. Evaluarea nu a putut fi adăugată cu succes.";
 				$("#add-review-modal").on("hidden.bs.modal", function () {
 					var urlProfileRedirect = "./faculty-profile.html?id=" + facultyId;
 					location.href = urlProfileRedirect;
@@ -1045,10 +1049,33 @@ function validateForm() {
   var generalReviewText = document.getElementById("general-review-text");
   var facultyName = document.getElementById("review-faculty-name");
     // If a field is empty...
-    if (!facultyName || facultyName.value == '' || generalReviewText.value.length < 150 || document.querySelectorAll('input[name=rating]:checked').length === 0) {
+	var countrow = document.getElementById("counter-row");
+	var countfield = document.getElementById('counter');
+	var counttext = document.getElementById('counter-text');
+	countfield.className = "error-message";
+	counttext.className = "error-message";
+	countrow.style.visibility = "visible";
+	if (!facultyName || facultyName.value == '') {
+	  // and set the current valid status to false
+	  countfield.innerHTML = "A apărut o eroare";
+	  counttext.innerHTML = "";
+	  
+      valid = false;
+	}
+    if (generalReviewText.value.length < 150) {
       // and set the current valid status to false
+	  countfield.innerHTML = "Cel puțin 150 de caractere";
+	  counttext.innerHTML = "";
+	  
       valid = false;
     }
+	if (document.querySelectorAll('input[name=rating]:checked').length === 0) {
+	  // and set the current valid status to false
+	  countfield.innerHTML = "Nota este obligatorie";
+	  counttext.innerHTML = "";
+	  
+      valid = false;
+	}
   return valid; // return the valid status
 }
 
@@ -1080,15 +1107,19 @@ function fixProgressIndicator(n) {
 
 }
 
-  function textCounter(field, field2, field3, maxlimit) {
+  function textCounter(field, field2, field3, field4, maxlimit) {
     var countfield = document.getElementById(field2);
 	var countrow = document.getElementById(field3);
+	var counttext = document.getElementById(field4);
     /* $(field2).html(text_remaining); */
     if (field.value.length >= maxlimit) {
 		countrow.style.visibility = "hidden";
     } else {
 		countrow.style.visibility = "visible";
 		countfield.innerHTML = maxlimit - field.value.length;
+		counttext.innerHTML = " caractere obligatorii rămase";
+		countfield.className = "text-muted";
+		counttext.className = "text-muted";
     }
   }
   
