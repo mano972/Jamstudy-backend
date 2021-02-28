@@ -68,7 +68,6 @@ public class Review extends ParentEntity {
 	@Field
 	private int upvotes;
 
-	/* STUDENT, MASTERAND, ALUMNI */
 	@Field
 	private String userStatus;
 

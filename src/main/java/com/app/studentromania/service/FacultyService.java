@@ -78,6 +78,21 @@ public class FacultyService {
 
 		return ResponseDTO.createSuccessResponse(response);
 	}
+	
+	public ResponseDTO getFilteredFacultiesDetailed(FacultyFilter facultyFilter) {
+		List<Faculty> faculties = facultyDAO.getFilteredFaculties(facultyFilter);
+		long count = facultyDAO.countFilteredFaculties(facultyFilter);
+		JSONArray facultiesArray = new JSONArray();
+		faculties.forEach(faculty -> {
+			FacultyResponseDTO facultyResponseDTO = mapToFacultyResponseDTO(faculty);
+			facultiesArray.put(new JSONObject(facultyResponseDTO));
+		});
+		JSONObject response = new JSONObject();
+		response.put("faculties", facultiesArray);
+		response.put("count", count);
+
+		return ResponseDTO.createSuccessResponse(response);
+	}
 
 	public ResponseDTO getUniversitiesForFilter(FacultyFilter facultyFilter) {
 		List<UniversityFilterRowResponseDTO> listResponseDTOs = facultyDAO.getUniversitiesForFilter(facultyFilter);

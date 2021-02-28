@@ -514,6 +514,10 @@ function loadData(loadMore) {
 																			+ '</div>';
 			}
 			
+			if (response.result.faculties.length == 0) {
+				document.getElementById("faculty-entries").innerHTML = '<div class="text-center text-muted"> <h4>Nu au fost găsite rezultate</h4> </div>';
+			}
+			
 			var urlProfileRedirect = "./faculty-profile.html?id=";
 			
 			var i;

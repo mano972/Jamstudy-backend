@@ -36,6 +36,12 @@ public class FacultyController {
 	public ResponseEntity<String> getFilteredFaculties(FacultyFilter facultyFilter) {
 		return facultyService.getFilteredFaculties(facultyFilter).createRestResponse();
 	}
+	
+	@GetMapping("/details")
+	@RestCall
+	public ResponseEntity<String> getFilteredFacultiesDetailed(FacultyFilter facultyFilter) {
+		return facultyService.getFilteredFacultiesDetailed(facultyFilter).createRestResponse();
+	}
 
 	@GetMapping("/universityfilter")
 	@RestCall

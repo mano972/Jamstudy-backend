@@ -667,7 +667,7 @@ function loadGeneralReviewCard(response) {
 +'																<strong style="color: orange">&nbsp' + avgRatingJobProspects + '</strong>'
 +'															</div>'
 +'															<div class="review-category-entry">'
-+'																<strong>Acomodare</strong>'
++'																<strong>Cazare</strong>'
 +'																<br>'
 +'																<i class="fa fa-star" style="color: orange"></i>'
 +'																<strong style="color: orange">&nbsp' + avgRatingAccomodation + '</strong>'
@@ -1165,6 +1165,10 @@ function loadReviewsTab(response, loadMore) {
 																			+ '</div> '
 																		+ '</div> '
 																	+ '</div>';
+		}
+		
+		if (response.result.reviews.length == 0) {
+			document.getElementById("faculty-profile-review-entries").innerHTML = '<div class="text-center text-muted"> <h4>Nu au fost găsite rezultate</h4> </div>';
 		}
 
 		var i;

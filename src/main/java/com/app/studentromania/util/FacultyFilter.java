@@ -16,6 +16,7 @@ public class FacultyFilter {
 	private static final String SORT_SPLIT_CHARACTER = ",";
 
 	private String searchBy;
+	private List<String> facultyIds;
 	private List<String> universityIds;
 	private List<String> facultyCities;
 	private List<String> facultyDomains;
@@ -27,11 +28,12 @@ public class FacultyFilter {
 	private Integer offset;
 	private boolean join;
 
-	public FacultyFilter(String searchBy, List<String> universityIds, List<String> facultyCities,
-			List<String> facultyDomains, List<String> admissionType, Double ratingFrom, String orderBy, Integer limit,
-			Integer pageNumber, Integer offset) {
+	public FacultyFilter(String searchBy, List<String> facultyIds, List<String> universityIds,
+			List<String> facultyCities, List<String> facultyDomains, List<String> admissionType, Double ratingFrom,
+			String orderBy, Integer limit, Integer pageNumber, Integer offset) {
 		super();
 		this.searchBy = searchBy;
+		this.facultyIds = facultyIds;
 		this.universityIds = universityIds;
 		this.facultyCities = facultyCities;
 		this.facultyDomains = facultyDomains;
@@ -51,6 +53,14 @@ public class FacultyFilter {
 		this.searchBy = searchBy;
 	}
 
+	public List<String> getFacultyIds() {
+		return facultyIds;
+	}
+
+	public void setFacultyIds(List<String> facultyIds) {
+		this.facultyIds = facultyIds;
+	}
+
 	public List<String> getUniversityIds() {
 		return universityIds;
 	}
@@ -59,11 +69,11 @@ public class FacultyFilter {
 		this.universityIds = universityIds;
 	}
 
-	public List<String> getFacultyCites() {
+	public List<String> getFacultyCities() {
 		return facultyCities;
 	}
 
-	public void setFacultyCity(List<String> facultyCities) {
+	public void setFacultyCities(List<String> facultyCities) {
 		this.facultyCities = facultyCities;
 	}
 
@@ -178,6 +188,16 @@ public class FacultyFilter {
 				+ searchBy.toUpperCase().trim() + "%' "
 				+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(facultyCity, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
 				+ searchBy.toUpperCase().trim() + "%') ";
+	}
+
+	public String getFacultyIdsClause() {
+		if (CollectionUtils.isEmpty(facultyIds)) {
+			return StringUtils.EMPTY;
+		}
+		if (isJoin()) {
+			return " and f.facultyId IN " + JsonArray.from(facultyIds);
+		}
+		return " and facultyId IN " + JsonArray.from(facultyIds);
 	}
 
 	public String getUniversityIdsClause() {

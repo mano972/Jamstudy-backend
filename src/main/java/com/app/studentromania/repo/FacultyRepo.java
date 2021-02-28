@@ -136,9 +136,10 @@ public class FacultyRepo {
 	}
 
 	private String getFilteredFacultiesStatement(FacultyFilter facultyFilter) {
-		String filteredStatement = facultyFilter.getSearchByClause() + facultyFilter.getUniversityIdsClause()
-				+ facultyFilter.getFacultyCitiesClause() + facultyFilter.getFacultyDomainsClause()
-				+ facultyFilter.getAdmissionTypeClause() + facultyFilter.getRatingFromClause();
+		String filteredStatement = facultyFilter.getSearchByClause() + facultyFilter.getFacultyIdsClause()
+				+ facultyFilter.getUniversityIdsClause() + facultyFilter.getFacultyCitiesClause()
+				+ facultyFilter.getFacultyDomainsClause() + facultyFilter.getAdmissionTypeClause()
+				+ facultyFilter.getRatingFromClause();
 		return filteredStatement;
 	}
 
