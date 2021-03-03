@@ -46,6 +46,9 @@
             <li>
                 <a href="./search-results.html" class="btn btn-simple">Facultăți</a>
             </li>
+			<li>
+				<a href="./faculty-comparison.html" class="btn btn-simple">Compară</a>
+			</li>
             <li>
                 <a href="./contact-page.html" class="btn btn-simple">Contact</a>
             </li>
@@ -259,6 +262,11 @@
                         <li>
                             <a href="./search-results.html">
                                 Facultăți
+                            </a>
+                        </li>
+						<li>
+                            <a href="./faculty-comparison.html">
+                                Compară
                             </a>
                         </li>
                         <li>
@@ -478,10 +486,10 @@ function loadData(loadMore) {
 			 backendUrl.searchParams.append("searchBy", finalSearchInput);
 		}
 		if (domainNames.length !== 0) {
-			//backendUrl.searchParams.append("facultyDomains", domainNames);
-			for(var d = 0;d < domainNames.length; d++) {
-				backendUrl.searchParams.append("facultyDomains", domainNames[d]);
-			}
+			backendUrl.searchParams.append("facultyDomains", domainNames);
+			<!-- for(var d = 0;d < domainNames.length; d++) { -->
+				<!-- backendUrl.searchParams.append("facultyDomains", domainNames[d]); -->
+			<!-- } -->
 		}
 		if (cityNames.length !== 0) {
 			//backendUrl.searchParams.append("facultyCities", cityNames.join(','));
@@ -505,7 +513,7 @@ function loadData(loadMore) {
 			if  (currentlyVisibleFacultiesNo >= response.result.count) {
 				document.getElementById("load-more-faculties-main").innerHTML = '';
 			} else {
-			document.getElementById("load-more-faculties-main").innerHTML = '<div class="card">'
+				document.getElementById("load-more-faculties-main").innerHTML = '<div class="card">'
 																				+ '<div class="content"> '
 																					+ '<div class="text-center row"> '
 																						+ '<button id="load-more-faculties" class="btn btn-info btn-fill" type="submit" onclick="loadMore()">Încarcă mai multe rezultate</button>'
@@ -554,53 +562,9 @@ function loadData(loadMore) {
 				var addReviewRedirectUrl = "./add-review.html?id=" + facultyId;
 		
 			
-			
-				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-3 col-xs-offset-0"> <a href="' + urlProfileRedirect + facultyId + '"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo"></img> </a> </div> <div class="col-xs-9 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <a href="#" id="university-name-main"> <h6 id="university-name-' + i + '">' + universityName + '</h6> </a> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6 save"> <i class="far fa-bookmark fa-lg" style="margin-right: 7px"></i><span>Salvează</span> </div> <div class="col-xs-6 compare compare-end" > <i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </div> </div> </div> </div> </div> </div>');
+				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-3 col-xs-offset-0"> <a href="' + urlProfileRedirect + facultyId + '"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo"></img> </a> </div> <div class="col-xs-9 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <h6 id="university-name-' + i + '">' + universityName + '</h6> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6 save"> <i class="far fa-bookmark fa-lg" style="margin-right: 7px"></i><span>Salvează</span> </div> <div class="col-xs-6 compare compare-end" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"> <i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </div> </div> </div> </div> </div> </div>');
 
 			}
-			
-			
-			<!-- document.getElementById("faculty-entries").innerHTML += '<div class="card"> <div id="content-style-2" class="content">'; -->
-			<!-- var j; -->
-			<!-- for (j in response.result.faculties) { -->
-			
-			
-			<!-- var avgRating = response.result.faculties[j].avgRating; -->
-				<!-- if (!avgRating) { -->
-					<!-- avgRating = "N/A"; -->
-				<!-- } else { -->
-					<!-- avgRating = avgRating.toFixed(1); -->
-				<!-- } -->
-				
-				<!-- var countRev = response.result.faculties[j].countRev; -->
-				<!-- var countRevText; -->
-				<!-- if (!countRev) { -->
-					<!-- countRevText = ""; -->
-				<!-- } else if (countRev === 1) { -->
-					<!-- countRevText = "din 1 evaluare"; -->
-				<!-- } else { -->
-					<!-- countRevText = "din " + countRev + " evaluări"; -->
-				<!-- } -->
-				
-				
-				
-				<!-- var facultyId = response.result.faculties[j].facultyId; -->
-				<!-- var facultyName = response.result.faculties[j].facultyName; -->
-				<!-- var universityName = response.result.faculties[j].universityName; -->
-				<!-- var facultyCity = response.result.faculties[j].facultyCity; -->
-				
-				<!-- var universityNameForLogo = universityName.replaceAll("\"", "_"); -->
-				<!-- var logoName = facultyName + universityNameForLogo; -->
-				<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
-				<!-- //var imgSrc = backendUrlRoot + "/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";	 -->
-				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
-				
-				<!-- var addReviewRedirectUrl = "./add-review.html?id=" + facultyId; -->
-			
-				<!-- document.getElementById("content-style-2").innerHTML +=('		<div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-3 col-xs-offset-0"> <a href="' + urlProfileRedirect + facultyId + '"> <img id="logo" src="' + logoSrc + '" onerror="this.onerror=null;this.src=' + defaultErrorImg + '"  class="img-faculty-logo"></img> </a> </div> <div class="col-xs-9 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + j + '"><strong>' + facultyName + '</strong></h5> </a> <a href="#" id="university-name-main"> <h6 id="university-name-' + j + '">' + universityName + '</h6> </a> <small id="faculty-city-' + j + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6 save"> <i class="far fa-bookmark fa-lg" style="margin-right: 7px"></i><span>Salvează</span> </div> <div class="col-xs-6 compare compare-end"> <i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </div> </div> </div> </div>											<hr>'); -->
-			<!-- } -->
-			<!-- document.getElementById("content-style-2").innerHTML += ('<div class="row"> <div class="col-md-offset-1" style="display:inline-block; vertical-align: middle;"> <span>1-20 din 700 rezultate</span> </div> <div class="col-md-offset-5" style="display:inline-block; vertical-align: middle;"> <ul class="pagination pagination-warning">  <li><a href="#">&laquo;</a></li>  <li class="active"><a href="#">1</a></li>  <li><a href="#">2</a></li> <li><a href="#">3</a></li> <li><a href="#">4</a></li> <li><a href="#">5</a></li> <li><a href="#">&raquo;</a></li>  </ul> </div> </div>'); -->
-			<!-- document.getElementById("content-style-2").innerHTML += '</div> </div>'; -->
 			
           },
           error: function(error) {
@@ -611,6 +575,43 @@ function loadData(loadMore) {
 
 function loadMore() {
 	loadData(true);
+}
+
+function addToCompare(el, facultyId, isParent) {
+
+	if (isParent) {
+		el = $(el).children()[0];
+	}
+	
+	var compareIcon = "fas fa-plus-circle fa-lg";
+	var compareCheckIcon = "fas fa-check-circle fa-lg";
+	
+	if ($(el).hasClass(compareCheckIcon)) {
+		var urlComparisonRedirect = "./faculty-comparison.html";
+		location.href = urlComparisonRedirect;
+		return;
+	}
+	
+	$(el).removeClass(compareIcon);
+	$(el).addClass(compareCheckIcon);
+	el.nextSibling.innerHTML = "Vezi Comparaţii";
+	
+	if (typeof(Storage) !== "undefined") {
+		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
+		var facultyIds;
+		if (facultyIdsString) {
+			facultyIds = facultyIdsString.split(",");
+		} else {
+			facultyIds = [];
+		}
+		if (!facultyIds.includes(facultyId)) {
+			facultyIds.push(facultyId);
+		}
+		localStorage.setItem("faculty-comparison-items", facultyIds);
+	} else {
+	  // Sorry! No Web Storage support..
+	}
+
 }
 
 

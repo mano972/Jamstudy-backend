@@ -137,6 +137,58 @@ body.loading .modal {
     display: block;
 }
 
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.comparison-table {
+	overflow: auto;
+	border: 1px solid #f0edf0;
+	max-width: 0px;
+}
+
+.comparison-cell {
+  min-height: 54px;
+  width: 300px;
+  border-left: 1px solid #f0edf0;
+}
+
+.comparison-cell-faculty {
+  min-height: 150px;
+  width: 300px;
+  border-left: 1px solid #f0edf0;
+}
+
+.comparison-header-cell { 
+	min-height: 54px;
+	background-color: #f0f0f0;
+	color: #51636e;
+	width: 300px;
+}
+
+.comparison-header-cell-blank { 
+	min-height: 1px;
+	background-color: white;
+	width: 300px;
+}
+
+.comparison-even-row { 
+	background-color: white;
+	width: 1500px;
+	overflow: auto;
+}
+
+.comparison-odd-row { 
+	background-color: #f7f7f7;
+	width: 1500px;
+	overflow: auto;
+}
+
 .ranking-t1 {
 	font-size: 22px;
 	color: #707070;
@@ -620,11 +672,25 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
   cursor: pointer;
   transition: .1s ease-in-out;
 }
+.difficulty-slider input[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none;
+  background-color: #cfcfcf;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #cfcfcf;
+  cursor: pointer;
+  transition: .1s ease-in-out;
+}
 
 .difficulty-slider input[type="range"].veryeasy {
   background-color: #3e9c28;
 }
 .difficulty-slider input[type="range"].veryeasy::-webkit-slider-thumb {
+   background-color: #3e9c28;
+   border: 2px solid #3e9c28;
+}
+.difficulty-slider input[type="range"].veryeasy::-moz-range-thumb {
    background-color: #3e9c28;
    border: 2px solid #3e9c28;
 }
@@ -635,10 +701,18 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
    background-color: #8ed41e;
    border: 2px solid #8ed41e;
 }
+.difficulty-slider input[type="range"].easy::-moz-range-thumb {
+   background-color: #8ed41e;
+   border: 2px solid #8ed41e;
+}
 .difficulty-slider input[type="range"].medium {
   background-color: #fabb0c;
 }
 .difficulty-slider input[type="range"].medium::-webkit-slider-thumb {
+   background-color: #fabb0c;
+   border: 2px solid #fabb0c;
+}
+.difficulty-slider input[type="range"].medium::-moz-range-thumb {
    background-color: #fabb0c;
    border: 2px solid #fabb0c;
 }
@@ -649,6 +723,10 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
    background-color: #e06c00;
    border: 2px solid #e06c00;
 }
+.difficulty-slider input[type="range"].hard::-moz-range-thumb {
+   background-color: #e06c00;
+   border: 2px solid #e06c00;
+}
  .difficulty-slider input[type="range"].veryhard {
   background-color: #c91104;
 }
@@ -656,10 +734,15 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
    background-color: #c91104;
    border: 2px solid #c91104;
 }
-.difficulty-slider  input[type="range"]::-webkit-slider-thumb:hover {
-    /* background-color: white; */
+.difficulty-slider input[type="range"].veryhard::-moz-range-thumb {
+   background-color: #c91104;
+   border: 2px solid #c91104;
 }
 .difficulty-slider input[type="range"]::-webkit-slider-thumb:active {
+    background-color: white;
+    transform: scale(1.4);
+}
+.difficulty-slider input[type="range"]::-moz-range-thumb:active {
     background-color: white;
     transform: scale(1.4);
 }
@@ -934,6 +1017,23 @@ input.ct-red + span + label + span.switch-right {
 
 .report:focus {
 	color: #c23100;
+}
+
+.close {
+	color: gray;
+}
+
+.close:hover {
+	cursor: pointer;
+	color: orange;
+}
+
+.close:active {
+	color: orange;
+}
+
+.close:focus {
+	color: orange;
 }
 
 .btn,
@@ -3011,6 +3111,25 @@ textarea.form-control {
 	position: absolute; 
 	top: -38px;
   }
+}
+
+.img-faculty-logo-comparison {
+  display: inline;
+  vertical-align: middle;
+  border: 1px solid #f2f1da;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
+  width: 70px;
+  max-height: 75px;
+  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.img-faculty-logo-comparison-container {
+  height: 75px;
 }
 
 .img-first-place-banner {

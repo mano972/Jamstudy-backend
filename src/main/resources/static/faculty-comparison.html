@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" type="image/png" href="./assets/img/favicon.ico">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+	<title>UniStart</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    
+    <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet" />
+    <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
+    <link href="./assets/css/demo.css" rel="stylesheet" />
+    <link href="./assets/css/examples.css" rel="stylesheet" />
+        
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
+	<script src="https://kit.fontawesome.com/6f635d9dad.js" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+      
+</head>
+<body>
+
+		<nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
+		  <div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="./">UNISTART</a>
+			</div>
+		
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="navigation-example-2">
+			  <ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="./" class="btn btn-simple">Acasă</a>
+				</li>
+				  <li>
+					  <a href="./search-results.html" class="btn btn-simple">Facultăți</a>
+				  </li>
+				  <li>
+					  <a href="./faculty-comparison.html" class="btn btn-simple">Compară</a>
+				  </li>
+				  <li>
+					  <a href="./contact-page.html" class="btn btn-simple">Contact</a>
+				  </li>
+				  <!-- <li> -->
+					  <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
+				  <!-- </li> -->
+				  <!-- <li> -->
+					  <!-- <a href="./add-review.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
+				  <!-- </li> -->
+			   </ul>
+			</div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-->
+		</nav>
+    
+    <div class="wrapper">
+		
+        <div class="section-white" >
+			<div class="container-fluid">		
+				<div id="comparison-container" class="row">
+					
+					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-xs-offset-0">
+					
+						<div class="row">
+							<div class="motto col-xs-12">
+								<h3 class="title">Compară facultăți</h3>                    
+							</div>
+						</div>
+						
+						<div class="text-center">
+							<div id="loading" class='uil-reload-css reload-background' style=''><div></div></div>
+						</div>	
+
+						<div id="comparison-table" class="comparison-table row">					
+							<!-- populated dynamically -->
+						</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="floating-button">
+			<a href="./contact-page.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
+		</div>
+		
+	</div>
+    
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-9">
+                <div class="links">
+                    <ul class="uppercase-links">
+                        <li>
+                            <a href="./">
+                                Acasă
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./search-results.html">
+                                Facultăți
+                            </a>
+                        </li>
+                        <li>
+                            <a href="./contact-page.html">
+                               Contact
+                            </a>
+                        </li>
+
+                    </ul>
+                    <hr>
+
+                    <div class="copyright">
+                        © 2020 Jamstudy, din dragoste pentru educaţie
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-md-offset-2 col-sm-2 col-sm-offset-1">
+                <div class="social-area">
+                        <a href="http://twitter.com" target="_blank"><button class="btn btn-icon btn-fill btn-twitter">
+                            <i class="fa fa-twitter"></i>
+                        </button>    
+						</a>
+                        <a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
+                            <i class="fa fa-facebook"> </i>
+                        </button>
+						</a>
+                        <a href="http://instagram.com" target="_blank"><button class="btn btn-icon btn-fill btn-instagram">
+                            <i class="fa fa-instagram"></i>
+                        </button>
+						</a>
+                        <a href="http://youtube.com" target="_blank"><button class="btn btn-icon btn-fill btn-youtube">
+                            <i class="fa fa-youtube"></i>
+                        </button>
+						</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+</body>
+
+<script>
+
+const backendUrlRoot = "http://unistart.westeurope.cloudapp.azure.com:8080/Jamstudy";
+
+$body = $("body");
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+    ajaxStop: function() { $body.removeClass("loading"); }    
+});
+
+
+$(document).ready(function() {
+
+	<!-- if (typeof(Storage) !== "undefined") { -->
+		<!-- var facultyIdsString = localStorage.getItem("faculty-comparison-items"); -->
+		<!-- var facultyIds; -->
+		<!-- if (facultyIdsString) { -->
+			<!-- facultyIds = facultyIdsString.split(","); -->
+		<!-- } else { -->
+			<!-- facultyIds = []; -->
+		<!-- } -->
+		<!-- document.getElementById("compare-label-count").innerHTML = facultyIds.length; -->
+	<!-- } -->
+	constructTable();
+	getFaculties();
+
+});
+
+function constructTable() {
+	var collColumnWidth = "col-xs-3";
+
+	document.getElementById("comparison-table").innerHTML = (
+'								<div class="col-md-12 col-md-offset-0">'
++'									<div id="faculty-name-row" class="comparison-even-row row"> '
++'									<div class="comparison-header-cell-blank ' + collColumnWidth + '"> '
++'									</div> '
++'									<div id="faculty-name-row-content"> '
++'									</div> '
++'								</div> '
++'								<div id="university-name-row" class="comparison-even-row row"> '
++'									<div class="comparison-header-cell-blank ' + collColumnWidth + '"> '
++'									</div>		 '
++'									<div id="university-name-row-content"> '
++'									</div>									 '
++'								</div> '
++'								<div id="faculty-avgrating-row" class="comparison-odd-row text-center row"> '
++'									<div class="comparison-header-cell ' + collColumnWidth + '"> '
++'										<span class="center"><b>Nota</b></span> '
++'									</div> '
++'									<div id="faculty-avgrating-row-content"> '
++'									</div>	 '
++'								</div> '
++'								<div id="faculty-recommend-row" class="comparison-even-row text-center row"> '
++'									<div class="comparison-header-cell ' + collColumnWidth + '"> '
++'										<span class="center"><b>Ar recomanda</b></span> '
++'									</div> '
++'									<div id="faculty-recommend-row-content"> '
++'									</div>									 '
++'								</div> '
++'								<div id="faculty-difficulty-row" class="comparison-odd-row text-center row"> '
++'									<div class="comparison-header-cell ' + collColumnWidth + '"> '
++'										<span class="center"><b>Dificultate</b></span> '
++'									</div> '
++'									<div id="faculty-difficulty-row-content"> '
++'									</div> '
++'								</div> '
++'								<div id="faculty-courses-row" class="comparison-even-row text-center row"> '
++'									<div class="comparison-header-cell ' + collColumnWidth + '"> '
++'										<span class="center"><b>Profesori și cursuri</b></span> '
++'									</div> '
++'									<div id="faculty-courses-row-content"> '
++'									</div> '
++'								</div> '
++'								<div id="faculty-jobs-row" class="comparison-odd-row text-center row"> '
++'									<div class="comparison-header-cell ' + collColumnWidth + '"> '
++'										<span class="center"><b>Oportunități în carieră</b></span> '
++'									</div> '
++'									<div id="faculty-jobs-row-content"> '
++'									</div> '
++'								</div> '
++'								<div id="faculty-accommodation-row" class="comparison-even-row text-center row"> '
++'									<div class="comparison-header-cell ' + collColumnWidth + '"> '
++'										<span class="center"><b>Cazare</b></span> '
++'									</div> '
++'									<div id="faculty-accommodation-row-content"> '
++'									</div> '
++'								</div> '
++'								<div id="faculty-organisations-row" class="comparison-odd-row text-center row"> '
++'									<div class="comparison-header-cell ' + collColumnWidth + '"> '
++'										<span class="center"><b>Asociații studențești</b></span> '
++'									</div> '
++'									<div id="faculty-organisations-row-content"> '
++'									</div> '
++'								</div> '
++'								<div id="faculty-facilities-row" class="comparison-even-row text-center row"> '
++'									<div class="comparison-header-cell ' + collColumnWidth + '"> '
++'										<span class="center"><b>Facilități</b></span> '
++'									</div> '
++'									<div id="faculty-facilities-row-content"> '
++'									</div> '
++'								</div> '
++'								<div id="faculty-time-row" class="comparison-odd-row text-center row"> '
++'									<div class="comparison-header-cell ' + collColumnWidth + '"> '
++'										<span class="center"><b>Timp de studiu vs. timp liber</b></span> '
++'									</div> '
++'									<div id="faculty-time-row-content"> '
++'									</div> '
++'								</div>											 '
++'							</div> '
+);
+}
+
+function removeFromCompare(facultyId) {
+
+	if (typeof(Storage) !== "undefined") {
+		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
+		var facultyIds;
+		if (facultyIdsString) {
+			facultyIds = facultyIdsString.split(",");
+		} else {
+			facultyIds = [];
+		}
+		console.log(facultyIds);
+		if (facultyIds.includes(facultyId)) {
+			facultyIds = facultyIds.filter(function(value, index, arr){ return value !== facultyId;});
+		}
+		console.log(facultyIds);
+		localStorage.setItem("faculty-comparison-items", facultyIds);
+		
+		getFaculties();
+		
+	} else {
+	  // Sorry! No Web Storage support..
+	}
+}
+
+
+function getFaculties() {
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/faculty/details");
+
+	if (typeof(Storage) == "undefined") {
+		return;
+	}
+
+	var facultyIdsString = localStorage.getItem("faculty-comparison-items");
+	var facultyIds;
+	if (facultyIdsString) {
+		facultyIds = facultyIdsString.split(",");
+	}
+	console.log(facultyIds);
+	if (!facultyIds || facultyIds.length === 0) {
+		document.getElementById("comparison-table").innerHTML = '<div class="text-center text-muted center"> <h4>Adaugă o facultate pentru a începe</h4><a href="./search-results.html"utton class="btn btn-info btn-block btn-fill">Caută Facultăți</a> </div>';
+		document.getElementById("comparison-table").style.height = "500px";
+		document.getElementById("comparison-table").style.width = "1200px";
+		document.getElementById("comparison-table").style.border = "none";
+		document.getElementById("loading").style.display = "none";
+		return;
+	}
+	backendUrl.searchParams.append("facultyIds", facultyIds.join());
+	
+	
+
+	  $.ajax({
+	  url: backendUrl,
+	  type: "GET",
+	  success: function(response) {
+		console.log(response);
+		
+		if (response.control.errorCode === 0) {
+			loadComparisonTableContent(response);
+		} else {
+			console.log(response.control.errorDescription);
+		}
+
+	  },
+	  error: function(error) {
+		console.log(error);
+	  },
+	  complete: function (data) {
+		document.getElementById("loading").style.display = "none";
+	  }
+	});
+}
+
+function loadComparisonTableContent(response) {
+
+	var collColumnWidth = "col-xs-3";
+	
+	const cellWidth = 300;
+	var noOfFaculties = response.result.faculties.length;
+	var noOfFacultiesIncludingHeader = noOfFaculties + 1;
+	var comparisonRowWidth = cellWidth * noOfFacultiesIncludingHeader;
+	var comparisonTableWidth = (cellWidth * noOfFacultiesIncludingHeader) + 2; // in order to not show the scroll bar all the time
+	
+	var comparisonTableElement = document.getElementById('comparison-table');
+	comparisonTableElement.style.maxWidth = comparisonTableWidth + "px";
+	
+	var comparisonEvenRowElements = document.getElementsByClassName('comparison-even-row');
+	var comparisonOddRowElements = document.getElementsByClassName('comparison-odd-row');
+	var comparisonEvenRowElementsLength = comparisonEvenRowElements.length;
+	var comparisonOddRowElementsLength = comparisonOddRowElements.length;
+	
+	do {
+		comparisonEvenRowElementsLength--;
+		comparisonEvenRowElements[comparisonEvenRowElementsLength].style.width = comparisonRowWidth + "px";
+	} while (comparisonEvenRowElementsLength >= 1);
+	
+	do {
+		comparisonOddRowElementsLength--;
+		comparisonOddRowElements[comparisonOddRowElementsLength].style.width = comparisonRowWidth + "px";
+	} while (comparisonOddRowElementsLength >= 1);
+	
+	if (noOfFaculties === 0) {
+		
+	}
+	
+	document.getElementById("faculty-name-row-content").innerHTML = '';
+	document.getElementById("university-name-row-content").innerHTML = '';
+	document.getElementById("faculty-avgrating-row-content").innerHTML = '';
+	document.getElementById("faculty-recommend-row-content").innerHTML = '';
+	document.getElementById("faculty-difficulty-row-content").innerHTML = '';
+	document.getElementById("faculty-courses-row-content").innerHTML = '';
+	document.getElementById("faculty-jobs-row-content").innerHTML = '';
+	document.getElementById("faculty-accommodation-row-content").innerHTML = '';
+	document.getElementById("faculty-organisations-row-content").innerHTML = '';
+	document.getElementById("faculty-facilities-row-content").innerHTML = '';
+	document.getElementById("faculty-time-row-content").innerHTML = '';
+
+	var i;
+	for (i in response.result.faculties) {
+		var facultyResponse = response.result.faculties[i];
+		
+		console.log(facultyResponse);
+		
+		var facultyId = facultyResponse.facultyId;
+		var facultyName = facultyResponse.facultyName;
+		var universityNameFront;
+		var universityName = facultyResponse.universityName;
+		if (universityName.length > 43) {
+			universityNameFront = universityName.substring(0, 43).concat('...');
+		} else {
+			universityNameFront = universityName;
+		}
+		var universityNameTooltipTitle = universityName.replaceAll("\"", "");
+		var facultyCity = facultyResponse.facultyCity;
+		var facultyLogo = backendUrlRoot + "/v1/faculty/" + facultyResponse.facultyId + "/logo";	
+		
+		var avgRating = facultyResponse.avgRating ? facultyResponse.avgRating.toFixed(1) : "N/A";
+		
+		var countRev = facultyResponse.countRev;
+		var countRevText;
+		if (!countRev) {
+			countRevText = "";
+		} else if (countRev === 1) {
+			countRevText = "(1 evaluare)";
+		} else {
+			countRevText = "(" + countRev + " evaluări)";
+		}
+		
+		var wouldRecommend = facultyResponse.percentageWouldRecommend ? facultyResponse.percentageWouldRecommend.toFixed(0)+"%" : "N/A";
+		var avgDifficulty = facultyResponse.avgDifficulty ? facultyResponse.avgDifficulty : "N/A";
+		
+		var avgRatingCoursesAndLecturers = facultyResponse.avgRatingCoursesAndLecturers ? facultyResponse.avgRatingCoursesAndLecturers.toFixed(1) : "N/A";
+		var avgRatingJobProspects = facultyResponse.avgRatingJobProspects ? facultyResponse.avgRatingJobProspects.toFixed(1) : "N/A";
+		var avgRatingStudentOrganisations = facultyResponse.avgRatingStudentOrganisations ? facultyResponse.avgRatingStudentOrganisations.toFixed(1) : "N/A";
+		var avgRatingAccomodation = facultyResponse.avgRatingAccomodation ? facultyResponse.avgRatingAccomodation.toFixed(1) : "N/A";
+		var avgRatingFacultyFacilities = facultyResponse.avgRatingFacultyFacilities ? facultyResponse.avgRatingFacultyFacilities.toFixed(1) : "N/A";
+		<!-- var avgRatingStudentSupport = facultyResponse.avgRatingStudentSupport ? facultyResponse.avgRatingStudentSupport.toFixed(1) : "N/A"; -->
+		var avgRatingTimeBalance = facultyResponse.avgRatingTimeBalance ? facultyResponse.avgRatingTimeBalance.toFixed(1) : "N/A";
+		
+		var urlProfileRedirect = "./faculty-profile.html?id=";
+
+		document.getElementById("faculty-name-row-content").innerHTML += (
+	'									<div class="comparison-cell-faculty ' + collColumnWidth + '"> '
+	+' 										<br> '
+	+' 										<div class="row"> '
+	+' 											<div class="col-xs-3">	 '
+	+' 												<div data-toggle="tooltip" title="Salvează" class="save"> '
+	+' 													<i class="far fa-bookmark"></i> '
+	+' 												</div> '
+	+' 											</div> '
+	+' 											<div class="col-xs-3 col-xs-offset-6">	 '
+	+' 												<div class="close"> '
+	+' 													<i class="fa fa-close" onclick="removeFromCompare(&quot;'+facultyId+'&quot;)"></i> '
+	+' 												</div> '
+	+' 											</div> '
+	+' 										</div>	 '
+	+' 										<div class="row"> '
+	+' 											<div class="col-xs-4 col-xs-offset-4">															 '
+	+' 												<div class="img-faculty-logo-comparison-container">	'
+	+' 													<a href="' + urlProfileRedirect + facultyId + '"><img class="img-faculty-logo-comparison" src= "' + facultyLogo + '"></img></a>													 '
+	+' 												</div> '	
+	+' 											</div> '
+	+' 										</div>													 '
+	+' 										<div class="row"> '
+	+' 											<div class="col-xs-12"> '
+	+' 												<a href="' + urlProfileRedirect + facultyId + '"><h5><b>' + facultyName + '</b></h5></a> '
+	+' 											</div> '
+	+' 										</div> '
+	+' 									</div> ');
+	
+		document.getElementById("university-name-row-content").innerHTML += (	
+	' 									<div class="comparison-cell ' + collColumnWidth + '">													 '
+	+' 										<div class="row"> '
+	+' 											<div class="col-xs-12"> '
+	+' 												<small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> '
+	+' 												<br> '
+	+' 												<small class="text-muted">' + facultyCity + '</small> '
+	+' 											</div> '
+	+' 										</div> '
+	+' 									</div> ');
+	
+		document.getElementById("faculty-avgrating-row-content").innerHTML += (	
+	' 									<div class="comparison-cell ' + collColumnWidth + '"> '
+	+' 										<div class="center"> '
+	+' 											<i class="fa fa-star" style="color: orange; display: inline; vertical-align: middle;"></i> '
+	+' 											<span style="color: orange; display: inline; vertical-align: middle;"><b>' + avgRating + '</b></span> '
+	+' 											<h6 style="display: inline; vertical-align: middle;">' + countRevText + '</h6> '
+	+' 										</div> '
+	+' 									</div> ');
+	
+		document.getElementById("faculty-recommend-row-content").innerHTML += (	
+	' 									<div class="comparison-cell ' + collColumnWidth + '"> '
+	+' 										<span class="center">' + wouldRecommend + '</span> '
+	+' 									</div> ');
+	
+		document.getElementById("faculty-difficulty-row-content").innerHTML += (	
+	' 									<div class="comparison-cell ' + collColumnWidth + '"> '
+	+' 										<span class="center">' + avgDifficulty + '</span> '
+	+' 									</div> ');
+	
+		document.getElementById("faculty-courses-row-content").innerHTML += (	
+	' 									<div class="comparison-cell ' + collColumnWidth + '"> '
+	+' 										<div class="center"> '
+	+' 											<i class="fa fa-star" style="color: orange; display: inline; vertical-align: middle;"></i> '
+	+' 											<span style="color: orange; display: inline; vertical-align: middle;"><b>' + avgRatingCoursesAndLecturers + '</b></span> '
+	+' 										</div> '
+	+' 									</div> ');
+	
+		document.getElementById("faculty-jobs-row-content").innerHTML += (	
+	' 									<div class="comparison-cell ' + collColumnWidth + '"> '
+	+' 										<div class="center"> '
+	+' 											<i class="fa fa-star" style="color: orange; display: inline; vertical-align: middle;"></i> '
+	+' 											<span style="color: orange; display: inline; vertical-align: middle;"><b>' + avgRatingJobProspects + '</b></span> '
+	+' 										</div> '
+	+' 									</div> ');
+	
+		document.getElementById("faculty-accommodation-row-content").innerHTML += (	
+	' 									<div class="comparison-cell ' + collColumnWidth + '"> '
+	+' 										<div class="center"> '
+	+' 											<i class="fa fa-star" style="color: orange; display: inline; vertical-align: middle;"></i> '
+	+' 											<span style="color: orange; display: inline; vertical-align: middle;"><b>' + avgRatingAccomodation + '</b></span> '
+	+' 										</div> '
+	+' 									</div> ');
+	
+		document.getElementById("faculty-organisations-row-content").innerHTML += (	
+	' 									<div class="comparison-cell ' + collColumnWidth + '"> '
+	+' 										<div class="center"> '
+	+' 											<i class="fa fa-star" style="color: orange; display: inline; vertical-align: middle;"></i> '
+	+' 											<span style="color: orange; display: inline; vertical-align: middle;"><b>' + avgRatingStudentOrganisations + '</b></span> '
+	+' 										</div> '
+	+' 									</div> ');
+	
+		document.getElementById("faculty-facilities-row-content").innerHTML += (	
+	' 									<div class="comparison-cell ' + collColumnWidth + '"> '
+	+' 										<div class="center"> '
+	+' 											<i class="fa fa-star" style="color: orange; display: inline; vertical-align: middle;"></i> '
+	+' 											<span style="color: orange; display: inline; vertical-align: middle;"><b>' + avgRatingFacultyFacilities + '</b></span> '
+	+' 										</div> '
+	+' 									</div> ');
+	
+		document.getElementById("faculty-time-row-content").innerHTML += (	
+	' 									<div class="comparison-cell ' + collColumnWidth + '"> '
+	+' 										<div class="center"> '
+	+' 											<i class="fa fa-star" style="color: orange; display: inline; vertical-align: middle;"></i> '
+	+' 											<span style="color: orange; display: inline; vertical-align: middle;"><b>' + avgRatingTimeBalance + '</b></span> '
+	+' 										</div> '
+	+' 									</div> ');
+	
+	
+	}
+
+}
+
+
+
+
+</script>
+
+<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+
+<script src="./bootstrap3/js/bootstrap.js" type="text/javascript"></script>
+
+<!--  Plugins -->
+<script src="./assets/js/ct-paper-checkbox.js"></script>
+<script src="./assets/js/ct-paper-radio.js"></script>
+<script src="./assets/js/bootstrap-select.js"></script>
+<script src="./assets/js/bootstrap-datepicker.js"></script>
+
+<script src="./assets/js/ct-paper.js"></script>
+    
+</html>

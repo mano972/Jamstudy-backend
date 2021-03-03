@@ -47,6 +47,9 @@
 				  <li>
 					  <a href="./search-results.html" class="btn btn-simple">Facultăți</a>
 				  </li>
+				   <li>
+					  <a href="./faculty-comparison.html" class="btn btn-simple">Compară</a>
+				  </li>
 				  <li>
 					  <a href="./contact-page.html" class="btn btn-simple">Contact</a>
 				  </li>
@@ -230,6 +233,11 @@
                                 Facultăți
                             </a>
                         </li>
+						<li>
+                            <a href="./faculty-comparison.html">
+                                Compară
+                            </a>
+                        </li>
                         <li>
                             <a href="./contact-page.html">
                                Contact
@@ -292,9 +300,6 @@ $(document).ready(function() {
 	facultyId = queryParams.get("id");
 	getFaculty();
 	getReviews(false);
-
-	  <!-- updateDonutChart('#donut-chart-1', 57, true);     -->
-	  <!-- updateDonutChart('#donut-chart-2', 15, true); -->
   
 });
 
@@ -305,6 +310,12 @@ function addHash(obj) {
 }
 
 function updateDonutChart (el, percent, donut) {
+	var percentText = percent;
+	if (percent === "N/A") {
+		percent = 0;
+		percentText = "N/A";
+		$(el + ' .smaller').text("");
+	}
     percent = Math.round(percent);
     if (percent > 100) {
         percent = 100;
@@ -329,7 +340,7 @@ function updateDonutChart (el, percent, donut) {
         $(el + ' .left-side').css('border-width', '0.5em');
         $(el + ' .shadow').css('border-width', '0.5em');
     }
-    $(el + ' .num').text(percent);
+    $(el + ' .num').text(percentText);
     $(el + ' .left-side').css('transform', 'rotate(' + deg + 'deg)');
 }
 
@@ -515,7 +526,7 @@ function loadGeneralReviewCard(response) {
 			countRevText = "(" + countRev + " evaluări)";
 		}
 		
-		var wouldRecommend = response.result.percentageWouldRecommend ? response.result.percentageWouldRecommend.toFixed(0) : "0";
+		var wouldRecommend = response.result.percentageWouldRecommend ? response.result.percentageWouldRecommend.toFixed(0) : "N/A";
 		var avgDifficulty = response.result.avgDifficulty;
 		var avgDifficultyText;
 		if (avgDifficulty) {
@@ -532,7 +543,7 @@ function loadGeneralReviewCard(response) {
 		var avgRatingStudentOrganisations = response.result.avgRatingStudentOrganisations ? response.result.avgRatingStudentOrganisations.toFixed(1) : "N/A";
 		var avgRatingAccomodation = response.result.avgRatingAccomodation ? response.result.avgRatingAccomodation.toFixed(1) : "N/A";
 		var avgRatingFacultyFacilities = response.result.avgRatingFacultyFacilities ? response.result.avgRatingFacultyFacilities.toFixed(1) : "N/A";
-		var avgRatingStudentSupport = response.result.avgRatingStudentSupport ? response.result.avgRatingStudentSupport.toFixed(1) : "N/A";
+		<!-- var avgRatingStudentSupport = response.result.avgRatingStudentSupport ? response.result.avgRatingStudentSupport.toFixed(1) : "N/A"; -->
 		var avgRatingTimeBalance = response.result.avgRatingTimeBalance ? response.result.avgRatingTimeBalance.toFixed(1) : "N/A";
 		
 		var countRev1Star = response.result.countRev1Star ? response.result.countRev1Star : 0;
