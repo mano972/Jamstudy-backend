@@ -585,7 +585,7 @@
 <footer class="footer">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-sm-9">
+            <div class="col-md-6 col-sm-7">
                 <div class="links">
                     <ul class="uppercase-links">
                         <li>
@@ -618,7 +618,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-md-offset-2 col-sm-2 col-sm-offset-1">
+            <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
                 <div class="social-area">
                         <a href="http://twitter.com" target="_blank"><button class="btn btn-icon btn-fill btn-twitter">
                             <i class="fa fa-twitter"></i>
@@ -685,7 +685,6 @@ function loadFaculty(){
           url: backendUrl,
           type: "GET",
           success: function(response) {
-            console.log(response);
 			
 			if (response.control.errorCode === 0) {
 				var facultyName = response.result.facultyName;
@@ -721,27 +720,7 @@ function loadFaculty(){
 										+'</div>'
 								+'</div>');
 				
-			} 
-			<!-- else { -->
-				<!-- console.log(response.control.errorDescription); -->
-				<!-- var defaultErrorImg = "C://logos_jamstudy/default_image.png"; -->
-				
-				<!-- document.getElementById("review-faculty-main").innerHTML = ''; -->
-				<!-- document.getElementById("review-faculty-main").innerHTML += (							 -->
-							<!-- '<div class="row">' -->
-							<!-- +'	<div class="col-md-2 col-sm-2 col-xs-3">' -->
-							<!-- +'		<div class="row">' -->
-							<!-- +'			<a href="./faculty-profile.html">		'												 -->
-							<!-- +'				<img id="review-faculty-logo" class="img-faculty-logo" src="' + defaultErrorImg + '" onerror="this.onerror=null;this.src=' + defaultErrorImg + '" style="max-width: 85%;"></img>' -->
-							<!-- +'			</a>' -->
-							<!-- +'		</div>' -->
-							<!-- +'	</div>' -->
-							<!-- +'	<div class="form-group col-md-10 col-xs-9" style="display:inline; vertical-align: middle;">' -->
-							<!-- +'		<h5>Numele facultății*</h5>' -->
-							<!-- +'		<input id="review-faculty-name" type="text" value="" placeholder="" class="form-control" required oninvalid="this.setCustomValidity(\'Câmp obligatoriu\')" />' -->
-							<!-- +'	</div>' -->
-							<!-- +'</div>'); -->
-			<!-- } -->
+			}
 			
 			var licensePrograms = response.result.licensePrograms;
 			var masterPrograms = response.result.masterPrograms;
@@ -780,11 +759,6 @@ function loadFaculty(){
 				}
 				programNameMaster.set(domain, programsForDomain);
 			}
-			
-			console.log(domainsOfLicense);
-			console.log(programNameLicense);
-			console.log(domainsOfMaster);
-			console.log(programNameMaster);
 
           },
           error: function(error) {
@@ -961,7 +935,6 @@ function postReview(){
 		   isUserWorking: userWorking,
 		   userEmail: userEmail
 		};
-		console.log(review);
 		
 		var backendUrl = new URL(backendUrlRoot + "/v1/review/" + facultyId);
 		
