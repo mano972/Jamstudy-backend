@@ -546,7 +546,7 @@ function addToCompare(el, facultyId, isParent) {
 		} else {
 			facultyIds = [];
 		}
-		if (!facultyIds.includes(facultyId)) {
+		if (facultyIds.length <= 20 && !facultyIds.includes(facultyId)) {
 			facultyIds.push(facultyId);
 		}
 		localStorage.setItem("faculty-comparison-items", facultyIds);

@@ -153,40 +153,46 @@ body.loading .modal {
 }
 
 .comparison-cell {
+	width: 300px;
+	border-left: 1px solid #f0edf0;
+}
+
+@media (max-width:992px) {
+  .comparison-cell {
+	width: 150px;
+  }
+}
+
+.comparison-cell-standard {
   min-height: 54px;
-  width: 300px;
-  border-left: 1px solid #f0edf0;
 }
 
 .comparison-cell-faculty {
   min-height: 150px;
-  width: 300px;
-  border-left: 1px solid #f0edf0;
 }
 
 .comparison-header-cell { 
 	min-height: 54px;
 	background-color: #f0f0f0;
 	color: #51636e;
-	width: 300px;
 }
 
 .comparison-header-cell-blank { 
 	min-height: 1px;
 	background-color: white;
-	width: 300px;
+}
+
+.comparison-row {
+	width: 1500px;
+	overflow: auto;
 }
 
 .comparison-even-row { 
 	background-color: white;
-	width: 1500px;
-	overflow: auto;
 }
 
 .comparison-odd-row { 
 	background-color: #f7f7f7;
-	width: 1500px;
-	overflow: auto;
 }
 
 .ranking-t1 {
@@ -810,7 +816,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
   cursor: pointer;
   width: 40px;
   height: 40px;
-  margin-top: auto;
+  margin-top: auto !important;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='126.729' height='126.73'%3e%3cpath fill='%23e3e3e3' d='M121.215 44.212l-34.899-3.3c-2.2-.2-4.101-1.6-5-3.7l-12.5-30.3c-2-5-9.101-5-11.101 0l-12.4 30.3c-.8 2.1-2.8 3.5-5 3.7l-34.9 3.3c-5.2.5-7.3 7-3.4 10.5l26.3 23.1c1.7 1.5 2.4 3.7 1.9 5.9l-7.9 32.399c-1.2 5.101 4.3 9.3 8.9 6.601l29.1-17.101c1.9-1.1 4.2-1.1 6.1 0l29.101 17.101c4.6 2.699 10.1-1.4 8.899-6.601l-7.8-32.399c-.5-2.2.2-4.4 1.9-5.9l26.3-23.1c3.8-3.5 1.6-10-3.6-10.5z'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: center;
@@ -8892,12 +8898,12 @@ $ct-series-colors: (
 }
 
 #content-top-faculty {
-	height:640px;
+	height:650px;
 	overflow-y: auto;
 }
 
 #content-runner-up-faculties {
-	height:640px; 
+	height:665px; 
 	overflow-y: auto;
 }
 
@@ -8943,7 +8949,7 @@ $ct-series-colors: (
   z-index: 1;
   padding: 8px;
   min-height:185px; 
-  max-height: 225px; 
+  max-height: 250px; 
   overflow-y: auto; 
   text-overflow: ellipsis;
 }

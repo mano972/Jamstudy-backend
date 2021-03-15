@@ -101,8 +101,8 @@
 																	<option value="facultyName,desc">Facultate descendent</option>
 																	<option value="facultyCity,asc">Oraș ascendent</option>
 																	<option value="facultyCity,desc">Oraș descendent</option>
-																	<option value="avgRating,asc">Rating ascendent</option>
-																	<option value="avgRating,desc">Rating descendent</option>
+																	<option value="avgRating,asc">Notă ascendent</option>
+																	<option value="avgRating,desc" selected="selected">Notă descendent</option>
 																</select>  
 															</div>
 														<!-- </div> -->
@@ -127,8 +127,8 @@
 																	<!-- <option value="facultyName,desc">Facultate descendent</option> -->
 																	<!-- <option value="facultyCity,asc">Oraș ascendent</option> -->
 																	<!-- <option value="facultyCity,desc">Oraș descendent</option> -->
-																	<!-- <option value="avgRating,asc">Rating ascendent</option> -->
-																	<!-- <option value="avgRating,desc">Rating descendent</option> -->
+																	<!-- <option value="avgRating,asc">Notă ascendent</option> -->
+																	<!-- <option value="avgRating,desc">Notă descendent</option> -->
 																<!-- </select>   -->
 														<!-- </div> -->
 													<!-- </div> -->
@@ -604,7 +604,7 @@ function addToCompare(el, facultyId, isParent) {
 		} else {
 			facultyIds = [];
 		}
-		if (!facultyIds.includes(facultyId)) {
+		if (facultyIds.length <= 20 && !facultyIds.includes(facultyId)) {
 			facultyIds.push(facultyId);
 		}
 		localStorage.setItem("faculty-comparison-items", facultyIds);

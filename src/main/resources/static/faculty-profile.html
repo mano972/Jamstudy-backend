@@ -72,11 +72,9 @@
 					<div class="faculty-profile-card-fixed col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 col-xs-offset-0">
 						<div class="round-top img-faculty-cover-profile">
 						</div>
-						
 					</div>
 				</div>
 			</div> 
-
 			<div class="container-fluid">
 				<div class="row">
 					<div id="faculty-profile-header" class="faculty-profile-card-fixed col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 col-xs-offset-0">
@@ -376,6 +374,7 @@ function getFaculty() {
           },
           error: function(error) {
             console.log(error);
+			location.href = "./error.html";
           }
         });
 }
