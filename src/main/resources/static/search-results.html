@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="./assets/img/favicon.ico">
+	<link rel="icon" type="image/png" href="./assets/img/graduation_cap_small.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
 	<title>UniStart</title>
@@ -237,6 +237,26 @@
 									<!-- </div> -->
 								<!-- </div>  -->
 							<!-- </div> -->
+							
+							<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+								<div class="modal-content">
+								  <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<div id="modal-header-text">
+										<i class="far fa-envelope fa-2x"></i>
+									</div>
+								  </div>
+								  <div id="modal-text" class="modal-body modal-info text-center">
+									&nbsp;
+								  </div>
+								  <div class="modal-footer">
+									   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+								  </div>
+								</div>
+							  </div>
+							</div>
+							
 							
 				</div>  
 			</div>     
@@ -562,7 +582,7 @@ function loadData(loadMore) {
 				var addReviewRedirectUrl = "./add-review.html?id=" + facultyId;
 		
 			
-				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-3 col-xs-offset-0"> <a href="' + urlProfileRedirect + facultyId + '"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo"></img> </a> </div> <div class="col-xs-9 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <h6 id="university-name-' + i + '">' + universityName + '</h6> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6 save"> <i class="far fa-bookmark fa-lg" style="margin-right: 7px"></i><span>Salvează</span> </div> <div class="col-xs-6 compare compare-end" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"> <i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </div> </div> </div> </div> </div> </div>');
+				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-2 col-sm-offset-0 col-xs-3 col-xs-offset-0"> <a href="' + urlProfileRedirect + facultyId + '"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo"></img> </a> </div> <div class="col-xs-9 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <h6 id="university-name-' + i + '">' + universityName + '</h6> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i><span>Salvează</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div>');
 
 			}
 			
@@ -577,24 +597,22 @@ function loadMore() {
 	loadData(true);
 }
 
-function addToCompare(el, facultyId, isParent) {
+function addToCompare(button, facultyId) {
 
-	if (isParent) {
-		el = $(el).children()[0];
-	}
+	var icon = $(button).children()[0];
 	
 	var compareIcon = "fas fa-plus-circle fa-lg";
 	var compareCheckIcon = "fas fa-check-circle fa-lg";
 	
-	if ($(el).hasClass(compareCheckIcon)) {
+	if ($(icon).hasClass(compareCheckIcon)) {
 		var urlComparisonRedirect = "./faculty-comparison.html";
 		location.href = urlComparisonRedirect;
 		return;
 	}
 	
-	$(el).removeClass(compareIcon);
-	$(el).addClass(compareCheckIcon);
-	el.nextSibling.innerHTML = "Vezi Comparaţii";
+	$(icon).removeClass(compareIcon);
+	$(icon).addClass(compareCheckIcon);
+	icon.nextSibling.innerHTML = "Vezi Comparaţii";
 	
 	if (typeof(Storage) !== "undefined") {
 		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
@@ -612,6 +630,13 @@ function addToCompare(el, facultyId, isParent) {
 	  // Sorry! No Web Storage support..
 	}
 
+}
+
+function addToFavorites(el) {
+	el.setAttribute("data-toggle", 'modal');
+	el.setAttribute("data-target", '#general-modal');
+	document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation fa-2x"></i>';
+	document.getElementById('modal-text').innerHTML = "Funcționalitatea va fi implementată în curând.";
 }
 
 

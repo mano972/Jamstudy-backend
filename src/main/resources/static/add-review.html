@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="./assets/img/favicon.ico">
+	<link rel="icon" type="image/png" href="./assets/img/graduation_cap_small.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
 	<title>UniStart</title>
@@ -70,7 +70,7 @@
 									<div class="content">
 										<img id="floating-card-icon-2" src="./assets/img/floating-card-icon.png"></img>
 										<h4>Evaluează experienţa la această facultate</h4>
-										<h5>Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii ce se întâmplă în fiecare din cele pe care le urmarești. Să ai informații din interior despre cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum (sau, poate, o mie de elevi). Evaluarea ta poate face diferența între o decizie buna și o decizie total greșita a unui elev. Durează doar un minut.</h5>
+										<h5>Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii ce se întâmplă în fiecare din cele pe care le urmarești. Să ai informații din interior despre cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum (sau, poate, o mie de elevi). Evaluarea ta poate face diferența între o decizie bună și o decizie total greșita a unui elev. Durează doar un minut.</h5>
 										<div id="progress-2" class="progress">
 											<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
 												<span><b>Pasul 1 din 3</b></span>
@@ -563,7 +563,7 @@
 								  <div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 									<div id="add-review-header-text">
-										<i class="far fa-envelope fa-3x"></i>
+										<i class="far fa-envelope fa-2x"></i>
 									</div>
 								  </div>
 								  <div id="add-review-modal-text" class="modal-body modal-info text-center">
@@ -938,6 +938,10 @@ function postReview(){
 		
 		var backendUrl = new URL(backendUrlRoot + "/v1/review/" + facultyId);
 		
+		nextbutton.setAttribute("data-toggle", 'modal');
+		nextbutton.setAttribute("data-target", '#add-review-modal');
+		document.getElementById('add-review-modal-text').innerHTML = "Se procesează...";
+		
 		$.ajax({
 			url: backendUrl,
 			type: 'POST',
@@ -946,8 +950,6 @@ function postReview(){
 			crossDomain: true,
 			data: JSON.stringify(review),
 			success: function (data) {
-				nextbutton.setAttribute("data-toggle", 'modal');
-				nextbutton.setAttribute("data-target", '#add-review-modal');
 				document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost adăugată cu succes";
 				$("#add-review-modal").on("hidden.bs.modal", function () {
     				var urlProfileRedirect = "./faculty-profile.html?id=" + facultyId;
@@ -956,9 +958,7 @@ function postReview(){
 			},
 			error: function(error) {
 				console.log(error);
-				nextbutton.setAttribute("data-toggle", 'modal');
-				nextbutton.setAttribute("data-target", '#add-review-modal');
-				document.getElementById('add-review-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+				document.getElementById('add-review-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
 				document.getElementById('add-review-modal-text').innerHTML = "A apărut o eroare. Evaluarea nu a putut fi adăugată cu succes.";
 				$("#add-review-modal").on("hidden.bs.modal", function () {
 					var urlProfileRedirect = "./faculty-profile.html?id=" + facultyId;

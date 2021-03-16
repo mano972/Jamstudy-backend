@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="./assets/img/favicon.ico">
+	<link rel="icon" type="image/png" href="./assets/img/graduation_cap_small.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
 	<title>UniStart</title>
@@ -235,7 +235,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <button id="newsletter-button" class="btn btn-info btn-block btn-fill" data-toggle="modal" data-target="#newsletter-modal">Abonează-mă</button>
+                                        <button id="newsletter-button" class="btn btn-info btn-block btn-fill" data-toggle="modal" data-target="#general-modal">Abonează-mă</button>
                                     </div>
                                 </div>
                             </form>
@@ -249,17 +249,17 @@
                 </div>
             </div>
 			
-			<div class="modal fade" id="newsletter-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
 				<div class="modal-content">
 				  <div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<div id="newsletter-header-text">
-						<i class="far fa-envelope fa-3x"></i>
+					<div id="modal-header-text">
+						<i class="far fa-envelope fa-2x"></i>
 					</div>
 				  </div>
-				  <div id="newsletter-modal-text" class="modal-body modal-info text-center">
-					.
+				  <div id="modal-text" class="modal-body modal-info text-center">
+					&nbsp;
 				  </div>
 				  <div class="modal-footer">
 					   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
@@ -447,7 +447,7 @@ function loadTopFaculties() {
 								reviewTextFront = reviewText.concat(' <strong class="review-ellipsis"> ...</strong>');	
 							}	
 								
-							cardReviewStr = '<div class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + reviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span class="btn btn-simple btn-info" >Vezi tot</span>							</div>											</div>';
+							cardReviewStr = '<div class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + reviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span class="btn btn-simple btn-info temp-display">Vezi tot</span>							</div>											</div>';
 							
 						} else {
 							var noReviewsText = "Nu există evaluări";
@@ -455,7 +455,7 @@ function loadTopFaculties() {
 							cardReviewStr = '<div class="card-review-brief">			<div class="content" >			<p class="text-muted">' + noReviewsText + '</p>												</div>											</div>';
 						}
 						
-						document.getElementById("content-top-faculty").innerHTML += ('			<div class="img-first-place-banner">												<img src="./assets/img/trophy2_big.png" style="display:inline; vertical-align: middle; margin-right: 5px; width: 15%"></img>												<span class="label label-warning">Primul Loc</span>											</div>								<div class="row">												<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">													<a href="' + urlProfileRedirect + facultyIdTop +'">														<img src="' + logoSrcTop + '" class="img-faculty-logo-home-top"></img>													</a>												</div>												<div class="col-xs-8" style="display:inline; vertical-align: middle;">													<a href="' + urlProfileRedirect + facultyIdTop + '">														<h5 id="top-faculty"><strong>' + facultyNameTop + '</strong></h5>													</a>													<h6 id="top-university">' +  universityNameTop + '</h6>													<small id="top-city" class="text-muted">' + facultyCityTop + '</small>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + avgRatingTop +'</strong> <strong><a href="#">' + countRevTextTop +'</a></strong>																									</div>											</div>											<br>											<br>	 <br>										<div class="row">												<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-7 col-md-8 col-md-offset-4 col-lg-5 col-lg-offset-7">													<a href="' + addReviewRedirectUrlTop + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>												</div>											</div>																						' + cardReviewStr + '																<br>											<div class="row">												<div class="col-xs-4 save save-top-faculty">													<i class="far fa-bookmark fa-lg" style="margin-right: 8px"></i><span>Salvează</span>												</div>												<div class="col-xs-4 col-xs-offset-4 col-md-4 col-md-offset-4 compare compare-end compare-top-faculty" onclick="addToCompare(this, &quot;'+facultyIdTop+'&quot;, true)">													<i class="fas fa-plus-circle fa-lg" style="margin-right: 8px" ></i><span>Compară</span>												</div>											</div>								');
+						document.getElementById("content-top-faculty").innerHTML += ('			<div class="img-first-place-banner">												<img src="./assets/img/trophy2_big.png" style="display:inline; vertical-align: middle; margin-right: 5px; width: 15%"></img>												<span class="label label-warning">Primul Loc</span>											</div>								<div class="row">												<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">													<a href="' + urlProfileRedirect + facultyIdTop +'">														<img src="' + logoSrcTop + '" class="img-faculty-logo-home-top"></img>													</a>												</div>												<div class="col-xs-8" style="display:inline; vertical-align: middle;">													<a href="' + urlProfileRedirect + facultyIdTop + '">														<h5 id="top-faculty"><strong>' + facultyNameTop + '</strong></h5>													</a>													<h6 id="top-university">' +  universityNameTop + '</h6>													<small id="top-city" class="text-muted">' + facultyCityTop + '</small>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + avgRatingTop +'</strong> <strong><a href="#">' + countRevTextTop +'</a></strong>																									</div>											</div>											<br>											<br>	 <br>										<div class="row">			<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-7 col-md-8 col-md-offset-4 col-lg-5 col-lg-offset-7">													<a href="' + addReviewRedirectUrlTop + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>												</div>						</div>																						' + cardReviewStr + '																<br>											<div class="row">												<div class="col-xs-4 save-top-faculty">													<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i><span>Salvează</span></button>											</div>												<div class="col-xs-4 col-xs-offset-4 col-md-4 col-md-offset-4 compare-top-faculty text-right">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button>								</div>											</div>								');
 				   },
 			   });
 				
@@ -508,7 +508,7 @@ function loadTopFaculties() {
 				}
 				 <!-- document.getElementById("content-runner-up-faculties").innerHTML += '<div class="top-separator"><span class="label ' + labelClass + '">' + position + '</span></div>';  -->
 			
-				document.getElementById("content-runner-up-faculties").innerHTML += ('<div class="row" style="margin-bottom: 8px;">												<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">													<a href="' + urlProfileRedirect + facultyId +'">														<img src="' + logoSrc + '"  class="img-faculty-logo-home" ></img>													</a>												</div>												<div class="col-xs-9" style="display:inline; vertical-align: middle;">					<div>								<a href="' + urlProfileRedirect + facultyId + '">														<h5><strong>' + facultyName + '</strong></h5>													</a>													<h6>' + universityName + '</h6>													<small class="text-muted">' + facultyCity + '</small>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + avgRating +'</strong> <strong><a href="#">' + countRevText +'</a></strong>  </div>	<div class="row">	<div class="col-xs-10 col-sm-7 col-md-7 col-lg-7" style="margin-top: 10px; ">													<a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>				</div>								</div>										</div>						<div class="col-xs-1">						<div data-toggle="tooltip" title="Salvează" class="text-center save" style="margin-top:10px;">													<i class="far fa-bookmark fa-lg" style="margin-right: 7px"></i>												</div>	<div data-toggle="tooltip" title="Compară" class="text-center compare" style="margin-top:85px;">													<i class="fas fa-plus-circle fa-lg" style="margin-right: 7px;" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, false)"></i>												</div>				</div>		</div>');
+				document.getElementById("content-runner-up-faculties").innerHTML += ('<div class="row" style="margin-bottom: 8px;">												<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">													<a href="' + urlProfileRedirect + facultyId +'">														<img src="' + logoSrc + '"  class="img-faculty-logo-home" ></img>													</a>												</div>												<div class="col-xs-9" style="display:inline; vertical-align: middle;">					<div>								<a href="' + urlProfileRedirect + facultyId + '">														<h5><strong>' + facultyName + '</strong></h5>													</a>													<h6>' + universityName + '</h6>													<small class="text-muted">' + facultyCity + '</small>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + avgRating +'</strong> <strong><a href="#">' + countRevText +'</a></strong>  </div>	<div class="row">	<div class="col-xs-10 col-sm-7 col-md-7 col-lg-7" style="margin-top: 10px; ">													<a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>				</div>								</div>										</div>						<div class="col-xs-1">			<div data-toggle="tooltip" title="Salvează"  class="text-center" style="margin-top:10px;">					<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i></button>												</div>	<div data-toggle="tooltip" title="Compară" class="text-center" style="margin-top:85px;">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, false)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i></button>												</div>				</div>		</div>');
 
 			}
 			
@@ -519,24 +519,24 @@ function loadTopFaculties() {
         });
 }
 
-function addToCompare(el, facultyId, isParent) {
+function addToCompare(button, facultyId, hasText) {
 
-	if (isParent) {
-		el = $(el).children()[0];
-	}
+	var icon = $(button).children()[0];
 	
 	var compareIcon = "fas fa-plus-circle fa-lg";
 	var compareCheckIcon = "fas fa-check-circle fa-lg";
 	
-	if ($(el).hasClass(compareCheckIcon)) {
+	if ($(icon).hasClass(compareCheckIcon)) {
 		var urlComparisonRedirect = "./faculty-comparison.html";
 		location.href = urlComparisonRedirect;
 		return;
 	}
 	
-	$(el).removeClass(compareIcon);
-	$(el).addClass(compareCheckIcon);
-	el.nextSibling.innerHTML = "Vezi Comparaţii";
+	$(icon).removeClass(compareIcon);
+	$(icon).addClass(compareCheckIcon);
+	if (hasText) {
+		icon.nextSibling.innerHTML = "Vezi Comparaţii";
+	}
 	
 	if (typeof(Storage) !== "undefined") {
 		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
@@ -554,6 +554,14 @@ function addToCompare(el, facultyId, isParent) {
 	  // Sorry! No Web Storage support..
 	}
 
+}
+
+
+function addToFavorites(el) {
+	el.setAttribute("data-toggle", 'modal');
+	el.setAttribute("data-target", '#general-modal');
+	document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation fa-2x"></i>';
+	document.getElementById('modal-text').innerHTML = "Funcționalitatea va fi implementată în curând.";
 }
 
 
@@ -595,8 +603,8 @@ document.getElementById("newsletter-button").onclick = function (e) {
 	e.preventDefault();
 	var email = document.getElementById("newsletter-email").value.trim();
 	if (!validateEmail(email)) {
-		document.getElementById('newsletter-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
-		document.getElementById('newsletter-modal-text').innerHTML = "Adresa de email nu este valida";
+		document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
+		document.getElementById('modal-text').innerHTML = "Adresa de email nu este validă";
 	} else {
 	var body = {
 	   email: email
@@ -612,20 +620,21 @@ document.getElementById("newsletter-button").onclick = function (e) {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (data) {
-			document.getElementById('newsletter-modal-text').innerHTML = "Abonarea s-a facut cu succes";
+		document.getElementById('modal-header-text').innerHTML = '<i class="far fa-envelope fa-2x"></i>';
+			document.getElementById('modal-text').innerHTML = "Abonarea s-a făcut cu succes";
 		},
 		error: function(error) {
 			console.log(error);
-			document.getElementById('newsletter-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+			document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
 			if (error.responseJSON) {
 				if (error.responseJSON.control) {
 					var errorDescription = error.responseJSON.control.errorDescription;
-					document.getElementById('newsletter-modal-text').innerHTML = errorDescription;
+					document.getElementById('modal-text').innerHTML = errorDescription;
 				} else {
-					document.getElementById('newsletter-modal-text').innerHTML = "Abonarea nu a reusit";
+					document.getElementById('modal-text').innerHTML = "Abonarea nu a reușit";
 				}
 			} else {
-				document.getElementById('newsletter-modal-text').innerHTML = "Abonarea nu a reusit";
+				document.getElementById('modal-text').innerHTML = "Abonarea nu a reușit";
 			}
 		}
 	});

@@ -157,18 +157,18 @@ body.loading .modal {
 	border-left: 1px solid #f0edf0;
 }
 
-@media (max-width:992px) {
-  .comparison-cell {
-	width: 150px;
-  }
-}
+/* @media (max-width:992px) { */
+  /* .comparison-cell { */
+	/* width: 150px; */
+  /* } */
+/* } */
 
 .comparison-cell-standard {
   min-height: 54px;
 }
 
 .comparison-cell-faculty {
-  min-height: 150px;
+  min-height: 200px;
 }
 
 .comparison-header-cell { 
@@ -967,6 +967,14 @@ input.ct-red + span + label + span.switch-right {
   background-color: #EB5E28;
 }
 
+.temp-display {
+	display: none;
+}
+
+.temp-visibility {
+	visibility: hidden;
+}
+
 .save-top-faculty {
     position: absolute;
     bottom: 20px;
@@ -974,20 +982,20 @@ input.ct-red + span + label + span.switch-right {
 }
 
 .save {
-	color: #ba9991;
+	color: #ad7365 !important;
 }
 
 .save:hover {
 	cursor: pointer;
-	color: #c22400;
+	color: #c22400 !important;
 }
 
 .save:active {
-	color: #c22400;
+	color: #c22400 !important;
 }
 
 .save:focus {
-	color: #c22400;
+	color: #c22400 !important;
 }
 
 .compare-top-faculty {
@@ -997,24 +1005,19 @@ input.ct-red + span + label + span.switch-right {
 }
 
 .compare {
-	color: #4071ad;
-}
-
-.compare.compare-end{
-	text-align: end;
+	color: #4071ad !important;
 }
 
 .compare:hover {
-	cursor: pointer;
-	color: #2f517a;
+	color: #2f517a !important;
 }
 
 .compare:active {
-	color: #2f517a;
+	color: #2f517a !important;
 }
 
 .compare:focus {
-	color: #2f517a;
+	color: #2f517a !important;
 }
 
 .like-review {
@@ -3100,6 +3103,7 @@ textarea.form-control {
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
   width: 105px;
   background-color: white;
+  margin-top: 10px;
 }
 
 .img-faculty-logo-home-top {
@@ -3109,6 +3113,7 @@ textarea.form-control {
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
   max-height: 105px;
   background-color: white;
+  margin-top: 10px;
 }
 
 .img-faculty-logo-profile-block {
@@ -6307,7 +6312,7 @@ body > .navbar-collapse.collapse {
 }
 
 .modal-info {
-	font-size: 22px;
+	font-size: 20px;
 }
 
 .modal-footer {
@@ -8898,13 +8903,19 @@ $ct-series-colors: (
 }
 
 #content-top-faculty {
-	height:650px;
+	height:665px;
 	overflow-y: auto;
 }
 
 #content-runner-up-faculties {
 	height:665px; 
 	overflow-y: auto;
+}
+
+#content-faculty-programs {
+	min-height: 260px; 
+	max-height: 750px; 
+	overflow-y: auto
 }
 
 @media (min-width:992px) {
