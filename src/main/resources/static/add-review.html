@@ -1031,11 +1031,11 @@ function validateForm() {
 	var countrow = document.getElementById("counter-row");
 	var countfield = document.getElementById('counter');
 	var counttext = document.getElementById('counter-text');
-	countfield.className = "error-message";
-	counttext.className = "error-message";
-	countrow.style.visibility = "visible";
 	if (!facultyName || facultyName.value == '') {
 	  // and set the current valid status to false
+	  countfield.className = "error-message";
+	  counttext.className = "error-message";
+	  countrow.style.visibility = "visible";
 	  countfield.innerHTML = "A apărut o eroare";
 	  counttext.innerHTML = "";
 	  
@@ -1043,6 +1043,9 @@ function validateForm() {
 	}
     if (generalReviewText.value.length < 30) {
       // and set the current valid status to false
+	  countfield.className = "error-message";
+	  counttext.className = "error-message";
+	  countrow.style.visibility = "visible";
 	  countfield.innerHTML = "Cel puțin 30 de caractere";
 	  counttext.innerHTML = "";
 	  
@@ -1050,6 +1053,9 @@ function validateForm() {
     }
 	if (document.querySelectorAll('input[name=rating]:checked').length === 0) {
 	  // and set the current valid status to false
+	  countfield.className = "error-message";
+	  counttext.className = "error-message";
+	  countrow.style.visibility = "visible";
 	  countfield.innerHTML = "Nota este obligatorie";
 	  counttext.innerHTML = "";
 	  
