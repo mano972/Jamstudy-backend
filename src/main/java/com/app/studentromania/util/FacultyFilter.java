@@ -211,6 +211,9 @@ public class FacultyFilter {
 	}
 
 	public String getFacultyCitiesClause() {
+		facultyCities.forEach(city -> {
+			city = city.replace(";", ",");
+		});
 		if (CollectionUtils.isEmpty(facultyCities)) {
 			return StringUtils.EMPTY;
 		}
