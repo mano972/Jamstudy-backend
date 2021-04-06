@@ -1,5 +1,6 @@
 package com.app.studentromania.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -211,12 +212,10 @@ public class FacultyFilter {
 	}
 
 	public String getFacultyCitiesClause() {
-		facultyCities.forEach(city -> {
-			city = city.replace(";", ",");
-		});
 		if (CollectionUtils.isEmpty(facultyCities)) {
 			return StringUtils.EMPTY;
 		}
+		facultyCities = replaceCharacters(facultyCities);
 		if (isJoin()) {
 			return " and f.facultyCity IN " + JsonArray.from(facultyCities);
 		}
@@ -272,6 +271,14 @@ public class FacultyFilter {
 				+ facultyCities + ", facultyDomains=" + facultyDomains + ", admissionType=" + admissionType
 				+ ", ratingFrom=" + ratingFrom + ", orderBy=" + orderBy + ", limit=" + limit + ", pageNumber="
 				+ pageNumber + ", offset=" + offset + ", join=" + join + "]";
+	}
+
+	private List<String> replaceCharacters(List<String> list) {
+		ArrayList<String> returnList = new ArrayList<>();
+		for (String entry : list) {
+			returnList.add(entry.replace(";", ","));
+		}
+		return returnList;
 	}
 
 }
