@@ -3131,7 +3131,7 @@ textarea.form-control {
 	margin-bottom: 15px;
 	position: absolute; 
 	top: -70px;
-	height: 300px;
+	max-height: 145px;
 	left: 50%;
     transform: translate(-50%, 0%);
   }
@@ -3146,7 +3146,7 @@ textarea.form-control {
 	border: 1px solid #f2f1da;
 	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
 	background-color: white;
-	max-height: 180px;
+	max-height: 170px;
 	position: absolute; 
 	top: -38px;
   }
