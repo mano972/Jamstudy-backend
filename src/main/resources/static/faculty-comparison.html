@@ -426,7 +426,7 @@ function loadComparisonTableContent(sortedResponse) {
 		}
 		
 		var wouldRecommend = facultyResponse.percentageWouldRecommend ? facultyResponse.percentageWouldRecommend.toFixed(0)+"%" : "N/A";
-		var avgDifficulty = facultyResponse.avgDifficulty ? facultyResponse.avgDifficulty : "N/A";
+		var avgDifficulty = facultyResponse.avgDifficulty ? facultyResponse.avgDifficulty.toFixed(1) : "N/A";
 		
 		var avgRatingCoursesAndLecturers = facultyResponse.avgRatingCoursesAndLecturers ? facultyResponse.avgRatingCoursesAndLecturers.toFixed(1) : "N/A";
 		var avgRatingJobProspects = facultyResponse.avgRatingJobProspects ? facultyResponse.avgRatingJobProspects.toFixed(1) : "N/A";
