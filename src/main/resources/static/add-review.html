@@ -894,7 +894,7 @@ function postReview(){
 		var userWorkingRadio = document.getElementsByName('work');
 		var userWorking;
 		for (var i = 0, length = userWorkingRadio.length; i < length; i++) {
-		  if (userWorkingRadio[i].checked) {
+		  if (userWorkingRadio[i].checked && userWorkingRadio[i].value != 2) {
 			userWorking = userWorkingRadio[i].value;
 			break;
 		  }
