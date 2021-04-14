@@ -71,6 +71,18 @@ public class ReviewController {
 		return reviewService.upvoteReview(reviewDTO).createRestResponse();
 	}
 
+	@DeleteMapping("/{reviewId}")
+	@VerifyAdmin
+	public ResponseEntity<String> deleteByReviewId(@PathVariable String reviewId) {
+		return reviewService.deleteAllReviews().createRestResponse();
+	}
+
+	@DeleteMapping("/faculty/{facultyId}")
+	@VerifyAdmin
+	public ResponseEntity<String> deleteByFacultyId(@PathVariable String facultyId) {
+		return reviewService.deleteAllReviews().createRestResponse();
+	}
+
 	@DeleteMapping
 	@VerifyAdmin
 	public ResponseEntity<String> deleteAllReviews() {

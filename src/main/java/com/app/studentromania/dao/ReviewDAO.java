@@ -40,7 +40,11 @@ public class ReviewDAO {
 		return reviewRepo.getFilteredReviewsByFacultyId(facultyId, reviewFilter);
 	}
 
-	public long countFilteredReviews(String facultyId, ReviewFilter reviewFilter) { 
+	public List<Review> getReviewsByFacultyId(String facultyId) {
+		return reviewRepo.getReviewsByFacultyId(facultyId);
+	}
+
+	public long countFilteredReviews(String facultyId, ReviewFilter reviewFilter) {
 		return reviewRepo.countFilteredReviewsByFacultyId(facultyId, reviewFilter);
 	}
 
@@ -133,6 +137,11 @@ public class ReviewDAO {
 		review.setUpdateDateWithCurrentDate();
 		reviewRepo.save(review);
 		LogUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was updated!");
+	}
+
+	public void deleteReview(Review review) {
+		reviewRepo.delete(review);
+		LogUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was deleted!");
 	}
 
 	public void deleteAllReviews() {

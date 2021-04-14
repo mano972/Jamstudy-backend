@@ -108,27 +108,13 @@ public class ReviewService {
 		reviewResponseDTO.setReviewId(review.getReviewId());
 		reviewResponseDTO.setFacultyId(review.getFacultyId());
 
-		// update faculty with new ratings
-
-		LogUtils.logMessage(LOGGER,
-				"Faculty " + faculty.getFacultyId() + " currently has the following review details. avgRating: "
-						+ faculty.getAvgRating() + " countRev: " + faculty.getCountRev() + " avgDifficulty: "
-						+ faculty.getAvgDifficulty() + " percentageWouldRecommend: "
-						+ faculty.getPercentageWouldRecommend());
-
 		// review document arrives late in database
 		while (!reviewDAO.getByReviewIdNoLog(review.getReviewId()).isPresent()) {
 
 		}
 
-		reviewDAO.updateReviewsDetailsForFaculty(faculty);
-		facultyDAO.updateFaculty(faculty);
-
-		LogUtils.logMessage(LOGGER,
-				"Faculty " + faculty.getFacultyId() + " was updated with the following review details. avgRating: "
-						+ faculty.getAvgRating() + " countRev: " + faculty.getCountRev() + " avgDifficulty: "
-						+ faculty.getAvgDifficulty() + " percentageWouldRecommend: "
-						+ faculty.getPercentageWouldRecommend());
+		// update faculty with new ratings
+		updateFacultyReviewDetails(faculty);
 
 		return ResponseDTO.createSuccessResponse(new JSONObject(reviewResponseDTO));
 	}
@@ -150,13 +136,11 @@ public class ReviewService {
 		reviewResponseDTO.setFacultyId(review.getFacultyId());
 
 		// update faculty with new ratings
-
 		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(reviewDTO.getFacultyId());
 		if (!facultyOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
 		}
 		Faculty faculty = facultyOpt.get();
-
 		updateFacultyReviewDetails(faculty);
 
 		return ResponseDTO.createSuccessResponse(new JSONObject(reviewResponseDTO));
@@ -220,8 +204,50 @@ public class ReviewService {
 		return ResponseDTO.createSuccessResponse(new JSONObject(reviewResponseDTO));
 	}
 
+	public ResponseDTO deleteByReviewId(String reviewId) {
+		Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewId);
+		if (!reviewOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
+		}
+		Review review = reviewOpt.get();
+		reviewDAO.deleteReview(review);
+
+		// update faculty with new ratings
+		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(review.getFacultyId());
+		if (!facultyOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
+		}
+		Faculty faculty = facultyOpt.get();
+		updateFacultyReviewDetails(faculty);
+
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
+	public ResponseDTO deleteByFacultyId(String facultyId) {
+		List<Review> reviews = reviewDAO.getReviewsByFacultyId(facultyId);
+		for (Review review : reviews) {
+			reviewDAO.deleteReview(review);
+		}
+
+		// update faculty with new ratings
+		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(facultyId);
+		if (!facultyOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
+		}
+		Faculty faculty = facultyOpt.get();
+		updateFacultyReviewDetails(faculty);
+
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
 	public ResponseDTO deleteAllReviews() {
 		reviewDAO.deleteAllReviews();
+		List<Faculty> faculties = facultyDAO.getAllFaculties();
+		// update all faculties with new ratings
+		for (Faculty faculty : faculties) {
+			updateFacultyReviewDetails(faculty);
+		}
+
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 

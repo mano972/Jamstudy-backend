@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9fe0e610-827f-d09d-70fb-bc62b79ddec4",
+		"_postman_id": "34d995b2-e0c3-4b6b-9f3d-d3d188cbb94f",
 		"name": "Jamstudy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -1287,6 +1287,93 @@
 									"key": "offset",
 									"value": "0"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete review (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/v1/review/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"review",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete reviews by faculty (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/v1/review/faculty/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"review",
+								"faculty",
+								"1"
 							]
 						}
 					},
