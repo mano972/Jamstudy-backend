@@ -431,11 +431,12 @@ function loadTopFaculties() {
 				   type: "GET",
 				   success: function(responseReview){
 				   
-				   var reviewId, userName, reviewDate, generalRating, reviewText;
+				   var reviewId, userName, reviewDate, formattedReviewDate, generalRating, reviewText;
 				   var cardReviewStr;
 				   
 						if (responseReview.result.reviews.length > 0) {
-							reviewId = responseReview.result.reviews[0].reviewId;;
+							reviewId = responseReview.result.reviews[0].reviewId;
+							formattedReviewDate = responseReview.result.reviews[0].formattedReviewDate ? responseReview.result.reviews[0].formattedReviewDate : "N/A";
 							userName = responseReview.result.reviews[0].userName ? responseReview.result.reviews[0].userName : "Anonim";
 							reviewDate = responseReview.result.reviews[0].reviewDate ? responseReview.result.reviews[0].reviewDate : "N/A";
 							generalRating = responseReview.result.reviews[0].generalRating ? responseReview.result.reviews[0].generalRating : "N/A";
@@ -447,7 +448,7 @@ function loadTopFaculties() {
 								reviewTextFront = reviewText.concat(' <strong class="review-ellipsis"> ...</strong>');	
 							}	
 								
-							cardReviewStr = '<div class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + reviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span class="btn btn-simple btn-info temp-display">Vezi tot</span>							</div>											</div>';
+							cardReviewStr = '<div class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span class="btn btn-simple btn-info temp-display">Vezi tot</span>							</div>											</div>';
 							
 						} else {
 							var noReviewsText = "Nu există evaluări";

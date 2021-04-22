@@ -8951,7 +8951,7 @@ $ct-series-colors: (
 
 .card-review-brief {
   border-radius: 0;
-  box-shadow: 0 0px 3px rgba(204, 197, 185, .5);
+  box-shadow: 0 3px 10px rgba(204, 197, 185, .5);
   background-color: #fffcf5;
   color: #252422;
   margin-top: 10px;
