@@ -569,7 +569,7 @@ function loadGeneralReviewCard(response) {
 				   type: "GET",
 				   success: function(responseReview){
 				   
-					   var reviewId, userName, reviewDate, generalRating, reviewText;
+					   var reviewId, userName, reviewDate, formattedReviewDate, generalRating, reviewText;
 					   var cardReviewStr = "";
 					   var seeAllReviewsButtonStr = "";
 					   
@@ -579,6 +579,7 @@ function loadGeneralReviewCard(response) {
 									reviewId = responseReview.result.reviews[i].reviewId;;
 									userName = responseReview.result.reviews[i].userName ? responseReview.result.reviews[i].userName : "Anonim";
 									reviewDate = responseReview.result.reviews[i].reviewDate ? responseReview.result.reviews[i].reviewDate : "N/A";
+									formattedReviewDate = responseReview.result.reviews[i].formattedReviewDate ? responseReview.result.reviews[i].formattedReviewDate : "N/A";
 									generalRating = responseReview.result.reviews[i].generalRating ? responseReview.result.reviews[i].generalRating : "N/A";
 									reviewText = responseReview.result.reviews[i].reviewText ? responseReview.result.reviews[i].reviewText : "N/A";
 									var reviewTextFront;
@@ -589,7 +590,7 @@ function loadGeneralReviewCard(response) {
 										reviewTextFront = reviewText.concat(' <strong class="review-ellipsis"> ...</strong>');
 									}
 									
-									cardReviewStr += '<div class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + reviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">&nbsp' + generalRating + '</strong>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display">Vezi tot</span>	 										</div>											</div>';
+									cardReviewStr += '<div class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">&nbsp' + generalRating + '</strong>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display">Vezi tot</span>	 										</div>											</div>';
 								}
 								seeAllReviewsButtonStr = '<div class="text-center">'
 +'															<a id="see-all-reviews" type="button" class="btn btn-warning" onclick="seeAllReviews()" style="color: orange;">Vezi toate evaluările</a>'
