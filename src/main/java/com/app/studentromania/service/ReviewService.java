@@ -101,7 +101,7 @@ public class ReviewService {
 		review.setReviewId(generatedId);
 		Date currentDate = new Date();
 		review.setReviewDate(currentDate);
-		review.setFormattedReviewDate(Utilities.getFormatedDate(currentDate));
+		review.setFormattedReviewDate(Utilities.getFormattedDate(currentDate));
 		mapToReview(reviewDTO, review);
 		reviewDAO.createReview(review);
 		ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
