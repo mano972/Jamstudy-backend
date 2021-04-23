@@ -1119,6 +1119,9 @@ function loadReviewsTab(response, loadMore) {
 			var userName = response.result.reviews[i].userName ? response.result.reviews[i].userName : "Anonim";
 			var formattedReviewDate = response.result.reviews[i].formattedReviewDate ? response.result.reviews[i].formattedReviewDate : "N/A";
 			var userStatus = response.result.reviews[i].userStatus ? response.result.reviews[i].userStatus.toLowerCase() : "";
+			if (userStatus === 'drop-out') {
+				userStatus = "";
+			}
 			var userDomainOfLicenseOrMaster = response.result.reviews[i].userDomainOfLicenseOrMaster ? response.result.reviews[i].userDomainOfLicenseOrMaster : "";
 			var userProgramName = response.result.reviews[i].userProgramName ? response.result.reviews[i].userProgramName : "";
 			var userYear = response.result.reviews[i].userYear ? response.result.reviews[i].userYear : "";
