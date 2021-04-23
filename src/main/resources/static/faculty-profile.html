@@ -525,7 +525,14 @@ function loadGeneralReviewCard(response) {
 			countRevText = "(" + countRev + " evaluări)";
 		}
 		
-		var wouldRecommend = response.result.percentageWouldRecommend ? response.result.percentageWouldRecommend.toFixed(0) : "N/A";
+		var wouldRecommend;
+		if (response.result.percentageWouldRecommend === 0) {
+			wouldRecommend = 0;
+		} else if (!response.result.percentageWouldRecommend) {
+			wouldRecommend = "N/A";
+		} else {
+			wouldRecommend = response.result.percentageWouldRecommend;
+		}
 		var avgDifficulty = response.result.avgDifficulty;
 		var avgDifficultyText;
 		if (avgDifficulty) {
