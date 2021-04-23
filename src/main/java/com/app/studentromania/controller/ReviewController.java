@@ -74,13 +74,13 @@ public class ReviewController {
 	@DeleteMapping("/{reviewId}")
 	@VerifyAdmin
 	public ResponseEntity<String> deleteByReviewId(@PathVariable String reviewId) {
-		return reviewService.deleteAllReviews().createRestResponse();
+		return reviewService.deleteByReviewId(reviewId).createRestResponse();
 	}
 
 	@DeleteMapping("/faculty/{facultyId}")
 	@VerifyAdmin
 	public ResponseEntity<String> deleteByFacultyId(@PathVariable String facultyId) {
-		return reviewService.deleteAllReviews().createRestResponse();
+		return reviewService.deleteByFacultyId(facultyId).createRestResponse();
 	}
 
 	@DeleteMapping
