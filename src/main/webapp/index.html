@@ -34,7 +34,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-		  <a class="navbar-brand" href="./">UNISTART</a>
+		  <a class="navbar-brand" href="./">
+				<img src="./assets/img/unistart_logo_small.png">
+		  </a>
         </div>
     
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -77,7 +79,7 @@
 				<div class="row">
 						<div class="col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0">
 									<div class="content">
-										<h5 class="title">Caută facultate</h5>
+										<h5 class="title">Caută după cuvinte cheie</h5>
 										<div class="form-group">
 											<input id="search-input" type="text" value="" placeholder="Facultate, Universitate, Oraș ...." class="form-control" spellcheck="false"/>
 										</div>	
@@ -156,41 +158,43 @@
 					<div class="row">
 							<div class ="list-options col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
 								<div class="col-lg-offset-0 col-lg-3 col-md-offset-0 col-md-5 col-sm-6 col-xs-12">
+										<span><b></b></span><br>
 										<select id="top-by-domain" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadTopFaculties()">
-											<option value="Toate">Toate domeniile</option>
-											<option value="Științe Economice">Științe Economice</option>
-											<option value="Științe Inginerești">Științe Inginerești</option>
-											<option value="Științe Politice și Comunicare">Științe Politice și Comunicare</option>
-											<option value="Științe Umaniste">Științe Umaniste</option>
-											<option value="Științe Juridice">Științe Juridice</option>
-											<option value="Medicină">Medicină</option>
-											<option value="Științe ale Naturii">Științe ale Naturii</option>
-											<option value="Arte Arhitectură și Urbanism">Arte, Arhitectură și Urbanism</option>
-											<option value="Științe Exacte">Științe Exacte</option>
-											<option value="Științe Sociale și Psihologie">Științe Sociale și Psihologie</option>
-											<option value="Științe Agricole">Științe Agricole</option>
-											<option value="Ştiinţa Sportului şi Educaţiei Fizice">Știința Sportului şi Educației Fizice</option>
-											<option value="Ştiinţe Militare Informaţii şi Ordine publică">Științe Militare şi de Informații</option>
-											<option value="Teologie">Teologie</option>
+											<option id= "all" value="Toate">Toate domeniile</option>
+											<option id="d1" value="Științe Economice">Științe Economice</option>
+											<option id="d2" value="Științe Inginerești">Științe Inginerești</option>
+											<option id="d3" value="Științe Politice și Comunicare">Științe Politice și Comunicare</option>
+											<option id="d4" value="Științe Umaniste">Științe Umaniste</option>
+											<option id="d5" value="Științe Juridice">Științe Juridice</option>
+											<option id="d6" value="Medicină">Medicină</option>
+											<option id="d7" value="Științe ale Naturii">Științe ale Naturii</option>
+											<option id="d8" value="Arte Arhitectură și Urbanism">Arte, Arhitectură și Urbanism</option>
+											<option id="d9" value="Științe Exacte">Științe Exacte</option>
+											<option id="d10" value="Științe Sociale și Psihologie">Științe Sociale și Psihologie</option>
+											<option id="d11" value="Științe Agricole">Științe Agricole</option>
+											<option id="d12" value="Ştiinţa Sportului şi Educaţiei Fizice">Știința Sportului şi Educației Fizice</option>
+											<option id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică">Științe Militare şi de Informații</option>
+											<option id="d14" value="Teologie">Teologie</option>
 										</select>
 								</div>
 								<div class="col-lg-3 col-md-5 col-sm-6 col-xs-12">
+										<span><b></b></span><br>
 										<select id="top-by-city" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadTopFaculties()">
-											<option value="Toate">Toate orasele</option>
-											<option value="Bucureşti">Bucureşti</option>
-											<option value="Cluj-Napoca; Cluj">Cluj-Napoca</option>
-											<option value="Timişoara; Timiş">Timişoara</option>
-											<option value="Iaşi; Iaşi">Iaşi</option>
-											<option value="Constanţa; Constanţa">Constanţa</option>
-											<option value="Craiova; Dolj">Craiova</option>	
-											<option value="Oradea; Bihor">Oradea</option>
-											<option value="Braşov; Braşov">Braşov</option>
-											<option value="Piteşti; Argeş">Piteşti</option>
-											<option value="Târgovişte; Damboviţa">Târgovişte</option>
-											<option value="Alba Iulia; Alba">Alba Iulia</option>
-											<option value="Sibiu; Sibiu">Sibiu</option>
-											<option value="Galaţi; Galaţi">Galaţi</option>
-											<option value="Arad; Arad">Arad</option>
+											<option id= "all" value="Toate">Toate oraşele</option>
+											<option id="c1" value="Bucureşti">Bucureşti</option>
+											<option id="c2" value="Cluj-Napoca; Cluj">Cluj-Napoca</option>
+											<option id="c3" value="Timişoara; Timiş">Timişoara</option>
+											<option id="c4" value="Iaşi; Iaşi">Iaşi</option>
+											<option id="c5" value="Constanţa; Constanţa">Constanţa</option>
+											<option id="c6" value="Craiova; Dolj">Craiova</option>	
+											<option id="c10" value="Oradea; Bihor">Oradea</option>
+											<option id="c7" value="Braşov; Braşov">Braşov</option>
+											<option id="c8" value="Piteşti; Argeş">Piteşti</option>
+											<option id="c9" value="Târgovişte; Damboviţa">Târgovişte</option>
+											<option id="c11" value="Alba Iulia; Alba">Alba Iulia</option>
+											<option id="c12" value="Sibiu; Sibiu">Sibiu</option>
+											<option id="c13" value="Galaţi; Galaţi">Galaţi</option>
+											<option id="c14" value="Arad; Arad">Arad</option>
 										</select> 
 								</div>
 							
@@ -218,6 +222,13 @@
 								</div>
 							</div>
 					</div>
+					<div class="row">
+						<div class="col-md-4 col-md-offset-4 col-xs-12">
+							<div class="text-center">
+								<a id="see-all-filtered-faculties-button" type="button" class="btn btn-warning btn-block" >Vezi toate facultățile</a>
+							</div>
+						</div>
+					</div>
                 </div>
             </div>  
             
@@ -225,7 +236,8 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6 col-md-offset-1">
-                            <h3>Te ajutăm să iei deciziile bune pentru educația ta!</h3>
+							<img src="./assets/img/letter_small.png" style="vertical-align: middle; margin-right: 10px"></img>
+                            <h3 style="display:inline-block; vertical-align: middle;">Te ajutăm să iei deciziile bune pentru educația ta!</h3>
 							<p>Abonează-te la newsletter-ul nostru și primești săptămânal știri utile și informări din domeniul educației!</p>
                             <form class="contact-form">
                                 <div class="row">
@@ -388,6 +400,8 @@ function loadTopFaculties() {
 			var urlProfileRedirect = "./faculty-profile.html?id=";
 			
 			if (response.result.faculties.length > 0) {
+				document.getElementById("see-all-filtered-faculties-button").innerHTML = 'Vezi toate facultățile (' + response.result.count + ')';
+			
 				var avgRatingTop = response.result.faculties[0].avgRating;
 				if (!avgRatingTop) {
 					avgRatingTop = "N/A";
@@ -456,7 +470,7 @@ function loadTopFaculties() {
 							cardReviewStr = '<div class="card-review-brief">			<div class="content" >			<p class="text-muted">' + noReviewsText + '</p>												</div>											</div>';
 						}
 						
-						document.getElementById("content-top-faculty").innerHTML += ('			<div class="img-first-place-banner">												<img src="./assets/img/trophy2_big.png" style="display:inline; vertical-align: middle; margin-right: 5px; width: 15%"></img>												<span class="label label-warning">Primul Loc</span>											</div>								<div class="row">												<div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">													<a href="' + urlProfileRedirect + facultyIdTop +'">														<img src="' + logoSrcTop + '" class="img-faculty-logo-home-top"></img>													</a>												</div>												<div class="col-xs-8" style="display:inline; vertical-align: middle;">													<a href="' + urlProfileRedirect + facultyIdTop + '">														<h5 id="top-faculty"><strong>' + facultyNameTop + '</strong></h5>													</a>													<h6 id="top-university">' +  universityNameTop + '</h6>													<small id="top-city" class="text-muted">' + facultyCityTop + '</small>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + avgRatingTop +'</strong> <strong><a href="#">' + countRevTextTop +'</a></strong>																									</div>											</div>											<br>											<br>	 <br>										<div class="row">			<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-7 col-md-8 col-md-offset-4 col-lg-5 col-lg-offset-7">													<a href="' + addReviewRedirectUrlTop + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>												</div>						</div>																						' + cardReviewStr + '																<br>											<div class="row">												<div class="col-xs-4 save-top-faculty">													<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i><span>Salvează</span></button>											</div>												<div class="col-xs-4 col-xs-offset-4 col-md-4 col-md-offset-4 compare-top-faculty text-right">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button>								</div>											</div>								');
+						document.getElementById("content-top-faculty").innerHTML += ('			<div class="img-first-place-banner">												<img src="./assets/img/trophy2_big.png" style="display:inline; vertical-align: middle; margin-right: 5px; width: 15%"></img>												<span class="label label-warning">Primul Loc</span>											</div>								<div class="row">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + urlProfileRedirect + facultyIdTop +'">		<div class="img-faculty-home-logo-top-block">										<img src="' + logoSrcTop + '" class="img-faculty-logo-base img-faculty-logo-home-top center-logo-home"></img>	 </div>												</a>												</div>												<div class="col-md-9 col-xs-12" style="display:inline; vertical-align: middle;">													<a href="' + urlProfileRedirect + facultyIdTop + '">														<h5 id="top-faculty"><strong>' + facultyNameTop + '</strong></h5>													</a>													<h6 id="top-university">' +  universityNameTop + '</h6>													<small id="top-city" class="text-muted">' + facultyCityTop + '</small>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + avgRatingTop +'</strong> <strong><a href="#">' + countRevTextTop +'</a></strong>																									</div>											</div>																	<div class="row margin-top-faculty-top">			<div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-8 col-md-offset-4 col-lg-5 col-lg-offset-7">													<a href="' + addReviewRedirectUrlTop + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>												</div>						</div>																						' + cardReviewStr + '																<br>											<div class="row save-compare-home-top">												<div class="col-xs-4 save-top-faculty">													<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i><span>Salvează</span></button>											</div>												<div class="col-xs-4 col-xs-offset-4 col-md-4 col-md-offset-4 compare-top-faculty text-right">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button>								</div>											</div>								');
 				   },
 			   });
 				
@@ -508,8 +522,18 @@ function loadTopFaculties() {
 					document.getElementById("content-runner-up-faculties").innerHTML += '<div class="top-separator"><span class="label ' + labelClass + '">' + position + '</span></div>';
 				}
 				 <!-- document.getElementById("content-runner-up-faculties").innerHTML += '<div class="top-separator"><span class="label ' + labelClass + '">' + position + '</span></div>';  -->
+				
+				var searchCompareString1;
+				var searchCompareString2;
+				if ($(window).width() > 992) {
+					searchCompareString1 = '<div class="col-xs-1">			<div data-toggle="tooltip" title="Salvează"  class="text-center" style="margin-top:10px;">					<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i></button>												</div>	<div data-toggle="tooltip" title="Compară" class="text-center" style="margin-top:85px;">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, false)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i></button>												</div>				</div>';
+					searchCompareString2 = '';
+				} else {
+					searchCompareString1 = '';
+					searchCompareString2 = '<div class="row save-compare-search-list"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i><span>Salvează</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, false)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div>	';
+				}
 			
-				document.getElementById("content-runner-up-faculties").innerHTML += ('<div class="row" style="margin-bottom: 8px;">												<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">													<a href="' + urlProfileRedirect + facultyId +'">														<img src="' + logoSrc + '"  class="img-faculty-logo-home" ></img>													</a>												</div>												<div class="col-xs-9" style="display:inline; vertical-align: middle;">					<div>								<a href="' + urlProfileRedirect + facultyId + '">														<h5><strong>' + facultyName + '</strong></h5>													</a>													<h6>' + universityName + '</h6>													<small class="text-muted">' + facultyCity + '</small>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + avgRating +'</strong> <strong><a href="#">' + countRevText +'</a></strong>  </div>	<div class="row">	<div class="col-xs-10 col-sm-7 col-md-7 col-lg-7" style="margin-top: 10px; ">													<a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>				</div>								</div>										</div>						<div class="col-xs-1">			<div data-toggle="tooltip" title="Salvează"  class="text-center" style="margin-top:10px;">					<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i></button>												</div>	<div data-toggle="tooltip" title="Compară" class="text-center" style="margin-top:85px;">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, false)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i></button>												</div>				</div>		</div>');
+				document.getElementById("content-runner-up-faculties").innerHTML += ('<div class="row" style="margin-bottom: 8px;">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + urlProfileRedirect + facultyId +'">	<div class="img-faculty-home-logo-block">													<img src="' + logoSrc + '"  class="img-faculty-logo-base img-faculty-logo-home center-logo-home" ></img>								</div>					</a>												</div>												<div class="col-md-9 col-xs-12" style="display:inline; vertical-align: middle;">					<div>								<a href="' + urlProfileRedirect + facultyId + '">														<h5><strong>' + facultyName + '</strong></h5>													</a>													<h6>' + universityName + '</h6>													<small class="text-muted">' + facultyCity + '</small>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + avgRating +'</strong> <strong><a href="#">' + countRevText +'</a></strong>  </div>	<div class="row margin-top-faculty-runnerups">	<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">													<a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>		' + searchCompareString2 + '		</div>						</div>										</div>						'+ searchCompareString1 + '		</div>');
 
 			}
 			
@@ -585,6 +609,31 @@ document.getElementById("search-button").onclick = function () {
 	
 	var url = "./search-results.html";
 	var searchInputParam = "q=" + searchInput;
+	var domainsParam = "d=" + arrayDomains;
+	var citiesParam = "c=" + arrayCities;
+	var finalUrl = url + "?" + searchInputParam + "&" + domainsParam + "&" + citiesParam;
+    location.href = finalUrl;
+};
+
+document.getElementById("see-all-filtered-faculties-button").onclick = function () {
+	var arrayDomains = [];
+	var arrayCities = [];
+	
+	var topByCity = document.getElementById("top-by-city");
+	var topByCityId = topByCity.options[topByCity.selectedIndex].getAttribute('id');
+	
+	var topByDomain = document.getElementById("top-by-domain");
+	var topByDomainId = topByDomain.options[topByDomain.selectedIndex].getAttribute('id');
+	
+	if (topByDomainId !== "all") {
+		arrayDomains.push(topByDomainId);
+	}
+	if (topByCityId !== "all") {
+		arrayCities.push(topByCityId);
+	}
+	
+	var url = "./search-results.html";
+	var searchInputParam = "q=";
 	var domainsParam = "d=" + arrayDomains;
 	var citiesParam = "c=" + arrayCities;
 	var finalUrl = url + "?" + searchInputParam + "&" + domainsParam + "&" + citiesParam;

@@ -35,7 +35,9 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			  </button>
-			  <a class="navbar-brand" href="./">UNISTART</a>
+			  <a class="navbar-brand" href="./">
+				<img src="./assets/img/unistart_logo_small.png">
+			  </a>
 			</div>
 		
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -458,8 +460,10 @@ function loadProfileHeader(response) {
 					+		'<div class="content" style="padding-bottom: 0px;">'
 					+			'<div class="row">'
 					+				 '<div class="col-lg-2 col-lg-offset-0 col-md-3 col-md-offset-0 col-sm-2 col-sm-offset-5 col-xs-4 col-xs-offset-4">'
-					+					'<div class="img-faculty-logo-profile-block">'
-					+						'<img class="img-faculty-logo-profile" src="' + logoSrcTop + '"></img>'
+					+					'<div class="img-faculty-logo-profile-container">'
+					+						'<div class="img-faculty-logo-profile-block">'
+					+							'<img class="img-faculty-logo-base img-faculty-logo-profile center" src="' + logoSrcTop + '"></img>'
+					+						'</div>'
 					+					'</div>'
 					+				 '</div>'	
 					+				'<div class="col-md-9 col-md-offset-0 col-xs-12">'
@@ -487,7 +491,7 @@ function loadProfileHeader(response) {
 					+						'<div class="nav-tabs-wrapper">'
 					+						'<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">'
 					+							'<li class="active"><a href="#profile" data-toggle="tab" onclick="addHash(this)">Profil</a></li>'
-					+							'<li><a href="#reviews" data-toggle="tab" onclick="addHash(this)">Evaluări</a></li>'
+					+							'<li><a id="xx" href="#reviews" data-toggle="tab" onclick="addHash(this)">Evaluări</a></li>'
 					<!-- +							'<li><a href="#statistics" data-toggle="tab" onclick="addHash(this)">Statistici</a></li>' -->
 					<!-- +							'<li><a href="#qa" data-toggle="tab" onclick="addHash(this)">Q&A</a></li>' -->
 					+						'</ul>'
@@ -582,6 +586,9 @@ function loadGeneralReviewCard(response) {
 					   
 					   
 							if (responseReview.result.reviews.length > 0) {
+								if (document.getElementById("xx")) {
+									document.getElementById("xx").innerHTML = 'Evaluări (' + responseReview.result.count + ')';
+								}
 								for (i in responseReview.result.reviews) {
 									reviewId = responseReview.result.reviews[i].reviewId;;
 									userName = responseReview.result.reviews[i].userName ? responseReview.result.reviews[i].userName : "Anonim";
@@ -787,6 +794,10 @@ function loadGeneralReviewCard(response) {
 
 		);
 		document.getElementById("faculty-profile-review-header").innerHTML += facultyProfileTabString;
+		
+		if (document.getElementById("see-all-reviews")) {
+					document.getElementById("see-all-reviews").innerHTML = 'Vezi toate evaluările (' + responseReview.result.count + ')';
+				}
 					
 				   
 

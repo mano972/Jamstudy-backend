@@ -34,7 +34,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-		  <a class="navbar-brand" href="./">UNISTART</a>
+		  <a class="navbar-brand" href="./">
+			<img src="./assets/img/unistart_logo_small.png">
+		  </a>
         </div>
     
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -706,12 +708,14 @@ function loadFaculty(){
 										+'<div class="card">'
 											+'<div class="content">			'	
 												+'<div class="row">'
-												+'	<div class="col-md-2 col-sm-2 col-xs-3">'
-												+'			<a href="' + urlProfileRedirect + '">		'												
-												+'				<img id="review-faculty-logo" class="img-faculty-logo" src="' + logoSrc + '" style="max-width: 85%;"></img>'
+												+'	<div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">'
+												+'			<a href="' + urlProfileRedirect + '">		'	
+												+'				<div class="img-faculty-add-review-logo-block">'
+												+'					<img id="review-faculty-logo" class="img-faculty-logo-base img-faculty-logo-add-review center" src="' + logoSrc + '"></img>'
+												+'				</div>'
 												+'			</a>'
 												+'	</div>'
-												+'	<div class="form-group col-md-10 col-xs-9" style="display:inline; vertical-align: middle;">'
+												+'	<div class="form-group col-md-10 col-xs-12" style="display:inline; vertical-align: middle;">'
 												+'		<h5>Numele facultății<em>*</em></h5>'
 												+'		<input id="review-faculty-name" type="text" value="' + facultyName + '" placeholder="" class="form-control" required oninvalid="this.setCustomValidity(\'Câmp obligatoriu\')" readonly/>'
 												+'	</div>'
