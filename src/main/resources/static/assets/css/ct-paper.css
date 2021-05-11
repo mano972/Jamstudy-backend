@@ -137,6 +137,10 @@ body.loading .modal {
     display: block;
 }
 
+.homepage-header {
+	background: transparent linear-gradient(180deg, #fff3bc 0%, #FFFFFF00 100%) 0% 0% no-repeat padding-box;
+}
+
 .center {
   margin: 0;
   position: absolute;
