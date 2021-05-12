@@ -9125,8 +9125,8 @@ $ct-series-colors: (
 
 #content-faculty-programs {
 	min-height: 260px; 
-	max-height: 789px; 
-	overflow-y: auto
+	/* max-height: 789px;  */
+	/* overflow-y: auto */
 }
 
 @media (min-width:992px) {
