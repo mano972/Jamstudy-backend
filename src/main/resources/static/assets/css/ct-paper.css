@@ -137,8 +137,16 @@ body.loading .modal {
     display: block;
 }
 
-.homepage-header {
-	background: transparent linear-gradient(180deg, #fff3bc 0%, #FFFFFF00 100%) 0% 0% no-repeat padding-box;
+.homepage-header-background {
+	background-image: linear-gradient(to bottom, #fff3bc, #FFFFFF00);	
+}
+
+.faculty-profile-header-background {
+	background-image: linear-gradient(to bottom, #fff5c4, #faf6e3) !important;
+}
+
+.faculty-profile-other-background {
+	background-image: linear-gradient(to bottom, #faf6e3, #FFFFFF00);
 }
 
 .center {
@@ -146,6 +154,7 @@ body.loading .modal {
   position: absolute;
   top: 50%;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
@@ -155,6 +164,7 @@ body.loading .modal {
   position: absolute;
   top: 55%;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
@@ -165,6 +175,7 @@ body.loading .modal {
 	  position: absolute;
 	  top: 50%;
 	  left: 50%;
+	  -webkit-transform: translate(-50%, -50%);
 	  -ms-transform: translate(-50%, -50%);
 	  transform: translate(-50%, -50%);
 	}
@@ -176,6 +187,7 @@ body.loading .modal {
 	  position: absolute;
 	  top: 46%;
 	  left: 50%;
+	  -webkit-transform: translate(-50%, -50%);
 	  -ms-transform: translate(-50%, -50%);
 	  transform: translate(-50%, -50%);
 	}
@@ -2922,7 +2934,7 @@ textarea.form-control {
   /* margin: 5px 0px; */
   /* padding: 20px 15px; */
   font-size: 25px;
-  color: #474743
+  color: #474743;
 }
 .navbar .navbar-nav > li > a {
   line-height: 1.42857;
@@ -3162,17 +3174,19 @@ textarea.form-control {
 .img-faculty-logo-base {
   display: inline;
   vertical-align: middle;
-  /* border: 1px solid #f2f1da; */
-  /* box-shadow: 0 1px 3px 0 rgba(0,0,0,.2); */
   background-color: white;
   padding: 7px;
 }
 
+.img-faculty-logo-block-base {
+  border: 1px solid #f2f1da;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
+  background-color: white;
+}
+
 @media (min-width:992px) {
   .img-faculty-home-logo-top-block {
-	border: 1px solid #f2f1da;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
-	background-color: white;
 	height: 99px;
 	width: 99px;
 	max-width: 100% !important;
@@ -3182,9 +3196,6 @@ textarea.form-control {
 
 @media (max-width:992px) {
   .img-faculty-home-logo-top-block {
-	border: 1px solid #f2f1da;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
-	background-color: white;
 	height: 84px;
 	width: 84px;
 	max-width: 100% !important;
@@ -3208,9 +3219,6 @@ textarea.form-control {
 
 @media (min-width:992px) {
   .img-faculty-home-logo-block {
-	border: 1px solid #f2f1da;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
-	background-color: white;
 	height: 99px;
 	width: 99px;
 	max-width: 100% !important;
@@ -3220,9 +3228,6 @@ textarea.form-control {
 
 @media (max-width:992px) {
   .img-faculty-home-logo-block {
-	border: 1px solid #f2f1da;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
-	background-color: white;
 	height: 84px;
 	width: 84px;
 	max-width: 100% !important;
@@ -3250,9 +3255,6 @@ textarea.form-control {
 
 @media (min-width:992px) {
   .img-faculty-logo-profile-block {
-	border: 1px solid #f2f1da;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
-	background-color: white;
 	min-height: 165px;
 	width: 160px;
 	max-width: 100% !important;
@@ -3260,6 +3262,7 @@ textarea.form-control {
 	position: absolute;
 	top: 40px;
 	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
   }
@@ -3267,9 +3270,6 @@ textarea.form-control {
 
 @media (max-width:992px) {
   .img-faculty-logo-profile-block {
-	border: 1px solid #f2f1da;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
-	background-color: white;
 	min-height: 145px;
 	width: 140px;
 	/* max-width: 90% !important; */
@@ -3278,6 +3278,8 @@ textarea.form-control {
 	position: absolute; 
 	top: -70px !important;
 	left: 50%;
+	-webkit-transform: translate(-50%, 0%) !important;
+	-ms-transform: translate(-50%, 0%) !important;
     transform: translate(-50%, 0%) !important;
   }
 }
@@ -3309,9 +3311,6 @@ textarea.form-control {
 }
 @media (min-width:992px) {
 	.img-faculty-search-logo-block {
-		border: 1px solid #f2f1da;
-		box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
-		background-color: white;
 		/* height: 125px; */
 		height: 136px;
 		/* width: 129px; */
@@ -3323,9 +3322,6 @@ textarea.form-control {
 
 @media (max-width:992px) {
 	.img-faculty-search-logo-block {
-		border: 1px solid #f2f1da;
-		box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
-		background-color: white;
 		height: 84px;
 		width: 84px;
 		max-width: 100% !important;
@@ -3352,9 +3348,6 @@ textarea.form-control {
 
 .img-faculty-logo-comparison-block {
   height: 75px;
-  border: 1px solid #f2f1da;
-  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
-  background-color: white;
 }
 
 .img-faculty-logo-comparison {
@@ -3363,9 +3356,6 @@ textarea.form-control {
 }
 
 .img-faculty-add-review-logo-block {
-	border: 1px solid #f2f1da;
-	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
-	background-color: white;
 	min-height: 125px;
 	max-height: 150px;
 	width: 129px;
@@ -9111,15 +9101,22 @@ $ct-series-colors: (
 
 @media (min-width:992px) {
 	#content-top-faculty {
-		height:665px;
+		height: 665px;
 		overflow-y: auto;
 	}
 }
 
 @media (min-width:992px) {
 	#content-runner-up-faculties {
-		height:665px; 
+		height: 665px; 
 		overflow-y: auto;
+	}
+}
+
+@media (max-width:992px) {
+	#content-runner-up-faculties {
+		height: auto;
+		overflow-y: visible;
 	}
 }
 
