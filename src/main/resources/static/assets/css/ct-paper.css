@@ -9049,8 +9049,11 @@ $ct-series-colors: (
 
 @media (min-width:1450px) {
   .add-review-floating-card {
-	margin-left: 25px;
-	min-width: 470px;
+	/* margin-left: 25px; */
+	min-width: 460px;
+	position: fixed;
+	top: 11.5%;
+	right: 5%;
   }
 }
 
