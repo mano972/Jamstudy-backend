@@ -3360,7 +3360,7 @@ textarea.form-control {
 	max-height: 150px;
 	width: 129px;
 	max-width: 100% !important;
-	margin: 0 auto;
+	margin: 10px auto 0 auto;
 }
 
 .img-faculty-logo-add-review {
