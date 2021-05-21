@@ -193,6 +193,16 @@ body.loading .modal {
 	}
 }
 
+.center-comparison {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 53%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
 .comparison-table {
 	overflow: auto;
 	border: 1px solid #f0edf0;
@@ -971,6 +981,58 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 }
 
 
+/* Carousel */
+.media-carousel 
+{
+  margin-bottom: 0;
+  /* padding: 0 40px 30px 40px; */
+  margin-top: 0px;
+}
+/* Previous button  */
+.media-carousel .carousel-control.left 
+{
+  left: -12px;
+  background-image: none;
+  background: none repeat scroll 0 0 #2d7ee0;
+  border: 4px solid #FFFFFF;
+  border-radius: 23px 23px 23px 23px;
+  height: 40px;
+  width : 40px;
+  /* margin-top: 30px; */
+}
+/* Next button  */
+.media-carousel .carousel-control.right 
+{
+  right: -12px !important;
+  background-image: none;
+  background: none repeat scroll 0 0 #2d7ee0;
+  border: 4px solid #FFFFFF;
+  border-radius: 23px 23px 23px 23px;
+  height: 40px;
+  width : 40px;
+  /* margin-top: 30px; */
+}
+/* Changes the position of the indicators */
+.media-carousel .carousel-indicators 
+{
+  right: 50%;
+  top: auto;
+  bottom: 0px;
+  margin-right: -19px;
+}
+/* Changes the colour of the indicators */
+.media-carousel .carousel-indicators li 
+{
+  background: #c0c0c0;
+}
+.media-carousel .carousel-indicators .active 
+{
+  background: #333333;
+}
+
+/* End carousel */
+
+
 
 /*       CT colors          */
 .ct-blue,
@@ -1081,6 +1143,11 @@ input.ct-red + span + label + span.switch-right {
 
 .save:focus {
 	color: #c22400 !important;
+}
+
+.compare-carousel {
+	padding: 7px 15px !important;
+	border: 1px solid #4071ad !important;
 }
 
 .compare-top-faculty {
@@ -3348,11 +3415,12 @@ textarea.form-control {
 
 .img-faculty-logo-comparison-block {
   height: 75px;
+  width: 75px;
 }
 
 .img-faculty-logo-comparison {
   max-height: 75px;
-  max-width: 67% !important;
+  max-width: 70% !important;
 }
 
 .img-faculty-add-review-logo-block {
@@ -3366,6 +3434,18 @@ textarea.form-control {
 .img-faculty-logo-add-review {
   max-height: 125px;
   max-width: 64% !important;
+}
+
+.img-faculty-logo-carousel-block {
+  height: 80px;
+  width: 80px;
+  max-width: 100% !important;
+  margin: 0 auto;
+}
+
+.img-faculty-logo-carousel {
+  max-height: 75px;
+  max-width: 75px !important;
 }
 
 .img-first-place-banner {
@@ -6431,7 +6511,7 @@ body > .navbar-collapse.collapse {
 
 .carousel-control.left {
   height: 30px;
-  top: 50%;
+  top: 44%;
   width: 30px;
   left: 8%;
 }
@@ -6439,7 +6519,7 @@ body > .navbar-collapse.collapse {
 .carousel-control.right {
   height: 30px;
   right: 8%;
-  top: 50%;
+  top: 44%;
   width: 30px;
 }
 
@@ -6458,11 +6538,11 @@ body > .navbar-collapse.collapse {
 }
 
 .carousel-inner {
-  background-color: #d6d2cc;
+  background-color: #ffffff;
 }
 
 .carousel-inner > .item {
-  padding: 50px;
+  padding: 15px 50px;
 }
 
 .carousel-inner > .item > img,

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "34d995b2-e0c3-4b6b-9f3d-d3d188cbb94f",
+		"_postman_id": "ce49e22d-827e-4cf6-b175-e6833ff54280",
 		"name": "Jamstudy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -649,6 +649,189 @@
 										{
 											"key": "searchBy",
 											"value": "ETTI",
+											"disabled": true
+										},
+										{
+											"key": "universityIds",
+											"value": "1, 2",
+											"disabled": true
+										},
+										{
+											"key": "facultyCities",
+											"value": "Bucuresti, Cluj",
+											"disabled": true
+										},
+										{
+											"key": "facultyDomains",
+											"value": "d1, d3",
+											"disabled": true
+										},
+										{
+											"key": "admissionType",
+											"value": "Examen, Dosar",
+											"disabled": true
+										},
+										{
+											"key": "ratingFrom",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "orderBy",
+											"value": "facultyName,desc"
+										},
+										{
+											"key": "limit",
+											"value": "5"
+										},
+										{
+											"key": "offset",
+											"value": "0"
+										},
+										{
+											"key": "pageNumber",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1301"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 27 Jan 2020 18:33:43 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"result\": {\n        \"count\": 566,\n        \"faculties\": [\n            {\n                \"universityName\": \"Universitatea ”Babeș Bolyai” Cluj Napoca - Centru Sfântu Gheorghe\",\n                \"facultyCity\": \"Sfantu Gheorghe, Covasna\",\n                \"universityId\": \"UNI_qkOXXRfgmI\",\n                \"facultyId\": \"FAC_ekGr5VILNH\",\n                \"countRev\": 1,\n                \"avgRating\": 5,\n                \"facultyName\": \"Facultatea de Știință și Ingineria Mediului\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Valahia\\\" din Târgovişte\",\n                \"facultyCity\": \"Alexandria, Teleorman\",\n                \"universityId\": \"UNI_WinoeNs4Wr\",\n                \"facultyId\": \"FAC_b6Vx4IsPce\",\n                \"countRev\": 0,\n                \"facultyName\": \"Facultatea de Științe și Inginerie (Alexandria)\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Sapientia\\\" din Cluj-Napoca\",\n                \"facultyCity\": \"Cluj-Napoca, Cluj\",\n                \"universityId\": \"UNI_qVjdiCLskR\",\n                \"facultyId\": \"FAC_KskA1mEU9Z\",\n                \"countRev\": 0,\n                \"facultyName\": \"Facultatea de Științe și Arte\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Valahia\\\" din Târgovişte\",\n                \"facultyCity\": \"Targoviste, Dambovita\",\n                \"universityId\": \"UNI_WinoeNs4Wr\",\n                \"facultyId\": \"FAC_GAeGOxvlnP\",\n                \"countRev\": 0,\n                \"facultyName\": \"Facultatea de Științe și Arte\"\n            },\n            {\n                \"universityName\": \"Universitatea \\\"Apollonia\\\" din Iaşi\",\n                \"facultyCity\": \"Iasi, Iasi\",\n                \"universityId\": \"UNI_WbOldmH106\",\n                \"facultyId\": \"FAC_08WoG93hcI\",\n                \"countRev\": 0,\n                \"facultyName\": \"Facultatea de Științe ale comunicării\"\n            }\n        ]\n    },\n    \"control\": {\n        \"date\": \"Mon Jan 27 20:33:43 EET 2020\",\n        \"errorCode\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get faculties detailed",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/v1/faculty/details?orderBy=facultyName,asc&limit=10&offset=0",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"faculty",
+								"details"
+							],
+							"query": [
+								{
+									"key": "searchBy",
+									"value": "ETTI",
+									"disabled": true
+								},
+								{
+									"key": "facultyIds",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "universityIds",
+									"value": "1, 2",
+									"disabled": true
+								},
+								{
+									"key": "facultyCities",
+									"value": "Bucuresti, Cluj",
+									"disabled": true
+								},
+								{
+									"key": "facultyDomains",
+									"value": "d1, d3",
+									"disabled": true
+								},
+								{
+									"key": "admissionType",
+									"value": "Examen, Dosar",
+									"disabled": true
+								},
+								{
+									"key": "ratingFrom",
+									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "orderBy",
+									"value": "facultyName,asc"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get faculties 1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://127.0.0.1:8080/Jamstudy/faculty?orderBy=facultyName,desc&limit=5&offset=0",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8080",
+									"path": [
+										"Jamstudy",
+										"faculty"
+									],
+									"query": [
+										{
+											"key": "searchBy",
+											"value": "ETTI",
+											"disabled": true
+										},
+										{
+											"key": "facultyIds",
+											"value": null,
 											"disabled": true
 										},
 										{

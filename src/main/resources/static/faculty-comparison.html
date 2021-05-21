@@ -83,19 +83,50 @@
 						<div class="text-center">
 							<div id="loading" class='uil-reload-css reload-background' style=''><div></div></div>
 						</div>	
-
-						<div id="comparison-table" class="comparison-table row">					
+						
+						<div id="comparison-table" class="comparison-table row">						
 							<!-- populated dynamically -->
 						</div>
 	
 					</div>
 				</div>
-			</div>
+			</div>		
+		</div>
 		
-			<div class="floating-button">
-				<a href="./contact-page.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
-			</div>
-			
+		<div class="section-white" >
+			<div class="container-fluid">		
+				<div class="row">
+					
+					<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-xs-offset-0">
+					
+						<div class="row">
+							<div class="col-xs-12">
+								<h4 class="title">Sugestii de comparație</h4>                    
+							</div>
+						</div>
+						
+						 <div class='row'>
+							<div class="col-md-12">
+							  <div class="carousel slide media-carousel" id="media">
+								<div id="recommended-carousel" class="carousel-inner">
+									<div class="text-center" style='height: 350px;'>
+										<div id="loading-recommended" class='uil-reload-css reload-background' style=''><div></div></div>
+									</div>	
+									<!-- populated dynamically -->
+								</div>
+								<a data-slide="prev" href="#media" class="left carousel-control">‹</a>
+								<a data-slide="next" href="#media" class="right carousel-control">›</a>
+							  </div>                          
+							</div>
+						 </div>
+	
+					</div>
+				</div>
+			</div>		
+		</div>
+		
+		<div class="floating-button">
+			<a href="./contact-page.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
 		</div>
 		
 	</div>
@@ -195,15 +226,91 @@ $(document).on({
 
 $(document).ready(function() {
 
-	constructTable();
+	<!-- $('#media').carousel({ -->
+		<!-- pause: true, -->
+		<!-- interval: false, -->
+	<!-- }); -->
+	
+	$('#media').carousel('pause');
+
 	getFaculties();
 
 });
 
+
+function getFaculties() {
+
+	document.getElementById("loading").style.display = "inline-block";
+	document.getElementById("comparison-table").innerHTML = '';
+	document.getElementById("comparison-table").style.border = "none";
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/faculty/details");
+
+	if (typeof(Storage) == "undefined") {
+		return;
+	}
+
+	var facultyIdsString = localStorage.getItem("faculty-comparison-items");
+	var facultyIds;
+	if (facultyIdsString) {
+		facultyIds = facultyIdsString.split(",");
+	}
+	if (!facultyIds || facultyIds.length === 0) {
+		console.log("aici");
+		document.getElementById("comparison-table").innerHTML = '<div class="text-center text-muted center"> <h4>Adaugă o facultate pentru a începe</h4><a href="./search-results.html"utton class="btn btn-info btn-block btn-fill">Caută Facultăți</a> </div>';
+		document.getElementById("comparison-table").style.height = "500px";
+		<!-- document.getElementById("comparison-table").style.width = "1200px"; -->
+		document.getElementById("comparison-table").style.border = "none";
+		document.getElementById("loading").style.display = "none";
+		var universityIds = ['UNI_JBCh5VDZkN', 'UNI_2pdZxarJlM', 'UNI_7qEOSdaLJ7', 'UNI_88N6eRLyXm'];
+		getRecommendedFaculties(universityIds, facultyIds);
+		return;
+	}
+	backendUrl.searchParams.append("facultyIds", facultyIds.join());
+	
+	
+	  $.ajax({
+	  url: backendUrl,
+	  type: "GET",
+	  success: function(response) {
+		
+		if (response.control.errorCode === 0) {
+		
+			var universityIds = [];
+			var i;
+			for (i in response.result.faculties) {
+				universityIds.push(response.result.faculties[i].universityId);
+			}
+			getRecommendedFaculties(universityIds, facultyIds);
+		
+			var facultyIdsCopy = facultyIds.slice();
+			var sortedResponse = response.result.faculties.map(function(item) {
+			var n = facultyIdsCopy.indexOf(item.facultyId);
+			facultyIdsCopy[n] = '';
+			return [n, item]
+			}).sort().map(function(j) { return j[1] });
+			constructTable();
+			loadComparisonTableContent(sortedResponse);
+		} else {
+			console.log(response.control.errorDescription);
+		}
+
+	  },
+	  error: function(error) {
+		console.log(error);
+	  },
+	  complete: function (data) {
+		document.getElementById("loading").style.display = "none";
+	  }
+	});
+}
+
 function constructTable() {
 	var collColumnWidth = "col-xs-3";
 
-	document.getElementById("comparison-table").innerHTML = (
+		document.getElementById("comparison-table").style.height = "742px";
+		document.getElementById("comparison-table").style.border = "1px solid #f0edf0";
+		document.getElementById("comparison-table").innerHTML = (
 '								<div class="col-md-12 col-md-offset-0">'
 +'									<div id="faculty-name-row" class="comparison-row comparison-even-row row"> '
 +'									<div class="comparison-cell comparison-header-cell-blank ' + collColumnWidth + '"> '
@@ -282,82 +389,6 @@ function constructTable() {
 +'								</div>											 '
 +'							</div> '
 );
-}
-
-function removeFromCompare(facultyId) {
-
-	if (typeof(Storage) !== "undefined") {
-		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
-		var facultyIds;
-		if (facultyIdsString) {
-			facultyIds = facultyIdsString.split(",");
-		} else {
-			facultyIds = [];
-		}
-		if (facultyIds.includes(facultyId)) {
-			facultyIds = facultyIds.filter(function(value, index, arr){ return value !== facultyId;});
-		}
-		localStorage.setItem("faculty-comparison-items", facultyIds);
-		
-		getFaculties();
-		
-	} else {
-	  // Sorry! No Web Storage support..
-	}
-}
-
-
-function getFaculties() {
-
-	var backendUrl = new URL(backendUrlRoot + "/v1/faculty/details");
-
-	if (typeof(Storage) == "undefined") {
-		return;
-	}
-
-	var facultyIdsString = localStorage.getItem("faculty-comparison-items");
-	var facultyIds;
-	if (facultyIdsString) {
-		facultyIds = facultyIdsString.split(",");
-	}
-	if (!facultyIds || facultyIds.length === 0) {
-		document.getElementById("comparison-table").innerHTML = '<div class="text-center text-muted center"> <h4>Adaugă o facultate pentru a începe</h4><a href="./search-results.html"utton class="btn btn-info btn-block btn-fill">Caută Facultăți</a> </div>';
-		document.getElementById("comparison-table").style.height = "500px";
-		document.getElementById("comparison-table").style.width = "1200px";
-		document.getElementById("comparison-table").style.border = "none";
-		document.getElementById("loading").style.display = "none";
-		return;
-	}
-	backendUrl.searchParams.append("facultyIds", facultyIds.join());
-	
-	
-	  $.ajax({
-	  url: backendUrl,
-	  type: "GET",
-	  success: function(response) {
-		
-		if (response.control.errorCode === 0) {
-		
-			var facultyIdsCopy = facultyIds.slice();
-			var sortedResponse = response.result.faculties.map(function(item) {
-			var n = facultyIdsCopy.indexOf(item.facultyId);
-			facultyIdsCopy[n] = '';
-			return [n, item]
-			}).sort().map(function(j) { return j[1] });
-			
-			loadComparisonTableContent(sortedResponse);
-		} else {
-			console.log(response.control.errorDescription);
-		}
-
-	  },
-	  error: function(error) {
-		console.log(error);
-	  },
-	  complete: function (data) {
-		document.getElementById("loading").style.display = "none";
-	  }
-	});
 }
 
 function loadComparisonTableContent(sortedResponse) {
@@ -460,7 +491,7 @@ function loadComparisonTableContent(sortedResponse) {
 	+' 											<div class="col-xs-4 col-xs-offset-4">															 '
 	+' 												<a href="' + urlProfileRedirect + facultyId + '"> '
 	+' 													<div class="img-faculty-logo-block-base img-faculty-logo-comparison-block">	'
-	+' 														<img class="img-faculty-logo-base img-faculty-logo-comparison center" src= "' + facultyLogo + '"></img>												 '
+	+' 														<img class="img-faculty-logo-base img-faculty-logo-comparison center-comparison" src= "' + facultyLogo + '"></img>												 '
 	+' 													</div> '
 	+'												</a>	'	
 	+' 											</div> '
@@ -553,6 +584,160 @@ function loadComparisonTableContent(sortedResponse) {
 	
 	}
 
+}
+
+function getRecommendedFaculties(universityIds, comparedFacultyIds) {
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
+	
+	if (!universityIds || universityIds.length == 0) {
+		return;
+	}
+
+	backendUrl.searchParams.append("universityIds", universityIds.join());
+	backendUrl.searchParams.append("limit", 8);
+	
+	  $.ajax({
+	  url: backendUrl,
+	  type: "GET",
+	  success: function(response) {
+		
+		if (response.control.errorCode === 0) {
+			loadRecommendedFacultiesContent(response, comparedFacultyIds);
+		} else {
+			console.log(response.control.errorDescription);
+		}
+
+	  },
+	  error: function(error) {
+		console.log(error);
+	  },
+	  complete: function (data) {
+		<!-- document.getElementById("loading-recommended").style.display = "none"; -->
+	  }
+	});
+}
+
+function loadRecommendedFacultiesContent(response, comparedFacultyIds) {
+
+	var faculties = response.result.faculties;
+	if (comparedFacultyIds) {
+		faculties = faculties.filter(function(value, index, arr){
+			return !comparedFacultyIds.includes(value.facultyId);
+		});
+	}
+	
+
+	var windowWidth = $(window).width();
+	var colWidth;
+	var recommendedNumberPerSlide;
+	if (windowWidth > 1200) {
+		colWidth = 'col-md-3';
+		recommendedNumberPerSlide = 4;
+	} else if (windowWidth > 992) {
+		colWidth = 'col-md-4';
+		recommendedNumberPerSlide = 3;
+	} else if (windowWidth > 768) {
+		colWidth = 'col-sm-6';
+		recommendedNumberPerSlide = 2;
+	} else {
+		colWidth = 'col-xs-12';
+		recommendedNumberPerSlide = 1;
+	}
+	
+	var i;
+	for (i in faculties) {
+	
+	
+			if (i == 0) {
+				recommendedFacultiesString = (
+		'						<div class="item active">'
+		+'							<div class="row">');
+			}
+			if (i!=0 && (i%recommendedNumberPerSlide)==0) {
+				recommendedFacultiesString += (
+		'						<div class="item">'
+		+'							<div class="row">');
+			}
+			var faculty = faculties[i];
+			var universityNameFront;
+			var universityName = faculty.universityName;
+			if (universityName.length > 50) {
+				universityNameFront = universityName.substring(0, 50).concat('...');
+			} else {
+				universityNameFront = universityName;
+			}
+			var universityNameTooltipTitle = universityName.replaceAll("\"", "");
+			
+			var avgRating = faculties[i].avgRating;
+			if (!avgRating) {
+				avgRating = "N/A";
+			} else {
+				avgRating = avgRating.toFixed(1);
+			}
+			
+			var logoSrc = backendUrlRoot + "/v1/faculty/" + faculties[i].facultyId + "/logo";	
+			
+			var urlProfileRedirect = "./faculty-profile.html?id=";
+			
+			recommendedFacultiesString += (
+						'<div class="' + colWidth + '"><div class="card"> <div class="content" style="height: 350px;"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + faculty.facultyName + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + faculty.facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </div> </div> <div class="col-xs-12 text-center" style="margin-top: 10px;"> <button class="btn btn-simple compare compare-carousel" onclick="addToCompare(this, &quot;'+faculty.facultyId+'&quot;)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div>');
+		<!-- } -->
+		if (i%recommendedNumberPerSlide==(recommendedNumberPerSlide-1)) {
+			recommendedFacultiesString += ('</div> </div>');
+		}
+		
+	}
+	
+	document.getElementById("recommended-carousel").innerHTML = recommendedFacultiesString;
+	
+}
+
+function addToCompare(button, facultyId) {
+
+	if (typeof(Storage) !== "undefined") {
+		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
+		var facultyIds;
+		if (facultyIdsString) {
+			facultyIds = facultyIdsString.split(",");
+		} else {
+			facultyIds = [];
+		}
+		if (facultyIds.length <= 20 && !facultyIds.includes(facultyId)) {
+			facultyIds.push(facultyId);
+		}
+		localStorage.setItem("faculty-comparison-items", facultyIds);
+	} else {
+	  // Sorry! No Web Storage support..
+	}
+	
+	document.body.scrollTop = 0; // For Safari
+	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+	getFaculties();
+	
+
+}
+
+function removeFromCompare(facultyId) {
+
+	if (typeof(Storage) !== "undefined") {
+		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
+		var facultyIds;
+		if (facultyIdsString) {
+			facultyIds = facultyIdsString.split(",");
+		} else {
+			facultyIds = [];
+		}
+		if (facultyIds.includes(facultyId)) {
+			facultyIds = facultyIds.filter(function(value, index, arr){ return value !== facultyId;});
+		}
+		localStorage.setItem("faculty-comparison-items", facultyIds);
+		
+		getFaculties();
+		
+	} else {
+	  // Sorry! No Web Storage support..
+	}
 }
 
 
