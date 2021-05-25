@@ -1033,6 +1033,13 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
 /* End carousel */
 
+.map {
+	margin-top:25px;
+    height: 400px;
+    width: 100%;
+	border: 1px solid black;
+}
+
 
 
 /*       CT colors          */

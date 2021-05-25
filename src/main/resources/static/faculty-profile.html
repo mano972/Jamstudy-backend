@@ -21,6 +21,8 @@
 	<script src="https://kit.fontawesome.com/6f635d9dad.js" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
       
 </head>
 <body>
@@ -68,7 +70,6 @@
     
     <div class="wrapper">
 		
-
 		<div class="section section-profile faculty-profile-header-background">
 			<div class="container-fluid">
 				<div class="row">
@@ -90,7 +91,7 @@
 			</div>
 		</div>
 				
-		<div class="" >
+		<div class="section section-white">
 			<div class="container-fluid">		
 				<div class="row">
 					<div class="faculty-profile-card-fixed col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 col-xs-offset-0">
@@ -176,25 +177,6 @@
 										</div>
 									</div> 
 								</div>
-								
-								<div class="modal fade" id="generic-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-								  <div class="modal-dialog">
-									<div class="modal-content">
-									  <div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-										<div id="generic-header-text">
-											<i class="far fa-envelope fa-3x"></i>
-										</div>
-									  </div>
-									  <div id="generic-modal-text" class="modal-body modal-info text-center">
-										.
-									  </div>
-									  <div class="modal-footer">
-										   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-									  </div>
-									</div>
-								  </div>
-								</div>
 
 							</div>
 <!-- 							<div class="tab-pane" id="statistics">
@@ -212,72 +194,111 @@
 			</div>
 		</div>
 		
+		<div class="section-white">
+			<div class="container-fluid">		
+				<div class="row">
+					<div id="other-faculties" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-xs-offset-0">
+						<!-- populated dynamically -->
+					</div>
+				</div>
+			</div>		
+		</div>
+		
+		<!-- <div class="section"> -->
+			<!-- <div class="container-fluid">		 -->
+				<!-- <div class="row"> -->
+					<!-- <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-xs-offset-0"> -->
+						<!-- <div id="map" class="map"></div> -->
+					<!-- </div> -->
+				<!-- </div> -->
+			<!-- </div>		 -->
+		<!-- </div> -->
+		
 		<div class="floating-button">
 			<a href="./contact-page.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
 		</div>
 		
 	</div>
+	
+	<div class="modal fade" id="generic-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<div id="generic-header-text">
+				<i class="far fa-envelope fa-3x"></i>
+			</div>
+		  </div>
+		  <div id="generic-modal-text" class="modal-body modal-info text-center">
+			.
+		  </div>
+		  <div class="modal-footer">
+			   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
     
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-7">
-                <div class="links">
-                    <ul class="uppercase-links">
-                        <li>
-                            <a href="./">
-                                Acasă
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./search-results.html">
-                                Facultăți
-                            </a>
-                        </li>
-						<li>
-                            <a href="./faculty-comparison.html">
-                                Compară
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./contact-page.html">
-                               Contact
-                            </a>
-                        </li>
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-sm-7">
+					<div class="links">
+						<ul class="uppercase-links">
+							<li>
+								<a href="./">
+									Acasă
+								</a>
+							</li>
+							<li>
+								<a href="./search-results.html">
+									Facultăți
+								</a>
+							</li>
+							<li>
+								<a href="./faculty-comparison.html">
+									Compară
+								</a>
+							</li>
+							<li>
+								<a href="./contact-page.html">
+								   Contact
+								</a>
+							</li>
 
-                    </ul>
-                    <hr>
+						</ul>
+						<hr>
 
-                    <div class="copyright">
-                        © 2020 Jamstudy, din dragoste pentru educaţie
-                    </div>
-                </div>
-            </div>
+						<div class="copyright">
+							© 2020 Jamstudy, din dragoste pentru educaţie
+						</div>
+					</div>
+				</div>
 
-            <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
-                <div class="social-area">
-                        <a href="http://twitter.com" target="_blank"><button class="btn btn-icon btn-fill btn-twitter">
-                            <i class="fa fa-twitter"></i>
-                        </button>    
-						</a>
-                        <a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
-                            <i class="fa fa-facebook"> </i>
-                        </button>
-						</a>
-                        <a href="http://instagram.com" target="_blank"><button class="btn btn-icon btn-fill btn-instagram">
-                            <i class="fa fa-instagram"></i>
-                        </button>
-						</a>
-                        <a href="http://youtube.com" target="_blank"><button class="btn btn-icon btn-fill btn-youtube">
-                            <i class="fa fa-youtube"></i>
-                        </button>
-						</a>
-                </div>
-            </div>
-        </div>
+				<div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
+					<div class="social-area">
+							<a href="http://twitter.com" target="_blank"><button class="btn btn-icon btn-fill btn-twitter">
+								<i class="fa fa-twitter"></i>
+							</button>    
+							</a>
+							<a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
+								<i class="fa fa-facebook"> </i>
+							</button>
+							</a>
+							<a href="http://instagram.com" target="_blank"><button class="btn btn-icon btn-fill btn-instagram">
+								<i class="fa fa-instagram"></i>
+							</button>
+							</a>
+							<a href="http://youtube.com" target="_blank"><button class="btn btn-icon btn-fill btn-youtube">
+								<i class="fa fa-youtube"></i>
+							</button>
+							</a>
+					</div>
+				</div>
+			</div>
 
-    </div>
-</footer>
+		</div>
+	</footer>
 
 </body>
 
@@ -370,6 +391,7 @@ function getFaculty() {
 			if (response.control.errorCode === 0) {
 				loadProfileHeader(response);
 				loadProfileTab(response);
+				getOtherFacultiesFromSameUniversity(response.result.universityId, facultyId);
 			} else {
 				console.log(response.control.errorDescription);
 			}
@@ -922,12 +944,20 @@ function loadGeneralPresentationCard(response) {
 +'													</div>'
 +'												</div>'
 +'												<br>'
-+											generalPresentationContentString
++												generalPresentationContentString
+<!-- +'												<div class="row">' -->
+<!-- +'													<div class="col-md-12 col-md-offset-0">' -->
+<!-- +'														<div id="map" class="map"></div>' -->
+<!-- +'													</div>' -->
+<!-- +'												</div>' -->
 +'											</div>'
 +'										</div>'
 
 			);
 			document.getElementById("faculty-profile-presentation-header").innerHTML += facultyProfilePresentationString;
+			
+			<!-- loadMap(response.result.facultyAddress); -->
+
 }
 
 function loadProgramsCard(response) {
@@ -1298,6 +1328,135 @@ function loadReviewsTab(response, loadMore) {
 	
 }
 
+function getOtherFacultiesFromSameUniversity(universityId, currentFacultyId) {
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
+
+	backendUrl.searchParams.append("universityIds", universityId);
+	
+	  $.ajax({
+	  url: backendUrl,
+	  type: "GET",
+	  beforeSend : function(request) {
+			document.getElementById("other-faculties").innerHTML = '	<div class="text-center" style="height: 350px;">'
+																					+'<div class="uil-reload-css reload-background" style=""><div></div></div>'
+																				+'</div>';
+			
+		  },
+	  success: function(response) {
+		if (response.control.errorCode === 0) {
+			loadOtherFacultiesFromSameUniversityContent(response, currentFacultyId);
+		} else {
+			console.log(response.control.errorDescription);
+		}
+
+	  },
+	  error: function(error) {
+		console.log(error);
+	  }
+	});
+}
+
+function loadOtherFacultiesFromSameUniversityContent(response, currentFacultyId) {
+
+	var faculties = response.result.faculties;
+	faculties = faculties.filter(function(value, index, arr){
+		return currentFacultyId != value.facultyId;
+	});
+	
+	if (faculties.length == 0 ) {
+		<!-- document.getElementById("other-faculties-carousel").innerHTML = '<div class="text-center text-muted" style="height: 150px;"> <h4>Nu au fost găsite facultăți</h4> </div>'; -->
+		return;
+	}
+	
+	
+var otherFacultiesString = 
+'						<div class="row">'
++'							<div class="col-xs-12">'
++'								<h4 class="title">Alte facultăți de la aceeași universitate</h4>         '           
++'							</div>'
++'						</div>';
+
+	var windowWidth = $(window).width();
+	var colWidth;
+	var otherFacultiesPerSlide;
+	if (windowWidth > 1200) {
+		colWidth = 'col-md-3';
+		otherFacultiesPerSlide = 4;
+	} else if (windowWidth > 992) {
+		colWidth = 'col-md-4';
+		otherFacultiesPerSlide = 3;
+	} else if (windowWidth > 768) {
+		colWidth = 'col-sm-6';
+		otherFacultiesPerSlide = 2;
+	} else {
+		colWidth = 'col-xs-12';
+		otherFacultiesPerSlide = 1;
+	}
+	
+	otherFacultiesString += 
+'						<div class="row">'
++'							<div class="col-md-12">'
++'							  <div class="carousel slide media-carousel" id="media">'
++'								<div id="other-faculties-carousel" class="carousel-inner">';
+	
+	var i;
+	for (i in faculties) {
+	
+			if (i == 0) {
+				otherFacultiesString += (
+		'						<div class="item active">'
+		+'							<div class="row">');
+			}
+			if (i!=0 && (i%otherFacultiesPerSlide)==0) {
+				otherFacultiesString += (
+		'						<div class="item">'
+		+'							<div class="row">');
+			}
+			var faculty = faculties[i];
+			var universityNameFront;
+			var universityName = faculty.universityName;
+			if (universityName.length > 50) {
+				universityNameFront = universityName.substring(0, 50).concat('...');
+			} else {
+				universityNameFront = universityName;
+			}
+			var universityNameTooltipTitle = universityName.replaceAll("\"", "");
+			
+			var avgRating = faculties[i].avgRating;
+			if (!avgRating) {
+				avgRating = "N/A";
+			} else {
+				avgRating = avgRating.toFixed(1);
+			}
+			
+			var logoSrc = backendUrlRoot + "/v1/faculty/" + faculties[i].facultyId + "/logo";	
+			
+			var urlProfileRedirect = "./faculty-profile.html?id=";
+			
+			otherFacultiesString += (
+						'<div class="' + colWidth + '"><div class="card"> <div class="content"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + faculty.facultyName + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + faculty.facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </div> </div>  </div> </div> </div> </div>');
+		<!-- } -->
+		if (i==(faculties.length - 1) || i%otherFacultiesPerSlide==(otherFacultiesPerSlide-1)) {
+			otherFacultiesString += ('</div> </div>');
+		}
+		
+	}
+	
+	otherFacultiesString += 
+'								</div>'
++'								<a data-slide="prev" href="#media" class="left carousel-control">‹</a>'
++'								<a data-slide="next" href="#media" class="right carousel-control">›</a>'
++'							  </div>    '                      
++'							</div>'
++'						</div>';
+	
+	document.getElementById("other-faculties").innerHTML = otherFacultiesString;
+	
+	$('#media').carousel('pause');
+	
+}
+
 <!-- document.getElementById("see-all-reviews").onclick = function () {  -->
 	 <!-- $('[href=#reviews]').tab('show');  -->
 <!-- }; -->
@@ -1398,6 +1557,86 @@ function upvoteReview(el) {
 			}
 		});
 
+}
+
+function loadMap(address) {
+
+	var zoom = 17;
+	if (!address) {
+		address = 'Romania';
+		zoom = 7;
+	}
+	
+	console.log(address);
+	
+	var data = {
+    "format": "json",
+    "addressdetails": 1,
+    "q": address,
+    "limit": 1
+	};
+	$.ajax({
+	  method: "GET",
+	  url: "https://nominatim.openstreetmap.org",
+	  data: data
+	})
+	.success(function(response) {
+		createMap(response, zoom);
+	});
+
+}
+
+function createMap(response, zoom) {
+		if (!response || response.length == 0) {
+			return;
+		}
+		var longitude = response[0].lon;
+		var latitude = response[0].lat;
+		var map = new ol.Map({
+			target: 'map',
+			layers: [
+			  new ol.layer.Tile({
+				source: new ol.source.OSM()
+			  })
+			],
+			view: new ol.View({
+			  center: ol.proj.fromLonLat([longitude, latitude]),
+			  zoom: zoom
+			})
+		  });
+		  
+		var features = [];
+		var iconFeature = new ol.Feature({
+			geometry: new ol.geom.Point(ol.proj.transform([longitude, latitude], 'EPSG:4326', 'EPSG:3857'))
+		});
+		
+		var iconStyle = new ol.style.Style({
+			image: new ol.style.Icon(({
+				anchor: [1, 1],
+				src: "./assets/img/school_small.png"
+			}))
+		});
+		
+		iconFeature.setStyle(iconStyle);
+		features.push(iconFeature);
+		
+		var vectorSource = new ol.source.Vector({
+			features: features
+		});
+		  
+		<!-- var layer = new ol.layer.Vector({ -->
+		<!-- source: new ol.source.Vector({ -->
+			 <!-- features: [ -->
+				 <!-- new ol.Feature({ -->
+					 <!-- geometry:  new ol.geom.Point(ol.proj.transform([longitude, latitude], 'EPSG:4326', 'EPSG:3857')) -->
+				 <!-- }) -->
+			 <!-- ] -->
+		 <!-- }) -->
+		<!-- }); -->
+		var vectorLayer = new ol.layer.Vector({
+			source: vectorSource
+		});
+		map.addLayer(vectorLayer);
 }
 
 document.getElementById("search-review-keyword").addEventListener("keyup", function(event) {
