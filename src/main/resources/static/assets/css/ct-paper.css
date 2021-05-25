@@ -3353,7 +3353,7 @@ textarea.form-control {
 
 @media (min-width:992px) {
   .img-faculty-logo-profile {
-	width: 160px;
+	/* width: 160px; */
 	max-width: 90% !important;
 	max-height: 165px;
 	/* position: absolute;  */
