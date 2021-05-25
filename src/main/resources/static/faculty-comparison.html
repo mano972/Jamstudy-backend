@@ -109,8 +109,8 @@
 							<div class="col-md-12">
 							  <div class="carousel slide media-carousel" id="media">
 								<div id="recommended-carousel" class="carousel-inner">
-									<div class="text-center" style='height: 350px;'>
-										<div id="loading-recommended" class='uil-reload-css reload-background' style=''><div></div></div>
+									<div class="text-center" style="height: 350px;">
+										<div class='uil-reload-css reload-background' style=''><div></div></div>
 									</div>	
 									<!-- populated dynamically -->
 								</div>
@@ -256,7 +256,6 @@ function getFaculties() {
 		facultyIds = facultyIdsString.split(",");
 	}
 	if (!facultyIds || facultyIds.length === 0) {
-		console.log("aici");
 		document.getElementById("comparison-table").innerHTML = '<div class="text-center text-muted center"> <h4>Adaugă o facultate pentru a începe</h4><a href="./search-results.html"utton class="btn btn-info btn-block btn-fill">Caută Facultăți</a> </div>';
 		document.getElementById("comparison-table").style.height = "500px";
 		<!-- document.getElementById("comparison-table").style.width = "1200px"; -->
@@ -595,13 +594,19 @@ function getRecommendedFaculties(universityIds, comparedFacultyIds) {
 	}
 
 	backendUrl.searchParams.append("universityIds", universityIds.join());
+	backendUrl.searchParams.append("ratingFrom", 0); // set to 1
 	backendUrl.searchParams.append("limit", 8);
 	
 	  $.ajax({
 	  url: backendUrl,
 	  type: "GET",
+	  beforeSend : function(request) {
+			document.getElementById("recommended-carousel").innerHTML = '	<div class="text-center" style="height: 350px;">'
+																					+'<div class="uil-reload-css reload-background" style=""><div></div></div>'
+																				+'</div>';
+			
+		  },
 	  success: function(response) {
-		
 		if (response.control.errorCode === 0) {
 			loadRecommendedFacultiesContent(response, comparedFacultyIds);
 		} else {
@@ -611,9 +616,6 @@ function getRecommendedFaculties(universityIds, comparedFacultyIds) {
 	  },
 	  error: function(error) {
 		console.log(error);
-	  },
-	  complete: function (data) {
-		<!-- document.getElementById("loading-recommended").style.display = "none"; -->
 	  }
 	});
 }
@@ -627,6 +629,10 @@ function loadRecommendedFacultiesContent(response, comparedFacultyIds) {
 		});
 	}
 	
+	if (faculties.length == 0 ) {
+		document.getElementById("recommended-carousel").innerHTML = '<div class="text-center text-muted" style="height: 150px;"> <h4>Nu au fost găsite sugestii</h4> </div>';
+		return;
+	}
 
 	var windowWidth = $(window).width();
 	var colWidth;
@@ -647,7 +653,6 @@ function loadRecommendedFacultiesContent(response, comparedFacultyIds) {
 	
 	var i;
 	for (i in faculties) {
-	
 	
 			if (i == 0) {
 				recommendedFacultiesString = (

@@ -142,9 +142,10 @@ body.loading .modal {
 }
 
 .faculty-profile-header-background {
-	background-image: linear-gradient(to bottom, #fff5c4, #faf6e3) !important;
+	background-image: linear-gradient(to bottom, #fff5c4, #ffffff) !important;
 }
 
+/* currently not used */
 .faculty-profile-other-background {
 	background-image: linear-gradient(to bottom, #faf6e3, #FFFFFF00);
 }
@@ -4801,7 +4802,7 @@ input.ct-danger + span + label + span.switch-right {
 }
 
 .uil-reload-css.reload-background {
-  background-color: #DDDDDD;
+  background-color: orange;
   border-radius: 50%;
 }
 .uil-reload-css.reload-background > div {

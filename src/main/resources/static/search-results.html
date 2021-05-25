@@ -196,7 +196,7 @@
 
 									<div id="faculty-entries" class="faculty-search-card-fixed col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-0 col-lg-7 col-lg-offset-0">
 										<div class="text-center">
-											<div class='uil-reload-css reload-background' style=''><div></div></div>
+											<div id="loading" class="uil-reload-css reload-background" style=""><div></div></div>
 										</div>
 											<!-- populated dynamically -->
 									</div>
@@ -523,6 +523,13 @@ function loadData(loadMore) {
 	      $.ajax({
           url: backendUrl,
           type: "GET",
+		  beforeSend : function(request) {
+			if (!loadMore) {
+				document.getElementById("faculty-entries").innerHTML = '	<div class="text-center">'
+																					+'<div class="uil-reload-css reload-background" style=""><div></div></div>'
+																				+'</div>';
+			}
+		  },
           success: function(response) {
 			
 			if (loadMore) {
@@ -546,6 +553,7 @@ function loadData(loadMore) {
 			
 			if (response.result.faculties.length == 0) {
 				document.getElementById("faculty-entries").innerHTML = '<div class="text-center text-muted"> <h4>Nu au fost găsite rezultate</h4> </div>';
+				return;
 			}
 			
 			var urlProfileRedirect = "./faculty-profile.html?id=";
