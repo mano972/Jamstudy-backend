@@ -4802,7 +4802,7 @@ input.ct-danger + span + label + span.switch-right {
 }
 
 .uil-reload-css.reload-background {
-  background-color: orange;
+  background-color: #ffca2b;
   border-radius: 50%;
 }
 .uil-reload-css.reload-background > div {
