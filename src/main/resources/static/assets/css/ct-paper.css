@@ -204,6 +204,16 @@ body.loading .modal {
   transform: translate(-50%, -50%);
 }
 
+.center-add-review {
+  margin: 0;
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
 .comparison-table {
 	overflow: auto;
 	border: 1px solid #f0edf0;
@@ -3441,7 +3451,7 @@ textarea.form-control {
 
 .img-faculty-logo-add-review {
   max-height: 125px;
-  max-width: 64% !important;
+  max-width: 54% !important;
 }
 
 .img-faculty-logo-carousel-block {
