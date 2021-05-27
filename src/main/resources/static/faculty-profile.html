@@ -116,6 +116,21 @@
 										<!-- populated dynamically -->
 									</div>
 								</div>
+								
+								<div class="row">
+									<div class="col-md-12 col-md-offset-0">
+										<!-- <div class="card"> -->
+											<!-- <div id="content-faculty-programs" class="content"> -->
+									
+														<!-- <div class="row"> -->
+																<!-- <div class="col-lg-12 col-lg-offset-0 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-xs-offset-0"> -->
+																	<div id="map" class="map"></div>
+																<!-- </div> -->
+														<!-- </div> -->
+											<!-- </div> -->
+										<!-- </div> -->
+									</div>
+								</div>
 							</div>
 							
 							<div class="tab-pane" id="reviews">
@@ -946,7 +961,7 @@ function loadGeneralPresentationCard(response) {
 +'												<br>'
 +												generalPresentationContentString
 <!-- +'												<div class="row">' -->
-<!-- +'													<div class="col-md-12 col-md-offset-0">' -->
+<!-- +'													<div class="col-md-5 col-md-offset-0">' -->
 <!-- +'														<div id="map" class="map"></div>' -->
 <!-- +'													</div>' -->
 <!-- +'												</div>' -->
@@ -956,7 +971,7 @@ function loadGeneralPresentationCard(response) {
 			);
 			document.getElementById("faculty-profile-presentation-header").innerHTML += facultyProfilePresentationString;
 			
-			<!-- loadMap(response.result.facultyAddress); -->
+			loadMap(response.result.facultyAddress);
 
 }
 
@@ -1561,13 +1576,13 @@ function upvoteReview(el) {
 
 function loadMap(address) {
 
-	var zoom = 17;
+	<!-- address = 'Bulevardul Regina Elisabeta Nr. 4-12, București 030018, Romania'; -->
+
+	var zoom = 14;
 	if (!address) {
 		address = 'Romania';
 		zoom = 7;
 	}
-	
-	console.log(address);
 	
 	var data = {
     "format": "json",
@@ -1592,11 +1607,13 @@ function createMap(response, zoom) {
 		}
 		var longitude = response[0].lon;
 		var latitude = response[0].lat;
+		<!-- const mapUrl = 'http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'; -->
+		const mapUrl = 'http://{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 		var map = new ol.Map({
 			target: 'map',
 			layers: [
 			  new ol.layer.Tile({
-				source: new ol.source.OSM()
+				source: new ol.source.OSM({"url" : mapUrl})
 			  })
 			],
 			view: new ol.View({
@@ -1604,6 +1621,7 @@ function createMap(response, zoom) {
 			  zoom: zoom
 			})
 		  });
+		  
 		  
 		var features = [];
 		var iconFeature = new ol.Feature({
@@ -1613,7 +1631,7 @@ function createMap(response, zoom) {
 		var iconStyle = new ol.style.Style({
 			image: new ol.style.Icon(({
 				anchor: [1, 1],
-				src: "./assets/img/school_small.png"
+				src: "./assets/img/map_marker.png"
 			}))
 		});
 		
@@ -1624,19 +1642,17 @@ function createMap(response, zoom) {
 			features: features
 		});
 		  
-		<!-- var layer = new ol.layer.Vector({ -->
-		<!-- source: new ol.source.Vector({ -->
-			 <!-- features: [ -->
-				 <!-- new ol.Feature({ -->
-					 <!-- geometry:  new ol.geom.Point(ol.proj.transform([longitude, latitude], 'EPSG:4326', 'EPSG:3857')) -->
-				 <!-- }) -->
-			 <!-- ] -->
-		 <!-- }) -->
-		<!-- }); -->
 		var vectorLayer = new ol.layer.Vector({
 			source: vectorSource
 		});
 		map.addLayer(vectorLayer);
+		
+		if ($(window).width() > 992) {
+			const olViewport = document.getElementsByClassName('ol-viewport').length > 0 ? document.getElementsByClassName('ol-viewport')[0] : null;
+			if (olViewport) {
+				olViewport.style.borderRadius = '20px';
+			}
+		}
 }
 
 document.getElementById("search-review-keyword").addEventListener("keyup", function(event) {

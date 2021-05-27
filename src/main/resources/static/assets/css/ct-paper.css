@@ -1044,11 +1044,12 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 /* End carousel */
 
 .map {
-	margin-top:25px;
-    height: 400px;
-    width: 100%;
-	border: 1px solid black;
+	margin-top:5px;
+	height: 215px;
+	width: 100%;
+	/* border: 1px solid black; */
 }
+
 
 
 
@@ -3465,10 +3466,22 @@ textarea.form-control {
   max-height: 75px;
   max-width: 75px !important;
 }
+@media (min-width:992px) {
+	.img-first-place-banner {
+		background-color: #fceea9;
+		margin: -20px -20px 20px -20px;
+		/* margin-bottom: 7px; */
+		border-radius: 20px 20px 0 0;
+	}
+}
 
-.img-first-place-banner {
-	background-color: #fceea9;
-	margin-bottom: 7px;
+@media (max-width:992px) {
+	.img-first-place-banner {
+		background-color: #fceea9;
+		margin: -20px -20px 20px -20px;
+		/* margin-bottom: 7px; */
+		border-radius: 0;
+	}
 }
 
 .img-rounded {
