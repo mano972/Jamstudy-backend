@@ -76,9 +76,12 @@ public class FacultyService {
 		response.put("faculties", facultiesArray);
 		response.put("count", count);
 
+		LogUtils.logMessage(LOGGER,
+				"Searched faculties criteria " + facultyFilter.toString() + "with result count: " + count);
+
 		return ResponseDTO.createSuccessResponse(response);
 	}
-	
+
 	public ResponseDTO getFilteredFacultiesDetailed(FacultyFilter facultyFilter) {
 		List<Faculty> faculties = facultyDAO.getFilteredFaculties(facultyFilter);
 		long count = facultyDAO.countFilteredFaculties(facultyFilter);
