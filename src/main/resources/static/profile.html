@@ -49,19 +49,16 @@
 					<a href="./" class="btn btn-simple">Acasă</a>
 				</li>
 				  <li>
-					  <a href="./search-results.html" class="btn btn-simple">Facultăți</a>
+					  <a href="./search.html" class="btn btn-simple">Facultăți</a>
 				  </li>
 				   <li>
-					  <a href="./faculty-comparison.html" class="btn btn-simple">Compară</a>
+					  <a href="./comparison.html" class="btn btn-simple">Compară</a>
 				  </li>
 				  <li>
-					  <a href="./contact-page.html" class="btn btn-simple">Contact</a>
+					  <a href="./contact.html" class="btn btn-simple">Contact</a>
 				  </li>
 				  <!-- <li> -->
 					  <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-				  <!-- </li> -->
-				  <!-- <li> -->
-					  <!-- <a href="./add-review.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
 				  <!-- </li> -->
 			   </ul>
 			</div><!-- /.navbar-collapse -->
@@ -230,7 +227,7 @@
 		<!-- </div> -->
 		
 		<div class="floating-button">
-			<a href="./contact-page.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
+			<a href="./contact.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
 		</div>
 		
 	</div>
@@ -266,17 +263,17 @@
 								</a>
 							</li>
 							<li>
-								<a href="./search-results.html">
+								<a href="./search.html">
 									Facultăți
 								</a>
 							</li>
 							<li>
-								<a href="./faculty-comparison.html">
+								<a href="./comparison.html">
 									Compară
 								</a>
 							</li>
 							<li>
-								<a href="./contact-page.html">
+								<a href="./contact.html">
 								   Contact
 								</a>
 							</li>
@@ -492,7 +489,7 @@ function loadProfileHeader(response) {
 			<!-- var logoSrcTop = "C://logos_jamstudy/" + logoName + ".png"; -->
 			var logoSrcTop = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
 			
-			var addReviewRedirectUrl = "./add-review.html?id=" + facultyId;
+			var addReviewRedirectUrl = "./review.html?id=" + facultyId;
 			
 			document.getElementById("faculty-profile-header").innerHTML = '';
 			var facultyProfileHeaderString = (
@@ -638,8 +635,8 @@ function loadGeneralReviewCard(response) {
 									reviewText = responseReview.result.reviews[i].reviewText ? responseReview.result.reviews[i].reviewText : "N/A";
 									var reviewTextFront;
 									
-									if (reviewText.length > 380) {
-										reviewTextFront = reviewText.substring(0, 380).concat(' <strong class="review-ellipsis"> ...</strong>');
+									if (reviewText.length > 200) {
+										reviewTextFront = reviewText.substring(0, 200).concat(' <strong class="review-ellipsis"> ...</strong>');
 									} else {
 										reviewTextFront = reviewText.concat(' <strong class="review-ellipsis"> ...</strong>');
 									}

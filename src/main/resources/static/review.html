@@ -46,13 +46,13 @@
                 <a href="./" class="btn btn-simple">Acasă</a>
             </li>
             <li>
-                <a href="./search-results.html" class="btn btn-simple">Facultăți</a>
+                <a href="./search.html" class="btn btn-simple">Facultăți</a>
             </li>
 			<li>
-				<a href="./faculty-comparison.html" class="btn btn-simple">Compară</a>
+				<a href="./comparison.html" class="btn btn-simple">Compară</a>
 			</li>
             <li>
-                <a href="./contact-page.html" class="btn btn-simple">Contact</a>
+                <a href="./contact.html" class="btn btn-simple">Contact</a>
             </li>
 			<!-- <li> -->
 				<!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
@@ -615,17 +615,17 @@
 								</a>
 							</li>
 							<li>
-								<a href="./search-results.html">
+								<a href="./search.html">
 									Facultăți
 								</a>
 							</li>
 							<li>
-								<a href="./faculty-comparison.html">
+								<a href="./comparison.html">
 									Compară
 								</a>
 							</li>
 							<li>
-								<a href="./contact-page.html">
+								<a href="./contact.html">
 								   Contact
 								</a>
 							</li>
@@ -716,7 +716,7 @@ function loadFaculty(){
 				var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 				
-				var urlProfileRedirect = "./faculty-profile.html?id=" + facultyId;
+				var urlProfileRedirect = "./profile.html?id=" + facultyId;
 
 				
 				document.getElementById("review-faculty-main").innerHTML = '';
@@ -975,7 +975,7 @@ function postReview(){
 			success: function (data) {
 				document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost adăugată cu succes";
 				$("#add-review-modal").on("hidden.bs.modal", function () {
-    				var urlProfileRedirect = "./faculty-profile.html?id=" + facultyId;
+    				var urlProfileRedirect = "./profile.html?id=" + facultyId;
 					location.href = urlProfileRedirect;
 				});
 			},
@@ -984,7 +984,7 @@ function postReview(){
 				document.getElementById('add-review-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
 				document.getElementById('add-review-modal-text').innerHTML = "A apărut o eroare. Evaluarea nu a putut fi adăugată cu succes.";
 				$("#add-review-modal").on("hidden.bs.modal", function () {
-					var urlProfileRedirect = "./faculty-profile.html?id=" + facultyId;
+					var urlProfileRedirect = "./profile.html?id=" + facultyId;
 					location.href = urlProfileRedirect;
 				});
 		}

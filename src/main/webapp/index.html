@@ -46,19 +46,16 @@
                 <a href="./" class="btn btn-simple">Acasă</a>
             </li>
 			 <li>
-				<a href="./search-results.html" class="btn btn-simple">Facultăți</a>
+				<a href="./search.html" class="btn btn-simple">Facultăți</a>
 			</li>
 			 <li>
-				<a href="./faculty-comparison.html" class="btn btn-simple">Compară</a>
+				<a href="./comparison.html" class="btn btn-simple">Compară</a>
 			</li>
 			<li>
-				<a href="./contact-page.html" class="btn btn-simple">Contact</a>
+				<a href="./contact.html" class="btn btn-simple">Contact</a>
 			</li>
               <!-- <li> -->
                   <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-              <!-- </li> -->
-			  <!-- <li> -->
-                  <!-- <a href="./add-review.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
               <!-- </li> -->
            </ul>
         </div><!-- /.navbar-collapse -->
@@ -264,7 +261,7 @@
         </div>    
 
 		<div class="floating-button">
-			<a href="./contact-page.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
+			<a href="./contact.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
 		</div>
 		
     </div>
@@ -281,17 +278,17 @@
                             </a>
                         </li>
                         <li>
-                            <a href="./search-results.html">
+                            <a href="./search.html">
                                 Facultăți
                             </a>
                         </li>
 						<li>
-                            <a href="./faculty-comparison.html">
+                            <a href="./comparison.html">
                                 Compară
                             </a>
                         </li>
                         <li>
-                            <a href="./contact-page.html">
+                            <a href="./contact.html">
                                Contact
                             </a>
                         </li>
@@ -340,6 +337,25 @@
 					</div>
 				  </div>
 				  <div id="modal-text" class="modal-body modal-info text-center">
+					&nbsp;
+				  </div>
+				  <div class="modal-footer">
+					   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
+			<div class="modal fade" id="review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<div id="review-modal-header-text">
+						<i class="far fa-envelope fa-2x"></i>
+					</div>
+				  </div>
+				  <div id="review-modal-text" class="modal-body modal-info text-center">
 					&nbsp;
 				  </div>
 				  <div class="modal-footer">
@@ -398,7 +414,7 @@ function loadTopFaculties() {
 			document.getElementById("content-top-faculty").innerHTML = '';
 			document.getElementById("content-runner-up-faculties").innerHTML = '';
 			
-			var urlProfileRedirect = "./faculty-profile.html?id=";
+			var urlProfileRedirect = "./profile.html?id=";
 			
 			if (response.result.faculties.length > 0) {
 				document.getElementById("see-all-filtered-faculties-button").innerHTML = 'Vezi tot (' + response.result.count + ')';
@@ -431,7 +447,7 @@ function loadTopFaculties() {
 				var logoSrcTop = backendUrlRoot + "/v1/faculty/" + response.result.faculties[0].facultyId + "/logo";	
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 				
-				var addReviewRedirectUrlTop = "./add-review.html?id=" + facultyIdTop;
+				var addReviewRedirectUrlTop = "./review.html?id=" + facultyIdTop;
 				
 				
 				var backendUrlReviews = new URL(backendUrlRoot + "/v1/review/faculty/" + facultyIdTop);
@@ -457,13 +473,13 @@ function loadTopFaculties() {
 							generalRating = responseReview.result.reviews[0].generalRating ? responseReview.result.reviews[0].generalRating : "N/A";
 							reviewText = responseReview.result.reviews[0].reviewText ? responseReview.result.reviews[0].reviewText : "N/A";
 							var reviewTextFront;
-							if (reviewText.length > 380) {	
-								reviewTextFront = reviewText.substring(0, 380).concat(' <strong class="review-ellipsis"> ...</strong>');	
+							if (reviewText.length > 200) {	
+								reviewTextFront = reviewText.substring(0, 200).concat(' <strong class="review-ellipsis"> ...</strong>');	
 							} else {	
 								reviewTextFront = reviewText.concat(' <strong class="review-ellipsis"> ...</strong>');	
 							}	
 								
-							cardReviewStr = '<div class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span class="btn btn-simple btn-info temp-display">Vezi tot</span>							</div>											</div>';
+							cardReviewStr = '<div class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span id="see-full-review" class="btn btn-simple btn-info temp-display">Vezi tot</span>							</div>											</div>';
 							
 						} else {
 							var noReviewsText = "Nu există evaluări";
@@ -507,7 +523,7 @@ function loadTopFaculties() {
 				<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
 				var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";
 				
-				var addReviewRedirectUrl = "./add-review.html?id=" + facultyId;
+				var addReviewRedirectUrl = "./review.html?id=" + facultyId;
 				
 				var position = i + 1;
 				var labelClass = "label-primary";
@@ -553,7 +569,7 @@ function addToCompare(button, facultyId, hasText) {
 	var compareCheckIcon = "fas fa-check-circle fa-lg";
 	
 	if ($(icon).hasClass(compareCheckIcon)) {
-		var urlComparisonRedirect = "./faculty-comparison.html";
+		var urlComparisonRedirect = "./comparison.html";
 		location.href = urlComparisonRedirect;
 		return;
 	}
@@ -608,7 +624,7 @@ document.getElementById("search-button").onclick = function () {
 	
 	var searchInput = document.getElementById("search-input").value;
 	
-	var url = "./search-results.html";
+	var url = "./search.html";
 	var searchInputParam = "q=" + searchInput;
 	var domainsParam = "d=" + arrayDomains;
 	var citiesParam = "c=" + arrayCities;
@@ -633,7 +649,7 @@ document.getElementById("see-all-filtered-faculties-button").onclick = function 
 		arrayCities.push(topByCityId);
 	}
 	
-	var url = "./search-results.html";
+	var url = "./search.html";
 	var searchInputParam = "q=";
 	var domainsParam = "d=" + arrayDomains;
 	var citiesParam = "c=" + arrayCities;
@@ -693,6 +709,7 @@ document.getElementById("newsletter-button").onclick = function (e) {
 	}
 
 }
+
 
 function validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

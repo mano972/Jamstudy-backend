@@ -46,19 +46,16 @@
                 <a href="./" class="btn btn-simple">Acasă</a>
             </li>
             <li>
-                <a href="./search-results.html" class="btn btn-simple">Facultăți</a>
+                <a href="./search.html" class="btn btn-simple">Facultăți</a>
             </li>
 			<li>
-				<a href="./faculty-comparison.html" class="btn btn-simple">Compară</a>
+				<a href="./comparison.html" class="btn btn-simple">Compară</a>
 			</li>
             <li>
-                <a href="./contact-page.html" class="btn btn-simple">Contact</a>
+                <a href="./contact.html" class="btn btn-simple">Contact</a>
             </li>
 			<!-- <li> -->
 				<!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-			<!-- </li> -->
-			<!-- <li> -->
-				 <!-- <a href="./add-review.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
 			<!-- </li> -->
            </ul>
         </div><!-- /.navbar-collapse -->
@@ -246,7 +243,7 @@
 		</div>
 		
 		<div class="floating-button">
-			<a href="./contact-page.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
+			<a href="./contact.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
 		</div>
 		
 	</div>
@@ -282,17 +279,17 @@
 								</a>
 							</li>
 							<li>
-								<a href="./search-results.html">
+								<a href="./search.html">
 									Facultăți
 								</a>
 							</li>
 							<li>
-								<a href="./faculty-comparison.html">
+								<a href="./comparison.html">
 									Compară
 								</a>
 							</li>
 							<li>
-								<a href="./contact-page.html">
+								<a href="./contact.html">
 								   Contact
 								</a>
 							</li>
@@ -556,7 +553,7 @@ function loadData(loadMore) {
 				return;
 			}
 			
-			var urlProfileRedirect = "./faculty-profile.html?id=";
+			var urlProfileRedirect = "./profile.html?id=";
 			
 			var i;
 			for (i in response.result.faculties) {
@@ -589,7 +586,7 @@ function loadData(loadMore) {
 				var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";	
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 				
-				var addReviewRedirectUrl = "./add-review.html?id=" + facultyId;
+				var addReviewRedirectUrl = "./review.html?id=" + facultyId;
 		
 			
 				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <h6 id="university-name-' + i + '">' + universityName + '</h6> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i><span>Salvează</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div>');
@@ -615,7 +612,7 @@ function addToCompare(button, facultyId) {
 	var compareCheckIcon = "fas fa-check-circle fa-lg";
 	
 	if ($(icon).hasClass(compareCheckIcon)) {
-		var urlComparisonRedirect = "./faculty-comparison.html";
+		var urlComparisonRedirect = "./comparison.html";
 		location.href = urlComparisonRedirect;
 		return;
 	}

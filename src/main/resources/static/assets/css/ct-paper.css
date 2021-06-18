@@ -1051,6 +1051,71 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 }
 
 
+/* Scroll bars */
+
+/* Mozilla */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+/* Others */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* ::-webkit-scrollbar-button { */
+	
+/* } */
+
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+ 
+.content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+.card-review-brief::-webkit-scrollbar {
+  width: 8px;
+}
+
+.card-review-brief::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 10px;
+}
+ 
+.card-review-brief::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.card-review-brief::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
 
 
 /*       CT colors          */
@@ -1120,11 +1185,11 @@ input.ct-red + span + label + span.switch-right {
 }
 
 .temp-display {
-	display: none;
+	/* display: none; */
 }
 
 .temp-visibility {
-	visibility: hidden;
+	/* visibility: hidden; */
 }
 
 .save-compare-search-list {
@@ -9216,7 +9281,7 @@ $ct-series-colors: (
 @media (min-width:992px) {
 	#content-top-faculty {
 		height: 665px;
-		overflow-y: auto;
+		/* overflow-y: auto; */
 	}
 }
 

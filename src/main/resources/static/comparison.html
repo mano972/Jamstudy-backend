@@ -47,19 +47,16 @@
 					<a href="./" class="btn btn-simple">Acasă</a>
 				</li>
 				  <li>
-					  <a href="./search-results.html" class="btn btn-simple">Facultăți</a>
+					  <a href="./search.html" class="btn btn-simple">Facultăți</a>
 				  </li>
 				  <li>
-					  <a href="./faculty-comparison.html" class="btn btn-simple">Compară</a>
+					  <a href="./comparison.html" class="btn btn-simple">Compară</a>
 				  </li>
 				  <li>
-					  <a href="./contact-page.html" class="btn btn-simple">Contact</a>
+					  <a href="./contact.html" class="btn btn-simple">Contact</a>
 				  </li>
 				  <!-- <li> -->
 					  <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-				  <!-- </li> -->
-				  <!-- <li> -->
-					  <!-- <a href="./add-review.html" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> -->
 				  <!-- </li> -->
 			   </ul>
 			</div><!-- /.navbar-collapse -->
@@ -126,7 +123,7 @@
 		</div>
 		
 		<div class="floating-button">
-			<a href="./contact-page.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
+			<a href="./contact.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
 		</div>
 		
 	</div>
@@ -162,17 +159,17 @@
 								</a>
 							</li>
 							<li>
-								<a href="./search-results.html">
+								<a href="./search.html">
 									Facultăți
 								</a>
 							</li>
 							<li>
-								<a href="./faculty-comparison.html">
+								<a href="./comparison.html">
 									Compară
 								</a>
 							</li>
 							<li>
-								<a href="./contact-page.html">
+								<a href="./contact.html">
 								   Contact
 								</a>
 							</li>
@@ -256,7 +253,7 @@ function getFaculties() {
 		facultyIds = facultyIdsString.split(",");
 	}
 	if (!facultyIds || facultyIds.length === 0) {
-		document.getElementById("comparison-table").innerHTML = '<div class="text-center text-muted center"> <h4>Adaugă o facultate pentru a începe</h4><a href="./search-results.html"utton class="btn btn-info btn-block btn-fill">Caută Facultăți</a> </div>';
+		document.getElementById("comparison-table").innerHTML = '<div class="text-center text-muted center"> <h4>Adaugă o facultate pentru a începe</h4><a href="./search.html"utton class="btn btn-info btn-block btn-fill">Caută Facultăți</a> </div>';
 		document.getElementById("comparison-table").style.height = "500px";
 		<!-- document.getElementById("comparison-table").style.width = "1200px"; -->
 		document.getElementById("comparison-table").style.border = "none";
@@ -469,7 +466,7 @@ function loadComparisonTableContent(sortedResponse) {
 		<!-- var avgRatingStudentSupport = facultyResponse.avgRatingStudentSupport ? facultyResponse.avgRatingStudentSupport.toFixed(1) : "N/A"; -->
 		var avgRatingTimeBalance = facultyResponse.avgRatingTimeBalance ? facultyResponse.avgRatingTimeBalance.toFixed(1) : "N/A";
 		
-		var urlProfileRedirect = "./faculty-profile.html?id=";
+		var urlProfileRedirect = "./profile.html?id=";
 
 		document.getElementById("faculty-name-row-content").innerHTML += (
 	'									<div class="comparison-cell comparison-cell-faculty ' + collColumnWidth + '"> '
@@ -685,7 +682,7 @@ function loadRecommendedFacultiesContent(response, comparedFacultyIds) {
 			
 			var logoSrc = backendUrlRoot + "/v1/faculty/" + faculties[i].facultyId + "/logo";	
 			
-			var urlProfileRedirect = "./faculty-profile.html?id=";
+			var urlProfileRedirect = "./profile.html?id=";
 			
 			recommendedFacultiesString += (
 						'<div class="' + colWidth + '"><div class="card"> <div class="content" style="height: 350px;"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + faculty.facultyName + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + faculty.facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </div> </div> <div class="col-xs-12 text-center" style="margin-top: 10px;"> <button class="btn btn-simple compare compare-carousel" onclick="addToCompare(this, &quot;'+faculty.facultyId+'&quot;)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div>');
