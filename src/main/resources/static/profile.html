@@ -232,7 +232,7 @@
 		
 	</div>
 	
-	<div class="modal fade" id="generic-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="generic-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
 	  <div class="modal-dialog">
 		<div class="modal-content">
 		  <div class="modal-header">
@@ -246,6 +246,32 @@
 		  </div>
 		  <div class="modal-footer">
 			   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	
+	<div class="modal fade" id="review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog-review">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<div id="review-modal-header-text">
+				<i class="fas fa-scroll fa-2x"></i>
+			</div>
+		  </div>
+		  <div id="review-modal-text" class="modal-body">
+			&nbsp;
+		  </div>
+		  <div class="modal-footer">
+			<div class="left-side">
+				<button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+			</div>
+			<div class="divider"></div>
+			<div class="right-side">
+				<button id="see-all-reviews-modal" type="button" class="btn btn-warning btn-simple" data-dismiss="modal" style="color: orange;">Vezi toate evaluările</button>
+			</div>
 		  </div>
 		</div>
 	  </div>
@@ -317,6 +343,7 @@
 <script>
 
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
+var reviewTop = [];
 
 $body = $("body");
 $(document).on({
@@ -511,9 +538,9 @@ function loadProfileHeader(response) {
 					+						'<small class="text-muted">' + facultyCity + '</small>'
 					+						'<br>'
 					+						'<div>'
-					+							'<i class="fa fa-star fa-lg" style="color: orange; display: inline; vertical-align: middle;"></i>'
-					+							'<h3 style="color: orange; display: inline; vertical-align: middle;">&nbsp' + avgRating + '</h3>'
-					+							'<h5 style="display: inline; vertical-align: middle;"><a><strong>&nbsp' + countRevText + '</strong></a></h5>'
+					+							'<i class="fa fa-star fa-lg align-orange"></i>'
+					+							'<h3 class="align-orange">&nbsp' + avgRating + '</h3>'
+					+							'<h5 class="align"><a><strong>&nbsp' + countRevText + '</strong></a></h5>'
 					+						'</div>'
 					+					'</div>'
 					+				'</div>'
@@ -528,7 +555,7 @@ function loadProfileHeader(response) {
 					+						'<div class="nav-tabs-wrapper">'
 					+						'<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">'
 					+							'<li class="active"><a href="#profile" data-toggle="tab" onclick="addHash(this)">Profil</a></li>'
-					+							'<li><a id="xx" href="#reviews" data-toggle="tab" onclick="addHash(this)">Evaluări</a></li>'
+					+							'<li><a id="reviews-tab" href="#reviews" data-toggle="tab" onclick="addHash(this)">Evaluări</a></li>'
 					<!-- +							'<li><a href="#statistics" data-toggle="tab" onclick="addHash(this)">Statistici</a></li>' -->
 					<!-- +							'<li><a href="#qa" data-toggle="tab" onclick="addHash(this)">Q&A</a></li>' -->
 					+						'</ul>'
@@ -623,8 +650,8 @@ function loadGeneralReviewCard(response) {
 					   
 					   
 							if (responseReview.result.reviews.length > 0) {
-								if (document.getElementById("xx")) {
-									document.getElementById("xx").innerHTML = 'Evaluări (' + responseReview.result.count + ')';
+								if (document.getElementById("reviews-tab")) {
+									document.getElementById("reviews-tab").innerHTML = 'Evaluări (' + responseReview.result.count + ')';
 								}
 								for (i in responseReview.result.reviews) {
 									reviewId = responseReview.result.reviews[i].reviewId;
@@ -641,7 +668,9 @@ function loadGeneralReviewCard(response) {
 										reviewTextFront = reviewText.concat(' <strong class="review-ellipsis"> ...</strong>');
 									}
 									
-									cardReviewStr += '<div class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">&nbsp' + generalRating + '</strong>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display">Vezi tot</span>	 										</div>											</div>';
+									reviewTop.push(responseReview.result.reviews[i]);
+									
+									cardReviewStr += '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">&nbsp' + generalRating + '</strong>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>	 										</div>											</div>';
 								}
 								seeAllReviewsButtonStr = '<div class="text-center">'
 +'															<a id="see-all-reviews" type="button" class="btn btn-warning" onclick="seeAllReviews()" style="color: orange;">Vezi toate evaluările</a>'
@@ -665,9 +694,9 @@ function loadGeneralReviewCard(response) {
 +'												<div class="row">'
 +'													<div class="col-xs-12 text-center">'
 +'														<div class="rating-profile-big">'
-+'															<i class="fa fa-star fa-2x" style="color: orange; display: inline; vertical-align: middle;"></i>'
-+'															<h2 style="color: orange; display: inline; vertical-align: middle;">' + avgRating + '</h2> '
-+'															<h5 style="display: inline; vertical-align: middle;"><a><strong>' + countRevText + '</strong></a></h5>'
++'															<i class="fa fa-star fa-2x align-orange"></i>'
++'															<h2 class="align-orange">' + avgRating + '</h2> '
++'															<h5 class="align"><a><strong>' + countRevText + '</strong></a></h5>'
 +'														</div>'
 +'													</div>'
 +'												</div>'
@@ -1171,7 +1200,7 @@ function loadReviewsTab(response, loadMore) {
 		var i;
 		for (i in response.result.reviews) {
 
-			var reviewId = response.result.reviews[i].reviewId;;
+			var reviewId = response.result.reviews[i].reviewId;
 			var userName = response.result.reviews[i].userName ? response.result.reviews[i].userName : "Anonim";
 			var formattedReviewDate = response.result.reviews[i].formattedReviewDate ? response.result.reviews[i].formattedReviewDate : "N/A";
 			var userStatus = response.result.reviews[i].userStatus ? response.result.reviews[i].userStatus.toLowerCase() : "";
@@ -1323,10 +1352,10 @@ function loadReviewsTab(response, loadMore) {
 	+'															<button class="btn btn-simple btn-info" onclick="viewMore(' + i +')" id="view-more-button-' + i + '">+ Vezi tot</button>'
 	+'														</div>'
 	+'														<div class="col-md-2 col-md-offset-6 col-sm-2 col-sm-offset-5 col-xs-3 col-xs-offset-2" style="text-align: end;">'
-	+'															<i class="far fa-thumbs-up fa-lg like-review" style="margin-right: 7px; vertical-align: middle; display: inline;" onclick="upvoteReview(this)"></i><span id="upvotes-value" style="vertical-align: middle; display: inline;">' + upvotes + '</span>'
+	+'															<i class="far fa-thumbs-up fa-lg like-review align" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align">' + upvotes + '</span>'
 	+'														</div>'
 	+'														<div class="col-md-1 col-sm-2 col-xs-3" style="text-align: end;">'
-	+'															<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report" style="vertical-align: middle; display: inline;" onclick="reportReview(this)" data-toggle="modal" data-target="#generic-modal"></i>'
+	+'															<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report align" onclick="reportReview(this)" data-toggle="modal" data-target="#generic-modal"></i>'
 	+'														</div>														'
 	+'													</div>'
 	+'												</div>'	
@@ -1473,13 +1502,16 @@ var otherFacultiesString =
 	 <!-- $('[href=#reviews]').tab('show');  -->
 <!-- }; -->
 
-function seeAllReviews () {
+function seeAllReviews() {
 	$('[href=#reviews]').tab('show'); 
 	document.body.scrollTop = 0; // For Safari
 	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
 function reportReview(el) {
+
+	el.setAttribute("data-toggle", 'modal');
+	el.setAttribute("data-target", '#generic-modal');
 
 	var regularIcon = "far";
 	var solidIcon = "fas";
@@ -1497,20 +1529,21 @@ function reportReview(el) {
 			contentType: 'application/json',
 			crossDomain: true,
 			success: function () {
-				document.getElementById('generic-modal-text').innerHTML = "Evaluarea a fost raportata";
+				document.getElementById('generic-modal-text').innerHTML = "Evaluarea a fost raportată";
 				$(el).removeClass(regularIcon);
 				$(el).addClass(solidIcon);
 			},
 			error: function(error) {
 				console.log(error);
 				document.getElementById('generic-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
-				if (error.responseJSON) {
-					if (error.responseJSON.control) {
-						var errorDescription = error.responseJSON.control.errorDescription;
-						document.getElementById('generic-modal-text').innerHTML = errorDescription;
-					}
-					document.getElementById('generic-modal-text').innerHTML = "Evaluarea nu a putut fi raportata";
-				}
+				document.getElementById('generic-modal-text').innerHTML = "Evaluarea nu a putut fi raportată";
+				<!-- if (error.responseJSON) { -->
+					<!-- if (error.responseJSON.control) { -->
+						<!-- var errorDescription = error.responseJSON.control.errorDescription; -->
+						<!-- document.getElementById('generic-modal-text').innerHTML = errorDescription; -->
+					<!-- } -->
+					<!-- document.getElementById('generic-modal-text').innerHTML = "Evaluarea nu a putut fi raportată"; -->
+				<!-- } -->
 			}
 		});
 	
@@ -1559,13 +1592,17 @@ function upvoteReview(el) {
 			},
 			error: function(error) {
 				console.log(error);
-				if (error.responseJSON) {
-					if (error.responseJSON.control) {
-						var errorDescription = error.responseJSON.control.errorDescription;
-						alert(errorDescription);
-					}
-					alert("Evaluarea nu a putut fi votata");
-				}
+				el.setAttribute("data-toggle", 'modal');
+				el.setAttribute("data-target", '#generic-modal');
+				document.getElementById('generic-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+				document.getElementById('generic-modal-text').innerHTML = "Evaluarea nu a putut fi votată";
+				<!-- if (error.responseJSON) { -->
+					<!-- if (error.responseJSON.control) { -->
+						<!-- var errorDescription = error.responseJSON.control.errorDescription; -->
+						<!-- alert(errorDescription); -->
+					<!-- } -->
+					<!-- alert("Evaluarea nu a putut fi votată"); -->
+				<!-- } -->
 			}
 		});
 
@@ -1659,6 +1696,185 @@ document.getElementById("search-review-keyword").addEventListener("keyup", funct
     document.getElementById("search-reviews-icon").click();
   }
 });
+
+function seeFullReview(el, reviewArray) {
+		
+		var review;
+		const dataReviewId = $(el).parent().parent().attr("data-reviewid");
+		for (i in reviewArray) {
+			if (reviewArray[i].reviewId == dataReviewId) {
+				review = reviewArray[i];
+			}
+		}
+		
+		
+		var reviewId = review.reviewId;
+		var facultyId = review.facultyId;
+		var userName = review.userName ? review.userName : "Anonim";
+		var formattedReviewDate = review.formattedReviewDate ? review.formattedReviewDate : "N/A";
+		var userStatus = review.userStatus ? review.userStatus.toLowerCase() : "";
+		if (userStatus === 'drop-out') {
+			userStatus = "";
+		}
+		var userDomainOfLicenseOrMaster = review.userDomainOfLicenseOrMaster ? review.userDomainOfLicenseOrMaster : "";
+		var userProgramName = review.userProgramName ? review.userProgramName : "";
+		var userYear = review.userYear ? review.userYear : "";
+		var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
+		var upvotes = review.upvotes ? review.upvotes : 0;
+		var wouldRecommend = review.wouldRecommend;
+		var wouldRecommendText;
+		var wouldRecommendBoxClass;
+		var wouldRecommendTextClass;
+		if (wouldRecommend === true) {
+			wouldRecommendText = "Ar recomanda";
+			wouldRecommendBoxClass = "box green";
+			wouldRecommendTextClass = "would-recommend-text";
+		} else if (wouldRecommend === false) {
+			wouldRecommendText = "Nu ar recomanda";
+			wouldRecommendBoxClass = "box red";
+			wouldRecommendTextClass = "would-not-recommend-text";
+		} else {
+			wouldRecommendText = "";
+			wouldRecommendBoxClass = "";
+			wouldRecommendTextClass = "";
+		}
+		
+		var difficulty = review.difficulty
+		var difficultyText;
+		if (difficulty) {
+			difficultyText = 'Dificultate:&nbsp' + difficulty + '/5';
+		} else {
+			difficultyText = "";
+		}
+		var wouldRecommendAndDifficultyRowString;
+		if (wouldRecommend || difficulty) {
+			wouldRecommendAndDifficultyRowString = 
+															'<br>'
+			+'													<div class="row">'
+			+'														<div  class="col-xs-6">'
+			+'															<div class="'+ wouldRecommendBoxClass + '">'
+			+'															</div>'
+			+'															<span class=' + wouldRecommendTextClass + '>&nbsp&nbsp' + wouldRecommendText + '</span>'
+			+'														</div>'
+			+'													<div  class="col-xs-6">'
+			+'															<span style="color: #707070;">&nbsp&nbsp' + difficultyText + '</span>'
+			+'														</div>'
+			+'													</div>';
+		} else {
+			wouldRecommendAndDifficultyRowString = "";
+		}
+		
+		
+		var generalRating = review.generalRating ? review.generalRating : "N/A";
+		var reviewText = review.reviewText ? review.reviewText : "N/A";
+		
+		var jobProspectsReviewCategory = review.jobProspectsReview;
+		var jobProspectsReviewRating = (jobProspectsReviewCategory && jobProspectsReviewCategory.generalRating) ? jobProspectsReviewCategory.generalRating : "N/A";
+		var jobProspectsReviewText = (jobProspectsReviewCategory && jobProspectsReviewCategory.reviewText) ? jobProspectsReviewCategory.reviewText : "";
+		
+		var coursesAndLecturersReviewCategory = review.coursesAndLecturersReview;
+		var coursesAndLecturersReviewRating = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.generalRating) ? coursesAndLecturersReviewCategory.generalRating : "N/A";
+		var coursesAndLecturersReviewText = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.reviewText) ? coursesAndLecturersReviewCategory.reviewText : "";
+		
+		var studentOrganisationsReviewCategory = review.studentOrganisationsReview;
+		var studentOrganisationsReviewRating = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.generalRating) ? studentOrganisationsReviewCategory.generalRating : "N/A";
+		var studentOrganisationsReviewText = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.reviewText) ? studentOrganisationsReviewCategory.reviewText : "";
+		
+		var accomodationReviewCategory = review.accomodationReview;
+		var accomodationReviewRating = (accomodationReviewCategory && accomodationReviewCategory.generalRating) ? accomodationReviewCategory.generalRating : "N/A";
+		var accomodationReviewText = (accomodationReviewCategory && accomodationReviewCategory.reviewText) ? accomodationReviewCategory.reviewText : "";
+		
+		var facultyFacilitiesReviewCategory = review.facultyFacilitiesReview;
+		var facultyFacilitiesReviewRating = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.generalRating) ? facultyFacilitiesReviewCategory.generalRating : "N/A";
+		var facultyFacilitiesReviewText = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "";
+		
+		var studentSupportReviewCategory = review.studentSupportReview;
+		var studentSupportReviewRating = (studentSupportReviewCategory && studentSupportReviewCategory.generalRating) ? studentSupportReviewCategory.generalRating : "N/A";
+		var studentSupportReviewText = (studentSupportReviewCategory && studentSupportReviewCategory.reviewText) ? studentSupportReviewCategory.reviewText : "";
+		
+		var timeBalanceReviewCategory = review.timeBalanceReview;
+		var timeBalanceReviewRating = (timeBalanceReviewCategory && timeBalanceReviewCategory.generalRating) ? timeBalanceReviewCategory.generalRating : "N/A";
+		var timeBalanceReviewText = (timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : "";	
+
+
+		var facultyReviewsString = (
+										<!-- '<div class="card">'		 -->
+<!-- '											<div class="content">' -->
+'												<div data-reviewid=' + reviewId + ' class="review-entry">'
++'													<div class="row">'
++'														<div  class="col-xs-12">'
++'															<h5 id="reviewer-details">' + userName + '</h5> '
++'															<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6> '
++'															<small id="review-date" class="text-muted"><i>' + formattedReviewDate + '</i></small> 	'
++'														</div>'
++'													</div>													'
++													wouldRecommendAndDifficultyRowString
++'													<br>'
++'													<div class="row">'
++'														<div class="col-xs-12">		'
++'															<i class="fa fa-star align-orange"></i>'
++'															<strong class="align-orange">' + generalRating + '</strong>													'
++'															<p>' + reviewText + '</p>'
++'														</div>'
++'													</div>'
++'													<br>'
++'														<div class="row">'
++'															<div class="review-card-category-item col-md-6 col-xs-12">		'
++'																<i class="fa fa-star align-orange"></i>'
++'																<strong class="align-orange">' + coursesAndLecturersReviewRating + '</strong>  <span class="align"><b>&nbsp&nbspProfesori și cursuri</b></span>'
++'																<p>' + coursesAndLecturersReviewText + '</p>'
++'															</div>'
++'															<div class="review-card-category-item col-md-6 col-xs-12">			'
++'																<i class="fa fa-star align-orange"></i>'
++'																<strong class="align-orange">' + jobProspectsReviewRating + '</strong> <span class="align"><b>&nbsp&nbspOportunități în carieră</b></span>													'
++'																<p>' + jobProspectsReviewText + '</p>'
++'															</div>'
++'														</div>'
++'														<div class="row">'
++'															<div class="review-card-category-item col-md-6 col-xs-12">			'
++'																<i class="fa fa-star align-orange"></i>'
++'																<strong class="align-orange">' + accomodationReviewRating + '</strong> <span class="align"><b>&nbsp&nbspAcomodare</b></span>'
++'																<p>' + accomodationReviewText + '</p>'
++'															</div>'
++'															<div class="review-card-category-item col-md-6 col-xs-12">	'
++'																<i class="fa fa-star align-orange"></i>'
++'																<strong class="align-orange">' + studentOrganisationsReviewRating + '</strong> <span class="align"><b>&nbsp&nbspAsociații studențești</b></span>													'
++'																<p>' + studentOrganisationsReviewText + '</p>'
++'															</div>'
++'														</div>	'
++'														<div class="row">'
++'															<div class="review-card-category-item col-md-6 col-xs-12">		'
++'																<i class="fa fa-star align-orange"></i>'
++'																<strong class="align-orange">' + facultyFacilitiesReviewRating + '</strong> <span class="align"><b>&nbsp&nbspFacilități</b></span>'
++'																<p>' + facultyFacilitiesReviewText + '</p>'
++'															</div>'
++'															<div class="review-card-category-item col-md-6 col-xs-12">		'
++'																<i class="fa fa-star align-orange"></i>'
++'																<strong class="align-orange">' + timeBalanceReviewRating + '</strong> <span class="align"><b>&nbsp&nbspTimp la facultate vs. timp liber</b></span>													'
++'																<p>' + timeBalanceReviewText + '</p>'
++'															</div>'
++'														</div>'
++'														<br>'
++'													<div class="row">'
++'														<div class="col-md-2 col-md-offset-9 col-sm-2 col-sm-offset-8 col-xs-3 col-xs-offset-6" style="text-align: end;">'
++'															<i class="far fa-thumbs-up fa-lg like-review align" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align">' + upvotes + '</span>'
++'														</div>'
++'														<div class="col-md-1 col-sm-2 col-xs-3" style="text-align: end;">'
++'															<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report align" onclick="reportReview(this)" data-toggle="modal" data-target="#general-modal"></i>'
++'														</div>														'
++'													</div>'
++'												</div>'	
+<!-- +'											</div>' -->
+<!-- +'										</div>' -->
+
+		);
+
+		document.getElementById('review-modal-text').innerHTML = facultyReviewsString;
+		document.getElementById('see-all-reviews-modal').onclick = function() {
+			seeAllReviews();
+		};
+	
+}
 
 
 </script>

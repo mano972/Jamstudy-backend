@@ -137,6 +137,17 @@ body.loading .modal {
     display: block;
 }
 
+.align {
+	display: inline;
+	vertical-align: middle;
+}
+
+.align-orange {
+	display: inline !important;
+	vertical-align: middle !important;
+	color: orange;
+}
+
 .homepage-header-background {
 	background-image: linear-gradient(to bottom, #fff3bc, #FFFFFF00);	
 }
@@ -6681,7 +6692,7 @@ body > .navbar-collapse.collapse {
 }
 
 .modal-body {
-  padding: 20px 50px;
+  /* padding: 20px 50px; */
 }
 
 .modal-info {
@@ -6717,6 +6728,22 @@ body > .navbar-collapse.collapse {
   width: 1px;
 }
 
+@media (min-width:992px) {
+	.modal-dialog-review {
+	  position: relative;
+	  width: 1000px;
+	  margin: 30px auto;
+	}
+}
+
+@media (max-width:992px) {
+	.modal-dialog-review {
+	  position: relative;
+	  width: auto;
+	  margin: 10px;
+	}
+}
+
 .modal.fade .modal-dialog {
   transform: none;
   -webkit-transform: none;
@@ -6724,6 +6751,18 @@ body > .navbar-collapse.collapse {
 }
 
 .modal.in .modal-dialog {
+  transform: none;
+  -webkit-transform: none;
+  -moz-transform: none;
+}
+
+.modal.fade .modal-dialog-review {
+  transform: none;
+  -webkit-transform: none;
+  -moz-transform: none;
+}
+
+.modal.in .modal-dialog-review {
   transform: none;
   -webkit-transform: none;
   -moz-transform: none;
