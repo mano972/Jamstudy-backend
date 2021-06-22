@@ -531,7 +531,7 @@ function loadProfileHeader(response) {
 					+						'</div>'
 					+					'</div>'
 					+				 '</div>'	
-					+				'<div class="col-md-9 col-md-offset-0 col-xs-12">'
+					+				'<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12">'
 					+					'<div>'
 					+						'<h4 class="faculty-title-profile">' + facultyName + '</h4>'
 					+						'<span><strong>' + universityName + '</strong></span>'
@@ -545,18 +545,26 @@ function loadProfileHeader(response) {
 					+						'</div>'
 					+					'</div>'
 					+				'</div>'
+					+				'<div class="col-xs-10 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-2 col-md-offset-0 col-lg-2 col-lg-offset-0 save-compare-profile">	'
+					+					'<div class="align">'
+					+						'<button class="btn-danger btn btn-simple save align" style="margin-bottom: 20px" onclick="addToFavorites(this)"><i class="far fa-heart fa-2x align" style="margin-right: 7px"></i><span class="align">Salvează</span></button>'	
+					+					'</div>	'	
+					+					'<div class="align" style="float: right;">'
+					+						'<button class="compare btn btn-simple align" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-2x align" style="margin-right: 7px; "></i><span class="align">Compară</span> </button>	'	
+					+					'</div>	'						
+					+				'</div>'
 					+			'</div>'					
 					+			'<br>'	
 					+			'<div class="row">	'
-					+			'	<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-md-4 col-lg-3 col-lg-offset-9">'
+					+				'<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-3 col-lg-offset-9">'
 					+					'<a href="' + accessWebisteUrl + '" target="_blank" class="btn btn-success btn-fill btn-block add-review-button"><i class="fas fa-external-link-alt fa-lg" style="color: white; margin-right: 7px"></i>Accesează website</a>'
 					+				'</div>'
 					+			'</div>'
 					+			'<div class="row nav-row-faculty-profile">	'	
-					+				'<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-push-6 col-md-4 col-md-push-6 col-lg-3 col-lg-push-8">'
+					+				'<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-push-6 col-md-5 col-md-push-6 col-lg-3 col-lg-push-8">'
 					+					'<a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>'
 					+				'</div>'						
-					+				'<div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-7 col-md-pull-5 col-lg-6 col-lg-pull-4">'
+					+				'<div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-6 col-md-pull-6 col-lg-6 col-lg-pull-4">'
 					+					'<div class="nav-tabs-navigation">'
 					+						'<div class="nav-tabs-wrapper">'
 					+						'<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">'
@@ -1556,6 +1564,50 @@ function reportReview(el) {
 	}
 }
 
+function addToFavorites(el) {
+	el.setAttribute("data-toggle", 'modal');
+	el.setAttribute("data-target", '#generic-modal');
+	document.getElementById('generic-header-text').innerHTML = '<i class="fas fa-exclamation fa-2x"></i>';
+	document.getElementById('generic-modal-text').innerHTML = "Funcționalitatea va fi implementată în curând.";
+}
+
+function addToCompare(button, facultyId, hasText) {
+
+	var icon = $(button).children()[0];
+	
+	var compareIcon = "fas fa-plus-circle fa-2x";
+	var compareCheckIcon = "fas fa-check-circle fa-2x";
+	
+	if ($(icon).hasClass(compareCheckIcon)) {
+		var urlComparisonRedirect = "./comparison.html";
+		location.href = urlComparisonRedirect;
+		return;
+	}
+	
+	$(icon).removeClass(compareIcon);
+	$(icon).addClass(compareCheckIcon);
+	if (hasText) {
+		icon.nextSibling.innerHTML = "Vezi Comparaţii";
+	}
+	
+	if (typeof(Storage) !== "undefined") {
+		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
+		var facultyIds;
+		if (facultyIdsString) {
+			facultyIds = facultyIdsString.split(",");
+		} else {
+			facultyIds = [];
+		}
+		if (facultyIds.length <= 20 && !facultyIds.includes(facultyId)) {
+			facultyIds.push(facultyId);
+		}
+		localStorage.setItem("faculty-comparison-items", facultyIds);
+	} else {
+	  // Sorry! No Web Storage support..
+	}
+
+}
+
 function upvoteReview(el) {
 
 	var regularIcon = "far";
@@ -1866,7 +1918,7 @@ function seeFullReview(el, reviewArray) {
 +'															<i class="far fa-thumbs-up fa-lg like-review align" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align">' + upvotes + '</span>'
 +'														</div>'
 +'														<div class="col-md-1 col-sm-2 col-xs-3" style="text-align: end;">'
-+'															<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report align" onclick="reportReview(this)" data-toggle="modal" data-target="#general-modal"></i>'
++'															<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report align" onclick="reportReview(this)"></i>'
 +'														</div>														'
 +'													</div>'
 +'												</div>'	
