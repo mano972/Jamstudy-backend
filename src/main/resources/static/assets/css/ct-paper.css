@@ -254,11 +254,23 @@ body.loading .modal {
 	min-height: 54px;
 	background-color: #f0f0f0;
 	color: #51636e;
+	position:absolute; 
+	left:0;
+	z-index: 1000;
+	float:left;
+}
+
+.comparison-row-content {
+	margin-left: 300px;
 }
 
 .comparison-header-cell-blank { 
-	min-height: 1px;
+	min-height: 200px;
 	background-color: white;
+	position:absolute; 
+	left:0;
+	z-index: 1000;
+	float:left;
 }
 
 .comparison-row {
@@ -575,6 +587,7 @@ select {
 .nav-row-faculty-profile {
 	margin-top: 10px;
 }
+
 
 /*       Radio buttons         */
 
