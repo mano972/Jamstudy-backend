@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.studentromania.annotation.VerifyAdmin;
@@ -32,15 +32,15 @@ public class AnalyticsController {
 	public ResponseEntity<String> resetAnalytics() {
 		return analyticsService.resetAnalytics().createRestResponse();
 	}
-	
+
 	@PutMapping("/reset/excel")
 	@VerifyAdmin
 	public ResponseEntity<String> resetAnalyticsExcel() {
 		return analyticsService.resetAnalyticsExcel().createRestResponse();
 	}
 
-	@PutMapping("/homepage/{m}")
-	public ResponseEntity<String> homePageStatistic(@PathVariable boolean m) {
+	@PutMapping("/homepage")
+	public ResponseEntity<String> homePageStatistic(@RequestParam boolean m) {
 		return analyticsService.increaseHomePageStatistic(m).createRestResponse();
 	}
 
