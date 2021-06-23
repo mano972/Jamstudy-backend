@@ -15,7 +15,7 @@ public class Constants {
 	public static final String LOGO_IMAGE_TYPE = ".png";
 	public static final String DEFAULT_IMAGE = "default_image";
 	
-	public static final String ANALYTICS_EXCEL_PATH = "C:\\UnistartAnalytics";
+	public static final String ANALYTICS_EXCEL_PATH = "C:\\UnistartAnalytics.xlsx";
 
 	public static final String CONFIG_KEY_FACULTIES_LICENSE_FILEPATH = "faculties_licence_filepath";
 	public static final String CONFIG_KEY_FACULTIES_MASTER_FILEPATH = "faculties_master_filepath";
