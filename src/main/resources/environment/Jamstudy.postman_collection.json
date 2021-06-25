@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ce49e22d-827e-4cf6-b175-e6833ff54280",
+		"_postman_id": "c5904833-f5cf-413f-81b3-aafa6099877d",
 		"name": "Jamstudy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -573,6 +573,11 @@
 								{
 									"key": "searchBy",
 									"value": "ETTI",
+									"disabled": true
+								},
+								{
+									"key": "facultyIds",
+									"value": "1",
 									"disabled": true
 								},
 								{
