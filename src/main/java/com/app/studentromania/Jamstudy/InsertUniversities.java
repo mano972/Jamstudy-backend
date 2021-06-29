@@ -99,7 +99,7 @@ public class InsertUniversities {
 		HttpURLConnection conn = null;
 		try {
 			for (University univ : univList) {
-				URL url = new URL("http://localhost:8080/Jamstudy/university");
+				URL url = new URL("http://localhost:8080/Jamstudy/v1/university");
 				conn = (HttpURLConnection) url.openConnection();
 
 				String userCredentials = "jamstudyadmin:93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D";

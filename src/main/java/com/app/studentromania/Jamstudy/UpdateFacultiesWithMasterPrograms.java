@@ -1,4 +1,4 @@
-	package com.app.studentromania.Jamstudy;
+package com.app.studentromania.Jamstudy;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -126,22 +126,20 @@ public class UpdateFacultiesWithMasterPrograms {
 		List<Faculty> existingFacList = new ArrayList<>();
 		HttpURLConnection connGet = null;
 		try {
-			URL url = new URL("http://localhost:8080/Jamstudy/faculty");
+			URL url = new URL("http://localhost:8080/Jamstudy/v1/faculty/details?limit=1000"); // admin limit = 1000
 			connGet = (HttpURLConnection) url.openConnection();
 			connGet.setDoOutput(true);
 			connGet.setRequestMethod("GET");
 			connGet.setRequestProperty("Content-Type", "application/json");
 			connGet.setRequestProperty("Accept", "application/json");
 			// ai grija la LIMIT
-			
-			
+
 //			Map<String, String> parameters = new HashMap<>();
 //			parameters.put("limit", "99999");
 //			String parameters = "limit=99999";
 //			DataOutputStream out = new DataOutputStream(connGet.getOutputStream());
 //			out.writeBytes(parameters);
 //			out.flush();
-			
 
 //			StringBuilder requestData = new StringBuilder();
 //			for (Map.Entry<String, String> param : parameters.entrySet()) {
@@ -204,7 +202,7 @@ public class UpdateFacultiesWithMasterPrograms {
 				if (fac.getFacultyDomainsMaster() == null || fac.getFacultyDomainsMaster().isEmpty()) {
 					continue;
 				}
-				String urlString = "http://localhost:8080/Jamstudy/faculty/" + fac.getFacultyId();
+				String urlString = "http://localhost:8080/Jamstudy/v1/faculty/" + fac.getFacultyId();
 				URL url = new URL(urlString);
 				connPost = (HttpURLConnection) url.openConnection();
 
@@ -358,7 +356,7 @@ public class UpdateFacultiesWithMasterPrograms {
 		return list.stream().filter(f -> f.getFacultyName().equals(facName) && f.getUniversityName().equals(univName))
 				.findFirst().isPresent();
 	}
-	
+
 	// Adjust only facultyDomainsMaster, not also the masterPrograms
 	private static String adjustDomain(String domain) {
 		String adjustedDomain = null;

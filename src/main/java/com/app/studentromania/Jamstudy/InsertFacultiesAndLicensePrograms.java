@@ -124,7 +124,7 @@ public class InsertFacultiesAndLicensePrograms {
 		List<University> univList = new ArrayList<>();
 		HttpURLConnection connGet = null;
 		try {
-			URL url = new URL("http://localhost:8080/Jamstudy/university");
+			URL url = new URL("http://localhost:8080/Jamstudy/v1/university");
 			connGet = (HttpURLConnection) url.openConnection();
 			connGet.setDoOutput(true);
 			connGet.setRequestMethod("GET");
@@ -170,7 +170,7 @@ public class InsertFacultiesAndLicensePrograms {
 		HttpURLConnection connPost = null;
 		try {
 			for (Faculty fac : facList) {
-				String urlString = "http://localhost:8080/Jamstudy/faculty/" + fac.getUniversityId();
+				String urlString = "http://localhost:8080/Jamstudy/v1/faculty/" + fac.getUniversityId();
 				URL url = new URL(urlString);
 				connPost = (HttpURLConnection) url.openConnection();
 
