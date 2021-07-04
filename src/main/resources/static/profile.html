@@ -910,7 +910,8 @@ function loadGeneralPresentationCard(response) {
 				facultyWebsite = "N/A";
 				websiteString = '<span>' + facultyWebsite + '</span>';
 			}
-			var facultyDescription = response.result.facultyDescription ? response.result.facultyDescription : "N/A";
+			var facultyDescription = "N/A";
+			<!-- var facultyDescription = response.result.facultyDescription ? response.result.facultyDescription : "N/A"; -->
 			var noOfYears = response.result.noOfYears ? response.result.noOfYears : "N/A";
 			var availablePlacesLicense = response.result.availablePlacesLicense ? response.result.availablePlacesLicense : "N/A";
 			var availablePlacesMaster = response.result.availablePlacesMaster ? response.result.availablePlacesMaster : "N/A";
