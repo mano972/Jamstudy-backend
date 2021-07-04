@@ -36,7 +36,6 @@ public class UpdateFacultiesWithExtraInfo {
 		LinkedHashMap<String, List<String>> map = new LinkedHashMap<>();
 
 		String filepath = "C:\\Jamstudy_data\\faculty_data_good.csv";
-		
 
 		try (CSVReader reader = new CSVReader(new FileReader(filepath))) {
 			String[] columns;
