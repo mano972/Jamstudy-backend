@@ -212,6 +212,7 @@ public class UpdateFacultiesWithExtraInfo {
 												.trim()
 										: infoEntry.trim().substring(infoEntry.indexOf(keyWord1) + keyWord1.length())
 												.trim();
+								enrolledStudentsLicence = enrolledStudentsLicence.replace(".", "");
 								try {
 									existingFac.setEnrolledStudentsLicence(Integer.parseInt(enrolledStudentsLicence));
 								} catch (NumberFormatException e) {
@@ -237,6 +238,7 @@ public class UpdateFacultiesWithExtraInfo {
 												.trim()
 										: infoEntry.trim().substring(infoEntry.indexOf(keyWord2) + keyWord2.length())
 												.trim();
+								enrolledStudentsMaster = enrolledStudentsMaster.replace(".", "");
 								try {
 									existingFac.setEnrolledStudentsMaster(Integer.parseInt(enrolledStudentsMaster));
 								} catch (NumberFormatException e) {
