@@ -517,7 +517,7 @@ function loadProfileHeader(response) {
 			<!-- var logoSrcTop = "C://logos_jamstudy/" + logoName + ".png"; -->
 			var logoSrcTop = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
 			
-			var accessWebisteUrl = "http://www.google.com";
+			var accessWebisteUrl = response.result.facultyWebsite;
 			var addReviewRedirectUrl = "./review.html?id=" + facultyId;
 			
 			document.getElementById("faculty-profile-header").innerHTML = '';
@@ -558,7 +558,7 @@ function loadProfileHeader(response) {
 					+			'<br>'	
 					+			'<div class="row">	'
 					+				'<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-3 col-lg-offset-9">'
-					+					'<a href="' + accessWebisteUrl + '" target="_blank" class="btn btn-success btn-fill btn-block add-review-button"><i class="fas fa-external-link-alt fa-lg" style="color: white; margin-right: 7px"></i>Accesează website</a>'
+					+					'<a data-toggle="tooltip" title="' + accessWebisteUrl + '" href="' + accessWebisteUrl + '" target="_blank" class="btn btn-success btn-fill btn-block add-review-button"><i class="fas fa-external-link-alt fa-lg" style="color: white; margin-right: 7px"></i>Accesează website</a>'
 					+				'</div>'
 					+			'</div>'
 					+			'<div class="row nav-row-faculty-profile">	'	
@@ -1696,11 +1696,16 @@ function loadMap(address) {
 }
 
 function createMap(response, zoom) {
+		var longitude;
+		var latitude;
 		if (!response || response.length == 0) {
-			return;
+			longitude = '24.697';
+			latitude = '45.905';
+			zoom = 7;
+		} else {
+			longitude = response[0].lon;
+			latitude = response[0].lat;
 		}
-		var longitude = response[0].lon;
-		var latitude = response[0].lat;
 		<!-- const mapUrl = 'http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'; -->
 		const mapUrl = 'http://{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 		var map = new ol.Map({

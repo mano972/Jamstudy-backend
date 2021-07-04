@@ -314,10 +314,7 @@ public class UpdateFacultiesWithExtraInfo {
 		HttpURLConnection connPost = null;
 		try {
 			for (Faculty fac : existingFacList) {
-				if (fac.getFacultyDomainsMaster() == null || fac.getFacultyDomainsMaster().isEmpty()) {
-					continue;
-				}
-				String urlString = "http://localhost:8080/Jamstudy/faculty/" + fac.getFacultyId();
+				String urlString = "https://localhost:8080/Jamstudy/v1/faculty/" + fac.getFacultyId();
 				URL url = new URL(urlString);
 				connPost = (HttpURLConnection) url.openConnection();
 
