@@ -114,7 +114,7 @@ public class UpdateFacultiesWithExtraInfo {
 		List<Faculty> existingFacList = new ArrayList<>();
 		HttpURLConnection connGet = null;
 		try {
-			URL url = new URL("https://unistart.ro/Jamstudy/v1/faculty/details?limit=1000"); // admin limit = 1000
+			URL url = new URL("http://localhost:8080/Jamstudy/v1/faculty/details?limit=1000"); // admin limit = 1000
 			connGet = (HttpURLConnection) url.openConnection();
 			connGet.setDoOutput(true);
 			connGet.setRequestMethod("GET");
