@@ -518,7 +518,8 @@ function loadProfileHeader(response) {
 			var logoSrcTop = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
 			
 			var accessWebisteUrl = response.result.facultyWebsite;
-			if (!accessWebisteUrl.includes("http")) {
+			console.log(accessWebisteUrl);
+			if (accessWebisteUrl && !accessWebisteUrl.includes("http")) {
 				accessWebisteUrl = 'http://' + accessWebisteUrl;
 			}
 			var addReviewRedirectUrl = "./review.html?id=" + facultyId;
