@@ -91,7 +91,7 @@ public class UpdateFacultiesWithExtraInfo {
 				}
 			}
 			reader.close();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
