@@ -161,7 +161,7 @@
 
 	</dependencies>
 
-	<profiles>
+<!--<profiles>
 		<profile>
 			<id>local</id>
 			<activation>
@@ -189,31 +189,31 @@
 				<spring.profiles.active>prod</spring.profiles.active>
 			</properties>
 		</profile>
-	</profiles>
+	</profiles> -->
 
 	<build>
 		<finalName>Jamstudy</finalName>
 
-		<resources>
+<!--	<resources>
 			<resource>
 				<filtering>true</filtering>
 				<directory>src/main/resources</directory>
 			</resource>
-		</resources>
+		</resources> -->
 
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
+<!--		<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<configuration>
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>false</downloadJavadocs>
 				</configuration>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
