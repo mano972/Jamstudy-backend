@@ -518,7 +518,6 @@ function loadProfileHeader(response) {
 			var logoSrcTop = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
 			
 			var accessWebisteUrl = response.result.facultyWebsite;
-			console.log(accessWebisteUrl);
 			if (accessWebisteUrl && !accessWebisteUrl.includes("http")) {
 				accessWebisteUrl = 'http://' + accessWebisteUrl;
 			}
@@ -909,6 +908,9 @@ function loadGeneralPresentationCard(response) {
 			var websiteString;
 			if (response.result.facultyWebsite) {
 				facultyWebsite = response.result.facultyWebsite;
+				if (facultyWebsite && !facultyWebsite.includes("http")) {
+					facultyWebsite = 'http://' + facultyWebsite;
+				}
 				websiteString = '<a class="website" data-toggle="tooltip" title="' + facultyWebsite + '" href=' + facultyWebsite + ' target="_blank"> <span>Accesează website</span> </a>';
 			} else {
 				facultyWebsite = "N/A";
