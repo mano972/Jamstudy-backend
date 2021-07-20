@@ -1000,6 +1000,8 @@ function validateEmail(email) {
 }
 
 function showTab(n) {
+	increaseReviewStatistic(n);
+
   // This function will display the specified tab of the form...
   var x = document.getElementsByClassName("tab");
   x[n].style.display = "block";
@@ -1129,6 +1131,26 @@ function fixProgressIndicator(n) {
 		countfield.className = "text-muted";
 		counttext.className = "text-muted";
     }
+  }
+  
+  function increaseReviewStatistic(n) {
+	var step = n + 1;
+	
+	var backendUrl = new URL(backendUrlRoot + "/v1/analytics/rev");
+	backendUrl.searchParams.append("s", step);
+	
+	$.ajax({
+		url: backendUrl,
+		type: 'PUT',
+		dataType: 'json',
+		contentType: 'application/json',
+		crossDomain: true,
+		success: function () {
+		},
+		error: function(error) {
+			console.log(error);
+		}
+	});
   }
   
   var elem = document.querySelector('input[type="range"]');

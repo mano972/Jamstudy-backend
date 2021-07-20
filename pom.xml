@@ -163,7 +163,6 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.18.1</version>
 		</dependency>
-
 	</dependencies>
 
 	<!--<profiles> <profile> <id>local</id> <activation> <activeByDefault>true</activeByDefault> 

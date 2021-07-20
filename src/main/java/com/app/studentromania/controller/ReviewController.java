@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.dto.ReviewDTO;
 import com.app.studentromania.service.ReviewService;
+import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.ReviewFilter;
 
 @CrossOrigin()
@@ -70,9 +72,10 @@ public class ReviewController {
 	@PutMapping("/{reviewId}/upvote")
 	@RestCall
 	@JWTAuth
-	public ResponseEntity<String> upvoteReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
+	public ResponseEntity<String> upvoteReview(@PathVariable String reviewId,
+			@RequestHeader(Constants.JWT_TOKEN_REQUEST_HEADER) String jwtToken, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setReviewId(reviewId);
-		return reviewService.upvoteReview(reviewDTO).createRestResponse();
+		return reviewService.upvoteReview(jwtToken, reviewDTO).createRestResponse();
 	}
 
 	@DeleteMapping("/{reviewId}")

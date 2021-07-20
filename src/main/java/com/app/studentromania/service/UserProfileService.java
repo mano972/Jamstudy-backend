@@ -131,6 +131,7 @@ public class UserProfileService {
 		userProfileDAO.updateUserProfile(userProfile);
 
 		AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+		authResponseDTO.setJwtToken(jwtToken);
 		JSONObject response = new JSONObject(authResponseDTO);
 
 		return ResponseDTO.createSuccessResponse(response);

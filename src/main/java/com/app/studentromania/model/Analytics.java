@@ -22,6 +22,15 @@ public class Analytics extends ParentEntity {
 	private long reviewIntention;
 
 	@Field
+	private long reviewReachedFirstStep;
+
+	@Field
+	private long reviewReachedSecondStep;
+
+	@Field
+	private long reviewReachedThirdStep;
+
+	@Field
 	private long reviewAdded;
 
 	public long getHomePage() {
@@ -46,6 +55,30 @@ public class Analytics extends ParentEntity {
 
 	public void setReviewIntention(long reviewIntention) {
 		this.reviewIntention = reviewIntention;
+	}
+
+	public long getReviewReachedFirstStep() {
+		return reviewReachedFirstStep;
+	}
+
+	public void setReviewReachedFirstStep(long reviewReachedFirstStep) {
+		this.reviewReachedFirstStep = reviewReachedFirstStep;
+	}
+
+	public long getReviewReachedSecondStep() {
+		return reviewReachedSecondStep;
+	}
+
+	public void setReviewReachedSecondStep(long reviewReachedSecondStep) {
+		this.reviewReachedSecondStep = reviewReachedSecondStep;
+	}
+
+	public long getReviewReachedThirdStep() {
+		return reviewReachedThirdStep;
+	}
+
+	public void setReviewReachedThirdStep(long reviewReachedThirdStep) {
+		this.reviewReachedThirdStep = reviewReachedThirdStep;
 	}
 
 	public long getReviewAdded() {

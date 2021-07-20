@@ -20,6 +20,7 @@ import com.app.studentromania.dao.UserProfileDAO;
 import com.app.studentromania.dto.ResponseDTO;
 import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.model.UserProfile;
+import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.LogUtils;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -45,7 +46,7 @@ public class JWTAuthAspect {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
 
-		final String jwtAuthHeader = request.getHeader("Token");
+		final String jwtAuthHeader = request.getHeader(Constants.JWT_TOKEN_REQUEST_HEADER);
 
 		try {
 			if (StringUtils.isBlank(jwtAuthHeader) || !jwtAuthHeader.startsWith("Bearer")) {

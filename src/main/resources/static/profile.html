@@ -362,6 +362,7 @@ $(document).ready(function() {
 	getFaculty();
 	getReviews(false);
 	addToRecentlyViewed();
+	increaseViewCount();
   
 });
 
@@ -1968,6 +1969,24 @@ function addToRecentlyViewed() {
 	} else {
 	  // Sorry! No Web Storage support..
 	}
+}
+
+function increaseViewCount() {
+	var backendUrl = new URL(backendUrlRoot + "/v1/analytics/profile");
+	backendUrl.searchParams.append("facultyId", f);
+	
+	$.ajax({
+		url: backendUrl,
+		type: 'PUT',
+		dataType: 'json',
+		contentType: 'application/json',
+		crossDomain: true,
+		success: function () {
+		},
+		error: function(error) {
+			console.log(error);
+		}
+	});
 }
 
 

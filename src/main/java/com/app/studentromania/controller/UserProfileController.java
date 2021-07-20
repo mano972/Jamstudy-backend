@@ -18,6 +18,7 @@ import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.dto.UserProfileDTO;
 import com.app.studentromania.service.UserProfileService;
+import com.app.studentromania.util.Constants;
 
 @CrossOrigin()
 @RestController
@@ -44,7 +45,7 @@ public class UserProfileController {
 	@GetMapping
 	@RestCall
 	@JWTAuth
-	public ResponseEntity<String> getUserProfile(@RequestHeader("Token") String jwtToken) {
+	public ResponseEntity<String> getUserProfile(@RequestHeader(Constants.JWT_TOKEN_REQUEST_HEADER) String jwtToken) {
 		return userProfileService.getUserProfile(jwtToken).createRestResponse();
 	}
 

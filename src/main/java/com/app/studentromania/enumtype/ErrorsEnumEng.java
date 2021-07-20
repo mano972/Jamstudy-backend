@@ -32,6 +32,7 @@ public enum ErrorsEnumEng {
 	REVIEW_ID_MISSING(HttpStatus.BAD_REQUEST, "Review id is missing.", -32),
 	REVIEW_GENERAL_RATING_ERROR(HttpStatus.BAD_REQUEST, "General Rating value is not correct.", -33),
 	REVIEW_DIFFICULTY_ERROR(HttpStatus.BAD_REQUEST, "Difficulty value is not correct.", -34),
+	REVIEW_ALREADY_UPVOTED(HttpStatus.BAD_REQUEST, "This review was already upvoted.", -35),
 
 	// Question
 	QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "Question was not found.", -40),

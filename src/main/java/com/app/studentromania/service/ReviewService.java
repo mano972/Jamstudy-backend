@@ -16,16 +16,20 @@ import org.springframework.stereotype.Service;
 import com.app.studentromania.dao.ConfigDAO;
 import com.app.studentromania.dao.FacultyDAO;
 import com.app.studentromania.dao.ReviewDAO;
+import com.app.studentromania.dao.UserProfileDAO;
 import com.app.studentromania.dto.ResponseDTO;
 import com.app.studentromania.dto.ReviewDTO;
 import com.app.studentromania.dto.ReviewResponseDTO;
 import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.model.Faculty;
 import com.app.studentromania.model.Review;
+import com.app.studentromania.model.UserProfile;
 import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.LogUtils;
 import com.app.studentromania.util.ReviewFilter;
 import com.app.studentromania.util.Utilities;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 @Service
 public class ReviewService {
@@ -37,6 +41,9 @@ public class ReviewService {
 
 	@Autowired
 	private FacultyDAO facultyDAO;
+
+	@Autowired
+	private UserProfileDAO userProfileDAO;
 
 	@Autowired
 	private ConfigDAO configDAO;
@@ -177,7 +184,15 @@ public class ReviewService {
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
-	public ResponseDTO upvoteReview(ReviewDTO reviewDTO) {
+	public ResponseDTO upvoteReview(String jwtToken, ReviewDTO reviewDTO) {
+		DecodedJWT decodedJwtToken = JWT.decode(jwtToken);
+		String email = decodedJwtToken.getSubject();
+
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(email);
+		if (!userProfileOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		}
+
 		Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewDTO.getReviewId());
 		if (!reviewOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
@@ -185,17 +200,26 @@ public class ReviewService {
 		Review review = reviewOpt.get();
 		int upvotes = review.getUpvotes();
 		if (reviewDTO.getUpvote()) {
+			if (userProfileOpt.get().getLikedReviews().contains(reviewDTO.getReviewId())) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_ALREADY_UPVOTED);
+			}
 			review.setUpvotes(++upvotes);
+			userProfileOpt.get().getLikedReviews().add(reviewDTO.getReviewId());
 			LogUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was upvoted!");
 		} else {
+			if (!userProfileOpt.get().getLikedReviews().contains(reviewDTO.getReviewId())) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_ALREADY_UPVOTED);
+			}
 			if (upvotes == 0) {
 				review.setUpvotes(0);
 			} else {
 				review.setUpvotes(--upvotes);
 			}
+			userProfileOpt.get().getLikedReviews().remove(reviewDTO.getReviewId());
 			LogUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was downvoted!");
 		}
 		reviewDAO.updateReview(review);
+		userProfileDAO.updateUserProfile(userProfileOpt.get());
 		ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
 		reviewResponseDTO.setReviewId(review.getReviewId());
 		reviewResponseDTO.setFacultyId(review.getFacultyId());

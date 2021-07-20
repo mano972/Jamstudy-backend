@@ -31,6 +31,7 @@ public enum ErrorsEnum {
 	REVIEW_ID_MISSING(HttpStatus.BAD_REQUEST, "Lipsete id-ul evaluarii", -32),
 	REVIEW_GENERAL_RATING_ERROR(HttpStatus.BAD_REQUEST, "Nota acordata nu este corecta.", -33),
 	REVIEW_DIFFICULTY_ERROR(HttpStatus.BAD_REQUEST, "Valoarea dificultatii nu este corecta.", -34),
+	REVIEW_ALREADY_UPVOTED(HttpStatus.BAD_REQUEST, "Aceasta evaluare a fost deja votata.", -35),
 
 	// Question
 	QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "Intrebarea nu a fost gasita.", -40),

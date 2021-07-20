@@ -49,14 +49,14 @@ public class AnalyticsController {
 		analyticsService.increaseSearchStatistic();
 	}
 
-	@PutMapping("/revint")
-	public void reviewIntentionStatistic() {
-		analyticsService.increaseReviewIntentionStatistic();
+	@PutMapping("/rev")
+	public void reviewIntentionStatistic(@RequestParam int s) {
+		analyticsService.increaseReviewStatistic(s);
 	}
-
-	@PutMapping("/revadd")
-	public void reviewAddedStatistic() {
-		analyticsService.increaseReviewAddedStatistic();
+	
+	@PutMapping("/profile")
+	public void facultyViewCount(@RequestParam String facultyId) {
+		analyticsService.increaseFacultyViewCountStatistic(facultyId);
 	}
 
 	@GetMapping

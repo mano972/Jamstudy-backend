@@ -27,7 +27,7 @@ public class UserProfile extends ParentEntity {
 
 	@Field
 	private String userName;
-	
+
 	@Field
 	private String email;
 
@@ -39,6 +39,9 @@ public class UserProfile extends ParentEntity {
 
 	@Field
 	private List<UserProfileFaculty> recentFaculties = new ArrayList<>();
+
+	@Field
+	private List<String> likedReviews;
 
 	@Field
 	private Date lastLogin;
@@ -105,6 +108,14 @@ public class UserProfile extends ParentEntity {
 
 	public void setRecentFaculties(List<UserProfileFaculty> recentFaculties) {
 		this.recentFaculties = recentFaculties;
+	}
+
+	public List<String> getLikedReviews() {
+		return likedReviews;
+	}
+
+	public void setLikedReviews(List<String> likedReviews) {
+		this.likedReviews = likedReviews;
 	}
 
 	public Date getLastLogin() {

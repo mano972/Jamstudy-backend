@@ -192,6 +192,9 @@ public class Faculty extends ParentEntity {
 	@Field
 	private Double avgRatingTimeBalance;
 
+	@Field
+	private int viewsCount;
+
 	public String getFacultyId() {
 		return facultyId;
 	}
@@ -558,6 +561,14 @@ public class Faculty extends ParentEntity {
 
 	public void setAvgRatingTimeBalance(Double avgRatingTimeBalance) {
 		this.avgRatingTimeBalance = avgRatingTimeBalance;
+	}
+
+	public int getViewsCount() {
+		return viewsCount;
+	}
+
+	public void setViewsCount(int viewsCount) {
+		this.viewsCount = viewsCount;
 	}
 
 }
