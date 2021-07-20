@@ -18,9 +18,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.studentromania.auth.JWTAuthenticationService;
 import com.app.studentromania.dao.ConfigDAO;
 import com.app.studentromania.dao.FacultyDAO;
 import com.app.studentromania.dao.UserProfileDAO;
+import com.app.studentromania.dto.AuthResponseDTO;
 import com.app.studentromania.dto.ResponseDTO;
 import com.app.studentromania.dto.UserProfileDTO;
 import com.app.studentromania.dto.UserProfileResponseDTO;
@@ -30,6 +32,8 @@ import com.app.studentromania.model.UserProfile;
 import com.app.studentromania.model.UserProfileFaculty;
 import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.LogUtils;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 @Service
 public class UserProfileService {
@@ -75,6 +79,22 @@ public class UserProfileService {
 		return ResponseDTO.createSuccessResponse(response);
 	}
 
+	public ResponseDTO getUserProfile(String jwtToken) {
+		DecodedJWT decodedJwtToken = JWT.decode(jwtToken);
+		String email = decodedJwtToken.getSubject();
+
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(email);
+		if (!userProfileOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		}
+
+		UserProfile userProfile = userProfileOpt.get();
+		UserProfileResponseDTO userProfileResponseDTO = mapToUserProfileResponseDTO(userProfile);
+		JSONObject response = new JSONObject(userProfileResponseDTO);
+
+		return ResponseDTO.createSuccessResponse(response);
+	}
+
 	public ResponseDTO getUsersToNotify() {
 		Map<String, List<String>> facultiesToNotifyPerEmail = new HashMap<>();
 
@@ -100,12 +120,20 @@ public class UserProfileService {
 		if (!userProfile.getPassword().equals(userProfileDTO.getPassword())) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_WRONG_CREDENTIALS);
 		}
+
+		String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getEmail());
+		if (StringUtils.isBlank(jwtToken)) {
+			LogUtils.logMessage(LOGGER, "Error when generating JWT token for email " + userProfile.getEmail());
+			return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
+		}
+
 		userProfile.setLastLogin(new Date());
 		userProfileDAO.updateUserProfile(userProfile);
 
-		// maybe generate JWT or similar
+		AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+		JSONObject response = new JSONObject(authResponseDTO);
 
-		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+		return ResponseDTO.createSuccessResponse(response);
 	}
 
 	public ResponseDTO register(UserProfileDTO userProfileDTO) {

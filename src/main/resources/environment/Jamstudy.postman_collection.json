@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "9880af32-55aa-4b39-b163-c8b0ea10944b",
+		"_postman_id": "c5904833-f5cf-413f-81b3-aafa6099877d",
 		"name": "Jamstudy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -573,6 +573,11 @@
 								{
 									"key": "searchBy",
 									"value": "ETTI",
+									"disabled": true
+								},
+								{
+									"key": "facultyIds",
+									"value": "1",
 									"disabled": true
 								},
 								{
@@ -1993,6 +1998,50 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{host}}/v1/userprofile",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"userprofile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user profile by user id (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
 							}
 						],
 						"url": {
@@ -2010,8 +2059,23 @@
 					"response": []
 				},
 				{
-					"name": "get user profiles",
+					"name": "get user profiles (admin)",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -2020,13 +2084,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{host}}/v1/userprofile",
+							"raw": "{{host}}/v1/userprofile/profiles",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
-								"userprofile"
+								"userprofile",
+								"profiles"
 							]
 						}
 					},
@@ -2119,8 +2184,23 @@
 			"name": "config",
 			"item": [
 				{
-					"name": "create config",
+					"name": "create config (admin)",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -2146,8 +2226,23 @@
 					"response": []
 				},
 				{
-					"name": "create configs",
+					"name": "create configs (admin)",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -2174,8 +2269,23 @@
 					"response": []
 				},
 				{
-					"name": "get configs",
+					"name": "get configs (admin)",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -2197,8 +2307,23 @@
 					"response": []
 				},
 				{
-					"name": "get config",
+					"name": "get config (admin)",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -2537,12 +2662,13 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/v1/newsletter",
+							"raw": "{{host}}/v1/Jamstudy/newsletter",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
+								"Jamstudy",
 								"newsletter"
 							]
 						}

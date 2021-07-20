@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.studentromania.annotation.JWTAuth;
 import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.dto.ReviewDTO;
@@ -46,6 +47,7 @@ public class ReviewController {
 
 	@PostMapping("/{facultyId}")
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> createReview(@PathVariable String facultyId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setFacultyId(facultyId);
 		return reviewService.createReview(reviewDTO).createRestResponse();
@@ -53,6 +55,7 @@ public class ReviewController {
 
 	@PutMapping("/{reviewId}")
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> updateReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setReviewId(reviewId);
 		return reviewService.updateReview(reviewDTO).createRestResponse();
@@ -66,6 +69,7 @@ public class ReviewController {
 
 	@PutMapping("/{reviewId}/upvote")
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> upvoteReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setReviewId(reviewId);
 		return reviewService.upvoteReview(reviewDTO).createRestResponse();

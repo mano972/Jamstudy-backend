@@ -26,24 +26,28 @@ public class ConfigController {
 
 	@GetMapping
 	@RestCall
+	@VerifyAdmin
 	public ResponseEntity<String> getAllConfigs() {
 		return configService.getAllConfigs().createRestResponse();
 	}
 
 	@GetMapping("/{configKey}")
 	@RestCall
+	@VerifyAdmin
 	public ResponseEntity<String> getByConfigKey(@PathVariable String configKey) {
 		return configService.getByConfigKey(configKey).createRestResponse();
 	}
 
 	@PostMapping
 	@RestCall
+	@VerifyAdmin
 	public ResponseEntity<String> saveConfig(@RequestBody Config config) {
 		return configService.saveConfig(config).createRestResponse();
 	}
 
 	@PostMapping("/configs")
 	@RestCall
+	@VerifyAdmin
 	public ResponseEntity<String> saveConfigs(@RequestBody List<Config> configs) {
 		return configService.saveConfigs(configs).createRestResponse();
 	}

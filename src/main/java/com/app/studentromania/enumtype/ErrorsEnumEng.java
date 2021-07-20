@@ -44,10 +44,17 @@ public enum ErrorsEnumEng {
 	USERPROFILE_EXISTS(HttpStatus.NOT_ACCEPTABLE, "User already exists.", -61),
 	USERPROFILE_LOGIN_WRONG_CREDENTIALS(HttpStatus.BAD_REQUEST, "Email/password not correct.", -62),
 	USERPROFILE_EMAIL_PASSWORD_MISSING(HttpStatus.BAD_REQUEST, "Email/password missing.", -63),
+	JWT_GENERATION_ERROR(HttpStatus.BAD_REQUEST, "Error when generating JWT token.", -64),
+	JWT_MISSING(HttpStatus.BAD_REQUEST, "JWT token is missing from request.", -65),
+	JWT_VERIFY_ERROR(HttpStatus.BAD_REQUEST, "JWT token verification failed.", -66),
+	JWT_EXPIRED(HttpStatus.BAD_REQUEST, "JWT token has expired.", -67),
 
 	// Statistic
 	ANALYTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics document was not found.", -70),
 	ANALYTICS_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics document already exists.", -71),
+	ANALYTICS_EXCEL_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics excel document already exists.", -72),
+	ANALYTICS_EXCEL_DOCUMENT_ERROR(HttpStatus.BAD_REQUEST, "Analytics excel error.", -73),
+	ANALYTICS_EXCEL_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics excel document was not found.", -74),
 
 	// Newsletter
 	NEWSLETTER_NOT_FOUND(HttpStatus.NOT_FOUND, "Newsletter was not found.", -80),

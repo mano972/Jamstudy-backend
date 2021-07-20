@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.studentromania.annotation.JWTAuth;
 import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.dto.UserProfileDTO;
@@ -25,16 +27,25 @@ public class UserProfileController {
 	@Autowired
 	private UserProfileService userProfileService;
 
-	@GetMapping
+	@GetMapping("/profiles")
 	@RestCall
+	@VerifyAdmin
 	public ResponseEntity<String> getAllUserProfiles() {
 		return userProfileService.getAllUserProfiles().createRestResponse();
 	}
 
 	@GetMapping("/{userId}")
 	@RestCall
+	@VerifyAdmin
 	public ResponseEntity<String> getByUserId(@PathVariable String userId) {
 		return userProfileService.getByUserId(userId).createRestResponse();
+	}
+
+	@GetMapping
+	@RestCall
+	@JWTAuth
+	public ResponseEntity<String> getUserProfile(@RequestHeader("Token") String jwtToken) {
+		return userProfileService.getUserProfile(jwtToken).createRestResponse();
 	}
 
 	@GetMapping("/notify")
@@ -72,6 +83,7 @@ public class UserProfileController {
 
 	@PutMapping("/{userId}/favoritefaculty/{facultyId}")
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> addFavoriteFaculty(@PathVariable String userId, @PathVariable String facultyId,
 			@RequestBody UserProfileDTO userProfileDTO) {
 		userProfileDTO.setUserId(userId);
@@ -80,6 +92,7 @@ public class UserProfileController {
 
 	@PutMapping("/{userId}/notification/{facultyId}")
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> allowNotificationForFaculty(@PathVariable String userId,
 			@PathVariable String facultyId, @RequestBody UserProfileDTO userProfileDTO) {
 		userProfileDTO.setUserId(userId);
