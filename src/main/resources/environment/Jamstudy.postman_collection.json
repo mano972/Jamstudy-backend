@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c5904833-f5cf-413f-81b3-aafa6099877d",
+		"_postman_id": "9880af32-55aa-4b39-b163-c8b0ea10944b",
 		"name": "Jamstudy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -573,11 +573,6 @@
 								{
 									"key": "searchBy",
 									"value": "ETTI",
-									"disabled": true
-								},
-								{
-									"key": "facultyIds",
-									"value": "1",
 									"disabled": true
 								},
 								{
@@ -2542,13 +2537,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/v1/Jamstudy/newsletter",
+							"raw": "{{host}}/v1/newsletter",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
-								"Jamstudy",
 								"newsletter"
 							]
 						}

@@ -1,13 +1,13 @@
 - Download Couchbase Server 6.0.0 Community from https://www.couchbase.com/downloads
 - Access the CB console at http://localhost:8091/
-- Create a cluster, create bucket "JamstudyBucket". Create user (under Security tab) with username "JamstudyBucket" (same as bucket name) and password "jamstudy123".
+- Create a cluster (name: JamstudyCluster, user: Administrator, password: administrator), create bucket "JamstudyBucket". Create user (under Security tab) with username "JamstudyBucket" (same as bucket name) and password "jamstudy123".
  
 - Download and install Maven
 - Download and install Postman
 - In Eclipse, install server Wildfly 16
 
 - Put csv files Fac12Sept2019.csv, FacMasterPrograms04Oct2019.csv in a folder on your computer (now found in src/main/resources/static).
-- In the project there are 3 Java classes under package Jamstudy: InsertUniversities.java, InsertFacultiesAndLicensePrograms.java, UpdateFacultiesWithMasterPrograms.java. 
+- In the project there are 4 Java classes under package Jamstudy: InsertUniversities.java, InsertFacultiesAndLicensePrograms.java, UpdateFacultiesWithMasterPrograms.java, UpdateFacultiesWithExtraInfo. 
 Manually modify the filepath variable in each class to point to the csv files. 
 Run each class as a Java program, in the enumerated order.
 (there are also some REST endpoints to run the initial setup, under Postman folder 'init', but they are not working properly for now)
