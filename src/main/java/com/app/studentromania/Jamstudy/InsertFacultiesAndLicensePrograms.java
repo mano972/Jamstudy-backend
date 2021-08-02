@@ -376,7 +376,7 @@ public class InsertFacultiesAndLicensePrograms {
 			adjustedCity = "Piteşti, Argeş";
 			break;
 		case "Targoviste, Dambovita":
-			adjustedCity = "Târgovişte, Damboviţa";
+			adjustedCity = "Târgovişte, Dâmboviţa";
 			break;
 		case "Galati, Galati":
 			adjustedCity = "Galaţi, Galaţi";
