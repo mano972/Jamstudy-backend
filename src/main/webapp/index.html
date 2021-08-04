@@ -539,8 +539,15 @@ function loadTopFaculties() {
 							
 							
 							reviewTop.push(review);
+							
+							var secondRevCard;
+							if ($(window).width() > 992) {
+								secondRevCard = '<div class="card-review-brief">												<div class="content" >													<h6>-</h6>													<small class="text-muted"><i></i></small>				</div>											</div>';
+							} else {
+								secondRevCard = '';
+							}
 								
-							cardReviewStr = '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span id="see-full-review" class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>							</div>											</div><div class="card-review-brief">												<div class="content" >													<h6>-</h6>													<small class="text-muted"><i></i></small>				</div>											</div>';
+							cardReviewStr = '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span id="see-full-review" class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>							</div>											</div>' + secondRevCard;
 						} else {
 							var noReviewsText = "Nu există evaluări";
 							
