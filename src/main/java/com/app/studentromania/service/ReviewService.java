@@ -28,13 +28,14 @@ import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.LogUtils;
 import com.app.studentromania.util.ReviewFilter;
 import com.app.studentromania.util.Utilities;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.interfaces.DecodedJWT;
 
 @Service
 public class ReviewService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReviewService.class);
+
+	@Autowired
+	private CustomRequestContext customRequestContext;
 
 	@Autowired
 	private ReviewDAO reviewDAO;
@@ -184,9 +185,8 @@ public class ReviewService {
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
-	public ResponseDTO upvoteReview(String jwtToken, ReviewDTO reviewDTO) {
-		DecodedJWT decodedJwtToken = JWT.decode(jwtToken);
-		String email = decodedJwtToken.getSubject();
+	public ResponseDTO upvoteReview(ReviewDTO reviewDTO) {
+		String email = customRequestContext.getUserEmail();
 
 		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(email);
 		if (!userProfileOpt.isPresent()) {

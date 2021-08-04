@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +17,6 @@ import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.dto.ReviewDTO;
 import com.app.studentromania.service.ReviewService;
-import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.ReviewFilter;
 
 @CrossOrigin()
@@ -49,7 +47,7 @@ public class ReviewController {
 
 	@PostMapping("/{facultyId}")
 	@RestCall
-//	@JWTAuth
+	@JWTAuth
 	public ResponseEntity<String> createReview(@PathVariable String facultyId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setFacultyId(facultyId);
 		return reviewService.createReview(reviewDTO).createRestResponse();
@@ -57,7 +55,7 @@ public class ReviewController {
 
 	@PutMapping("/{reviewId}")
 	@RestCall
-//	@JWTAuth
+	@JWTAuth
 	public ResponseEntity<String> updateReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setReviewId(reviewId);
 		return reviewService.updateReview(reviewDTO).createRestResponse();
@@ -71,11 +69,10 @@ public class ReviewController {
 
 	@PutMapping("/{reviewId}/upvote")
 	@RestCall
-//	@JWTAuth
-	public ResponseEntity<String> upvoteReview(@PathVariable String reviewId,
-			@RequestHeader(Constants.JWT_TOKEN_REQUEST_HEADER) String jwtToken, @RequestBody ReviewDTO reviewDTO) {
+	@JWTAuth
+	public ResponseEntity<String> upvoteReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setReviewId(reviewId);
-		return reviewService.upvoteReview(jwtToken, reviewDTO).createRestResponse();
+		return reviewService.upvoteReview(reviewDTO).createRestResponse();
 	}
 
 	@DeleteMapping("/{reviewId}")

@@ -1,5 +1,7 @@
 package com.app.studentromania.service;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,13 +34,15 @@ import com.app.studentromania.model.UserProfile;
 import com.app.studentromania.model.UserProfileFaculty;
 import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.LogUtils;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.interfaces.DecodedJWT;
+import com.app.studentromania.util.SecurityUtils;
 
 @Service
 public class UserProfileService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserProfileService.class);
+
+	@Autowired
+	private CustomRequestContext customRequestContext;
 
 	@Autowired
 	private UserProfileDAO userProfileDAO;
@@ -79,9 +83,8 @@ public class UserProfileService {
 		return ResponseDTO.createSuccessResponse(response);
 	}
 
-	public ResponseDTO getUserProfile(String jwtToken) {
-		DecodedJWT decodedJwtToken = JWT.decode(jwtToken);
-		String email = decodedJwtToken.getSubject();
+	public ResponseDTO getUserProfile() {
+		String email = customRequestContext.getUserEmail();
 
 		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(email);
 		if (!userProfileOpt.isPresent()) {
@@ -111,13 +114,13 @@ public class UserProfileService {
 		return ResponseDTO.createSuccessResponse(response);
 	}
 
-	public ResponseDTO login(UserProfileDTO userProfileDTO) {
+	public ResponseDTO login(UserProfileDTO userProfileDTO) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(userProfileDTO.getEmail());
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_WRONG_CREDENTIALS);
 		}
 		UserProfile userProfile = userProfileOpt.get();
-		if (!userProfile.getPassword().equals(userProfileDTO.getPassword())) {
+		if (!SecurityUtils.validatePassword(userProfileDTO.getPassword(), userProfile.getPassword())) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_WRONG_CREDENTIALS);
 		}
 
@@ -137,7 +140,8 @@ public class UserProfileService {
 		return ResponseDTO.createSuccessResponse(response);
 	}
 
-	public ResponseDTO register(UserProfileDTO userProfileDTO) {
+	public ResponseDTO register(UserProfileDTO userProfileDTO)
+			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		if (StringUtils.isEmpty(userProfileDTO.getEmail()) || StringUtils.isEmpty(userProfileDTO.getPassword())) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_PASSWORD_MISSING);
 		}
@@ -148,7 +152,9 @@ public class UserProfileService {
 		UserProfile userProfile = new UserProfile();
 		String generatedId = configDAO.generateDocumentId(Constants.USERPROFILE_PREFIX_ID);
 		userProfile.setUserId(generatedId);
+		String securePassword = SecurityUtils.generateSecurePassword(userProfileDTO.getPassword());
 		mapToUserProfile(userProfileDTO, userProfile);
+		userProfile.setPassword(securePassword);
 		userProfileDAO.createUserProfile(userProfile);
 		UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO();
 		userProfileResponseDTO.setUserId(userProfile.getUserId());

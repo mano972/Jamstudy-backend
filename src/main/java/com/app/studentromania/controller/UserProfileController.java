@@ -1,5 +1,8 @@
 package com.app.studentromania.controller;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +20,6 @@ import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.dto.UserProfileDTO;
 import com.app.studentromania.service.UserProfileService;
-import com.app.studentromania.util.Constants;
 
 @CrossOrigin()
 @RestController
@@ -45,8 +46,8 @@ public class UserProfileController {
 	@GetMapping
 	@RestCall
 	@JWTAuth
-	public ResponseEntity<String> getUserProfile(@RequestHeader(Constants.JWT_TOKEN_REQUEST_HEADER) String jwtToken) {
-		return userProfileService.getUserProfile(jwtToken).createRestResponse();
+	public ResponseEntity<String> getUserProfile() {
+		return userProfileService.getUserProfile().createRestResponse();
 	}
 
 	@GetMapping("/notify")
@@ -58,13 +59,15 @@ public class UserProfileController {
 
 	@PostMapping("/register")
 	@RestCall
-	public ResponseEntity<String> register(@RequestBody UserProfileDTO userProfileDTO) {
+	public ResponseEntity<String> register(@RequestBody UserProfileDTO userProfileDTO)
+			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		return userProfileService.register(userProfileDTO).createRestResponse();
 	}
 
 	@PostMapping("/login")
 	@RestCall
-	public ResponseEntity<String> login(@RequestBody UserProfileDTO userProfileDTO) {
+	public ResponseEntity<String> login(@RequestBody UserProfileDTO userProfileDTO)
+			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		return userProfileService.login(userProfileDTO).createRestResponse();
 	}
 

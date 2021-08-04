@@ -20,6 +20,7 @@ import com.app.studentromania.dao.UserProfileDAO;
 import com.app.studentromania.dto.ResponseDTO;
 import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.model.UserProfile;
+import com.app.studentromania.service.CustomRequestContext;
 import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.LogUtils;
 import com.auth0.jwt.JWT;
@@ -34,6 +35,9 @@ public class JWTAuthAspect {
 
 	@Autowired
 	private UserProfileDAO userProfileDAO;
+
+	@Autowired
+	private CustomRequestContext customRequestContext;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(JWTAuthAspect.class);
 
@@ -70,6 +74,8 @@ public class JWTAuthAspect {
 				LogUtils.logMessage(LOGGER, "Error when verifying JWT token. Token has expired for email: " + email);
 				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_EXPIRED);
 			}
+
+			customRequestContext.setUserEmail(email);
 
 		} catch (JWTVerificationException e) {
 			LogUtils.logMessage(LOGGER, "Error when verifying JWT token ");
