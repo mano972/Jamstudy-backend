@@ -114,7 +114,7 @@ public class UserProfileService {
 	public ResponseDTO login(UserProfileDTO userProfileDTO) {
 		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(userProfileDTO.getEmail());
 		if (!userProfileOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_WRONG_CREDENTIALS);
 		}
 		UserProfile userProfile = userProfileOpt.get();
 		if (!userProfile.getPassword().equals(userProfileDTO.getPassword())) {

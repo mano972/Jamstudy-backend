@@ -49,7 +49,7 @@ public class ReviewController {
 
 	@PostMapping("/{facultyId}")
 	@RestCall
-	@JWTAuth
+//	@JWTAuth
 	public ResponseEntity<String> createReview(@PathVariable String facultyId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setFacultyId(facultyId);
 		return reviewService.createReview(reviewDTO).createRestResponse();
@@ -57,7 +57,7 @@ public class ReviewController {
 
 	@PutMapping("/{reviewId}")
 	@RestCall
-	@JWTAuth
+//	@JWTAuth
 	public ResponseEntity<String> updateReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setReviewId(reviewId);
 		return reviewService.updateReview(reviewDTO).createRestResponse();
@@ -71,7 +71,7 @@ public class ReviewController {
 
 	@PutMapping("/{reviewId}/upvote")
 	@RestCall
-	@JWTAuth
+//	@JWTAuth
 	public ResponseEntity<String> upvoteReview(@PathVariable String reviewId,
 			@RequestHeader(Constants.JWT_TOKEN_REQUEST_HEADER) String jwtToken, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setReviewId(reviewId);
