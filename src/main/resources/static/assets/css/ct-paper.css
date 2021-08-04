@@ -390,7 +390,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 
 @media (min-width:992px) {
 	.margin-top-faculty-top {
-	  margin-top: 50px;
+	  margin-top: 11px;
 	}
 }
 
@@ -3592,6 +3592,13 @@ textarea.form-control {
 		/* margin-bottom: 7px; */
 		border-radius: 0;
 	}
+}
+
+.img-first-place-trophy {
+	display: inline;
+	vertical-align: middle;
+	margin-right: 5px;
+	width: 15%;
 }
 
 .img-rounded {
@@ -9358,14 +9365,14 @@ $ct-series-colors: (
 
 @media (min-width:992px) {
 	#content-top-faculty {
-		height: 665px;
+		height: 770px;
 		/* overflow-y: auto; */
 	}
 }
 
 @media (min-width:992px) {
 	#content-runner-up-faculties {
-		height: 665px; 
+		height: 770px; 
 		overflow-y: auto;
 	}
 }
@@ -9424,8 +9431,7 @@ $ct-series-colors: (
   position: relative;
   z-index: 1;
   padding: 8px;
-  min-height:185px; 
-  max-height: 250px; 
+  height:189px; 
   overflow-y: auto; 
   text-overflow: ellipsis;
 }

@@ -384,7 +384,7 @@
 <script>
 
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
-var reviewTop;
+var reviewTop = [];
 
 $body = $("body");
 $(document).on({
@@ -405,6 +405,8 @@ function loadTopFaculties() {
 		backendUrl.searchParams.append("orderBy", sortingOrder);
 		var limit = 10;
 		backendUrl.searchParams.append("limit", limit);
+		<!-- var countRevFrom = 2; -->
+		<!-- backendUrl.searchParams.append("countRevFrom", 2); -->
 		
 		var topByDomain = document.getElementById("top-by-domain").value;
 		var topByCity = document.getElementById("top-by-city").value;
@@ -467,7 +469,7 @@ function loadTopFaculties() {
 				
 				
 				var backendUrlReviews = new URL(backendUrlRoot + "/v1/review/faculty/" + facultyIdTop);
-				var limitReviews = 1;
+				var limitReviews = 2;
 				var sortingOrderReviews = "generalRating,desc";
 				backendUrlReviews.searchParams.append("limit", limitReviews);
 				backendUrlReviews.searchParams.append("orderBy", sortingOrderReviews);
@@ -479,9 +481,48 @@ function loadTopFaculties() {
 				   success: function(responseReview){
 				   
 				   var reviewId, userName, reviewDate, formattedReviewDate, generalRating, reviewText;
-				   var cardReviewStr;
+				    var cardReviewStr = "";
 				   
-						if (responseReview.result.reviews.length > 0) {
+						if (responseReview.result.reviews.length > 1) {
+						
+							for (i in responseReview.result.reviews) {
+								reviewId = responseReview.result.reviews[i].reviewId;
+								userName = responseReview.result.reviews[i].userName ? responseReview.result.reviews[i].userName : "Anonim";
+								reviewDate = responseReview.result.reviews[i].reviewDate ? responseReview.result.reviews[i].reviewDate : "N/A";
+								formattedReviewDate = responseReview.result.reviews[i].formattedReviewDate ? responseReview.result.reviews[i].formattedReviewDate : "N/A";
+								generalRating = responseReview.result.reviews[i].generalRating ? responseReview.result.reviews[i].generalRating : "N/A";
+								reviewText = responseReview.result.reviews[i].reviewText ? responseReview.result.reviews[i].reviewText : "N/A";
+								var reviewTextFront;
+								if (reviewText.length > 75) {
+									reviewTextFront = reviewText.substring(0, 75).concat(' <strong class="review-ellipsis"> ...</strong>');
+								} else {
+									reviewTextFront = reviewText.concat(' <strong class="review-ellipsis"> ...</strong>');
+								}
+								
+								reviewTop.push(responseReview.result.reviews[i]);
+								
+								cardReviewStr += '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">&nbsp' + generalRating + '</strong>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>	 										</div>											</div>';
+							}
+						
+							<!-- var review = responseReview.result.reviews[0]; -->
+							<!-- reviewId = review.reviewId; -->
+							<!-- formattedReviewDate = review.formattedReviewDate ? review.formattedReviewDate : "N/A"; -->
+							<!-- userName = review.userName ? review.userName : "Anonim"; -->
+							<!-- reviewDate = review.reviewDate ? review.reviewDate : "N/A"; -->
+							<!-- generalRating = review.generalRating ? review.generalRating : "N/A"; -->
+							<!-- reviewText = review.reviewText ? review.reviewText : "N/A"; -->
+							<!-- var reviewTextFront; -->
+							<!-- if (reviewText.length > 75) {	 -->
+								<!-- reviewTextFront = reviewText.substring(0, 75).concat(' <strong class="review-ellipsis"> ...</strong>');	 -->
+							<!-- } else {	 -->
+								<!-- reviewTextFront = reviewText.concat(' <strong class="review-ellipsis"> ...</strong>');	 -->
+							<!-- }	 -->
+							
+							
+							<!-- reviewTop = review; -->
+								
+							<!-- cardReviewStr = '<div class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span id="see-full-review" class="btn btn-simple btn-info temp-display" onclick="seeFullReview(reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>							</div>											</div>'; -->
+						} else if(responseReview.result.reviews.length == 1) {
 							var review = responseReview.result.reviews[0];
 							reviewId = review.reviewId;
 							formattedReviewDate = review.formattedReviewDate ? review.formattedReviewDate : "N/A";
@@ -490,24 +531,23 @@ function loadTopFaculties() {
 							generalRating = review.generalRating ? review.generalRating : "N/A";
 							reviewText = review.reviewText ? review.reviewText : "N/A";
 							var reviewTextFront;
-							if (reviewText.length > 200) {	
-								reviewTextFront = reviewText.substring(0, 200).concat(' <strong class="review-ellipsis"> ...</strong>');	
+							if (reviewText.length > 75) {	
+								reviewTextFront = reviewText.substring(0, 75).concat(' <strong class="review-ellipsis"> ...</strong>');	
 							} else {	
 								reviewTextFront = reviewText.concat(' <strong class="review-ellipsis"> ...</strong>');	
 							}	
 							
 							
-							reviewTop = review;
+							reviewTop.push(review);
 								
-							cardReviewStr = '<div class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span id="see-full-review" class="btn btn-simple btn-info temp-display" onclick="seeFullReview(reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>							</div>											</div>';
-							
+							cardReviewStr = '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span id="see-full-review" class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>							</div>											</div><div class="card-review-brief">												<div class="content" >													<h6>-</h6>													<small class="text-muted"><i></i></small>				</div>											</div>';
 						} else {
 							var noReviewsText = "Nu există evaluări";
 							
 							cardReviewStr = '<div class="card-review-brief">			<div class="content" >			<p class="text-muted">' + noReviewsText + '</p>												</div>											</div>';
 						}
 						
-						document.getElementById("content-top-faculty").innerHTML += ('			<div class="img-first-place-banner">												<img src="./assets/img/trophy2_big.png" style="display:inline; vertical-align: middle; margin-right: 5px; width: 15%"></img>												<span class="label label-warning">Primul Loc</span>											</div>								<div class="row">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + urlProfileRedirect + facultyIdTop +'">		<div class="img-faculty-logo-block-base img-faculty-home-logo-top-block">										<img src="' + logoSrcTop + '" class="img-faculty-logo-base img-faculty-logo-home-top center-logo-home"></img>	 </div>												</a>												</div>												<div class="col-md-9 col-xs-12 align" >													<a href="' + urlProfileRedirect + facultyIdTop + '">														<h5 id="top-faculty"><strong>' + facultyNameTop + '</strong></h5>													</a>													<h6 id="top-university">' +  universityNameTop + '</h6>													<small id="top-city" class="text-muted">' + facultyCityTop + '</small>													<br>													<i class="fa fa-star align-orange"></i>													<strong class="align-orange">' + avgRatingTop +'</strong> <strong class="align"><a>' + countRevTextTop +'</a></strong>																									</div>											</div>																	<div class="row margin-top-faculty-top">			<div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-8 col-md-offset-4 col-lg-5 col-lg-offset-7">													<a href="' + addReviewRedirectUrlTop + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>												</div>						</div>																						' + cardReviewStr + '																<br>											<div class="row save-compare-home-top">												<div class="col-xs-4 save-top-faculty">													<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i><span>Salvează</span></button>											</div>												<div class="col-xs-4 col-xs-offset-4 col-md-4 col-md-offset-4 compare-top-faculty text-right">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button>								</div>											</div>								');
+						document.getElementById("content-top-faculty").innerHTML += ('			<div class="img-first-place-banner">												<img src="./assets/img/trophy2_big.png" class="img-first-place-trophy"></img>												<span class="label label-warning">Primul Loc</span>											</div>								<div class="row">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + urlProfileRedirect + facultyIdTop +'">		<div class="img-faculty-logo-block-base img-faculty-home-logo-top-block">										<img src="' + logoSrcTop + '" class="img-faculty-logo-base img-faculty-logo-home-top center-logo-home"></img>	 </div>												</a>												</div>												<div class="col-md-9 col-xs-12 align" >													<a href="' + urlProfileRedirect + facultyIdTop + '">														<h5 id="top-faculty"><strong>' + facultyNameTop + '</strong></h5>													</a>													<h6 id="top-university">' +  universityNameTop + '</h6>													<small id="top-city" class="text-muted">' + facultyCityTop + '</small>													<br>													<i class="fa fa-star align-orange"></i>													<strong class="align-orange">' + avgRatingTop +'</strong> <strong class="align"><a>' + countRevTextTop +'</a></strong>																									</div>											</div>																	<div class="row margin-top-faculty-top">			<div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-8 col-md-offset-4 col-lg-5 col-lg-offset-7">													<a href="' + addReviewRedirectUrlTop + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>												</div>						</div>																						' + cardReviewStr + '																<br>											<div class="row save-compare-home-top">												<div class="col-xs-4 save-top-faculty">													<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i><span>Salvează</span></button>											</div>												<div class="col-xs-4 col-xs-offset-4 col-md-4 col-md-offset-4 compare-top-faculty text-right">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button>								</div>											</div>								');
 				   },
 			   });
 				
@@ -730,7 +770,15 @@ document.getElementById("newsletter-button").onclick = function (e) {
 
 }
 
-function seeFullReview(review) {
+function seeFullReview(el, reviewArray) {
+
+		var review;
+		const dataReviewId = $(el).parent().parent().attr("data-reviewid");
+		for (i in reviewArray) {
+			if (reviewArray[i].reviewId == dataReviewId) {
+				review = reviewArray[i];
+			}
+		}
 
 		var reviewId = review.reviewId;
 		var facultyId = review.facultyId;

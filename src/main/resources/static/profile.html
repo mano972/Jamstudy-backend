@@ -681,10 +681,9 @@ function loadGeneralReviewCard(response) {
 									formattedReviewDate = responseReview.result.reviews[i].formattedReviewDate ? responseReview.result.reviews[i].formattedReviewDate : "N/A";
 									generalRating = responseReview.result.reviews[i].generalRating ? responseReview.result.reviews[i].generalRating : "N/A";
 									reviewText = responseReview.result.reviews[i].reviewText ? responseReview.result.reviews[i].reviewText : "N/A";
-									var reviewTextFront;
-									
-									if (reviewText.length > 200) {
-										reviewTextFront = reviewText.substring(0, 200).concat(' <strong class="review-ellipsis"> ...</strong>');
+									var reviewTextFront;									
+									if (reviewText.length > 75) {
+										reviewTextFront = reviewText.substring(0, 75).concat(' <strong class="review-ellipsis"> ...</strong>');
 									} else {
 										reviewTextFront = reviewText.concat(' <strong class="review-ellipsis"> ...</strong>');
 									}
