@@ -54,9 +54,9 @@
 			<li>
 				<a href="./contact.html" class="btn btn-simple">Contact</a>
 			</li>
-              <!-- <li> -->
-                  <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-              <!-- </li> -->
+              <li>
+                  <a href="./contact.html" class="btn" style="margin-right: 20px;" data-toggle="modal" data-target="#login-modal"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
+              </li>
            </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
@@ -378,6 +378,62 @@
 				</div>
 			  </div>
 			</div>
+			
+			<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-login">
+					<div class="modal-content">
+						<div class="login-card">
+							<h3 class="title">Autentificare</h3>
+							<br>
+							<form class="register-form">
+								<!-- <label>Email</label> -->
+								<input type="text" class="form-control" placeholder="Email">
+								<br>
+								<!-- <label>Parolă</label> -->
+								<input type="password" class="form-control" placeholder="Parolă">
+								<button class="btn btn-info btn-block btn-fill">Intră în cont</button>
+								<!-- <h5>sau</h5> -->
+								<h5 id="reg-line"></h5>
+								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+							</form>
+							<div class="forgot">
+								<a href="#" class="btn btn-simple btn-info">Am uitat parola</a>
+								<a href="#" class="btn btn-simple btn-info btn-reg" data-dismiss="modal" data-toggle="modal" data-target="#register-modal">Nu ai cont? Înregistrează-te</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-register">
+					<div class="modal-content">
+						<div class="register-card">
+							<h3 class="title">Creare cont nou</h3>
+							<br>
+							<form class="register-form">
+								<!-- <label>Email</label> -->
+								<input type="text" class="form-control" placeholder="Email">
+								<br>
+								<!-- <label>Parola</label> -->
+								<input type="password" class="form-control" placeholder="Parola">
+								<!-- <label>Confirmă Parola</label> -->
+								<input type="password" class="form-control" placeholder="Confirmă Parola">
+								
+								<div>
+									<label class="checkbox" for="a1"><input type="checkbox" name="domeniu" value="" id="a1" data-toggle="checkbox">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</label>
+									<label class="checkbox" for="a2"><input type="checkbox" name="domeniu" value="" id="a2" data-toggle="checkbox">	Vreau să fiu la curent cu ultimele noutăți</label>
+								</div>
+								
+								<button class="btn btn-info btn-block btn-fill">Înregistrare</button>
+								<!-- <h5>sau</h5> -->
+								<h5 id="reg-line"></h5>
+								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>			
 
 </body>
 

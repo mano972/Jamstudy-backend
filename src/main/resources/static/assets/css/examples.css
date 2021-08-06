@@ -109,8 +109,8 @@
   color: #EB5E28;
 }
 
-.register-card {
-  background-color: #FF8F5E;
+.login-card {
+  background-color: #f9cf53;
   border-radius: 8px;
   color: #fff;
   max-width: 350px;
@@ -119,17 +119,56 @@
   padding: 30px;
 }
 
+.login-card label {
+  color: #403D39;
+  margin-top: 15px;
+}
+
+.login-card .title {
+  /* color: #B33C12; */
+  /* color: #403D39; */
+  text-align: center;
+}
+
+.login-card .btn {
+  margin-top: 27px;
+}
+
+.login-card .btn-reg {
+  margin-top: 7px !important;
+}
+
+.login-card .forgot {
+  text-align: center;
+}
+
+.register-card {
+  background-color: #f9cf53;
+  border-radius: 8px;
+  color: #fff;
+  max-width: 550px;
+  margin: 20px 0 70px;
+  min-height: 400px;
+  padding: 30px;
+}
+
 .register-card label {
+  color: #fff8f0;
   margin-top: 15px;
 }
 
 .register-card .title {
-  color: #B33C12;
+  /* color: #B33C12; */
+  /* color: #403D39; */
   text-align: center;
 }
 
 .register-card .btn {
-  margin-top: 30px;
+  margin-top: 27px;
+}
+
+.register-card .btn-reg {
+  margin-top: 7px !important;
 }
 
 .register-card .forgot {

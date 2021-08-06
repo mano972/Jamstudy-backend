@@ -3578,7 +3578,7 @@ textarea.form-control {
 }
 @media (min-width:992px) {
 	.img-first-place-banner {
-		background-color: #fceea9;
+		background-color: #ffe357;
 		margin: -20px -20px 20px -20px;
 		/* margin-bottom: 7px; */
 		border-radius: 20px 20px 0 0;
@@ -3587,7 +3587,7 @@ textarea.form-control {
 
 @media (max-width:992px) {
 	.img-first-place-banner {
-		background-color: #fceea9;
+		background-color: #ffe357;
 		margin: -20px -20px 20px -20px;
 		/* margin-bottom: 7px; */
 		border-radius: 0;
@@ -6790,6 +6790,38 @@ body > .navbar-collapse.collapse {
 	}
 }
 
+@media (min-width:992px) {
+	.modal-dialog-login {
+	  position: relative;
+	  width: 350px;
+	  margin: 30px auto;
+	}
+}
+
+@media (max-width:992px) {
+	.modal-dialog-login {
+	  position: relative;
+	  width: auto;
+	  margin: 10px;
+	}
+}
+
+@media (min-width:992px) {
+	.modal-dialog-register {
+	  position: relative;
+	  width: 550px;
+	  margin: 30px auto;
+	}
+}
+
+@media (max-width:992px) {
+	.modal-dialog-register {
+	  position: relative;
+	  width: auto;
+	  margin: 10px;
+	}
+}
+
 .modal.fade .modal-dialog {
   transform: none;
   -webkit-transform: none;
@@ -6809,6 +6841,18 @@ body > .navbar-collapse.collapse {
 }
 
 .modal.in .modal-dialog-review {
+  transform: none;
+  -webkit-transform: none;
+  -moz-transform: none;
+}
+
+.modal.fade .modal-dialog-login {
+  transform: none;
+  -webkit-transform: none;
+  -moz-transform: none;
+}
+
+.modal.in .modal-dialog-login {
   transform: none;
   -webkit-transform: none;
   -moz-transform: none;
@@ -7090,6 +7134,13 @@ body > .navbar-collapse.collapse {
 	vertical-align: middle;
   }
 } 
+
+  h5#reg-line {
+	margin: 18px auto -7px auto;
+	width: 100%;
+    border: 0;
+    border-top: 1px solid #fbf8f8;
+  }
 
 @media (max-width:992px) {
   img#newsletter_small {
@@ -9405,7 +9456,7 @@ $ct-series-colors: (
 .card-review-categories {
   border-radius: 5px;
   box-shadow: 0 0px 8px rgba(204, 197, 185, 0.5);
-  background: transparent linear-gradient(180deg, #faeca7 0%, #fce46d 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(180deg, #faeca7 0%, #ffe049 100%) 0% 0% no-repeat padding-box;
   color: #fffef5;
   margin-top: 10px;
   margin-bottom: 20px;
