@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.studentromania.annotation.JWTAuth;
 import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
+import com.app.studentromania.annotation.VerifyLoggedIn;
 import com.app.studentromania.dto.UserProfileDTO;
 import com.app.studentromania.service.UserProfileService;
 
@@ -46,6 +47,7 @@ public class UserProfileController {
 	@GetMapping
 	@RestCall
 	@JWTAuth
+	@VerifyLoggedIn
 	public ResponseEntity<String> getUserProfile() {
 		return userProfileService.getUserProfile().createRestResponse();
 	}
@@ -88,6 +90,7 @@ public class UserProfileController {
 	@PutMapping("/{userId}/favoritefaculty/{facultyId}")
 	@RestCall
 	@JWTAuth
+	@VerifyLoggedIn
 	public ResponseEntity<String> addFavoriteFaculty(@PathVariable String userId, @PathVariable String facultyId,
 			@RequestBody UserProfileDTO userProfileDTO) {
 		userProfileDTO.setUserId(userId);
@@ -97,6 +100,7 @@ public class UserProfileController {
 	@PutMapping("/{userId}/notification/{facultyId}")
 	@RestCall
 	@JWTAuth
+	@VerifyLoggedIn
 	public ResponseEntity<String> allowNotificationForFaculty(@PathVariable String userId,
 			@PathVariable String facultyId, @RequestBody UserProfileDTO userProfileDTO) {
 		userProfileDTO.setUserId(userId);

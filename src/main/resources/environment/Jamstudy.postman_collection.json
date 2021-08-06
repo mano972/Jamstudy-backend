@@ -606,6 +606,11 @@
 									"disabled": true
 								},
 								{
+									"key": "countRevFrom",
+									"value": "0",
+									"disabled": true
+								},
+								{
 									"key": "orderBy",
 									"value": "facultyName,asc"
 								},
@@ -781,6 +786,11 @@
 								{
 									"key": "ratingFrom",
 									"value": "3",
+									"disabled": true
+								},
+								{
+									"key": "countRevFrom",
+									"value": "0",
 									"disabled": true
 								},
 								{
@@ -2226,23 +2236,8 @@
 					"response": []
 				},
 				{
-					"name": "create configs (admin)",
+					"name": "create configs",
 					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "jamstudyadmin",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{

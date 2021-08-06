@@ -98,6 +98,17 @@ public class ReviewRepo {
 	@Query
 	@LogExecutionTime
 	@LogParameters
+	public List<Review> getReviewsByUserId(String userId) {
+		String query = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
+				+ Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET + " WHERE docType = $1 AND userId = $2 ";
+
+		return template.findByN1QL(
+				N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue(), userId)), Review.class);
+	}
+
+	@Query
+	@LogExecutionTime
+	@LogParameters
 	public N1qlQueryResult getReviewsDetailsByFacultyId(String facultyId) {
 		String query = "SELECT count(*) as countResults, avg(generalRating) as avgRating, "
 				+ " avg(jobProspectsReview.generalRating) as avgRatingJobProspects, "

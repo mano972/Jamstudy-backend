@@ -95,12 +95,27 @@ public class ReviewService {
 	}
 
 	public ResponseDTO createReview(ReviewDTO reviewDTO) {
+		String userId = customRequestContext.getUserId();
+
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+		if (!userProfileOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		}
+		UserProfile userProfile = userProfileOpt.get();
+		List<Review> userAddedReviews = reviewDAO.getReviewsByUserId(userProfile.getUserId());
+		if (userAddedReviews.size() > 4) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_MAX_NUMBER);
+		}
+		if (userAddedReviews.stream().anyMatch(review -> review.getFacultyId().equals(reviewDTO.getFacultyId()))) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_SAME_FACULTY);
+		}
+
 		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(reviewDTO.getFacultyId());
 		if (!facultyOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
 		}
 		Faculty faculty = facultyOpt.get();
-		ErrorsEnum error = validateReviewCreate(reviewDTO);
+		ErrorsEnum error = validateReviewCreate(reviewDTO, userProfile);
 		if (ErrorsEnum.NO_ERROR != error) {
 			return ResponseDTO.createErrorResponse(error);
 		}
@@ -111,7 +126,13 @@ public class ReviewService {
 		review.setReviewDate(currentDate);
 		review.setFormattedReviewDate(Utilities.getFormattedDate(currentDate));
 		mapToReview(reviewDTO, review);
+		review.setUserId(userProfile.getUserId());
+		review.setUserEmail(userProfile.getEmail());
 		reviewDAO.createReview(review);
+
+		userProfile.getAddedReviews().add(review.getReviewId());
+		userProfileDAO.updateUserProfile(userProfile);
+
 		ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
 		reviewResponseDTO.setReviewId(review.getReviewId());
 		reviewResponseDTO.setFacultyId(review.getFacultyId());
@@ -186,12 +207,13 @@ public class ReviewService {
 	}
 
 	public ResponseDTO upvoteReview(ReviewDTO reviewDTO) {
-		String email = customRequestContext.getUserEmail();
+		String userId = customRequestContext.getUserId();
 
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(email);
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
 		}
+		UserProfile userProfile = userProfileOpt.get();
 
 		Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewDTO.getReviewId());
 		if (!reviewOpt.isPresent()) {
@@ -200,14 +222,14 @@ public class ReviewService {
 		Review review = reviewOpt.get();
 		int upvotes = review.getUpvotes();
 		if (reviewDTO.getUpvote()) {
-			if (userProfileOpt.get().getLikedReviews().contains(reviewDTO.getReviewId())) {
+			if (userProfile.getLikedReviews().contains(reviewDTO.getReviewId())) {
 				return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_ALREADY_UPVOTED);
 			}
 			review.setUpvotes(++upvotes);
-			userProfileOpt.get().getLikedReviews().add(reviewDTO.getReviewId());
+			userProfile.getLikedReviews().add(reviewDTO.getReviewId());
 			LogUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was upvoted!");
 		} else {
-			if (!userProfileOpt.get().getLikedReviews().contains(reviewDTO.getReviewId())) {
+			if (!userProfile.getLikedReviews().contains(reviewDTO.getReviewId())) {
 				return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_ALREADY_UPVOTED);
 			}
 			if (upvotes == 0) {
@@ -215,11 +237,11 @@ public class ReviewService {
 			} else {
 				review.setUpvotes(--upvotes);
 			}
-			userProfileOpt.get().getLikedReviews().remove(reviewDTO.getReviewId());
+			userProfile.getLikedReviews().remove(reviewDTO.getReviewId());
 			LogUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was downvoted!");
 		}
 		reviewDAO.updateReview(review);
-		userProfileDAO.updateUserProfile(userProfileOpt.get());
+		userProfileDAO.updateUserProfile(userProfile);
 		ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
 		reviewResponseDTO.setReviewId(review.getReviewId());
 		reviewResponseDTO.setFacultyId(review.getFacultyId());
@@ -275,7 +297,7 @@ public class ReviewService {
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
-	private ErrorsEnum validateReviewCreate(ReviewDTO reviewDTO) {
+	private ErrorsEnum validateReviewCreate(ReviewDTO reviewDTO, UserProfile userProfile) {
 		if (reviewDTO.getGeneralRating() == null || reviewDTO.getGeneralRating() < 1
 				|| reviewDTO.getGeneralRating() > 5) {
 			return ErrorsEnum.REVIEW_GENERAL_RATING_ERROR;
@@ -284,6 +306,13 @@ public class ReviewService {
 			if (reviewDTO.getDifficulty() < 1 || reviewDTO.getDifficulty() > 5) {
 				return ErrorsEnum.REVIEW_DIFFICULTY_ERROR;
 			}
+		}
+		List<Review> userAddedReviews = reviewDAO.getReviewsByUserId(userProfile.getUserId());
+		if (userAddedReviews.size() > 4) {
+			return ErrorsEnum.REVIEW_MAX_NUMBER;
+		}
+		if (userAddedReviews.stream().anyMatch(review -> review.getFacultyId().equals(reviewDTO.getFacultyId()))) {
+			return ErrorsEnum.REVIEW_SAME_FACULTY;
 		}
 		return ErrorsEnum.NO_ERROR;
 	}

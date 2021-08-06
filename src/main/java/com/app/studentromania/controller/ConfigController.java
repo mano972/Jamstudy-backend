@@ -47,7 +47,6 @@ public class ConfigController {
 
 	@PostMapping("/configs")
 	@RestCall
-	@VerifyAdmin
 	public ResponseEntity<String> saveConfigs(@RequestBody List<Config> configs) {
 		return configService.saveConfigs(configs).createRestResponse();
 	}

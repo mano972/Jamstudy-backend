@@ -9,14 +9,14 @@ import org.springframework.web.context.WebApplicationContext;
 @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CustomRequestContext {
 
-	private String userEmail;
+	private String userId;
 
-	public String getUserEmail() {
-		return userEmail;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

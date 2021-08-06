@@ -31,7 +31,9 @@ public enum ErrorsEnum {
 	REVIEW_ID_MISSING(HttpStatus.BAD_REQUEST, "Lipsete id-ul evaluarii", -32),
 	REVIEW_GENERAL_RATING_ERROR(HttpStatus.BAD_REQUEST, "Nota acordata nu este corecta.", -33),
 	REVIEW_DIFFICULTY_ERROR(HttpStatus.BAD_REQUEST, "Valoarea dificultatii nu este corecta.", -34),
-	REVIEW_ALREADY_UPVOTED(HttpStatus.BAD_REQUEST, "Aceasta evaluare a fost deja votata.", -35),
+	REVIEW_ALREADY_UPVOTED(HttpStatus.NOT_ACCEPTABLE, "Aceasta evaluare a fost deja votata.", -35),
+	REVIEW_MAX_NUMBER(HttpStatus.NOT_ACCEPTABLE, "Ai atins deja numarul maxim de evaluari adaugate.", -36),
+	REVIEW_SAME_FACULTY(HttpStatus.NOT_ACCEPTABLE, "Ai adaugat deja o evaluare pentru aceasta facultate.", -37),
 
 	// Question
 	QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "Intrebarea nu a fost gasita.", -40),
@@ -42,12 +44,14 @@ public enum ErrorsEnum {
 	// UserProfile
 	USERPROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "Nu exista user cu acest email.", -60),
 	USERPROFILE_EXISTS(HttpStatus.NOT_ACCEPTABLE, "Un user cu acest email exista deja.", -61),
-	USERPROFILE_LOGIN_WRONG_CREDENTIALS(HttpStatus.BAD_REQUEST, "Combinatia email-parola este gresita.", -62),
+	USERPROFILE_LOGIN_WRONG_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Combinatia email-parola este gresita.", -62),
 	USERPROFILE_EMAIL_PASSWORD_MISSING(HttpStatus.BAD_REQUEST, "Email/parola nu au fost completate.", -63),
 	JWT_GENERATION_ERROR(HttpStatus.BAD_REQUEST, "Eroare la generarea JWT.", -64),
-	JWT_MISSING(HttpStatus.BAD_REQUEST, "Token-ul JWT lipseste din request.", -65),
-	JWT_VERIFY_ERROR(HttpStatus.BAD_REQUEST, "Token-ul JWT nu este corect.", -66),
-	JWT_EXPIRED(HttpStatus.BAD_REQUEST, "Token-ul JWT a expirat.", -67),
+	JWT_MISSING(HttpStatus.UNAUTHORIZED, "Token-ul JWT lipseste din request.", -65),
+	JWT_VERIFY_ERROR(HttpStatus.UNAUTHORIZED, "Token-ul JWT nu este corect.", -66),
+	JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "Token-ul JWT a expirat.", -67),
+	USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED,
+			"Este nevoie de autentificare pentru a folosit aceasta functionalitate.", -68),
 
 	// Statistic
 	ANALYTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics document was not found.", -70),
@@ -61,8 +65,8 @@ public enum ErrorsEnum {
 	NEWSLETTER_EMAIL_ALREADY_EXISTS(HttpStatus.BAD_REQUEST,
 			"Deja ești abonat la newsletter cu această adresă de e-mail. Îți mulțumim!", -81),
 	NEWSLETTER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Newsletter document already exists.", -82),
-	
-	//Feedback
+
+	// Feedback
 	FEEDBACK_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Feedback document was not found.", -90),
 	FEEDBACK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Feedback document already exists.", -91);
 

@@ -12,6 +12,10 @@ CREATE INDEX `idx_question_questionId` ON `JamstudyBucket`(`questionId`,(meta().
 
 CREATE INDEX `idx_review_reviewId` ON `JamstudyBucket`(`reviewId`,(meta().`cas`)) WHERE (`docType` = "REVIEW");
 
+CREATE INDEX `idx_review_userId` ON `JamstudyBucket`(`userId`,(meta().`cas`)) WHERE (`docType` = "REVIEW");
+
 CREATE INDEX `idx_university_universityId` ON `JamstudyBucket`(`universityId`,(meta().`cas`)) WHERE (`docType` = "UNIVERSITY");
 
 CREATE INDEX `idx_userprofile_email` ON `JamstudyBucket`(`email`,(meta().`cas`)) WHERE (`docType` = "USER_PROFILE");
+
+CREATE INDEX `idx_userprofile_userId` ON `JamstudyBucket`(`userId`,(meta().`cas`)) WHERE (`docType` = "USER_PROFILE");

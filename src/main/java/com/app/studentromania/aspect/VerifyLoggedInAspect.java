@@ -1,0 +1,41 @@
+package com.app.studentromania.aspect;
+
+import org.apache.commons.lang3.StringUtils;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.app.studentromania.dto.ResponseDTO;
+import com.app.studentromania.enumtype.ErrorsEnum;
+import com.app.studentromania.service.CustomRequestContext;
+import com.app.studentromania.util.LogUtils;
+
+@Aspect
+@Component
+public class VerifyLoggedInAspect {
+
+	@Autowired
+	private CustomRequestContext customRequestContext;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(VerifyLoggedInAspect.class);
+
+	@Around("@annotation(com.app.studentromania.annotation.VerifyLoggedIn)")
+	public Object VerifyLoggedIn(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+
+		String userId = customRequestContext.getUserId();
+		if (StringUtils.isBlank(userId)) {
+			LogUtils.logMessage(LOGGER, "User is not logged in: " + userId);
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USER_NOT_LOGGED_IN);
+		}
+
+		Object proceed = proceedingJoinPoint.proceed();
+
+		return proceed;
+
+	}
+
+}

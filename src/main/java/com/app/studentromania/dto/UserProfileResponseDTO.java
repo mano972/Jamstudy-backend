@@ -20,6 +20,10 @@ public class UserProfileResponseDTO {
 
 	private List<UserProfileFaculty> recentFaculties;
 
+	private List<String> likedReviews;
+
+	private List<String> addedReviews;
+
 	public String getUserId() {
 		return userId;
 	}
@@ -74,6 +78,22 @@ public class UserProfileResponseDTO {
 
 	public void setRecentFaculties(List<UserProfileFaculty> recentFaculties) {
 		this.recentFaculties = recentFaculties;
+	}
+
+	public List<String> getLikedReviews() {
+		return likedReviews;
+	}
+
+	public void setLikedReviews(List<String> likedReviews) {
+		this.likedReviews = likedReviews;
+	}
+
+	public List<String> getAddedReviews() {
+		return addedReviews;
+	}
+
+	public void setAddedReviews(List<String> addedReviews) {
+		this.addedReviews = addedReviews;
 	}
 
 }

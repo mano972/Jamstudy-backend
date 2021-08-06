@@ -33,6 +33,8 @@ public enum ErrorsEnumEng {
 	REVIEW_GENERAL_RATING_ERROR(HttpStatus.BAD_REQUEST, "General Rating value is not correct.", -33),
 	REVIEW_DIFFICULTY_ERROR(HttpStatus.BAD_REQUEST, "Difficulty value is not correct.", -34),
 	REVIEW_ALREADY_UPVOTED(HttpStatus.BAD_REQUEST, "This review was already upvoted.", -35),
+	REVIEW_MAX_NUMBER(HttpStatus.NOT_ACCEPTABLE, "Maximum number of reviews reached.", -36),
+	REVIEW_SAME_FACULTY(HttpStatus.NOT_ACCEPTABLE, "A review was already added for this faculty.", -37),
 
 	// Question
 	QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "Question was not found.", -40),
@@ -43,12 +45,13 @@ public enum ErrorsEnumEng {
 	// Review
 	USERPROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "User profile was not found.", -60),
 	USERPROFILE_EXISTS(HttpStatus.NOT_ACCEPTABLE, "User already exists.", -61),
-	USERPROFILE_LOGIN_WRONG_CREDENTIALS(HttpStatus.BAD_REQUEST, "Email/password not correct.", -62),
+	USERPROFILE_LOGIN_WRONG_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Email/password not correct.", -62),
 	USERPROFILE_EMAIL_PASSWORD_MISSING(HttpStatus.BAD_REQUEST, "Email/password missing.", -63),
 	JWT_GENERATION_ERROR(HttpStatus.BAD_REQUEST, "Error when generating JWT token.", -64),
-	JWT_MISSING(HttpStatus.BAD_REQUEST, "JWT token is missing from request.", -65),
-	JWT_VERIFY_ERROR(HttpStatus.BAD_REQUEST, "JWT token verification failed.", -66),
-	JWT_EXPIRED(HttpStatus.BAD_REQUEST, "JWT token has expired.", -67),
+	JWT_MISSING(HttpStatus.UNAUTHORIZED, "JWT token is missing from request.", -65),
+	JWT_VERIFY_ERROR(HttpStatus.UNAUTHORIZED, "JWT token verification failed.", -66),
+	JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "JWT token has expired.", -67),
+	USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "User needs to log in in order to use this functionality.", -68),
 
 	// Statistic
 	ANALYTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics document was not found.", -70),

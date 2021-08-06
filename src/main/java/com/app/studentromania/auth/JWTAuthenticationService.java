@@ -8,7 +8,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 
 public class JWTAuthenticationService {
-	
+
 //	public static Cookie createAuthCookie() {
 //		Cookie cookie = new Cookie(name, value); //name and value of the cookie
 //		cookie.setMaxAge(expire); //expire could be 60 (seconds)
@@ -18,7 +18,7 @@ public class JWTAuthenticationService {
 //		return cookie;
 //	}
 
-	public static String generateJWT(String email) {
+	public static String generateJWT(String userId) {
 		String jwtToken = null;
 		try {
 			final Integer hours = 72;
@@ -29,7 +29,7 @@ public class JWTAuthenticationService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(new Date());
 			cal.add(Calendar.HOUR_OF_DAY, hours);
-			jwtToken = JWT.create().withIssuer(issuer).withSubject(email).withIssuedAt(new Date())
+			jwtToken = JWT.create().withIssuer(issuer).withSubject(userId).withIssuedAt(new Date())
 					.withExpiresAt(cal.getTime()).sign(algorithm);
 		} catch (JWTCreationException e) {
 			jwtToken = null;

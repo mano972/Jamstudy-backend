@@ -44,6 +44,9 @@ public class UserProfile extends ParentEntity {
 	private List<String> likedReviews;
 
 	@Field
+	private List<String> addedReviews;
+
+	@Field
 	private Date lastLogin;
 
 	public String getUserId() {
@@ -116,6 +119,14 @@ public class UserProfile extends ParentEntity {
 
 	public void setLikedReviews(List<String> likedReviews) {
 		this.likedReviews = likedReviews;
+	}
+
+	public List<String> getAddedReviews() {
+		return addedReviews;
+	}
+
+	public void setAddedReviews(List<String> addedReviews) {
+		this.addedReviews = addedReviews;
 	}
 
 	public Date getLastLogin() {

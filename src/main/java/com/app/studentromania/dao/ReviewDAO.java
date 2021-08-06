@@ -44,6 +44,10 @@ public class ReviewDAO {
 		return reviewRepo.getReviewsByFacultyId(facultyId);
 	}
 
+	public List<Review> getReviewsByUserId(String userId) {
+		return reviewRepo.getReviewsByUserId(userId);
+	}
+
 	public long countFilteredReviews(String facultyId, ReviewFilter reviewFilter) {
 		return reviewRepo.countFilteredReviewsByFacultyId(facultyId, reviewFilter);
 	}

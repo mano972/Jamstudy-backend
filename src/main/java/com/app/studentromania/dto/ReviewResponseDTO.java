@@ -10,8 +10,6 @@ public class ReviewResponseDTO {
 
 	private String facultyId;
 
-	private String userName;
-
 	private Integer generalRating;
 
 	private Boolean isUserWorking;
@@ -60,14 +58,6 @@ public class ReviewResponseDTO {
 
 	public String getFacultyId() {
 		return facultyId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 	public void setFacultyId(String facultyId) {

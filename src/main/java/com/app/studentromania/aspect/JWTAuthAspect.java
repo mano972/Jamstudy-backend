@@ -12,6 +12,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -31,6 +33,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 @Aspect
 @Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class JWTAuthAspect {
 
 	@Autowired
@@ -47,35 +50,43 @@ public class JWTAuthAspect {
 		final String algorithmSecret = "amFtc3R1ZHlzZWNyZXQ";
 		final String issuer = "unistart";
 
+		customRequestContext.setUserId(null);
+
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
 
 		final String jwtAuthHeader = request.getHeader(Constants.JWT_TOKEN_REQUEST_HEADER);
 
 		try {
-			if (StringUtils.isBlank(jwtAuthHeader) || !jwtAuthHeader.startsWith("Bearer")) {
-				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_MISSING).createRestResponse();
+			if (!StringUtils.isBlank(jwtAuthHeader) && jwtAuthHeader.startsWith("Bearer")) {
+//				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_MISSING).createRestResponse();
+//			}
+				String jwtToken = jwtAuthHeader.replace("Bearer", "").trim();
+
+				Algorithm algorithm = Algorithm.HMAC256(algorithmSecret);
+				JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).build();
+				verifier.verify(jwtToken);
+
+				DecodedJWT decodedJwtToken = JWT.decode(jwtToken);
+				String userId = decodedJwtToken.getSubject();
+				if (StringUtils.isBlank(userId)) {
+					LogUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId is missing from the token");
+					return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+				}
+				Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+				if (!userProfileOpt.isPresent()) {
+					LogUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId does not exist: " + userId);
+					return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+				}
+
+				if (isTokenExpired(decodedJwtToken)) {
+					LogUtils.logMessage(LOGGER,
+							"Error when verifying JWT token. Token has expired for userId: " + userId);
+					return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_EXPIRED);
+				}
+
+				customRequestContext.setUserId(userId);
 			}
-			String jwtToken = jwtAuthHeader.replace("Bearer", "").trim();
-
-			Algorithm algorithm = Algorithm.HMAC256(algorithmSecret);
-			JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).build();
-			verifier.verify(jwtToken);
-
-			DecodedJWT decodedJwtToken = JWT.decode(jwtToken);
-			String email = decodedJwtToken.getSubject();
-			Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(email);
-			if (!userProfileOpt.isPresent()) {
-				LogUtils.logMessage(LOGGER, "Error when verifying JWT token. Email does not exist: " + email);
-				return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
-			}
-
-			if (isTokenExpired(decodedJwtToken)) {
-				LogUtils.logMessage(LOGGER, "Error when verifying JWT token. Token has expired for email: " + email);
-				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_EXPIRED);
-			}
-
-			customRequestContext.setUserEmail(email);
 
 		} catch (JWTVerificationException e) {
 			LogUtils.logMessage(LOGGER, "Error when verifying JWT token ");

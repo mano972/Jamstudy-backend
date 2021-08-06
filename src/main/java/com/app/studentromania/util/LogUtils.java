@@ -13,20 +13,31 @@ public class LogUtils {
 	}
 
 	public static void logStart(Logger logger, String endPointName) {
-		logger.info("*** Starting <" + endPointName + "> at [" + new Date() + "]");
+		logStart(logger, endPointName, null);
+	}
+
+	public static void logStart(Logger logger, String endPointName, String userId) {
+		logger.info("*** [" + userId + "] Starting <" + endPointName + "> at [" + new Date() + "]");
 	}
 
 	public static void logSuccess(Logger logger, String endPointName) {
-		logger.info("*** Finished with success <" + endPointName + "> at [" + new Date() + "]");
+		logSuccess(logger, endPointName, null);
+	}
+
+	public static void logSuccess(Logger logger, String endPointName, String userId) {
+		logger.info("*** [" + userId + "]  Finished with success <" + endPointName + "> at [" + new Date() + "]");
 	}
 
 	public static void logError(Logger logger, String endPointName, Throwable e) {
-		logger.error("*** Failed to run <" + endPointName + "> at [" + new Date() + "]", e);
+		logError(logger, endPointName, e, null);
+	}
+
+	public static void logError(Logger logger, String endPointName, Throwable e, String userId) {
+		logger.error("*** [" + userId + "] Failed to run <" + endPointName + "> at [" + new Date() + "]", e);
 	}
 
 	public static void logExecutionTime(Logger logger, String endPointName, long totalTime) {
-		logger.info(
-				">>> Execution time for <" + endPointName + "> is " + getDurationInSeconds(totalTime) + " seconds");
+		logger.info(">>> Execution time for <" + endPointName + "> is " + getDurationInSeconds(totalTime) + " seconds");
 	}
 
 	public static void logDataBaseExecutionTime(Logger logger, String methodName, long totalTime) {
@@ -35,8 +46,12 @@ public class LogUtils {
 	}
 
 	public static void logEndPointExecutionTime(Logger logger, String endPointName, long totalTime) {
-		logger.info(">>> Execution time for endpoint <" + endPointName + "> is " + getDurationInSeconds(totalTime)
-				+ " seconds");
+		logEndPointExecutionTime(logger, endPointName, totalTime, null);
+	}
+
+	public static void logEndPointExecutionTime(Logger logger, String endPointName, long totalTime, String userId) {
+		logger.info(">>> *** [" + userId + "] Execution time for endpoint <" + endPointName + "> is "
+				+ getDurationInSeconds(totalTime) + " seconds");
 	}
 
 	public static void logParameter(Logger logger, String paramaterName, String parameterValue) {

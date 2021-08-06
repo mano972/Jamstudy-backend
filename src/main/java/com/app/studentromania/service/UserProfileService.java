@@ -84,9 +84,9 @@ public class UserProfileService {
 	}
 
 	public ResponseDTO getUserProfile() {
-		String email = customRequestContext.getUserEmail();
+		String userId = customRequestContext.getUserId();
 
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(email);
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
 		}
@@ -124,7 +124,7 @@ public class UserProfileService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_WRONG_CREDENTIALS);
 		}
 
-		String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getEmail());
+		String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
 		if (StringUtils.isBlank(jwtToken)) {
 			LogUtils.logMessage(LOGGER, "Error when generating JWT token for email " + userProfile.getEmail());
 			return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
