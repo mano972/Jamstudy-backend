@@ -137,6 +137,10 @@ body.loading .modal {
     display: block;
 }
 
+.main-logo {
+	height: 43px;
+}
+
 .align {
 	display: inline;
 	vertical-align: middle;
