@@ -35,6 +35,9 @@ public class UserProfile extends ParentEntity {
 	private String password;
 
 	@Field
+	private Boolean acceptTermsAndConditions;
+
+	@Field
 	private List<UserProfileFaculty> favoriteFaculties = new ArrayList<>();
 
 	@Field
@@ -95,6 +98,14 @@ public class UserProfile extends ParentEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Boolean getAcceptTermsAndConditions() {
+		return acceptTermsAndConditions;
+	}
+
+	public void setAcceptTermsAndConditions(Boolean acceptTermsAndConditions) {
+		this.acceptTermsAndConditions = acceptTermsAndConditions;
 	}
 
 	public List<UserProfileFaculty> getFavoriteFaculties() {

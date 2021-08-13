@@ -1558,7 +1558,6 @@ function reportReview(el) {
 				$(el).addClass(solidIcon);
 			},
 			error: function(error) {
-				console.log(error);
 				document.getElementById('generic-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
 				document.getElementById('generic-modal-text').innerHTML = "Evaluarea nu a putut fi raportată";
 				<!-- if (error.responseJSON) { -->
@@ -1659,7 +1658,6 @@ function upvoteReview(el) {
 				}
 			},
 			error: function(error) {
-				console.log(error);
 				el.setAttribute("data-toggle", 'modal');
 				el.setAttribute("data-target", '#generic-modal');
 				document.getElementById('generic-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';

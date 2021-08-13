@@ -980,7 +980,6 @@ function postReview(){
 				});
 			},
 			error: function(error) {
-				console.log(error);
 				document.getElementById('add-review-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
 				document.getElementById('add-review-modal-text').innerHTML = "A apărut o eroare. Evaluarea nu a putut fi adăugată cu succes.";
 				$("#add-review-modal").on("hidden.bs.modal", function () {

@@ -44,14 +44,14 @@ public enum ErrorsEnum {
 	// UserProfile
 	USERPROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "Nu exista user cu acest email.", -60),
 	USERPROFILE_EXISTS(HttpStatus.NOT_ACCEPTABLE, "Un user cu acest email exista deja.", -61),
-	USERPROFILE_LOGIN_WRONG_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Combinatia email-parola este gresita.", -62),
+	USERPROFILE_LOGIN_WRONG_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Datele de autentificare sunt incorecte.", -62),
 	USERPROFILE_EMAIL_PASSWORD_MISSING(HttpStatus.BAD_REQUEST, "Email/parola nu au fost completate.", -63),
 	JWT_GENERATION_ERROR(HttpStatus.BAD_REQUEST, "Eroare la generarea JWT.", -64),
 	JWT_MISSING(HttpStatus.UNAUTHORIZED, "Token-ul JWT lipseste din request.", -65),
 	JWT_VERIFY_ERROR(HttpStatus.UNAUTHORIZED, "Token-ul JWT nu este corect.", -66),
 	JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "Token-ul JWT a expirat.", -67),
-	USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED,
-			"Este nevoie de autentificare pentru a folosit aceasta functionalitate.", -68),
+	USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "Este nevoie de autentificare pentru a folosi aceasta functionalitate.",
+			-68),
 
 	// Statistic
 	ANALYTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics document was not found.", -70),

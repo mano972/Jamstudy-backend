@@ -20,6 +20,10 @@ public class UserProfileDTO {
 	private Boolean addFavoriteFaculty;
 
 	private Boolean allowNotification;
+	
+	private Boolean acceptTermsAndConditions;
+
+	private Boolean subscribeToNewsletter;
 
 	public String getUserId() {
 		return userId;
@@ -67,6 +71,22 @@ public class UserProfileDTO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Boolean getAcceptTermsAndConditions() {
+		return acceptTermsAndConditions;
+	}
+
+	public void setAcceptTermsAndConditions(Boolean acceptTermsAndConditions) {
+		this.acceptTermsAndConditions = acceptTermsAndConditions;
+	}
+
+	public Boolean getSubscribeToNewsletter() {
+		return subscribeToNewsletter;
+	}
+
+	public void setSubscribeToNewsletter(Boolean subscribeToNewsletter) {
+		this.subscribeToNewsletter = subscribeToNewsletter;
 	}
 
 	public Boolean getAddFavoriteFaculty() {

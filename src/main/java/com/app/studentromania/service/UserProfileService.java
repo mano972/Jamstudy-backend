@@ -45,6 +45,9 @@ public class UserProfileService {
 	private CustomRequestContext customRequestContext;
 
 	@Autowired
+	private NewsletterService newsletterService;
+
+	@Autowired
 	private UserProfileDAO userProfileDAO;
 
 	@Autowired
@@ -155,6 +158,9 @@ public class UserProfileService {
 		String securePassword = SecurityUtils.generateSecurePassword(userProfileDTO.getPassword());
 		mapToUserProfile(userProfileDTO, userProfile);
 		userProfile.setPassword(securePassword);
+		if (userProfileDTO.getSubscribeToNewsletter()) {
+			newsletterService.addEmail(userProfile.getEmail());
+		}
 		userProfileDAO.createUserProfile(userProfile);
 		UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO();
 		userProfileResponseDTO.setUserId(userProfile.getUserId());

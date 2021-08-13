@@ -67,51 +67,63 @@
 			<div class="section-white">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-5 col-md-offset-1">
+						<div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1">
 							<div class="card">
 								<div class="content">
 									<div class="row">
 										<div class="col-md-12 col-md-offset-0">
-											<h3>Contactează-ne</h3>
-											<h5>Spune-ne ce părere ai despre platforma Unistart, raportează un bug sau, pur și simplu, lasă-ne un mesaj.
-											</h5>
-											<form class="contact-form">
-												<div class="row">
-													<div class="col-md-6">
-														<label>Nume</label>
-														<input id='feedback-name' class="form-control" placeholder="Nume" spellcheck="false">
-													</div>
-													<div class="col-md-6">
-														<label>Email</label>
-														<input id='feedback-email' class="form-control" placeholder="Email" spellcheck="false">
-													</div>
-												</div>
-												<label>Mesaj</label>
-												<textarea id='feedback-message' class="form-control" rows="4" placeholder="Lasă-ne un feedback..." spellcheck="false"></textarea>
-												<div class="row">
-													<div class="col-md-4">
-														<button id="send-feedback-btn" class="btn btn-info btn-block btn-fill" data-toggle="modal" data-target="#feedback-modal">Trimite</button>
-													</div>
-												</div>
+											<h3>Autentificare</h3>
+											<br>
+											<form class="register-form">
+												<!-- <label>Email</label> --> 
+												<input id="login-email" type="text" class="form-control" placeholder="Email" maxlength="100">
+												<small id="error-login-email" class="error-message"></small>
+												<br>
+												<!-- <label>Parolă</label> -->
+												<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100">
+												<small id="error-login" class="error-message"></small>
+												<br>
+												<button id="login-button" class="btn btn-info btn-block btn-fill">Intră în cont</button>
+												<br>
+												<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
 											</form>
+											<br>
+											<div class="forgot">
+												<!-- <div class="text-left"> -->
+													<a href="#" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
+												<!-- </div> -->
+												<!-- <div class="text-right"> -->
+													<a href="./register.html" class="btn btn-simple btn-info btn-reg" style="float: right;">Nu ai cont? Înregistrează-te</a>
+												<!-- </div> -->
+											</div>
 										</div>
 									</div>
 									<br>
-									<div class="row">
-										<div class="col-md-12 col-md-offset-0 text-right">
-											<a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook"><i class="fa fa-facebook"> </i></button>
-											</a>
-											&nbsp
-											<a href="http://instagram.com" target="_blank"><button class="btn btn-icon btn-fill btn-instagram"><i class="fa fa-instagram"></i></button>
-											</a>
-										</div>	
-									</div>
 								</div>
 							</div>
-						</div>'
-						<div class="col-md-4 col-md-offset-1 col-sm-10">
-							<div class="content">
-								<img id="bug_report" style="max-width: 100%" src="./assets/img/newsletter_small.png" alt="..."/>
+						</div>
+						<div class="col-lg-4 col-md-5 col-md-offset-0 col-sm-10">
+							<div class="card">
+								<div class="content">
+									<div class="row">
+										<div class="col-md-12 col-md-offset-0">
+											<h5><b>Beneficiile unui cont de utilizator</b></h5>
+											<br>
+											<p>Fa-ti cont pe Unistart pentru a putea avea access la toate sectiunile platformei.</p>
+											<br>
+											<p>• Evalueaza facultati.</p>
+											<br>
+											<p>• Salveaza facultatile favorite.</p>
+											<br>
+											<p>• Personalizeaza-ti contul.</p>
+											<br>
+											<p>• Opteaza pentru a primi notificari pentru facultatile favorite.</p>
+											<br>
+											<p>• Vei avea acces la viitoarele functionalitati dedicate exclusiv utilizatorilor inregistrati.</p>
+											
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						
@@ -223,61 +235,80 @@
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
 
 $().ready(function(){    
-	demo.initContactUsMap();
+
 });
 
-// Leave feedback
-document.getElementById("send-feedback-btn").onclick = function (e) {
+document.getElementById("login-email").oninput = function () {
+	document.getElementById('error-login-email').innerHTML = "";
+}
+
+document.getElementById("login-pass").oninput = function () {
+	document.getElementById('error-login').innerHTML = "";
+}
+
+document.getElementById("login-button").onclick = function (e) {
 	e.preventDefault();
-	var name = document.getElementById("feedback-name").value.trim();
-	var email = document.getElementById("feedback-email").value.trim();
-	var message = document.getElementById("feedback-message").value.trim();
-	if (!validateEmail(email)) {
-		console.log(document.getElementById('feedback-header-text').innerHTML);
-		document.getElementById('feedback-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
-		console.log(document.getElementById('feedback-header-text').innerHTML);
-		document.getElementById('feedback-modal-text').innerHTML = "Adresa de email nu este validă";
-	} else {
-	var body = {
-		name: name,
-		email: email,
-		message: message
-	};
+	
+	var userEmail = document.getElementById("login-email").value.trim();
+	var userPass = document.getElementById("login-pass").value.trim();
+	
+	var errorEmail = document.getElementById('error-login-email');
+	var errorLogin = document.getElementById('error-login');
+	
+	var isInvalid = false;
+	
+	if (!userEmail) {
+		errorEmail.innerHTML = "Câmp obligatoriu";
+		isInvalid = true;
+	} else if (!validateEmail(userEmail)) {
+		errorEmail.innerHTML = "Adresa de email nu este validă";
+		isInvalid = true;
+	}
+	if (!userPass) {
+		errorLogin.innerHTML = "Câmp obligatoriu";
+		isInvalid= true;
+	}
+	
+	if (isInvalid) {
+		return false;
+	}
+	
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/login");
 		
-	var backendUrl = new URL(backendUrlRoot + "/v1/feedback/add");
+	var body = {
+		email: userEmail,
+		password: userPass
+	};
 	
 	$.ajax({
 		url: backendUrl,
-		type: 'PUT',
+		type: 'POST',
 		dataType: 'json',
 		contentType: 'application/json',
 		crossDomain: true,
 		data: JSON.stringify(body),
-		success: function (data) {
-			document.getElementById('feedback-modal-text').innerHTML = "Mesajul a fost trimis";
+		success: function (response) {
+			var jwtToken = response.result.jwtToken;
+			localStorage.setItem("ut", jwtToken);
+			location.reload();
 		},
 		error: function(error) {
-			document.getElementById('feedback-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
-			if (error.responseJSON) {
-				if (error.responseJSON.control) {
-					var errorDescription = error.responseJSON.control.errorDescription;
-					document.getElementById('feedback-modal-text').innerHTML = errorDescription;
-				} else {
-					document.getElementById('feedback-modal-text').innerHTML = "Mesajul nu a putut fi trimis";
-				}
+			if (error.status == 401) {
+				errorLogin.innerHTML = "Datele de autentificare sunt incorecte.";
 			} else {
-				document.getElementById('feedback-modal-text').innerHTML = "Mesajul nu a putut fi trimis";
+				errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
 			}
+		
+			<!-- if (error.responseJSON) { -->
+				<!-- if (error.responseJSON.control) { -->
+					<!-- var errorDescription = error.responseJSON.control.errorDescription; -->
+					<!-- errorLogin.innerHTML = "Datele de autentificare sunt incorecte."; -->
+					<!-- errorLogin.innerHTML = errorDescription; -->
+				<!-- } -->
+			<!-- } -->
 		}
 	});
 	
-	}
-
-}
-
-function validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
 }
 	
 	

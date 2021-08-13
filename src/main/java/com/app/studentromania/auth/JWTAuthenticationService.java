@@ -21,7 +21,7 @@ public class JWTAuthenticationService {
 	public static String generateJWT(String userId) {
 		String jwtToken = null;
 		try {
-			final Integer hours = 72;
+			final Integer hours = 120;
 			final String algorithmSecret = "amFtc3R1ZHlzZWNyZXQ";
 			final String issuer = "unistart";
 
