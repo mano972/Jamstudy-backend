@@ -55,7 +55,7 @@
 				<a href="./contact.html" class="btn btn-simple">Contact</a>
 			</li>
             <li>
-                <a class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
+                <a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
             </li>
            </ul>
         </div><!-- /.navbar-collapse -->
@@ -276,36 +276,47 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-7">
-                <div class="links">
-                    <ul class="uppercase-links">
-                        <li>
-                            <a href="./">
-                                Acasă
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./search.html">
-                                Facultăți
-                            </a>
-                        </li>
+               	<div class="links">
+					<ul class="uppercase-links">
 						<li>
-                            <a href="./comparison.html">
-                                Compară
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./contact.html">
-                               Contact
-                            </a>
-                        </li>
+							<a href="./">
+								Acasă
+							</a>
+						</li>
+						<li>
+							<a href="./search.html">
+								Facultăți
+							</a>
+						</li>
+						<li>
+							<a href="./comparison.html">
+								Compară
+							</a>
+						</li>
+						<li>
+							<a href="./contact.html">
+							   Contact
+							</a>
+						</li>
+					</ul>
+					<ul>
+						<li>
+							<a href="./terms.html">
+							   Termeni și condiții
+							</a>
+						</li>
+						<li>
+							<a href="./policy.html">
+							   Politica de confidențialitate
+							</a>
+						</li>
+					</ul>
+					<hr>
 
-                    </ul>
-                    <hr>
-
-                    <div class="copyright">
-                        © 2020 Jamstudy, din dragoste pentru educaţie
-                    </div>
-                </div>
+					<div class="copyright">
+						© 2020 Jamstudy, din dragoste pentru educaţie
+					</div>
+				</div>
             </div>
 
             <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
@@ -387,11 +398,11 @@
 							<br>
 							<form class="register-form">
 								<!-- <label>Email</label> --> 
-								<input id="login-email" type="text" class="form-control" placeholder="Email" maxlength="100">
+								<input id="login-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorLoginEmail()">
 								<small id="error-login-email" class="error-message"></small>
 								<br>
 								<!-- <label>Parolă</label> -->
-								<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100">
+								<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100" oninput="clearErrorLoginPass()">
 								<small id="error-login" class="error-message"></small>
 								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
 								<!-- <h5>sau</h5> -->
@@ -416,13 +427,16 @@
 							<br>
 							<form class="register-form">
 								<!-- <label>Email</label> -->
-								<input id="register-email" type="text" class="form-control" placeholder="Email" maxlength="100">
+								<input id="register-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
 								<small id="error-register-email" class="error-message"></small>
 								<br>
 								<!-- <label>Parola</label> -->
-								<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="100">
+								<fieldset class="search-fieldset">
+									<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorRegisterPass()">
+									<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
+								</fieldset>
 								<!-- <label>Confirmă Parola</label> -->
-								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="100">
+								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorRegisterConfirmPass()">
 								<small id="error-register" class="error-message"></small>
 								
 								<div>
@@ -457,6 +471,7 @@ $(document).on({
 });
 
 $(document).ready(function() {
+	myAccountText();
 	loadTopFaculties();
 	homePageStatistic();
 });
@@ -528,8 +543,6 @@ function loadTopFaculties() {
 				<!-- var logoSrcTop = "C://logos_jamstudy/" + logoNameTop + ".png"; -->
 				var logoSrcTop = backendUrlRoot + "/v1/faculty/" + response.result.faculties[0].facultyId + "/logo";	
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
-				
-				var addReviewRedirectUrlTop = "./review.html?id=" + facultyIdTop;
 				
 				var savedFacultiesIds = getUField("usf");
 				var favoriteClassTop;
@@ -629,7 +642,7 @@ function loadTopFaculties() {
 							cardReviewStr = '<div class="card-review-brief">			<div class="content" >			<p class="text-muted">' + noReviewsText + '</p>												</div>											</div>';
 						}
 						
-						document.getElementById("content-top-faculty").innerHTML += ('			<div class="img-first-place-banner">												<img src="./assets/img/trophy2_big.png" class="img-first-place-trophy"></img>												<span class="label label-warning">Primul Loc</span>											</div>								<div class="row">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + urlProfileRedirect + facultyIdTop +'">		<div class="img-faculty-logo-block-base img-faculty-home-logo-top-block">										<img src="' + logoSrcTop + '" class="img-faculty-logo-base img-faculty-logo-home-top center-logo-home"></img>	 </div>												</a>												</div>												<div class="col-md-9 col-xs-12 align" >													<a href="' + urlProfileRedirect + facultyIdTop + '">														<h5 id="top-faculty"><strong>' + facultyNameTop + '</strong></h5>													</a>													<h6 id="top-university">' +  universityNameTop + '</h6>													<small id="top-city" class="text-muted">' + facultyCityTop + '</small>													<br>													<i class="fa fa-star align-orange"></i>													<strong class="align-orange">' + avgRatingTop +'</strong> <strong class="align"><a>' + countRevTextTop +'</a></strong>																									</div>											</div>																	<div class="row margin-top-faculty-top">			<div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-8 col-md-offset-4 col-lg-5 col-lg-offset-7">													<a href="' + addReviewRedirectUrlTop + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>												</div>						</div>																						' + cardReviewStr + '																<br>											<div class="row save-compare-home-top">												<div class="col-xs-4 save-top-faculty">													<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="' + favoriteClassTop + '" style="margin-right: 7px"></i><span>' + favoriteTextTop + '</span></button>											</div>												<div class="col-xs-4 col-xs-offset-4 col-md-4 col-md-offset-4 compare-top-faculty text-right">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button>								</div>											</div>								');
+						document.getElementById("content-top-faculty").innerHTML += ('			<div class="img-first-place-banner">												<img src="./assets/img/trophy2_big.png" class="img-first-place-trophy"></img>												<span class="label label-warning">Primul Loc</span>											</div>								<div class="row">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + urlProfileRedirect + facultyIdTop +'">		<div class="img-faculty-logo-block-base img-faculty-home-logo-top-block">										<img src="' + logoSrcTop + '" class="img-faculty-logo-base img-faculty-logo-home-top center-logo-home"></img>	 </div>												</a>												</div>												<div class="col-md-9 col-xs-12 align" >													<a href="' + urlProfileRedirect + facultyIdTop + '">														<h5 id="top-faculty"><strong>' + facultyNameTop + '</strong></h5>													</a>													<h6 id="top-university">' +  universityNameTop + '</h6>													<small id="top-city" class="text-muted">' + facultyCityTop + '</small>													<br>													<i class="fa fa-star align-orange"></i>													<strong class="align-orange">' + avgRatingTop +'</strong> <strong class="align"><a>' + countRevTextTop +'</a></strong>																									</div>											</div>																	<div class="row margin-top-faculty-top">			<div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-8 col-md-offset-4 col-lg-5 col-lg-offset-7">													<a class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyIdTop+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>												</div>						</div>																						' + cardReviewStr + '																<br>											<div class="row save-compare-home-top">												<div class="col-xs-4 save-top-faculty">													<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="' + favoriteClassTop + '" style="margin-right: 7px"></i><span>' + favoriteTextTop + '</span></button>											</div>												<div class="col-xs-4 col-xs-offset-4 col-md-4 col-md-offset-4 compare-top-faculty text-right">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button>								</div>											</div>								');
 				   },
 			   });
 				
@@ -679,8 +692,6 @@ function loadTopFaculties() {
 					favoriteText = "Salvează";
 				}
 				
-				var addReviewRedirectUrl = "./review.html?id=" + facultyId;
-				
 				var position = i + 1;
 				var labelClass = "label-primary";
 				if (position === 2) {
@@ -706,7 +717,7 @@ function loadTopFaculties() {
 					searchCompareString2 = '<div class="row save-compare-search-list"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyIdTop+'&quot;, false)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, false)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div>	';
 				}
 			
-				document.getElementById("content-runner-up-faculties").innerHTML += ('<div class="row" style="margin-bottom: 8px;">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + urlProfileRedirect + facultyId +'">	<div class="img-faculty-logo-block-base img-faculty-home-logo-block">													<img src="' + logoSrc + '"  class="img-faculty-logo-base img-faculty-logo-home center-logo-home" ></img>								</div>					</a>												</div>												<div class="col-md-9 col-xs-12 align" >					<div>								<a href="' + urlProfileRedirect + facultyId + '">														<h5><strong>' + facultyName + '</strong></h5>													</a>													<h6>' + universityName + '</h6>													<small class="text-muted">' + facultyCity + '</small>													<br>													<i class="fa fa-star align-orange" ></i>													<strong class="align-orange">' + avgRating +'</strong> <strong class="align"><a>' + countRevText +'</a></strong>  </div>	<div class="row margin-top-faculty-runnerups">	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-5">													<a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>		' + searchCompareString2 + '		</div>						</div>										</div>						'+ searchCompareString1 + '		</div>');
+				document.getElementById("content-runner-up-faculties").innerHTML += ('<div class="row" style="margin-bottom: 8px;">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + urlProfileRedirect + facultyId +'">	<div class="img-faculty-logo-block-base img-faculty-home-logo-block">													<img src="' + logoSrc + '"  class="img-faculty-logo-base img-faculty-logo-home center-logo-home" ></img>								</div>					</a>												</div>												<div class="col-md-9 col-xs-12 align" >					<div>								<a href="' + urlProfileRedirect + facultyId + '">														<h5><strong>' + facultyName + '</strong></h5>													</a>													<h6>' + universityName + '</h6>													<small class="text-muted">' + facultyCity + '</small>													<br>													<i class="fa fa-star align-orange" ></i>													<strong class="align-orange">' + avgRating +'</strong> <strong class="align"><a>' + countRevText +'</a></strong>  </div>	<div class="row margin-top-faculty-runnerups">	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-5">													<a class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>		' + searchCompareString2 + '		</div>						</div>										</div>						'+ searchCompareString1 + '		</div>');
 
 			}
 			
@@ -871,7 +882,7 @@ function seeFullReview(el, reviewArray) {
 			difficultyText = "";
 		}
 		var wouldRecommendAndDifficultyRowString;
-		if (wouldRecommend || difficulty) {
+		if (wouldRecommendText || difficulty) {
 			wouldRecommendAndDifficultyRowString = 
 															'<br>'
 			+'													<div class="row">'
@@ -989,12 +1000,10 @@ function seeFullReview(el, reviewArray) {
 +'														</div>'
 +'														<br>'
 +'													<div class="row">'
-+'														<div class="col-md-2 col-md-offset-9 col-sm-2 col-sm-offset-8 col-xs-3 col-xs-offset-6" style="text-align: end;">'
-+'															<i class="' + upvotedRevClass + '" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align">' + upvotes + '</span>'
-+'														</div>'
-+'														<div class="col-md-1 col-sm-2 col-xs-3" style="text-align: end;">'
++'														<div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10 text-right">'
++'															<i class="' + upvotedRevClass + '" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align" style="margin-right: 20px;">' + upvotes + '</span>'
 +'															<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report align" onclick="reportReview(this)" data-toggle="modal" data-target="#general-modal"></i>'
-+'														</div>														'
++'														</div>'	
 +'													</div>'
 +'												</div>'	
 <!-- +'											</div>' -->
