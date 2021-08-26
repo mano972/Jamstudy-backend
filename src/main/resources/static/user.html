@@ -374,8 +374,6 @@ function loadUserProfileInfoContent(userResponse) {
 												
 +'												<div id="user-years" class="col-xs-12 user-profile-form-input" style="display: none">'
 +'													<label>Anul</label> 		'
-<!-- +'													<div class="row">' -->
-<!-- +'														<div class="col-xs-12">																' -->
 +'															<div class="radio-toolbar">'
 +'															  <input type="radio" id="year1" name="years" value="Anul 1">'
 +'															  <label for="year1">Anul 1</label>'
@@ -389,14 +387,10 @@ function loadUserProfileInfoContent(userResponse) {
 +'															  <input type="radio" id="year4" name="years" value="Anul 4+">'
 +'															  <label for="year4">Anul 4+</label>'
 +'															</div>'
-<!-- +'														</div>' -->
-<!-- +'													</div>' -->
 +'												</div>'
 
 +'												<div id="user-work" class="col-xs-12 user-profile-form-input" style="display: none;">'
 +'													<label>Ai reușit să te angajezi, in domeniu, in timpul facultății sau la cel mult 6 luni dupa terminarea ei?</label>'
-<!-- +'													<div class="row">' -->
-<!-- +'														<div class="col-xs-12">															' -->
 +'															<div class="radio-toolbar">'
 +'														 	 <input type="radio" id="work-yes" name="work" value="1">'
 +'														 	 <label for="work-yes">Da</label>'
@@ -406,9 +400,7 @@ function loadUserProfileInfoContent(userResponse) {
 
 <!-- +'														 	 <input type="radio" id="work-not-applied" name="work" value="2">' -->
 <!-- +'														 	 <label for="work-not-applied">Nu se aplica</label>' -->
-<!-- +'															</div>' -->
-+'														</div>'
-<!-- +'													</div>' -->
++'															</div>'
 +'												</div>'
 
 
@@ -711,7 +703,7 @@ function loadSavedFacultiesContent(facultiesResponse) {
 			favoriteText = "Salvează";
 		}
 		
-		document.getElementById("saved-faculties").innerHTML += ('<div class="col-xs-12"><div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <h6 id="university-name-' + i + '">' + universityName + '</h6> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4"> <div class="row save-compare-user-profile"> <div class="col-xs-6 text-right"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div></div>');
+		document.getElementById("saved-faculties").innerHTML += ('<div class="col-xs-12"><div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <h6 id="university-name-' + i + '">' + universityName + '</h6> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4"> <div class="row save-compare-user-profile"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div></div>');
 		
 	}
 			

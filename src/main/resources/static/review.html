@@ -803,7 +803,7 @@ var reviewId;
 
 $(document).ready(function() {
 
-	checkLogin();
+	redirectIfNotLoggedIn();
 	myAccountText();
 
 	var queryParams = new URLSearchParams(window.location.search);
@@ -822,7 +822,7 @@ $(document).ready(function() {
 	<!-- loadFields(); -->
 });
 
-function checkLogin() {
+function redirectIfNotLoggedIn() {
 	var jwtToken = getUField("ut");
 	if (!jwtToken) {
 		var urlLoginRedirect = "./login.html";
