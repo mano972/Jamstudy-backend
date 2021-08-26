@@ -10,8 +10,8 @@ import com.couchbase.client.java.document.json.JsonArray;
 
 public class FacultyFilter {
 
-	private static final int DEFAULT_LIMIT = 20;
-	private static final int ADMIN_LIMIT = 1000;
+	private static final int DEFAULT_LIMIT = 10;
+	private static final int ADMIN_LIMIT = 999;
 	private static final String DEFAULT_SORT_FIELD = "facultyName";
 	private static final String DEFAULT_SORT_FIELD_JOIN = "f.facultyName";
 	private static final String DEFAULT_SORT_DIRECTION = "asc";
@@ -122,7 +122,7 @@ public class FacultyFilter {
 	}
 
 	public Integer getLimit() {
-		if (limit == null || limit == 0 || (limit > 30 && limit != ADMIN_LIMIT)) {
+		if (limit == null || limit == 0 || (limit > 20 && limit != ADMIN_LIMIT)) {
 			return DEFAULT_LIMIT;
 		}
 		return limit;

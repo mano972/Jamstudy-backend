@@ -31,9 +31,13 @@ public enum ErrorsEnum {
 	REVIEW_ID_MISSING(HttpStatus.BAD_REQUEST, "Lipsete id-ul evaluarii", -32),
 	REVIEW_GENERAL_RATING_ERROR(HttpStatus.BAD_REQUEST, "Nota acordata nu este corecta.", -33),
 	REVIEW_DIFFICULTY_ERROR(HttpStatus.BAD_REQUEST, "Valoarea dificultatii nu este corecta.", -34),
-	REVIEW_ALREADY_UPVOTED(HttpStatus.NOT_ACCEPTABLE, "Aceasta evaluare a fost deja votata.", -35),
-	REVIEW_MAX_NUMBER(HttpStatus.NOT_ACCEPTABLE, "Ai atins deja numarul maxim de evaluari adaugate.", -36),
-	REVIEW_SAME_FACULTY(HttpStatus.NOT_ACCEPTABLE, "Ai adaugat deja o evaluare pentru aceasta facultate.", -37),
+	REVIEW_ALREADY_UPVOTED(HttpStatus.NOT_ACCEPTABLE, "Această evaluare a fost deja votată.", -35),
+	REVIEW_MAX_NUMBER(HttpStatus.NOT_ACCEPTABLE, "Ai atins deja numărul maxim de evaluări adăugate.", -36),
+	REVIEW_SAME_FACULTY(HttpStatus.NOT_ACCEPTABLE,
+			"Ai adăugat deja o evaluare pentru această facultate. Poti adăuga din nou după 150 de zile.", -37),
+	REVIEW_UPDATE_DIFFERENT_USER(HttpStatus.BAD_REQUEST,
+			"User-ul care a editat evaluarea este diferit de userul care a creat-o.", -38),
+	REVIEW_NOT_EDITABLE(HttpStatus.NOT_ACCEPTABLE, "Evaluarea nu mai este editabilă.", -39),
 
 	// Question
 	QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "Intrebarea nu a fost gasita.", -40),
@@ -52,23 +56,31 @@ public enum ErrorsEnum {
 	JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "Token-ul JWT a expirat.", -67),
 	USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "Este nevoie de autentificare pentru a folosi aceasta functionalitate.",
 			-68),
+	USERPROFILE_MAX_FAVORITE_FACULTIES(HttpStatus.NOT_ACCEPTABLE,
+			"Ai adăugat deja numărul maxim de facultăți favorite.", -69),
+	REGISTER_EMAIL_NOT_VALID(HttpStatus.NOT_ACCEPTABLE, "Adresa de email nu este validă.", -70),
+	REGISTER_TERMS_AND_CONDITIONS(HttpStatus.NOT_ACCEPTABLE,
+			"Trebuie să accepți Termenii și condițiile de utilizare și Politica de prelucrare a datelor.", -71),
+	REGISTER_PASSWORD_ERROR(HttpStatus.NOT_ACCEPTABLE,
+			"Parola trebuie să fie de minim 7 caractere și să conțină litere și cifre.", -72),
+	USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED(HttpStatus.UNAUTHORIZED, "Adresa de email nu a fost inca confirmata.", -73),
 
 	// Statistic
-	ANALYTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics document was not found.", -70),
-	ANALYTICS_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics document already exists.", -71),
-	ANALYTICS_EXCEL_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics excel document already exists.", -72),
-	ANALYTICS_EXCEL_DOCUMENT_ERROR(HttpStatus.BAD_REQUEST, "Analytics excel error.", -73),
-	ANALYTICS_EXCEL_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics excel document was not found.", -74),
+	ANALYTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics document was not found.", -80),
+	ANALYTICS_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics document already exists.", -81),
+	ANALYTICS_EXCEL_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics excel document already exists.", -82),
+	ANALYTICS_EXCEL_DOCUMENT_ERROR(HttpStatus.BAD_REQUEST, "Analytics excel error.", -83),
+	ANALYTICS_EXCEL_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics excel document was not found.", -84),
 
 	// Newsletter
-	NEWSLETTER_NOT_FOUND(HttpStatus.NOT_FOUND, "Newsletter was not found.", -80),
+	NEWSLETTER_NOT_FOUND(HttpStatus.NOT_FOUND, "Newsletter was not found.", -90),
 	NEWSLETTER_EMAIL_ALREADY_EXISTS(HttpStatus.BAD_REQUEST,
-			"Deja ești abonat la newsletter cu această adresă de e-mail. Îți mulțumim!", -81),
-	NEWSLETTER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Newsletter document already exists.", -82),
+			"Deja ești abonat la newsletter cu această adresă de e-mail. Îți mulțumim!", -91),
+	NEWSLETTER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Newsletter document already exists.", -92),
 
 	// Feedback
-	FEEDBACK_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Feedback document was not found.", -90),
-	FEEDBACK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Feedback document already exists.", -91);
+	FEEDBACK_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Feedback document was not found.", -100),
+	FEEDBACK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Feedback document already exists.", -101);
 
 	private String errorDescription;
 	private int errorCode;

@@ -73,37 +73,36 @@ public class UserProfileController {
 		return userProfileService.login(userProfileDTO).createRestResponse();
 	}
 
-	@PutMapping("/{userId}")
+	@PutMapping
 	@RestCall
-	public ResponseEntity<String> updateUserProfile(@PathVariable String userId,
-			@RequestBody UserProfileDTO userProfileDTO) {
-		userProfileDTO.setUserId(userId);
+	@JWTAuth
+	@VerifyLoggedIn
+	public ResponseEntity<String> updateUserProfile(@RequestBody UserProfileDTO userProfileDTO) {
 		return userProfileService.updateUserProfile(userProfileDTO).createRestResponse();
 	}
 
-	@PutMapping("/{userId}/recentfaculty/{facultyId}")
+	@PutMapping("/recent/{facultyId}")
 	@RestCall
-	public ResponseEntity<String> addRecentFaculty(@PathVariable String userId, @PathVariable String facultyId) {
-		return userProfileService.addRecentFaculty(userId, facultyId).createRestResponse();
+	@JWTAuth
+	public ResponseEntity<String> addRecentFaculty(@PathVariable String facultyId) {
+		return userProfileService.addRecentFaculty(facultyId).createRestResponse();
 	}
 
-	@PutMapping("/{userId}/favoritefaculty/{facultyId}")
+	@PutMapping("/favorite/{facultyId}")
 	@RestCall
 	@JWTAuth
 	@VerifyLoggedIn
-	public ResponseEntity<String> addFavoriteFaculty(@PathVariable String userId, @PathVariable String facultyId,
+	public ResponseEntity<String> addFavoriteFaculty(@PathVariable String facultyId,
 			@RequestBody UserProfileDTO userProfileDTO) {
-		userProfileDTO.setUserId(userId);
 		return userProfileService.addFavoriteFaculty(facultyId, userProfileDTO).createRestResponse();
 	}
 
-	@PutMapping("/{userId}/notification/{facultyId}")
+	@PutMapping("/notification/{facultyId}")
 	@RestCall
 	@JWTAuth
 	@VerifyLoggedIn
-	public ResponseEntity<String> allowNotificationForFaculty(@PathVariable String userId,
-			@PathVariable String facultyId, @RequestBody UserProfileDTO userProfileDTO) {
-		userProfileDTO.setUserId(userId);
+	public ResponseEntity<String> allowNotificationForFaculty(@PathVariable String facultyId,
+			@RequestBody UserProfileDTO userProfileDTO) {
 		return userProfileService.allowNotificationForFaculty(facultyId, userProfileDTO).createRestResponse();
 	}
 

@@ -21,6 +21,9 @@ public class Review extends ParentEntity {
 	private String facultyId;
 
 	@Field
+	private String facultyName;
+
+	@Field
 	private String userId;
 
 	@Field
@@ -103,6 +106,14 @@ public class Review extends ParentEntity {
 
 	public void setFacultyId(String facultyId) {
 		this.facultyId = facultyId;
+	}
+
+	public String getFacultyName() {
+		return facultyName;
+	}
+
+	public void setFacultyName(String facultyName) {
+		this.facultyName = facultyName;
 	}
 
 	public String getUserId() {

@@ -44,18 +44,18 @@
             <li>
                 <a href="./" class="btn btn-simple">Acasă</a>
             </li>
-              <li>
-                  <a href="./search.html" class="btn btn-simple">Facultăți</a>
-              </li>
-			  <li>
-				  <a href="./comparison.html" class="btn btn-simple">Compară</a>
-			  </li>
-              <li>
-                  <a href="./contact.html" class="btn btn-simple">Contact</a>
-              </li>
-              <!-- <li> -->
-                  <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-              <!-- </li> -->
+            <li>
+				<a href="./search.html" class="btn btn-simple">Facultăți</a>
+            </li>
+			<li>
+				<a href="./comparison.html" class="btn btn-simple">Compară</a>
+			</li>
+            <li>
+                <a href="./contact.html" class="btn btn-simple">Contact</a>
+            </li>
+            <li>
+				<a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
+			</li>
            </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
@@ -67,104 +67,117 @@
 			<div class="section-white">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-5 col-md-offset-1">
+						<div class="user-profile-card-fixed col-md-8 col-md-offset-2">
 							<div class="card">
-								<div class="content">
+								<div id="content-user-profile-top" class="content">
 									<div class="row">
 										<div class="col-md-12 col-md-offset-0">
-											<h3>Contactează-ne</h3>
-											<h5>Spune-ne ce părere ai despre platforma Unistart, raportează un bug sau, pur și simplu, lasă-ne un mesaj.
-											</h5>
-											<form class="contact-form">
-												<div class="row">
-													<div class="col-md-6">
-														<label>Nume</label>
-														<input id='feedback-name' class="form-control" placeholder="Nume" spellcheck="false">
-													</div>
-													<div class="col-md-6">
-														<label>Email</label>
-														<input id='feedback-email' class="form-control" placeholder="Email" spellcheck="false">
-													</div>
+											<div id="user-profile-top" class="user-profile-text text-center">
+												<!-- populated dynamically -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="content-user-profile" class="content">
+									<div class="row">
+										<div class="col-md-offset-1 col-md-10 col-xs-12">
+											<div id="user-profile-info">
+												<div class="text-center">
+													<div id="loading" class='uil-reload-css reload-background' style=''><div></div></div>
 												</div>
-												<label>Mesaj</label>
-												<textarea id='feedback-message' class="form-control" rows="4" placeholder="Lasă-ne un feedback..." spellcheck="false"></textarea>
-												<div class="row">
-													<div class="col-md-4">
-														<button id="send-feedback-btn" class="btn btn-info btn-block btn-fill" data-toggle="modal" data-target="#feedback-modal">Trimite</button>
-													</div>
+												<!-- populated dynamically -->
+											</div>
+											<!-- <div class="row"> -->
+												<!-- <div id="save-profile-area" class="col-md-3 col-md-offset-9" style="margin-top: 40px; display: none"> -->
+													<!-- <button id="save-profile-button" class="btn btn-block btn-success btn-fill" onclick="saveUserProfileInfo()">Salvează</button> -->
+												<!-- </div> -->
+											<!-- </div>											 -->
+											<div id="profile-notifications">
+												<div class="col-md-6 col-xs-12 user-profile-form-input" style="margin-top: 30px;">
+													<label class="checkbox checkbox-blue checkbox-big" for="newsletter-check"><input type="checkbox" name="newsletter" value="" id="newsletter-check" data-toggle="checkbox">Abonare la newsletter</label>
 												</div>
-											</form>
+											</div>
+											<div class="row">
+												<div id="save-profile-area" class="col-md-3 col-md-offset-9" style="margin-top: 10px; display: none">
+													<button id="save-profile-button" class="btn btn-block btn-success btn-fill" onclick="saveUserProfileInfo()">Salvează</button>
+												</div>
+											</div>
+
+
+											<div id="saved-faculties">
+													<!-- populated dynamically -->
+											</div>
+											
+											<div id="user-reviews">
+												<!-- populated dynamically -->									
+											</div>
+											
+											<div class="row">
+												<div class="col-md-4 col-md-offset-4" style="margin-top: 30px;">
+													<button id="logout-profile-button" class="btn btn-block btn-danger btn-fill" onclick="logout()">Iesi din cont</button>
+												</div>
+											</div>
+
+											
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>'
-						<div class="col-md-4 col-md-offset-1 col-sm-10">
-							<div class="content">
-								<img id="bug_report" style="max-width: 100%" src="./assets/img/newsletter_small.png" alt="..."/>
-							</div>
 						</div>
-						
-						
 					</div>  
 				</div>
 			</div>
 		</div>
+		<div class="floating-button">
+			<a href="./contact.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
+		</div>
 	</div>  
-	
-			<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-				<div class="modal-content">
-				  <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<div id="feedback-header-text">
-						<i class="far fa-envelope fa-2x"></i>
-					</div>
-				  </div>
-				  <div id="feedback-modal-text" class="modal-body modal-info text-center">
-					.
-				  </div>
-				  <div class="modal-footer">
-					   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-				  </div>
-				</div>
-			  </div>
-			</div>
  
 <footer class="footer">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-7">
-                <div class="links">
-                    <ul class="uppercase-links">
-                        <li>
-                            <a href="./">
-                                Acasă
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./search.html">
-                                Facultăți
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./comparison.html">
-                                Compară
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./contact.html">
-                               Contact
-                            </a>
-                        </li>
+               	<div class="links">
+					<ul class="uppercase-links">
+						<li>
+							<a href="./">
+								Acasă
+							</a>
+						</li>
+						<li>
+							<a href="./search.html">
+								Facultăți
+							</a>
+						</li>
+						<li>
+							<a href="./comparison.html">
+								Compară
+							</a>
+						</li>
+						<li>
+							<a href="./contact.html">
+							   Contact
+							</a>
+						</li>
+					</ul>
+					<ul>
+						<li>
+							<a href="./terms.html">
+							   Termeni și condiții
+							</a>
+						</li>
+						<li>
+							<a href="./policy.html">
+							   Politica de confidențialitate
+							</a>
+						</li>
+					</ul>
+					<hr>
 
-                    </ul>
-                    <hr>
-
-                    <div class="copyright">
-                        © 2020 Jamstudy, din dragoste pentru educaţie
-                    </div>
-                </div>
+					<div class="copyright">
+						© 2020 Jamstudy, din dragoste pentru educaţie
+					</div>
+				</div>
             </div>
 
             <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
@@ -191,6 +204,26 @@
 
     </div>
 </footer>
+
+			<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<div id="modal-header-text">
+						<i class="far fa-envelope fa-2x"></i>
+					</div>
+				  </div>
+				  <div id="modal-text" class="modal-body modal-info text-center">
+					&nbsp;
+				  </div>
+				  <div id="general-modal-footer" class="modal-footer">
+					   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
+
 </body>
 
 <script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
@@ -203,7 +236,7 @@
 <script src="./assets/js/ct-paper-radio.js"></script>
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="./assets/js/unistart.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
 <script src="./assets/js/demo.js"></script>
@@ -212,29 +245,359 @@
 
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
 
-$().ready(function(){    
-	demo.initContactUsMap();
+$body = $("body");
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+    ajaxStop: function() { $body.removeClass("loading");}    
 });
 
-// Leave feedback
-document.getElementById("send-feedback-btn").onclick = function (e) {
-	e.preventDefault();
-	var name = document.getElementById("feedback-name").value.trim();
-	var email = document.getElementById("feedback-email").value.trim();
-	var message = document.getElementById("feedback-message").value.trim();
-	if (!validateEmail(email)) {
-		console.log(document.getElementById('feedback-header-text').innerHTML);
-		document.getElementById('feedback-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
-		console.log(document.getElementById('feedback-header-text').innerHTML);
-		document.getElementById('feedback-modal-text').innerHTML = "Adresa de email nu este validă";
-	} else {
-	var body = {
-		name: name,
-		email: email,
-		message: message
-	};
+$().ready(function(){    
+	redirectIfNotLoggedIn();
+	myAccountText();
+	
+	getUserProfileInfo();
+	checkProfileComplete();
+	getSavedFaculties();
+	getUserReviews();
+
+	
+});
+
+window.addEventListener('beforeunload', function(e) {
+  if(document.getElementById('save-profile-area').style.display == "inline") {
+    //following two lines will cause the browser to ask the user if they
+    //want to leave. The text of this dialog is controlled by the browser.
+    e.preventDefault(); //per the standard
+    e.returnValue = ''; //required for Chrome
+  }
+  //else: user is allowed to leave without a warning dialog
+});
+
+function redirectIfNotLoggedIn() {
+	var jwtToken = getUField("ut");
+	if (!jwtToken) {
+		var urlLoginRedirect = "./login.html";
+		window.location.replace(urlLoginRedirect);
+	}
+}
+
+function getUserProfileInfo() {
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile");
+	
+	$.ajax({
+	  url: backendUrl,
+	  type: "GET",
+	  success: function(response) {
+		if (response.control.errorCode === 0) {
 		
-	var backendUrl = new URL(backendUrlRoot + "/v1/feedback/add");
+			var userResponse = response.result;
+			loadUserProfileInfoContent(userResponse);
+
+		} else {
+			console.log(response.control.errorDescription);
+		}
+
+	  },
+	  error: function(error) {
+		checkLoggedInUser(error.status)
+	  },
+	  complete: function (data) {
+		<!-- document.getElementById("loading").style.display = "none"; -->
+	  }
+	});
+	
+}
+
+function loadUserProfileInfoContent(userResponse) {
+
+	var firstName = userResponse.firstName ? userReponse.firstName : "";
+	var lastName = userResponse.lastName ? userReponse.lastName : "";
+	var email = userResponse.email ? userReponse.email : "";
+	var location = userResponse.location ? userReponse.location : "";
+	var birthDate = userResponse.birthDate ? userReponse.birthDate : "";
+	var userWorking = userResponse.isUserWorking;
+	var userStatus = userResponse.userStatus;
+	var userYear = userResponse.userYear;
+	var subscribeToNewsletter = userResponse.subscribeToNewsletter;
+	
+	var userProfileHeaderString = 
+												'<div class="col-xs-12 user-profile-header">'
++'													<h4 class="text-center"><strong>Profil si informatii</strong></h4>'
++'													<hr>'
++'												</div>';
+	document.getElementById("user-profile-info").innerHTML = userProfileHeaderString;
+	
+	var userProfileString = (
+'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
++'													<label>Nume</label> '
++'													<input id="profile-name" type="text" class="form-control" value="' + lastName + '" placeholder="Nume" maxlength="100">'
++'												</div>'
++'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
++'													<label>Prenume</label> '
++'													<input id="profile-first-name" type="text" class="form-control" value="' + firstName + '" placeholder="Prenume" maxlength="100">'
++'												</div>'
++'												<div class="col-md-12 col-xs-12 user-profile-form-input">'
++'													<label>Email</label> '
++'													<input id="profile-email" type="text" class="form-control" value="' + email + '" placeholder="Email" readonly>'
++'												</div>'
++'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
++'													<label>Localitate</label> '
++'													<input id="profile-city" type="text" class="form-control" value="' + location + '" placeholder="Localitate" maxlength="50">'
++'												</div>'
++'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
++'													<label>Data nasterii</label> '
++'													<input id="profile-birth-date" type="date" class="form-control datepicker" value="' + birthDate + '" placeholder="" maxlength="50">'
++'												</div>'
+												
++'												<div id="user-status" class="col-md-12 user-profile-form-input">		'
++'													<label>Status</label> 												'
++'													<div class="radio-toolbar" onchange="showYears(); showUserWork()">'
++'													 <input type="radio" id="status-pupil" name="status" value="ELEV">'
++'													  <label for="status-pupil">Elev</label>'
+													  
++'													  <input type="radio" id="status-student" name="status" value="STUDENT">'
++'													  <label for="status-student">Student</label>'
+
++'													  <input type="radio" id="status-master" name="status" value="MASTERAND">'
++'													  <label for="status-master">Masterand</label>'
+
++'													  <input type="radio" id="status-alumni" name="status" value="ABSOLVENT">'
++'													  <label for="status-alumni">Absolvent</label>'
+													  
++'													  <input type="radio" id="status-drop" name="status" value="DROP-OUT">'
++'													  <label for="status-drop">M-am retras</label>'
+													  
++'													  <input type="radio" id="status-other" name="status" value="ALTUL">'
++'													  <label for="status-other">Altul</label>'
++'													</div>'
++'												</div>'
+												
++'												<div id="user-years" class="col-md-12 user-profile-form-input" style="display: none">'
++'													<label>Anul</label> 		'
++'													<div class="row">'
++'														<div class="col-md-12">																'
++'															<div class="radio-toolbar">'
++'															  <input type="radio" id="year1" name="years" value="Anul 1">'
++'															  <label for="year1">Anul 1</label>'
+
++'															  <input type="radio" id="year2" name="years" value="Anul 2">'
++'															  <label for="year2">Anul 2</label>'
+
++'															  <input type="radio" id="year3" name="years" value="Anul 3">'
++'															  <label for="year3">Anul 3</label>'
+															  
++'															  <input type="radio" id="year4" name="years" value="Anul 4+">'
++'															  <label for="year4">Anul 4+</label>'
++'															</div>'
++'														</div>'
++'													</div>'
++'												</div>'
+
++'												<div id="user-work" class="col-md-12 user-profile-form-input" style="display: none;">'
++'													<label>Ai reușit să te angajezi, in domeniu, in timpul facultății sau la cel mult 6 luni dupa terminarea ei?</label>'
++'													<div class="row">'
++'														<div class="col-md-12">															'
++'															<div class="radio-toolbar">'
++'														 	 <input type="radio" id="work-yes" name="work" value="0">'
++'														 	 <label for="work-yes">Da</label>'
+
++'															  <input type="radio" id="work-no" name="work" value="1">'
++'															  <label for="work-no">Nu</label>'
+
++'														 	 <input type="radio" id="work-not-applied" name="work" value="2">'
++'														 	 <label for="work-not-applied">Nu se aplica</label>'
++'															</div>'
++'														</div>'
++'													</div>'
++'												</div>'
+
+
+	);
+	
+	document.getElementById("user-profile-info").innerHTML += userProfileString;
+	
+	
+	switch(userStatus) {
+	case "ELEV":
+		document.getElementById('status-pupil').checked = true;
+		break;
+	case "STUDENT":
+		document.getElementById('status-student').checked = true;
+		break;
+	case "MASTERAND":
+		document.getElementById('status-master').checked = true;
+		break;
+	case "ABSOLVENT":
+		document.getElementById('status-alumni').checked = true;
+		break;
+	case "DROP-OUT":
+		document.getElementById('status-drop').checked = true;
+		break;
+	case "ALTUL":
+		document.getElementById('status-other').checked = true;
+		break;
+	}
+	
+	switch(userYear) {
+	case "Anul 1":
+		document.getElementById('year1').checked = true;
+		break;
+	case "Anul 2":
+		document.getElementById('year2').checked = true;
+		break;
+	case "Anul 3":
+		document.getElementById('year3').checked = true;
+		break;
+	case "Anul 4+":
+		document.getElementById('year4').checked = true;
+		break;
+	}
+	
+	showYears();
+	
+	switch(userWorking) {
+	case true:
+		document.getElementById('work-yes').checked = true;
+		break;
+	case false:
+		document.getElementById('work-no').checked = true;
+		break;
+	default:
+		document.getElementById('work-not-applied').checked = true;
+		break;
+	}
+	
+	showUserWork();
+	
+	if (subscribeToNewsletter) {
+		$("#newsletter-check").prop('checked', true);
+		$("label[for='newsletter-check']").addClass("checked");
+	} else {
+		$("#newsletter-check").prop('checked', false);
+		$("label[for='newsletter-check']").removeClass("checked");
+	}
+	
+	
+	
+	document.getElementById("profile-name").oninput = function () {
+		document.getElementById('save-profile-area').style.display = "inline";
+	}
+	document.getElementById("profile-first-name").oninput = function () {
+		document.getElementById('save-profile-area').style.display = "inline";
+	}
+	document.getElementById("profile-email").oninput = function () {
+		document.getElementById('save-profile-area').style.display = "inline";
+	}
+	document.getElementById("profile-city").oninput = function () {
+		document.getElementById('save-profile-area').style.display = "inline";
+	}
+	document.getElementById("profile-birth-date").oninput = function () {
+		document.getElementById('save-profile-area').style.display = "inline";
+	}
+	document.getElementById("user-status").oninput = function () {
+		document.getElementById('save-profile-area').style.display = "inline";
+	}
+	document.getElementById("user-years").oninput = function () {
+		document.getElementById('save-profile-area').style.display = "inline";
+	}
+	document.getElementById("user-work").oninput = function () {
+		document.getElementById('save-profile-area').style.display = "inline";
+	}
+	$("#newsletter-check").change(function() {
+		document.getElementById('save-profile-area').style.display = "inline";
+	});
+
+}
+
+function checkProfileComplete() {
+	var firstName = document.getElementById("profile-first-name").value;
+	var lastName = document.getElementById("profile-name").value;
+	var location = document.getElementById("profile-city").value;
+	var birthDate = document.getElementById("profile-birth-date").value;
+	var userStatusRadio = document.getElementsByName('status');
+	var userStatus;
+	for (var i = 0, length = userStatusRadio.length; i < length; i++) {
+	  if (userStatusRadio[i].checked) {
+		userStatus = userStatusRadio[i].value;
+		break;
+	  }
+	}
+	
+	var firstNameText = firstName ? (" " + firstName) : " ";
+	var userProfileTopString
+	if (!firstName || !lastName || !location || !birthDate || !userStatus) {
+	userProfileTopString = 
+		'											<h3>'
+		+'												Hei' + firstNameText + ', profilul tau este incomplet!'
+		+'											</h3>'
+		+'											<h5>'
+		+'												Ca sa iti putem oferi o experienta personalizata, te rugam sa completezi profilul.'
+		+'											</h5>';
+	} else {
+		userProfileTopString = 
+		'											<h3>'
+		+'												Hei' + firstNameText + ', profilul tau este complet!'
+		+'											</h3>'
+		+'											<h5>'
+		+'												Ne bucuram sa iti putem oferi o experienta personalizata.'
+		+'											</h5>';
+	}
+	
+	document.getElementById("user-profile-top").innerHTML = userProfileTopString;
+}
+
+function saveUserProfileInfo() {
+
+	var firstName = document.getElementById("profile-first-name").value ? document.getElementById("profile-first-name").value : null;
+	var lastName = document.getElementById("profile-name").value ? document.getElementById("profile-name").value : null;
+	var location = document.getElementById("profile-city").value ? document.getElementById("profile-city").value : null;
+	var birthDate = document.getElementById("profile-birth-date").value ? document.getElementById("profile-birth-date").value : null;
+	
+	var userStatusRadio = document.getElementsByName('status');
+	var userStatus;
+	for (var i = 0, length = userStatusRadio.length; i < length; i++) {
+	  if (userStatusRadio[i].checked) {
+		userStatus = userStatusRadio[i].value;
+		break;
+	  }
+	}
+	var yearsRadio = document.getElementsByName('years');
+	var userYear;
+	for (var i = 0, length = yearsRadio.length; i < length; i++) {
+	  if (yearsRadio[i].checked) {
+		userYear = yearsRadio[i].value;
+		break;
+	  }
+	}
+	
+	var userWorkingRadio = document.getElementsByName('work');
+	var userWorking;
+	for (var i = 0, length = userWorkingRadio.length; i < length; i++) {
+	  if (userWorkingRadio[i].checked && userWorkingRadio[i].value != 2) {
+		userWorking = userWorkingRadio[i].value;
+		break;
+	  }
+	}
+	
+	var subscribeToNewsletter = false;
+	var newsletterCheckBoxElementId = $("label[for=newsletter-check]").attr("for");
+	var newsletterCheckBoxElement = $("input[id='" + newsletterCheckBoxElementId + "']");
+	if (newsletterCheckBoxElement.prop("checked") === true) {
+		subscribeToNewsletter = true;;
+	}
+	
+	var body = {
+		firstName: firstName,
+		lastName: lastName,
+		location: location,
+		birthDate: birthDate,
+		userStatus: userStatus,
+		userYear: userYear,
+		isUserWorking: userWorking,
+		subscribeToNewsletter: subscribeToNewsletter
+	}
+	
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile");
 	
 	$.ajax({
 		url: backendUrl,
@@ -244,31 +607,424 @@ document.getElementById("send-feedback-btn").onclick = function (e) {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (data) {
-			document.getElementById('feedback-modal-text').innerHTML = "Mesajul a fost trimis";
+			location.reload();
 		},
 		error: function(error) {
-			document.getElementById('feedback-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
-			if (error.responseJSON) {
-				if (error.responseJSON.control) {
-					var errorDescription = error.responseJSON.control.errorDescription;
-					document.getElementById('feedback-modal-text').innerHTML = errorDescription;
-				} else {
-					document.getElementById('feedback-modal-text').innerHTML = "Mesajul nu a putut fi trimis";
-				}
-			} else {
-				document.getElementById('feedback-modal-text').innerHTML = "Mesajul nu a putut fi trimis";
-			}
+			checkLoggedInUser(error.status);
+			el.setAttribute("data-toggle", 'modal');
+			el.setAttribute("data-target", '#general-modal');
+			document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+			document.getElementById('modal-text').innerHTML = "Eroare. Profilul nu a putut fi salvat";
 		}
 	});
 	
+}
+
+function getSavedFaculties() {
+
+	// or use the user profile call to get the faculty ids
+	var savedFacultiesIds = getUField("usf");
+	
+	if (!savedFacultiesIds || savedFacultiesIds.length == 0) {
+		document.getElementById("saved-faculties").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Facultati salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai salvat nicio facultate</h5> </div>';
+		return;
 	}
+	
+	var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
+	backendUrl.searchParams.append("facultyIds", savedFacultiesIds.join());
+	
+	$.ajax({
+	  url: backendUrl,
+	  type: "GET",
+	  success: function(response) {
+		if (response.control.errorCode === 0) {
+		
+			var facultiesResponse = response.result.faculties;
+			loadSavedFacultiesContent(facultiesResponse);
+
+		} else {
+			console.log(response.control.errorDescription);
+		}
+
+	  },
+	  error: function(error) {
+		checkLoggedInUser(error.status)
+	  },
+	  complete: function (data) {
+		<!-- document.getElementById("loading").style.display = "none"; -->
+	  }
+	});
+}
+
+function loadSavedFacultiesContent(facultiesResponse) {
+	if (facultiesResponse.length == 0) {
+		document.getElementById("saved-faculties").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Facultati salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai salvat nicio facultate</h5> </div>';
+		return;
+	}
+	
+	var urlProfileRedirect = "./profile.html?id=";
+	
+	var savedFacultiesHeaderString = 
+	'										<div class="col-xs-12 user-profile-header">'
+	+'											<h4 class="text-center"><strong>Facultati salvate</strong></h4>'
+	+'											<hr>'
+	+'										</div>';
+	document.getElementById("saved-faculties").innerHTML = savedFacultiesHeaderString;
+	
+	var i;
+	for (i in facultiesResponse) {
+		var avgRating = facultiesResponse[i].avgRating;
+		if (!avgRating) {
+			avgRating = "N/A";
+		} else {
+			avgRating = avgRating.toFixed(1);
+		}
+		
+		var countRev = facultiesResponse[i].countRev;
+		var countRevText;
+		if (!countRev) {
+			countRevText = "";
+		} else if (countRev === 1) {
+			countRevText = "din 1 evaluare";
+		} else {
+			countRevText = "din " + countRev + " evaluări";
+		}
+		
+		var facultyId = facultiesResponse[i].facultyId;
+		var facultyName = facultiesResponse[i].facultyName;
+		var universityName = facultiesResponse[i].universityName;
+		var facultyCity = facultiesResponse[i].facultyCity;
+		
+		var universityNameForLogo = universityName.replaceAll("\"", "_");
+		var logoName = facultyName + universityNameForLogo;
+		var logoSrc = backendUrlRoot + "/v1/faculty/" + facultiesResponse[i].facultyId + "/logo";	
+		
+		var savedFacultiesIds = getUField("usf");
+		var favoriteClass;
+		var favoriteText;
+		if (savedFacultiesIds && savedFacultiesIds.includes(facultyId)) {
+			favoriteClass = "fas fa-heart fa-lg";
+			favoriteText = "Salvată";
+		} else {
+			favoriteClass = "far fa-heart fa-lg";
+			favoriteText = "Salvează";
+		}
+		
+		document.getElementById("saved-faculties").innerHTML += ('<div class="col-xs-12"><div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <h6 id="university-name-' + i + '">' + universityName + '</h6> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4"> <div class="row save-compare-user-profile"> <div class="col-xs-6 text-right"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div></div>');
+		
+	}
+			
+}
+
+function getUserReviews() {
+
+	<!-- document.getElementById("loading").style.display = "inline-block"; -->
+	
+	var sortingOrder = "reviewDate,asc";
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/review/user");
+	
+	$.ajax({
+	  url: backendUrl,
+	  type: "GET",
+	  success: function(response) {
+		if (response.control.errorCode === 0) {
+		
+			var reviewsResponse = response.result.reviews;
+			loadUserReviewsContent(reviewsResponse);
+
+		} else {
+			console.log(response.control.errorDescription);
+		}
+
+	  },
+	  error: function(error) {
+		checkLoggedInUser(error.status)
+	  },
+	  complete: function (data) {
+		<!-- document.getElementById("loading").style.display = "none"; -->
+	  }
+	});
+}
+
+function loadUserReviewsContent(reviewsResponse) {
+	if (reviewsResponse.length == 0) {
+		document.getElementById("user-reviews").innerHTML = '											<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Evaluarile mele</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai adăugat nicio evaluare</h5> </div>';
+		return;
+	}
+	
+	var facultyReviewHeaderString = 
+	'										<div class="col-xs-12 user-profile-header">'
+	+'											<h4 class="text-center"><strong>Evaluarile mele</strong></h4>'
+	+'											<hr>'
+	+'										</div>';
+	document.getElementById("user-reviews").innerHTML = facultyReviewHeaderString;
+	
+		var i;
+		for (i in reviewsResponse) {
+
+			var reviewId = reviewsResponse[i].reviewId;
+			var facultyId = reviewsResponse[i].facultyId;
+			var facultyName = reviewsResponse[i].facultyName;
+			var userName = reviewsResponse[i].userName ? reviewsResponse[i].userName : "";
+			var formattedReviewDate = reviewsResponse[i].formattedReviewDate ? reviewsResponse[i].formattedReviewDate : "N/A";
+			var userStatus = reviewsResponse[i].userStatus ? reviewsResponse[i].userStatus.toLowerCase() : "";
+			if (userStatus === 'drop-out') {
+				userStatus = "";
+			}
+			var userDomainOfLicenseOrMaster = reviewsResponse[i].userDomainOfLicenseOrMaster ? reviewsResponse[i].userDomainOfLicenseOrMaster : "";
+			var userProgramName = reviewsResponse[i].userProgramName ? reviewsResponse[i].userProgramName : "";
+			var userYear = reviewsResponse[i].userYear ? reviewsResponse[i].userYear : "";
+			var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
+			var upvotes = reviewsResponse[i].upvotes ? reviewsResponse[i].upvotes : 0;
+			var wouldRecommend = reviewsResponse[i].wouldRecommend;
+			var wouldRecommendText;
+			var wouldRecommendBoxClass;
+			var wouldRecommendTextClass;
+			if (wouldRecommend === true) {
+				wouldRecommendText = "Ar recomanda";
+				wouldRecommendBoxClass = "box green";
+				wouldRecommendTextClass = "would-recommend-text";
+			} else if (wouldRecommend === false) {
+				wouldRecommendText = "Nu ar recomanda";
+				wouldRecommendBoxClass = "box red";
+				wouldRecommendTextClass = "would-not-recommend-text";
+			} else {
+				wouldRecommendText = "";
+				wouldRecommendBoxClass = "";
+				wouldRecommendTextClass = "";
+			}
+			
+			var difficulty = reviewsResponse[i].difficulty;
+			var difficultyText;
+			if (difficulty) {
+				difficultyText = 'Dificultate:&nbsp' + difficulty + '/5';
+			} else {
+				difficultyText = "";
+			}
+			var wouldRecommendAndDifficultyRowString;
+			if (wouldRecommendText || difficulty) {
+				wouldRecommendAndDifficultyRowString = 
+																'<br>'
+				+'													<div class="row">'
+				+'														<div  class="col-xs-6">'
+				+'															<div class="'+ wouldRecommendBoxClass + '">'
+				+'															</div>'
+				+'															<span class=' + wouldRecommendTextClass + '>&nbsp&nbsp' + wouldRecommendText + '</span>'
+				+'														</div>'
+				+'													<div  class="col-xs-6">'
+				+'															<span style="color: #707070;">&nbsp&nbsp' + difficultyText + '</span>'
+				+'														</div>'
+				+'													</div>';
+			} else {
+				wouldRecommendAndDifficultyRowString = "";
+			}
+			
+			var upvotedReviewsIds = getUField("ulr");
+			var upvotedRevClass;
+			var upvotedRevText;
+			if (upvotedReviewsIds && upvotedReviewsIds.includes(reviewId)) {
+				upvotedRevClass = "fas fa-thumbs-up fa-lg like-review align";
+			} else {
+				upvotedRevClass = "far fa-thumbs-up fa-lg like-review align";
+			}
+			
+			var editReviewRedirectUrl = "./review.html?review=" + reviewId + "&faculty=" +facultyId;
+			var canEdit = reviewsResponse[i].canEdit;
+			canEdit = true;
+			var editString = '';
+			if (canEdit) {
+				editString = 
+	'														<div  class="col-xs-4 col-md-2 text-right">'
+	+'															<a href="' + editReviewRedirectUrl + '"><i data-toggle="tooltip" title="Editează" class="fas fa-edit fa-lg edit-review align" style="margin-right: 20px;"></i></a>'
+	+'															<i data-toggle="tooltip" title="Șterge" class="far fa-trash-alt fa-lg delete-review align" onclick="deleteReviewModal(this, &quot;'+reviewId+'&quot;)"></i>'
+	+'														</div>';
+			}
+
+			var urlProfileRedirect = "./profile.html?id=";
+			var facultyNameString = "";
+			if (facultyName) {
+				facultyNameString = '<a href="' + urlProfileRedirect + facultyId + '"><h5><strong>' + facultyName + '</strong></h5></a>'
+			}
+			
+			
+			var generalRating = reviewsResponse[i].generalRating ? reviewsResponse[i].generalRating : "N/A";
+			var reviewText = reviewsResponse[i].reviewText ? reviewsResponse[i].reviewText : "N/A";
+			
+			var jobProspectsReviewCategory = reviewsResponse[i].jobProspectsReview;
+			var jobProspectsReviewRating = (jobProspectsReviewCategory && jobProspectsReviewCategory.generalRating) ? jobProspectsReviewCategory.generalRating : "N/A";
+			var jobProspectsReviewText = (jobProspectsReviewCategory && jobProspectsReviewCategory.reviewText) ? jobProspectsReviewCategory.reviewText : "";
+			
+			var coursesAndLecturersReviewCategory = reviewsResponse[i].coursesAndLecturersReview;
+			var coursesAndLecturersReviewRating = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.generalRating) ? coursesAndLecturersReviewCategory.generalRating : "N/A";
+			var coursesAndLecturersReviewText = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.reviewText) ? coursesAndLecturersReviewCategory.reviewText : "";
+			
+			var studentOrganisationsReviewCategory = reviewsResponse[i].studentOrganisationsReview;
+			var studentOrganisationsReviewRating = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.generalRating) ? studentOrganisationsReviewCategory.generalRating : "N/A";
+			var studentOrganisationsReviewText = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.reviewText) ? studentOrganisationsReviewCategory.reviewText : "";
+			
+			var accomodationReviewCategory = reviewsResponse[i].accomodationReview;
+			var accomodationReviewRating = (accomodationReviewCategory && accomodationReviewCategory.generalRating) ? accomodationReviewCategory.generalRating : "N/A";
+			var accomodationReviewText = (accomodationReviewCategory && accomodationReviewCategory.reviewText) ? accomodationReviewCategory.reviewText : "";
+			
+			var facultyFacilitiesReviewCategory = reviewsResponse[i].facultyFacilitiesReview;
+			var facultyFacilitiesReviewRating = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.generalRating) ? facultyFacilitiesReviewCategory.generalRating : "N/A";
+			var facultyFacilitiesReviewText = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "";
+			
+			<!-- var studentSupportReviewCategory = reviewsResponse[i].studentSupportReview; -->
+			<!-- var studentSupportReviewRating = (studentSupportReviewCategory && studentSupportReviewCategory.generalRating) ? studentSupportReviewCategory.generalRating : "N/A"; -->
+			<!-- var studentSupportReviewText = (studentSupportReviewCategory && studentSupportReviewCategory.reviewText) ? studentSupportReviewCategory.reviewText : ""; -->
+			
+			var timeBalanceReviewCategory = reviewsResponse[i].timeBalanceReview;
+			var timeBalanceReviewRating = (timeBalanceReviewCategory && timeBalanceReviewCategory.generalRating) ? timeBalanceReviewCategory.generalRating : "N/A";
+			var timeBalanceReviewText = (timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : "";	
+
+
+			var facultyReviewsString = (
+
+	'										<div class="col-xs-12">'
+	+'										<div class="card">'		
+	+'											<div class="content">'
+	+'												<div data-reviewid=' + reviewId + ' class="review-entry">'
+	+'													<div class="row">'
+	+'														<div  class="col-xs-8 col-md-10">'
+	+															facultyNameString
+	+'															<h5 id="reviewer-details">' + userName + '</h5> '
+	+'															<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6> '
+	+'															<small id="review-date" class="text-muted"><i>' + formattedReviewDate + '</i></small> 	'
+	+'														</div>'
+	+													editString
+	+'													</div>													'
+	+													wouldRecommendAndDifficultyRowString
+	+'													<br>'
+	+'													<div class="row">'
+	+'														<div class="col-xs-12">		'
+	+'															<i class="fa fa-star" style="color: orange"></i>'
+	+'															<strong style="color: orange">&nbsp' + generalRating + '</strong>													'
+	+'															<p>' + reviewText + '</p>'
+	+'														</div>'
+	+'													</div>'
+	+'													<br>'
+	+'													<div id="view-more-text-' + i + '" style="display: none">'
+	+'														<div class="row">'
+	+'															<div class="review-card-category-item col-md-6 col-xs-12">		'
+	+'																<i class="fa fa-star" style="color: orange"></i>'
+	+'																<strong style="color: orange">&nbsp' + coursesAndLecturersReviewRating + '</strong>  <span><b>&nbsp&nbspProfesori și cursuri</b></span>'
+	+'																<p>' + coursesAndLecturersReviewText + '</p>'
+	+'															</div>'
+	+'															<div class="review-card-category-item col-md-6 col-xs-12">			'
+	+'																<i class="fa fa-star" style="color: orange"></i>'
+	+'																<strong style="color: orange">&nbsp' + jobProspectsReviewRating + '</strong> <span><b>&nbsp&nbspOportunități în carieră</b></span>													'
+	+'																<p>' + jobProspectsReviewText + '</p>'
+	+'															</div>'
+	+'														</div>'
+	+'														<div class="row">'
+	+'															<div class="review-card-category-item col-md-6 col-xs-12">			'
+	+'																<i class="fa fa-star" style="color: orange"></i>'
+	+'																<strong style="color: orange">&nbsp' + accomodationReviewRating + '</strong> <span><b>&nbsp&nbspAcomodare</b></span>'
+	+'																<p>' + accomodationReviewText + '</p>'
+	+'															</div>'
+	+'															<div class="review-card-category-item col-md-6 col-xs-12">	'
+	+'																<i class="fa fa-star" style="color: orange"></i>'
+	+'																<strong style="color: orange">&nbsp' + studentOrganisationsReviewRating + '</strong> <span><b>&nbsp&nbspAsociații studențești</b></span>													'
+	+'																<p>' + studentOrganisationsReviewText + '</p>'
+	+'															</div>'
+	+'														</div>	'
+	+'														<div class="row">'
+	+'															<div class="review-card-category-item col-md-6 col-xs-12">		'
+	+'																<i class="fa fa-star" style="color: orange"></i>'
+	+'																<strong style="color: orange">&nbsp' + facultyFacilitiesReviewRating + '</strong> <span><b>&nbsp&nbspFacilități</b></span>'
+	+'																<p>' + facultyFacilitiesReviewText + '</p>'
+	+'															</div>'
+	+'															<div class="review-card-category-item col-md-6 col-xs-12">		'
+	+'																<i class="fa fa-star" style="color: orange"></i>'
+	+'																<strong style="color: orange">&nbsp' + timeBalanceReviewRating + '</strong> <span><b>&nbsp&nbspTimp la facultate vs. timp liber</b></span>													'
+	+'																<p>' + timeBalanceReviewText + '</p>'
+	+'															</div>'
+	+'														</div>'
+	+'													</div>'
+	+'													<div class="row">'
+	+'														<div class="col-md-3 col-md-offset-0 col-sm-3 col-sm-offset-0 col-xs-4 col-xs-offset-0">'
+	+'															<button class="btn btn-simple btn-info" onclick="viewMore(' + i +')" id="view-more-button-' + i + '">+ Vezi tot</button>'
+	+'														</div>'
+	+'														<div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10 text-right">'
+	+'															<i class="' + upvotedRevClass + '" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align">' + upvotes + '</span>'
+	+'														</div>'
+	+'													</div>'
+	+'												</div>'	
+	+'											</div>'
+	+'										</div>'
+	+'										</div>'
+
+			);
+			document.getElementById("user-reviews").innerHTML += facultyReviewsString;
+		
+		}
+	
+	
+}
+
+function deleteReviewModal(el, reviewId) {
+	el.setAttribute("data-toggle", 'modal');
+	el.setAttribute("data-target", '#general-modal');
+	
+	document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation fa-2x"></i>';
+	document.getElementById('modal-text').innerHTML = "Esti sigur ca vrei sa stergi aceasta evaluare?";
+	document.getElementById('general-modal-footer').innerHTML = 
+					'<div class="left-side">'
+					+'	<button type="button" class="btn btn-default btn-simple" data-dismiss="modal" style="color: red;" onclick="deleteReview(&quot;'+reviewId+'&quot;)">Da</button>'
+					+'</div>'
+					+'<div class="divider"></div>'
+					+'<div class="right-side">'
+					+'	<button type="button" class="btn btn-simple" data-dismiss="modal">Nu</button>'
+					+'</div>';
 
 }
 
-function validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+function deleteReview(reviewId) {
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/review/" + reviewId);
+
+	var body = {
+		delete: true
+	}
+	
+	$.ajax({
+	url: backendUrl,
+	type: 'PUT',
+	dataType: 'json',
+	contentType: 'application/json',
+	crossDomain: true,
+	data: JSON.stringify(body),
+	success: function (data) {
+		var addedReviews = getUField("uar");
+		addedReviews = addedReviews.filter(function(value, index, arr){
+			return reviewId != value.reviewId;
+		});
+		setUField("uar", addedReviews);
+		location.reload();
+	},
+	error: function(error) {
+		checkLoggedInUser(error.status);
+	}
+	});
+
 }
+
+function viewMore(i) {
+  var moreText = document.getElementById("view-more-text-" + i);
+  var btnText = document.getElementById("view-more-button-" + i);
+  
+  if (moreText.style.display === "none") {
+		btnText.innerHTML = "- Vezi mai putin";
+		moreText.style.display = "inline";
+  } else {
+		btnText.innerHTML = "+ Vezi tot";
+		moreText.style.display = "none";
+  }
+} 
+
+
 	
 	
 </script>

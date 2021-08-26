@@ -10,6 +10,8 @@ public class ReviewResponseDTO {
 
 	private String facultyId;
 
+	private String facultyName;
+
 	private Integer generalRating;
 
 	private Boolean isUserWorking;
@@ -48,6 +50,8 @@ public class ReviewResponseDTO {
 
 	private String userYear;
 
+	private Boolean canEdit;
+
 	public String getReviewId() {
 		return reviewId;
 	}
@@ -62,6 +66,14 @@ public class ReviewResponseDTO {
 
 	public void setFacultyId(String facultyId) {
 		this.facultyId = facultyId;
+	}
+
+	public String getFacultyName() {
+		return facultyName;
+	}
+
+	public void setFacultyName(String facultyName) {
+		this.facultyName = facultyName;
 	}
 
 	public Integer getGeneralRating() {
@@ -214,6 +226,14 @@ public class ReviewResponseDTO {
 
 	public void setUserYear(String userYear) {
 		this.userYear = userYear;
+	}
+
+	public Boolean getCanEdit() {
+		return canEdit;
+	}
+
+	public void setCanEdit(Boolean canEdit) {
+		this.canEdit = canEdit;
 	}
 
 }

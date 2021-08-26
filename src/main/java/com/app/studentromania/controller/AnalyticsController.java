@@ -50,13 +50,13 @@ public class AnalyticsController {
 	}
 
 	@PutMapping("/rev")
-	public void reviewIntentionStatistic(@RequestParam int s) {
-		analyticsService.increaseReviewStatistic(s);
+	public ResponseEntity<String> reviewIntentionStatistic(@RequestParam int s) {
+		return analyticsService.increaseReviewStatistic(s).createRestResponse();
 	}
 	
 	@PutMapping("/profile")
-	public void facultyViewCount(@RequestParam String facultyId) {
-		analyticsService.increaseFacultyViewCountStatistic(facultyId);
+	public ResponseEntity<String> facultyViewCount(@RequestParam String facultyId) {
+		return analyticsService.increaseFacultyViewCountStatistic(facultyId).createRestResponse();
 	}
 
 	@GetMapping

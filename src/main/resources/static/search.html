@@ -24,6 +24,7 @@
 </head>
 <body>
     
+    
     <nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -54,9 +55,9 @@
             <li>
                 <a href="./contact.html" class="btn btn-simple">Contact</a>
             </li>
-			<!-- <li> -->
-				<!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-			<!-- </li> -->
+			<li>
+                <a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
+            </li>
            </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
@@ -204,7 +205,11 @@
 							</div>
 							
 							<div class="row">
-								<div id="load-more-faculties-main" class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-3 col-lg-7 col-lg-offset-2">
+								<div class="faculty-search-filter-card-fixed col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-0">
+									<div class="content">
+									</div>
+								</div>
+								<div id="load-more-faculties-main" class="faculty-search-card-fixed col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-0 col-lg-7 col-lg-offset-0">
 									<div class="card"> 
 										<div class="content"> 
 											<div class="text-center row"> 
@@ -261,25 +266,6 @@
 		</div>
 		
 	</div>
-	
-	<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<div id="modal-header-text">
-				<i class="far fa-envelope fa-2x"></i>
-			</div>
-		  </div>
-		  <div id="modal-text" class="modal-body modal-info text-center">
-			&nbsp;
-		  </div>
-		  <div class="modal-footer">
-			   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
     
 	<footer class="footer">
 		<div class="container">
@@ -307,7 +293,18 @@
 								   Contact
 								</a>
 							</li>
-
+						</ul>
+						<ul>
+							<li>
+								<a href="./terms.html">
+								   Termeni și condiții
+								</a>
+							</li>
+							<li>
+								<a href="./policy.html">
+								   Politica de confidențialitate
+								</a>
+							</li>
 						</ul>
 						<hr>
 
@@ -341,9 +338,96 @@
 
 		</div>
 	</footer>
+	
+		<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<div id="modal-header-text">
+				<i class="far fa-envelope fa-2x"></i>
+			</div>
+		  </div>
+		  <div id="modal-text" class="modal-body modal-info text-center">
+			&nbsp;
+		  </div>
+		  <div id="general-modal-footer" class="modal-footer">
+			   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+				<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-login">
+					<div class="modal-content">
+						<div class="login-card">
+							<h3 class="title">Autentificare</h3>
+							<br>
+							<form class="register-form">
+								<!-- <label>Email</label> --> 
+								<input id="login-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorLoginEmail()">
+								<small id="error-login-email" class="error-message"></small>
+								<br>
+								<!-- <label>Parolă</label> -->
+								<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100" oninput="clearErrorLoginPass()">
+								<small id="error-login" class="error-message"></small>
+								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
+								<!-- <h5>sau</h5> -->
+								<h5 id="reg-line"></h5>
+								<button class="btn btn-facebook btn-block btn-fill" onclick="fbLogin()"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+							</form>
+							<div class="forgot">
+								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
+								<a href="#" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
+								<a class="btn btn-simple btn-info btn-reg" data-dismiss="modal" data-toggle="modal" data-target="#register-modal">Nu ai cont? Înregistrează-te</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-register">
+					<div class="modal-content">
+						<div class="register-card">
+							<h3 class="title">Creare cont nou</h3>
+							<br>
+							<form class="register-form">
+								<!-- <label>Email</label> -->
+								<input id="register-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
+								<small id="error-register-email" class="error-message"></small>
+								<br>
+								<!-- <label>Parola</label> -->
+								<fieldset class="search-fieldset">
+									<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorRegisterPass()">
+									<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
+								</fieldset>
+								<!-- <label>Confirmă Parola</label> -->
+								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorRegisterConfirmPass()">
+								<small id="error-register" class="error-message"></small>
+								
+								<div>
+									<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</label>
+									<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox">Vreau să fiu la curent cu ultimele noutăți</label>
+								</div>
+								
+								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
+								<!-- <h5>sau</h5> -->
+								<h5 id="reg-line"></h5>
+								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+							</form>
+							<div class="forgot">
+								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
 
 </body>
 
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 <script>
 
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
@@ -367,6 +451,20 @@ window.addEventListener("load", collapseExpand);
 
 
 $(document).ready(function() {
+
+  window.fbAsyncInit = function() {
+  console.log("ssxx");
+    FB.init({
+      appId            : '369581668156591',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v11.0'
+    });
+  };
+
+
+
+	myAccountText();
 	finalSearchInput = queryParams.get("q");
 	if(queryParams.get("d")) {
 		urlDomainInput = queryParams.get("d").split(',');
@@ -452,7 +550,7 @@ $.each($("input[name=domeniu]"), function(){
 	if (checkBoxElement.prop("checked") === true) { //if it was already checked, it means now it is removed
 		domainParams = domainParams.filter(function(value, index, arr){ return value !== checkBoxElement.attr("id");});
 	} else { //if it was not checked, it means now it is checked
-			domainParams.push($(this).attr("for"));
+		domainParams.push($(this).attr("for"));
 	}
 	queryParams.set("d", domainParams);
 	history.replaceState(null, null, "?" + queryParams.toString());
@@ -602,16 +700,24 @@ function loadData(loadMore) {
 				var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.faculties[i].facultyId + "/logo";	
 				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 				
-				var addReviewRedirectUrl = "./review.html?id=" + facultyId;
-		
-			
-				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <h6 id="university-name-' + i + '">' + universityName + '</h6> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a href="#">' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this)"><i class="far fa-heart fa-lg" style="margin-right: 7px"></i><span>Salvează</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div>');
+				var savedFacultiesIds = getUField("usf");
+				var favoriteClass;
+				var favoriteText;
+				if (savedFacultiesIds && savedFacultiesIds.includes(facultyId)) {
+					favoriteClass = "fas fa-heart fa-lg";
+					favoriteText = "Salvată";
+				} else {
+					favoriteClass = "far fa-heart fa-lg";
+					favoriteText = "Salvează";
+				}
+	
+				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <h6 id="university-name-' + i + '">' + universityName + '</h6> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong><a>' + countRevText + '</a></strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div>');
 
 			}
 			
           },
           error: function(error) {
-            console.log(error);
+			checkLoggedInUser(error.status);
           }
         });
 }
@@ -620,55 +726,13 @@ function loadMore() {
 	loadData(true);
 }
 
-function addToCompare(button, facultyId) {
-
-	var icon = $(button).children()[0];
-	
-	var compareIcon = "fas fa-plus-circle fa-lg";
-	var compareCheckIcon = "fas fa-check-circle fa-lg";
-	
-	if ($(icon).hasClass(compareCheckIcon)) {
-		var urlComparisonRedirect = "./comparison.html";
-		location.href = urlComparisonRedirect;
-		return;
-	}
-	
-	$(icon).removeClass(compareIcon);
-	$(icon).addClass(compareCheckIcon);
-	icon.nextSibling.innerHTML = "Vezi Comparaţii";
-	
-	if (typeof(Storage) !== "undefined") {
-		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
-		var facultyIds;
-		if (facultyIdsString) {
-			facultyIds = facultyIdsString.split(",");
-		} else {
-			facultyIds = [];
-		}
-		if (facultyIds.length <= 20 && !facultyIds.includes(facultyId)) {
-			facultyIds.push(facultyId);
-		}
-		localStorage.setItem("faculty-comparison-items", facultyIds);
-	} else {
-	  // Sorry! No Web Storage support..
-	}
-
-}
-
-function addToFavorites(el) {
-	el.setAttribute("data-toggle", 'modal');
-	el.setAttribute("data-target", '#general-modal');
-	document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation fa-2x"></i>';
-	document.getElementById('modal-text').innerHTML = "Funcționalitatea va fi implementată în curând.";
-}
-
 function getRecentlyViewedFaculties() {
 
 	if (typeof(Storage) == "undefined") {
 		return;
 	}
 
-	var facultyIdsString = localStorage.getItem("recently-viewed-items");
+	var facultyIdsString = localStorage.getItem("rvi");
 	var facultyIds;
 	if (facultyIdsString) {
 		facultyIds = facultyIdsString.split(",");
@@ -707,7 +771,7 @@ function getRecentlyViewedFaculties() {
 
 	  },
 	  error: function(error) {
-		console.log(error);
+		checkLoggedInUser(error.status);
 	  }
 	});
 }
@@ -811,6 +875,69 @@ function loadRecentlyViewedFacultiesContent(sortedResponse) {
 }
 
 
+window.fbAsyncInit = function() {
+    // FB JavaScript SDK configuration and setup
+    FB.init({
+      appId      : 'InsertYourFacebookAppId', // FB App ID
+      cookie     : true,  // enable cookies to allow the server to access the session
+      xfbml      : true,  // parse social plugins on this page
+      version    : 'v3.2' // use graph api version 2.8
+    });
+    
+    // Check whether the user already logged in
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            //display user data
+            getFbUserData();
+        }
+    });
+};
+
+// Load the JavaScript SDK asynchronously
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+// Facebook login with JavaScript SDK
+function fbLogin() {
+console.log("ss");
+    FB.login(function (response) {
+	console.log("ssa");
+        if (response.authResponse) {
+            // Get and display the user profile data
+            getFbUserData();
+        } else {
+            document.getElementById('status').innerHTML = 'User cancelled login or did not fully authorize.';
+        }
+    }, {scope: 'email'});
+}
+
+// Fetch the user profile data from facebook
+function getFbUserData(){
+    FB.api('/me', {locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picture'},
+    function (response) {
+        document.getElementById('fbLink').setAttribute("onclick","fbLogout()");
+        document.getElementById('fbLink').innerHTML = 'Logout from Facebook';
+        document.getElementById('status').innerHTML = '<p>Thanks for logging in, ' + response.first_name + '!</p>';
+        document.getElementById('userData').innerHTML = '<h2>Facebook Profile Details</h2><p><img src="'+response.picture.data.url+'"/></p><p><b>FB ID:</b> '+response.id+'</p><p><b>Name:</b> '+response.first_name+' '+response.last_name+'</p><p><b>Email:</b> '+response.email+'</p><p><b>Gender:</b> '+response.gender+'</p><p><b>FB Profile:</b> <a target="_blank" href="'+response.link+'">click to view profile</a></p>';
+    });
+}
+
+// Logout from facebook
+function fbLogout() {
+    FB.logout(function() {
+        document.getElementById('fbLink').setAttribute("onclick","fbLogin()");
+        document.getElementById('fbLink').innerHTML = '<img src="images/fb-login-btn.png"/>';
+        document.getElementById('userData').innerHTML = '';
+        document.getElementById('status').innerHTML = '<p>You have successfully logout from Facebook.</p>';
+    });
+}
+
+
 </script>
 
 <script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
@@ -823,6 +950,7 @@ function loadRecentlyViewedFacultiesContent(sortedResponse) {
 <script src="./assets/js/ct-paper-radio.js"></script>
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
+<script src="./assets/js/unistart.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
     

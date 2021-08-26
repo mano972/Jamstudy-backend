@@ -8,12 +8,6 @@ public class ReviewDTO {
 
 	private String facultyId;
 
-	private String userId;
-
-	private String userName;
-
-	private String userEmail;
-
 	private Integer generalRating;
 
 	private Integer isUserWorking;
@@ -53,6 +47,8 @@ public class ReviewDTO {
 
 	private String userYear;
 
+	private Boolean delete;
+
 	public String getReviewId() {
 		return reviewId;
 	}
@@ -67,30 +63,6 @@ public class ReviewDTO {
 
 	public void setFacultyId(String facultyId) {
 		this.facultyId = facultyId;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
 	}
 
 	public Integer getGeneralRating() {
@@ -237,18 +209,26 @@ public class ReviewDTO {
 		this.userYear = userYear;
 	}
 
+	public Boolean getDelete() {
+		return delete;
+	}
+
+	public void setDelete(Boolean delete) {
+		this.delete = delete;
+	}
+
 	@Override
 	public String toString() {
-		return "ReviewDTO [reviewId=" + reviewId + ", facultyId=" + facultyId + ", userId=" + userId + ", userName="
-				+ userName + ", userEmail=" + userEmail + ", generalRating=" + generalRating + ", isUserWorking="
-				+ isUserWorking + ", reviewText=" + reviewText + ", jobProspectsReview=" + jobProspectsReview
-				+ ", coursesAndLecturersReview=" + coursesAndLecturersReview + ", studentOrganisationsReview="
-				+ studentOrganisationsReview + ", accomodationReview=" + accomodationReview
-				+ ", facultyFacilitiesReview=" + facultyFacilitiesReview + ", studentSupportReview="
-				+ studentSupportReview + ", timeBalanceReview=" + timeBalanceReview + ", upvotes=" + upvotes
-				+ ", upvote=" + upvote + ", userStatus=" + userStatus + ", wouldRecommend=" + wouldRecommend
-				+ ", difficulty=" + difficulty + ", userDomainOfLicenseOrMaster=" + userDomainOfLicenseOrMaster
-				+ ", userProgramName=" + userProgramName + ", userYear=" + userYear + "]";
+		return "ReviewDTO [reviewId=" + reviewId + ", facultyId=" + facultyId + ", generalRating=" + generalRating
+				+ ", isUserWorking=" + isUserWorking + ", reviewText=" + reviewText + ", jobProspectsReview="
+				+ jobProspectsReview + ", coursesAndLecturersReview=" + coursesAndLecturersReview
+				+ ", studentOrganisationsReview=" + studentOrganisationsReview + ", accomodationReview="
+				+ accomodationReview + ", facultyFacilitiesReview=" + facultyFacilitiesReview
+				+ ", studentSupportReview=" + studentSupportReview + ", timeBalanceReview=" + timeBalanceReview
+				+ ", upvotes=" + upvotes + ", upvote=" + upvote + ", userStatus=" + userStatus + ", wouldRecommend="
+				+ wouldRecommend + ", difficulty=" + difficulty + ", userDomainOfLicenseOrMaster="
+				+ userDomainOfLicenseOrMaster + ", userProgramName=" + userProgramName + ", userYear=" + userYear
+				+ ", delete=" + delete + "]";
 	}
 
 }

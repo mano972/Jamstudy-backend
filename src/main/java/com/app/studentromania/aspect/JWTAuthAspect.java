@@ -46,7 +46,7 @@ public class JWTAuthAspect {
 
 	@Around("@annotation(com.app.studentromania.annotation.JWTAuth)")
 	public Object auth(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-
+		
 		final String algorithmSecret = "amFtc3R1ZHlzZWNyZXQ";
 		final String issuer = "unistart";
 
@@ -59,8 +59,7 @@ public class JWTAuthAspect {
 
 		try {
 			if (!StringUtils.isBlank(jwtAuthHeader) && jwtAuthHeader.startsWith("Bearer")) {
-//				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_MISSING).createRestResponse();
-//			}
+
 				String jwtToken = jwtAuthHeader.replace("Bearer", "").trim();
 
 				Algorithm algorithm = Algorithm.HMAC256(algorithmSecret);

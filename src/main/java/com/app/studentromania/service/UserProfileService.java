@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -126,10 +127,13 @@ public class UserProfileService {
 		if (!SecurityUtils.validatePassword(userProfileDTO.getPassword(), userProfile.getPassword())) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_WRONG_CREDENTIALS);
 		}
+		if (!userProfile.getEmailConfirmed()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED);
+		}
 
 		String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
 		if (StringUtils.isBlank(jwtToken)) {
-			LogUtils.logMessage(LOGGER, "Error when generating JWT token for email " + userProfile.getEmail());
+			LogUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
 			return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
 		}
 
@@ -138,6 +142,12 @@ public class UserProfileService {
 
 		AuthResponseDTO authResponseDTO = new AuthResponseDTO();
 		authResponseDTO.setJwtToken(jwtToken);
+		authResponseDTO.setFirstName(userProfile.getFirstName());
+		authResponseDTO.setLastName(userProfile.getLastName());
+		authResponseDTO.setFavoriteFaculties(userProfile.getFavoriteFaculties());
+		authResponseDTO.setRecentFaculties(userProfile.getRecentFaculties());
+		authResponseDTO.setAddedReviews(userProfile.getAddedReviews());
+		authResponseDTO.setLikedReviews(userProfile.getLikedReviews());
 		JSONObject response = new JSONObject(authResponseDTO);
 
 		return ResponseDTO.createSuccessResponse(response);
@@ -147,6 +157,11 @@ public class UserProfileService {
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		if (StringUtils.isEmpty(userProfileDTO.getEmail()) || StringUtils.isEmpty(userProfileDTO.getPassword())) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_PASSWORD_MISSING);
+		}
+
+		ErrorsEnum error = validateRegister(userProfileDTO);
+		if (ErrorsEnum.NO_ERROR != error) {
+			return ResponseDTO.createErrorResponse(error);
 		}
 		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(userProfileDTO.getEmail());
 		if (userProfileOpt.isPresent()) {
@@ -161,6 +176,7 @@ public class UserProfileService {
 		if (userProfileDTO.getSubscribeToNewsletter()) {
 			newsletterService.addEmail(userProfile.getEmail());
 		}
+		userProfile.setAcceptTermsAndConditions(true);
 		userProfileDAO.createUserProfile(userProfile);
 		UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO();
 		userProfileResponseDTO.setUserId(userProfile.getUserId());
@@ -170,7 +186,9 @@ public class UserProfileService {
 	}
 
 	public ResponseDTO updateUserProfile(UserProfileDTO userProfileDTO) {
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userProfileDTO.getUserId());
+		String userId = customRequestContext.getUserId();
+
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
 		}
@@ -184,7 +202,9 @@ public class UserProfileService {
 		return ResponseDTO.createSuccessResponse(new JSONObject(userProfileResponseDTO));
 	}
 
-	public ResponseDTO addRecentFaculty(String userId, String facultyId) {
+	public ResponseDTO addRecentFaculty(String facultyId) {
+		String userId = customRequestContext.getUserId();
+
 		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
@@ -218,7 +238,9 @@ public class UserProfileService {
 	}
 
 	public ResponseDTO addFavoriteFaculty(String facultyId, UserProfileDTO userProfileDTO) {
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userProfileDTO.getUserId());
+		String userId = customRequestContext.getUserId();
+
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
 		}
@@ -231,6 +253,9 @@ public class UserProfileService {
 			}
 			if (favoriteFaculties.stream().anyMatch(fac -> fac.getFacultyId().equals(facultyId))) {
 				return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_EXISTS);
+			}
+			if (favoriteFaculties.size() >= Constants.MAX_FAVORITE_FACULTIES) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_MAX_FAVORITE_FACULTIES);
 			}
 			UserProfileFaculty favoriteFaculty = new UserProfileFaculty();
 			favoriteFaculty.setFacultyId(facultyOpt.get().getFacultyId());
@@ -258,7 +283,9 @@ public class UserProfileService {
 	}
 
 	public ResponseDTO allowNotificationForFaculty(String facultyId, UserProfileDTO userProfileDTO) {
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userProfileDTO.getUserId());
+		String userId = customRequestContext.getUserId();
+
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
 		}
@@ -287,6 +314,24 @@ public class UserProfileService {
 	public ResponseDTO deleteAllUserProfiles() {
 		userProfileDAO.deleteAllUserProfiles();
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
+	private ErrorsEnum validateRegister(UserProfileDTO userProfileDTO) {
+		String email = userProfileDTO.getEmail();
+		String pass = userProfileDTO.getPassword();
+		Matcher emailMatcher = Constants.VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+		if (!emailMatcher.find()) {
+			return ErrorsEnum.REGISTER_EMAIL_NOT_VALID;
+		}
+		if (!userProfileDTO.getAcceptTermsAndConditions()) {
+			return ErrorsEnum.REGISTER_TERMS_AND_CONDITIONS;
+		}
+		Matcher passMatcher = Constants.VALID_PASSWORD_REGEX.matcher(pass);
+		if (pass.length() < 7 || !passMatcher.find()) {
+			return ErrorsEnum.REGISTER_PASSWORD_ERROR;
+		}
+
+		return ErrorsEnum.NO_ERROR;
 	}
 
 	private void mapToUserProfile(UserProfileDTO userProfileDTO, UserProfile userProfile) {

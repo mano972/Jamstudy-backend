@@ -54,9 +54,9 @@
             <li>
                 <a href="./contact.html" class="btn btn-simple">Contact</a>
             </li>
-			<!-- <li> -->
-				<!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-			<!-- </li> -->
+			<li>
+                <a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
+            </li>
            </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
@@ -420,7 +420,7 @@
 										<div class="tab">
 											<h4>Spune-ne câte ceva despre tine</h4>
 											<br>
-											<h5>Status</h5>
+											<p>Status</p>
 											<div class="row">
 												<div class="col-md-12">																							
 													<div class="radio-toolbar" onchange="showYears()">
@@ -452,7 +452,7 @@
 											</div>
 											<div id="user-years" style="display: none">
 												<br>
-												<h5>Anul</h5>
+												<p>Anul</p>
 												<div class="row">
 													<div class="col-md-12">																
 														<div class="radio-toolbar">
@@ -515,7 +515,7 @@
 												<!-- </div> -->
 											<!-- </div> -->
 											<br>
-											<h5>Ai reușit să te angajezi, in domeniu, in timpul facultății sau la cel mult 6 luni dupa terminarea ei?</h5>
+											<p>Ai reușit să te angajezi, in domeniu, in timpul facultății sau la cel mult 6 luni dupa terminarea ei?</p>
 											<div class="row">
 												<div class="col-md-12">															
 													<div class="radio-toolbar">
@@ -537,13 +537,13 @@
 												<!-- </select> -->
 											</div>
 											<br>
-											<div class="row">
-												<div class="col-md-5">
-													<h5>Email<em>*</em></h5>
-													<input id="user-email" required class="form-control" placeholder="Email" spellcheck="false">
-												</div>
-											</div>
-											<small id="error-email" class="error-message"></small>
+											<!-- <div class="row"> -->
+												<!-- <div class="col-md-5"> -->
+													<!-- <p>Email<em>*</em></p> -->
+													<!-- <input id="user-email" required class="form-control" placeholder="Email" spellcheck="false"> -->
+												<!-- </div> -->
+											<!-- </div> -->
+											<!-- <small id="error-email" class="error-message"></small> -->
 										</div>
 										
 										<br>
@@ -584,25 +584,6 @@
 	</div>
 		
 		
-	<div class="modal fade" id="add-review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<div id="add-review-header-text">
-					<i class="far fa-envelope fa-2x"></i>
-				</div>
-			  </div>
-			  <div id="add-review-modal-text" class="modal-body modal-info text-center">
-				&nbsp;
-			  </div>
-			  <div class="modal-footer">
-				   <button id="ok-button-modal" type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-			  </div>
-			</div>
-		 </div>
-	</div>
-		
 	<footer class="footer">
 		<div class="container">
 			<div class="row">
@@ -629,7 +610,18 @@
 								   Contact
 								</a>
 							</li>
-
+						</ul>
+						<ul>
+							<li>
+								<a href="./terms.html">
+								   Termeni și condiții
+								</a>
+							</li>
+							<li>
+								<a href="./policy.html">
+								   Politica de confidențialitate
+								</a>
+							</li>
 						</ul>
 						<hr>
 
@@ -663,6 +655,111 @@
 
 		</div>
 	</footer>
+	
+	<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<div id="modal-header-text">
+				<i class="far fa-envelope fa-3x"></i>
+			</div>
+		  </div>
+		  <div id="modal-text" class="modal-body modal-info text-center">
+			.
+		  </div>
+		  <div id="general-modal-footer" class="modal-footer">
+			   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="modal fade" id="add-review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<div id="add-review-header-text">
+					<i class="far fa-envelope fa-2x"></i>
+				</div>
+			  </div>
+			  <div id="add-review-modal-text" class="modal-body modal-info text-center">
+				&nbsp;
+			  </div>
+			  <div class="modal-footer">
+				   <button id="ok-button-modal" type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+			  </div>
+			</div>
+		 </div>
+	</div>
+	
+			<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-login">
+					<div class="modal-content">
+						<div class="login-card">
+							<h3 class="title">Autentificare</h3>
+							<br>
+							<form class="register-form">
+								<!-- <label>Email</label> --> 
+								<input id="login-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorLoginEmail()">
+								<small id="error-login-email" class="error-message"></small>
+								<br>
+								<!-- <label>Parolă</label> -->
+								<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100" oninput="clearErrorLoginPass()">
+								<small id="error-login" class="error-message"></small>
+								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
+								<!-- <h5>sau</h5> -->
+								<h5 id="reg-line"></h5>
+								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+							</form>
+							<div class="forgot">
+								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
+								<a href="#" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
+								<a class="btn btn-simple btn-info btn-reg" data-dismiss="modal" data-toggle="modal" data-target="#register-modal">Nu ai cont? Înregistrează-te</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-register">
+					<div class="modal-content">
+						<div class="register-card">
+							<h3 class="title">Creare cont nou</h3>
+							<br>
+							<form class="register-form">
+								<!-- <label>Email</label> -->
+								<input id="register-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
+								<small id="error-register-email" class="error-message"></small>
+								<br>
+								<!-- <label>Parola</label> -->
+								<fieldset class="search-fieldset">
+									<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorRegisterPass()">
+									<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
+								</fieldset>
+								<!-- <label>Confirmă Parola</label> -->
+								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorRegisterConfirmPass()">
+								<small id="error-register" class="error-message"></small>
+								
+								<div>
+									<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</label>
+									<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox">Vreau să fiu la curent cu ultimele noutăți</label>
+								</div>
+								
+								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
+								<!-- <h5>sau</h5> -->
+								<h5 id="reg-line"></h5>
+								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+							</form>
+							<div class="forgot">
+								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
 
 </body>
 
@@ -676,6 +773,7 @@
 <script src="./assets/js/ct-paper-radio.js"></script>
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
+<script src="./assets/js/unistart.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
 
@@ -683,137 +781,162 @@
 
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
 
+$body = $("body");
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+    ajaxStop: function() { $body.removeClass("loading"); }    
+});
+
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab
 
 var facultyId;
+var reviewId;
+
+  <!-- $(window).load(function() { -->
+  <!-- console.log("st"); -->
+    <!-- $('#load1').hide(); -->
+	  <!-- console.log("fn"); -->
+  <!-- }); -->
 
 
 $(document).ready(function() {
 
-	var queryParams = new URLSearchParams(window.location.search);
-	facultyId = queryParams.get("id");
+	checkLogin();
+	myAccountText();
 
+	var queryParams = new URLSearchParams(window.location.search);
+	facultyId = queryParams.get("faculty");
+	reviewId = queryParams.get("review");
+	
 	loadFaculty();
+	
+	if (reviewId) {
+		checkEditReviewAllowed();
+		loadReview();
+	}
+	
+	showYears();
 	
 	<!-- loadFields(); -->
 });
 
-function loadFaculty(){
-		var backendUrl = new URL(backendUrlRoot + "/v1/faculty/" + facultyId);
-
-		  $.ajax({
-          url: backendUrl,
-          type: "GET",
-          success: function(response) {
-			
-			if (response.control.errorCode === 0) {
-				var facultyName = response.result.facultyName;
-				var universityName = response.result.universityName;
-				var universityNameForLogo = universityName.replaceAll("\"", "_");
-				var logoName = facultyName + universityNameForLogo;
-				<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
-				var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
-				<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
-				
-				var urlProfileRedirect = "./profile.html?id=" + facultyId;
-
-				
-				document.getElementById("review-faculty-main").innerHTML = '';
-				
-				document.getElementById("review-faculty-main").innerHTML += (	
-								'<div class="row">'
-									
-										+'<div class="card">'
-											+'<div class="content">			'	
-												+'<div class="row">'
-												+'	<div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">'
-												+'			<a href="' + urlProfileRedirect + '">		'	
-												+'				<div class="img-faculty-logo-block-base img-faculty-add-review-logo-block">'
-												+'					<img id="review-faculty-logo" class="img-faculty-logo-base img-faculty-logo-add-review center-add-review" src="' + logoSrc + '"></img>'
-												+'				</div>'
-												+'			</a>'
-												+'	</div>'
-												+'	<div class="form-group col-md-10 col-xs-12" style="display:inline; vertical-align: middle;">'
-												+'		<h5>Numele facultății<em>*</em></h5>'
-												+'		<input id="review-faculty-name" type="text" value="' + facultyName + '" placeholder="" class="form-control" required oninvalid="this.setCustomValidity(\'Câmp obligatoriu\')" readonly/>'
-												+'	</div>'
-												+'</div>'
-											+'</div>'
-										+'</div>'
-								+'</div>');
-				
-			}
-			
-			var licensePrograms = response.result.licensePrograms;
-			var masterPrograms = response.result.masterPrograms;
-			
-			var domainsOfLicense = [];
-			var domainsOfMaster = [];
-			var programNameLicense = new Map();
-			var programNameMaster = new Map();
-			
-			for (licenseProgram of licensePrograms) {
-				var domain = licenseProgram.domainOfLicenseOrMaster;
-				if (!domainsOfLicense.includes(domain)) {
-					domainsOfLicense.push(domain);
-				}
-			}
-			for (domain of domainsOfLicense) {
-			var programsForDomain = [];
-				for (licenseProgram of licensePrograms) {
-					if (licenseProgram.domainOfLicenseOrMaster === domain) {
-						programsForDomain.push(licenseProgram.programName);
-					}
-				}
-				programNameLicense.set(domain, programsForDomain);
-			}
-			for (masterProgram of masterPrograms) {
-				if (!domainsOfMaster.includes(masterProgram.domainOfLicenseOrMaster)) {
-					domainsOfMaster.push(masterProgram.domainOfLicenseOrMaster);
-				}
-			}
-			for (domain of domainsOfMaster) {
-			var programsForDomain = [];
-				for (masterProgram of masterPrograms) {
-					if (masterProgram.domainOfLicenseOrMaster === domain) {
-						programsForDomain.push(masterProgram.programName);
-					}
-				}
-				programNameMaster.set(domain, programsForDomain);
-			}
-
-          },
-          error: function(error) {
-            console.log(error);
-          }
-        });
+function checkLogin() {
+	var jwtToken = getUField("ut");
+	if (!jwtToken) {
+		var urlLoginRedirect = "./login.html";
+		window.location.replace(urlLoginRedirect);
+	}
 }
 
-function showYears() {
-  var userStatusValue = document.querySelectorAll('input[name=status]:checked')[0].value;
-  var usearYearsComponent = document.getElementById("user-years");
-  var year3 = document.getElementById("year3");
-  var year4 = document.getElementById("year4");
-  
-  if (userStatusValue === 'STUDENT') {
-  	$("label[for='year3']").css("display", "inline-block");
-	$("label[for='year4']").css("display", "inline-block");
-	if (usearYearsComponent.style.display === "none") { 
-		usearYearsComponent.style.display = "inline";
+function checkEditReviewAllowed() {
+	var addedReviews = getUField("uar");
+	var reviewsIds = [];
+	var i;
+	for (i in addedReviews) {
+		reviewsIds.push(addedReviews[i].rid);
 	}
-  } else if (userStatusValue === 'MASTERAND') {
-		$("label[for='year3']").css("display", "none");
-		$("label[for='year4']").css("display", "none");
-	if (usearYearsComponent.style.display === "none") { 
-		usearYearsComponent.style.display = "inline";
+	if (!reviewsIds.includes(reviewId)) {
+		var urlHomepageRedirect = "./";
+		window.location.replace(urlHomepageRedirect);
 	}
-  } else {
-		if (usearYearsComponent.style.display === "inline") { 
-		usearYearsComponent.style.display = "none";
-	}
-  }
-} 
+}
+
+function loadFaculty(){
+	<!-- document.getElementById("loading").style.display = "inline-block"; -->
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/faculty/" + facultyId);
+
+	$.ajax({
+	  url: backendUrl,
+	  type: "GET",
+	  success: function(response) {
+		
+		if (response.control.errorCode === 0) {
+			var facultyName = response.result.facultyName;
+			var universityName = response.result.universityName;
+			var universityNameForLogo = universityName.replaceAll("\"", "_");
+			var logoName = facultyName + universityNameForLogo;
+			<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->
+			var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
+			<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
+			
+			var urlProfileRedirect = "./profile.html?id=" + facultyId;
+
+			
+			document.getElementById("review-faculty-main").innerHTML = '';
+			
+			document.getElementById("review-faculty-main").innerHTML += (	
+							'<div class="row">'
+								
+									+'<div class="card">'
+										+'<div class="content">			'	
+											+'<div class="row">'
+											+'	<div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">'
+											+'			<a href="' + urlProfileRedirect + '">		'	
+											+'				<div class="img-faculty-logo-block-base img-faculty-add-review-logo-block">'
+											+'					<img id="review-faculty-logo" class="img-faculty-logo-base img-faculty-logo-add-review center-add-review" src="' + logoSrc + '"></img>'
+											+'				</div>'
+											+'			</a>'
+											+'	</div>'
+											+'	<div class="form-group col-md-10 col-xs-12" style="display:inline; vertical-align: middle;">'
+											+'		<h5>Numele facultății<em>*</em></h5>'
+											+'		<input id="review-faculty-name" type="text" value="' + facultyName + '" placeholder="" class="form-control" required oninvalid="this.setCustomValidity(\'Câmp obligatoriu\')" readonly/>'
+											+'	</div>'
+											+'</div>'
+										+'</div>'
+									+'</div>'
+							+'</div>');
+			
+		}
+		
+		var licensePrograms = response.result.licensePrograms;
+		var masterPrograms = response.result.masterPrograms;
+		
+		var domainsOfLicense = [];
+		var domainsOfMaster = [];
+		var programNameLicense = new Map();
+		var programNameMaster = new Map();
+		
+		for (licenseProgram of licensePrograms) {
+			var domain = licenseProgram.domainOfLicenseOrMaster;
+			if (!domainsOfLicense.includes(domain)) {
+				domainsOfLicense.push(domain);
+			}
+		}
+		for (domain of domainsOfLicense) {
+		var programsForDomain = [];
+			for (licenseProgram of licensePrograms) {
+				if (licenseProgram.domainOfLicenseOrMaster === domain) {
+					programsForDomain.push(licenseProgram.programName);
+				}
+			}
+			programNameLicense.set(domain, programsForDomain);
+		}
+		for (masterProgram of masterPrograms) {
+			if (!domainsOfMaster.includes(masterProgram.domainOfLicenseOrMaster)) {
+				domainsOfMaster.push(masterProgram.domainOfLicenseOrMaster);
+			}
+		}
+		for (domain of domainsOfMaster) {
+		var programsForDomain = [];
+			for (masterProgram of masterPrograms) {
+				if (masterProgram.domainOfLicenseOrMaster === domain) {
+					programsForDomain.push(masterProgram.programName);
+				}
+			}
+			programNameMaster.set(domain, programsForDomain);
+		}
+
+	  },
+	  error: function(error) {
+		checkLoggedInUser(error.status);
+	  },
+	  complete: function (data) {
+		<!-- document.getElementById("loading").style.display = "none"; -->
+	  }
+	});
+}
 
 <!-- function loadFields() { -->
 	<!-- var userDomain = document.getElementById("user-domain"); -->
@@ -824,18 +947,15 @@ function showYears() {
 	<!-- console.log(userDomain); -->
 <!-- } -->
 
-document.getElementById("user-email").oninput = function () {
-	document.getElementById('error-email').innerHTML = "";
-}
+<!-- document.getElementById("user-email").oninput = function () { -->
+	<!-- document.getElementById('error-email').innerHTML = ""; -->
+<!-- } -->
 
 function postReview(){
 
 	var nextbutton = document.getElementById("next-step");
 
-	var userEmail = document.getElementById("user-email").value;
-	if (!validateEmail(userEmail)) {
-		document.getElementById('error-email').innerHTML = "Adresa de email nu este validă";
-	} else {
+	<!-- var userEmail = document.getElementById("user-email").value; -->
 
 		var generalRating = document.querySelectorAll('input[name=rating]:checked')[0].value;
 		var reviewText = document.getElementById("general-review-text").value;
@@ -923,6 +1043,7 @@ function postReview(){
 		  }
 		}
 		var review = {
+			facultyId: facultyId,
 		   generalRating: generalRating,
 		   reviewText: reviewText,
 		   difficulty: difficulty,
@@ -955,41 +1076,321 @@ function postReview(){
 		   userYear: userYear,
 		   <!-- userDomainOfLicenseOrMaster: userDomain, -->
 		   <!-- userProgramName: userProgram, -->
-		   isUserWorking: userWorking,
-		   userEmail: userEmail
+		   isUserWorking: userWorking
 		};
 		
-		var backendUrl = new URL(backendUrlRoot + "/v1/review/" + facultyId);
-		
-		nextbutton.setAttribute("data-toggle", 'modal');
-		nextbutton.setAttribute("data-target", '#add-review-modal');
-		document.getElementById('add-review-modal-text').innerHTML = "Se procesează...";
-		
-		$.ajax({
-			url: backendUrl,
-			type: 'POST',
-			dataType: 'json',
-			contentType: 'application/json',
-			crossDomain: true,
-			data: JSON.stringify(review),
-			success: function (data) {
-				document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost adăugată cu succes";
-				$("#add-review-modal").on("hidden.bs.modal", function () {
-    				var urlProfileRedirect = "./profile.html?id=" + facultyId;
-					location.href = urlProfileRedirect;
-				});
-			},
-			error: function(error) {
-				document.getElementById('add-review-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
-				document.getElementById('add-review-modal-text').innerHTML = "A apărut o eroare. Evaluarea nu a putut fi adăugată cu succes.";
-				$("#add-review-modal").on("hidden.bs.modal", function () {
-					var urlProfileRedirect = "./profile.html?id=" + facultyId;
-					location.href = urlProfileRedirect;
-				});
+		var backendUrl;
+		if (!reviewId) { // if POST create review
+			backendUrl = new URL(backendUrlRoot + "/v1/review/" + facultyId);
+			
+			nextbutton.setAttribute("data-toggle", 'modal');
+			nextbutton.setAttribute("data-target", '#add-review-modal');
+			document.getElementById('add-review-modal-text').innerHTML = "Se procesează...";
+			
+			$.ajax({
+				url: backendUrl,
+				type: 'POST',
+				dataType: 'json',
+				contentType: 'application/json',
+				crossDomain: true,
+				data: JSON.stringify(review),
+				success: function (data) {
+						var addedReviews = getUField("uar");
+						if (!addedReviews) {
+							addedReviews = [];
+						}
+						var newReview = {
+							rid: data.result.reviewId,
+							fid: data.result.facultyId
+						}
+						addedReviews.push(newReview);
+						setUField("uar", addedReviews);
+					<!-- document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost adăugată cu succes. "; -->
+					document.getElementById('add-review-modal-text').innerHTML = "Succes. Poti edita evaluarea timp de 48 de ore din sectiunea 'Contul meu'.";
+					$("#add-review-modal").on("hidden.bs.modal", function () {
+						var urlProfileRedirect = "./profile.html?id=" + facultyId;
+						window.location.replace(urlProfileRedirect);
+					});
+				},
+				error: function(error) {
+					checkLoggedInUser(error.status);
+					document.getElementById('add-review-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
+								
+					if (error.status == 406 && error.responseJSON) {
+						if (error.responseJSON.control) {
+							var errorDescription = error.responseJSON.control.errorDescription;
+							document.getElementById('add-review-modal-text').innerHTML = errorDescription;
+						} else {
+							document.getElementById('add-review-modal-text').innerHTML = "A apărut o eroare. Evaluarea nu a putut fi adăugată cu succes.";
+						}
+					} else {
+						document.getElementById('add-review-modal-text').innerHTML = "A apărut o eroare. Evaluarea nu a putut fi adăugată cu succes.";
+					}
+					
+					$("#add-review-modal").on("hidden.bs.modal", function () {
+						var urlProfileRedirect = "./profile.html?id=" + facultyId;
+						window.location.replace(urlProfileRedirect);
+					});
+			}
+			});
+		} else { // if PUT update review
+			backendUrl = new URL(backendUrlRoot + "/v1/review/" + reviewId);
+			
+			nextbutton.setAttribute("data-toggle", 'modal');
+			nextbutton.setAttribute("data-target", '#add-review-modal');
+			document.getElementById('add-review-modal-text').innerHTML = "Se procesează...";
+			
+			$.ajax({
+				url: backendUrl,
+				type: 'PUT',
+				dataType: 'json',
+				contentType: 'application/json',
+				crossDomain: true,
+				data: JSON.stringify(review),
+				success: function (data) {
+
+					document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost editată cu succes. ";
+					$("#add-review-modal").on("hidden.bs.modal", function () {
+						var urlProfileRedirect = "./profile.html?id=" + facultyId;
+						window.location.replace(urlProfileRedirect);
+					});
+				},
+				error: function(error) {
+					checkLoggedInUser(error.status);
+					document.getElementById('add-review-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
+								
+					if (error.status == 406 && error.responseJSON) {
+						if (error.responseJSON.control) {
+							var errorDescription = error.responseJSON.control.errorDescription;
+							document.getElementById('add-review-modal-text').innerHTML = errorDescription;
+						} else {
+							document.getElementById('add-review-modal-text').innerHTML = "A apărut o eroare. Evaluarea nu a putut fi editată cu succes.";
+						}
+					} else {
+						document.getElementById('add-review-modal-text').innerHTML = "A apărut o eroare. Evaluarea nu a putut fi editată cu succes.";
+					}
+					
+					$("#add-review-modal").on("hidden.bs.modal", function () {
+						var urlProfileRedirect = "./profile.html?id=" + facultyId;
+						window.location.replace(urlProfileRedirect);
+					});
+			}
+			});
 		}
-		});
+		
+
+
+}
+
+function loadReview() {
+
+	document.getElementById("next-step").disabled = true;
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/review/" + reviewId);
 	
+	$.ajax({
+	  url: backendUrl,
+	  type: "GET",
+	  success: function(response) {
+		if (response.control.errorCode === 0) {
+		
+			var reviewResponse = response.result;
+			loadReviewContent(reviewResponse);
+
+		} else {
+			console.log(response.control.errorDescription);
+		}
+
+	  },
+	  error: function(error) {
+		checkLoggedInUser(error.status)
+	  },
+	  complete: function (data) {
+	  document.getElementById("next-step").disabled = false;
+		<!-- document.getElementById("loading").style.display = "none"; -->
+	  }
+	});
+
+}
+
+function loadReviewContent(reviewResponse) {
+
+	var generalRating = reviewResponse.generalRating;;
+	var reviewText = reviewResponse.reviewText ? reviewResponse.reviewText : "";
+	
+	var jobProspectsReviewCategory = reviewResponse.jobProspectsReview;
+	var jobProspectsReviewRating = (jobProspectsReviewCategory && jobProspectsReviewCategory.generalRating) ? jobProspectsReviewCategory.generalRating : null;
+	var jobProspectsReviewText = (jobProspectsReviewCategory && jobProspectsReviewCategory.reviewText) ? jobProspectsReviewCategory.reviewText : null;
+	
+	var coursesAndLecturersReviewCategory = reviewResponse.coursesAndLecturersReview;
+	var coursesAndLecturersReviewRating = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.generalRating) ? coursesAndLecturersReviewCategory.generalRating : null;
+	var coursesAndLecturersReviewText = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.reviewText) ? coursesAndLecturersReviewCategory.reviewText : null;
+	
+	var studentOrganisationsReviewCategory = reviewResponse.studentOrganisationsReview;
+	var studentOrganisationsReviewRating = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.generalRating) ? studentOrganisationsReviewCategory.generalRating : null;
+	var studentOrganisationsReviewText = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.reviewText) ? studentOrganisationsReviewCategory.reviewText : null;
+	
+	var accomodationReviewCategory = reviewResponse.accomodationReview;
+	var accomodationReviewRating = (accomodationReviewCategory && accomodationReviewCategory.generalRating) ? accomodationReviewCategory.generalRating : null;
+	var accomodationReviewText = (accomodationReviewCategory && accomodationReviewCategory.reviewText) ? accomodationReviewCategory.reviewText : null;
+	
+	var facultyFacilitiesReviewCategory = reviewResponse.facultyFacilitiesReview;
+	var facultyFacilitiesReviewRating = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.generalRating) ? facultyFacilitiesReviewCategory.generalRating : null;
+	var facultyFacilitiesReviewText = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : null;
+	
+	<!-- var studentSupportReviewCategory = reviewResponse.studentSupportReview; -->
+	<!-- var studentSupportReviewRating = (studentSupportReviewCategory && studentSupportReviewCategory.generalRating) ? studentSupportReviewCategory.generalRating : null; -->
+	<!-- var studentSupportReviewText = (studentSupportReviewCategory && studentSupportReviewCategory.reviewText) ? studentSupportReviewCategory.reviewText : null; -->
+	
+	var timeBalanceReviewCategory = reviewResponse.timeBalanceReview;
+	var timeBalanceReviewRating = (timeBalanceReviewCategory && timeBalanceReviewCategory.generalRating) ? timeBalanceReviewCategory.generalRating : null;
+	var timeBalanceReviewText = (timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : null;	
+	
+	var difficulty = reviewResponse.difficulty;
+	var wouldRecommend = reviewResponse.wouldRecommend;
+	
+	var userStatus = reviewResponse.userStatus;
+	var userYear = reviewResponse.userYear;
+	var userWorking = reviewResponse.isUserWorking;
+	
+	document.getElementById("general-review-text").value = reviewText;
+	if (generalRating) {
+		document.getElementById("rating-" + generalRating).checked = true;
 	}
+	
+	document.getElementById("cat1-review-text").value = coursesAndLecturersReviewText;
+	if (coursesAndLecturersReviewRating) {
+		document.getElementById("cat1-rating-" + coursesAndLecturersReviewRating).checked = true;
+	}
+	
+	document.getElementById("cat2-review-text").value = jobProspectsReviewText;
+	if (jobProspectsReviewRating) {
+		document.getElementById("cat2-rating-" + jobProspectsReviewRating).checked = true;
+	}
+	
+	document.getElementById("cat3-review-text").value = accomodationReviewText;
+	if (accomodationReviewRating) {
+		document.getElementById("cat3-rating-" + accomodationReviewRating).checked = true;
+	}
+	
+	document.getElementById("cat4-review-text").value = studentOrganisationsReviewText;
+	if (studentOrganisationsReviewRating) {
+		document.getElementById("cat4-rating-" + studentOrganisationsReviewRating).checked = true;
+	}
+	
+	document.getElementById("cat5-review-text").value = facultyFacilitiesReviewText;
+	if (facultyFacilitiesReviewRating) {
+		document.getElementById("cat5-rating-" + facultyFacilitiesReviewRating).checked = true;
+	}
+	
+	document.getElementById("cat6-review-text").value = timeBalanceReviewText;
+	if (timeBalanceReviewRating) {
+		document.getElementById("cat6-rating-" + timeBalanceReviewRating).checked = true;
+	}
+	
+	if (wouldRecommend === true) {
+		document.getElementById('would-recommend-yes').checked = true;
+	} else if (wouldRecommend === false){
+		document.getElementById('would-recommend-no').checked = true;
+	}
+	
+	if (wouldRecommend === true) {
+		document.getElementById('would-recommend-yes').checked = true;
+	} else if (wouldRecommend === false){
+		document.getElementById('would-recommend-no').checked = true;
+	}
+	
+	if (difficulty) {
+		document.querySelector('input[type="range"]').value = difficulty;
+	}
+	
+	var elem = document.querySelector('input[type="range"]');
+	var newValue = elem.value;
+	var target = document.querySelector('.difficulty-value');
+	var newText;
+	var color;
+	switch(newValue) {
+	case "0":
+		newText = "-";
+		color = "#cfcfcf";
+		elem.className = "";
+		break;
+	case "1":
+		newText = "Foarte redusă";
+		color = "#3e9c28";
+		elem.className = "veryeasy";
+		break;
+	case "2":
+		newText = "Redusă";
+		color = "#8ed41e";
+		elem.className = "easy";
+		break;
+	case "3":
+		newText = "Medie";
+		color = "#fabb0c";
+		elem.className = "medium";
+		break;
+	case "4":
+		newText = "Ridicată";
+		color = "#e06c00";
+		elem.className = "hard";
+		break;
+	case "5":
+		newText = "Foarte ridicată";
+		color = "#c91104";
+		elem.className = "veryhard";
+		break;
+	}
+	target.innerHTML = newText;
+	target.style.color = color;
+	
+	switch(userStatus) {
+	case "STUDENT":
+		document.getElementById('status-student').checked = true;
+		showYears();
+		break;
+	case "MASTERAND":
+		document.getElementById('status-master').checked = true;
+		showYears();
+		break;
+	case "ABSOLVENT":
+		document.getElementById('status-alumni').checked = true;
+		break;
+	case "DROP-OUT":
+		document.getElementById('status-drop').checked = true;
+		break;
+	case "ALTUL":
+		document.getElementById('status-other').checked = true;
+		break;
+	}
+	
+	switch(userYear) {
+	case "Anul 1":
+		document.getElementById('year1').checked = true;
+		break;
+	case "Anul 2":
+		document.getElementById('year2').checked = true;
+		break;
+	case "Anul 3":
+		document.getElementById('year3').checked = true;
+		break;
+	case "Anul 4+":
+		document.getElementById('year4').checked = true;
+		break;
+	}
+	
+	switch(userWorking) {
+	case true:
+		document.getElementById('work-yes').checked = true;
+		break;
+	case false:
+		document.getElementById('work-no').checked = true;
+		break;
+	default:
+		document.getElementById('work-not-applied').checked = true;
+		break;
+	}
+		
 
 }
 
@@ -1116,28 +1517,28 @@ function fixProgressIndicator(n) {
 
 }
 
-  function textCounter(field, field2, field3, field4, maxlimit) {
-    var countfield = document.getElementById(field2);
+function textCounter(field, field2, field3, field4, maxlimit) {
+	var countfield = document.getElementById(field2);
 	var countrow = document.getElementById(field3);
 	var counttext = document.getElementById(field4);
-    /* $(field2).html(text_remaining); */
-    if (field.value.length >= maxlimit) {
+	/* $(field2).html(text_remaining); */
+	if (field.value.length >= maxlimit) {
 		countrow.style.visibility = "hidden";
-    } else {
+	} else {
 		countrow.style.visibility = "visible";
 		countfield.innerHTML = maxlimit - field.value.length;
 		counttext.innerHTML = " caractere obligatorii rămase";
 		countfield.className = "text-muted";
 		counttext.className = "text-muted";
-    }
-  }
+	}
+}
   
-  function increaseReviewStatistic(n) {
+function increaseReviewStatistic(n) {
 	var step = n + 1;
-	
+
 	var backendUrl = new URL(backendUrlRoot + "/v1/analytics/rev");
 	backendUrl.searchParams.append("s", step);
-	
+
 	$.ajax({
 		url: backendUrl,
 		type: 'PUT',
@@ -1147,53 +1548,52 @@ function fixProgressIndicator(n) {
 		success: function () {
 		},
 		error: function(error) {
-			console.log(error);
 		}
 	});
-  }
+}
   
-  var elem = document.querySelector('input[type="range"]');
-  var rangeValue = function(){
-	  var newValue = elem.value;
-	  var target = document.querySelector('.difficulty-value');
-	  var newText;
-	  var color;
-	  switch(newValue) {
-		case "0":
-			newText = "-";
-			color = "#cfcfcf";
-			elem.className = "";
-			break;
-		case "1":
-			newText = "Foarte redusă";
-			color = "#3e9c28";
-			elem.className = "veryeasy";
-			break;
-		case "2":
-			newText = "Redusă";
-			color = "#8ed41e";
-			elem.className = "easy";
-			break;
-		case "3":
-			newText = "Medie";
-			color = "#fabb0c";
-			elem.className = "medium";
-			break;
-		case "4":
-			newText = "Ridicată";
-			color = "#e06c00";
-			elem.className = "hard";
-			break;
-		case "5":
-			newText = "Foarte ridicată";
-			color = "#c91104";
-			elem.className = "veryhard";
-			break;
-		}
-	  target.innerHTML = newText;
-	  target.style.color = color;
-  }
-  elem.addEventListener("input", rangeValue);
+var elem = document.querySelector('input[type="range"]');
+var rangeValue = function(){
+  var newValue = elem.value;
+  var target = document.querySelector('.difficulty-value');
+  var newText;
+  var color;
+  switch(newValue) {
+	case "0":
+		newText = "-";
+		color = "#cfcfcf";
+		elem.className = "";
+		break;
+	case "1":
+		newText = "Foarte redusă";
+		color = "#3e9c28";
+		elem.className = "veryeasy";
+		break;
+	case "2":
+		newText = "Redusă";
+		color = "#8ed41e";
+		elem.className = "easy";
+		break;
+	case "3":
+		newText = "Medie";
+		color = "#fabb0c";
+		elem.className = "medium";
+		break;
+	case "4":
+		newText = "Ridicată";
+		color = "#e06c00";
+		elem.className = "hard";
+		break;
+	case "5":
+		newText = "Foarte ridicată";
+		color = "#c91104";
+		elem.className = "veryhard";
+		break;
+	}
+  target.innerHTML = newText;
+  target.style.color = color;
+}
+elem.addEventListener("input", rangeValue);
 
   
 

@@ -35,6 +35,7 @@ public enum ErrorsEnumEng {
 	REVIEW_ALREADY_UPVOTED(HttpStatus.BAD_REQUEST, "This review was already upvoted.", -35),
 	REVIEW_MAX_NUMBER(HttpStatus.NOT_ACCEPTABLE, "Maximum number of reviews reached.", -36),
 	REVIEW_SAME_FACULTY(HttpStatus.NOT_ACCEPTABLE, "A review was already added for this faculty.", -37),
+	REVIEW_UPDATE_DIFFERENT_USER(HttpStatus.BAD_REQUEST, "The user who updated the review is different from the user who created it.", -38),
 
 	// Question
 	QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "Question was not found.", -40),
@@ -52,22 +53,23 @@ public enum ErrorsEnumEng {
 	JWT_VERIFY_ERROR(HttpStatus.UNAUTHORIZED, "JWT token verification failed.", -66),
 	JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "JWT token has expired.", -67),
 	USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "User needs to log in in order to use this functionality.", -68),
+	USERPROFILE_MAX_FAVORITE_FACULTIES(HttpStatus.BAD_REQUEST, "Maximum number of favorite faculties reached.", -69),
 
 	// Statistic
-	ANALYTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics document was not found.", -70),
-	ANALYTICS_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics document already exists.", -71),
-	ANALYTICS_EXCEL_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics excel document already exists.", -72),
-	ANALYTICS_EXCEL_DOCUMENT_ERROR(HttpStatus.BAD_REQUEST, "Analytics excel error.", -73),
-	ANALYTICS_EXCEL_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics excel document was not found.", -74),
+	ANALYTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics document was not found.", -80),
+	ANALYTICS_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics document already exists.", -81),
+	ANALYTICS_EXCEL_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics excel document already exists.", -82),
+	ANALYTICS_EXCEL_DOCUMENT_ERROR(HttpStatus.BAD_REQUEST, "Analytics excel error.", -83),
+	ANALYTICS_EXCEL_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics excel document was not found.", -84),
 
 	// Newsletter
-	NEWSLETTER_NOT_FOUND(HttpStatus.NOT_FOUND, "Newsletter was not found.", -80),
-	NEWSLETTER_EMAIL_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Email already exists.", -81),
-	NEWSLETTER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Newsletter document already exists.", -82),
+	NEWSLETTER_NOT_FOUND(HttpStatus.NOT_FOUND, "Newsletter was not found.", -90),
+	NEWSLETTER_EMAIL_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Email already exists.", -91),
+	NEWSLETTER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Newsletter document already exists.", -92),
 
 	// Feedback
-	FEEDBACK_NOT_FOUND(HttpStatus.NOT_FOUND, "Feedback was not found.", -90),
-	FEEDBACK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Feedback document already exists.", -91);
+	FEEDBACK_NOT_FOUND(HttpStatus.NOT_FOUND, "Feedback was not found.", -100),
+	FEEDBACK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Feedback document already exists.", -101);
 
 	private String errorDescription;
 	private int errorCode;

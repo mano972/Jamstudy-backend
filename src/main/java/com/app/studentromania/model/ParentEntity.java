@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.app.studentromania.enumtype.DocTypeEnum;
+import com.app.studentromania.util.Utilities;
 import com.couchbase.client.java.repository.annotation.Field;
 import com.couchbase.client.java.repository.annotation.Id;
 
@@ -16,7 +17,13 @@ public abstract class ParentEntity {
 	private Date creationDate;
 
 	@Field
+	private String formattedCreationDate;
+
+	@Field
 	private Date updateDate;
+
+	@Field
+	private String formattedUpdateDate;
 
 	@Field
 	private String docType;
@@ -27,13 +34,18 @@ public abstract class ParentEntity {
 	}
 
 	public void initParentEntity(DocTypeEnum docType) {
-		setCreationDate(new Date());
-		setUpdateDate(new Date());
+		Date date = new Date();
+		setCreationDate(date);
+		setFormattedCreationDate(Utilities.getFormattedDate(date));
+		setUpdateDate(date);
+		setFormattedUpdateDate(Utilities.getFormattedDate(date));
 		setDocType(docType.toString());
 	}
 
 	public void setUpdateDateWithCurrentDate() {
-		setUpdateDate(new Date());
+		Date date = new Date();
+		setUpdateDate(date);
+		setFormattedUpdateDate(Utilities.getFormattedDate(date));
 	}
 
 	public String getId() {
@@ -52,12 +64,28 @@ public abstract class ParentEntity {
 		this.creationDate = creationDate;
 	}
 
+	public String getFormattedCreationDate() {
+		return formattedCreationDate;
+	}
+
+	public void setFormattedCreationDate(String formattedCreationDate) {
+		this.formattedCreationDate = formattedCreationDate;
+	}
+
 	public Date getUpdateDate() {
 		return updateDate;
 	}
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public String getFormattedUpdateDate() {
+		return formattedUpdateDate;
+	}
+
+	public void setFormattedUpdateDate(String formattedUpdateDate) {
+		this.formattedUpdateDate = formattedUpdateDate;
 	}
 
 	public String getDocType() {

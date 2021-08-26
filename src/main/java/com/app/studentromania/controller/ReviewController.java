@@ -46,6 +46,12 @@ public class ReviewController {
 		return reviewService.getFilteredReviewsByFacultyId(facultyId, reviewFilter).createRestResponse();
 	}
 
+	@GetMapping("/user")
+	@RestCall
+	public ResponseEntity<String> getUserReviews() {
+		return reviewService.getUserReviews().createRestResponse();
+	}
+
 	@PostMapping("/{facultyId}")
 	@RestCall
 	@JWTAuth

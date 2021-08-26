@@ -46,18 +46,18 @@
 				<li>
 					<a href="./" class="btn btn-simple">Acasă</a>
 				</li>
-				  <li>
-					  <a href="./search.html" class="btn btn-simple">Facultăți</a>
-				  </li>
-				  <li>
-					  <a href="./comparison.html" class="btn btn-simple">Compară</a>
-				  </li>
-				  <li>
-					  <a href="./contact.html" class="btn btn-simple">Contact</a>
-				  </li>
-				  <!-- <li> -->
-					  <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-				  <!-- </li> -->
+				<li>
+					<a href="./search.html" class="btn btn-simple">Facultăți</a>
+				</li>
+				<li>
+					<a href="./comparison.html" class="btn btn-simple">Compară</a>
+				</li>
+				<li>
+					<a href="./contact.html" class="btn btn-simple">Contact</a>
+				</li>
+				<li>
+					<a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
+				</li>
 			   </ul>
 			</div><!-- /.navbar-collapse -->
 		  </div><!-- /.container-->
@@ -127,25 +127,6 @@
 		</div>
 		
 	</div>
-		
-	<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<div id="modal-header-text">
-				<i class="far fa-envelope fa-2x"></i>
-			</div>
-		  </div>
-		  <div id="modal-text" class="modal-body modal-info text-center">
-			&nbsp;
-		  </div>
-		  <div class="modal-footer">
-			   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
     
 	<footer class="footer">
 		<div class="container">
@@ -173,7 +154,18 @@
 								   Contact
 								</a>
 							</li>
-
+						</ul>
+						<ul>
+							<li>
+								<a href="./terms.html">
+								   Termeni și condiții
+								</a>
+							</li>
+							<li>
+								<a href="./policy.html">
+								   Politica de confidențialitate
+								</a>
+							</li>
 						</ul>
 						<hr>
 
@@ -207,8 +199,97 @@
 
 		</div>
 	</footer>
+	
+	<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<div id="modal-header-text">
+				<i class="far fa-envelope fa-2x"></i>
+			</div>
+		  </div>
+		  <div id="modal-text" class="modal-body modal-info text-center">
+			&nbsp;
+		  </div>
+		  <div id="general-modal-footer" class="modal-footer">
+			   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+				<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-login">
+					<div class="modal-content">
+						<div class="login-card">
+							<h3 class="title">Autentificare</h3>
+							<br>
+							<form class="register-form">
+								<!-- <label>Email</label> --> 
+								<input id="login-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorLoginEmail()">
+								<small id="error-login-email" class="error-message"></small>
+								<br>
+								<!-- <label>Parolă</label> -->
+								<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100" oninput="clearErrorLoginPass()">
+								<small id="error-login" class="error-message"></small>
+								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
+								<!-- <h5>sau</h5> -->
+								<h5 id="reg-line"></h5>
+								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+							</form>
+							<div class="forgot">
+								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
+								<a href="#" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
+								<a class="btn btn-simple btn-info btn-reg" data-dismiss="modal" data-toggle="modal" data-target="#register-modal">Nu ai cont? Înregistrează-te</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-register">
+					<div class="modal-content">
+						<div class="register-card">
+							<h3 class="title">Creare cont nou</h3>
+							<br>
+							<form class="register-form">
+								<!-- <label>Email</label> -->
+								<input id="register-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
+								<small id="error-register-email" class="error-message"></small>
+								<br>
+								<!-- <label>Parola</label> -->
+								<fieldset class="search-fieldset">
+									<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorRegisterPass()">
+									<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
+								</fieldset>
+								<!-- <label>Confirmă Parola</label> -->
+								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorRegisterConfirmPass()">
+								<small id="error-register" class="error-message"></small>
+								
+								<div>
+									<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</label>
+									<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox">Vreau să fiu la curent cu ultimele noutăți</label>
+								</div>
+								
+								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
+								<!-- <h5>sau</h5> -->
+								<h5 id="reg-line"></h5>
+								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+							</form>
+							<div class="forgot">
+								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
 
 </body>
+
+<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
 
 <script>
 
@@ -217,8 +298,13 @@ const backendUrlRoot = "https://unistart.ro/Jamstudy";
 $body = $("body");
 $(document).on({
     ajaxStart: function() { $body.addClass("loading");    },
-    ajaxStop: function() { $body.removeClass("loading"); }    
+    ajaxStop: function() { 
+	$body.removeClass("loading");
+	<!-- document.getElementById("loading").style.display = "none"; -->
+	}    
 });
+
+
 
 
 $(document).ready(function() {
@@ -227,6 +313,8 @@ $(document).ready(function() {
 		<!-- pause: true, -->
 		<!-- interval: false, -->
 	<!-- }); -->
+	
+	myAccountText();
 	
 	$('#media').carousel('pause');
 
@@ -247,7 +335,7 @@ function getFaculties() {
 		return;
 	}
 
-	var facultyIdsString = localStorage.getItem("faculty-comparison-items");
+	var facultyIdsString = localStorage.getItem("fci");
 	var facultyIds;
 	if (facultyIdsString) {
 		facultyIds = facultyIdsString.split(",");
@@ -269,7 +357,6 @@ function getFaculties() {
 	  url: backendUrl,
 	  type: "GET",
 	  success: function(response) {
-		
 		if (response.control.errorCode === 0) {
 		
 			var universityIds = [];
@@ -293,7 +380,7 @@ function getFaculties() {
 
 	  },
 	  error: function(error) {
-		console.log(error);
+		checkLoggedInUser(error.status)
 	  },
 	  complete: function (data) {
 		document.getElementById("loading").style.display = "none";
@@ -475,6 +562,18 @@ function loadComparisonTableContent(sortedResponse) {
 		<!-- var avgRatingStudentSupport = facultyResponse.avgRatingStudentSupport ? facultyResponse.avgRatingStudentSupport.toFixed(1) : "N/A"; -->
 		var avgRatingTimeBalance = facultyResponse.avgRatingTimeBalance ? facultyResponse.avgRatingTimeBalance.toFixed(1) : "N/A";
 		
+		var savedFacultiesIds = getUField("usf");
+		var favoriteClass;
+		var favoriteTooltipText;
+		var favoriteText;
+		if (savedFacultiesIds && savedFacultiesIds.includes(facultyId)) {
+			favoriteClass = "fas fa-heart fa-lg";
+			favoriteTooltipText = "Elimină";
+		} else {
+			favoriteClass = "far fa-heart fa-lg";
+			favoriteTooltipText = "Salvează";
+		}
+		
 		var urlProfileRedirect = "./profile.html?id=";
 
 		document.getElementById("faculty-name-row-content").innerHTML += (
@@ -482,8 +581,8 @@ function loadComparisonTableContent(sortedResponse) {
 	+' 										<br> '
 	+' 										<div class="row"> '
 	+' 											<div class="col-xs-3">	 '
-	+' 												<div data-toggle="tooltip" title="Salvează" class="save" onclick="addToFavorites(this)"> '
-	+' 													<i class="far fa-heart fa-lg"></i> '
+	+' 												<div data-toggle="tooltip" title="' + favoriteTooltipText + '" class="save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, false)"> '
+	+' 													<i class="' + favoriteClass + '"></i> '
 	+' 												</div> '
 	+' 											</div> '
 	+' 											<div class="col-xs-3 col-xs-offset-6">	 '
@@ -621,7 +720,7 @@ function getRecommendedFaculties(universityIds, comparedFacultyIds) {
 
 	  },
 	  error: function(error) {
-		console.log(error);
+		checkLoggedInUser(error.status);
 	  }
 	});
 }
@@ -694,7 +793,7 @@ function loadRecommendedFacultiesContent(response, comparedFacultyIds) {
 			var urlProfileRedirect = "./profile.html?id=";
 			
 			recommendedFacultiesString += (
-						'<div class="' + colWidth + '"><div class="card"> <div class="content" style="height: 350px;"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + faculty.facultyName + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + faculty.facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </div> </div> <div class="col-xs-12 text-center" style="margin-top: 10px;"> <button class="btn btn-simple compare compare-carousel" onclick="addToCompare(this, &quot;'+faculty.facultyId+'&quot;)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div>');
+						'<div class="' + colWidth + '"><div class="card"> <div class="content" style="height: 350px;"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + faculty.facultyName + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + faculty.facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </div> </div> <div class="col-xs-12 text-center" style="margin-top: 10px;"> <button class="btn btn-simple compare compare-carousel" onclick="addToCompareTable(this, &quot;'+faculty.facultyId+'&quot;)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div>');
 
 		if (i==(faculties.length - 1) || i%recommendedNumberPerSlide==(recommendedNumberPerSlide-1)) {
 			recommendedFacultiesString += ('</div> </div>');
@@ -706,10 +805,10 @@ function loadRecommendedFacultiesContent(response, comparedFacultyIds) {
 	
 }
 
-function addToCompare(button, facultyId) {
+function addToCompareTable(button, facultyId) {
 
 	if (typeof(Storage) !== "undefined") {
-		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
+		var facultyIdsString = localStorage.getItem("fci");
 		var facultyIds;
 		if (facultyIdsString) {
 			facultyIds = facultyIdsString.split(",");
@@ -719,7 +818,7 @@ function addToCompare(button, facultyId) {
 		if (facultyIds.length <= 20 && !facultyIds.includes(facultyId)) {
 			facultyIds.push(facultyId);
 		}
-		localStorage.setItem("faculty-comparison-items", facultyIds);
+		localStorage.setItem("fci", facultyIds);
 	} else {
 	  // Sorry! No Web Storage support..
 	}
@@ -734,7 +833,7 @@ function addToCompare(button, facultyId) {
 function removeFromCompare(facultyId) {
 
 	if (typeof(Storage) !== "undefined") {
-		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
+		var facultyIdsString = localStorage.getItem("fci");
 		var facultyIds;
 		if (facultyIdsString) {
 			facultyIds = facultyIdsString.split(",");
@@ -744,7 +843,7 @@ function removeFromCompare(facultyId) {
 		if (facultyIds.includes(facultyId)) {
 			facultyIds = facultyIds.filter(function(value, index, arr){ return value !== facultyId;});
 		}
-		localStorage.setItem("faculty-comparison-items", facultyIds);
+		localStorage.setItem("fci", facultyIds);
 		
 		getFaculties();
 		
@@ -754,20 +853,17 @@ function removeFromCompare(facultyId) {
 }
 
 
-function addToFavorites(el) {
-	el.setAttribute("data-toggle", 'modal');
-	el.setAttribute("data-target", '#general-modal');
-	document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation fa-2x"></i>';
-	document.getElementById('modal-text').innerHTML = "Funcționalitatea va fi implementată în curând.";
-}
+<!-- function addToFavorites(el) { -->
+	<!-- el.setAttribute("data-toggle", 'modal'); -->
+	<!-- el.setAttribute("data-target", '#general-modal'); -->
+	<!-- document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation fa-2x"></i>'; -->
+	<!-- document.getElementById('modal-text').innerHTML = "Funcționalitatea va fi implementată în curând."; -->
+<!-- } -->
 
 
 
 
 </script>
-
-<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
 
 <script src="./bootstrap3/js/bootstrap.js" type="text/javascript"></script>
 
@@ -776,6 +872,7 @@ function addToFavorites(el) {
 <script src="./assets/js/ct-paper-radio.js"></script>
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
+<script src="./assets/js/unistart.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
     

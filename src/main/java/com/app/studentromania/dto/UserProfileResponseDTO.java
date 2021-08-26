@@ -1,8 +1,10 @@
 package com.app.studentromania.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import com.app.studentromania.model.UserProfileFaculty;
+import com.app.studentromania.model.UserProfileReview;
 
 public class UserProfileResponseDTO {
 
@@ -16,13 +18,25 @@ public class UserProfileResponseDTO {
 
 	private String email;
 
+	private String location;
+
+	private Date birthDate;
+
+	private Boolean isUserWorking;
+
+	private String userStatus;
+
+	private String userYear;
+
+	private Boolean subscribeToNewsletter;
+
 	private List<UserProfileFaculty> favoriteFaculties;
 
 	private List<UserProfileFaculty> recentFaculties;
 
 	private List<String> likedReviews;
 
-	private List<String> addedReviews;
+	private List<UserProfileReview> addedReviews;
 
 	public String getUserId() {
 		return userId;
@@ -64,6 +78,54 @@ public class UserProfileResponseDTO {
 		this.email = email;
 	}
 
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public Boolean getIsUserWorking() {
+		return isUserWorking;
+	}
+
+	public void setIsUserWorking(Boolean isUserWorking) {
+		this.isUserWorking = isUserWorking;
+	}
+
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
+	}
+
+	public String getUserYear() {
+		return userYear;
+	}
+
+	public void setUserYear(String userYear) {
+		this.userYear = userYear;
+	}
+
+	public Boolean getSubscribeToNewsletter() {
+		return subscribeToNewsletter;
+	}
+
+	public void setSubscribeToNewsletter(Boolean subscribeToNewsletter) {
+		this.subscribeToNewsletter = subscribeToNewsletter;
+	}
+
 	public List<UserProfileFaculty> getFavoriteFaculties() {
 		return favoriteFaculties;
 	}
@@ -88,11 +150,11 @@ public class UserProfileResponseDTO {
 		this.likedReviews = likedReviews;
 	}
 
-	public List<String> getAddedReviews() {
+	public List<UserProfileReview> getAddedReviews() {
 		return addedReviews;
 	}
 
-	public void setAddedReviews(List<String> addedReviews) {
+	public void setAddedReviews(List<UserProfileReview> addedReviews) {
 		this.addedReviews = addedReviews;
 	}
 

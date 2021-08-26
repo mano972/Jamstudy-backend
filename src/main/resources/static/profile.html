@@ -48,18 +48,18 @@
 				<li>
 					<a href="./" class="btn btn-simple">Acasă</a>
 				</li>
-				  <li>
-					  <a href="./search.html" class="btn btn-simple">Facultăți</a>
-				  </li>
-				   <li>
-					  <a href="./comparison.html" class="btn btn-simple">Compară</a>
-				  </li>
-				  <li>
-					  <a href="./contact.html" class="btn btn-simple">Contact</a>
-				  </li>
-				  <!-- <li> -->
-					  <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-				  <!-- </li> -->
+				<li>
+					<a href="./search.html" class="btn btn-simple">Facultăți</a>
+				</li>
+				 <li>
+					<a href="./comparison.html" class="btn btn-simple">Compară</a>
+				</li>
+				<li>
+					<a href="./contact.html" class="btn btn-simple">Contact</a>
+				</li>
+				<li>
+					<a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
+				</li>
 			   </ul>
 			</div><!-- /.navbar-collapse -->
 		  </div><!-- /.container-->
@@ -231,53 +231,6 @@
 		</div>
 		
 	</div>
-	
-	<div class="modal fade" id="generic-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
-	  <div class="modal-dialog">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<div id="generic-header-text">
-				<i class="far fa-envelope fa-3x"></i>
-			</div>
-		  </div>
-		  <div id="generic-modal-text" class="modal-body modal-info text-center">
-			.
-		  </div>
-		  <div class="modal-footer">
-			   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-	
-	
-	<div class="modal fade" id="review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog-review">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<div class="close" data-dismiss="modal">
-	 			<i class="fa fa-close"></i>
-	 		</div>
-			<div id="review-modal-header-text">
-				<i class="fas fa-scroll fa-2x"></i>
-			</div>
-		  </div>
-		  <div id="review-modal-text" class="modal-body">
-			&nbsp;
-		  </div>
-		  <div class="modal-footer">
-			<div class="left-side">
-				<button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-			</div>
-			<div class="divider"></div>
-			<div class="right-side">
-				<button id="see-all-reviews-modal" type="button" class="btn btn-warning btn-simple" data-dismiss="modal" style="color: orange;">Vezi toate evaluările</button>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	</div>
     
 	<footer class="footer">
 		<div class="container">
@@ -305,7 +258,18 @@
 								   Contact
 								</a>
 							</li>
-
+						</ul>
+						<ul>
+							<li>
+								<a href="./terms.html">
+								   Termeni și condiții
+								</a>
+							</li>
+							<li>
+								<a href="./policy.html">
+								   Politica de confidențialitate
+								</a>
+							</li>
 						</ul>
 						<hr>
 
@@ -339,8 +303,124 @@
 
 		</div>
 	</footer>
+	
+	<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<div id="modal-header-text">
+				<i class="far fa-envelope fa-3x"></i>
+			</div>
+		  </div>
+		  <div id="modal-text" class="modal-body modal-info text-center">
+			...
+		  </div>
+		  <div id="general-modal-footer" class="modal-footer">
+			   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	
+	<div class="modal fade" id="review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog-review">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<div class="close" data-dismiss="modal">
+	 			<i class="fa fa-close"></i>
+	 		</div>
+			<div id="review-modal-header-text">
+				<i class="fas fa-scroll fa-2x"></i>
+			</div>
+		  </div>
+		  <div id="review-modal-text" class="modal-body">
+			&nbsp;
+		  </div>
+		  <div class="modal-footer">
+			<div class="left-side">
+				<button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+			</div>
+			<div class="divider"></div>
+			<div class="right-side">
+				<button id="see-all-reviews-modal" type="button" class="btn btn-warning btn-simple" data-dismiss="modal" style="color: orange;">Vezi toate evaluările</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+			<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-login">
+					<div class="modal-content">
+						<div class="login-card">
+							<h3 class="title">Autentificare</h3>
+							<br>
+							<form class="register-form">
+								<!-- <label>Email</label> --> 
+								<input id="login-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorLoginEmail()">
+								<small id="error-login-email" class="error-message"></small>
+								<br>
+								<!-- <label>Parolă</label> -->
+								<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100" oninput="clearErrorLoginPass()">
+								<small id="error-login" class="error-message"></small>
+								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
+								<!-- <h5>sau</h5> -->
+								<h5 id="reg-line"></h5>
+								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+							</form>
+							<div class="forgot">
+								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
+								<a href="#" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
+								<a class="btn btn-simple btn-info btn-reg" data-dismiss="modal" data-toggle="modal" data-target="#register-modal">Nu ai cont? Înregistrează-te</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-register">
+					<div class="modal-content">
+						<div class="register-card">
+							<h3 class="title">Creare cont nou</h3>
+							<br>
+							<form class="register-form">
+								<!-- <label>Email</label> -->
+								<input id="register-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
+								<small id="error-register-email" class="error-message"></small>
+								<br>
+								<!-- <label>Parola</label> -->
+								<fieldset class="search-fieldset">
+									<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorRegisterPass()">
+									<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
+								</fieldset>
+								<!-- <label>Confirmă Parola</label> -->
+								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorRegisterConfirmPass()">
+								<small id="error-register" class="error-message"></small>
+								
+								<div>
+									<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</label>
+									<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox">Vreau să fiu la curent cu ultimele noutăți</label>
+								</div>
+								
+								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
+								<!-- <h5>sau</h5> -->
+								<h5 id="reg-line"></h5>
+								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+							</form>
+							<div class="forgot">
+								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
 
 </body>
+<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
 
 <script>
 
@@ -359,6 +439,7 @@ var currentlyVisibleReviewsNo = 0;
 
 $(document).ready(function() {
 
+	myAccountText();
 	var queryParams = new URLSearchParams(window.location.search);
 	facultyId = queryParams.get("id");
 	getFaculty();
@@ -441,8 +522,9 @@ function getFaculty() {
 
           },
           error: function(error) {
-            console.log(error);
-			location.href = "./error.html";
+			if (checkLoggedInUser(error.status)) {
+				location.href = "./error.html";
+			}
           }
         });
 }
@@ -485,7 +567,7 @@ function getReviews(loadMore) {
 
 	  },
 	  error: function(error) {
-		console.log(error);
+		checkLoggedInUser(error.status)
 	  }
 	});
 }
@@ -520,11 +602,21 @@ function loadProfileHeader(response) {
 			<!-- var logoSrcTop = "C://logos_jamstudy/" + logoName + ".png"; -->
 			var logoSrcTop = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
 			
+			var savedFacultiesIds = getUField("usf");
+			var favoriteClass;
+			var favoriteText;
+			if (savedFacultiesIds && savedFacultiesIds.includes(facultyId)) {
+				favoriteClass = "fas fa-heart fa-2x align";
+				favoriteText = "Salvată";
+			} else {
+				favoriteClass = "far fa-heart fa-2x align";
+				favoriteText = "Salvează";
+			}
+			
 			var accessWebisteUrl = response.result.facultyWebsite;
 			if (accessWebisteUrl && !accessWebisteUrl.includes("http")) {
 				accessWebisteUrl = 'http://' + accessWebisteUrl;
 			}
-			var addReviewRedirectUrl = "./review.html?id=" + facultyId;
 			
 			document.getElementById("faculty-profile-header").innerHTML = '';
 			var facultyProfileHeaderString = (
@@ -554,7 +646,7 @@ function loadProfileHeader(response) {
 					+				'</div>'
 					+				'<div class="col-xs-10 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-2 col-md-offset-0 col-lg-2 col-lg-offset-0 save-compare-profile">	'
 					+					'<div class="align">'
-					+						'<button class="btn-danger btn btn-simple save align" style="margin-bottom: 20px" onclick="addToFavorites(this)"><i class="far fa-heart fa-2x align" style="margin-right: 7px"></i><span class="align">Salvează</span></button>'	
+					+						'<button class="btn-danger btn btn-simple save align" style="margin-bottom: 20px" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span class="align">' + favoriteText + '</span></button>'	
 					+					'</div>	'	
 					+					'<div class="align" style="float: right;">'
 					+						'<button class="compare btn btn-simple align" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-2x align" style="margin-right: 7px; "></i><span class="align">Compară</span> </button>	'	
@@ -564,12 +656,12 @@ function loadProfileHeader(response) {
 					+			'<br>'	
 					+			'<div class="row">	'
 					+				'<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-3 col-lg-offset-9">'
-					+					'<a data-toggle="tooltip" title="' + accessWebisteUrl + '" href="' + accessWebisteUrl + '" target="_blank" class="btn btn-success btn-fill btn-block add-review-button"><i class="fas fa-external-link-alt fa-lg" style="color: white; margin-right: 7px"></i>Accesează website</a>'
+					+					'<a data-toggle="tooltip" title="' + accessWebisteUrl + '" href="' + accessWebisteUrl + '" target="_blank" class="btn btn-success btn-fill btn-block visit-website-button"><i class="fas fa-external-link-alt fa-lg" style="color: white; margin-right: 7px"></i>Accesează website</a>'
 					+				'</div>'
 					+			'</div>'
 					+			'<div class="row nav-row-faculty-profile">	'	
 					+				'<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-push-6 col-md-5 col-md-push-6 col-lg-3 col-lg-push-8">'
-					+					'<a href="' + addReviewRedirectUrl + '" class="btn btn-warning btn-fill btn-block add-review-button"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>'
+					+					'<a class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>'
 					+				'</div>'						
 					+				'<div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-6 col-md-pull-6 col-lg-6 col-lg-pull-4">'
 					+					'<div class="nav-tabs-navigation">'
@@ -676,7 +768,7 @@ function loadGeneralReviewCard(response) {
 								}
 								for (i in responseReview.result.reviews) {
 									reviewId = responseReview.result.reviews[i].reviewId;
-									userName = responseReview.result.reviews[i].userName ? responseReview.result.reviews[i].userName : "Anonim";
+									userName = responseReview.result.reviews[i].userName ? responseReview.result.reviews[i].userName : "";
 									reviewDate = responseReview.result.reviews[i].reviewDate ? responseReview.result.reviews[i].reviewDate : "N/A";
 									formattedReviewDate = responseReview.result.reviews[i].formattedReviewDate ? responseReview.result.reviews[i].formattedReviewDate : "N/A";
 									generalRating = responseReview.result.reviews[i].generalRating ? responseReview.result.reviews[i].generalRating : "N/A";
@@ -889,7 +981,7 @@ function loadGeneralReviewCard(response) {
 
 			},
 			error: function(error) {
-				console.log(error);
+				checkLoggedInUser(error.status)
 			},
 			complete: function (data) {
 				updateDonutChart('#donut-chart-1', wouldRecommend, true); 
@@ -1225,7 +1317,7 @@ function loadReviewsTab(response, loadMore) {
 		for (i in response.result.reviews) {
 
 			var reviewId = response.result.reviews[i].reviewId;
-			var userName = response.result.reviews[i].userName ? response.result.reviews[i].userName : "Anonim";
+			var userName = response.result.reviews[i].userName ? response.result.reviews[i].userName : "";
 			var formattedReviewDate = response.result.reviews[i].formattedReviewDate ? response.result.reviews[i].formattedReviewDate : "N/A";
 			var userStatus = response.result.reviews[i].userStatus ? response.result.reviews[i].userStatus.toLowerCase() : "";
 			if (userStatus === 'drop-out') {
@@ -1254,7 +1346,7 @@ function loadReviewsTab(response, loadMore) {
 				wouldRecommendTextClass = "";
 			}
 			
-			var difficulty = response.result.reviews[i].difficulty
+			var difficulty = response.result.reviews[i].difficulty;
 			var difficultyText;
 			if (difficulty) {
 				difficultyText = 'Dificultate:&nbsp' + difficulty + '/5';
@@ -1262,7 +1354,7 @@ function loadReviewsTab(response, loadMore) {
 				difficultyText = "";
 			}
 			var wouldRecommendAndDifficultyRowString;
-			if (wouldRecommend || difficulty) {
+			if (wouldRecommendText || difficulty) {
 				wouldRecommendAndDifficultyRowString = 
 																'<br>'
 				+'													<div class="row">'
@@ -1277,6 +1369,15 @@ function loadReviewsTab(response, loadMore) {
 				+'													</div>';
 			} else {
 				wouldRecommendAndDifficultyRowString = "";
+			}
+			
+			var upvotedReviewsIds = getUField("ulr");
+			var upvotedRevClass;
+			var upvotedRevText;
+			if (upvotedReviewsIds && upvotedReviewsIds.includes(reviewId)) {
+				upvotedRevClass = "fas fa-thumbs-up fa-lg like-review align";
+			} else {
+				upvotedRevClass = "far fa-thumbs-up fa-lg like-review align";
 			}
 			
 			
@@ -1303,9 +1404,9 @@ function loadReviewsTab(response, loadMore) {
 			var facultyFacilitiesReviewRating = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.generalRating) ? facultyFacilitiesReviewCategory.generalRating : "N/A";
 			var facultyFacilitiesReviewText = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "";
 			
-			var studentSupportReviewCategory = response.result.reviews[i].studentSupportReview;
-			var studentSupportReviewRating = (studentSupportReviewCategory && studentSupportReviewCategory.generalRating) ? studentSupportReviewCategory.generalRating : "N/A";
-			var studentSupportReviewText = (studentSupportReviewCategory && studentSupportReviewCategory.reviewText) ? studentSupportReviewCategory.reviewText : "";
+			<!-- var studentSupportReviewCategory = response.result.reviews[i].studentSupportReview; -->
+			<!-- var studentSupportReviewRating = (studentSupportReviewCategory && studentSupportReviewCategory.generalRating) ? studentSupportReviewCategory.generalRating : "N/A"; -->
+			<!-- var studentSupportReviewText = (studentSupportReviewCategory && studentSupportReviewCategory.reviewText) ? studentSupportReviewCategory.reviewText : ""; -->
 			
 			var timeBalanceReviewCategory = response.result.reviews[i].timeBalanceReview;
 			var timeBalanceReviewRating = (timeBalanceReviewCategory && timeBalanceReviewCategory.generalRating) ? timeBalanceReviewCategory.generalRating : "N/A";
@@ -1375,12 +1476,10 @@ function loadReviewsTab(response, loadMore) {
 	+'														<div class="col-md-3 col-md-offset-0 col-sm-3 col-sm-offset-0 col-xs-4 col-xs-offset-0">'
 	+'															<button class="btn btn-simple btn-info" onclick="viewMore(' + i +')" id="view-more-button-' + i + '">+ Vezi tot</button>'
 	+'														</div>'
-	+'														<div class="col-md-2 col-md-offset-6 col-sm-2 col-sm-offset-5 col-xs-3 col-xs-offset-2" style="text-align: end;">'
-	+'															<i class="far fa-thumbs-up fa-lg like-review align" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align">' + upvotes + '</span>'
-	+'														</div>'
-	+'														<div class="col-md-1 col-sm-2 col-xs-3" style="text-align: end;">'
-	+'															<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report align" onclick="reportReview(this)" data-toggle="modal" data-target="#generic-modal"></i>'
-	+'														</div>														'
+	+'														<div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10 text-right">'
+	+'															<i class="' + upvotedRevClass + '" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align" style="margin-right: 20px;">' + upvotes + '</span>'
+	+'															<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report align" onclick="reportReview(this)" data-toggle="modal" data-target="#general-modal"></i>'
+	+'														</div>'													
 	+'													</div>'
 	+'												</div>'	
 	+'											</div>'
@@ -1417,7 +1516,7 @@ function getOtherFacultiesFromSameUniversity(universityId) {
 
 	  },
 	  error: function(error) {
-		console.log(error);
+		checkLoggedInUser(error.status)
 	  }
 	});
 }
@@ -1532,148 +1631,6 @@ function seeAllReviews() {
 	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
-function reportReview(el) {
-
-	el.setAttribute("data-toggle", 'modal');
-	el.setAttribute("data-target", '#generic-modal');
-
-	var regularIcon = "far";
-	var solidIcon = "fas";
-	
-	if ($(el).hasClass(regularIcon)) {
-
-		var reviewId = $(el).parent().parent().parent().attr("data-reviewid");
-		
-		var backendUrl = new URL(backendUrlRoot + "/v1/review/" + reviewId + "/report");
-		
-		$.ajax({
-			url: backendUrl,
-			type: 'PUT',
-			dataType: 'json',
-			contentType: 'application/json',
-			crossDomain: true,
-			success: function () {
-				document.getElementById('generic-modal-text').innerHTML = "Evaluarea a fost raportată";
-				$(el).removeClass(regularIcon);
-				$(el).addClass(solidIcon);
-			},
-			error: function(error) {
-				document.getElementById('generic-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
-				document.getElementById('generic-modal-text').innerHTML = "Evaluarea nu a putut fi raportată";
-				<!-- if (error.responseJSON) { -->
-					<!-- if (error.responseJSON.control) { -->
-						<!-- var errorDescription = error.responseJSON.control.errorDescription; -->
-						<!-- document.getElementById('generic-modal-text').innerHTML = errorDescription; -->
-					<!-- } -->
-					<!-- document.getElementById('generic-modal-text').innerHTML = "Evaluarea nu a putut fi raportată"; -->
-				<!-- } -->
-			}
-		});
-	
-	}
-}
-
-function addToFavorites(el) {
-	el.setAttribute("data-toggle", 'modal');
-	el.setAttribute("data-target", '#generic-modal');
-	document.getElementById('generic-header-text').innerHTML = '<i class="fas fa-exclamation fa-2x"></i>';
-	document.getElementById('generic-modal-text').innerHTML = "Funcționalitatea va fi implementată în curând.";
-}
-
-function addToCompare(button, facultyId, hasText) {
-
-	var icon = $(button).children()[0];
-	
-	var compareIcon = "fas fa-plus-circle fa-2x";
-	var compareCheckIcon = "fas fa-check-circle fa-2x";
-	
-	if ($(icon).hasClass(compareCheckIcon)) {
-		var urlComparisonRedirect = "./comparison.html";
-		location.href = urlComparisonRedirect;
-		return;
-	}
-	
-	$(icon).removeClass(compareIcon);
-	$(icon).addClass(compareCheckIcon);
-	if (hasText) {
-		icon.nextSibling.innerHTML = "Vezi Comparaţii";
-	}
-	
-	if (typeof(Storage) !== "undefined") {
-		var facultyIdsString = localStorage.getItem("faculty-comparison-items");
-		var facultyIds;
-		if (facultyIdsString) {
-			facultyIds = facultyIdsString.split(",");
-		} else {
-			facultyIds = [];
-		}
-		if (facultyIds.length <= 20 && !facultyIds.includes(facultyId)) {
-			facultyIds.push(facultyId);
-		}
-		localStorage.setItem("faculty-comparison-items", facultyIds);
-	} else {
-	  // Sorry! No Web Storage support..
-	}
-
-}
-
-function upvoteReview(el) {
-
-	var regularIcon = "far";
-	var solidIcon = "fas";
-	
-	var upvote;
-	if ($(el).hasClass(regularIcon)) {
-		upvote = true;
-	} else {
-		upvote = false; // take back the vote
-	}
-	
-		var upvotesValue = parseInt(el.nextSibling.innerHTML);
-
-		var reviewId = $(el).parent().parent().parent().attr("data-reviewid");
-		
-		var backendUrl = new URL(backendUrlRoot + "/v1/review/" + reviewId + "/upvote");
-		
-		var body = {
-			upvote: upvote
-		};
-		
-		$.ajax({
-			url: backendUrl,
-			type: 'PUT',
-			dataType: 'json',
-			contentType: 'application/json',
-			crossDomain: true,
-			data: JSON.stringify(body),
-			success: function (data) {
-				if ($(el).hasClass(regularIcon)) {
-					$(el).removeClass(regularIcon);
-					$(el).addClass(solidIcon);
-					el.nextSibling.innerHTML = (upvotesValue + 1);
-				} else {
-					$(el).removeClass(solidIcon);
-					$(el).addClass(regularIcon);
-					el.nextSibling.innerHTML = (upvotesValue - 1);
-				}
-			},
-			error: function(error) {
-				el.setAttribute("data-toggle", 'modal');
-				el.setAttribute("data-target", '#generic-modal');
-				document.getElementById('generic-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
-				document.getElementById('generic-modal-text').innerHTML = "Evaluarea nu a putut fi votată";
-				<!-- if (error.responseJSON) { -->
-					<!-- if (error.responseJSON.control) { -->
-						<!-- var errorDescription = error.responseJSON.control.errorDescription; -->
-						<!-- alert(errorDescription); -->
-					<!-- } -->
-					<!-- alert("Evaluarea nu a putut fi votată"); -->
-				<!-- } -->
-			}
-		});
-
-}
-
 function loadMap(address) {
 
 	<!-- address = 'Bulevardul Regina Elisabeta Nr. 4-12, București 030018, Romania'; -->
@@ -1781,7 +1738,7 @@ function seeFullReview(el, reviewArray) {
 		
 		var reviewId = review.reviewId;
 		var facultyId = review.facultyId;
-		var userName = review.userName ? review.userName : "Anonim";
+		var userName = review.userName ? review.userName : "";
 		var formattedReviewDate = review.formattedReviewDate ? review.formattedReviewDate : "N/A";
 		var userStatus = review.userStatus ? review.userStatus.toLowerCase() : "";
 		if (userStatus === 'drop-out') {
@@ -1818,7 +1775,7 @@ function seeFullReview(el, reviewArray) {
 			difficultyText = "";
 		}
 		var wouldRecommendAndDifficultyRowString;
-		if (wouldRecommend || difficulty) {
+		if (wouldRecommendText || difficulty) {
 			wouldRecommendAndDifficultyRowString = 
 															'<br>'
 			+'													<div class="row">'
@@ -1833,6 +1790,15 @@ function seeFullReview(el, reviewArray) {
 			+'													</div>';
 		} else {
 			wouldRecommendAndDifficultyRowString = "";
+		}
+		
+		var upvotedReviewsIds = getUField("ulr");
+		var upvotedRevClass;
+		var upvotedRevText;
+		if (upvotedReviewsIds && upvotedReviewsIds.includes(reviewId)) {
+			upvotedRevClass = "fas fa-thumbs-up fa-lg like-review align";
+		} else {
+			upvotedRevClass = "far fa-thumbs-up fa-lg like-review align";
 		}
 		
 		
@@ -1927,12 +1893,10 @@ function seeFullReview(el, reviewArray) {
 +'														</div>'
 +'														<br>'
 +'													<div class="row">'
-+'														<div class="col-md-2 col-md-offset-9 col-sm-2 col-sm-offset-8 col-xs-3 col-xs-offset-6" style="text-align: end;">'
-+'															<i class="far fa-thumbs-up fa-lg like-review align" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align">' + upvotes + '</span>'
-+'														</div>'
-+'														<div class="col-md-1 col-sm-2 col-xs-3" style="text-align: end;">'
-+'															<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report align" onclick="reportReview(this)"></i>'
-+'														</div>														'
++'														<div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10 text-right">'
++'															<i class="' + upvotedRevClass + '" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align" style="margin-right: 20px;">' + upvotes + '</span>'
++'															<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report align" onclick="reportReview(this)" data-toggle="modal" data-target="#general-modal"></i>'
++'														</div>'	
 +'													</div>'
 +'												</div>'	
 <!-- +'											</div>' -->
@@ -1949,7 +1913,7 @@ function seeFullReview(el, reviewArray) {
 
 function addToRecentlyViewed() {
 	if (typeof(Storage) !== "undefined") {
-		var facultyIdsString = localStorage.getItem("recently-viewed-items");
+		var facultyIdsString = localStorage.getItem("rvi");
 		var facultyIds;
 		if (facultyIdsString) {
 			facultyIds = facultyIdsString.split(",");
@@ -1964,7 +1928,7 @@ function addToRecentlyViewed() {
 				facultyIds.push(facultyId);
 			}
 		}
-		localStorage.setItem("recently-viewed-items", facultyIds);
+		localStorage.setItem("rvi", facultyIds);
 	} else {
 	  // Sorry! No Web Storage support..
 	}
@@ -1972,7 +1936,7 @@ function addToRecentlyViewed() {
 
 function increaseViewCount() {
 	var backendUrl = new URL(backendUrlRoot + "/v1/analytics/profile");
-	backendUrl.searchParams.append("facultyId", f);
+	backendUrl.searchParams.append("facultyId", facultyId);
 	
 	$.ajax({
 		url: backendUrl,
@@ -1983,16 +1947,12 @@ function increaseViewCount() {
 		success: function () {
 		},
 		error: function(error) {
-			console.log(error);
 		}
 	});
 }
 
 
 </script>
-
-<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
 
 <script src="./bootstrap3/js/bootstrap.js" type="text/javascript"></script>
 
@@ -2001,6 +1961,7 @@ function increaseViewCount() {
 <script src="./assets/js/ct-paper-radio.js"></script>
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
+<script src="./assets/js/unistart.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
     

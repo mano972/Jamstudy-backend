@@ -122,7 +122,7 @@ public class AnalyticsService {
 		}
 	}
 
-	public void increaseReviewStatistic(int step) {
+	public ResponseDTO increaseReviewStatistic(int step) {
 		List<Analytics> analyticsList = analyticsRepo.findAll();
 		if (!CollectionUtils.isEmpty(analyticsList)) {
 			Analytics analytics = analyticsList.get(0);
@@ -156,9 +156,11 @@ public class AnalyticsService {
 			analyticsRepo.save(analytics);
 			LogUtils.logMessage(LOGGER, "Analytics review statistic increased");
 		}
+
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
-	public void increaseFacultyViewCountStatistic(String facultyId) {
+	public ResponseDTO increaseFacultyViewCountStatistic(String facultyId) {
 		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(facultyId);
 		if (facultyOpt.isPresent()) {
 			int newViewsCount = facultyOpt.get().getViewsCount() + 1;
@@ -167,6 +169,8 @@ public class AnalyticsService {
 					"Analytics faculty view count increased for faculty: " + facultyOpt.get().getFacultyId());
 			facultyDAO.updateFaculty(facultyOpt.get());
 		}
+
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
 	public ResponseDTO getAnalytics() {

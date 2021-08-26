@@ -38,6 +38,27 @@ public class UserProfile extends ParentEntity {
 	private Boolean acceptTermsAndConditions;
 
 	@Field
+	private Boolean subscribeToNewsletter;
+
+	@Field
+	private Boolean emailConfirmed;
+
+	@Field
+	private String location;
+
+	@Field
+	private Date birthDate;
+
+	@Field
+	private Boolean isUserWorking;
+
+	@Field
+	private String userStatus;
+
+	@Field
+	private String userYear;
+
+	@Field
 	private List<UserProfileFaculty> favoriteFaculties = new ArrayList<>();
 
 	@Field
@@ -47,7 +68,7 @@ public class UserProfile extends ParentEntity {
 	private List<String> likedReviews;
 
 	@Field
-	private List<String> addedReviews;
+	private List<UserProfileReview> addedReviews = new ArrayList<>();
 
 	@Field
 	private Date lastLogin;
@@ -108,6 +129,62 @@ public class UserProfile extends ParentEntity {
 		this.acceptTermsAndConditions = acceptTermsAndConditions;
 	}
 
+	public Boolean getSubscribeToNewsletter() {
+		return subscribeToNewsletter;
+	}
+
+	public void setSubscribeToNewsletter(Boolean subscribeToNewsletter) {
+		this.subscribeToNewsletter = subscribeToNewsletter;
+	}
+
+	public Boolean getEmailConfirmed() {
+		return emailConfirmed;
+	}
+
+	public void setEmailConfirmed(Boolean emailConfirmed) {
+		this.emailConfirmed = emailConfirmed;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public Boolean getIsUserWorking() {
+		return isUserWorking;
+	}
+
+	public void setIsUserWorking(Boolean isUserWorking) {
+		this.isUserWorking = isUserWorking;
+	}
+
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
+	}
+
+	public String getUserYear() {
+		return userYear;
+	}
+
+	public void setUserYear(String userYear) {
+		this.userYear = userYear;
+	}
+
 	public List<UserProfileFaculty> getFavoriteFaculties() {
 		return favoriteFaculties;
 	}
@@ -132,11 +209,11 @@ public class UserProfile extends ParentEntity {
 		this.likedReviews = likedReviews;
 	}
 
-	public List<String> getAddedReviews() {
+	public List<UserProfileReview> getAddedReviews() {
 		return addedReviews;
 	}
 
-	public void setAddedReviews(List<String> addedReviews) {
+	public void setAddedReviews(List<UserProfileReview> addedReviews) {
 		this.addedReviews = addedReviews;
 	}
 

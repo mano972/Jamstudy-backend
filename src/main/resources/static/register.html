@@ -53,9 +53,6 @@
               <li>
                   <a href="./contact.html" class="btn btn-simple">Contact</a>
               </li>
-              <!-- <li> -->
-                  <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-              <!-- </li> -->
            </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
@@ -80,10 +77,13 @@
 												<small id="error-register-email" class="error-message"></small>
 												<br>
 												<!-- <label>Parola</label> -->
-												<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="100">
+												<fieldset class="search-fieldset">
+													<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50">
+													<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
+												</fieldset>
 												<!-- <label>Confirmă Parola</label> -->
 												<br>
-												<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="100">
+												<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50">
 												<small id="error-register" class="error-message"></small>
 												<br>
 												<div>
@@ -120,7 +120,9 @@
 											<br>
 											<p>• Personalizeaza-ti contul.</p>
 											<br>
-											<p>• Opteaza pentru a primi notificari pentru facultatile favorite.</p>
+											<p>• Voteaza evaluari.</p>
+											<br>
+											<p>• (In curand) Opteaza pentru a primi notificari pentru facultatile favorite.</p>
 											<br>
 											<p>• Vei avea acces la viitoarele functionalitati dedicate exclusiv utilizatorilor inregistrati.</p>
 											
@@ -137,60 +139,52 @@
 			</div>
 		</div>
 	</div>  
-	
-			<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-				<div class="modal-content">
-				  <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<div id="feedback-header-text">
-						<i class="far fa-envelope fa-2x"></i>
-					</div>
-				  </div>
-				  <div id="feedback-modal-text" class="modal-body modal-info text-center">
-					.
-				  </div>
-				  <div class="modal-footer">
-					   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-				  </div>
-				</div>
-			  </div>
-			</div>
  
 <footer class="footer">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-7">
-                <div class="links">
-                    <ul class="uppercase-links">
-                        <li>
-                            <a href="./">
-                                Acasă
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./search.html">
-                                Facultăți
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./comparison.html">
-                                Compară
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./contact.html">
-                               Contact
-                            </a>
-                        </li>
+               	<div class="links">
+					<ul class="uppercase-links">
+						<li>
+							<a href="./">
+								Acasă
+							</a>
+						</li>
+						<li>
+							<a href="./search.html">
+								Facultăți
+							</a>
+						</li>
+						<li>
+							<a href="./comparison.html">
+								Compară
+							</a>
+						</li>
+						<li>
+							<a href="./contact.html">
+							   Contact
+							</a>
+						</li>
+					</ul>
+					<ul>
+						<li>
+							<a href="./terms.html">
+							   Termeni și condiții
+							</a>
+						</li>
+						<li>
+							<a href="./policy.html">
+							   Politica de confidențialitate
+							</a>
+						</li>
+					</ul>
+					<hr>
 
-                    </ul>
-                    <hr>
-
-                    <div class="copyright">
-                        © 2020 Jamstudy, din dragoste pentru educaţie
-                    </div>
-                </div>
+					<div class="copyright">
+						© 2020 Jamstudy, din dragoste pentru educaţie
+					</div>
+				</div>
             </div>
 
             <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
@@ -229,7 +223,7 @@
 <script src="./assets/js/ct-paper-radio.js"></script>
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="./assets/js/unistart.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
 <script src="./assets/js/demo.js"></script>
@@ -239,14 +233,26 @@
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
 
 $().ready(function(){    
-
+	checkLogin();
 });
+
+function checkLogin() {
+	var jwtToken = getUField("ut");
+	if (jwtToken) {
+		var urlHomepageRedirect = "./";
+		window.location.replace(urlHomepageRedirect);
+	}
+}
 
 document.getElementById("register-email").oninput = function () {
 	document.getElementById('error-register-email').innerHTML = "";
 }
 
 document.getElementById("register-pass").oninput = function () {
+	document.getElementById('error-register').innerHTML = "";
+}
+
+document.getElementById("register-confirm-pass").oninput = function () {
 	document.getElementById('error-register').innerHTML = "";
 }
 
@@ -278,7 +284,7 @@ document.getElementById("register-button").onclick = function (e) {
 		errorLogin.innerHTML = "Parola trebuie să fie de minim 7 caractere.";
 		isInvalid = true;
 	} else if (!validatePass(userPass)) {
-		errorLogin.innerHTML = "Parola trebuie să conțină cel puțin o literă și o cifră.";
+		errorLogin.innerHTML = "Parola trebuie să conțină litere și cifre.";
 		isInvalid = true;
 	} else if (userPass != userConfPass) {
 		errorLogin.innerHTML = "Cele două parole nu se potrivesc";
@@ -306,6 +312,8 @@ document.getElementById("register-button").onclick = function (e) {
 		return false;
 	}
 	
+	document.getElementById("register-button").disabled = true; 
+	
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/register");
 		
 	var body = {
@@ -323,9 +331,8 @@ document.getElementById("register-button").onclick = function (e) {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (response) {
-			var jwtToken = response.result.jwtToken;
-			localStorage.setItem("ut", jwtToken);
-			location.reload();
+			var urlHomepageRedirect = "./";
+			window.location.replace(urlHomepageRedirect);
 		},
 		error: function(error) {
 			if (error.status == 401) {
@@ -333,14 +340,7 @@ document.getElementById("register-button").onclick = function (e) {
 			} else {
 				errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
 			}
-		
-			<!-- if (error.responseJSON) { -->
-				<!-- if (error.responseJSON.control) { -->
-					<!-- var errorDescription = error.responseJSON.control.errorDescription; -->
-					<!-- errorLogin.innerHTML = "Datele de autentificare sunt incorecte."; -->
-					<!-- errorLogin.innerHTML = errorDescription; -->
-				<!-- } -->
-			<!-- } -->
+			document.getElementById("register-button").disabled = false; 
 		}
 	});
 	

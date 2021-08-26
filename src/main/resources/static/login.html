@@ -53,9 +53,6 @@
               <li>
                   <a href="./contact.html" class="btn btn-simple">Contact</a>
               </li>
-              <!-- <li> -->
-                  <!-- <a href="./contact.html" class="btn" style="margin-right: 20px;"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a> -->
-              <!-- </li> -->
            </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
@@ -117,7 +114,9 @@
 											<br>
 											<p>• Personalizeaza-ti contul.</p>
 											<br>
-											<p>• Opteaza pentru a primi notificari pentru facultatile favorite.</p>
+											<p>• Voteaza evaluari.</p>
+											<br>
+											<p>• (In curand) Opteaza pentru a primi notificari pentru facultatile favorite.</p>
 											<br>
 											<p>• Vei avea acces la viitoarele functionalitati dedicate exclusiv utilizatorilor inregistrati.</p>
 											
@@ -133,60 +132,52 @@
 			</div>
 		</div>
 	</div>  
-	
-			<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-				<div class="modal-content">
-				  <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<div id="feedback-header-text">
-						<i class="far fa-envelope fa-2x"></i>
-					</div>
-				  </div>
-				  <div id="feedback-modal-text" class="modal-body modal-info text-center">
-					.
-				  </div>
-				  <div class="modal-footer">
-					   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-				  </div>
-				</div>
-			  </div>
-			</div>
  
 <footer class="footer">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-7">
-                <div class="links">
-                    <ul class="uppercase-links">
-                        <li>
-                            <a href="./">
-                                Acasă
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./search.html">
-                                Facultăți
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./comparison.html">
-                                Compară
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./contact.html">
-                               Contact
-                            </a>
-                        </li>
+				<div class="links">
+					<ul class="uppercase-links">
+						<li>
+							<a href="./">
+								Acasă
+							</a>
+						</li>
+						<li>
+							<a href="./search.html">
+								Facultăți
+							</a>
+						</li>
+						<li>
+							<a href="./comparison.html">
+								Compară
+							</a>
+						</li>
+						<li>
+							<a href="./contact.html">
+							   Contact
+							</a>
+						</li>
+					</ul>
+					<ul>
+						<li>
+							<a href="./terms.html">
+							   Termeni și condiții
+							</a>
+						</li>
+						<li>
+							<a href="./policy.html">
+							   Politica de confidențialitate
+							</a>
+						</li>
+					</ul>
+					<hr>
 
-                    </ul>
-                    <hr>
-
-                    <div class="copyright">
-                        © 2020 Jamstudy, din dragoste pentru educaţie
-                    </div>
-                </div>
+					<div class="copyright">
+						© 2020 Jamstudy, din dragoste pentru educaţie
+					</div>
+				</div>
             </div>
 
             <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
@@ -225,7 +216,7 @@
 <script src="./assets/js/ct-paper-radio.js"></script>
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="./assets/js/unistart.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
 <script src="./assets/js/demo.js"></script>
@@ -235,8 +226,17 @@
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
 
 $().ready(function(){    
-
+var jwtToken = localStorage.getItem("ut");
+	checkLogin();
 });
+
+function checkLogin() {
+	var jwtToken = getUField("ut");
+	if (jwtToken) {
+		var urlHomepageRedirect = "./";
+		window.location.replace(urlHomepageRedirect);
+	}
+}
 
 document.getElementById("login-email").oninput = function () {
 	document.getElementById('error-login-email').innerHTML = "";
@@ -273,6 +273,8 @@ document.getElementById("login-button").onclick = function (e) {
 		return false;
 	}
 	
+	document.getElementById("login-button").disabled = true; 
+	
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/login");
 		
 	var body = {
@@ -288,9 +290,23 @@ document.getElementById("login-button").onclick = function (e) {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (response) {
+			localStorage.setItem("u", "{}");
 			var jwtToken = response.result.jwtToken;
-			localStorage.setItem("ut", jwtToken);
-			location.reload();
+			var savedFaculties = response.result.favoriteFaculties;
+			var savedFacultiesIds = [];
+			for (i in savedFaculties) {
+				savedFacultiesIds.push(savedFaculties[i]);
+			}
+			var likedReviewsIds = response.result.likedReviews;
+			var addedReviews = response.result.addedReviews;
+			
+			setUField("ut", jwtToken);
+			setUField("usf", savedFacultiesIds);
+			setUField("ulr", likedReviewsIds);
+			setUField("uar", addedReviews);
+			
+			var urlHomepageRedirect = "./";
+			window.location.replace(urlHomepageRedirect);
 		},
 		error: function(error) {
 			if (error.status == 401) {
@@ -298,17 +314,20 @@ document.getElementById("login-button").onclick = function (e) {
 			} else {
 				errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
 			}
-		
-			<!-- if (error.responseJSON) { -->
-				<!-- if (error.responseJSON.control) { -->
-					<!-- var errorDescription = error.responseJSON.control.errorDescription; -->
-					<!-- errorLogin.innerHTML = "Datele de autentificare sunt incorecte."; -->
-					<!-- errorLogin.innerHTML = errorDescription; -->
-				<!-- } -->
-			<!-- } -->
+			document.getElementById("login-button").disabled = false;
 		}
 	});
 	
+}
+
+function validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function validatePass(pass) {
+	var lettersNumbers = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/;
+	return lettersNumbers.test(String(pass).toLowerCase());
 }
 	
 	

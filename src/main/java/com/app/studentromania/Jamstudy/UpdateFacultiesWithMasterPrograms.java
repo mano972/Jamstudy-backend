@@ -126,7 +126,7 @@ public class UpdateFacultiesWithMasterPrograms {
 		List<Faculty> existingFacList = new ArrayList<>();
 		HttpURLConnection connGet = null;
 		try {
-			URL url = new URL("http://localhost:8080/Jamstudy/v1/faculty/details?limit=1000"); // admin limit = 1000
+			URL url = new URL("http://localhost:8080/Jamstudy/v1/faculty/details?limit=999"); // admin limit = 999
 			connGet = (HttpURLConnection) url.openConnection();
 			connGet.setDoOutput(true);
 			connGet.setRequestMethod("GET");

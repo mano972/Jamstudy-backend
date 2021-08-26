@@ -1,5 +1,7 @@
 package com.app.studentromania.dto;
 
+import java.util.Date;
+
 public class UserProfileDTO {
 
 	private String userId;
@@ -20,10 +22,20 @@ public class UserProfileDTO {
 	private Boolean addFavoriteFaculty;
 
 	private Boolean allowNotification;
-	
+
 	private Boolean acceptTermsAndConditions;
 
 	private Boolean subscribeToNewsletter;
+
+	private String location;
+
+	private Date birthDate;
+
+	private Boolean isUserWorking;
+
+	private String userStatus;
+
+	private String userYear;
 
 	public String getUserId() {
 		return userId;
@@ -103,6 +115,46 @@ public class UserProfileDTO {
 
 	public void setAllowNotification(Boolean allowNotification) {
 		this.allowNotification = allowNotification;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public Boolean getIsUserWorking() {
+		return isUserWorking;
+	}
+
+	public void setIsUserWorking(Boolean isUserWorking) {
+		this.isUserWorking = isUserWorking;
+	}
+
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
+	}
+
+	public String getUserYear() {
+		return userYear;
+	}
+
+	public void setUserYear(String userYear) {
+		this.userYear = userYear;
 	}
 
 }
