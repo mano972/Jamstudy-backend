@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -205,7 +206,7 @@ public class ReviewService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_EDITABLE);
 		}
 		mapToReview(reviewDTO, review);
-		if (reviewDTO.getDelete()) {
+		if (BooleanUtils.isTrue(reviewDTO.getDelete())) {
 			review.setDocType(DocTypeEnum.ARCHIVED_REVIEW.toString());
 			userProfileOpt.get().getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
 			userProfileDAO.updateUserProfile(userProfileOpt.get());
@@ -216,7 +217,7 @@ public class ReviewService {
 		reviewResponseDTO.setFacultyId(review.getFacultyId());
 
 		// update faculty with new ratings
-		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(reviewDTO.getFacultyId());
+		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(review.getFacultyId());
 		if (!facultyOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
 		}
@@ -359,25 +360,27 @@ public class ReviewService {
 			}
 		}
 		List<UserProfileReview> userAddedReviews = userProfile.getAddedReviews();
-		if (userAddedReviews.size() >= Constants.MAX_REVIEWS_PER_FACULTY) {
+		if (userAddedReviews.size() >= Constants.MAX_REVIEWS) {
 			return ErrorsEnum.REVIEW_MAX_NUMBER;
 		}
 		List<UserProfileReview> reviewsForSameFaculty = userAddedReviews.stream()
 				.filter(review -> review.getFacultyId().equals(reviewDTO.getFacultyId())).collect(Collectors.toList());
 
-		Collections.sort(reviewsForSameFaculty, new Comparator<UserProfileReview>() {
-			public int compare(UserProfileReview o1, UserProfileReview o2) {
-				if (o1.getAddedDate() == null || o2.getAddedDate() == null) {
-					return 0;
+		if (!reviewsForSameFaculty.isEmpty()) {
+			Collections.sort(reviewsForSameFaculty, new Comparator<UserProfileReview>() {
+				public int compare(UserProfileReview o1, UserProfileReview o2) {
+					if (o1.getAddedDate() == null || o2.getAddedDate() == null) {
+						return 0;
+					}
+					return o1.getAddedDate().compareTo(o2.getAddedDate());
 				}
-				return o1.getAddedDate().compareTo(o2.getAddedDate());
-			}
-		});
+			});
 
-		LocalDateTime dueDate = LocalDateTime.now().minusDays(150);
-		if (reviewsForSameFaculty.get(0).getAddedDate()
-				.after(Date.from(dueDate.atZone(ZoneId.systemDefault()).toInstant()))) {
-			return ErrorsEnum.REVIEW_SAME_FACULTY;
+			LocalDateTime dueDate = LocalDateTime.now().minusDays(150);
+			if (reviewsForSameFaculty.get(0).getAddedDate()
+					.after(Date.from(dueDate.atZone(ZoneId.systemDefault()).toInstant()))) {
+				return ErrorsEnum.REVIEW_SAME_FACULTY;
+			}
 		}
 
 		return ErrorsEnum.NO_ERROR;

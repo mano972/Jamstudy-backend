@@ -15,4 +15,11 @@ public class Utilities {
 		return formattedDate;
 	}
 
+	public static String getFormattedBirthDate(Date date) {
+		Locale roLocale = new Locale("ro", "RO");
+		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		String formattedDate = localDate.format(DateTimeFormatter.ofPattern(Constants.BIRTH_DATE_FORMAT, roLocale));
+		return formattedDate;
+	}
+
 }

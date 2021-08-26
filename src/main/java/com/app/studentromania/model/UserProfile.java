@@ -50,6 +50,9 @@ public class UserProfile extends ParentEntity {
 	private Date birthDate;
 
 	@Field
+	private String formattedBirthDate;
+
+	@Field
 	private Boolean isUserWorking;
 
 	@Field
@@ -65,7 +68,7 @@ public class UserProfile extends ParentEntity {
 	private List<UserProfileFaculty> recentFaculties = new ArrayList<>();
 
 	@Field
-	private List<String> likedReviews;
+	private List<String> likedReviews = new ArrayList<>();
 
 	@Field
 	private List<UserProfileReview> addedReviews = new ArrayList<>();
@@ -159,6 +162,14 @@ public class UserProfile extends ParentEntity {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public String getFormattedBirthDate() {
+		return formattedBirthDate;
+	}
+
+	public void setFormattedBirthDate(String formattedBirthDate) {
+		this.formattedBirthDate = formattedBirthDate;
 	}
 
 	public Boolean getIsUserWorking() {

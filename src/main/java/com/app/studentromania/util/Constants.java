@@ -25,11 +25,12 @@ public class Constants {
 	public static final String CONFIG_KEY_ADMIN_PASS = "admin_pass";
 
 	public static final String DATE_FORMAT = "dd MMM yyyy";
+	public static final String BIRTH_DATE_FORMAT = "yyyy-MM-dd";
 
 	public static final String JWT_TOKEN_REQUEST_HEADER = "Token";
 
 	public static final int MAX_FAVORITE_FACULTIES = 10;
-	public static final int MAX_REVIEWS_PER_FACULTY = 5;
+	public static final int MAX_REVIEWS = 5;
 
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 			Pattern.CASE_INSENSITIVE);

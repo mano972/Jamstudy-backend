@@ -70,6 +70,22 @@ public class NewsletterService {
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
+	public ResponseDTO removeEmail(String email) {
+		List<Newsletter> newsletters = newsletterRepo.findAll();
+		if (CollectionUtils.isEmpty(newsletters)) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.NEWSLETTER_NOT_FOUND);
+		}
+		Newsletter newsletter = newsletters.get(0);
+		List<String> emails = newsletter.getEmails();
+		if (emails.contains(email)) {
+			emails.remove(email);
+		}
+		newsletter.setEmails(emails);
+		newsletterRepo.save(newsletter);
+		LogUtils.logMessage(LOGGER, "Email added to newsletter!");
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
 	public ResponseDTO getNewsletter() {
 		List<Newsletter> newsletters = newsletterRepo.findAll();
 		if (CollectionUtils.isEmpty(newsletters)) {

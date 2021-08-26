@@ -89,7 +89,7 @@
 											</div>
 											<!-- <div class="row"> -->
 												<!-- <div id="save-profile-area" class="col-md-3 col-md-offset-9" style="margin-top: 40px; display: none"> -->
-													<!-- <button id="save-profile-button" class="btn btn-block btn-success btn-fill" onclick="saveUserProfileInfo()">Salvează</button> -->
+													<!-- <button id="save-profile-button" class="btn btn-block btn-success btn-fill" onclick="saveUserProfileInfo(this)">Salvează</button> -->
 												<!-- </div> -->
 											<!-- </div>											 -->
 											<div id="profile-notifications">
@@ -99,7 +99,7 @@
 											</div>
 											<div class="row">
 												<div id="save-profile-area" class="col-md-3 col-md-offset-9" style="margin-top: 10px; display: none">
-													<button id="save-profile-button" class="btn btn-block btn-success btn-fill" onclick="saveUserProfileInfo()">Salvează</button>
+													<button id="save-profile-button" class="btn btn-block btn-success btn-fill" onclick="saveUserProfileInfo(this)">Salvează</button>
 												</div>
 											</div>
 
@@ -243,7 +243,8 @@
 
 <script type="text/javascript">
 
-const backendUrlRoot = "https://unistart.ro/Jamstudy";
+<!-- const backendUrlRoot = "https://unistart.ro/Jamstudy"; -->
+const backendUrlRoot = "http://localhost:8080/Jamstudy";
 
 $body = $("body");
 $(document).on({
@@ -256,10 +257,8 @@ $().ready(function(){
 	myAccountText();
 	
 	getUserProfileInfo();
-	checkProfileComplete();
 	getSavedFaculties();
 	getUserReviews();
-
 	
 });
 
@@ -292,6 +291,7 @@ function getUserProfileInfo() {
 		
 			var userResponse = response.result;
 			loadUserProfileInfoContent(userResponse);
+			checkProfileComplete();
 
 		} else {
 			console.log(response.control.errorDescription);
@@ -310,11 +310,12 @@ function getUserProfileInfo() {
 
 function loadUserProfileInfoContent(userResponse) {
 
-	var firstName = userResponse.firstName ? userReponse.firstName : "";
-	var lastName = userResponse.lastName ? userReponse.lastName : "";
-	var email = userResponse.email ? userReponse.email : "";
-	var location = userResponse.location ? userReponse.location : "";
-	var birthDate = userResponse.birthDate ? userReponse.birthDate : "";
+	var firstName = userResponse.firstName ? userResponse.firstName : "";
+	var lastName = userResponse.lastName ? userResponse.lastName : "";
+	var email = userResponse.email ? userResponse.email : "";
+	var location = userResponse.location ? userResponse.location : "";
+	var birthDate = userResponse.birthDate ? userResponse.birthDate : "";
+	var formattedBirthDate = userResponse.formattedBirthDate ? userResponse.formattedBirthDate : "";
 	var userWorking = userResponse.isUserWorking;
 	var userStatus = userResponse.userStatus;
 	var userYear = userResponse.userYear;
@@ -330,11 +331,11 @@ function loadUserProfileInfoContent(userResponse) {
 	var userProfileString = (
 '												<div class="col-md-6 col-xs-12 user-profile-form-input">'
 +'													<label>Nume</label> '
-+'													<input id="profile-name" type="text" class="form-control" value="' + lastName + '" placeholder="Nume" maxlength="100">'
++'													<input id="profile-name" type="text" class="form-control" value="' + lastName + '" placeholder="Nume" maxlength="100" spellcheck="false">'
 +'												</div>'
 +'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
 +'													<label>Prenume</label> '
-+'													<input id="profile-first-name" type="text" class="form-control" value="' + firstName + '" placeholder="Prenume" maxlength="100">'
++'													<input id="profile-first-name" type="text" class="form-control" value="' + firstName + '" placeholder="Prenume" maxlength="100" spellcheck="false">'
 +'												</div>'
 +'												<div class="col-md-12 col-xs-12 user-profile-form-input">'
 +'													<label>Email</label> '
@@ -342,14 +343,14 @@ function loadUserProfileInfoContent(userResponse) {
 +'												</div>'
 +'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
 +'													<label>Localitate</label> '
-+'													<input id="profile-city" type="text" class="form-control" value="' + location + '" placeholder="Localitate" maxlength="50">'
++'													<input id="profile-city" type="text" class="form-control" value="' + location + '" placeholder="Localitate" maxlength="50" spellcheck="false">'
 +'												</div>'
 +'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
 +'													<label>Data nasterii</label> '
-+'													<input id="profile-birth-date" type="date" class="form-control datepicker" value="' + birthDate + '" placeholder="" maxlength="50">'
++'													<input id="profile-birth-date" type="date" class="form-control datepicker" value="' + formattedBirthDate + '" placeholder="" maxlength="50">'
 +'												</div>'
 												
-+'												<div id="user-status" class="col-md-12 user-profile-form-input">		'
++'												<div id="user-status" class="col-xs-12 user-profile-form-input">		'
 +'													<label>Status</label> 												'
 +'													<div class="radio-toolbar" onchange="showYears(); showUserWork()">'
 +'													 <input type="radio" id="status-pupil" name="status" value="ELEV">'
@@ -372,10 +373,10 @@ function loadUserProfileInfoContent(userResponse) {
 +'													</div>'
 +'												</div>'
 												
-+'												<div id="user-years" class="col-md-12 user-profile-form-input" style="display: none">'
++'												<div id="user-years" class="col-xs-12 user-profile-form-input" style="display: none">'
 +'													<label>Anul</label> 		'
-+'													<div class="row">'
-+'														<div class="col-md-12">																'
+<!-- +'													<div class="row">' -->
+<!-- +'														<div class="col-xs-12">																' -->
 +'															<div class="radio-toolbar">'
 +'															  <input type="radio" id="year1" name="years" value="Anul 1">'
 +'															  <label for="year1">Anul 1</label>'
@@ -389,26 +390,26 @@ function loadUserProfileInfoContent(userResponse) {
 +'															  <input type="radio" id="year4" name="years" value="Anul 4+">'
 +'															  <label for="year4">Anul 4+</label>'
 +'															</div>'
-+'														</div>'
-+'													</div>'
+<!-- +'														</div>' -->
+<!-- +'													</div>' -->
 +'												</div>'
 
-+'												<div id="user-work" class="col-md-12 user-profile-form-input" style="display: none;">'
++'												<div id="user-work" class="col-xs-12 user-profile-form-input" style="display: none;">'
 +'													<label>Ai reușit să te angajezi, in domeniu, in timpul facultății sau la cel mult 6 luni dupa terminarea ei?</label>'
-+'													<div class="row">'
-+'														<div class="col-md-12">															'
+<!-- +'													<div class="row">' -->
+<!-- +'														<div class="col-xs-12">															' -->
 +'															<div class="radio-toolbar">'
-+'														 	 <input type="radio" id="work-yes" name="work" value="0">'
++'														 	 <input type="radio" id="work-yes" name="work" value="1">'
 +'														 	 <label for="work-yes">Da</label>'
 
-+'															  <input type="radio" id="work-no" name="work" value="1">'
++'															  <input type="radio" id="work-no" name="work" value="0">'
 +'															  <label for="work-no">Nu</label>'
 
-+'														 	 <input type="radio" id="work-not-applied" name="work" value="2">'
-+'														 	 <label for="work-not-applied">Nu se aplica</label>'
-+'															</div>'
+<!-- +'														 	 <input type="radio" id="work-not-applied" name="work" value="2">' -->
+<!-- +'														 	 <label for="work-not-applied">Nu se aplica</label>' -->
+<!-- +'															</div>' -->
 +'														</div>'
-+'													</div>'
+<!-- +'													</div>' -->
 +'												</div>'
 
 
@@ -462,9 +463,9 @@ function loadUserProfileInfoContent(userResponse) {
 	case false:
 		document.getElementById('work-no').checked = true;
 		break;
-	default:
-		document.getElementById('work-not-applied').checked = true;
-		break;
+	<!-- default: -->
+		<!-- document.getElementById('work-not-applied').checked = true; -->
+		<!-- break; -->
 	}
 	
 	showUserWork();
@@ -523,7 +524,7 @@ function checkProfileComplete() {
 	  }
 	}
 	
-	var firstNameText = firstName ? (" " + firstName) : " ";
+	var firstNameText = firstName ? (" " + firstName) : "";
 	var userProfileTopString
 	if (!firstName || !lastName || !location || !birthDate || !userStatus) {
 	userProfileTopString = 
@@ -546,11 +547,11 @@ function checkProfileComplete() {
 	document.getElementById("user-profile-top").innerHTML = userProfileTopString;
 }
 
-function saveUserProfileInfo() {
+function saveUserProfileInfo(el) {
 
-	var firstName = document.getElementById("profile-first-name").value ? document.getElementById("profile-first-name").value : null;
-	var lastName = document.getElementById("profile-name").value ? document.getElementById("profile-name").value : null;
-	var location = document.getElementById("profile-city").value ? document.getElementById("profile-city").value : null;
+	var firstName = document.getElementById("profile-first-name").value ? document.getElementById("profile-first-name").value : "";
+	var lastName = document.getElementById("profile-name").value ? document.getElementById("profile-name").value : "";
+	var loc = document.getElementById("profile-city").value ? document.getElementById("profile-city").value : "";
 	var birthDate = document.getElementById("profile-birth-date").value ? document.getElementById("profile-birth-date").value : null;
 	
 	var userStatusRadio = document.getElementsByName('status');
@@ -589,7 +590,7 @@ function saveUserProfileInfo() {
 	var body = {
 		firstName: firstName,
 		lastName: lastName,
-		location: location,
+		location: loc,
 		birthDate: birthDate,
 		userStatus: userStatus,
 		userYear: userYear,
@@ -607,6 +608,7 @@ function saveUserProfileInfo() {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (data) {
+			document.getElementById('save-profile-area').style.display = "none";
 			location.reload();
 		},
 		error: function(error) {
@@ -831,7 +833,6 @@ function loadUserReviewsContent(reviewsResponse) {
 			
 			var editReviewRedirectUrl = "./review.html?review=" + reviewId + "&faculty=" +facultyId;
 			var canEdit = reviewsResponse[i].canEdit;
-			canEdit = true;
 			var editString = '';
 			if (canEdit) {
 				editString = 

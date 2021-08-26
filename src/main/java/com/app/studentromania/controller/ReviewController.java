@@ -48,6 +48,8 @@ public class ReviewController {
 
 	@GetMapping("/user")
 	@RestCall
+	@JWTAuth
+	@VerifyLoggedIn
 	public ResponseEntity<String> getUserReviews() {
 		return reviewService.getUserReviews().createRestResponse();
 	}

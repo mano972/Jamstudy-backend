@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.studentromania.annotation.JWTAuth;
 import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.dto.UniversityDTO;
@@ -27,12 +28,14 @@ public class UniversityController {
 
 	@GetMapping
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> getAllUniversities() {
 		return universityService.getAllUniversities().createRestResponse();
 	}
 
 	@GetMapping("/{universityId}")
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> getByUniversityId(@PathVariable String universityId) {
 		return universityService.getByUniversityId(universityId).createRestResponse();
 	}

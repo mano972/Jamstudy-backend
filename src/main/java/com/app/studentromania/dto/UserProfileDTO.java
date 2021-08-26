@@ -31,7 +31,7 @@ public class UserProfileDTO {
 
 	private Date birthDate;
 
-	private Boolean isUserWorking;
+	private Integer isUserWorking;
 
 	private String userStatus;
 
@@ -133,11 +133,11 @@ public class UserProfileDTO {
 		this.birthDate = birthDate;
 	}
 
-	public Boolean getIsUserWorking() {
+	public Integer getIsUserWorking() {
 		return isUserWorking;
 	}
 
-	public void setIsUserWorking(Boolean isUserWorking) {
+	public void setIsUserWorking(Integer isUserWorking) {
 		this.isUserWorking = isUserWorking;
 	}
 

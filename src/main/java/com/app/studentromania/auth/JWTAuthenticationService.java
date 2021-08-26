@@ -28,7 +28,7 @@ public class JWTAuthenticationService {
 			Algorithm algorithm = Algorithm.HMAC256(algorithmSecret);
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(new Date());
-			cal.add(Calendar.HOUR_OF_DAY, hours);
+			cal.add(Calendar.HOUR, hours);
 			jwtToken = JWT.create().withIssuer(issuer).withSubject(userId).withIssuedAt(new Date())
 					.withExpiresAt(cal.getTime()).sign(algorithm);
 		} catch (JWTCreationException e) {

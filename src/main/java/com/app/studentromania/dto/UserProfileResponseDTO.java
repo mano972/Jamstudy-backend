@@ -22,6 +22,8 @@ public class UserProfileResponseDTO {
 
 	private Date birthDate;
 
+	private String formattedBirthDate;
+
 	private Boolean isUserWorking;
 
 	private String userStatus;
@@ -92,6 +94,14 @@ public class UserProfileResponseDTO {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public String getFormattedBirthDate() {
+		return formattedBirthDate;
+	}
+
+	public void setFormattedBirthDate(String formattedBirthDate) {
+		this.formattedBirthDate = formattedBirthDate;
 	}
 
 	public Boolean getIsUserWorking() {

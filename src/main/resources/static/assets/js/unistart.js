@@ -132,27 +132,10 @@ function login(e) {
 			var likedReviewsIds = response.result.likedReviews;
 			var addedReviews = response.result.addedReviews;
 			
-			savedFacultiesIds = ["sf1", "sf2", "sf3", "FAC_ILQJrenFam"];
-			likedReviewsIds = ["lr1", "lr2", "lr3"];
-			addedReviews = '[{"rid": "REV_2dOpsGJGZh","fid": "f1"},{"rid": "REV_7PqWoEDjFR","fid": "f2"}]';
-			addedReviews = JSON.parse(addedReviews);
-			
 			setUField("ut", jwtToken);
 			setUField("usf", savedFacultiesIds);
 			setUField("ulr", likedReviewsIds);
 			setUField("uar", addedReviews);
-			
-			console.log(localStorage);
-			console.log(getUField("usf"));
-			console.log(getUField("ulr"));
-			console.log(getUField("uar"));
-			
-			var saved = getUField("usf");
-			saved.push("abcabc");
-			setUField("usf", saved);
-			
-			console.log(localStorage);
-			console.log(getUField("usf"));
 			
 			location.reload();
 		},
@@ -279,6 +262,7 @@ function validatePass(pass) {
 }
 
 function goToAddReview(el, facultyId) {
+	increaseReviewStatistic(0);
 	var jwtToken = getUField("ut");
 	if (!jwtToken) {
 		el.setAttribute("data-toggle", 'modal');
@@ -604,6 +588,24 @@ function showUserWork() {
 	  }
 	  
 	}
+}
+
+function increaseReviewStatistic(step) {
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/analytics/rev");
+	backendUrl.searchParams.append("s", step);
+
+	$.ajax({
+		url: backendUrl,
+		type: 'PUT',
+		dataType: 'json',
+		contentType: 'application/json',
+		crossDomain: true,
+		success: function () {
+		},
+		error: function(error) {
+		}
+	});
 }
 
 function getUField(key) {

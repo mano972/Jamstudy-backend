@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,6 +37,7 @@ import com.app.studentromania.model.UserProfileFaculty;
 import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.LogUtils;
 import com.app.studentromania.util.SecurityUtils;
+import com.app.studentromania.util.Utilities;
 
 @Service
 public class UserProfileService {
@@ -127,9 +129,9 @@ public class UserProfileService {
 		if (!SecurityUtils.validatePassword(userProfileDTO.getPassword(), userProfile.getPassword())) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_WRONG_CREDENTIALS);
 		}
-		if (!userProfile.getEmailConfirmed()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED);
-		}
+//		if (BooleanUtils.isNotTrue(userProfile.getEmailConfirmed())) {
+//			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED);
+//		}
 
 		String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
 		if (StringUtils.isBlank(jwtToken)) {
@@ -173,7 +175,7 @@ public class UserProfileService {
 		String securePassword = SecurityUtils.generateSecurePassword(userProfileDTO.getPassword());
 		mapToUserProfile(userProfileDTO, userProfile);
 		userProfile.setPassword(securePassword);
-		if (userProfileDTO.getSubscribeToNewsletter()) {
+		if (BooleanUtils.isTrue(userProfileDTO.getSubscribeToNewsletter())) {
 			newsletterService.addEmail(userProfile.getEmail());
 		}
 		userProfile.setAcceptTermsAndConditions(true);
@@ -194,6 +196,12 @@ public class UserProfileService {
 		}
 		UserProfile userProfile = userProfileOpt.get();
 		mapToUserProfile(userProfileDTO, userProfile);
+		userProfile.setFormattedBirthDate(Utilities.getFormattedBirthDate(userProfileDTO.getBirthDate()));
+		if (BooleanUtils.isTrue(userProfileDTO.getSubscribeToNewsletter())) {
+			newsletterService.addEmail(userProfile.getEmail());
+		} else if (BooleanUtils.isFalse(userProfileDTO.getSubscribeToNewsletter())) {
+			newsletterService.removeEmail(userProfile.getEmail());
+		}
 		userProfileDAO.updateUserProfile(userProfile);
 		UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO();
 		userProfileResponseDTO.setUserId(userProfile.getUserId());

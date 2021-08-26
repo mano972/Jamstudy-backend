@@ -519,10 +519,10 @@
 											<div class="row">
 												<div class="col-md-12">															
 													<div class="radio-toolbar">
-													  <input type="radio" id="work-yes" name="work" value="0">
+													  <input type="radio" id="work-yes" name="work" value="1">
 													  <label for="work-yes">Da</label>
 
-													  <input type="radio" id="work-no" name="work" value="1">
+													  <input type="radio" id="work-no" name="work" value="0">
 													  <label for="work-no">Nu</label>
 
 													  <input type="radio" id="work-not-applied" name="work" value="2">
@@ -581,6 +581,26 @@
 				</div>
 			</div>
         </div>
+	</div>
+	
+	
+	<div class="modal fade" id="add-review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<div id="add-review-header-text">
+					<i class="far fa-envelope fa-2x"></i>
+				</div>
+			  </div>
+			  <div id="add-review-modal-text" class="modal-body modal-info text-center">
+				&nbsp;
+			  </div>
+			  <div class="modal-footer">
+				   <button id="ok-button-modal" type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+			  </div>
+			</div>
+		 </div>
 	</div>
 		
 		
@@ -675,25 +695,6 @@
 	  </div>
 	</div>
 	
-	<div class="modal fade" id="add-review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<div id="add-review-header-text">
-					<i class="far fa-envelope fa-2x"></i>
-				</div>
-			  </div>
-			  <div id="add-review-modal-text" class="modal-body modal-info text-center">
-				&nbsp;
-			  </div>
-			  <div class="modal-footer">
-				   <button id="ok-button-modal" type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-			  </div>
-			</div>
-		 </div>
-	</div>
-	
 			<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 <div class="modal-dialog-login">
 					<div class="modal-content">
@@ -779,7 +780,8 @@
 
 <script>
 
-const backendUrlRoot = "https://unistart.ro/Jamstudy";
+<!-- const backendUrlRoot = "https://unistart.ro/Jamstudy"; -->
+const backendUrlRoot = "http://localhost:8080/Jamstudy";
 
 $body = $("body");
 $(document).on({
@@ -834,12 +836,13 @@ function checkEditReviewAllowed() {
 	var reviewsIds = [];
 	var i;
 	for (i in addedReviews) {
-		reviewsIds.push(addedReviews[i].rid);
+		reviewsIds.push(addedReviews[i].reviewId);
 	}
-	if (!reviewsIds.includes(reviewId)) {
-		var urlHomepageRedirect = "./";
-		window.location.replace(urlHomepageRedirect);
-	}
+
+	<!-- if (!reviewsIds.includes(reviewId)) { -->
+		<!-- var urlHomepageRedirect = "./"; -->
+		<!-- window.location.replace(urlHomepageRedirect); -->
+	<!-- } -->
 }
 
 function loadFaculty(){
@@ -1042,6 +1045,7 @@ function postReview(){
 			break;
 		  }
 		}
+		console.log(userWorking);
 		var review = {
 			facultyId: facultyId,
 		   generalRating: generalRating,
@@ -1095,6 +1099,7 @@ function postReview(){
 				crossDomain: true,
 				data: JSON.stringify(review),
 				success: function (data) {
+						increaseReviewStatistic(4);
 						var addedReviews = getUField("uar");
 						if (!addedReviews) {
 							addedReviews = [];
@@ -1400,7 +1405,8 @@ function validateEmail(email) {
 }
 
 function showTab(n) {
-	increaseReviewStatistic(n);
+	var step = n + 1;
+	increaseReviewStatistic(step);
 
   // This function will display the specified tab of the form...
   var x = document.getElementsByClassName("tab");
@@ -1531,25 +1537,6 @@ function textCounter(field, field2, field3, field4, maxlimit) {
 		countfield.className = "text-muted";
 		counttext.className = "text-muted";
 	}
-}
-  
-function increaseReviewStatistic(n) {
-	var step = n + 1;
-
-	var backendUrl = new URL(backendUrlRoot + "/v1/analytics/rev");
-	backendUrl.searchParams.append("s", step);
-
-	$.ajax({
-		url: backendUrl,
-		type: 'PUT',
-		dataType: 'json',
-		contentType: 'application/json',
-		crossDomain: true,
-		success: function () {
-		},
-		error: function(error) {
-		}
-	});
 }
   
 var elem = document.querySelector('input[type="range"]');

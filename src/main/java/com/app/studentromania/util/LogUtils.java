@@ -13,7 +13,7 @@ public class LogUtils {
 	}
 
 	public static void logStart(Logger logger, String endPointName) {
-		logStart(logger, endPointName, null);
+		logStart(logger, endPointName, "visitor");
 	}
 
 	public static void logStart(Logger logger, String endPointName, String userId) {
@@ -21,7 +21,7 @@ public class LogUtils {
 	}
 
 	public static void logSuccess(Logger logger, String endPointName) {
-		logSuccess(logger, endPointName, null);
+		logSuccess(logger, endPointName, "visitor");
 	}
 
 	public static void logSuccess(Logger logger, String endPointName, String userId) {
@@ -29,7 +29,7 @@ public class LogUtils {
 	}
 
 	public static void logError(Logger logger, String endPointName, Throwable e) {
-		logError(logger, endPointName, e, null);
+		logError(logger, endPointName, e, "visitor");
 	}
 
 	public static void logError(Logger logger, String endPointName, Throwable e, String userId) {
@@ -46,7 +46,7 @@ public class LogUtils {
 	}
 
 	public static void logEndPointExecutionTime(Logger logger, String endPointName, long totalTime) {
-		logEndPointExecutionTime(logger, endPointName, totalTime, null);
+		logEndPointExecutionTime(logger, endPointName, totalTime, "visitor");
 	}
 
 	public static void logEndPointExecutionTime(Logger logger, String endPointName, long totalTime, String userId) {
