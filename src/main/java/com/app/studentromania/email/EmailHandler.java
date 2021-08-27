@@ -16,10 +16,12 @@ import javax.mail.internet.MimeMultipart;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.util.LogUtils;
 
+@Component
 public class EmailHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailHandler.class);
@@ -27,7 +29,11 @@ public class EmailHandler {
 	private static final String user = "unistart@gmail.com";
 	private static final String pass = "Cabalache_2107";
 
-	private ErrorsEnum handleSendMail(String to, String subject, String message) {
+	public ErrorsEnum sendEmail(String to, String subject, String message) {
+		return handleSendEmail(to, subject, message);
+	}
+
+	private ErrorsEnum handleSendEmail(String to, String subject, String message) {
 
 		Session session = null;
 		Properties mailProps = getEmailProperties();
@@ -65,11 +71,12 @@ public class EmailHandler {
 
 			Transport.send(mimeMessage);
 		} catch (MessagingException e) {
-			LogUtils.logError(LOGGER, "handleSendMail", e);
+//			LogUtils.logError(LOGGER, "handleSendMail", e);
+			LogUtils.logMessage(LOGGER, "<-- Error. Email was not sent to email address: " + to);
 			return ErrorsEnum.EMAIL_SENDING_ERROR;
 		}
 
-		LogUtils.logMessage(LOGGER, "<-- Email was sent succesfully!");
+		LogUtils.logMessage(LOGGER, "<-- Email was sent succesfully to email address: " + to);
 		return ErrorsEnum.NO_ERROR;
 	}
 

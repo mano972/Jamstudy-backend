@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.studentromania.dao.UserProfileDAO;
+import com.app.studentromania.dto.NewsletterDTO;
 import com.app.studentromania.dto.ResponseDTO;
+import com.app.studentromania.email.EmailHandler;
 import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.model.Newsletter;
 import com.app.studentromania.model.UserProfile;
@@ -33,6 +36,9 @@ public class NewsletterService {
 
 	@Autowired
 	private UserProfileDAO userProfileDAO;
+
+	@Autowired
+	private EmailHandler emailHandler;
 
 	public ResponseDTO saveNewsletter() {
 		Newsletter newsletter = new Newsletter();
@@ -102,7 +108,7 @@ public class NewsletterService {
 		}
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
-	
+
 	public ErrorsEnum removeEmailFromNewsletter(String email) {
 		List<Newsletter> newsletters = newsletterRepo.findAll();
 		if (CollectionUtils.isEmpty(newsletters)) {
@@ -140,6 +146,31 @@ public class NewsletterService {
 		JSONObject response = new JSONObject(newsletter);
 
 		return ResponseDTO.createSuccessResponse(response);
+	}
+
+	public ResponseDTO sendNewsletter(NewsletterDTO newsletterDTO) {
+
+		if (!StringUtils.isEmpty(newsletterDTO.getTo())) {
+			ErrorsEnum errors = emailHandler.sendEmail(newsletterDTO.getTo(), newsletterDTO.getSubject(),
+					newsletterDTO.getNewsletterBody());
+			if (errors != ErrorsEnum.NO_ERROR) {
+				return ResponseDTO.createErrorResponse(errors);
+			}
+		} else {
+			List<Newsletter> newsletters = newsletterRepo.findAll();
+			if (CollectionUtils.isEmpty(newsletters)) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.NEWSLETTER_NOT_FOUND);
+			}
+			Newsletter newsletter = newsletters.get(0);
+			List<String> emails = newsletter.getEmails();
+			LogUtils.logMessage(LOGGER, "Number of newsletter emails to send: " + emails.size());
+			for (String email : emails) {
+				emailHandler.sendEmail(email, newsletterDTO.getSubject(), newsletterDTO.getNewsletterBody());
+			}
+		}
+		LogUtils.logMessage(LOGGER, "Newsletter emails were sent!");
+
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
 }

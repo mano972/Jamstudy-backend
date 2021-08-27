@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.studentromania.annotation.VerifyAdmin;
+import com.app.studentromania.dto.NewsletterDTO;
 import com.app.studentromania.dto.SubscribeDTO;
 import com.app.studentromania.service.NewsletterService;
 
@@ -38,7 +39,7 @@ public class NewsletterController {
 	public ResponseEntity<String> addEmail(@RequestBody SubscribeDTO subscribeDTO) {
 		return newsletterService.addEmail(subscribeDTO.getEmail()).createRestResponse();
 	}
-	
+
 	@PutMapping("/unsubscribe")
 	public ResponseEntity<String> removeEmail(@RequestBody SubscribeDTO subscribeDTO) {
 		return newsletterService.removeEmail(subscribeDTO.getEmail()).createRestResponse();
@@ -48,6 +49,12 @@ public class NewsletterController {
 	@VerifyAdmin
 	public ResponseEntity<String> getNewsletter() {
 		return newsletterService.getNewsletter().createRestResponse();
+	}
+
+	@PostMapping("/send")
+	@VerifyAdmin
+	public ResponseEntity<String> sendNewsletter(@RequestBody NewsletterDTO newsletterDTO) {
+		return newsletterService.sendNewsletter(newsletterDTO).createRestResponse();
 	}
 
 }
