@@ -16,7 +16,7 @@ public enum ErrorsEnum {
 
 	// Faculty
 	FACULTY_NOT_FOUND(HttpStatus.NOT_FOUND, "Facultatea nu a fost gasita.", -10),
-	FACULTY_EXISTS(HttpStatus.NOT_ACCEPTABLE, "Facultea exista deja.", -11),
+	FACULTY_EXISTS(HttpStatus.NOT_ACCEPTABLE, "Facultatea exista deja.", -11),
 	FACULTY_ID_MISSING(HttpStatus.BAD_REQUEST, "Lipsete id-ul facultatii.", -12),
 	FACULTY_LOGO_ERROR(HttpStatus.NOT_FOUND, "A aparut o eroare la incarcarea logo-ului.", -13),
 
