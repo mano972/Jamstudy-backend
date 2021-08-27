@@ -904,7 +904,7 @@ function loadRecentlyViewedFacultiesContent(sortedResponse) {
 function fbLogin() {
 	console.log("Logging in");
     FB.login(function (response) {
-	console.log("Logging in");
+	console.log(response);
         if (response.authResponse) {
             // Get and display the user profile data
 			console.log(response.authResponse);
@@ -935,7 +935,7 @@ function fbLogout() {
     FB.logout(function() {
         document.getElementById('fbLink').setAttribute("onclick","fbLogin()");
         <!-- document.getElementById('fbLink').innerHTML = '<img src="images/fb-login-btn.png"/>'; -->
-		console.log("Logging out);
+		console.log("Logging out");
         document.getElementById('userData').innerHTML = '';
         document.getElementById('status').innerHTML = '<p>You have successfully logged out from Facebook.</p>';
     });
