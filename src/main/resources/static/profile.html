@@ -1922,7 +1922,7 @@ function addToRecentlyViewed() {
 		} else {
 			facultyIds = [];
 		}
-		if (!facultyIds.includes(facultyId)) {
+		if (facultyId && !facultyIds.includes(facultyId)) {
 			if (facultyIds.length < 16) {
 				facultyIds.push(facultyId);
 			} else {

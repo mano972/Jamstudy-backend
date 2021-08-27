@@ -3747,6 +3747,7 @@ textarea.form-control {
 .btn-facebook:disabled, .btn-facebook[disabled], .btn-facebook.disabled {
   background-color: transparent;
   border-color: #3b5998;
+  opacity: 0.5 !important;
 }
 .btn-facebook.btn-fill {
   color: #FFFFFF;

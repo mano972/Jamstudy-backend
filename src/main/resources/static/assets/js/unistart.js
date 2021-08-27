@@ -49,6 +49,11 @@ window.fbAsyncInit = function() {
         if (response.status === 'connected') {
             //display user data
             // getFbUserData();
+			var jwtToken = getUField("ut");
+			if (!jwtToken) {
+				 fbLogout();
+			}
+		
         }
     });
 };
@@ -359,6 +364,7 @@ function register(e) {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (response) {
+			var currentLocationPath = window.location.pathname;
 			if (currentLocationPath.includes("register")) {
 				var urlHomepageRedirect = "./";
 				window.location.replace(urlHomepageRedirect);
@@ -390,7 +396,6 @@ function logout() {
     });
 	var urlHomepageRedirect = "./";
 	window.location.replace(urlHomepageRedirect);
-	
 }
 
 function validateEmail(email) {
@@ -675,8 +680,9 @@ function checkLoggedInUser(status) {
 			
 			// $('#general-modal').modal('show');
 			// $("#general-modal").on("hidden.bs.modal", function () {
-				var urlHomepageRedirect = "./";
-				window.location.replace(urlHomepageRedirect);
+				// var urlHomepageRedirect = "./";
+				// window.location.replace(urlHomepageRedirect);
+			logout();
 			// });
 		} else {
 			// document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation fa-2x"></i>';
@@ -684,9 +690,10 @@ function checkLoggedInUser(status) {
 			// document.getElementById('general-modal-footer').innerHTML = '<button type="button" class="btn btn-warning btn-simple" data-dismiss="modal" style="color: orange;">Autentificare</button>';
 			// $('#general-modal').modal('show');
 			// $("#general-modal").on("hidden.bs.modal", function () {
-				var urlHomepageRedirect = "./";
-				window.location.replace(urlHomepageRedirect);
+				// var urlHomepageRedirect = "./";
+				// window.location.replace(urlHomepageRedirect);
 			// });
+			logout();
 		}
 		return false;
 	}
