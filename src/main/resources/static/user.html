@@ -605,8 +605,7 @@ function saveUserProfileInfo(el) {
 		},
 		error: function(error) {
 			checkLoggedInUser(error.status);
-			el.setAttribute("data-toggle", 'modal');
-			el.setAttribute("data-target", '#general-modal');
+			$("#general-modal").modal();
 			document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
 			document.getElementById('modal-text').innerHTML = "Eroare. Profilul nu a putut fi salvat";
 		}

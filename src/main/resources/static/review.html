@@ -582,26 +582,6 @@
 			</div>
         </div>
 	</div>
-	
-	
-	<div class="modal fade" id="add-review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<div id="add-review-header-text">
-					<i class="far fa-envelope fa-2x"></i>
-				</div>
-			  </div>
-			  <div id="add-review-modal-text" class="modal-body modal-info text-center">
-				&nbsp;
-			  </div>
-			  <div class="modal-footer">
-				   <button id="ok-button-modal" type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-			  </div>
-			</div>
-		 </div>
-	</div>
 		
 		
 	<footer class="footer">
@@ -675,6 +655,25 @@
 
 		</div>
 	</footer>
+	
+	<div class="modal fade" id="add-review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<div id="add-review-header-text">
+					<i class="far fa-envelope fa-2x"></i>
+				</div>
+			  </div>
+			  <div id="add-review-modal-text" class="modal-body modal-info text-center">
+				&nbsp;
+			  </div>
+			  <div class="modal-footer">
+				   <button id="ok-button-modal" type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+			  </div>
+			</div>
+		 </div>
+	</div>
 	
 	<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
 	  <div class="modal-dialog">
@@ -1087,8 +1086,7 @@ function postReview(){
 		if (!reviewId) { // if POST create review
 			backendUrl = new URL(backendUrlRoot + "/v1/review/" + facultyId);
 			
-			nextbutton.setAttribute("data-toggle", 'modal');
-			nextbutton.setAttribute("data-target", '#add-review-modal');
+			$("#add-review-modal").modal();
 			document.getElementById('add-review-modal-text').innerHTML = "Se procesează...";
 			
 			$.ajax({
@@ -1105,8 +1103,8 @@ function postReview(){
 							addedReviews = [];
 						}
 						var newReview = {
-							rid: data.result.reviewId,
-							fid: data.result.facultyId
+							reviewId: data.result.reviewId,
+							facultyId: data.result.facultyId
 						}
 						addedReviews.push(newReview);
 						setUField("uar", addedReviews);
@@ -1141,8 +1139,7 @@ function postReview(){
 		} else { // if PUT update review
 			backendUrl = new URL(backendUrlRoot + "/v1/review/" + reviewId);
 			
-			nextbutton.setAttribute("data-toggle", 'modal');
-			nextbutton.setAttribute("data-target", '#add-review-modal');
+			$("#add-review-modal").modal();
 			document.getElementById('add-review-modal-text').innerHTML = "Se procesează...";
 			
 			$.ajax({

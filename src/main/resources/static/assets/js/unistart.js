@@ -128,7 +128,7 @@ function loginWithFb(userData) {
 			var savedFaculties = response.result.favoriteFaculties;
 			var savedFacultiesIds = [];
 			for (i in savedFaculties) {
-				savedFacultiesIds.push(savedFaculties[i]);
+				savedFacultiesIds.push(savedFaculties[i].facultyId);
 			}
 			var likedReviewsIds = response.result.likedReviews;
 			var addedReviews = response.result.addedReviews;
@@ -254,7 +254,7 @@ function login(e) {
 			var savedFaculties = response.result.favoriteFaculties;
 			var savedFacultiesIds = [];
 			for (i in savedFaculties) {
-				savedFacultiesIds.push(savedFaculties[i]);
+				savedFacultiesIds.push(savedFaculties[i].facultyId);
 			}
 			var likedReviewsIds = response.result.likedReviews;
 			var addedReviews = response.result.addedReviews;
@@ -618,8 +618,7 @@ function upvoteReview(el) {
 		},
 		error: function(error) {
 			if (checkLoggedInUser(error.status)) {
-				el.setAttribute("data-toggle", 'modal');
-				el.setAttribute("data-target", '#general-modal');
+				$("#general-modal").modal();
 				document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
 				document.getElementById('modal-text').innerHTML = "Evaluarea nu a putut fi votată";
 			}
@@ -634,10 +633,6 @@ function reportReview(el) {
 	var solidIcon = "fas";
 	
 	if ($(el).hasClass(regularIcon)) {
-		
-		el.setAttribute("data-toggle", 'modal');
-		el.setAttribute("data-target", '#general-modal');
-		document.getElementById('modal-text').innerHTML = "Se procesează...";
 
 		var reviewId = $(el).parent().parent().parent().attr("data-reviewid");
 		
@@ -649,12 +644,14 @@ function reportReview(el) {
 			contentType: 'application/json',
 			crossDomain: true,
 			success: function () {
+				$("#general-modal").modal();
 				document.getElementById('modal-text').innerHTML = "Evaluarea a fost raportată";
 				$(el).removeClass(regularIcon);
 				$(el).addClass(solidIcon);
 			},
 			error: function(error) {
 				if (checkLoggedInUser(error.status)) {
+					$("#general-modal").modal();
 					document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
 					document.getElementById('modal-text').innerHTML = "Evaluarea nu a putut fi raportată";
 				}
