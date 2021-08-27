@@ -207,6 +207,14 @@
 							<div class="row">
 								<div class="faculty-search-filter-card-fixed col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-0">
 									<div class="content">
+									<!-- Display login status -->
+<div id="status"></div>
+
+<!-- Facebook login or logout button -->
+<button  id="fbLink" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin();"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+
+<!-- Display user's profile info -->
+<div class="ac-data" id="userData"></div>
 									</div>
 								</div>
 								<div id="load-more-faculties-main" class="faculty-search-card-fixed col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-0 col-lg-7 col-lg-offset-0">
@@ -464,11 +472,21 @@ window.fbAsyncInit = function() {
     // Check whether the user already logged in
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
+		console.log(response.status);
             //display user data
             getFbUserData();
         }
     });
 };
+
+// Load the JavaScript SDK asynchronously
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 
 
 
@@ -882,24 +900,17 @@ function loadRecentlyViewedFacultiesContent(sortedResponse) {
 	
 }
 
-// Load the JavaScript SDK asynchronously
-(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-
 // Facebook login with JavaScript SDK
 function fbLogin() {
-console.log("ss");
+	console.log("Logging in");
     FB.login(function (response) {
-	console.log("ssa");
+	console.log("Logging in");
         if (response.authResponse) {
             // Get and display the user profile data
+			console.log(response.authResponse);
             getFbUserData();
         } else {
+			console.log("User cancelled login or did not fully authorize.");
             document.getElementById('status').innerHTML = 'User cancelled login or did not fully authorize.';
         }
     }, {scope: 'email'});
@@ -910,8 +921,11 @@ function getFbUserData(){
     FB.api('/me', {locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picture'},
     function (response) {
         document.getElementById('fbLink').setAttribute("onclick","fbLogout()");
-        document.getElementById('fbLink').innerHTML = 'Logout from Facebook';
+        <!-- document.getElementById('fbLink').innerHTML = 'Logout from Facebook'; -->
         document.getElementById('status').innerHTML = '<p>Thanks for logging in, ' + response.first_name + '!</p>';
+		console.log(response.first_name);
+		console.log(response.last_name);
+		console.log(response.email);
         document.getElementById('userData').innerHTML = '<h2>Facebook Profile Details</h2><p><img src="'+response.picture.data.url+'"/></p><p><b>FB ID:</b> '+response.id+'</p><p><b>Name:</b> '+response.first_name+' '+response.last_name+'</p><p><b>Email:</b> '+response.email+'</p><p><b>Gender:</b> '+response.gender+'</p><p><b>FB Profile:</b> <a target="_blank" href="'+response.link+'">click to view profile</a></p>';
     });
 }
@@ -920,9 +934,10 @@ function getFbUserData(){
 function fbLogout() {
     FB.logout(function() {
         document.getElementById('fbLink').setAttribute("onclick","fbLogin()");
-        document.getElementById('fbLink').innerHTML = '<img src="images/fb-login-btn.png"/>';
+        <!-- document.getElementById('fbLink').innerHTML = '<img src="images/fb-login-btn.png"/>'; -->
+		console.log("Logging out);
         document.getElementById('userData').innerHTML = '';
-        document.getElementById('status').innerHTML = '<p>You have successfully logout from Facebook.</p>';
+        document.getElementById('status').innerHTML = '<p>You have successfully logged out from Facebook.</p>';
     });
 }
 
