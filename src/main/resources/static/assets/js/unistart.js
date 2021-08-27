@@ -81,7 +81,7 @@ function fbLogin(e) {
 
 // Fetch the user profile data from facebook
 function getFbUserData(){
-    FB.api('/me', {locale: 'en_US', fields: 'id,first_name,last_name'},
+    FB.api('/me', {locale: 'en_US', fields: 'id,first_name,last_name,email'},
     function (response) {
 		console.log(response);
 		loginWithFb(response);
@@ -89,6 +89,7 @@ function getFbUserData(){
 }
 
 function loginWithFb(userData) {
+	
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/loginfb");
 	
 	var email = userData.email;
@@ -142,9 +143,19 @@ function loginWithFb(userData) {
 		},
 		error: function(error) {
 			if (error.status == 401) {
-				errorLogin.innerHTML = "Datele de autentificare sunt incorecte.";
+				if (document.getElementById('error-login')) {
+					document.getElementById('error-login').innerHTML = "Datele de autentificare sunt incorecte.";
+				}
+				if (document.getElementById('error-register')) {
+					document.getElementById('error-register').innerHTML = "Datele de autentificare sunt incorecte.";
+				}
 			} else {
-				errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
+				if (document.getElementById('error-login')) {
+					document.getElementById('error-login').innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
+				}
+				if (document.getElementById('error-register')) {
+					document.getElementById('error-register').innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
+				}
 			}
 		
 			if (document.getElementById("login-button")) {
