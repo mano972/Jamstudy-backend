@@ -383,7 +383,7 @@
 								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
 								<!-- <h5>sau</h5> -->
 								<h5 id="reg-line"></h5>
-								<button class="btn btn-facebook btn-block btn-fill" onclick="fbLogin()"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
 							</form>
 							<div class="forgot">
 								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
@@ -423,7 +423,7 @@
 								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
 								<!-- <h5>sau</h5> -->
 								<h5 id="reg-line"></h5>
-								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
 							</form>
 							<div class="forgot">
 								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
@@ -460,33 +460,7 @@ window.addEventListener("load", collapseExpand);
 
 $(document).ready(function() {
 
-window.fbAsyncInit = function() {
-    // FB JavaScript SDK configuration and setup
-    FB.init({
-      appId            : '369581668156591',
-      autoLogAppEvents : true,
-      xfbml            : true,
-      version          : 'v11.0'
-    });
-    
-    // Check whether the user already logged in
-    FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-		console.log(response.status);
-            //display user data
-            getFbUserData();
-        }
-    });
-};
 
-// Load the JavaScript SDK asynchronously
-(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
 
 
 
@@ -898,47 +872,6 @@ function loadRecentlyViewedFacultiesContent(sortedResponse) {
 	
 	$('#media').carousel('pause');
 	
-}
-
-// Facebook login with JavaScript SDK
-function fbLogin() {
-	console.log("Logging in");
-    FB.login(function (response) {
-	console.log(response);
-        if (response.authResponse) {
-            // Get and display the user profile data
-			console.log(response.authResponse);
-            getFbUserData();
-        } else {
-			console.log("User cancelled login or did not fully authorize.");
-            document.getElementById('status').innerHTML = 'User cancelled login or did not fully authorize.';
-        }
-    }, {scope: 'email'});
-}
-
-// Fetch the user profile data from facebook
-function getFbUserData(){
-    FB.api('/me', {locale: 'en_US', fields: 'id,first_name,last_name,email,link,gender,locale,picture'},
-    function (response) {
-        document.getElementById('fbLink').setAttribute("onclick","fbLogout()");
-        <!-- document.getElementById('fbLink').innerHTML = 'Logout from Facebook'; -->
-        document.getElementById('status').innerHTML = '<p>Thanks for logging in, ' + response.first_name + '!</p>';
-		console.log(response.first_name);
-		console.log(response.last_name);
-		console.log(response.email);
-        document.getElementById('userData').innerHTML = '<h2>Facebook Profile Details</h2><p><img src="'+response.picture.data.url+'"/></p><p><b>FB ID:</b> '+response.id+'</p><p><b>Name:</b> '+response.first_name+' '+response.last_name+'</p><p><b>Email:</b> '+response.email+'</p><p><b>Gender:</b> '+response.gender+'</p><p><b>FB Profile:</b> <a target="_blank" href="'+response.link+'">click to view profile</a></p>';
-    });
-}
-
-// Logout from facebook
-function fbLogout() {
-    FB.logout(function() {
-        document.getElementById('fbLink').setAttribute("onclick","fbLogin()");
-        <!-- document.getElementById('fbLink').innerHTML = '<img src="images/fb-login-btn.png"/>'; -->
-		console.log("Logging out");
-        document.getElementById('userData').innerHTML = '';
-        document.getElementById('status').innerHTML = '<p>You have successfully logged out from Facebook.</p>';
-    });
 }
 
 

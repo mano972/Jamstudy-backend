@@ -73,6 +73,13 @@ public class UserProfileController {
 		return userProfileService.login(userProfileDTO).createRestResponse();
 	}
 
+	@PostMapping("/loginfb")
+	@RestCall
+	public ResponseEntity<String> loginWithFacebook(@RequestBody UserProfileDTO userProfileDTO)
+			throws NoSuchAlgorithmException, InvalidKeySpecException {
+		return userProfileService.loginWithFacebook(userProfileDTO).createRestResponse();
+	}
+
 	@PutMapping
 	@RestCall
 	@JWTAuth

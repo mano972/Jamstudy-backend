@@ -1,6 +1,7 @@
 package com.app.studentromania.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.json.JSONObject;
@@ -9,9 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.studentromania.dao.UserProfileDAO;
 import com.app.studentromania.dto.ResponseDTO;
 import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.model.Newsletter;
+import com.app.studentromania.model.UserProfile;
 import com.app.studentromania.repo.NewsletterRepo;
 import com.app.studentromania.util.LogUtils;
 
@@ -27,6 +30,9 @@ public class NewsletterService {
 
 	@Autowired
 	private NewsletterRepo newsletterRepo;
+
+	@Autowired
+	private UserProfileDAO userProfileDAO;
 
 	public ResponseDTO saveNewsletter() {
 		Newsletter newsletter = new Newsletter();
@@ -54,26 +60,53 @@ public class NewsletterService {
 	}
 
 	public ResponseDTO addEmail(String email) {
+		ErrorsEnum errors = addEmailToNewsletter(email);
+		if (errors != ErrorsEnum.NO_ERROR) {
+			return ResponseDTO.createErrorResponse(errors);
+		}
+		LogUtils.logMessage(LOGGER, "Email added to newsletter!");
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(email);
+		if (userProfileOpt.isPresent()) {
+			userProfileOpt.get().setSubscribeToNewsletter(true);
+			userProfileDAO.updateUserProfile(userProfileOpt.get());
+		}
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
+	public ErrorsEnum addEmailToNewsletter(String email) {
 		List<Newsletter> newsletters = newsletterRepo.findAll();
 		if (CollectionUtils.isEmpty(newsletters)) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.NEWSLETTER_NOT_FOUND);
+			return ErrorsEnum.NEWSLETTER_NOT_FOUND;
 		}
 		Newsletter newsletter = newsletters.get(0);
 		List<String> emails = newsletter.getEmails();
 		if (emails.contains(email)) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.NEWSLETTER_EMAIL_ALREADY_EXISTS);
+			return ErrorsEnum.NEWSLETTER_EMAIL_ALREADY_EXISTS;
 		}
 		emails.add(email);
 		newsletter.setEmails(emails);
 		newsletterRepo.save(newsletter);
-		LogUtils.logMessage(LOGGER, "Email added to newsletter!");
-		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+		return ErrorsEnum.NO_ERROR;
 	}
 
 	public ResponseDTO removeEmail(String email) {
+		ErrorsEnum errors = removeEmailFromNewsletter(email);
+		if (errors != ErrorsEnum.NO_ERROR) {
+			return ResponseDTO.createErrorResponse(errors);
+		}
+		LogUtils.logMessage(LOGGER, "Email removed from newsletter!");
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(email);
+		if (userProfileOpt.isPresent()) {
+			userProfileOpt.get().setSubscribeToNewsletter(false);
+			userProfileDAO.updateUserProfile(userProfileOpt.get());
+		}
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+	
+	public ErrorsEnum removeEmailFromNewsletter(String email) {
 		List<Newsletter> newsletters = newsletterRepo.findAll();
 		if (CollectionUtils.isEmpty(newsletters)) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.NEWSLETTER_NOT_FOUND);
+			return ErrorsEnum.NEWSLETTER_NOT_FOUND;
 		}
 		Newsletter newsletter = newsletters.get(0);
 		List<String> emails = newsletter.getEmails();
@@ -82,8 +115,20 @@ public class NewsletterService {
 		}
 		newsletter.setEmails(emails);
 		newsletterRepo.save(newsletter);
-		LogUtils.logMessage(LOGGER, "Email added to newsletter!");
-		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+		return ErrorsEnum.NO_ERROR;
+	}
+
+	public boolean emailExists(String email) {
+		List<Newsletter> newsletters = newsletterRepo.findAll();
+		if (CollectionUtils.isEmpty(newsletters)) {
+			return false;
+		}
+		Newsletter newsletter = newsletters.get(0);
+		List<String> emails = newsletter.getEmails();
+		if (emails.contains(email)) {
+			return true;
+		}
+		return false;
 	}
 
 	public ResponseDTO getNewsletter() {

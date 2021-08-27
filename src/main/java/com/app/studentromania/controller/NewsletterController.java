@@ -38,6 +38,11 @@ public class NewsletterController {
 	public ResponseEntity<String> addEmail(@RequestBody SubscribeDTO subscribeDTO) {
 		return newsletterService.addEmail(subscribeDTO.getEmail()).createRestResponse();
 	}
+	
+	@PutMapping("/unsubscribe")
+	public ResponseEntity<String> removeEmail(@RequestBody SubscribeDTO subscribeDTO) {
+		return newsletterService.removeEmail(subscribeDTO.getEmail()).createRestResponse();
+	}
 
 	@GetMapping
 	@VerifyAdmin

@@ -127,36 +127,47 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-7">
-                <div class="links">
-                    <ul class="uppercase-links">
-                        <li>
-                            <a href="./">
-                                Acasă
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./search.html">
-                                Facultăți
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./comparison.html">
-                                Compară
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./contact.html">
-                               Contact
-                            </a>
-                        </li>
+               	<div class="links">
+					<ul class="uppercase-links">
+						<li>
+							<a href="./">
+								Acasă
+							</a>
+						</li>
+						<li>
+							<a href="./search.html">
+								Facultăți
+							</a>
+						</li>
+						<li>
+							<a href="./comparison.html">
+								Compară
+							</a>
+						</li>
+						<li>
+							<a href="./contact.html">
+							   Contact
+							</a>
+						</li>
+					</ul>
+					<ul>
+						<li>
+							<a href="./terms.html">
+							   Termeni și condiții
+							</a>
+						</li>
+						<li>
+							<a href="./policy.html">
+							   Politica de confidențialitate
+							</a>
+						</li>
+					</ul>
+					<hr>
 
-                    </ul>
-                    <hr>
-
-                    <div class="copyright">
-                        © 2020 Jamstudy, din dragoste pentru educaţie
-                    </div>
-                </div>
+					<div class="copyright">
+						© 2020 Jamstudy, din dragoste pentru educaţie
+					</div>
+				</div>
             </div>
 
             <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
@@ -202,7 +213,7 @@
 								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
 								<!-- <h5>sau</h5> -->
 								<h5 id="reg-line"></h5>
-								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true" onclick="fbLogin(event)"> </i>Loghează-te cu Facebook</button>
 							</form>
 							<div class="forgot">
 								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
@@ -226,9 +237,12 @@
 								<small id="error-register-email" class="error-message"></small>
 								<br>
 								<!-- <label>Parola</label> -->
-								<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="100" oninput="clearErrorRegisterPass()">
+								<fieldset class="search-fieldset">
+									<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorRegisterPass()">
+									<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
+								</fieldset>
 								<!-- <label>Confirmă Parola</label> -->
-								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="100" oninput="clearErrorRegisterConfirmPass()">
+								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorRegisterConfirmPass()">
 								<small id="error-register" class="error-message"></small>
 								
 								<div>
@@ -239,7 +253,7 @@
 								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
 								<!-- <h5>sau</h5> -->
 								<h5 id="reg-line"></h5>
-								<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true" onclick="fbLogin(event)"> </i>Loghează-te cu Facebook</button>
 							</form>
 							<div class="forgot">
 								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
@@ -265,6 +279,7 @@
 
 <script src="./assets/js/ct-paper.js"></script>
 <script src="./assets/js/demo.js"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 <script type="text/javascript">
 

@@ -120,6 +120,67 @@ public class UserProfileService {
 		return ResponseDTO.createSuccessResponse(response);
 	}
 
+	public ResponseDTO loginWithFacebook(UserProfileDTO userProfileDTO) {
+		if (StringUtils.isEmpty(userProfileDTO.getEmail())) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_PASSWORD_MISSING);
+		}
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(userProfileDTO.getEmail());
+		if (userProfileOpt.isPresent()) {
+			UserProfile userProfile = userProfileOpt.get();
+			mapToUserProfile(userProfileDTO, userProfile);
+			userProfile.setLastLogin(new Date());
+			userProfileDAO.updateUserProfile(userProfile);
+
+			String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
+			if (StringUtils.isBlank(jwtToken)) {
+				LogUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
+				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
+			}
+
+			AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+			authResponseDTO.setJwtToken(jwtToken);
+			authResponseDTO.setFirstName(userProfile.getFirstName());
+			authResponseDTO.setLastName(userProfile.getLastName());
+			authResponseDTO.setFavoriteFaculties(userProfile.getFavoriteFaculties());
+			authResponseDTO.setRecentFaculties(userProfile.getRecentFaculties());
+			authResponseDTO.setAddedReviews(userProfile.getAddedReviews());
+			authResponseDTO.setLikedReviews(userProfile.getLikedReviews());
+			JSONObject response = new JSONObject(authResponseDTO);
+
+			return ResponseDTO.createSuccessResponse(response);
+		} else {
+			UserProfile userProfile = new UserProfile();
+			String generatedId = configDAO.generateDocumentId(Constants.USERPROFILE_PREFIX_ID);
+			userProfile.setUserId(generatedId);
+			mapToUserProfile(userProfileDTO, userProfile);
+			if (newsletterService.emailExists(userProfile.getEmail())) {
+				userProfile.setSubscribeToNewsletter(true);
+			}
+			userProfile.setAcceptTermsAndConditions(true);
+			userProfile.setLastLogin(new Date());
+			userProfileDAO.createUserProfile(userProfile);
+
+			String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
+			if (StringUtils.isBlank(jwtToken)) {
+				LogUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
+				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
+			}
+
+			AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+			authResponseDTO.setJwtToken(jwtToken);
+			authResponseDTO.setFirstName(userProfile.getFirstName());
+			authResponseDTO.setLastName(userProfile.getLastName());
+			authResponseDTO.setFavoriteFaculties(userProfile.getFavoriteFaculties());
+			authResponseDTO.setRecentFaculties(userProfile.getRecentFaculties());
+			authResponseDTO.setAddedReviews(userProfile.getAddedReviews());
+			authResponseDTO.setLikedReviews(userProfile.getLikedReviews());
+			JSONObject response = new JSONObject(authResponseDTO);
+
+			return ResponseDTO.createSuccessResponse(response);
+		}
+
+	}
+
 	public ResponseDTO login(UserProfileDTO userProfileDTO) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(userProfileDTO.getEmail());
 		if (!userProfileOpt.isPresent()) {
@@ -176,13 +237,14 @@ public class UserProfileService {
 		mapToUserProfile(userProfileDTO, userProfile);
 		userProfile.setPassword(securePassword);
 		if (BooleanUtils.isTrue(userProfileDTO.getSubscribeToNewsletter())) {
-			newsletterService.addEmail(userProfile.getEmail());
+			newsletterService.addEmailToNewsletter(userProfile.getEmail());
+		} else if (newsletterService.emailExists(userProfile.getEmail())) {
+			userProfile.setSubscribeToNewsletter(true);
 		}
-		userProfile.setAcceptTermsAndConditions(true);
+//		userProfile.setAcceptTermsAndConditions(true);
 		userProfileDAO.createUserProfile(userProfile);
 		UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO();
 		userProfileResponseDTO.setUserId(userProfile.getUserId());
-		userProfileResponseDTO.setUserName(userProfile.getUserName());
 
 		return ResponseDTO.createSuccessResponse(new JSONObject(userProfileResponseDTO));
 	}
@@ -198,9 +260,9 @@ public class UserProfileService {
 		mapToUserProfile(userProfileDTO, userProfile);
 		userProfile.setFormattedBirthDate(Utilities.getFormattedBirthDate(userProfileDTO.getBirthDate()));
 		if (BooleanUtils.isTrue(userProfileDTO.getSubscribeToNewsletter())) {
-			newsletterService.addEmail(userProfile.getEmail());
+			newsletterService.addEmailToNewsletter(userProfile.getEmail());
 		} else if (BooleanUtils.isFalse(userProfileDTO.getSubscribeToNewsletter())) {
-			newsletterService.removeEmail(userProfile.getEmail());
+			newsletterService.removeEmailFromNewsletter(userProfile.getEmail());
 		}
 		userProfileDAO.updateUserProfile(userProfile);
 		UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO();
@@ -331,7 +393,7 @@ public class UserProfileService {
 		if (!emailMatcher.find()) {
 			return ErrorsEnum.REGISTER_EMAIL_NOT_VALID;
 		}
-		if (!userProfileDTO.getAcceptTermsAndConditions()) {
+		if (BooleanUtils.isNotTrue(userProfileDTO.getAcceptTermsAndConditions())) {
 			return ErrorsEnum.REGISTER_TERMS_AND_CONDITIONS;
 		}
 		Matcher passMatcher = Constants.VALID_PASSWORD_REGEX.matcher(pass);

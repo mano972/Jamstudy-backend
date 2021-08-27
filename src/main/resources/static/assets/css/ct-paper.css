@@ -3751,7 +3751,7 @@ textarea.form-control {
 .btn-facebook.btn-fill {
   color: #FFFFFF;
   background-color: #3b5998;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 .btn-facebook.btn-fill:hover, .btn-facebook.btn-fill:focus, .btn-facebook.btn-fill:active, .btn-facebook.btn-fill.active, .open > .btn-facebook.btn-fill.dropdown-toggle {
   background-color: #3b5998;

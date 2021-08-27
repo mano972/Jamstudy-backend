@@ -32,7 +32,137 @@ function myAccountText() {
 	} else {
 		document.getElementById('myaccount').innerHTML = '<i class="far fa-user" style="margin-right: 7px"></i>Autentificare';		
 	}
+}
+
+window.fbAsyncInit = function() {
+    // FB JavaScript SDK configuration and setup
+    FB.init({
+      appId            : '369581668156591',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v11.0'
+    });
+    
+    // Check whether the user already logged in
+    FB.getLoginStatus(function(response) {
+		console.log(response.status);
+        if (response.status === 'connected') {
+            //display user data
+            // getFbUserData();
+        }
+    });
+};
+
+// Load the JavaScript SDK asynchronously
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+// Facebook login with JavaScript SDK
+function fbLogin(e) {
+	e.preventDefault();
 	
+	console.log("Logging in");
+    FB.login(function (response) {
+		console.log(response);
+        if (response.authResponse) {
+            // Get and display the user profile data
+			console.log(response.authResponse);
+            getFbUserData();
+        } else {
+			console.log("User cancelled login or did not fully authorize.");
+        }
+    }, {scope: 'email'});
+}
+
+// Fetch the user profile data from facebook
+function getFbUserData(){
+    FB.api('/me', {locale: 'en_US', fields: 'id,first_name,last_name'},
+    function (response) {
+		console.log(response);
+		loginWithFb(response);
+    });
+}
+
+function loginWithFb(userData) {
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/loginfb");
+	
+	var email = userData.email;
+	var firstName = userData.first_name;
+	var lastName = userData.last_name;
+		
+	var body = {
+		email: email,
+		firstName: firstName,
+		lastName: lastName
+	};
+	
+	if (document.getElementById("login-button")) {
+		document.getElementById("login-button").disabled = true; 
+	}
+	if (document.getElementById("register-button")) {
+		document.getElementById("register-button").disabled = true; 
+	}
+	document.getElementById("login-fb-button").disabled = true; 
+	
+	$.ajax({
+		url: backendUrl,
+		type: 'POST',
+		dataType: 'json',
+		contentType: 'application/json',
+		crossDomain: true,
+		data: JSON.stringify(body),
+		success: function (response) {
+			localStorage.setItem("u", "{}");
+			var jwtToken = response.result.jwtToken;
+			var savedFaculties = response.result.favoriteFaculties;
+			var savedFacultiesIds = [];
+			for (i in savedFaculties) {
+				savedFacultiesIds.push(savedFaculties[i]);
+			}
+			var likedReviewsIds = response.result.likedReviews;
+			var addedReviews = response.result.addedReviews;
+			
+			setUField("ut", jwtToken);
+			setUField("usf", savedFacultiesIds);
+			setUField("ulr", likedReviewsIds);
+			setUField("uar", addedReviews);
+			
+			var currentLocationPath = window.location.pathname;
+			if (currentLocationPath.includes("login") || currentLocationPath.includes("register")) {
+				var urlHomepageRedirect = "./";
+				window.location.replace(urlHomepageRedirect);
+			} else {
+				location.reload();
+			}
+		},
+		error: function(error) {
+			if (error.status == 401) {
+				errorLogin.innerHTML = "Datele de autentificare sunt incorecte.";
+			} else {
+				errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
+			}
+		
+			if (document.getElementById("login-button")) {
+				document.getElementById("login-button").disabled = false; 
+			}
+			if (document.getElementById("register-button")) {
+				document.getElementById("register-button").disabled = false; 
+			}
+			document.getElementById("login-fb-button").disabled = false; 
+		}
+	});
+}
+
+// Logout from facebook
+function fbLogout() {
+    FB.logout(function() {
+		console.log("Logging out");
+    });
 }
 
 function clearErrorLoginEmail() {
@@ -54,26 +184,6 @@ function clearErrorRegisterPass() {
 function clearErrorRegisterConfirmPass() {
 	document.getElementById('error-register').innerHTML = "";
 }
-
-// document.getElementById("login-email").oninput = function () {
-	// document.getElementById('error-login-email').innerHTML = "";
-// }
-
-// document.getElementById("login-pass").oninput = function () {
-	// document.getElementById('error-login').innerHTML = "";
-// }
-
-// document.getElementById("register-email").oninput = function () {
-	// document.getElementById('error-register-email').innerHTML = "";
-// }
-
-// document.getElementById("register-pass").oninput = function () {
-	// document.getElementById('error-register').innerHTML = "";
-// }
-
-// document.getElementById("register-confirm-pass").oninput = function () {
-	// document.getElementById('error-register').innerHTML = "";
-// }
 
 
 // document.getElementById("login-button").onclick = function (e) {
@@ -105,6 +215,7 @@ function login(e) {
 	}
 	
 	document.getElementById("login-button").disabled = true; 
+	document.getElementById("login-fb-button").disabled = true; 
 	
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/login");
 		
@@ -137,7 +248,13 @@ function login(e) {
 			setUField("ulr", likedReviewsIds);
 			setUField("uar", addedReviews);
 			
-			location.reload();
+			var currentLocationPath = window.location.pathname;
+			if (currentLocationPath.includes("login")) {
+				var urlHomepageRedirect = "./";
+				window.location.replace(urlHomepageRedirect);
+			} else {
+				location.reload();
+			}
 		},
 		error: function(error) {
 			if (error.status == 401) {
@@ -147,6 +264,7 @@ function login(e) {
 			}
 		
 			document.getElementById("login-button").disabled = false;
+			document.getElementById("login-fb-button").disabled = false;
 		}
 	});
 	
@@ -211,6 +329,7 @@ function register(e) {
 	}
 	
 	document.getElementById("register-button").disabled = true; 
+	document.getElementById("login-fb-button").disabled = true; 
 	
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/register");
 		
@@ -229,7 +348,12 @@ function register(e) {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (response) {
-			location.reload();
+			if (currentLocationPath.includes("register")) {
+				var urlHomepageRedirect = "./";
+				window.location.replace(urlHomepageRedirect);
+			} else {
+				location.reload();
+			}
 		},
 		error: function(error) {
 			if (error.status == 401) {
@@ -238,7 +362,8 @@ function register(e) {
 				errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
 			}
 		
-			document.getElementById("register-button").disabled = false; 
+			document.getElementById("register-button").disabled = false;
+			document.getElementById("login-fb-button").disabled = false; 			
 		}
 	});
 	
@@ -246,6 +371,12 @@ function register(e) {
 
 function logout() {
 	localStorage.removeItem("u");
+	FB.getLoginStatus(function(response) {
+		console.log(response.status);
+        if (response.status === 'connected') {
+            fbLogout();
+        }
+    });
 	var urlHomepageRedirect = "./";
 	window.location.replace(urlHomepageRedirect);
 	

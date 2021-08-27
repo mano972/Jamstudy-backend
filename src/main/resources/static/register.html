@@ -73,17 +73,17 @@
 											<br>
 											<form class="register-form">
 												<!-- <label>Email</label> -->
-												<input id="register-email" type="text" class="form-control" placeholder="Email" maxlength="100">
+												<input id="register-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
 												<small id="error-register-email" class="error-message"></small>
 												<br>
 												<!-- <label>Parola</label> -->
 												<fieldset class="search-fieldset">
-													<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50">
+													<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorRegisterPass()">
 													<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
 												</fieldset>
 												<!-- <label>Confirmă Parola</label> -->
 												<br>
-												<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50">
+												<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorRegisterConfirmPass()">
 												<small id="error-register" class="error-message"></small>
 												<br>
 												<div>
@@ -91,9 +91,9 @@
 													<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox">Vreau să fiu la curent cu ultimele noutăți</label>
 												</div>
 												<br>
-												<button id="register-button" class="btn btn-info btn-block btn-fill">Înregistrare</button>
+												<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
 												<br>
-												<button class="btn btn-facebook btn-block btn-fill"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+												<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true" onclick="fbLogin(event)"> </i>Loghează-te cu Facebook</button>
 											</form>
 											<br>
 											<div class="forgot">
@@ -227,6 +227,7 @@
 
 <script src="./assets/js/ct-paper.js"></script>
 <script src="./assets/js/demo.js"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 <script type="text/javascript">
 
@@ -242,118 +243,6 @@ function checkLogin() {
 		var urlHomepageRedirect = "./";
 		window.location.replace(urlHomepageRedirect);
 	}
-}
-
-document.getElementById("register-email").oninput = function () {
-	document.getElementById('error-register-email').innerHTML = "";
-}
-
-document.getElementById("register-pass").oninput = function () {
-	document.getElementById('error-register').innerHTML = "";
-}
-
-document.getElementById("register-confirm-pass").oninput = function () {
-	document.getElementById('error-register').innerHTML = "";
-}
-
-document.getElementById("register-button").onclick = function (e) {
-	e.preventDefault();
-	
-	var userEmail = document.getElementById("register-email").value.trim();
-	var userPass = document.getElementById("register-pass").value.trim();
-	var userConfPass = document.getElementById("register-confirm-pass").value.trim();
-	
-	var errorEmail = document.getElementById('error-register-email');
-	var errorLogin = document.getElementById('error-register');
-	
-	var isInvalid = false;
-	
-	const passMin = 7;
-	
-	if (!userEmail) {
-		errorEmail.innerHTML = "Câmp obligatoriu";
-		isInvalid = true;
-	} else if (!validateEmail(userEmail)) {
-		errorEmail.innerHTML = "Adresa de email nu este validă";
-		isInvalid = true;
-	}
-	if (!userPass) {
-		errorLogin.innerHTML = "Câmp obligatoriu";
-		isInvalid = true;
-	} else if (userPass.length < passMin) {
-		errorLogin.innerHTML = "Parola trebuie să fie de minim 7 caractere.";
-		isInvalid = true;
-	} else if (!validatePass(userPass)) {
-		errorLogin.innerHTML = "Parola trebuie să conțină litere și cifre.";
-		isInvalid = true;
-	} else if (userPass != userConfPass) {
-		errorLogin.innerHTML = "Cele două parole nu se potrivesc";
-		isInvalid = true;
-	}
-	
-	var acceptTermsAndConditions = false;
-	var policyCheckBoxElementId = $("label[for=policy-check]").attr("for");
-	var policyCheckBoxElement = $("input[id='" + policyCheckBoxElementId + "']");
-	if (policyCheckBoxElement.prop("checked") != true) {
-		errorLogin.innerHTML = "Trebuie să accepți Termenii și condițiile de utilizare și Politica de prelucrare a datelor";
-		isInvalid = true;
-	} else {
-		acceptTermsAndConditions = true;
-	}
-	
-	var subscribeToNewsletter = false;
-	var newsletterCheckBoxElementId = $("label[for=newsletter-check]").attr("for");
-	var newsletterCheckBoxElement = $("input[id='" + newsletterCheckBoxElementId + "']");
-	if (newsletterCheckBoxElement.prop("checked") === true) {
-		subscribeToNewsletter = true;;
-	}
-	
-	if (isInvalid) {
-		return false;
-	}
-	
-	document.getElementById("register-button").disabled = true; 
-	
-	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/register");
-		
-	var body = {
-		email: userEmail,
-		password: userPass,
-		subscribeToNewsletter: subscribeToNewsletter,
-		acceptTermsAndConditions: acceptTermsAndConditions
-	};
-	
-	$.ajax({
-		url: backendUrl,
-		type: 'POST',
-		dataType: 'json',
-		contentType: 'application/json',
-		crossDomain: true,
-		data: JSON.stringify(body),
-		success: function (response) {
-			var urlHomepageRedirect = "./";
-			window.location.replace(urlHomepageRedirect);
-		},
-		error: function(error) {
-			if (error.status == 401) {
-				errorLogin.innerHTML = "Datele de autentificare sunt incorecte.";
-			} else {
-				errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
-			}
-			document.getElementById("register-button").disabled = false; 
-		}
-	});
-	
-}
-
-function validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
-
-function validatePass(pass) {
-	var lettersNumbers = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/;
-	return lettersNumbers.test(String(pass).toLowerCase());
 }
 	
 	
