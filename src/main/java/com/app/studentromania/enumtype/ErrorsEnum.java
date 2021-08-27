@@ -80,7 +80,11 @@ public enum ErrorsEnum {
 
 	// Feedback
 	FEEDBACK_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Feedback document was not found.", -100),
-	FEEDBACK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Feedback document already exists.", -101);
+	FEEDBACK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Feedback document already exists.", -101),
+	
+	// Email
+	EMAIL_AUTH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Email: eroare la autentificare.", -110),
+	EMAIL_SENDING_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Email: eroare generala.", -111);
 
 	private String errorDescription;
 	private int errorCode;

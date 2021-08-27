@@ -258,7 +258,9 @@ public class UserProfileService {
 		}
 		UserProfile userProfile = userProfileOpt.get();
 		mapToUserProfile(userProfileDTO, userProfile);
-		userProfile.setFormattedBirthDate(Utilities.getFormattedBirthDate(userProfileDTO.getBirthDate()));
+		if (userProfileDTO.getBirthDate() != null) {
+			userProfile.setFormattedBirthDate(Utilities.getFormattedBirthDate(userProfileDTO.getBirthDate()));
+		}
 		if (BooleanUtils.isTrue(userProfileDTO.getSubscribeToNewsletter())) {
 			newsletterService.addEmailToNewsletter(userProfile.getEmail());
 		} else if (BooleanUtils.isFalse(userProfileDTO.getSubscribeToNewsletter())) {
