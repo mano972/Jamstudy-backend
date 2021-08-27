@@ -315,8 +315,6 @@ $(document).ready(function() {
 	<!-- }); -->
 	
 	myAccountText();
-	
-	$('#media').carousel('pause');
 
 	getFaculties();
 
@@ -802,6 +800,8 @@ function loadRecommendedFacultiesContent(response, comparedFacultyIds) {
 	}
 	
 	document.getElementById("recommended-carousel").innerHTML = recommendedFacultiesString;
+	
+	$('#media').carousel('pause');
 	
 }
 

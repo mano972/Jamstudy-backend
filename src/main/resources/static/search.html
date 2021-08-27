@@ -452,15 +452,23 @@ window.addEventListener("load", collapseExpand);
 
 $(document).ready(function() {
 
-  window.fbAsyncInit = function() {
-  console.log("ssxx");
+window.fbAsyncInit = function() {
+    // FB JavaScript SDK configuration and setup
     FB.init({
       appId            : '369581668156591',
       autoLogAppEvents : true,
       xfbml            : true,
       version          : 'v11.0'
     });
-  };
+    
+    // Check whether the user already logged in
+    FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+            //display user data
+            getFbUserData();
+        }
+    });
+};
 
 
 
@@ -873,25 +881,6 @@ function loadRecentlyViewedFacultiesContent(sortedResponse) {
 	$('#media').carousel('pause');
 	
 }
-
-
-window.fbAsyncInit = function() {
-    // FB JavaScript SDK configuration and setup
-    FB.init({
-      appId      : 'InsertYourFacebookAppId', // FB App ID
-      cookie     : true,  // enable cookies to allow the server to access the session
-      xfbml      : true,  // parse social plugins on this page
-      version    : 'v3.2' // use graph api version 2.8
-    });
-    
-    // Check whether the user already logged in
-    FB.getLoginStatus(function(response) {
-        if (response.status === 'connected') {
-            //display user data
-            getFbUserData();
-        }
-    });
-};
 
 // Load the JavaScript SDK asynchronously
 (function(d, s, id) {
