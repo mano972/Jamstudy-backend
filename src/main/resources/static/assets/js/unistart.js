@@ -45,7 +45,6 @@ window.fbAsyncInit = function() {
     
     // Check whether the user already logged in
     FB.getLoginStatus(function(response) {
-		console.log(response.status);
         if (response.status === 'connected') {
             //display user data
             // getFbUserData();
@@ -71,12 +70,9 @@ window.fbAsyncInit = function() {
 function fbLogin(e) {
 	e.preventDefault();
 	
-	console.log("Logging in");
     FB.login(function (response) {
-		console.log(response);
         if (response.authResponse) {
             // Get and display the user profile data
-			console.log(response.authResponse);
             getFbUserData();
         } else {
 			console.log("User cancelled login or did not fully authorize.");
@@ -88,7 +84,6 @@ function fbLogin(e) {
 function getFbUserData(){
     FB.api('/me', {locale: 'en_US', fields: 'id,first_name,last_name,email'},
     function (response) {
-		console.log(response);
 		loginWithFb(response);
     });
 }
@@ -389,7 +384,6 @@ function register(e) {
 function logout() {
 	localStorage.removeItem("u");
 	FB.getLoginStatus(function(response) {
-		console.log(response.status);
         if (response.status === 'connected') {
             fbLogout();
         }
@@ -529,8 +523,7 @@ function addToFavorites(el, facultyId, hasText) {
 		},
 		error: function(error) {
 			checkLoggedInUser(error.status);
-			el.setAttribute("data-toggle", 'modal');
-			el.setAttribute("data-target", '#general-modal');
+			$("#general-modal").modal();
 			document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
 			if (error.responseJSON) {
 				if (error.responseJSON.control) {
