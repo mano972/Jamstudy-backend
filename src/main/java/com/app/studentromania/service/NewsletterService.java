@@ -152,7 +152,7 @@ public class NewsletterService {
 
 		if (!StringUtils.isEmpty(newsletterDTO.getTo())) {
 			ErrorsEnum errors = emailHandler.sendEmail(newsletterDTO.getTo(), newsletterDTO.getSubject(),
-					newsletterDTO.getNewsletterBody());
+					newsletterDTO.getNewsletterBody(), newsletterDTO.getInlineImages());
 			if (errors != ErrorsEnum.NO_ERROR) {
 				return ResponseDTO.createErrorResponse(errors);
 			}
@@ -165,7 +165,8 @@ public class NewsletterService {
 			List<String> emails = newsletter.getEmails();
 			LogUtils.logMessage(LOGGER, "Number of newsletter emails to send: " + emails.size());
 			for (String email : emails) {
-				emailHandler.sendEmail(email, newsletterDTO.getSubject(), newsletterDTO.getNewsletterBody());
+				emailHandler.sendEmail(email, newsletterDTO.getSubject(), newsletterDTO.getNewsletterBody(),
+						newsletterDTO.getInlineImages());
 			}
 		}
 		LogUtils.logMessage(LOGGER, "Newsletter emails were sent!");

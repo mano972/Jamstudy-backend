@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ import com.app.studentromania.dto.AuthResponseDTO;
 import com.app.studentromania.dto.ResponseDTO;
 import com.app.studentromania.dto.UserProfileDTO;
 import com.app.studentromania.dto.UserProfileResponseDTO;
+import com.app.studentromania.email.EmailHandler;
 import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.model.Faculty;
 import com.app.studentromania.model.UserProfile;
@@ -58,6 +60,9 @@ public class UserProfileService {
 
 	@Autowired
 	private ConfigDAO configDAO;
+
+	@Autowired
+	private EmailHandler emailHandler;
 
 	@Autowired
 	public UserProfileService() {
@@ -190,9 +195,9 @@ public class UserProfileService {
 		if (!SecurityUtils.validatePassword(userProfileDTO.getPassword(), userProfile.getPassword())) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_WRONG_CREDENTIALS);
 		}
-//		if (BooleanUtils.isNotTrue(userProfile.getEmailConfirmed())) {
-//			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED);
-//		}
+		if (BooleanUtils.isNotTrue(userProfile.getEmailConfirmed())) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED);
+		}
 
 		String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
 		if (StringUtils.isBlank(jwtToken)) {
@@ -242,11 +247,87 @@ public class UserProfileService {
 			userProfile.setSubscribeToNewsletter(true);
 		}
 //		userProfile.setAcceptTermsAndConditions(true);
+		createRegistrationVerificationToken(userProfile);
 		userProfileDAO.createUserProfile(userProfile);
+		sendRegistrationConfirmationEmail(userProfile);
 		UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO();
 		userProfileResponseDTO.setUserId(userProfile.getUserId());
 
 		return ResponseDTO.createSuccessResponse(new JSONObject(userProfileResponseDTO));
+	}
+
+	public ResponseDTO resendConfirmation(String existingToken) {
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmailConfirmationToken(existingToken);
+		if (!userProfileOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_RESEND_CONFIRMATION_FAILED);
+		}
+		UserProfile userProfile = userProfileOpt.get();
+		createRegistrationVerificationToken(userProfile);
+		userProfileDAO.updateUserProfile(userProfile);
+		sendRegistrationConfirmationEmail(userProfile);
+
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
+	public ResponseDTO changePassword(UserProfileDTO userProfileDTO)
+			throws NoSuchAlgorithmException, InvalidKeySpecException {
+		String userId = customRequestContext.getUserId();
+
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+		if (!userProfileOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		}
+		UserProfile userProfile = userProfileOpt.get();
+		String pass = userProfileDTO.getPassword();
+		if (!isPasswordValid(pass)) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.REGISTER_PASSWORD_ERROR);
+		}
+		String securePassword = SecurityUtils.generateSecurePassword(pass);
+		userProfile.setPassword(securePassword);
+		userProfile.setPasswordResetToken(null);
+		userProfile.setPasswordResetTokenExpiration(null);
+		userProfileDAO.updateUserProfile(userProfile);
+
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
+	public ResponseDTO resetPassword(UserProfileDTO userProfileDTO) {
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(userProfileDTO.getEmail());
+		if (!userProfileOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		}
+		UserProfile userProfile = userProfileOpt.get();
+		createPasswordResetToken(userProfile);
+		userProfileDAO.updateUserProfile(userProfile);
+		sendPasswordResetEmail(userProfile);
+
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
+	public ResponseDTO verifyRegistration(String token) {
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmailConfirmationToken(token);
+		if (!userProfileOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_REGISTER_VERIFICATION_FAILED);
+		}
+		UserProfile userProfile = userProfileOpt.get();
+//		if ((userProfile.getEmailConfirmationTokenExpiration().before(new Date()))) {
+//			return ErrorsEnum.USERPROFILE_REGISTER_VERIFICATION_EXPIRED;
+//		}
+
+		userProfile.setEmailConfirmationToken(null);
+		userProfile.setEmailConfirmationTokenExpiration(null);
+		userProfile.setEmailConfirmed(true);
+		userProfileDAO.updateUserProfile(userProfile);
+
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
+	public ResponseDTO verifyPasswordReset(String token) {
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByPasswordResetToken(token);
+		if (!userProfileOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_RESET_PASS_VERIFICATION_FAILED);
+		}
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
 	public ResponseDTO updateUserProfile(UserProfileDTO userProfileDTO) {
@@ -388,6 +469,58 @@ public class UserProfileService {
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
+	private void createRegistrationVerificationToken(UserProfile userProfile) {
+		String emailConfirmationToken = UUID.randomUUID().toString();
+//		Integer hours = 24;
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(new Date());
+//		cal.add(Calendar.HOUR, hours);
+
+		userProfile.setEmailConfirmationToken(emailConfirmationToken);
+//		userProfile.setEmailConfirmationTokenExpiration(cal.getTime());
+	}
+
+	private void sendRegistrationConfirmationEmail(UserProfile userProfile) {
+		String to = userProfile.getEmail();
+		String subject = "Confirmă crearea unui cont nou pe platforma Unistart";
+		String confirmationUrl = "https://unistart.ro" + "/login.html?token=" + userProfile.getEmailConfirmationToken();
+		StringBuilder sb = new StringBuilder();
+		sb.append("Bun venit in comunitatea Unistart! \nAcceseaza link-ul pentru a confirma crearea unui cont nou.\n")
+				.append(confirmationUrl).append("\n").append("Parerea ta conteaza!\n")
+				.append("Foloseste platforma Unistart pentru a gasi facultatea potrivita pentru tine.\n")
+				.append("In cazul in care esti student sau absolvent, lasa o evaluarea facultatii tale si ajuta un elev sa ia decizia potrivita.\n")
+				.append("Cu drag, \nEchipa Unistart");
+		String message = sb.toString();
+
+		emailHandler.sendEmail(to, subject, message);
+	}
+
+	private void createPasswordResetToken(UserProfile userProfile) {
+		String passwordResetToken = UUID.randomUUID().toString();
+//		Integer hours = 24;
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(new Date());
+//		cal.add(Calendar.HOUR, hours);
+
+		userProfile.setPasswordResetToken(passwordResetToken);
+//		userProfile.setPasswordResetTokenExpiration(cal.getTime());
+	}
+
+	private void sendPasswordResetEmail(UserProfile userProfile) {
+		String to = userProfile.getEmail();
+		String subject = "Resetează parola";
+		String confirmationUrl = "https://unistart.ro" + "/change.html?token=" + userProfile.getPasswordResetToken();
+		StringBuilder sb = new StringBuilder();
+		sb.append("Salut")
+				.append(!StringUtils.isEmpty(userProfile.getFirstName()) ? (", " + userProfile.getFirstName()) : "")
+				.append("!");
+		sb.append("Ai cerut resetarea parolei. Te rugăm accesează link-ul de mai jos\n").append(confirmationUrl)
+				.append("\n").append("Cu drag, \nEchipa Unistart");
+		String message = sb.toString();
+
+		emailHandler.sendEmail(to, subject, message);
+	}
+
 	private ErrorsEnum validateRegister(UserProfileDTO userProfileDTO) {
 		String email = userProfileDTO.getEmail();
 		String pass = userProfileDTO.getPassword();
@@ -398,12 +531,19 @@ public class UserProfileService {
 		if (BooleanUtils.isNotTrue(userProfileDTO.getAcceptTermsAndConditions())) {
 			return ErrorsEnum.REGISTER_TERMS_AND_CONDITIONS;
 		}
-		Matcher passMatcher = Constants.VALID_PASSWORD_REGEX.matcher(pass);
-		if (pass.length() < 7 || !passMatcher.find()) {
+		if (!isPasswordValid(pass)) {
 			return ErrorsEnum.REGISTER_PASSWORD_ERROR;
 		}
 
 		return ErrorsEnum.NO_ERROR;
+	}
+
+	private boolean isPasswordValid(String pass) {
+		Matcher passMatcher = Constants.VALID_PASSWORD_REGEX.matcher(pass);
+		if (pass.length() < 7 || !passMatcher.find()) {
+			return false;
+		}
+		return true;
 	}
 
 	private void mapToUserProfile(UserProfileDTO userProfileDTO, UserProfile userProfile) {

@@ -44,6 +44,18 @@ public class UserProfile extends ParentEntity {
 	private Boolean emailConfirmed;
 
 	@Field
+	private String emailConfirmationToken;
+
+	@Field
+	private Date emailConfirmationTokenExpiration;
+
+	@Field
+	private String passwordResetToken;
+
+	@Field
+	private Date passwordResetTokenExpiration;
+
+	@Field
 	private String location;
 
 	@Field
@@ -146,6 +158,38 @@ public class UserProfile extends ParentEntity {
 
 	public void setEmailConfirmed(Boolean emailConfirmed) {
 		this.emailConfirmed = emailConfirmed;
+	}
+
+	public String getEmailConfirmationToken() {
+		return emailConfirmationToken;
+	}
+
+	public void setEmailConfirmationToken(String emailConfirmationToken) {
+		this.emailConfirmationToken = emailConfirmationToken;
+	}
+
+	public Date getEmailConfirmationTokenExpiration() {
+		return emailConfirmationTokenExpiration;
+	}
+
+	public void setEmailConfirmationTokenExpiration(Date emailConfirmationTokenExpiration) {
+		this.emailConfirmationTokenExpiration = emailConfirmationTokenExpiration;
+	}
+
+	public String getPasswordResetToken() {
+		return passwordResetToken;
+	}
+
+	public void setPasswordResetToken(String passwordResetToken) {
+		this.passwordResetToken = passwordResetToken;
+	}
+
+	public Date getPasswordResetTokenExpiration() {
+		return passwordResetTokenExpiration;
+	}
+
+	public void setPasswordResetTokenExpiration(Date passwordResetTokenExpiration) {
+		this.passwordResetTokenExpiration = passwordResetTokenExpiration;
 	}
 
 	public String getLocation() {

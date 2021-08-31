@@ -15,18 +15,18 @@ public enum ErrorsEnum {
 	ADMIN_LOGIN_WRONG_CREDENTIALS(HttpStatus.BAD_REQUEST, "Admin username/password not correct", -5),
 
 	// Faculty
-	FACULTY_NOT_FOUND(HttpStatus.NOT_FOUND, "Facultatea nu a fost gasita.", -10),
+	FACULTY_NOT_FOUND(HttpStatus.NOT_FOUND, "Facultatea nu a fost gasită.", -10),
 	FACULTY_EXISTS(HttpStatus.NOT_ACCEPTABLE, "Facultatea exista deja.", -11),
 	FACULTY_ID_MISSING(HttpStatus.BAD_REQUEST, "Lipsete id-ul facultatii.", -12),
 	FACULTY_LOGO_ERROR(HttpStatus.NOT_FOUND, "A aparut o eroare la incarcarea logo-ului.", -13),
 
 	// University
-	UNIVERSITY_NOT_FOUND(HttpStatus.NOT_FOUND, "Universitatea nu a fost gasita.", -20),
+	UNIVERSITY_NOT_FOUND(HttpStatus.NOT_FOUND, "Universitatea nu a fost gasită.", -20),
 	UNIVERSITY_EXISTS(HttpStatus.NOT_ACCEPTABLE, "Universitatea exista deja.", -21),
 	UNIVERSITY_ID_MISSING(HttpStatus.BAD_REQUEST, "Lipsete id-ul universitatii.", -22),
 
 	// Review
-	REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "Evaluarea nu a fost gasita.", -30),
+	REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "Evaluarea nu a fost gasită.", -30),
 	REVIEW_EXISTS(HttpStatus.NOT_ACCEPTABLE, "Evaluarea exista deja.", -31),
 	REVIEW_ID_MISSING(HttpStatus.BAD_REQUEST, "Lipsete id-ul evaluarii", -32),
 	REVIEW_GENERAL_RATING_ERROR(HttpStatus.BAD_REQUEST, "Nota acordata nu este corecta.", -33),
@@ -40,7 +40,7 @@ public enum ErrorsEnum {
 	REVIEW_NOT_EDITABLE(HttpStatus.NOT_ACCEPTABLE, "Evaluarea nu mai este editabilă.", -39),
 
 	// Question
-	QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "Intrebarea nu a fost gasita.", -40),
+	QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "Intrebarea nu a fost gasită.", -40),
 
 	// Answer
 	ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "Raspunsul nu a fost gasit.", -50),
@@ -54,7 +54,7 @@ public enum ErrorsEnum {
 	JWT_MISSING(HttpStatus.UNAUTHORIZED, "Token-ul JWT lipseste din request.", -65),
 	JWT_VERIFY_ERROR(HttpStatus.UNAUTHORIZED, "Token-ul JWT nu este corect.", -66),
 	JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "Token-ul JWT a expirat.", -67),
-	USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "Este nevoie de autentificare pentru a folosi aceasta functionalitate.",
+	USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "Este nevoie de autentificare pentru a folosi această funcționalitate.",
 			-68),
 	USERPROFILE_MAX_FAVORITE_FACULTIES(HttpStatus.NOT_ACCEPTABLE,
 			"Ai adăugat deja numărul maxim de facultăți favorite.", -69),
@@ -63,7 +63,12 @@ public enum ErrorsEnum {
 			"Trebuie să accepți Termenii și condițiile de utilizare și Politica de prelucrare a datelor.", -71),
 	REGISTER_PASSWORD_ERROR(HttpStatus.NOT_ACCEPTABLE,
 			"Parola trebuie să fie de minim 7 caractere și să conțină litere și cifre.", -72),
-	USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED(HttpStatus.UNAUTHORIZED, "Adresa de email nu a fost inca confirmata.", -73),
+	USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED(HttpStatus.UNAUTHORIZED, "Adresa de email nu a fost incă confirmată.", -73),
+	USERPROFILE_REGISTER_VERIFICATION_FAILED(HttpStatus.UNAUTHORIZED, "Verificarea adresei de email a eșuat. Link-ul nu mai este valabil.", -74),
+	USERPROFILE_REGISTER_VERIFICATION_EXPIRED(HttpStatus.UNAUTHORIZED,
+			"Timpul alocat verificării adresei de email a expirat.", -75),
+	USERPROFILE_RESET_PASS_VERIFICATION_FAILED(HttpStatus.UNAUTHORIZED, "Resetarea parolei a eșuat. Link-ul nu mai este valabil.", -76),
+	USERPROFILE_RESEND_CONFIRMATION_FAILED(HttpStatus.BAD_REQUEST, "Email-ul de confirmare nu a putut fi trimis.", -77),
 
 	// Statistic
 	ANALYTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics document was not found.", -80),
@@ -81,7 +86,7 @@ public enum ErrorsEnum {
 	// Feedback
 	FEEDBACK_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Feedback document was not found.", -100),
 	FEEDBACK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Feedback document already exists.", -101),
-	
+
 	// Email
 	EMAIL_AUTH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Email: eroare la autentificare.", -110),
 	EMAIL_SENDING_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Email: eroare generala.", -111);

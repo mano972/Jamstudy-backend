@@ -71,6 +71,32 @@ public class UserProfileRepo {
 	@Query
 	@LogExecutionTime
 	@LogParameters
+	public List<UserProfile> findByEmailConfirmationToken(String token) {
+		String query = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
+				+ Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET
+				+ " WHERE docType = $1 AND emailConfirmationToken = $2 ";
+
+		return template.findByN1QL(
+				N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.USER_PROFILE.getValue(), token)),
+				UserProfile.class);
+	}
+	
+	@Query
+	@LogExecutionTime
+	@LogParameters
+	public List<UserProfile> findByPasswordResetToken(String token) {
+		String query = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
+				+ Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET
+				+ " WHERE docType = $1 AND passwordResetToken = $2 ";
+
+		return template.findByN1QL(
+				N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.USER_PROFILE.getValue(), token)),
+				UserProfile.class);
+	}
+
+	@Query
+	@LogExecutionTime
+	@LogParameters
 	public List<UserProfile> findUsersToNotify() {
 		String query = "SELECT u.*, meta(u).cas AS _CAS, meta(u).id AS _ID FROM " + Constants.BUCKET
 				+ " AS u WHERE u.docType = $1 AND ANY n IN u.favoriteFaculties SATISFIES n.allowNotification = true END ";

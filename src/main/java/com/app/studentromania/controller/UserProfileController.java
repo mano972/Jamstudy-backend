@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.studentromania.annotation.JWTAuth;
@@ -75,9 +76,39 @@ public class UserProfileController {
 
 	@PostMapping("/loginfb")
 	@RestCall
-	public ResponseEntity<String> loginWithFacebook(@RequestBody UserProfileDTO userProfileDTO)
-			throws NoSuchAlgorithmException, InvalidKeySpecException {
+	public ResponseEntity<String> loginWithFacebook(@RequestBody UserProfileDTO userProfileDTO) {
 		return userProfileService.loginWithFacebook(userProfileDTO).createRestResponse();
+	}
+
+	@PutMapping("/resendconfirmation")
+	@RestCall
+	public ResponseEntity<String> resendConfirmation(@RequestParam("token") String existingToken) {
+		return userProfileService.resendConfirmation(existingToken).createRestResponse();
+	}
+	
+	@PutMapping("/verifyregister")
+	@RestCall
+	public ResponseEntity<String> verifyRegistration(@RequestParam("token") String token) {
+		return userProfileService.verifyRegistration(token).createRestResponse();
+	}
+
+	@PutMapping("/change")
+	@RestCall
+	public ResponseEntity<String> changePassword(@RequestBody UserProfileDTO userProfileDTO)
+			throws NoSuchAlgorithmException, InvalidKeySpecException {
+		return userProfileService.changePassword(userProfileDTO).createRestResponse();
+	}
+
+	@PutMapping("/reset")
+	@RestCall
+	public ResponseEntity<String> resetPassword(@RequestBody UserProfileDTO userProfileDTO) {
+		return userProfileService.resetPassword(userProfileDTO).createRestResponse();
+	}
+	
+	@PutMapping("/verifyreset")
+	@RestCall
+	public ResponseEntity<String> verifyPasswordReset(@RequestParam("token") String token) {
+		return userProfileService.verifyPasswordReset(token).createRestResponse();
 	}
 
 	@PutMapping

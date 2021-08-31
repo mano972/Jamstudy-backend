@@ -1,5 +1,7 @@
 package com.app.studentromania.dto;
 
+import java.util.Map;
+
 public class NewsletterDTO {
 
 	private String to;
@@ -7,6 +9,8 @@ public class NewsletterDTO {
 	private String subject;
 
 	private String newsletterBody;
+
+	private Map<String, String> inlineImages;
 
 	public String getTo() {
 		return to;
@@ -30,6 +34,14 @@ public class NewsletterDTO {
 
 	public void setNewsletterBody(String newsletterBody) {
 		this.newsletterBody = newsletterBody;
+	}
+
+	public Map<String, String> getInlineImages() {
+		return inlineImages;
+	}
+
+	public void setInlineImages(Map<String, String> inlineImages) {
+		this.inlineImages = inlineImages;
 	}
 
 }

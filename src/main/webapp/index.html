@@ -570,14 +570,22 @@ function loadTopFaculties() {
 				   type: "GET",
 				   success: function(responseReview){
 				   
-				   var reviewId, userName, reviewDate, formattedReviewDate, generalRating, reviewText;
+				   var reviewId, userName, reviewDate, formattedReviewDate, generalRating, reviewText, userStatus, userDomainOfLicenseOrMaster, userProgramName, userYear;
 				    var cardReviewStr = "";
 				   
 						if (responseReview.result.reviews.length > 1) {
 						
 							for (i in responseReview.result.reviews) {
 								reviewId = responseReview.result.reviews[i].reviewId;
-								userName = responseReview.result.reviews[i].userName ? responseReview.result.reviews[i].userName : "Anonim";
+								userName = responseReview.result.reviews[i].userName ? responseReview.result.reviews[i].userName : "";
+								userStatus = responseReview.result.reviews[i].userStatus ? responseReview.result.reviews[i].userStatus.toLowerCase() : "";
+								if (userStatus === 'drop-out') {
+									userStatus = "";
+								}
+								userDomainOfLicenseOrMaster = responseReview.result.reviews[i].userDomainOfLicenseOrMaster ? responseReview.result.reviews[i].userDomainOfLicenseOrMaster : "";
+								userProgramName = responseReview.result.reviews[i].userProgramName ? responseReview.result.reviews[i].userProgramName : "";
+								userYear = responseReview.result.reviews[i].userYear ? responseReview.result.reviews[i].userYear : "";
+								var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
 								reviewDate = responseReview.result.reviews[i].reviewDate ? responseReview.result.reviews[i].reviewDate : "N/A";
 								formattedReviewDate = responseReview.result.reviews[i].formattedReviewDate ? responseReview.result.reviews[i].formattedReviewDate : "N/A";
 								generalRating = responseReview.result.reviews[i].generalRating ? responseReview.result.reviews[i].generalRating : "N/A";
@@ -591,13 +599,13 @@ function loadTopFaculties() {
 								
 								reviewTop.push(responseReview.result.reviews[i]);
 								
-								cardReviewStr += '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">&nbsp' + generalRating + '</strong>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>	 										</div>											</div>';
+								cardReviewStr += '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>		<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6>											<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">&nbsp' + generalRating + '</strong>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>	 										</div>											</div>';
 							}
 						
 							<!-- var review = responseReview.result.reviews[0]; -->
 							<!-- reviewId = review.reviewId; -->
 							<!-- formattedReviewDate = review.formattedReviewDate ? review.formattedReviewDate : "N/A"; -->
-							<!-- userName = review.userName ? review.userName : "Anonim"; -->
+							<!-- userName = review.userName ? review.userName : ""; -->
 							<!-- reviewDate = review.reviewDate ? review.reviewDate : "N/A"; -->
 							<!-- generalRating = review.generalRating ? review.generalRating : "N/A"; -->
 							<!-- reviewText = review.reviewText ? review.reviewText : "N/A"; -->
@@ -616,7 +624,15 @@ function loadTopFaculties() {
 							var review = responseReview.result.reviews[0];
 							reviewId = review.reviewId;
 							formattedReviewDate = review.formattedReviewDate ? review.formattedReviewDate : "N/A";
-							userName = review.userName ? review.userName : "Anonim";
+							userName = review.userName ? review.userName : "";
+							userStatus = review.userStatus ? review.userStatus.toLowerCase() : "";
+							if (userStatus === 'drop-out') {
+								userStatus = "";
+							}
+							userDomainOfLicenseOrMaster = review.userDomainOfLicenseOrMaster ? review.userDomainOfLicenseOrMaster : "";
+							userProgramName = review.userProgramName ? review.userProgramName : "";
+							userYear = review.userYear ? review.userYear : "";
+							var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
 							reviewDate = review.reviewDate ? review.reviewDate : "N/A";
 							generalRating = review.generalRating ? review.generalRating : "N/A";
 							reviewText = review.reviewText ? review.reviewText : "N/A";
@@ -637,7 +653,7 @@ function loadTopFaculties() {
 								secondRevCard = '';
 							}
 								
-							cardReviewStr = '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span id="see-full-review" class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>							</div>											</div>' + secondRevCard;
+							cardReviewStr = '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>			<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6>										<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span id="see-full-review" class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>							</div>											</div>' + secondRevCard;
 						} else {
 							var noReviewsText = "Nu există evaluări";
 							
@@ -847,7 +863,7 @@ function seeFullReview(el, reviewArray) {
 
 		var reviewId = review.reviewId;
 		var facultyId = review.facultyId;
-		var userName = review.userName ? review.userName : "Anonim";
+		var userName = review.userName ? review.userName : "";
 		var formattedReviewDate = review.formattedReviewDate ? review.formattedReviewDate : "N/A";
 		var userStatus = review.userStatus ? review.userStatus.toLowerCase() : "";
 		if (userStatus === 'drop-out') {

@@ -1414,6 +1414,14 @@ input.ct-red + span + label + span.switch-right {
 	color: #8e1e1e;
 }
 
+.btn-reset {
+	color: #499bff !important;
+}
+
+.btn-reset:hover {
+	color: #2d7ee0 !important;
+}
+
 .myaccount-button:hover, .myaccount-button:focus, .myaccount-button:active, .myaccount-button:active:hover, .myaccount-button:active:focus {
   background-color: #f0c000 !important;
   color: #474746 !important;

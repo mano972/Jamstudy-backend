@@ -197,6 +197,15 @@ function clearErrorRegisterConfirmPass() {
 }
 
 
+function clearErrorResetPass() {
+	document.getElementById('error-reset').innerHTML = "";
+}
+
+function clearErrorResetConfirmPass() {
+	document.getElementById('error-reset').innerHTML = "";
+}
+
+
 // document.getElementById("login-button").onclick = function (e) {
 function login(e) {
 	e.preventDefault();
@@ -290,7 +299,7 @@ function register(e) {
 	var userConfPass = document.getElementById("register-confirm-pass").value.trim();
 	
 	var errorEmail = document.getElementById('error-register-email');
-	var errorLogin = document.getElementById('error-register');
+	var errorRegister = document.getElementById('error-register');
 	
 	var isInvalid = false;
 	
@@ -308,23 +317,23 @@ function register(e) {
 	var policyCheckBoxElementId = $("label[for=policy-check]").attr("for");
 	var policyCheckBoxElement = $("input[id='" + policyCheckBoxElementId + "']");
 	if (policyCheckBoxElement.prop("checked") != true) {
-		errorLogin.innerHTML = "Trebuie să accepți Termenii și condițiile de utilizare și Politica de prelucrare a datelor";
+		errorRegister.innerHTML = "Trebuie să accepți Termenii și condițiile de utilizare și Politica de prelucrare a datelor";
 		isInvalid = true;
 	} else {
 		acceptTermsAndConditions = true;
 	}
 	
 	if (!userPass) {
-		errorLogin.innerHTML = "Câmp obligatoriu";
+		errorRegister.innerHTML = "Câmp obligatoriu";
 		isInvalid = true;
 	} else if (userPass.length < passMin) {
-		errorLogin.innerHTML = "Parola trebuie să fie de minim 7 caractere.";
+		errorRegister.innerHTML = "Parola trebuie să fie de minim 7 caractere.";
 		isInvalid = true;
 	} else if (!validatePass(userPass)) {
-		errorLogin.innerHTML = "Parola trebuie să conțină litere și cifre.";
+		errorRegister.innerHTML = "Parola trebuie să conțină litere și cifre.";
 		isInvalid = true;
 	} else if (userPass != userConfPass) {
-		errorLogin.innerHTML = "Cele două parole nu se potrivesc";
+		errorRegister.innerHTML = "Cele două parole nu se potrivesc.";
 		isInvalid = true;
 	}
 	
@@ -369,9 +378,9 @@ function register(e) {
 		},
 		error: function(error) {
 			if (error.status == 401) {
-				errorLogin.innerHTML = "Datele de autentificare sunt incorecte.";
+				errorRegister.innerHTML = "Datele de autentificare sunt incorecte.";
 			} else {
-				errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
+				errorRegister.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
 			}
 		
 			document.getElementById("register-button").disabled = false;
@@ -379,6 +388,202 @@ function register(e) {
 		}
 	});
 	
+}
+
+function changePass(e) {
+	e.preventDefault();
+
+	var userPass = document.getElementById("reset-pass").value.trim();
+	var userConfPass = document.getElementById("reset-confirm-pass").value.trim();
+	
+	var errorReset = document.getElementById('error-reset');
+	
+	var isInvalid = false;
+	
+	const passMin = 7;
+	
+	if (!userPass) {
+		errorReset.innerHTML = "Câmp obligatoriu";
+		isInvalid = true;
+	} else if (userPass.length < passMin) {
+		errorReset.innerHTML = "Parola trebuie să fie de minim 7 caractere.";
+		isInvalid = true;
+	} else if (!validatePass(userPass)) {
+		errorReset.innerHTML = "Parola trebuie să conțină litere și cifre.";
+		isInvalid = true;
+	} else if (userPass != userConfPass) {
+		errorReset.innerHTML = "Cele două parole nu se potrivesc.";
+		isInvalid = true;
+	}
+	
+	if (isInvalid) {
+		return false;
+	}
+	
+	document.getElementById("reset-button").disabled = true; 
+	
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/change");
+		
+	var body = {
+		password: userPass
+	};
+	
+	$.ajax({
+		url: backendUrl,
+		type: 'PUT',
+		dataType: 'json',
+		contentType: 'application/json',
+		crossDomain: true,
+		data: JSON.stringify(body),
+		success: function (response) {
+			$("#general-modal").modal();
+			document.getElementById('modal-text').innerHTML = "Parola a fost schimbată cu success.";
+			$("#general-modal").on("hidden.bs.modal", function () {
+				var jwtToken = getUField("ut");
+				if (!jwtToken) {
+					var urlLoginRedirect = "./login.html";
+					window.location.replace(urlLoginRedirect);
+				} else {
+					var urlUserRedirect = "./user.html";
+					window.location.replace(urlUserRedirect);
+				}
+			});
+		},
+		error: function(error) {
+			if (error.status == 401) {
+				errorReset.innerHTML = "Datele de autentificare sunt incorecte.";
+			} else {
+				errorReset.innerHTML = "Parola nu a putut fi schimbată. Te rugăm să încerci din nou mai târziu.";
+			}
+		
+			document.getElementById("reset-button").disabled = false;			
+		}
+	});
+	
+}
+
+function verifyRegister(token) {
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/verifyregister");
+		
+	var body = {
+		token: token
+	};
+	
+	$.ajax({
+		url: backendUrl,
+		type: 'PUT',
+		dataType: 'json',
+		contentType: 'application/json',
+		crossDomain: true,
+		data: JSON.stringify(body),
+		success: function (response) {
+			$("#general-modal").modal();
+			document.getElementById('modal-text').innerHTML = "Adresa de email a fost confirmată cu success. Te poți autentifica.";
+		},
+		error: function(error) {
+			$("#general-modal").modal();
+			document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+			if (error.responseJSON) {
+				if (error.responseJSON.control) {
+					var errorDescription = error.responseJSON.control.errorDescription;
+					document.getElementById('modal-text').innerHTML = errorDescription;
+				} else {
+					document.getElementById('modal-text').innerHTML = "Adresa de email nu a putut fi confirmată.";
+				}
+			} else {
+				document.getElementById('modal-text').innerHTML = "Adresa de email nu a putut fi confirmată.";
+			}
+			// document.getElementById('general-modal-footer').innerHTML = 
+					// '<div class="left-side">'
+					// +'	<button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Ok</button>'
+					// +'</div>'
+					// +'<div class="divider"></div>'
+					// +'<div class="right-side">'
+					// +'	<button type="button" class="btn btn-warning btn-simple" data-dismiss="modal" style="color: orange;" onclick="resendConfirmationEmail(&quot;'+token+'&quot;)">Retrimite email de confirmare</button>'
+					// +'</div>';
+					
+		}
+	});
+
+}
+
+function verifyReset(token) {
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/verifyreset");
+		
+	var body = {
+		token: token
+	};
+	
+	$.ajax({
+		url: backendUrl,
+		type: 'PUT',
+		dataType: 'json',
+		contentType: 'application/json',
+		crossDomain: true,
+		data: JSON.stringify(body),
+		success: function (response) {
+
+		},
+		error: function(error) {
+			$("#general-modal").modal();
+			if (error.responseJSON) {
+				if (error.responseJSON.control) {
+					var errorDescription = error.responseJSON.control.errorDescription;
+					document.getElementById('modal-text').innerHTML = errorDescription;
+				} else {
+					document.getElementById('modal-text').innerHTML = "A apărut o eroare.";
+				}
+			} else {
+				document.getElementById('modal-text').innerHTML = "A apărut o eroare.";
+			}
+			$("#general-modal").on("hidden.bs.modal", function () {
+				var jwtToken = getUField("ut");
+				var urlLoginRedirect = "./login.html";
+				window.location.replace(urlLoginRedirect);
+			});
+					
+		}
+	});
+
+}
+
+function resendConfirmationEmail(token) {
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/resendconfirmation");
+		
+	var body = {
+		token: token
+	};
+	
+	$.ajax({
+		url: backendUrl,
+		type: 'PUT',
+		dataType: 'json',
+		contentType: 'application/json',
+		crossDomain: true,
+		data: JSON.stringify(body),
+		success: function (response) {
+			
+		},
+		
+		error: function(error) {
+			$("#general-modal").modal();
+			document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+			if (error.responseJSON) {
+				if (error.responseJSON.control) {
+					var errorDescription = error.responseJSON.control.errorDescription;
+					document.getElementById('modal-text').innerHTML = errorDescription;
+				} else {
+					document.getElementById('modal-text').innerHTML = "Email-ul de confirmare nu a putut fi trimis.";
+				}
+			} else {
+				document.getElementById('modal-text').innerHTML = "Email-ul de confirmare nu a putut fi trimis.";
+			}
+			document.getElementById('general-modal-footer').innerHTML = '<button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>';
+					
+		}
+	});
 }
 
 function logout() {

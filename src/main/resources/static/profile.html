@@ -771,6 +771,14 @@ function loadGeneralReviewCard(response) {
 								for (i in responseReview.result.reviews) {
 									reviewId = responseReview.result.reviews[i].reviewId;
 									userName = responseReview.result.reviews[i].userName ? responseReview.result.reviews[i].userName : "";
+									var userStatus = responseReview.result.reviews[i].userStatus ? responseReview.result.reviews[i].userStatus.toLowerCase() : "";
+									if (userStatus === 'drop-out') {
+										userStatus = "";
+									}
+									var userDomainOfLicenseOrMaster = responseReview.result.reviews[i].userDomainOfLicenseOrMaster ? responseReview.result.reviews[i].userDomainOfLicenseOrMaster : "";
+									var userProgramName = responseReview.result.reviews[i].userProgramName ? responseReview.result.reviews[i].userProgramName : "";
+									var userYear = responseReview.result.reviews[i].userYear ? responseReview.result.reviews[i].userYear : "";
+									var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
 									reviewDate = responseReview.result.reviews[i].reviewDate ? responseReview.result.reviews[i].reviewDate : "N/A";
 									formattedReviewDate = responseReview.result.reviews[i].formattedReviewDate ? responseReview.result.reviews[i].formattedReviewDate : "N/A";
 									generalRating = responseReview.result.reviews[i].generalRating ? responseReview.result.reviews[i].generalRating : "N/A";
@@ -784,7 +792,7 @@ function loadGeneralReviewCard(response) {
 									
 									reviewTop.push(responseReview.result.reviews[i]);
 									
-									cardReviewStr += '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>													<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">&nbsp' + generalRating + '</strong>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>	 										</div>											</div>';
+									cardReviewStr += '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>				<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6>											<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">&nbsp' + generalRating + '</strong>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>	 										</div>											</div>';
 								}
 								seeAllReviewsButtonStr = '<div class="text-center">'
 +'															<a id="see-all-reviews" type="button" class="btn btn-warning" onclick="seeAllReviews()" style="color: orange;">Vezi toate evaluările</a>'

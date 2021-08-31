@@ -47,6 +47,18 @@ public class UserProfileDAO {
 
 	@LogExecutionTime
 	@LogParameters
+	public Optional<UserProfile> getByEmailConfirmationToken(String token) {
+		return userProfileRepo.findByEmailConfirmationToken(token).stream().findFirst();
+	}
+
+	@LogExecutionTime
+	@LogParameters
+	public Optional<UserProfile> getByPasswordResetToken(String token) {
+		return userProfileRepo.findByPasswordResetToken(token).stream().findFirst();
+	}
+
+	@LogExecutionTime
+	@LogParameters
 	public List<UserProfile> getUsersToNotify() {
 		return userProfileRepo.findUsersToNotify();
 	}

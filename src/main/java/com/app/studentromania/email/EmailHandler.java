@@ -1,6 +1,9 @@
 package com.app.studentromania.email;
 
+import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
@@ -30,10 +33,14 @@ public class EmailHandler {
 	private static final String pass = "Cabalache_2107";
 
 	public ErrorsEnum sendEmail(String to, String subject, String message) {
-		return handleSendEmail(to, subject, message);
+		return handleSendEmail(to, subject, message, null);
 	}
 
-	private ErrorsEnum handleSendEmail(String to, String subject, String message) {
+	public ErrorsEnum sendEmail(String to, String subject, String message, Map<String, String> mapInlineImage) {
+		return handleSendEmail(to, subject, message, mapInlineImage);
+	}
+
+	private ErrorsEnum handleSendEmail(String to, String subject, String message, Map<String, String> mapInlineImages) {
 
 		Session session = null;
 		Properties mailProps = getEmailProperties();
@@ -66,6 +73,26 @@ public class EmailHandler {
 			messageBodyPart.setText(emailMessage.toString());
 			messageBodyPart.setContent(emailMessage.toString(), "text/html");
 			multipart.addBodyPart(messageBodyPart);
+
+			// adds inline image attachments
+			if (mapInlineImages != null && mapInlineImages.size() > 0) {
+				Set<String> setImageID = mapInlineImages.keySet();
+
+				for (String contentId : setImageID) {
+					MimeBodyPart imagePart = new MimeBodyPart();
+					imagePart.setHeader("Content-ID", "<" + contentId + ">");
+					imagePart.setDisposition(MimeBodyPart.INLINE);
+
+					String imageFilePath = mapInlineImages.get(contentId);
+					try {
+						imagePart.attachFile(imageFilePath);
+					} catch (IOException ex) {
+						ex.printStackTrace();
+					}
+
+					multipart.addBodyPart(imagePart);
+				}
+			}
 
 			mimeMessage.setContent(multipart);
 
