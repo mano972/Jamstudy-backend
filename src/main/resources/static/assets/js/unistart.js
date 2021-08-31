@@ -277,11 +277,21 @@ function login(e) {
 			}
 		},
 		error: function(error) {
-			if (error.status == 401) {
-				errorLogin.innerHTML = "Datele de autentificare sunt incorecte.";
+			if (error.responseJSON) {
+				if (error.responseJSON.control) {
+					var errorDescription = error.responseJSON.control.errorDescription;
+					errorLogin.innerHTML = errorDescription;
+				} else {
+					errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
+				}
 			} else {
 				errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
 			}
+			// if (error.status == 401) {
+				// errorLogin.innerHTML = "Datele de autentificare sunt incorecte.";
+			// } else {
+				// errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
+			// }
 		
 			document.getElementById("login-button").disabled = false;
 			document.getElementById("login-fb-button").disabled = false;
@@ -377,11 +387,21 @@ function register(e) {
 			}
 		},
 		error: function(error) {
-			if (error.status == 401) {
-				errorRegister.innerHTML = "Datele de autentificare sunt incorecte.";
+			if (error.responseJSON) {
+				if (error.responseJSON.control) {
+					var errorDescription = error.responseJSON.control.errorDescription;
+					errorRegister.innerHTML = errorDescription;
+				} else {
+					errorRegister.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
+				}
 			} else {
 				errorRegister.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
 			}
+			// if (error.status == 401) {
+				// errorRegister.innerHTML = "Datele de autentificare sunt incorecte.";
+			// } else {
+				// errorRegister.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
+			// }
 		
 			document.getElementById("register-button").disabled = false;
 			document.getElementById("login-fb-button").disabled = false; 			
@@ -451,11 +471,21 @@ function changePass(e, token) {
 			});
 		},
 		error: function(error) {
-			if (error.status == 401) {
-				errorReset.innerHTML = "Datele de autentificare sunt incorecte.";
+			if (error.responseJSON) {
+				if (error.responseJSON.control) {
+					var errorDescription = error.responseJSON.control.errorDescription;
+					errorReset.innerHTML = errorDescription;
+				} else {
+					errorReset.innerHTML = "Parola nu a putut fi schimbată. Te rugăm să încerci din nou mai târziu.";
+				}
 			} else {
 				errorReset.innerHTML = "Parola nu a putut fi schimbată. Te rugăm să încerci din nou mai târziu.";
 			}
+			// if (error.status == 401) {
+				// errorReset.innerHTML = "Datele de autentificare sunt incorecte.";
+			// } else {
+				// errorReset.innerHTML = "Parola nu a putut fi schimbată. Te rugăm să încerci din nou mai târziu.";
+			// }
 		
 			document.getElementById("reset-button").disabled = false;			
 		}

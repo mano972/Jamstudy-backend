@@ -249,7 +249,10 @@ public class UserProfileService {
 //		userProfile.setAcceptTermsAndConditions(true);
 		createRegistrationVerificationToken(userProfile);
 		userProfileDAO.createUserProfile(userProfile);
-		sendRegistrationConfirmationEmail(userProfile);
+		ErrorsEnum emailError = sendRegistrationConfirmationEmail(userProfile);
+		if (ErrorsEnum.NO_ERROR != emailError) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_CONFIRMATION_FAILED);
+		}
 		UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO();
 		userProfileResponseDTO.setUserId(userProfile.getUserId());
 
@@ -260,7 +263,7 @@ public class UserProfileService {
 		Optional<UserProfile> userProfileOpt = userProfileDAO
 				.getByEmailConfirmationToken(userProfileDTO.getEmailConfirmationToken());
 		if (!userProfileOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_RESEND_CONFIRMATION_FAILED);
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_CONFIRMATION_FAILED);
 		}
 		UserProfile userProfile = userProfileOpt.get();
 		createRegistrationVerificationToken(userProfile);
@@ -305,7 +308,10 @@ public class UserProfileService {
 		UserProfile userProfile = userProfileOpt.get();
 		createPasswordResetToken(userProfile);
 		userProfileDAO.updateUserProfile(userProfile);
-		sendPasswordResetEmail(userProfile);
+		ErrorsEnum emailError = sendPasswordResetEmail(userProfile);
+		if (ErrorsEnum.NO_ERROR != emailError) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_CONFIRMATION_FAILED);
+		}
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
@@ -488,7 +494,7 @@ public class UserProfileService {
 //		userProfile.setEmailConfirmationTokenExpiration(cal.getTime());
 	}
 
-	private void sendRegistrationConfirmationEmail(UserProfile userProfile) {
+	private ErrorsEnum sendRegistrationConfirmationEmail(UserProfile userProfile) {
 		String to = userProfile.getEmail();
 		String subject = "Confirmă crearea unui cont nou pe platforma Unistart";
 		String confirmationUrl = "https://unistart.ro" + "/login.html?token=" + userProfile.getEmailConfirmationToken();
@@ -500,7 +506,7 @@ public class UserProfileService {
 				.append("Cu drag, \nEchipa Unistart");
 		String message = sb.toString();
 
-		emailHandler.sendEmail(to, subject, message);
+		return emailHandler.sendEmail(to, subject, message);
 	}
 
 	private void createPasswordResetToken(UserProfile userProfile) {
@@ -514,7 +520,7 @@ public class UserProfileService {
 //		userProfile.setPasswordResetTokenExpiration(cal.getTime());
 	}
 
-	private void sendPasswordResetEmail(UserProfile userProfile) {
+	private ErrorsEnum sendPasswordResetEmail(UserProfile userProfile) {
 		String to = userProfile.getEmail();
 		String subject = "Resetează parola";
 		String confirmationUrl = "https://unistart.ro" + "/change.html?token=" + userProfile.getPasswordResetToken();
@@ -526,7 +532,7 @@ public class UserProfileService {
 				.append("\n").append("Cu drag, \nEchipa Unistart");
 		String message = sb.toString();
 
-		emailHandler.sendEmail(to, subject, message);
+		return emailHandler.sendEmail(to, subject, message);
 	}
 
 	private ErrorsEnum validateRegister(UserProfileDTO userProfileDTO) {
