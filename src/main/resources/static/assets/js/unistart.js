@@ -859,6 +859,22 @@ function reportReview(el) {
 	}
 }
 
+function redirectIfNotLoggedIn() {
+	var jwtToken = getUField("ut");
+	if (!jwtToken) {
+		var urlLoginRedirect = "./login.html";
+		window.location.replace(urlLoginRedirect);
+	}
+}
+
+function checkLogin() {
+	var jwtToken = getUField("ut");
+	if (jwtToken) {
+		var urlHomepageRedirect = "./";
+		window.location.replace(urlHomepageRedirect);
+	}
+}
+
 function checkLoggedInUser(status) {
 	// login not necessary and not logged in (no jwt) -> ok
 	// login not necessary and logged in expired (jwt expired) -> login again

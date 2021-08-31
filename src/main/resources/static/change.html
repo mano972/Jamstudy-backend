@@ -282,7 +282,7 @@
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
 
 $().ready(function(){
-	<!-- redirectIfNotLoggedIn(); -->
+
 	myAccountText();
 	var queryParams = new URLSearchParams(window.location.search);
 	var token = queryParams.get("token");
@@ -290,15 +290,8 @@ $().ready(function(){
 	if (token && !jwtToken) {
 		verifyReset(token);
 	}
+	
 });
-
-<!-- function redirectIfNotLoggedIn() { -->
-	<!-- var jwtToken = getUField("ut"); -->
-	<!-- if (!jwtToken) { -->
-		<!-- var urlLoginRedirect = "./login.html"; -->
-		<!-- window.location.replace(urlLoginRedirect); -->
-	<!-- } -->
-<!-- } -->
 	
 	
 </script>

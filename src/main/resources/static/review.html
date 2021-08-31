@@ -822,14 +822,6 @@ $(document).ready(function() {
 	<!-- loadFields(); -->
 });
 
-function redirectIfNotLoggedIn() {
-	var jwtToken = getUField("ut");
-	if (!jwtToken) {
-		var urlLoginRedirect = "./login.html";
-		window.location.replace(urlLoginRedirect);
-	}
-}
-
 function checkEditReviewAllowed() {
 	var addedReviews = getUField("uar");
 	var reviewsIds = [];

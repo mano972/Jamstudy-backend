@@ -236,14 +236,6 @@ const backendUrlRoot = "https://unistart.ro/Jamstudy";
 $().ready(function(){    
 	checkLogin();
 });
-
-function checkLogin() {
-	var jwtToken = getUField("ut");
-	if (jwtToken) {
-		var urlHomepageRedirect = "./";
-		window.location.replace(urlHomepageRedirect);
-	}
-}
 	
 	
 </script>
