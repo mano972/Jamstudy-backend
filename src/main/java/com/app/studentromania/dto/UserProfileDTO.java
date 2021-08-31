@@ -27,6 +27,10 @@ public class UserProfileDTO {
 
 	private Boolean subscribeToNewsletter;
 
+	private String emailConfirmationToken;
+
+	private String passwordResetToken;
+
 	private String location;
 
 	private Date birthDate;
@@ -99,6 +103,22 @@ public class UserProfileDTO {
 
 	public void setSubscribeToNewsletter(Boolean subscribeToNewsletter) {
 		this.subscribeToNewsletter = subscribeToNewsletter;
+	}
+
+	public String getEmailConfirmationToken() {
+		return emailConfirmationToken;
+	}
+
+	public void setEmailConfirmationToken(String emailConfirmationToken) {
+		this.emailConfirmationToken = emailConfirmationToken;
+	}
+
+	public String getPasswordResetToken() {
+		return passwordResetToken;
+	}
+
+	public void setPasswordResetToken(String passwordResetToken) {
+		this.passwordResetToken = passwordResetToken;
 	}
 
 	public Boolean getAddFavoriteFaculty() {

@@ -256,8 +256,9 @@ public class UserProfileService {
 		return ResponseDTO.createSuccessResponse(new JSONObject(userProfileResponseDTO));
 	}
 
-	public ResponseDTO resendConfirmation(String existingToken) {
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmailConfirmationToken(existingToken);
+	public ResponseDTO resendConfirmation(UserProfileDTO userProfileDTO) {
+		Optional<UserProfile> userProfileOpt = userProfileDAO
+				.getByEmailConfirmationToken(userProfileDTO.getEmailConfirmationToken());
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_RESEND_CONFIRMATION_FAILED);
 		}
@@ -273,7 +274,12 @@ public class UserProfileService {
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		String userId = customRequestContext.getUserId();
 
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+		Optional<UserProfile> userProfileOpt = Optional.empty();
+		if (StringUtils.isNotEmpty(userId)) {
+			userProfileOpt = userProfileDAO.getByUserId(userId);
+		} else if (StringUtils.isNotEmpty(userProfileDTO.getPasswordResetToken())) {
+			userProfileOpt = userProfileDAO.getByPasswordResetToken(userProfileDTO.getPasswordResetToken());
+		}
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
 		}
@@ -304,8 +310,9 @@ public class UserProfileService {
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
-	public ResponseDTO verifyRegistration(String token) {
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmailConfirmationToken(token);
+	public ResponseDTO verifyRegistration(UserProfileDTO userProfileDTO) {
+		Optional<UserProfile> userProfileOpt = userProfileDAO
+				.getByEmailConfirmationToken(userProfileDTO.getEmailConfirmationToken());
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_REGISTER_VERIFICATION_FAILED);
 		}
@@ -322,8 +329,9 @@ public class UserProfileService {
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
-	public ResponseDTO verifyPasswordReset(String token) {
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByPasswordResetToken(token);
+	public ResponseDTO verifyPasswordReset(UserProfileDTO userProfileDTO) {
+		Optional<UserProfile> userProfileOpt = userProfileDAO
+				.getByPasswordResetToken(userProfileDTO.getPasswordResetToken());
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_RESET_PASS_VERIFICATION_FAILED);
 		}

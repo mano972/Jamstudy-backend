@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.studentromania.annotation.JWTAuth;
@@ -82,18 +81,19 @@ public class UserProfileController {
 
 	@PutMapping("/resendconfirmation")
 	@RestCall
-	public ResponseEntity<String> resendConfirmation(@RequestParam("token") String existingToken) {
-		return userProfileService.resendConfirmation(existingToken).createRestResponse();
+	public ResponseEntity<String> resendConfirmation(@RequestBody UserProfileDTO userProfileDTO) {
+		return userProfileService.resendConfirmation(userProfileDTO).createRestResponse();
 	}
-	
+
 	@PutMapping("/verifyregister")
 	@RestCall
-	public ResponseEntity<String> verifyRegistration(@RequestParam("token") String token) {
-		return userProfileService.verifyRegistration(token).createRestResponse();
+	public ResponseEntity<String> verifyRegistration(@RequestBody UserProfileDTO userProfileDTO) {
+		return userProfileService.verifyRegistration(userProfileDTO).createRestResponse();
 	}
 
 	@PutMapping("/change")
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> changePassword(@RequestBody UserProfileDTO userProfileDTO)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		return userProfileService.changePassword(userProfileDTO).createRestResponse();
@@ -104,11 +104,11 @@ public class UserProfileController {
 	public ResponseEntity<String> resetPassword(@RequestBody UserProfileDTO userProfileDTO) {
 		return userProfileService.resetPassword(userProfileDTO).createRestResponse();
 	}
-	
+
 	@PutMapping("/verifyreset")
 	@RestCall
-	public ResponseEntity<String> verifyPasswordReset(@RequestParam("token") String token) {
-		return userProfileService.verifyPasswordReset(token).createRestResponse();
+	public ResponseEntity<String> verifyPasswordReset(@RequestBody UserProfileDTO userProfileDTO) {
+		return userProfileService.verifyPasswordReset(userProfileDTO).createRestResponse();
 	}
 
 	@PutMapping

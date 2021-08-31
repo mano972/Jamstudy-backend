@@ -390,7 +390,7 @@ function register(e) {
 	
 }
 
-function changePass(e) {
+function changePass(e, token) {
 	e.preventDefault();
 
 	var userPass = document.getElementById("reset-pass").value.trim();
@@ -425,7 +425,8 @@ function changePass(e) {
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/change");
 		
 	var body = {
-		password: userPass
+		password: userPass,
+		passwordResetToken: token
 	};
 	
 	$.ajax({
@@ -467,7 +468,7 @@ function verifyRegister(token) {
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/verifyregister");
 		
 	var body = {
-		token: token
+		emailConfirmationToken: token
 	};
 	
 	$.ajax({
@@ -513,7 +514,7 @@ function verifyReset(token) {
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/verifyreset");
 		
 	var body = {
-		token: token
+		passwordResetToken: token
 	};
 	
 	$.ajax({
@@ -553,7 +554,7 @@ function resendConfirmationEmail(token) {
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/resendconfirmation");
 		
 	var body = {
-		token: token
+		emailConfirmationToken: token
 	};
 	
 	$.ajax({

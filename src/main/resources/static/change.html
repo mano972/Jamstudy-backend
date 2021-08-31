@@ -85,7 +85,7 @@
 												<input id="reset-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorResetConfirmPass()">
 												<small id="error-reset" class="error-message"></small>
 												<br>
-												<button id="reset-button" class="btn btn-info btn-block btn-fill" onclick="changePass(event)">Schimbă parola</button>
+												<button id="reset-button" class="btn btn-info btn-block btn-fill" onclick="changePass(event, resetToken)">Schimbă parola</button>
 											</form>
 										</div>
 									</div>
@@ -280,15 +280,16 @@
 <script type="text/javascript">
 
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
+var resetToken;
 
 $().ready(function(){
 
 	myAccountText();
 	var queryParams = new URLSearchParams(window.location.search);
-	var token = queryParams.get("token");
+	resetToken = queryParams.get("token");
 	var jwtToken = getUField("ut");
-	if (token && !jwtToken) {
-		verifyReset(token);
+	if (resetToken && !jwtToken) {
+		verifyReset(resetToken);
 	}
 	
 });
