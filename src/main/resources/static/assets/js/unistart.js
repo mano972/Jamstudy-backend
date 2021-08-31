@@ -205,6 +205,10 @@ function clearErrorResetConfirmPass() {
 	document.getElementById('error-reset').innerHTML = "";
 }
 
+function clearErrorForgotEmail() {
+	document.getElementById('error-forgot-email').innerHTML = "";
+}
+
 
 // document.getElementById("login-button").onclick = function (e) {
 function login(e) {
@@ -378,13 +382,17 @@ function register(e) {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (response) {
-			var currentLocationPath = window.location.pathname;
-			if (currentLocationPath.includes("register")) {
-				var urlHomepageRedirect = "./";
-				window.location.replace(urlHomepageRedirect);
-			} else {
-				location.reload();
-			}
+			$("#general-modal").modal();
+			document.getElementById('modal-text').innerHTML = "Un email cu instrucțiuni a fost trimis la adresa de email introdusă.";
+			$("#general-modal").on("hidden.bs.modal", function () {
+					var currentLocationPath = window.location.pathname;
+				if (currentLocationPath.includes("register")) {
+					var urlHomepageRedirect = "./";
+					window.location.replace(urlHomepageRedirect);
+				} else {
+					location.reload();
+				}
+			});
 		},
 		error: function(error) {
 			if (error.responseJSON) {
@@ -491,6 +499,51 @@ function changePass(e, token) {
 		}
 	});
 	
+}
+
+function resetPass(e) {
+	e.preventDefault();
+	
+	var email = document.getElementById("forgot-email").value.trim();
+	
+	var errorForgot = document.getElementById('error-forgot-email');
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/reset");
+		
+	var body = {
+		email: email
+	};
+	
+	$.ajax({
+		url: backendUrl,
+		type: 'PUT',
+		dataType: 'json',
+		contentType: 'application/json',
+		crossDomain: true,
+		data: JSON.stringify(body),
+		success: function (response) {
+			$("#general-modal").modal();
+			document.getElementById('modal-text').innerHTML = "Un email cu instrucțiuni a fost trimis la adresa de email introdusă.";
+			$("#general-modal").on("hidden.bs.modal", function () {
+				var urlHomepageRedirect = "./";
+				window.location.replace(urlHomepageRedirect);
+			});
+		},
+		error: function(error) {
+			if (error.responseJSON) {
+				if (error.responseJSON.control) {
+					var errorDescription = error.responseJSON.control.errorDescription;
+					errorForgot.innerHTML = errorDescription;
+				} else {
+					errorForgot.innerHTML = "Parola nu a putut fi schimbată. Te rugăm să încerci din nou mai târziu.";
+				}
+			} else {
+				errorForgot.innerHTML = "Parola nu a putut fi schimbată. Te rugăm să încerci din nou mai târziu.";
+			}
+					
+		}
+	});
+
 }
 
 function verifyRegister(token) {

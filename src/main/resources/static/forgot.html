@@ -54,8 +54,8 @@
                 <a href="./contact.html" class="btn btn-simple">Contact</a>
             </li>
 			<li>
-				<a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
-			</li>
+                <a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
+            </li>
            </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
@@ -67,55 +67,50 @@
 			<div class="section-white">
 				<div class="container-fluid">
 					<div class="row">
-						<div class="col-md-5 col-md-offset-1">
+						<div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1">
 							<div class="card">
 								<div class="content">
 									<div class="row">
 										<div class="col-md-12 col-md-offset-0">
-											<h3>Contactează-ne</h3>
-											<h5>Spune-ne ce părere ai despre platforma Unistart, raportează un bug sau, pur și simplu, lasă-ne un mesaj.
-											</h5>
-											<form class="contact-form">
-												<div class="row">
-													<div class="col-md-6">
-														<label>Nume</label>
-														<input id='feedback-name' class="form-control" placeholder="Nume" spellcheck="false">
-													</div>
-													<div class="col-md-6">
-														<label>Email</label>
-														<input id='feedback-email' class="form-control" placeholder="Email" spellcheck="false">
-													</div>
-												</div>
-												<label>Mesaj</label>
-												<textarea id='feedback-message' class="form-control" rows="4" placeholder="Lasă-ne un feedback..." spellcheck="false"></textarea>
-												<div class="row">
-													<div class="col-md-4">
-														<button id="send-feedback-btn" class="btn btn-info btn-block btn-fill" data-toggle="modal" data-target="#feedback-modal">Trimite</button>
-													</div>
-												</div>
+											<h3>Ai uitat parola?</h3>
+											<br>
+											<form class="register-form">
+												<input id="forgot-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorForgotEmail()">
+												<small id="error-forgot-email" class="error-message"></small>
+												<br>
+												<button id="forgot-button" class="btn btn-info btn-block btn-fill" onclick="resetPass(event)">Resetează parola</button>
 											</form>
 										</div>
-									</div>
-									<br>
-									<div class="row">
-										<div class="col-md-12 col-md-offset-0 text-right">
-											<a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook"><i class="fa fa-facebook"> </i></button>
-											</a>
-											&nbsp
-											<a href="http://instagram.com" target="_blank"><button class="btn btn-icon btn-fill btn-instagram"><i class="fa fa-instagram"></i></button>
-											</a>
-										</div>	
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4 col-md-offset-1 col-sm-10">
-							<div class="content">
-								<img id="bug_report" style="max-width: 100%" src="./assets/img/newsletter_small.png" alt="..."/>
+						<div class="col-lg-4 col-md-5 col-md-offset-0 col-sm-10">
+							<div class="card">
+								<div class="content">
+									<div class="row">
+										<div class="col-md-12 col-md-offset-0">
+											<h5><b>Beneficiile unui cont de utilizator</b></h5>
+											<br>
+											<p>Fa-ti cont pe Unistart pentru a putea avea access la toate sectiunile platformei.</p>
+											<br>
+											<p>• Evalueaza facultati.</p>
+											<br>
+											<p>• Salveaza facultatile favorite.</p>
+											<br>
+											<p>• Personalizeaza-ti contul.</p>
+											<br>
+											<p>• Voteaza evaluari.</p>
+											<br>
+											<p>• (In curand) Opteaza pentru a primi notificari pentru facultatile favorite.</p>
+											<br>
+											<p>• Vei avea acces la viitoarele functionalitati dedicate exclusiv utilizatorilor inregistrati.</p>
+											
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-						
-						
 					</div>  
 				</div>
 			</div>
@@ -126,67 +121,48 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-sm-7">
-                <div class="links">
-                    <ul class="uppercase-links">
-                        <li>
-                            <a href="./">
-                                Acasă
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./search.html">
-                                Facultăți
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./comparison.html">
-                                Compară
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./contact.html">
-                               Contact
-                            </a>
-                        </li>
-                    </ul>
+				<div class="links">
+					<ul class="uppercase-links">
+						<li>
+							<a href="./">
+								Acasă
+							</a>
+						</li>
+						<li>
+							<a href="./search.html">
+								Facultăți
+							</a>
+						</li>
+						<li>
+							<a href="./comparison.html">
+								Compară
+							</a>
+						</li>
+						<li>
+							<a href="./contact.html">
+							   Contact
+							</a>
+						</li>
+					</ul>
 					<ul>
 						<li>
-                            <a href="./terms.html">
-                               Termeni și condiții
-                            </a>
-                        </li>
+							<a href="./terms.html">
+							   Termeni și condiții
+							</a>
+						</li>
 						<li>
-                            <a href="./policy.html">
-                               Politica de confidențialitate
-                            </a>
-                        </li>
+							<a href="./policy.html">
+							   Politica de confidențialitate
+							</a>
+						</li>
 					</ul>
-                    <hr>
+					<hr>
 
-                    <div class="copyright">
-                        © 2020 Jamstudy, din dragoste pentru educaţie
-                    </div>
-                </div>
-            </div>
-			
-			<div class="modal fade" id="feedback-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-				<div class="modal-content">
-				  <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<div id="feedback-header-text">
-						<i class="far fa-envelope fa-2x"></i>
+					<div class="copyright">
+						© 2020 Jamstudy, din dragoste pentru educaţie
 					</div>
-				  </div>
-				  <div id="feedback-modal-text" class="modal-body modal-info text-center">
-					.
-				  </div>
-				  <div class="modal-footer">
-					   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-				  </div>
 				</div>
-			  </div>
-			</div>
+            </div>
 
             <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
                 <div class="social-area">
@@ -213,6 +189,26 @@
     </div>
 </footer>
 
+
+			<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<div id="modal-header-text">
+						<i class="far fa-envelope fa-2x"></i>
+					</div>
+				  </div>
+				  <div id="modal-text" class="modal-body modal-info text-center">
+					&nbsp;
+				  </div>
+				  <div id="general-modal-footer" class="modal-footer">
+					   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			
 			<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 <div class="modal-dialog-login">
 					<div class="modal-content">
@@ -234,7 +230,7 @@
 							</form>
 							<div class="forgot">
 								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
-								<a href="./forgot.html" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
+								<a href="#" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
 								<a class="btn btn-simple btn-info btn-reg" data-dismiss="modal" data-toggle="modal" data-target="#register-modal">Nu ai cont? Înregistrează-te</a>
 							</div>
 						</div>
@@ -292,7 +288,6 @@
 <script src="./assets/js/ct-paper-radio.js"></script>
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
-<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script> -->
 <script src="./assets/js/unistart.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
@@ -301,67 +296,15 @@
 
 <script type="text/javascript">
 
-
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
+var resetToken;
 
-$().ready(function(){    
-	<!-- demo.initContactUsMap(); -->
+$().ready(function(){
+
 	myAccountText();
+	checkLogin();
+	
 });
-
-// Leave feedback
-document.getElementById("send-feedback-btn").onclick = function (e) {
-	e.preventDefault();
-	var name = document.getElementById("feedback-name").value.trim();
-	var email = document.getElementById("feedback-email").value.trim();
-	var message = document.getElementById("feedback-message").value.trim();
-	if (!validateEmail(email)) {
-		console.log(document.getElementById('feedback-header-text').innerHTML);
-		document.getElementById('feedback-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
-		console.log(document.getElementById('feedback-header-text').innerHTML);
-		document.getElementById('feedback-modal-text').innerHTML = "Adresa de email nu este validă";
-	} else {
-	var body = {
-		name: name,
-		email: email,
-		message: message
-	};
-		
-	var backendUrl = new URL(backendUrlRoot + "/v1/feedback/add");
-	
-	$.ajax({
-		url: backendUrl,
-		type: 'PUT',
-		dataType: 'json',
-		contentType: 'application/json',
-		crossDomain: true,
-		data: JSON.stringify(body),
-		success: function (data) {
-			document.getElementById('feedback-modal-text').innerHTML = "Mesajul a fost trimis";
-		},
-		error: function(error) {
-			document.getElementById('feedback-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
-			if (error.responseJSON) {
-				if (error.responseJSON.control) {
-					var errorDescription = error.responseJSON.control.errorDescription;
-					document.getElementById('feedback-modal-text').innerHTML = errorDescription;
-				} else {
-					document.getElementById('feedback-modal-text').innerHTML = "Mesajul nu a putut fi trimis";
-				}
-			} else {
-				document.getElementById('feedback-modal-text').innerHTML = "Mesajul nu a putut fi trimis";
-			}
-		}
-	});
-	
-	}
-
-}
-
-function validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
 	
 	
 </script>

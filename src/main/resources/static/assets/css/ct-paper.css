@@ -5230,7 +5230,7 @@ body > .navbar-collapse.collapse {
 }
 @media (max-width:992px) {
   .wrapper {
-      padding-bottom: 200px;
+      padding-bottom: 226px;
   }
 }
 .wrapper.transition {
@@ -5959,7 +5959,7 @@ body > .navbar-collapse.collapse {
 }
 @media (max-width:992px) {
   .footer {
-    height: 200px;
+    height: 226px;
   }
 }
 .footer .links {
