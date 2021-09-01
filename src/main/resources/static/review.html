@@ -65,14 +65,16 @@
     <div class="wrapper">
         <div class="section-white">
 			<div class="container-fluid">
+				<div class="row">
 				<div class="col-lg-11">
 						<div class="add-review-floating-card-2 col-lg-7 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0">
 							<div class="row">
 								<div class="card text-center">
 									<div class="content">
-										<img id="floating-card-icon-2" src="./assets/img/floating-card-icon.png"></img>
-										<h4>Evaluează experienţa la această facultate</h4>
-										<h5>Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii ce se întâmplă în fiecare din cele pe care le urmarești. Să ai informații din interior despre cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum (sau, poate, o mie de elevi). Evaluarea ta poate face diferența între o decizie bună și o decizie total greșita a unui elev. Durează doar un minut.</h5>
+										<!-- <img id="floating-card-icon-2" src="./assets/img/floating-card-icon.png"></img> -->
+										<h4 class="text-left">Evaluează experienţa la această facultate</h4>
+										<h5 class="text-left">Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. 
+										<h5 class="text-left">Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum. Evaluarea ta poate face diferența. Durează doar un minut.</h5>
 										<div id="progress-2" class="progress">
 											<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
 												<span><b>Pasul 1 din 3</b></span>
@@ -83,9 +85,9 @@
 							</div>
 						</div>
 					
-						<div id="review-faculty-main" class="col-lg-7 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0">
+						<!-- <div id="review-faculty-main" class="col-lg-7 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0"> -->
 							<!-- populated dynamically -->
-						</div>
+						<!-- </div> -->
 						
 						<div class="add-review-floating-card col-lg-3 col-lg-offset-0 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0">
 							<div class="row">
@@ -93,8 +95,8 @@
 									<div class="content">
 										<img id="floating-card-icon" src="./assets/img/floating-card-icon.png"></img>
 										<h4 class="text-left">Evaluează experienţa la această facultate</h4>
-										<h5 class="text-left">Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii ce se întâmplă în fiecare din cele pe care le urmarești. Să ai informații din interior despre cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin.</h5>
-										<h5 class="text-left">Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum (sau, poate, o mie de elevi). Evaluarea ta poate face diferența între o decizie buna și o decizie total greșita a unui elev. Durează doar un minut.</h5>
+										<h5 class="text-left">Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. 
+										<h5 class="text-left">Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum. Evaluarea ta poate face diferența. Durează doar un minut.</h5>
 										<br>
 										<div id="progress-1" class="progress">
 											<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
@@ -111,6 +113,10 @@
 							<div class="row">
 								<div class="card">
 									<div class="content">
+									
+										<div id="review-faculty-main">
+											<!-- populated dynamically -->
+										</div>
 					
 										<div class="tab">
 											<h4>Evaluare generală</h4>
@@ -420,7 +426,7 @@
 										<div class="tab">
 											<h4>Spune-ne câte ceva despre tine</h4>
 											<br>
-											<p>Status</p>
+											<label>Status</label>
 											<div class="row">
 												<div class="col-md-12">																							
 													<div class="radio-toolbar" onchange="showYears()">
@@ -452,7 +458,7 @@
 											</div>
 											<div id="user-years" style="display: none">
 												<br>
-												<p>Anul</p>
+												<label>Anul</label>
 												<div class="row">
 													<div class="col-md-12">																
 														<div class="radio-toolbar">
@@ -515,7 +521,7 @@
 												<!-- </div> -->
 											<!-- </div> -->
 											<br>
-											<p>Ai reușit să te angajezi, in domeniu, in timpul facultății sau la cel mult 6 luni dupa terminarea ei?</p>
+											<label>Ai reușit să te angajezi, in domeniu, in timpul facultății sau la cel mult 6 luni dupa terminarea ei?</label>
 											<div class="row">
 												<div class="col-md-12">															
 													<div class="radio-toolbar">
@@ -544,6 +550,10 @@
 												<!-- </div> -->
 											<!-- </div> -->
 											<!-- <small id="error-email" class="error-message"></small> -->
+											<hr>
+											<small>
+												Prin adăugarea acestei evaluări declar că sunt de acord cu  <a href="./terms.html" target="_blank">Termenii și Condițiile</a>  și cu <a href="./policy.html" target="_blank">Politica de Confidențialitate</a> ale platformei.
+											</small>
 										</div>
 										
 										<br>
@@ -559,25 +569,7 @@
 								</div>
 							</div>
 						</div>
-									
-						
-						<!-- <div class="add-review-floating-card col-lg-3 col-lg-offset-0 col-md-8 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0"> -->
-							<!-- <div class="row"> -->
-								<!-- <div class="card text-center"> -->
-									<!-- <div class="content"> -->
-										<!-- <img id="floating-card-icon" src="./assets/img/floating-card-icon.png"></img> -->
-										<!-- <h4>Evaluează experienţa la această facultate</h4> -->
-										<!-- <h5>Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii ce se întâmplă în fiecare din cele pe care le urmarești. Să ai informații din interior despre cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum (sau, poate, o mie de elevi). Evaluarea ta poate face diferența între o decizie buna și o decizie total greșita a unui elev. Durează doar un minut.</h5> -->
-										<!-- <div id="progress-1" class="progress"> -->
-											<!-- <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;"> -->
-												<!-- <span><b>Pasul 1 din 3</b></span> -->
-											<!-- </div> -->
-										<!-- </div> -->
-									<!-- </div> -->
-								<!-- </div> -->
-							<!-- </div> -->
-						<!-- </div> -->
-			
+				</div>
 				</div>
 			</div>
         </div>
@@ -861,26 +853,27 @@ function loadFaculty(){
 			document.getElementById("review-faculty-main").innerHTML = '';
 			
 			document.getElementById("review-faculty-main").innerHTML += (	
-							'<div class="row">'
+							<!-- '<div class="row">' -->
 								
-									+'<div class="card">'
-										+'<div class="content">			'	
-											+'<div class="row">'
-											+'	<div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">'
+									<!-- +'<div class="card">' -->
+										<!-- +'<div class="content">			'	 -->
+											'<div class="row">'
+											+'	<div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">'
 											+'			<a href="' + urlProfileRedirect + '">		'	
 											+'				<div class="img-faculty-logo-block-base img-faculty-add-review-logo-block">'
 											+'					<img id="review-faculty-logo" class="img-faculty-logo-base img-faculty-logo-add-review center-add-review" src="' + logoSrc + '"></img>'
 											+'				</div>'
 											+'			</a>'
 											+'	</div>'
-											+'	<div class="form-group col-md-10 col-xs-12" style="display:inline; vertical-align: middle;">'
-											+'		<h5>Numele facultății<em>*</em></h5>'
+											+'	<div class="form-group col-md-6 col-md-offset-3 col-xs-12" style="display:inline; vertical-align: middle; margin-top: 15px;">'
+											<!-- +'		<h5>Numele facultății<em>*</em></h5>' -->
 											+'		<input id="review-faculty-name" type="text" value="' + facultyName + '" placeholder="" class="form-control" required oninvalid="this.setCustomValidity(\'Câmp obligatoriu\')" readonly/>'
 											+'	</div>'
 											+'</div>'
-										+'</div>'
-									+'</div>'
-							+'</div>');
+										<!-- +'</div>' -->
+									<!-- +'</div>' -->
+							<!-- +'</div>' -->
+							);
 			
 		}
 		

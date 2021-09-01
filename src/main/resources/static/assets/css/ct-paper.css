@@ -134,7 +134,11 @@ body.loading .modal {
 /* Anytime the body has the loading class, our
    modal element will be visible */
 body.loading .modal {
-    display: block;
+    /* display: block; */
+}
+
+body.loading {
+	/* opacity: 0; */
 }
 
 .main-logo {
@@ -1412,14 +1416,6 @@ input.ct-red + span + label + span.switch-right {
 
 .delete-review:focus {
 	color: #8e1e1e;
-}
-
-.btn-reset {
-	color: #499bff !important;
-}
-
-.btn-reset:hover {
-	color: #2d7ee0 !important;
 }
 
 .myaccount-button:hover, .myaccount-button:focus, .myaccount-button:active, .myaccount-button:active:hover, .myaccount-button:active:focus {
@@ -3317,6 +3313,7 @@ textarea.form-control {
 .navbar-default {
   background-color: #ffca2b ;
   border-bottom: 0px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid black;
 }
 .navbar-default .brand {
   color: #000000 !important;
@@ -3436,6 +3433,7 @@ textarea.form-control {
 	height: 170px;
 	background-image: url(../../assets/img/university_building6.png);
 	box-shadow: 0px 0px 5px rgba(204, 197, 185, 0.5);
+	border: 2px solid black;
 }
 
 @media (max-width:992px) {
@@ -3641,7 +3639,7 @@ textarea.form-control {
 
 .img-faculty-logo-add-review {
   max-height: 125px;
-  max-width: 67% !important;
+  max-width: 60% !important;
 }
 
 .img-faculty-logo-carousel-block {
@@ -3695,7 +3693,7 @@ textarea.form-control {
 
 @media (max-width:992px) {
 	.img-first-place-banner {
-		background-color: #ffe357;
+		background-color: #ffeb88;
 		margin: -20px -20px 20px -20px;
 		/* margin-bottom: 7px; */
 		border-radius: 0;
@@ -5226,7 +5224,7 @@ body > .navbar-collapse.collapse {
   transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
   left: 0;
   background-color: white;
-  padding-bottom: 155px;
+  padding-bottom: 157px;
 }
 @media (max-width:992px) {
   .wrapper {
@@ -5955,7 +5953,8 @@ body > .navbar-collapse.collapse {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 155px;
+  height: 157px;
+  border: 2px solid black;
 }
 @media (max-width:992px) {
   .footer {
@@ -9498,10 +9497,26 @@ $ct-series-colors: (
   }
 }
 
-@media (min-width:992px) {
-  #review-faculty-main {
-	min-width: 770px;
-  }
+/* @media (min-width:992px) { */
+  /* #review-faculty-main { */
+	/* min-width: 770px; */
+  /* } */
+/* } */
+
+
+#review-faculty-main {
+	/* background-color: #FFF3C4; */
+	background-image: linear-gradient(to bottom, #FFEEAC, #FFFAE6);
+	border-radius: 20px 20px 0 0;
+	margin: -20px -20px 20px -20px;
+	padding: 11px;
+	height: 227px;
+}
+
+@media (max-width:992px) {
+	#review-faculty-main {
+		border-radius: 0;
+	}
 }
 
 @media (min-width:1450px) {
@@ -9589,12 +9604,28 @@ $ct-series-colors: (
 @media (min-width:992px) {
 	.round-top {
 		border-radius: 20px 20px 0px 0px !important;
+		border-bottom: 0px;
+	}
+}
+
+@media (max-width:992px) {
+	.round-top {
+		border-radius: 4px 4px 0px 0px !important;
+		border-bottom: 0px;
 	}
 }
 
 @media (min-width:992px) {
 	.round-bottom {
 		border-radius: 0px 0px 20px 20px !important;
+		border-top: 0px !important;
+	}
+}
+
+@media (max-width:992px) {
+	.round-bottom {
+		border-radius: 0px 0px 4px 4px !important;
+		border-top: 0px !important;
 	}
 }
 
@@ -9658,6 +9689,7 @@ $ct-series-colors: (
   color: #252422;
   margin-bottom: 20px;
   position: relative;
+  border: 2px solid black;
 }
 
 @media (max-width:992px) {
@@ -9691,7 +9723,7 @@ $ct-series-colors: (
   z-index: 3;
 }
 .card a {
-  color: #444444;
+  /* color: #444444; */
   z-index: 3;
 }
 .card a:hover, .card a:focus {

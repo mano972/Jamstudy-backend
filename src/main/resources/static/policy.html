@@ -459,60 +459,6 @@ const backendUrlRoot = "https://unistart.ro/Jamstudy";
 $().ready(function(){    
 	myAccountText();
 });
-
-// Leave feedback
-document.getElementById("send-feedback-btn").onclick = function (e) {
-	e.preventDefault();
-	var name = document.getElementById("feedback-name").value.trim();
-	var email = document.getElementById("feedback-email").value.trim();
-	var message = document.getElementById("feedback-message").value.trim();
-	if (!validateEmail(email)) {
-		console.log(document.getElementById('feedback-header-text').innerHTML);
-		document.getElementById('feedback-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
-		console.log(document.getElementById('feedback-header-text').innerHTML);
-		document.getElementById('feedback-modal-text').innerHTML = "Adresa de email nu este validă";
-	} else {
-	var body = {
-		name: name,
-		email: email,
-		message: message
-	};
-		
-	var backendUrl = new URL(backendUrlRoot + "/v1/feedback/add");
-	
-	$.ajax({
-		url: backendUrl,
-		type: 'PUT',
-		dataType: 'json',
-		contentType: 'application/json',
-		crossDomain: true,
-		data: JSON.stringify(body),
-		success: function (data) {
-			document.getElementById('feedback-modal-text').innerHTML = "Mesajul a fost trimis";
-		},
-		error: function(error) {
-			document.getElementById('feedback-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
-			if (error.responseJSON) {
-				if (error.responseJSON.control) {
-					var errorDescription = error.responseJSON.control.errorDescription;
-					document.getElementById('feedback-modal-text').innerHTML = errorDescription;
-				} else {
-					document.getElementById('feedback-modal-text').innerHTML = "Mesajul nu a putut fi trimis";
-				}
-			} else {
-				document.getElementById('feedback-modal-text').innerHTML = "Mesajul nu a putut fi trimis";
-			}
-		}
-	});
-	
-	}
-
-}
-
-function validateEmail(email) {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
 	
 	
 </script>

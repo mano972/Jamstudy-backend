@@ -308,9 +308,11 @@ public class ReviewService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
 		}
 		Review review = reviewOpt.get();
-		UserProfile userProfile = userProfileDAO.getByUserId(review.getUserId()).get();
-		userProfile.getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
-		userProfileDAO.saveUserProfile(userProfile);
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(review.getUserId());
+		if (userProfileOpt.isPresent()) {
+			userProfileOpt.get().getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
+			userProfileDAO.saveUserProfile(userProfileOpt.get());
+		}
 		reviewDAO.deleteReview(review);
 
 		// update faculty with new ratings
@@ -327,9 +329,11 @@ public class ReviewService {
 	public ResponseDTO deleteByFacultyId(String facultyId) {
 		List<Review> reviews = reviewDAO.getReviewsByFacultyId(facultyId);
 		for (Review review : reviews) {
-			UserProfile userProfile = userProfileDAO.getByUserId(review.getUserId()).get();
-			userProfile.getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
-			userProfileDAO.saveUserProfile(userProfile);
+			Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(review.getUserId());
+			if (userProfileOpt.isPresent()) {
+				userProfileOpt.get().getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
+				userProfileDAO.saveUserProfile(userProfileOpt.get());
+			}
 			reviewDAO.deleteReview(review);
 		}
 
@@ -354,6 +358,7 @@ public class ReviewService {
 		List<UserProfile> userProfiles = userProfileDAO.getAllUserProfiles();
 		for (UserProfile userProfile : userProfiles) {
 			userProfile.getAddedReviews().clear();
+			userProfile.getLikedReviews().clear();
 			userProfileDAO.saveUserProfile(userProfile);
 		}
 

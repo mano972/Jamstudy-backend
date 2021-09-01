@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import com.app.studentromania.auth.JWTAuthenticationService;
 import com.app.studentromania.dao.ConfigDAO;
 import com.app.studentromania.dao.FacultyDAO;
+import com.app.studentromania.dao.ReviewDAO;
 import com.app.studentromania.dao.UserProfileDAO;
 import com.app.studentromania.dto.AuthResponseDTO;
 import com.app.studentromania.dto.ResponseDTO;
@@ -60,6 +61,9 @@ public class UserProfileService {
 
 	@Autowired
 	private ConfigDAO configDAO;
+
+	@Autowired
+	private ReviewDAO reviewDAO;
 
 	@Autowired
 	private EmailHandler emailHandler;
@@ -193,7 +197,8 @@ public class UserProfileService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_WRONG_CREDENTIALS);
 		}
 		UserProfile userProfile = userProfileOpt.get();
-		if (!SecurityUtils.validatePassword(userProfileDTO.getPassword(), userProfile.getPassword())) {
+		if (StringUtils.isEmpty(userProfile.getPassword())
+				|| !SecurityUtils.validatePassword(userProfileDTO.getPassword(), userProfile.getPassword())) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_WRONG_CREDENTIALS);
 		}
 		if (BooleanUtils.isNotTrue(userProfile.getEmailConfirmed())) {

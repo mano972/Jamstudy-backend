@@ -34,7 +34,7 @@ public enum ErrorsEnum {
 	REVIEW_ALREADY_UPVOTED(HttpStatus.NOT_ACCEPTABLE, "Această evaluare a fost deja votată.", -35),
 	REVIEW_MAX_NUMBER(HttpStatus.NOT_ACCEPTABLE, "Ai atins deja numărul maxim de evaluări adăugate.", -36),
 	REVIEW_SAME_FACULTY(HttpStatus.NOT_ACCEPTABLE,
-			"Ai adăugat deja o evaluare pentru această facultate. Poti adăuga din nou după 150 de zile.", -37),
+			"Ai adăugat deja o evaluare pentru această facultate. Poți adăuga din nou după 150 de zile.", -37),
 	REVIEW_UPDATE_DIFFERENT_USER(HttpStatus.BAD_REQUEST,
 			"User-ul care a editat evaluarea este diferit de userul care a creat-o.", -38),
 	REVIEW_NOT_EDITABLE(HttpStatus.NOT_ACCEPTABLE, "Evaluarea nu mai este editabilă.", -39),
