@@ -162,6 +162,7 @@ public class UserProfileService {
 				userProfile.setSubscribeToNewsletter(true);
 			}
 			userProfile.setAcceptTermsAndConditions(true);
+			userProfile.setEmailConfirmed(true);
 			userProfile.setLastLogin(new Date());
 			userProfileDAO.createUserProfile(userProfile);
 
