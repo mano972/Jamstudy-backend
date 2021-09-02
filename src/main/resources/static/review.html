@@ -62,7 +62,7 @@
       </div><!-- /.container-->
     </nav>           
     
-    <div class="wrapper">
+     <div id="wrapper" class="wrapper loading">
         <div class="section-white">
 			<div class="container-fluid">
 				<div class="row">
@@ -690,6 +690,9 @@
 				 <div class="modal-dialog-login">
 					<div class="modal-content">
 						<div class="login-card">
+							<div class="close close-login" data-dismiss="modal">
+								<i class="fa fa-close"></i>
+							</div>
 							<h3 class="title">Autentificare</h3>
 							<br>
 							<form class="register-form">
@@ -719,6 +722,9 @@
 				 <div class="modal-dialog-register">
 					<div class="modal-content">
 						<div class="register-card">
+							<div class="close close-login" data-dismiss="modal">
+								<i class="fa fa-close"></i>
+							</div>
 							<h3 class="title">Creare cont nou</h3>
 							<br>
 							<form class="register-form">
@@ -752,6 +758,10 @@
 					</div>
 				</div>
 			</div>	
+			
+			<div id="main-loading" class="text-center">
+				<div id="loading" class='uil-reload-css reload-background' style=''><div></div></div>
+			</div>	
 
 </body>
 
@@ -774,11 +784,14 @@
 
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
 
-<!-- $body = $("body"); -->
-<!-- $(document).on({ -->
-    <!-- ajaxStart: function() { $body.addClass("loading");    }, -->
-    <!-- ajaxStop: function() { $body.removeClass("loading"); }     -->
-<!-- }); -->
+$wrapper = $("#wrapper");
+$(document).on({
+    <!-- ajaxStart: function() { $wrapper.addClass("loading");    }, -->
+    ajaxStop: function() { 
+		$wrapper.removeClass("loading");
+		document.getElementById("main-loading").style.display = "none";
+	}    
+});
 
 var currentTab = 0; // Current tab is set to be the first tab (0)
 showTab(currentTab); // Display the current tab

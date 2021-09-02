@@ -137,8 +137,21 @@ body.loading .modal {
     /* display: block; */
 }
 
-body.loading {
-	/* opacity: 0; */
+.wrapper.loading {
+	opacity: 0;
+	background-color: white;
+}
+
+#main-loading {
+	position: fixed; 
+	top: 50%;
+	left: 50%;
+}
+
+@media (max-width:992px) {
+	#main-loading {
+		left: 40%;
+	}
 }
 
 .main-logo {
@@ -1088,7 +1101,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 /* End carousel */
 
 .map {
-	margin-top:5px;
+	margin-top: 5px;
 	height: 215px;
 	width: 100%;
 	/* border: 1px solid black; */
@@ -1382,6 +1395,10 @@ input.ct-red + span + label + span.switch-right {
 
 .close:focus {
 	color: orange;
+}
+
+.close-login {
+	color: #574949;
 }
 
 .edit-review {
@@ -3614,8 +3631,8 @@ textarea.form-control {
 
 @media (max-width:992px) {
 	.img-faculty-logo-search {
-	  max-width: 84px !important;
-	  max-height: 84px;
+	  max-width: 81px !important;
+	  max-height: 80px;
 	}
 }
 
@@ -6909,8 +6926,8 @@ body > .navbar-collapse.collapse {
 @media (max-width:992px) {
 	.modal-dialog-login {
 	  position: relative;
-	  width: auto;
-	  margin: 10px;
+	  width: 350px;
+	  margin: 10px auto;
 	}
 }
 
@@ -6925,8 +6942,8 @@ body > .navbar-collapse.collapse {
 @media (max-width:992px) {
 	.modal-dialog-register {
 	  position: relative;
-	  width: auto;
-	  margin: 10px;
+	  width: 450px;
+	  margin: 10px auto;
 	}
 }
 

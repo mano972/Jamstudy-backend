@@ -54,8 +54,8 @@
                 <a href="./contact.html" class="btn btn-simple">Contact</a>
             </li>
 			<li>
-				<a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
-			</li>
+                <a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>
+            </li>
            </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-->
@@ -217,6 +217,9 @@
 				 <div class="modal-dialog-login">
 					<div class="modal-content">
 						<div class="login-card">
+							<div class="close close-login" data-dismiss="modal">
+								<i class="fa fa-close"></i>
+							</div>
 							<h3 class="title">Autentificare</h3>
 							<br>
 							<form class="register-form">
@@ -246,6 +249,9 @@
 				 <div class="modal-dialog-register">
 					<div class="modal-content">
 						<div class="register-card">
+							<div class="close close-login" data-dismiss="modal">
+								<i class="fa fa-close"></i>
+							</div>	
 							<h3 class="title">Creare cont nou</h3>
 							<br>
 							<form class="register-form">
@@ -312,13 +318,12 @@ $().ready(function(){
 // Leave feedback
 document.getElementById("send-feedback-btn").onclick = function (e) {
 	e.preventDefault();
+	
 	var name = document.getElementById("feedback-name").value.trim();
 	var email = document.getElementById("feedback-email").value.trim();
 	var message = document.getElementById("feedback-message").value.trim();
 	if (!validateEmail(email)) {
-		console.log(document.getElementById('feedback-header-text').innerHTML);
 		document.getElementById('feedback-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-2x"></i>';
-		console.log(document.getElementById('feedback-header-text').innerHTML);
 		document.getElementById('feedback-modal-text').innerHTML = "Adresa de email nu este validă";
 	} else {
 	var body = {

@@ -65,7 +65,7 @@
 		  </div><!-- /.container-->
 		</nav>
     
-    <div class="wrapper">
+     <div id="wrapper" class="wrapper loading">
 		
 		<div class="section section-profile faculty-profile-header-background">
 			<div class="container-fluid">
@@ -116,16 +116,7 @@
 								
 								<div class="row">
 									<div class="col-md-12 col-md-offset-0">
-										<!-- <div class="card"> -->
-											<!-- <div id="content-faculty-programs" class="content"> -->
-									
-														<!-- <div class="row"> -->
-																<!-- <div class="col-lg-12 col-lg-offset-0 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-xs-offset-0"> -->
-																	<div id="map" class="map"></div>
-																<!-- </div> -->
-														<!-- </div> -->
-											<!-- </div> -->
-										<!-- </div> -->
+										<div id="map" class="map"></div>
 									</div>
 								</div>
 							</div>
@@ -355,6 +346,9 @@
 				 <div class="modal-dialog-login">
 					<div class="modal-content">
 						<div class="login-card">
+							<div class="close close-login" data-dismiss="modal">
+								<i class="fa fa-close"></i>
+							</div>
 							<h3 class="title">Autentificare</h3>
 							<br>
 							<form class="register-form">
@@ -384,6 +378,9 @@
 				 <div class="modal-dialog-register">
 					<div class="modal-content">
 						<div class="register-card">
+							<div class="close close-login" data-dismiss="modal">
+								<i class="fa fa-close"></i>
+							</div>
 							<h3 class="title">Creare cont nou</h3>
 							<br>
 							<form class="register-form">
@@ -417,6 +414,10 @@
 					</div>
 				</div>
 			</div>	
+			
+			<div id="main-loading" class="text-center">
+				<div id="loading" class='uil-reload-css reload-background' style=''><div></div></div>
+			</div>			
 
 </body>
 <script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
@@ -429,10 +430,13 @@ const backendUrlRoot = "https://unistart.ro/Jamstudy";
 
 var reviewTop = [];
 
-$body = $("body");
+$wrapper = $("#wrapper");
 $(document).on({
-    ajaxStart: function() { $body.addClass("loading");    },
-    ajaxStop: function() { $body.removeClass("loading"); }    
+    <!-- ajaxStart: function() { $wrapper.addClass("loading");    }, -->
+    ajaxStop: function() { 
+		$wrapper.removeClass("loading");
+		document.getElementById("main-loading").style.display = "none";
+	}    
 });
 
 
@@ -1112,11 +1116,6 @@ function loadGeneralPresentationCard(response) {
 +'												</div>'
 +'												<br>'
 +												generalPresentationContentString
-<!-- +'												<div class="row">' -->
-<!-- +'													<div class="col-md-5 col-md-offset-0">' -->
-<!-- +'														<div id="map" class="map"></div>' -->
-<!-- +'													</div>' -->
-<!-- +'												</div>' -->
 +'											</div>'
 +'										</div>'
 
@@ -1643,8 +1642,6 @@ function seeAllReviews() {
 
 function loadMap(address) {
 
-	<!-- address = 'Bulevardul Regina Elisabeta Nr. 4-12, București 030018, Romania'; -->
-
 	var zoom = 14;
 	if (!address) {
 		address = 'Romania';
@@ -1657,14 +1654,23 @@ function loadMap(address) {
     "q": address,
     "limit": 1
 	};
+	
+	delete $.ajaxSettings.headers["Token"]; // workaround
 	$.ajax({
 	  method: "GET",
 	  url: "https://nominatim.openstreetmap.org",
-	  data: data
+	  data: data,
+	  beforeSend : function(request) {
+	  }
 	})
 	.success(function(response) {
+		console.log(response);
 		createMap(response, zoom);
-	});
+	})
+	.error(function(error) {
+		console.log(error);
+	})
+	$.ajaxSettings.headers["Token"] = getUField("ut") ? "Bearer " + getUField("ut") : null; // workaround
 
 }
 
@@ -1723,6 +1729,7 @@ function createMap(response, zoom) {
 			const olViewport = document.getElementsByClassName('ol-viewport').length > 0 ? document.getElementsByClassName('ol-viewport')[0] : null;
 			if (olViewport) {
 				olViewport.style.borderRadius = '20px';
+				olViewport.style.border = '2px solid black';
 			}
 		}
 }

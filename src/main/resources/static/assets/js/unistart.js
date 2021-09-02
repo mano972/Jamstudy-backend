@@ -1,12 +1,3 @@
-// $.ajaxSetup({
-	// beforeSend: function (request) {
-		// console.log("ss");
-		// var jwtToken = getUField("ut");
-		// if (jwtToken) {
-			 // request.setRequestHeader("Token","Bearer " + jwtToken);
-		// }  
-    // }
-// });
 
 $.ajaxSetup({
   headers: {
@@ -30,7 +21,7 @@ function myAccountText() {
 	if (jwtToken) {
 		document.getElementById('myaccount').innerHTML = '<i class="far fa-user" style="margin-right: 7px"></i>Contul meu';
 	} else {
-		document.getElementById('myaccount').innerHTML = '<i class="far fa-user" style="margin-right: 7px"></i>Autentificare';		
+		document.getElementById('myaccount').innerHTML = '<i class="far fa-user" style="margin-right: 7px"></i>Autentificare';	
 	}
 }
 
