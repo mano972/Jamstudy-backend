@@ -31,7 +31,7 @@ public class EmailHandler {
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailHandler.class);
 
 	private static final String user = "office@unistart.ro";
-	private static final String pass = "Cabalache_2107";
+	private static final String pass = "aizxrovqrmnvyxfp";
 
 	public ErrorsEnum sendEmail(String to, String subject, String message) {
 		return handleSendEmail(to, subject, message, null);
