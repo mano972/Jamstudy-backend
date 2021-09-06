@@ -11,12 +11,22 @@ public class CustomRequestContext {
 
 	private String userId;
 
+	private String traceId;
+
 	public String getUserId() {
 		return userId;
 	}
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getTraceId() {
+		return traceId;
+	}
+
+	public void setTraceId(String traceId) {
+		this.traceId = traceId;
 	}
 
 }

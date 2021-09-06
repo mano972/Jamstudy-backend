@@ -11,6 +11,10 @@ public class LogUtils {
 	public static void logMessage(Logger logger, String message) {
 		logger.info(message);
 	}
+	
+	public static void logAuth(Logger logger, String endPointName, String userId) {
+		logger.info("*** [" + userId + "] Authenticating for <" + endPointName + "> at [" + new Date() + "]");
+	}
 
 	public static void logStart(Logger logger, String endPointName) {
 		logStart(logger, endPointName, "visitor");

@@ -78,62 +78,28 @@
 										<div class="content">
 											<div class="row">
 												<div class="list-options col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
-													<!-- <div class="content"> -->
-														<!-- <div class="row"> -->
-															<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12 col-xs-offset-0">
-																<span><b>Căutare</b></span><br>
-																<!-- <div class="form-group col-md-8 col-xs-10"> -->
-																	
-																	<!-- <input id="search-input-2" type="text" value="" placeholder="Facultate, Universitate, Oras etc." class="form-control" /> -->
-																<!-- </div> -->
-																<!-- <div class="col-md-3 col-xs-2"> -->
-																	<!-- <button id="search-button-2" class="btn btn-info btn-fill" type="submit">Caută</button> -->
-																<!-- </div> -->
-																<fieldset class="search-fieldset">
-																	<input id="search-input-2" class="form-control" type="text" value="" placeholder="Facultate, Universitate, Oraș ..." spellcheck="false"/>
-																	<i id="search-button-2" class="fa fa-search inner-icon" aria-hidden="true"></i>
-																</fieldset>
-															</div>
-															<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12 col-xs-offset-0">
-																<span><b>Sortare</b></span><br>
-																<select id="sorting" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadData(false)">
-																	<option value="facultyName,asc">Facultate ascendent</option>
-																	<option value="facultyName,desc">Facultate descendent</option>
-																	<option value="facultyCity,asc">Oraș ascendent</option>
-																	<option value="facultyCity,desc">Oraș descendent</option>
-																	<option value="avgRating,asc">Notă ascendent</option>
-																	<option value="avgRating,desc" selected="selected">Notă descendent</option>
-																</select>  
-															</div>
-														<!-- </div> -->
-													<!-- </div> -->
+													<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12 col-xs-offset-0">
+														<span><b>Căutare</b></span><br>
+														<fieldset class="search-fieldset">
+															<input id="search-input-2" class="form-control" type="text" value="" placeholder="Facultate, Universitate, Oraș ..." spellcheck="false"/>
+															<i id="search-button-2" class="fa fa-search inner-icon" aria-hidden="true"></i>
+														</fieldset>
+													</div>
+													<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12 col-xs-offset-0">
+														<span><b>Sortare</b></span><br>
+														<select id="sorting" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadData(false)">
+															<option value="facultyName,asc">Facultate ascendent</option>
+															<option value="facultyName,desc">Facultate descendent</option>
+															<option value="universityName,asc">Universitate ascendent</option>
+															<option value="universityName,desc">Universitate descendent</option>
+															<option value="facultyCity,asc">Oraș ascendent</option>
+															<option value="facultyCity,desc">Oraș descendent</option>
+															<option value="avgRating,asc">Notă ascendent</option>
+															<option value="avgRating,desc" selected="selected">Notă descendent</option>
+														</select>  
+													</div>
 												</div>
 											</div>		
-											<!-- <div class="row"> -->
-												<!-- <div class="content"> -->
-													<!-- <div class ="list-options col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12"> -->
-														<!-- <div class="results-on-page-main col-lg-offset-3 col-lg-4 col-md-offset-2 col-md-5 col-sm-6 col-xs-12"> -->
-																<!-- <span style="padding-right: 7px"><b>Rezultate pe pagină</b></span> -->
-																<!-- <select id="results-on-page" class="auto-width selectpicker" data-style="form-control" data-menu-style="" onchange="loadData(false)"> -->
-																	<!-- <option value="10">10</option> -->
-																	<!-- <option value="20">20</option> -->
-																	<!-- <option value="30">30</option> -->
-																<!-- </select>					   -->
-														<!-- </div> -->
-														<!-- <div class="sorting-main col-lg-5 col-md-5 col-sm-6 col-xs-12"> -->
-																<!-- <span style="padding-right: 7px"><b>Sortare după</b></span> -->
-																<!-- <select id="sorting" class="auto-width selectpicker" data-style="form-control" data-menu-style="" onchange="loadData(false)"> -->
-																	<!-- <option value="facultyName,asc">Facultate ascendent</option> -->
-																	<!-- <option value="facultyName,desc">Facultate descendent</option> -->
-																	<!-- <option value="facultyCity,asc">Oraș ascendent</option> -->
-																	<!-- <option value="facultyCity,desc">Oraș descendent</option> -->
-																	<!-- <option value="avgRating,asc">Notă ascendent</option> -->
-																	<!-- <option value="avgRating,desc">Notă descendent</option> -->
-																<!-- </select>   -->
-														<!-- </div> -->
-													<!-- </div> -->
-												<!-- </div> -->
-											<!-- </div> -->
 										</div>
 									</div>
 								</div>
@@ -210,54 +176,21 @@
 									</div>
 								</div>
 								<div id="load-more-faculties-main" class="faculty-search-card-fixed col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-0 col-lg-7 col-lg-offset-0">
-									<div class="card"> 
-										<div class="content"> 
-											<div class="text-center row"> 
-												<button id="load-more-faculties" class="btn btn-info btn-fill" type="submit" onclick="loadMore()">Încarcă mai multe rezultate</button>
-											</div> 
-										</div> 
-									</div>
+									<!-- populated dynamically -->
 								</div> 
-							</div>
-							
-							<!-- <div class="row"> -->
-								<!-- <div class="col-xs-12 col-xs-offset-0 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-3 col-lg-7 col-lg-offset-2"> -->
-									<!-- <div class="card">  -->
-										<!-- <div class="content">  -->
-											<!-- <div class="row">  -->
-												<!-- <div class="col-md-offset-1" style="display:inline-block; vertical-align: middle;">  -->
-													<!-- <span>1-20 din 700 rezultate</span>  -->
-												<!-- </div>  -->
-												<!-- <div class="col-md-offset-5" style="display:inline-block; vertical-align: middle;">  -->
-													<!-- <ul class="pagination pagination-warning">   -->
-														<!-- <li><a href="#">&laquo;</a></li>   -->
-														<!-- <li class="active"><a href="#">1</a></li>   -->
-														<!-- <li><a href="#">2</a></li>  -->
-														<!-- <li><a href="#">3</a></li>  -->
-														<!-- <li><a href="#">4</a></li>  -->
-														<!-- <li><a href="#">5</a></li>  -->
-														<!-- <li><a href="#">&raquo;</a></li>   -->
-													<!-- </ul>  -->
-												<!-- </div>  -->
-											<!-- </div>  -->
-										<!-- </div>  -->
-									<!-- </div> -->
-								<!-- </div>  -->
-							<!-- </div> -->
-							
-							
+							</div>				
 				</div>  
 			</div>     
 			
-		<div id="recent-faculties-section" class="section-white">
-			<div class="container-fluid">		
-				<div class="row">
-					<div id="recently-viewed-faculties" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-xs-offset-0">
-						<!-- populated dynamically -->
+			<div id="recent-faculties-section" class="section-white">
+				<div class="container-fluid">		
+					<div class="row">
+						<div id="recently-viewed-faculties" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-xs-offset-0">
+							<!-- populated dynamically -->
+						</div>
 					</div>
-				</div>
-			</div>		
-		</div>
+				</div>		
+			</div>
 			
 		</div>
 		
@@ -320,7 +253,7 @@
 								<i class="fa fa-twitter"></i>
 							</button>    
 							</a>
-							<a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
+							<a href="https://www.facebook.com/UnistartFb" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
 								<i class="fa fa-facebook"> </i>
 							</button>
 							</a>
@@ -441,10 +374,10 @@
 
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
 
-$body = $("body");
+<!-- $body = $("body"); -->
 $(document).on({
-    ajaxStart: function() { $body.addClass("loading");  },
-    ajaxStop: function() { $body.removeClass("loading");  }    
+    <!-- ajaxStart: function() { document.getElementById("load-more-faculties-main").innerHTML = '<div class="text-center"><div class="uil-reload-css reload-background" style=""><div></div></div></div>';  }, -->
+    <!-- ajaxStop: function() { $body.removeClass("loading");  }     -->
 });
 
 var queryParams = new URLSearchParams(window.location.search);
@@ -479,9 +412,8 @@ $(document).ready(function() {
 	}
 	
 	initializeCheckboxes();
-	
+	loadUser();
 	loadData(false);	
-	
 	getRecentlyViewedFaculties();
 });
 
@@ -636,6 +568,9 @@ function loadData(loadMore) {
 				document.getElementById("faculty-entries").innerHTML = '	<div class="text-center">'
 																					+'<div class="uil-reload-css reload-background" style=""><div></div></div>'
 																				+'</div>';
+				document.getElementById("load-more-faculties-main").innerHTML = '';
+			} else {
+				document.getElementById("load-more-faculties-main").innerHTML = '<div class="text-center"><div class="uil-reload-css reload-background" style=""><div></div></div></div>';
 			}
 		  },
           success: function(response) {
@@ -708,7 +643,7 @@ function loadData(loadMore) {
 					favoriteText = "Salvează";
 				}
 	
-				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5 id="faculty-name-' + i + '"><strong>' + facultyName + '</strong></h5> </a> <h6 id="university-name-' + i + '">' + universityName + '</h6> <small id="faculty-city-' + i + '" class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div>');
+				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5><strong>' + facultyName + '</strong></h5> </a> <h6>' + universityName + '</h6> <small class="text-muted">' + facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </div> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div>');
 
 			}
 			
@@ -740,8 +675,10 @@ function getRecentlyViewedFaculties() {
 		return;
 	}
 
+	var limit = 16;
 	var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
 	backendUrl.searchParams.append("facultyIds", facultyIds.join());
+	backendUrl.searchParams.append("limit", limit);
 	
 	  $.ajax({
 	  url: backendUrl,
@@ -756,10 +693,10 @@ function getRecentlyViewedFaculties() {
 		if (response.control.errorCode === 0) {
 			var facultyIdsCopy = facultyIds.slice();
 			var sortedResponse = response.result.faculties.map(function(item) {
-			var n = facultyIdsCopy.indexOf(item.facultyId);
-			facultyIdsCopy[n] = '';
-			return [n, item]
-			}).sort().map(function(j) { return j[1] });
+				var n = facultyIdsCopy.indexOf(item.facultyId);
+				facultyIdsCopy[n] = '';
+				return [n, item]
+			}).sort(function (a, b) { return a[0] - b[0];  }).map(function(j) { return j[1] });
 			sortedResponse = sortedResponse.reverse();
 			loadRecentlyViewedFacultiesContent(sortedResponse);
 		} else {

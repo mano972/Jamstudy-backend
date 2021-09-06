@@ -52,10 +52,10 @@ public class EmailHandler {
 				}
 			});
 		} catch (Exception e) {
-			LogUtils.logError(LOGGER, "handleSendMail", e);
+			LogUtils.logMessage(LOGGER, "Email authentication error. " + to);
 			return ErrorsEnum.EMAIL_AUTH_ERROR;
 		}
-		LogUtils.logMessage(LOGGER, "--> Mail session created = " + session.getProperties().toString());
+		LogUtils.logMessage(LOGGER, "Mail session created = " + session.getProperties().toString());
 
 		try {
 
@@ -98,12 +98,11 @@ public class EmailHandler {
 
 			Transport.send(mimeMessage);
 		} catch (MessagingException e) {
-//			LogUtils.logError(LOGGER, "handleSendMail", e);
-			LogUtils.logMessage(LOGGER, "<-- Error. Email was not sent to email address: " + to);
+			LogUtils.logMessage(LOGGER, "Error. Email was not sent to email address: " + to);
 			return ErrorsEnum.EMAIL_SENDING_ERROR;
 		}
 
-		LogUtils.logMessage(LOGGER, "<-- Email was sent succesfully to email address: " + to);
+		LogUtils.logMessage(LOGGER, "Email was sent succesfully to email address: " + to);
 		return ErrorsEnum.NO_ERROR;
 	}
 

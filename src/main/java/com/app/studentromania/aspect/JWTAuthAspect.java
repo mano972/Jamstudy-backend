@@ -46,7 +46,7 @@ public class JWTAuthAspect {
 
 	@Around("@annotation(com.app.studentromania.annotation.JWTAuth)")
 	public Object auth(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-		
+
 		final String algorithmSecret = "amFtc3R1ZHlzZWNyZXQ";
 		final String issuer = "unistart";
 
@@ -72,6 +72,10 @@ public class JWTAuthAspect {
 					LogUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId is missing from the token");
 					return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
 				}
+				
+				final String endPointName = proceedingJoinPoint.getSignature().getName();
+				LogUtils.logAuth(LOGGER, endPointName, userId);
+				
 				Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
 				if (!userProfileOpt.isPresent()) {
 					LogUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId does not exist: " + userId);

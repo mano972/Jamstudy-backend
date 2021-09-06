@@ -68,6 +68,46 @@ window.addEventListener( "pageshow", function ( event ) {
   }
 });
 
+function loadUser() {
+	var jwtToken = getUField("ut");
+	if (jwtToken) {
+		var backendUrl = new URL(backendUrlRoot + "/v1/userprofile");
+		
+		$.ajax({
+		  url: backendUrl,
+		  type: "GET",
+		  async: false,
+		  success: function(response) {
+			if (response.control.errorCode === 0) {
+			
+				var userResponse = response.result;
+				var savedFaculties = userResponse.favoriteFaculties;
+				var savedFacultiesIds = [];
+				for (i in savedFaculties) {
+					savedFacultiesIds.push(savedFaculties[i].facultyId);
+				}
+				var likedReviewsIds = userResponse.likedReviews;
+				var addedReviews = userResponse.addedReviews;
+				
+				setUField("usf", savedFacultiesIds);
+				setUField("ulr", likedReviewsIds);
+				setUField("uar", addedReviews);
+				
+
+			} else {
+				console.log(response.control.errorDescription);
+			}
+
+		  },
+		  error: function(error) {
+			checkLoggedInUser(error.status)
+		  },
+		  complete: function (data) {
+		  }
+		});
+	}
+}
+
 // Facebook login with JavaScript SDK
 function fbLogin(e) {
 	e.preventDefault();

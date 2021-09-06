@@ -1,5 +1,7 @@
 package com.app.studentromania.aspect;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -28,7 +30,9 @@ public class VerifyLoggedInAspect {
 
 		String userId = customRequestContext.getUserId();
 		if (StringUtils.isBlank(userId)) {
-			LogUtils.logMessage(LOGGER, "User is not logged in: " + userId);
+			final String endPointName = proceedingJoinPoint.getSignature().getName();
+			LogUtils.logMessage(LOGGER,
+					"User is not logged in. Cannot access <" + endPointName + "> at [" + new Date() + "]");
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USER_NOT_LOGGED_IN);
 		}
 

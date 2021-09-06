@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 import com.app.studentromania.auth.JWTAuthenticationService;
 import com.app.studentromania.dao.ConfigDAO;
 import com.app.studentromania.dao.FacultyDAO;
-import com.app.studentromania.dao.ReviewDAO;
 import com.app.studentromania.dao.UserProfileDAO;
 import com.app.studentromania.dto.AuthResponseDTO;
 import com.app.studentromania.dto.ResponseDTO;
@@ -61,9 +60,6 @@ public class UserProfileService {
 
 	@Autowired
 	private ConfigDAO configDAO;
-
-	@Autowired
-	private ReviewDAO reviewDAO;
 
 	@Autowired
 	private EmailHandler emailHandler;
@@ -316,7 +312,8 @@ public class UserProfileService {
 		userProfileDAO.updateUserProfile(userProfile);
 		ErrorsEnum emailError = sendPasswordResetEmail(userProfile);
 		if (ErrorsEnum.NO_ERROR != emailError) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_CONFIRMATION_FAILED);
+			// change back to confimration_email_error
+			return ResponseDTO.createErrorResponse(emailError);
 		}
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
@@ -535,6 +532,8 @@ public class UserProfileService {
 				.append(!StringUtils.isEmpty(userProfile.getFirstName()) ? (", " + userProfile.getFirstName()) : "")
 				.append("!");
 		sb.append("Ai cerut resetarea parolei. Te rugăm accesează link-ul de mai jos\n").append(confirmationUrl)
+				.append("\n")
+				.append("În cazul în care nu ai solicitat schimbarea parolei, este în regulă să nu întreprinzi o acțiune. Dacă ești îngrijorat de securitatea contului tău, îți recomandăm să ne scrii la office@unistart.ro ")
 				.append("\n").append("Cu drag, \nEchipa Unistart");
 		String message = sb.toString();
 

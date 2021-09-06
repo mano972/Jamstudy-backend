@@ -144,13 +144,13 @@ body.loading .modal {
 
 #main-loading {
 	position: fixed; 
-	top: 50%;
-	left: 50%;
+	top: 37%;
+	left: 48%;
 }
 
 @media (max-width:992px) {
 	#main-loading {
-		left: 40%;
+		left: 42%;
 	}
 }
 
@@ -3656,7 +3656,7 @@ textarea.form-control {
 
 .img-faculty-logo-add-review {
   max-height: 125px;
-  max-width: 60% !important;
+  max-width: 46% !important;
 }
 
 .img-faculty-logo-carousel-block {
@@ -3704,6 +3704,7 @@ textarea.form-control {
 		margin: -20px -20px 20px -20px;
 		/* margin-bottom: 7px; */
 		border-radius: 20px 20px 0 0;
+		border-bottom: 2px solid black;
 		height: 112px;
 	}
 }
@@ -9541,7 +9542,7 @@ $ct-series-colors: (
 	/* margin-left: 25px; */
 	min-width: 460px;
 	position: fixed;
-	top: 11.5%;
+	top: 12.5%;
 	right: 5%;
   }
 }
@@ -9745,6 +9746,7 @@ $ct-series-colors: (
 }
 .card a:hover, .card a:focus {
   color: #333333;
+  /* text-decoration: underline; */
 }
 
 .card a.website {

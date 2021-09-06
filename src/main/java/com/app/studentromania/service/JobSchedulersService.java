@@ -18,9 +18,9 @@ public class JobSchedulersService {
 
 	@Scheduled(fixedDelay = 1_800_000)
 	public void facultyReviewDetailsUpdateScheduler() {
-		LogUtils.logStart(LOGGER, "facultyReviewDetailsUpdateScheduler");
+		LogUtils.logStart(LOGGER, "facultyReviewDetailsUpdateScheduler", "scheduler");
 		facultyService.updateAllFacultiesReviewDetails();
-		LogUtils.logSuccess(LOGGER, "facultyReviewDetailsUpdateScheduler");
+		LogUtils.logSuccess(LOGGER, "facultyReviewDetailsUpdateScheduler", "scheduler");
 	}
 
 }

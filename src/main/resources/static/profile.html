@@ -164,6 +164,9 @@
 								
 								<div class="row">
 										<div id="faculty-profile-review-entries" class="faculty-review-card-fixed col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-8 col-lg-offset-0">
+											<div class="text-center">
+												<div class="uil-reload-css reload-background" style=""><div></div></div>
+											</div>
 											<!-- populated dynamically -->
 											<br>
 										</div>
@@ -171,14 +174,7 @@
 								
 								<div class="row">
 									<div id="load-more-reviews-main" class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-8 col-lg-offset-0">
-										<div class="card"> 
-											<div class="content"> 
-												<div class="text-center row"> 
-													<button id="load-more-reviews" class="btn btn-info btn-fill" type="submit" onclick="loadMore()">Încarcă mai multe rezultate</button>
-												</div> 
-											</div> 
-										</div>
-									</div> 
+										<!-- populated dynamically -->
 								</div>
 
 							</div>
@@ -276,7 +272,7 @@
 								<i class="fa fa-twitter"></i>
 							</button>    
 							</a>
-							<a href="http://www.facebook.com/Jamstudy" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
+							<a href="https://www.facebook.com/UnistartFb" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
 								<i class="fa fa-facebook"> </i>
 							</button>
 							</a>
@@ -448,6 +444,7 @@ $(document).ready(function() {
 	myAccountText();
 	var queryParams = new URLSearchParams(window.location.search);
 	facultyId = queryParams.get("id");
+	loadUser();
 	getFaculty();
 	getReviews(false);
 	addToRecentlyViewed();
@@ -567,6 +564,16 @@ function getReviews(loadMore) {
 	$.ajax({
 	  url: backendUrlReviews,
 	  type: "GET",
+	   beforeSend : function(request) {
+		if (!loadMore) {
+			document.getElementById("faculty-profile-review-entries").innerHTML = '	<div class="text-center">'
+																					+'<div class="uil-reload-css reload-background" style=""><div></div></div>'
+																				+'</div>';
+			document.getElementById("load-more-reviews-main").innerHTML = '';
+		} else {
+			document.getElementById("load-more-reviews-main").innerHTML = '<div class="text-center"><div class="uil-reload-css reload-background" style=""><div></div></div></div>';
+		}
+	  },
 	  success: function(response) {
 		
 		loadReviewsTab(response, loadMore);
@@ -1664,7 +1671,6 @@ function loadMap(address) {
 	  }
 	})
 	.success(function(response) {
-		console.log(response);
 		createMap(response, zoom);
 	})
 	.error(function(error) {
@@ -1937,11 +1943,18 @@ function addToRecentlyViewed() {
 		} else {
 			facultyIds = [];
 		}
-		if (facultyId && !facultyIds.includes(facultyId)) {
-			if (facultyIds.length < 16) {
-				facultyIds.push(facultyId);
+		if (facultyId) {
+			if (!facultyIds.includes(facultyId)) {
+				if (facultyIds.length < 16) {
+					facultyIds.push(facultyId);
+				} else {
+					facultyIds.shift();
+					facultyIds.push(facultyId);
+				}
 			} else {
-				facultyIds.shift();
+				facultyIds = facultyIds.filter(function(value, index, arr){
+					return facultyId != value;
+				});
 				facultyIds.push(facultyId);
 			}
 		}
