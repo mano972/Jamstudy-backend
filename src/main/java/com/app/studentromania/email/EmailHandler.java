@@ -17,6 +17,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -99,7 +100,7 @@ public class EmailHandler {
 			Transport.send(mimeMessage);
 		} catch (MessagingException e) {
 			LogUtils.logMessage(LOGGER, "Error. Email was not sent to email address: " + to);
-			ErrorsEnum.EMAIL_SENDING_ERROR.setErrorDescription(e.getStackTrace().toString());
+			ErrorsEnum.EMAIL_SENDING_ERROR.setErrorDescription(ExceptionUtils.getStackTrace(e));
 			return ErrorsEnum.EMAIL_SENDING_ERROR;
 		}
 
