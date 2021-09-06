@@ -71,7 +71,7 @@ public class EmailHandler {
 
 			BodyPart messageBodyPart = new MimeBodyPart();
 			messageBodyPart.setText(emailMessage.toString());
-			messageBodyPart.setContent(emailMessage.toString(), "text/html");
+//			messageBodyPart.setContent(emailMessage.toString(), "text/html");
 			multipart.addBodyPart(messageBodyPart);
 
 			// adds inline image attachments
@@ -99,6 +99,7 @@ public class EmailHandler {
 			Transport.send(mimeMessage);
 		} catch (MessagingException e) {
 			LogUtils.logMessage(LOGGER, "Error. Email was not sent to email address: " + to);
+			ErrorsEnum.EMAIL_SENDING_ERROR.setErrorDescription(e.getStackTrace().toString());
 			return ErrorsEnum.EMAIL_SENDING_ERROR;
 		}
 

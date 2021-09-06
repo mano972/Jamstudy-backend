@@ -34,7 +34,7 @@ public enum ErrorsEnum {
 	REVIEW_ALREADY_UPVOTED(HttpStatus.NOT_ACCEPTABLE, "Această evaluare a fost deja votată.", -35),
 	REVIEW_MAX_NUMBER(HttpStatus.NOT_ACCEPTABLE, "Ai atins deja numărul maxim de evaluări adăugate.", -36),
 	REVIEW_SAME_FACULTY(HttpStatus.NOT_ACCEPTABLE,
-			"Ai adăugat deja o evaluare pentru această facultate. Poți adăuga din nou după 150 de zile.", -37),
+			"Ai adăugat deja o evaluare pentru această facultate. Poți adăuga din nou după %s zile.", -37),
 	REVIEW_UPDATE_DIFFERENT_USER(HttpStatus.BAD_REQUEST,
 			"User-ul care a editat evaluarea este diferit de userul care a creat-o.", -38),
 	REVIEW_NOT_EDITABLE(HttpStatus.NOT_ACCEPTABLE, "Evaluarea nu mai este editabilă.", -39),
@@ -64,10 +64,12 @@ public enum ErrorsEnum {
 	REGISTER_PASSWORD_ERROR(HttpStatus.NOT_ACCEPTABLE,
 			"Parola trebuie să fie de minim 7 caractere și să conțină litere și cifre.", -72),
 	USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED(HttpStatus.UNAUTHORIZED, "Adresa de email nu a fost încă confirmată.", -73),
-	USERPROFILE_REGISTER_VERIFICATION_FAILED(HttpStatus.UNAUTHORIZED, "Verificarea adresei de email a eșuat. Link-ul nu mai este valabil.", -74),
+	USERPROFILE_REGISTER_VERIFICATION_FAILED(HttpStatus.UNAUTHORIZED,
+			"Verificarea adresei de email a eșuat. Link-ul nu mai este valabil.", -74),
 	USERPROFILE_REGISTER_VERIFICATION_EXPIRED(HttpStatus.UNAUTHORIZED,
 			"Timpul alocat verificării adresei de email a expirat.", -75),
-	USERPROFILE_RESET_PASS_VERIFICATION_FAILED(HttpStatus.UNAUTHORIZED, "Resetarea parolei a eșuat. Link-ul nu mai este valabil.", -76),
+	USERPROFILE_RESET_PASS_VERIFICATION_FAILED(HttpStatus.UNAUTHORIZED,
+			"Resetarea parolei a eșuat. Link-ul nu mai este valabil.", -76),
 	USERPROFILE_EMAIL_CONFIRMATION_FAILED(HttpStatus.BAD_REQUEST, "Email-ul de confirmare nu a putut fi trimis.", -77),
 
 	// Statistic
@@ -123,6 +125,11 @@ public enum ErrorsEnum {
 
 	public void setHttpStatus(HttpStatus httpStatus) {
 		this.httpStatus = httpStatus;
+	}
+
+	public ErrorsEnum formatErrorDescription(Object... params) {
+		this.setErrorDescription(String.format(this.getErrorDescription(), params));
+		return this;
 	}
 
 }

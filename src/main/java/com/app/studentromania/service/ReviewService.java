@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.BooleanUtils;
@@ -392,10 +393,14 @@ public class ReviewService {
 				}
 			});
 
-			LocalDateTime dueDate = LocalDateTime.now().minusDays(150);
-			if (reviewsForSameFaculty.get(0).getAddedDate()
-					.after(Date.from(dueDate.atZone(ZoneId.systemDefault()).toInstant()))) {
-				return ErrorsEnum.REVIEW_SAME_FACULTY;
+			Date lastReviewDateForSameFaculty = reviewsForSameFaculty.get(0).getAddedDate();
+			Date currentDate = new Date();
+			long millisSinceLastReview = currentDate.getTime() - lastReviewDateForSameFaculty.getTime();
+			long dueDateMillis = TimeUnit.MILLISECONDS.convert(Constants.SAME_FACULTY_REVIEW_DAYS, TimeUnit.DAYS);
+			long daysLeft = TimeUnit.DAYS.convert(dueDateMillis - millisSinceLastReview, TimeUnit.MILLISECONDS);
+
+			if (millisSinceLastReview < dueDateMillis) {
+				return ErrorsEnum.REVIEW_SAME_FACULTY.formatErrorDescription(String.valueOf(daysLeft));
 			}
 		}
 
