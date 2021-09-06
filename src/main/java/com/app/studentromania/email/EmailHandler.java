@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.mail.BodyPart;
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -17,7 +16,6 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -61,7 +59,7 @@ public class EmailHandler {
 		try {
 
 			Message mimeMessage = new MimeMessage(session);
-			mimeMessage.setFrom(new InternetAddress(user));
+			mimeMessage.setFrom(new InternetAddress(user, "Echipa Unistart"));
 			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			mimeMessage.setSubject(subject);
 
@@ -98,9 +96,8 @@ public class EmailHandler {
 			mimeMessage.setContent(multipart);
 
 			Transport.send(mimeMessage);
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			LogUtils.logMessage(LOGGER, "Error. Email was not sent to email address: " + to);
-			ErrorsEnum.EMAIL_SENDING_ERROR.setErrorDescription(ExceptionUtils.getStackTrace(e));
 			return ErrorsEnum.EMAIL_SENDING_ERROR;
 		}
 

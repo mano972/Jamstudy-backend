@@ -312,7 +312,7 @@ public class UserProfileService {
 		userProfileDAO.updateUserProfile(userProfile);
 		ErrorsEnum emailError = sendPasswordResetEmail(userProfile);
 		if (ErrorsEnum.NO_ERROR != emailError) {
-			return ResponseDTO.createErrorResponse(emailError);
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_CONFIRMATION_FAILED);
 		}
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
