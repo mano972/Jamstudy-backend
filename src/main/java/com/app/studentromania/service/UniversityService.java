@@ -8,8 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,18 +23,11 @@ import com.app.studentromania.util.Constants;
 @Service
 public class UniversityService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UniversityService.class);
-
 	@Autowired
 	private UniversityDAO universityDAO;
 
 	@Autowired
 	private ConfigDAO configDAO;
-
-	@Autowired
-	public UniversityService() {
-//		logUtils.logMessage(LOGGER, "UniversityService initialized");
-	}
 
 	public ResponseDTO getAllUniversities() {
 		List<University> universities = universityDAO.getAllUniversities();

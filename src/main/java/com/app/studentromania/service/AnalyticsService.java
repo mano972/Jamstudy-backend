@@ -43,11 +43,6 @@ public class AnalyticsService {
 	private LogUtils logUtils;
 
 	@Autowired
-	public AnalyticsService() {
-//		logUtils.logMessage(LOGGER, "StatisticService initialized");
-	}
-
-	@Autowired
 	private AnalyticsRepo analyticsRepo;
 
 	@Autowired

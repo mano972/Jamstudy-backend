@@ -25,14 +25,6 @@ import com.app.studentromania.util.LogUtils;
 public class NewsletterService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(NewsletterService.class);
-	
-	private LogUtils logUtils;
-
-	@Autowired
-	public NewsletterService(LogUtils logUtils) {
-		this.logUtils = logUtils;
-		logUtils.logMessage(LOGGER, "NewsletterService initialized");
-	}
 
 	@Autowired
 	private NewsletterRepo newsletterRepo;
@@ -42,6 +34,9 @@ public class NewsletterService {
 
 	@Autowired
 	private EmailHandler emailHandler;
+
+	@Autowired
+	private LogUtils logUtils;
 
 	public ResponseDTO saveNewsletter() {
 		Newsletter newsletter = new Newsletter();

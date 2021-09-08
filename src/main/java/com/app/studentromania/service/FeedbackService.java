@@ -26,11 +26,6 @@ public class FeedbackService {
 	private LogUtils logUtils;
 
 	@Autowired
-	public FeedbackService() {
-//		logUtils.logMessage(LOGGER, "FeedbackService initialized");
-	}
-
-	@Autowired
 	private FeedbackRepo feedbackRepo;
 
 	public ResponseDTO saveFeedback() {

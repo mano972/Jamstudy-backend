@@ -62,11 +62,6 @@ public class ReviewService {
 	@Autowired
 	private LogUtils logUtils;
 
-	@Autowired
-	public ReviewService() {
-//		logUtils.logMessage(LOGGER, "ReviewService initialized");
-	}
-
 	public ResponseDTO getAllReviews() {
 		List<Review> reviews = reviewDAO.getAllReviews();
 		JSONArray reviewsArray = new JSONArray();

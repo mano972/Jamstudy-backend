@@ -45,11 +45,6 @@ public class QuestionService {
 	@Autowired
 	private LogUtils logUtils;
 
-	@Autowired
-	public QuestionService() {
-//		LOGGER.info("QuestionService initialized");
-	}
-
 	public ResponseDTO getFilteredQuestionsByFacultyId(String facultyId, QuestionFilter questionFilter) {
 		List<Question> questions = questionDAO.getFilteredQuestionsByFacultyId(facultyId, questionFilter);
 		long count = questionDAO.countByFacultyId(facultyId);

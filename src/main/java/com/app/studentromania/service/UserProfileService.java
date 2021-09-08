@@ -69,11 +69,6 @@ public class UserProfileService {
 	@Autowired
 	private LogUtils logUtils;
 
-	@Autowired
-	public UserProfileService() {
-//		logUtils.logMessage(LOGGER, "UserProfileService initialized");
-	}
-
 	public ResponseDTO getAllUserProfiles() {
 		List<UserProfile> userProfiles = userProfileDAO.getAllUserProfiles();
 		JSONArray userProfilesArray = new JSONArray();

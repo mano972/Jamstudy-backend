@@ -58,11 +58,6 @@ public class FacultyService {
 	@Autowired
 	private LogUtils logUtils;
 
-	@Autowired
-	public FacultyService() {
-//		logUtils.logMessage(LOGGER, "FacultyService initialized");
-	}
-
 	public List<Faculty> getAllFaculties() {
 		return facultyDAO.getAllFaculties();
 	}

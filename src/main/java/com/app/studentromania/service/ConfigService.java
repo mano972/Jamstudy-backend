@@ -27,11 +27,6 @@ public class ConfigService {
 	@Autowired
 	private LogUtils logUtils;
 
-	@Autowired
-	public ConfigService() {
-//		logUtils.logMessage(LOGGER, "ConfigService initialized");
-	}
-
 	public ResponseDTO getAllConfigs() {
 		List<Config> configs = configDAO.getAllConfigs();
 		JSONArray configsArray = new JSONArray();
