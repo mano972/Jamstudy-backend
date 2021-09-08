@@ -25,6 +25,7 @@ import com.app.studentromania.model.UserProfile;
 import com.app.studentromania.service.CustomRequestContext;
 import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.LogUtils;
+import com.app.studentromania.util.Utilities;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -42,6 +43,9 @@ public class JWTAuthAspect {
 	@Autowired
 	private CustomRequestContext customRequestContext;
 
+	@Autowired
+	private LogUtils logUtils;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(JWTAuthAspect.class);
 
 	@Around("@annotation(com.app.studentromania.annotation.JWTAuth)")
@@ -51,6 +55,7 @@ public class JWTAuthAspect {
 		final String issuer = "unistart";
 
 		customRequestContext.setUserId(null);
+		customRequestContext.setTraceId(Utilities.getTraceId());
 
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
@@ -69,21 +74,21 @@ public class JWTAuthAspect {
 				DecodedJWT decodedJwtToken = JWT.decode(jwtToken);
 				String userId = decodedJwtToken.getSubject();
 				if (StringUtils.isBlank(userId)) {
-					LogUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId is missing from the token");
+					logUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId is missing from the token");
 					return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
 				}
-				
+
 				final String endPointName = proceedingJoinPoint.getSignature().getName();
-				LogUtils.logAuth(LOGGER, endPointName, userId);
-				
+				logUtils.logAuth(LOGGER, endPointName, userId);
+
 				Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
 				if (!userProfileOpt.isPresent()) {
-					LogUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId does not exist: " + userId);
+					logUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId does not exist: " + userId);
 					return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
 				}
 
 				if (isTokenExpired(decodedJwtToken)) {
-					LogUtils.logMessage(LOGGER,
+					logUtils.logMessage(LOGGER,
 							"Error when verifying JWT token. Token has expired for userId: " + userId);
 					return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_EXPIRED);
 				}
@@ -92,7 +97,7 @@ public class JWTAuthAspect {
 			}
 
 		} catch (JWTVerificationException e) {
-			LogUtils.logMessage(LOGGER, "Error when verifying JWT token ");
+			logUtils.logMessage(LOGGER, "Error when verifying JWT token ");
 			return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_VERIFY_ERROR).createRestResponse();
 		}
 

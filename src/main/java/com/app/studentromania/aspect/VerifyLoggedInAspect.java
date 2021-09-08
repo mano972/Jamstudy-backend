@@ -23,6 +23,9 @@ public class VerifyLoggedInAspect {
 	@Autowired
 	private CustomRequestContext customRequestContext;
 
+	@Autowired
+	private LogUtils logUtils;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(VerifyLoggedInAspect.class);
 
 	@Around("@annotation(com.app.studentromania.annotation.VerifyLoggedIn)")
@@ -31,7 +34,7 @@ public class VerifyLoggedInAspect {
 		String userId = customRequestContext.getUserId();
 		if (StringUtils.isBlank(userId)) {
 			final String endPointName = proceedingJoinPoint.getSignature().getName();
-			LogUtils.logMessage(LOGGER,
+			logUtils.logMessage(LOGGER,
 					"User is not logged in. Cannot access <" + endPointName + "> at [" + new Date() + "]");
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USER_NOT_LOGGED_IN);
 		}

@@ -29,30 +29,27 @@ import com.app.studentromania.util.Constants;
 @RequestMapping("${base.path}/init")
 public class InitController {
 
-	//@formatter:off
+	// @formatter:off
 	/*
 	 * Unele date sunt per facultyDomain, deci trebuie agregate pentru faculty
 	 * 
-	 * columns:
-	 * [0] facultyName
-	 * [1] universityName
-	 * [2] facultyCity / universityCity
-	 * [3] availablePlaces (trebuie adunate de la toate programele)
-	 * [4] lastEntranceGrade (difera pentru fiecare program din aceeasi faculty)
-	 * [5] candidatesPerPlace (difera pentru fiecare program din aceeasi faculty)
-	 * [6] annualTax (difera pentru fiecare program din aceeasi faculty)
-	 * [7] facultyProgram (baza pe care e construit site-ul optiuni)
-	 * [8] facultyType / universityType (s-ar putea sa nu fie date bune)
-	 * [9] authorization/accreditation (difera pentru fiecare program din aceeasi faculty)
-	 * [10] specialization (difera pentru fiecare program din aceeasi faculty)
-	 * [11] domainOfLicenseOrMaster (difera pentru fiecare program din aceeasi faculty)
-	 * [12] facultyDomain (difera pentru fiecare program, sunt mai multe per faculty, trebuie agregate)
-	 * [13] admissionType (difera pentru fiecare program din aceeasi faculty)
-	 * [14] budgetPlaces (trebuie adunate de la toate programele)
-	 * [15] taxPlaces (trebuie adunate de la toate programele)
+	 * columns: [0] facultyName [1] universityName [2] facultyCity / universityCity
+	 * [3] availablePlaces (trebuie adunate de la toate programele) [4]
+	 * lastEntranceGrade (difera pentru fiecare program din aceeasi faculty) [5]
+	 * candidatesPerPlace (difera pentru fiecare program din aceeasi faculty) [6]
+	 * annualTax (difera pentru fiecare program din aceeasi faculty) [7]
+	 * facultyProgram (baza pe care e construit site-ul optiuni) [8] facultyType /
+	 * universityType (s-ar putea sa nu fie date bune) [9]
+	 * authorization/accreditation (difera pentru fiecare program din aceeasi
+	 * faculty) [10] specialization (difera pentru fiecare program din aceeasi
+	 * faculty) [11] domainOfLicenseOrMaster (difera pentru fiecare program din
+	 * aceeasi faculty) [12] facultyDomain (difera pentru fiecare program, sunt mai
+	 * multe per faculty, trebuie agregate) [13] admissionType (difera pentru
+	 * fiecare program din aceeasi faculty) [14] budgetPlaces (trebuie adunate de la
+	 * toate programele) [15] taxPlaces (trebuie adunate de la toate programele)
 	 * 
 	 */
-	//@formatter:on
+	// @formatter:on
 
 	@Autowired
 	private ConfigDAO configDAO;
@@ -88,7 +85,9 @@ public class InitController {
 		String cvsSplitBy = ";";
 		List<UniversityDTO> universityDTOList = new ArrayList<>();
 
-		final String filepath = configDAO.getValueByConfigKey(Constants.CONFIG_KEY_FACULTIES_LICENSE_FILEPATH);
+		String defaultFilepath = "C:\\Jamstudy_data\\Fac12Sept2019.csv";
+		String filepath = configDAO.getValueByConfigKey(Constants.CONFIG_KEY_FACULTIES_LICENSE_FILEPATH,
+				defaultFilepath);
 
 		try {
 
@@ -132,7 +131,9 @@ public class InitController {
 		String cvsSplitBy = ";";
 		List<FacultyDTO> facultyDTOList = new ArrayList<>();
 
-		final String filepath = configDAO.getValueByConfigKey(Constants.CONFIG_KEY_FACULTIES_LICENSE_FILEPATH);
+		String defaultFilepath = "C:\\Jamstudy_data\\FacMasterPrograms04Oct2019.csv";
+		String filepath = configDAO.getValueByConfigKey(Constants.CONFIG_KEY_FACULTIES_LICENSE_FILEPATH,
+				defaultFilepath);
 
 		try {
 

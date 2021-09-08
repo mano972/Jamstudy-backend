@@ -23,6 +23,12 @@ public class Constants {
 	public static final String CONFIG_KEY_FACULTIES_MASTER_FILEPATH = "faculties_master_filepath";
 	public static final String CONFIG_KEY_ADMIN_USERNAME = "admin_username";
 	public static final String CONFIG_KEY_ADMIN_PASS = "admin_pass";
+	public static final String CONFIG_KEY_REGISTER_CONFIRMATION_EMAIL_SUBJECT = "register_confirmation_email_subject";
+	public static final String CONFIG_KEY_REGISTER_CONFIRMATION_EMAIL_TEXT = "register_confirmation_email_text";
+	public static final String CONFIG_KEY_REGISTER_CONFIRMATION_EMAIL_URL = "register_confirmation_email_url";
+	public static final String CONFIG_KEY_RESET_PASS_EMAIL_SUBJECT = "reset_pass_email_subject";
+	public static final String CONFIG_KEY_RESET_PASS_EMAIL_TEXT = "reset_pass_email_text";
+	public static final String CONFIG_KEY_RESET_PASS_EMAIL_URL = "reset_pass_email_url";
 
 	public static final String DATE_FORMAT = "dd MMM yyyy";
 	public static final String BIRTH_DATE_FORMAT = "yyyy-MM-dd";
@@ -37,7 +43,15 @@ public class Constants {
 
 	public static final Pattern VALID_PASSWORD_REGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z][A-Z]).{7,22}$",
 			Pattern.CASE_INSENSITIVE);
-	
+
 	public static final int SAME_FACULTY_REVIEW_DAYS = 150;
+	
+	public static final String DEFAULT_REGISTER_CONFIRMATION_EMAIL_SUBJECT = "Confirma crearea unui cont nou pe platforma Unistart";
+	public static final String DEFAULT_REGISTER_CONFIRMATION_EMAIL_TEXT = "Bun venit in comunitatea Unistart! \n \n Acceseaza link-ul pentru a confirma crearea unui cont nou. \n \n Foloseste platforma Unistart pentru a gasi facultatea potrivita pentru tine. \n In cazul in care esti student sau absolvent, lasa o evaluarea facultatii tale si ajuta un elev sa ia decizia potrivita. \n \n Cu drag, Echipa Unistart";
+	public static final String DEFAULT_REGISTER_CONFIRMATION_EMAIL_URL = "https://unistart.ro/login.html?token=";
+
+	public static final String DEFAULT_RESET_PASS_EMAIL_SUBJECT = "Reseteaza parola contului tau Unistart";
+	public static final String DEFAULT_RESET_PASS_EMAIL_TEXT = "Salut %s! \n \n Ai cerut resetarea parolei pentru contul tau Unistart. Te rugam acceseaza link-ul de mai jos. \n \n %s \n \n În cazul în care nu ai solicitat schimbarea parolei, este în regulă să nu întreprinzi o acțiune. Dacă ești îngrijorat de securitatea contului tău, îți recomandăm să ne scrii la office@unistart.ro. \n \n Cu drag, Echipa Unistart";
+	public static final String DEFAULT_RESET_PASS_EMAIL_URL = "https://unistart.ro/change.html?token=";
 
 }

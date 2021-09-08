@@ -41,6 +41,9 @@ public class QuestionService {
 
 	@Autowired
 	private FacultyDAO facultyDAO;
+	
+	@Autowired
+	private LogUtils logUtils;
 
 	@Autowired
 	public QuestionService() {
@@ -93,7 +96,7 @@ public class QuestionService {
 		mapToAnswer(answerDTO, answer);
 		List<Answer> answers = question.getAnswers();
 		answers.add(answer);
-		LogUtils.logMessage(LOGGER,
+		logUtils.logMessage(LOGGER,
 				"Answer " + answer.getAnswerId() + " was created for question " + question.getQuestionId());
 		questionDAO.updateQuestion(question);
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
@@ -108,14 +111,14 @@ public class QuestionService {
 		int upvotes = question.getUpvotes();
 		if (questionDTO.getUpvote()) {
 			question.setUpvotes(++upvotes);
-			LogUtils.logMessage(LOGGER, "Question " + question.getQuestionId() + " was upvoted!");
+			logUtils.logMessage(LOGGER, "Question " + question.getQuestionId() + " was upvoted!");
 		} else {
 			if (upvotes == 0) {
 				question.setUpvotes(0);
 			} else {
 				question.setUpvotes(--upvotes);
 			}
-			LogUtils.logMessage(LOGGER, "Question " + question.getQuestionId() + " was downvoted!");
+			logUtils.logMessage(LOGGER, "Question " + question.getQuestionId() + " was downvoted!");
 		}
 		questionDAO.updateQuestion(question);
 		QuestionResponseDTO questionResponseDTO = new QuestionResponseDTO();
@@ -141,14 +144,14 @@ public class QuestionService {
 		int upvotes = answer.getUpvotes();
 		if (answerDTO.getUpvote()) {
 			answer.setUpvotes(++upvotes);
-			LogUtils.logMessage(LOGGER, "Answer " + answer.getAnswerId() + " was upvoted!");
+			logUtils.logMessage(LOGGER, "Answer " + answer.getAnswerId() + " was upvoted!");
 		} else {
 			if (upvotes == 0) {
 				answer.setUpvotes(0);
 			} else {
 				answer.setUpvotes(--upvotes);
 			}
-			LogUtils.logMessage(LOGGER, "Answer " + answer.getAnswerId() + " was downvoted!");
+			logUtils.logMessage(LOGGER, "Answer " + answer.getAnswerId() + " was downvoted!");
 		}
 		questionDAO.updateQuestion(question);
 

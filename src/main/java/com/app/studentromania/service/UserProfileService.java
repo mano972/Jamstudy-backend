@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,7 @@ import com.app.studentromania.dto.UserProfileDTO;
 import com.app.studentromania.dto.UserProfileResponseDTO;
 import com.app.studentromania.email.EmailHandler;
 import com.app.studentromania.enumtype.ErrorsEnum;
+import com.app.studentromania.enumtype.RegisterTypeEnum;
 import com.app.studentromania.model.Faculty;
 import com.app.studentromania.model.UserProfile;
 import com.app.studentromania.model.UserProfileFaculty;
@@ -65,8 +67,11 @@ public class UserProfileService {
 	private EmailHandler emailHandler;
 
 	@Autowired
+	private LogUtils logUtils;
+
+	@Autowired
 	public UserProfileService() {
-		LogUtils.logMessage(LOGGER, "UserProfileService initialized");
+		logUtils.logMessage(LOGGER, "UserProfileService initialized");
 	}
 
 	public ResponseDTO getAllUserProfiles() {
@@ -130,7 +135,7 @@ public class UserProfileService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_PASSWORD_MISSING);
 		}
 		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(userProfileDTO.getEmail());
-		if (userProfileOpt.isPresent()) {
+		if (userProfileOpt.isPresent()) { // login
 			UserProfile userProfile = userProfileOpt.get();
 			mapToUserProfile(userProfileDTO, userProfile);
 			userProfile.setLastLogin(new Date());
@@ -138,7 +143,7 @@ public class UserProfileService {
 
 			String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
 			if (StringUtils.isBlank(jwtToken)) {
-				LogUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
+				logUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
 				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
 			}
 
@@ -153,7 +158,7 @@ public class UserProfileService {
 			JSONObject response = new JSONObject(authResponseDTO);
 
 			return ResponseDTO.createSuccessResponse(response);
-		} else {
+		} else { // register
 			UserProfile userProfile = new UserProfile();
 			String generatedId = configDAO.generateDocumentId(Constants.USERPROFILE_PREFIX_ID);
 			userProfile.setUserId(generatedId);
@@ -163,12 +168,13 @@ public class UserProfileService {
 			}
 			userProfile.setAcceptTermsAndConditions(true);
 			userProfile.setEmailConfirmed(true);
+			userProfile.setRegisterType(RegisterTypeEnum.FACEBOOK.getValue());
 			userProfile.setLastLogin(new Date());
 			userProfileDAO.createUserProfile(userProfile);
 
 			String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
 			if (StringUtils.isBlank(jwtToken)) {
-				LogUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
+				logUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
 				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
 			}
 
@@ -203,7 +209,7 @@ public class UserProfileService {
 
 		String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
 		if (StringUtils.isBlank(jwtToken)) {
-			LogUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
+			logUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
 			return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
 		}
 
@@ -248,6 +254,7 @@ public class UserProfileService {
 		} else if (newsletterService.emailExists(userProfile.getEmail())) {
 			userProfile.setSubscribeToNewsletter(true);
 		}
+		userProfile.setRegisterType(RegisterTypeEnum.REGULAR.getValue());
 //		userProfile.setAcceptTermsAndConditions(true);
 		createRegistrationVerificationToken(userProfile);
 		userProfileDAO.createUserProfile(userProfile);
@@ -399,7 +406,7 @@ public class UserProfileService {
 			recentFaculties.add(0, recentFaculty);
 			userProfile.setRecentFaculties(recentFaculties);
 			userProfileDAO.updateUserProfile(userProfile);
-			LogUtils.logMessage(LOGGER, "Faculty " + recentFaculty.getFacultyName()
+			logUtils.logMessage(LOGGER, "Faculty " + recentFaculty.getFacultyName()
 					+ " was added to recent faculties for User Profile " + userProfile.getUserId());
 		}
 
@@ -433,7 +440,7 @@ public class UserProfileService {
 			favoriteFaculty.setUniversityName(facultyOpt.get().getUniversityName());
 			favoriteFaculty.setAddedDate(new Date());
 			favoriteFaculties.add(favoriteFaculty);
-			LogUtils.logMessage(LOGGER, "Faculty " + favoriteFaculty.getFacultyName()
+			logUtils.logMessage(LOGGER, "Faculty " + favoriteFaculty.getFacultyName()
 					+ " was added to favorite faculties for User Profile " + userProfile.getUserId());
 		} else { // remove
 			boolean removedFavoriteFaculty = favoriteFaculties
@@ -441,7 +448,7 @@ public class UserProfileService {
 			if (!removedFavoriteFaculty) {
 				return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
 			}
-			LogUtils.logMessage(LOGGER, "Faculty " + facultyId
+			logUtils.logMessage(LOGGER, "Faculty " + facultyId
 					+ " was removed from favorite faculties for User Profile " + userProfile.getUserId());
 		}
 
@@ -467,11 +474,11 @@ public class UserProfileService {
 		}
 		if (userProfileDTO.getAllowNotification()) {
 			favoriteFacultyOpt.get().setAllowNotification(true);
-			LogUtils.logMessage(LOGGER, "Notification are now allowed for faculty "
+			logUtils.logMessage(LOGGER, "Notifications are now allowed for faculty "
 					+ favoriteFacultyOpt.get().getFacultyName() + " for User Profile " + userProfile.getUserId());
 		} else {
 			favoriteFacultyOpt.get().setAllowNotification(false);
-			LogUtils.logMessage(LOGGER, "Notification are no longer allowed for faculty "
+			logUtils.logMessage(LOGGER, "Notifications are no longer allowed for faculty "
 					+ favoriteFacultyOpt.get().getFacultyName() + " for User Profile " + userProfile.getUserId());
 		}
 		userProfile.setFavoriteFaculties(favoriteFaculties);
@@ -498,15 +505,13 @@ public class UserProfileService {
 
 	private ErrorsEnum sendRegistrationConfirmationEmail(UserProfile userProfile) {
 		String to = userProfile.getEmail();
-		String subject = "Confirmă crearea unui cont nou pe platforma Unistart";
-		String confirmationUrl = "https://unistart.ro" + "/login.html?token=" + userProfile.getEmailConfirmationToken();
-		StringBuilder sb = new StringBuilder();
-		sb.append("Bun venit in comunitatea Unistart! \nAcceseaza link-ul pentru a confirma crearea unui cont nou.\n")
-				.append(confirmationUrl).append("\n").append("Parerea ta conteaza!\n")
-				.append("Foloseste platforma Unistart pentru a gasi facultatea potrivita pentru tine.\n")
-				.append("In cazul in care esti student sau absolvent, lasa o evaluarea facultatii tale si ajuta un elev sa ia decizia potrivita.\n")
-				.append("Cu drag, \nEchipa Unistart");
-		String message = sb.toString();
+		String subject = configDAO.getValueByConfigKey(Constants.CONFIG_KEY_REGISTER_CONFIRMATION_EMAIL_SUBJECT,
+				Constants.DEFAULT_REGISTER_CONFIRMATION_EMAIL_SUBJECT);
+		String confirmationUrl = configDAO.getValueByConfigKey(Constants.CONFIG_KEY_REGISTER_CONFIRMATION_EMAIL_URL,
+				Constants.DEFAULT_REGISTER_CONFIRMATION_EMAIL_URL) + userProfile.getEmailConfirmationToken();
+		String message = String
+				.format(configDAO.getValueByConfigKey(Constants.CONFIG_KEY_REGISTER_CONFIRMATION_EMAIL_TEXT,
+						Constants.CONFIG_KEY_REGISTER_CONFIRMATION_EMAIL_TEXT), confirmationUrl);
 
 		return emailHandler.sendEmail(to, subject, message);
 	}
@@ -524,17 +529,14 @@ public class UserProfileService {
 
 	private ErrorsEnum sendPasswordResetEmail(UserProfile userProfile) {
 		String to = userProfile.getEmail();
-		String subject = "Resetează parola";
-		String confirmationUrl = "https://unistart.ro" + "/change.html?token=" + userProfile.getPasswordResetToken();
-		StringBuilder sb = new StringBuilder();
-		sb.append("Salut")
-				.append(!StringUtils.isEmpty(userProfile.getFirstName()) ? (", " + userProfile.getFirstName()) : "")
-				.append("!");
-		sb.append("Ai cerut resetarea parolei. Te rugăm accesează link-ul de mai jos\n").append(confirmationUrl)
-				.append("\n")
-				.append("În cazul în care nu ai solicitat schimbarea parolei, este în regulă să nu întreprinzi o acțiune. Dacă ești îngrijorat de securitatea contului tău, îți recomandăm să ne scrii la office@unistart.ro ")
-				.append("\n").append("Cu drag, \nEchipa Unistart");
-		String message = sb.toString();
+		String subject = configDAO.getValueByConfigKey(Constants.CONFIG_KEY_RESET_PASS_EMAIL_SUBJECT,
+				Constants.DEFAULT_RESET_PASS_EMAIL_SUBJECT);
+		String resetUrl = configDAO.getValueByConfigKey(Constants.CONFIG_KEY_RESET_PASS_EMAIL_URL,
+				Constants.DEFAULT_RESET_PASS_EMAIL_URL) + userProfile.getPasswordResetToken();
+		String userFirstName = !StringUtils.isEmpty(userProfile.getFirstName()) ? (", " + userProfile.getFirstName())
+				: "";
+		String message = String.format(configDAO.getValueByConfigKey(Constants.CONFIG_KEY_RESET_PASS_EMAIL_TEXT,
+				Constants.CONFIG_KEY_RESET_PASS_EMAIL_TEXT), userFirstName, resetUrl);
 
 		return emailHandler.sendEmail(to, subject, message);
 	}
@@ -567,6 +569,12 @@ public class UserProfileService {
 	private void mapToUserProfile(UserProfileDTO userProfileDTO, UserProfile userProfile) {
 		ModelMapper mapper = new ModelMapper();
 		mapper.getConfiguration().setSkipNullEnabled(true).setMatchingStrategy(MatchingStrategies.STRICT);
+		mapper.addMappings(new PropertyMap<UserProfileDTO, UserProfile>() {
+			@Override
+			protected void configure() {
+				skip(destination.getPassword());
+			}
+		});
 		mapper.map(userProfileDTO, userProfile);
 	}
 

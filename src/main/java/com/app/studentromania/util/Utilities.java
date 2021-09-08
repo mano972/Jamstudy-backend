@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 public class Utilities {
 
 	public static String getFormattedDate(Date date) {
@@ -20,6 +22,10 @@ public class Utilities {
 		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		String formattedDate = localDate.format(DateTimeFormatter.ofPattern(Constants.BIRTH_DATE_FORMAT, roLocale));
 		return formattedDate;
+	}
+
+	public static String getTraceId() {
+		return RandomStringUtils.randomAlphanumeric(12);
 	}
 
 }

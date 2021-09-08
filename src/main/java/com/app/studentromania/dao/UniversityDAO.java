@@ -15,6 +15,9 @@ import com.app.studentromania.util.LogUtils;
 @Component
 public class UniversityDAO {
 
+	@Autowired
+	private LogUtils logUtils;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(UniversityDAO.class);
 
 	@Autowired
@@ -30,13 +33,13 @@ public class UniversityDAO {
 
 	public void createUniversity(University university) {
 		universityRepo.save(university);
-		LogUtils.logMessage(LOGGER, "University " + university.getUniversityId() + " was created!");
+		logUtils.logMessage(LOGGER, "University " + university.getUniversityId() + " was created!");
 	}
 
 	public void updateUniversity(University university) {
 		university.setUpdateDateWithCurrentDate();
 		universityRepo.save(university);
-		LogUtils.logMessage(LOGGER, "University " + university.getUniversityId() + " was updated!");
+		logUtils.logMessage(LOGGER, "University " + university.getUniversityId() + " was updated!");
 	}
 
 	public void deleteAllUniversities() {

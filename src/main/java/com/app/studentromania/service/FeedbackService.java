@@ -20,11 +20,14 @@ import com.app.studentromania.util.LogUtils;
 @Service
 public class FeedbackService {
 
+	@Autowired
+	private LogUtils logUtils;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(FeedbackService.class);
 
 	@Autowired
 	public FeedbackService() {
-		LogUtils.logMessage(LOGGER, "FeedbackService initialized");
+		logUtils.logMessage(LOGGER, "FeedbackService initialized");
 	}
 
 	@Autowired
@@ -37,7 +40,7 @@ public class FeedbackService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.FEEDBACK_ALREADY_EXISTS);
 		}
 		feedbackRepo.save(feedback);
-		LogUtils.logMessage(LOGGER, "Feedback document created!");
+		logUtils.logMessage(LOGGER, "Feedback document created!");
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
@@ -50,7 +53,7 @@ public class FeedbackService {
 		Feedback feedback = feedbacks.get(0);
 		feedback.getFeedbackEntries().clear();
 		feedbackRepo.save(feedback);
-		LogUtils.logMessage(LOGGER, "Feedback entries reset!");
+		logUtils.logMessage(LOGGER, "Feedback entries reset!");
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
@@ -69,7 +72,7 @@ public class FeedbackService {
 		feedbackEntries.add(feedbackEntry);
 		feedback.setFeedbackEntries(feedbackEntries);
 		feedbackRepo.save(feedback);
-		LogUtils.logMessage(LOGGER, "Feedback entry added to feedback document!");
+		logUtils.logMessage(LOGGER, "Feedback entry added to feedback document!");
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 

@@ -86,6 +86,9 @@ public class UserProfile extends ParentEntity {
 	private List<UserProfileReview> addedReviews = new ArrayList<>();
 
 	@Field
+	private String registerType;
+
+	@Field
 	private Date lastLogin;
 
 	public String getUserId() {
@@ -270,6 +273,14 @@ public class UserProfile extends ParentEntity {
 
 	public void setAddedReviews(List<UserProfileReview> addedReviews) {
 		this.addedReviews = addedReviews;
+	}
+
+	public String getRegisterType() {
+		return registerType;
+	}
+
+	public void setRegisterType(String registerType) {
+		this.registerType = registerType;
 	}
 
 	public Date getLastLogin() {

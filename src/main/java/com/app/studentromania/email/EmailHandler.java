@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMultipart;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.app.studentromania.enumtype.ErrorsEnum;
@@ -27,6 +28,9 @@ import com.app.studentromania.util.LogUtils;
 public class EmailHandler {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailHandler.class);
+
+	@Autowired
+	private LogUtils logUtils;
 
 	private static final String user = "office@unistart.ro";
 	private static final String pass = "aizxrovqrmnvyxfp";
@@ -51,10 +55,10 @@ public class EmailHandler {
 				}
 			});
 		} catch (Exception e) {
-			LogUtils.logMessage(LOGGER, "Email authentication error. " + to);
+			logUtils.logMessage(LOGGER, "Email authentication error. " + to);
 			return ErrorsEnum.EMAIL_AUTH_ERROR;
 		}
-		LogUtils.logMessage(LOGGER, "Mail session created = " + session.getProperties().toString());
+		logUtils.logMessage(LOGGER, "Mail session created = " + session.getProperties().toString());
 
 		try {
 
@@ -97,11 +101,11 @@ public class EmailHandler {
 
 			Transport.send(mimeMessage);
 		} catch (Exception e) {
-			LogUtils.logMessage(LOGGER, "Error. Email was not sent to email address: " + to);
+			logUtils.logMessage(LOGGER, "Error. Email was not sent to email address: " + to);
 			return ErrorsEnum.EMAIL_SENDING_ERROR;
 		}
 
-		LogUtils.logMessage(LOGGER, "Email was sent succesfully to email address: " + to);
+		logUtils.logMessage(LOGGER, "Email was sent succesfully to email address: " + to);
 		return ErrorsEnum.NO_ERROR;
 	}
 

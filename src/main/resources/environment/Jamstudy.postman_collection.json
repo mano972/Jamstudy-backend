@@ -101,6 +101,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Token",
+								"value": "Bearer {{token}}",
+								"type": "text"
 							}
 						],
 						"url": {
@@ -177,6 +182,11 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Token",
+								"value": "Bearer {{token}}",
+								"type": "text"
 							}
 						],
 						"url": {
@@ -1285,21 +1295,26 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Token",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhYUBhYS5jb20iLCJpc3MiOiJ1bmlzdGFydCIsImV4cCI6MTYzMDA1OTU0MiwiaWF0IjoxNjI5ODAwMzQyfQ.8z_zQxEfYFHaBYj_iEeMzBcWBtNm1oMNDGLHsBiII1E",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"generalRating\": 5,\n        \"reviewText\": \"This is a great faculty!\"\n    }"
+							"raw": "{\n        \"generalRating\": 2,\n        \"reviewText\": \"general text\"\n    }"
 						},
 						"url": {
-							"raw": "{{host}}/v1/review/1",
+							"raw": "{{host}}/v1/review/FAC_ILQJrenFam",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
 								"review",
-								"1"
+								"FAC_ILQJrenFam"
 							]
 						}
 					},
@@ -1856,6 +1871,18 @@
 				},
 				{
 					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"token\", jsonData.result.jwtToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1905,6 +1932,34 @@
 								"v1",
 								"userprofile",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"password\": \"newPassword123\"\n    }"
+						},
+						"url": {
+							"raw": "{{host}}/v1/userprofile/change",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"userprofile",
+								"change"
 							]
 						}
 					},
@@ -2247,7 +2302,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t{\n\t\t\"configKey\": \"faculties_licence_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\Fac12Sept2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"faculties_master_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\FacMasterPrograms04Oct2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_username\",\n\t\t\"configValue\": \"jamstudyadmin\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_pass\",\n\t\t\"configValue\": \"93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D\"\n\t}\n]"
+							"raw": "[\n\t{\n\t\t\"configKey\": \"faculties_licence_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\Fac12Sept2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"faculties_master_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\FacMasterPrograms04Oct2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_username\",\n\t\t\"configValue\": \"jamstudyadmin\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_pass\",\n\t\t\"configValue\": \"93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D\"\n\t},\n\t{\n\t\t\"configKey\": \"register_confirmation_email_subject\",\n\t\t\"configValue\": \"Confirma crearea unui cont nou pe platforma Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"register_confirmation_email_text\",\n\t\t\"configValue\": \"Bun venit in comunitatea Unistart! \\n \\n Acceseaza link-ul pentru a confirma crearea unui cont nou. \\n \\n Foloseste platforma Unistart pentru a gasi facultatea potrivita pentru tine. \\n In cazul in care esti student sau absolvent, lasa o evaluarea facultatii tale si ajuta un elev sa ia decizia potrivita. \\n \\n Cu drag, Echipa Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"register_confirmation_email_url\",\n\t\t\"configValue\": \"https://unistart.ro/login.html?token=\"\n\t},\n\t{\n\t\t\"configKey\": \"reset_pass_email_subject\",\n\t\t\"configValue\": \"Reseteaza parola contului tau Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"reset_pass_email_text\",\n\t\t\"configValue\": \"Salut %s! \\n \\n Ai cerut resetarea parolei pentru contul tau Unistart. Te rugam acceseaza link-ul de mai jos. \\n \\n %s \\n \\n În cazul în care nu ai solicitat schimbarea parolei, este în regulă să nu întreprinzi o acțiune. Dacă ești îngrijorat de securitatea contului tău, îți recomandăm să ne scrii la office@unistart.ro. \\n \\n Cu drag, Echipa Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"reset_pass_email_url\",\n\t\t\"configValue\": \"https://unistart.ro/change.html?token=\"\n\t}\n]"
 						},
 						"url": {
 							"raw": "{{host}}/v1/config/configs",
@@ -2665,6 +2720,50 @@
 								"v1",
 								"Jamstudy",
 								"newsletter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send newsletter (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"to\": \"andrei_manolache2000@yahoo.com\",\r\n    \"subject\": \"test a 1\",\r\n    \"newsletterBody\": \"abc abc\",\r\n    \"inlineImages\": {}\r\n}"
+						},
+						"url": {
+							"raw": "{{host}}/v1/Jamstudy/newsletter/send",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"Jamstudy",
+								"newsletter",
+								"send"
 							]
 						}
 					},

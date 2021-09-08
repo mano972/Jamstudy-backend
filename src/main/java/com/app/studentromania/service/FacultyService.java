@@ -56,8 +56,11 @@ public class FacultyService {
 	private ConfigDAO configDAO;
 
 	@Autowired
+	private LogUtils logUtils;
+
+	@Autowired
 	public FacultyService() {
-		LogUtils.logMessage(LOGGER, "FacultyService initialized");
+		logUtils.logMessage(LOGGER, "FacultyService initialized");
 	}
 
 	public List<Faculty> getAllFaculties() {
@@ -76,7 +79,7 @@ public class FacultyService {
 		response.put("faculties", facultiesArray);
 		response.put("count", count);
 
-		LogUtils.logMessage(LOGGER,
+		logUtils.logMessage(LOGGER,
 				"Searched faculties criteria " + facultyFilter.toString() + "with result count: " + count);
 
 		return ResponseDTO.createSuccessResponse(response);

@@ -15,12 +15,15 @@ public class JobSchedulersService {
 
 	@Autowired
 	private FacultyService facultyService;
+	
+	@Autowired
+	private LogUtils logUtils;
 
 	@Scheduled(fixedDelay = 1_800_000)
 	public void facultyReviewDetailsUpdateScheduler() {
-		LogUtils.logStart(LOGGER, "facultyReviewDetailsUpdateScheduler", "scheduler");
+		logUtils.logStart(LOGGER, "facultyReviewDetailsUpdateScheduler");
 		facultyService.updateAllFacultiesReviewDetails();
-		LogUtils.logSuccess(LOGGER, "facultyReviewDetailsUpdateScheduler", "scheduler");
+		logUtils.logSuccess(LOGGER, "facultyReviewDetailsUpdateScheduler");
 	}
 
 }

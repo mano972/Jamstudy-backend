@@ -23,12 +23,15 @@ import com.app.studentromania.util.LogUtils;
 
 @Service
 public class NewsletterService {
+	
+	@Autowired
+	private LogUtils logUtils;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(NewsletterService.class);
 
 	@Autowired
 	public NewsletterService() {
-		LogUtils.logMessage(LOGGER, "NewsletterService initialized");
+		logUtils.logMessage(LOGGER, "NewsletterService initialized");
 	}
 
 	@Autowired
@@ -47,7 +50,7 @@ public class NewsletterService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.NEWSLETTER_ALREADY_EXISTS);
 		}
 		newsletterRepo.save(newsletter);
-		LogUtils.logMessage(LOGGER, "Newsletter document created!");
+		logUtils.logMessage(LOGGER, "Newsletter document created!");
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
@@ -60,7 +63,7 @@ public class NewsletterService {
 		Newsletter newsletter = newsletters.get(0);
 		newsletter.getEmails().clear();
 		newsletterRepo.save(newsletter);
-		LogUtils.logMessage(LOGGER, "Newsletter emails reset!");
+		logUtils.logMessage(LOGGER, "Newsletter emails reset!");
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
@@ -70,7 +73,7 @@ public class NewsletterService {
 		if (errors != ErrorsEnum.NO_ERROR) {
 			return ResponseDTO.createErrorResponse(errors);
 		}
-		LogUtils.logMessage(LOGGER, "Email added to newsletter!");
+		logUtils.logMessage(LOGGER, "Email added to newsletter!");
 		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(email);
 		if (userProfileOpt.isPresent()) {
 			userProfileOpt.get().setSubscribeToNewsletter(true);
@@ -100,7 +103,7 @@ public class NewsletterService {
 		if (errors != ErrorsEnum.NO_ERROR) {
 			return ResponseDTO.createErrorResponse(errors);
 		}
-		LogUtils.logMessage(LOGGER, "Email removed from newsletter!");
+		logUtils.logMessage(LOGGER, "Email removed from newsletter!");
 		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(email);
 		if (userProfileOpt.isPresent()) {
 			userProfileOpt.get().setSubscribeToNewsletter(false);
@@ -163,13 +166,13 @@ public class NewsletterService {
 			}
 			Newsletter newsletter = newsletters.get(0);
 			List<String> emails = newsletter.getEmails();
-			LogUtils.logMessage(LOGGER, "Number of newsletter emails to send: " + emails.size());
+			logUtils.logMessage(LOGGER, "Number of newsletter emails to send: " + emails.size());
 			for (String email : emails) {
 				emailHandler.sendEmail(email, newsletterDTO.getSubject(), newsletterDTO.getNewsletterBody(),
 						newsletterDTO.getInlineImages());
 			}
 		}
-		LogUtils.logMessage(LOGGER, "Newsletter emails were sent!");
+		logUtils.logMessage(LOGGER, "Newsletter emails were sent!");
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}

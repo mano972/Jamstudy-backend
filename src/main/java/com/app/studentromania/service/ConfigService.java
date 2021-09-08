@@ -23,10 +23,13 @@ public class ConfigService {
 
 	@Autowired
 	private ConfigDAO configDAO;
+	
+	@Autowired
+	private LogUtils logUtils;
 
 	@Autowired
 	public ConfigService() {
-		LogUtils.logMessage(LOGGER, "ConfigService initialized");
+		logUtils.logMessage(LOGGER, "ConfigService initialized");
 	}
 
 	public ResponseDTO getAllConfigs() {
@@ -58,10 +61,10 @@ public class ConfigService {
 		if (existingConfigOpt.isPresent()) {
 			existingConfigOpt.get().setConfigValue(newConfig.getConfigValue());
 			configDAO.saveConfig(existingConfigOpt.get());
-			LogUtils.logMessage(LOGGER, "Config " + configKey + "was updated!");
+			logUtils.logMessage(LOGGER, "Config " + configKey + "was updated!");
 		} else {
 			configDAO.saveConfig(newConfig);
-			LogUtils.logMessage(LOGGER, "Config " + configKey + "was created!");
+			logUtils.logMessage(LOGGER, "Config " + configKey + "was created!");
 		}
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
@@ -74,10 +77,10 @@ public class ConfigService {
 			if (existingConfigOpt.isPresent()) {
 				existingConfigOpt.get().setConfigValue(newConfig.getConfigValue());
 				configDAO.saveConfig(existingConfigOpt.get());
-				LogUtils.logMessage(LOGGER, "Config " + configKey + "was updated!");
+				logUtils.logMessage(LOGGER, "Config " + configKey + "was updated!");
 			} else {
 				configDAO.saveConfig(newConfig);
-				LogUtils.logMessage(LOGGER, "Config " + configKey + "was created!");
+				logUtils.logMessage(LOGGER, "Config " + configKey + "was created!");
 			}
 		}
 

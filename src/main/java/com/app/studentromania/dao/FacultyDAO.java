@@ -22,6 +22,9 @@ import com.couchbase.client.java.query.N1qlQueryRow;
 
 @Component
 public class FacultyDAO {
+	
+	@Autowired
+	private LogUtils logUtils;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FacultyDAO.class);
 
@@ -72,13 +75,13 @@ public class FacultyDAO {
 
 	public void createFaculty(Faculty faculty) {
 		facultyRepo.save(faculty);
-		LogUtils.logMessage(LOGGER, "Faculty " + faculty.getFacultyId() + " was created!");
+		logUtils.logMessage(LOGGER, "Faculty " + faculty.getFacultyId() + " was created!");
 	}
 
 	public void updateFaculty(Faculty faculty) {
 		faculty.setUpdateDateWithCurrentDate();
 		facultyRepo.save(faculty);
-		LogUtils.logMessage(LOGGER, "Faculty " + faculty.getFacultyId() + " was updated!");
+		logUtils.logMessage(LOGGER, "Faculty " + faculty.getFacultyId() + " was updated!");
 	}
 
 	public void deleteAllFaculties() {

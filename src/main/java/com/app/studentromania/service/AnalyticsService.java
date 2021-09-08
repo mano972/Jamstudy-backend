@@ -37,11 +37,14 @@ import com.app.studentromania.util.Utilities;
 @Service
 public class AnalyticsService {
 
+	@Autowired
+	private LogUtils logUtils;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsService.class);
 
 	@Autowired
 	public AnalyticsService() {
-		LogUtils.logMessage(LOGGER, "StatisticService initialized");
+		logUtils.logMessage(LOGGER, "StatisticService initialized");
 	}
 
 	@Autowired
@@ -60,7 +63,7 @@ public class AnalyticsService {
 		if (excelDocumentErrors != ErrorsEnum.NO_ERROR) {
 			return ResponseDTO.createErrorResponse(excelDocumentErrors);
 		}
-		LogUtils.logMessage(LOGGER, "Analytics document and excel created!");
+		logUtils.logMessage(LOGGER, "Analytics document and excel created!");
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
@@ -76,7 +79,7 @@ public class AnalyticsService {
 		statistic.setReviewIntention(0);
 		statistic.setReviewAdded(0);
 		analyticsRepo.save(statistic);
-		LogUtils.logMessage(LOGGER, "Analytics fields reset!");
+		logUtils.logMessage(LOGGER, "Analytics fields reset!");
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
@@ -86,7 +89,7 @@ public class AnalyticsService {
 		if (excelDocumentErrors != ErrorsEnum.NO_ERROR) {
 			return ResponseDTO.createErrorResponse(excelDocumentErrors);
 		}
-		LogUtils.logMessage(LOGGER, "Analytics excel reset!");
+		logUtils.logMessage(LOGGER, "Analytics excel reset!");
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
@@ -99,11 +102,11 @@ public class AnalyticsService {
 			homePageStatistic++;
 			analytics.setHomePage(homePageStatistic);
 			analyticsRepo.save(analytics);
-			LogUtils.logMessage(LOGGER, "Analytics statistic 'homepage' increased");
+			logUtils.logMessage(LOGGER, "Analytics statistic 'homepage' increased");
 		}
 		ErrorsEnum excelDocumentErrors = updateHomepageAnalyticsExcelDocument(isMobile);
 		if (excelDocumentErrors != ErrorsEnum.NO_ERROR) {
-			LogUtils.logMessage(LOGGER, "Could not update analytics excel document");
+			logUtils.logMessage(LOGGER, "Could not update analytics excel document");
 			return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 		}
 
@@ -118,7 +121,7 @@ public class AnalyticsService {
 			searchStatistic++;
 			analytics.setSearch(searchStatistic);
 			analyticsRepo.save(analytics);
-			LogUtils.logMessage(LOGGER, "Analytics statistic 'search' increased");
+			logUtils.logMessage(LOGGER, "Analytics statistic 'search' increased");
 		}
 	}
 
@@ -154,7 +157,7 @@ public class AnalyticsService {
 				break;
 			}
 			analyticsRepo.save(analytics);
-			LogUtils.logMessage(LOGGER, "Analytics review statistic increased");
+			logUtils.logMessage(LOGGER, "Analytics review statistic increased");
 		}
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
@@ -165,7 +168,7 @@ public class AnalyticsService {
 		if (facultyOpt.isPresent()) {
 			int newViewsCount = facultyOpt.get().getViewsCount() + 1;
 			facultyOpt.get().setViewsCount(newViewsCount);
-			LogUtils.logMessage(LOGGER,
+			logUtils.logMessage(LOGGER,
 					"Analytics faculty view count increased for faculty: " + facultyOpt.get().getFacultyId());
 			facultyDAO.updateFaculty(facultyOpt.get());
 		}

@@ -19,6 +19,9 @@ import com.couchbase.client.java.query.N1qlQueryResult;
 @Component
 public class ReviewDAO {
 
+	@Autowired
+	private LogUtils logUtils;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReviewDAO.class);
 
 	@Autowired
@@ -133,19 +136,19 @@ public class ReviewDAO {
 
 	public void createReview(Review review) {
 		reviewRepo.save(review);
-		LogUtils.logMessage(LOGGER,
+		logUtils.logMessage(LOGGER,
 				"Review " + review.getReviewId() + " was created for faculty " + review.getFacultyId());
 	}
 
 	public void updateReview(Review review) {
 		review.setUpdateDateWithCurrentDate();
 		reviewRepo.save(review);
-		LogUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was updated!");
+		logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was updated!");
 	}
 
 	public void deleteReview(Review review) {
 		reviewRepo.delete(review);
-		LogUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was deleted!");
+		logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was deleted!");
 	}
 
 	public void deleteAllReviews() {

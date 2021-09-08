@@ -58,10 +58,13 @@ public class ReviewService {
 
 	@Autowired
 	private ConfigDAO configDAO;
+	
+	@Autowired
+	private LogUtils logUtils;
 
 	@Autowired
 	public ReviewService() {
-		LogUtils.logMessage(LOGGER, "ReviewService initialized");
+		logUtils.logMessage(LOGGER, "ReviewService initialized");
 	}
 
 	public ResponseDTO getAllReviews() {
@@ -229,7 +232,7 @@ public class ReviewService {
 	}
 
 	public void updateFacultyReviewDetails(Faculty faculty) {
-		LogUtils.logMessage(LOGGER,
+		logUtils.logMessage(LOGGER,
 				"Faculty " + faculty.getFacultyId() + " currently has the following review details. avgRating: "
 						+ faculty.getAvgRating() + " countRev: " + faculty.getCountRev() + " avgDifficulty: "
 						+ faculty.getAvgDifficulty() + " percentageWouldRecommend: "
@@ -238,7 +241,7 @@ public class ReviewService {
 		reviewDAO.updateReviewsDetailsForFaculty(faculty);
 		facultyDAO.updateFaculty(faculty);
 
-		LogUtils.logMessage(LOGGER,
+		logUtils.logMessage(LOGGER,
 				"Faculty " + faculty.getFacultyId() + " was updated with the following review details. avgRating: "
 						+ faculty.getAvgRating() + " countRev: " + faculty.getCountRev() + " avgDifficulty: "
 						+ faculty.getAvgDifficulty() + " percentageWouldRecommend: "
@@ -253,7 +256,7 @@ public class ReviewService {
 		Review review = reviewOpt.get();
 		int reports = review.getReports();
 		review.setReports(++reports);
-		LogUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was reported!");
+		logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was reported!");
 		reviewDAO.updateReview(review);
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
@@ -280,7 +283,7 @@ public class ReviewService {
 			}
 			review.setUpvotes(++upvotes);
 			userProfile.getLikedReviews().add(reviewDTO.getReviewId());
-			LogUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was upvoted!");
+			logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was upvoted!");
 		} else {
 			if (!userProfile.getLikedReviews().contains(reviewDTO.getReviewId())) {
 				return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_ALREADY_UPVOTED);
@@ -291,7 +294,7 @@ public class ReviewService {
 				review.setUpvotes(--upvotes);
 			}
 			userProfile.getLikedReviews().remove(reviewDTO.getReviewId());
-			LogUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was downvoted!");
+			logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was downvoted!");
 		}
 		reviewDAO.updateReview(review);
 		userProfileDAO.updateUserProfile(userProfile);

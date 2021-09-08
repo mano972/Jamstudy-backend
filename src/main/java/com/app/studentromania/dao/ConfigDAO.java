@@ -26,9 +26,9 @@ public class ConfigDAO {
 
 	@LogExecutionTime
 	@LogParameters
-	public String getValueByConfigKey(String configKey) {
+	public String getValueByConfigKey(String configKey, String defaultValue) {
 		Optional<Config> configOpt = configRepo.findByConfigKey(configKey).stream().findFirst();
-		return configOpt.get().getConfigValue();
+		return configOpt.isPresent() ? configOpt.get().getConfigValue() : defaultValue;
 	}
 
 	@LogExecutionTime

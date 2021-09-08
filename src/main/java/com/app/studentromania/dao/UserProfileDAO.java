@@ -17,6 +17,9 @@ import com.app.studentromania.util.LogUtils;
 @Component
 public class UserProfileDAO {
 
+	@Autowired
+	private LogUtils logUtils;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserProfileDAO.class);
 
 	@Autowired
@@ -65,13 +68,13 @@ public class UserProfileDAO {
 
 	public void createUserProfile(UserProfile userProfile) {
 		userProfileRepo.save(userProfile);
-		LogUtils.logMessage(LOGGER, "User Profile " + userProfile.getUserId() + " was created");
+		logUtils.logMessage(LOGGER, "User Profile " + userProfile.getUserId() + " was created");
 	}
 
 	public void updateUserProfile(UserProfile userProfile) {
 		userProfile.setUpdateDateWithCurrentDate();
 		userProfileRepo.save(userProfile);
-		LogUtils.logMessage(LOGGER, "User Profile " + userProfile.getUserId() + " was updated");
+		logUtils.logMessage(LOGGER, "User Profile " + userProfile.getUserId() + " was updated");
 
 	}
 

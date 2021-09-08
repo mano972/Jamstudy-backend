@@ -33,10 +33,13 @@ public class UniversityService {
 
 	@Autowired
 	private ConfigDAO configDAO;
+	
+	@Autowired
+	private LogUtils logUtils;
 
 	@Autowired
 	public UniversityService() {
-		LogUtils.logMessage(LOGGER, "UniversityService initialized");
+		logUtils.logMessage(LOGGER, "UniversityService initialized");
 	}
 
 	public ResponseDTO getAllUniversities() {

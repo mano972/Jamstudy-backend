@@ -5,6 +5,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.app.studentromania.util.LogUtils;
@@ -12,6 +13,9 @@ import com.app.studentromania.util.LogUtils;
 @Aspect
 @Component
 public class LogExecutionTimeAspect {
+
+	@Autowired
+	private LogUtils logUtils;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LogExecutionTimeAspect.class);
 
@@ -25,7 +29,7 @@ public class LogExecutionTimeAspect {
 		final String methodName = proceedingJoinPoint.getSignature().getName();
 
 		long totalTime = System.currentTimeMillis() - start;
-		LogUtils.logDataBaseExecutionTime(LOGGER, fullClassName + "." + methodName, totalTime);
+		logUtils.logDataBaseExecutionTime(LOGGER, fullClassName + "." + methodName, totalTime);
 
 		return proceed;
 	}
