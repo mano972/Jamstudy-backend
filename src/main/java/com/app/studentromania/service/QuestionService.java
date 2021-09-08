@@ -42,11 +42,11 @@ public class QuestionService {
 	@Autowired
 	private FacultyDAO facultyDAO;
 	
-	@Autowired
 	private LogUtils logUtils;
 
 	@Autowired
-	public QuestionService() {
+	public QuestionService(LogUtils logUtils) {
+		this.logUtils = logUtils;
 		LOGGER.info("QuestionService initialized");
 	}
 

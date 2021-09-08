@@ -55,11 +55,11 @@ public class FacultyService {
 	@Autowired
 	private ConfigDAO configDAO;
 
-	@Autowired
 	private LogUtils logUtils;
 
 	@Autowired
-	public FacultyService() {
+	public FacultyService(LogUtils logUtils) {
+		this.logUtils = logUtils;
 		logUtils.logMessage(LOGGER, "FacultyService initialized");
 	}
 

@@ -15,13 +15,13 @@ import com.app.studentromania.util.LogUtils;
 @Component
 public class UniversityDAO {
 
-	@Autowired
-	private LogUtils logUtils;
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(UniversityDAO.class);
 
 	@Autowired
 	private UniversityRepo universityRepo;
+	
+	@Autowired
+	private LogUtils logUtils;
 
 	public List<University> getAllUniversities() {
 		return universityRepo.findAll();

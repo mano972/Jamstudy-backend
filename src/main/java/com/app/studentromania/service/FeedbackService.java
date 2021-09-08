@@ -20,13 +20,13 @@ import com.app.studentromania.util.LogUtils;
 @Service
 public class FeedbackService {
 
-	@Autowired
+	private static final Logger LOGGER = LoggerFactory.getLogger(FeedbackService.class);
+	
 	private LogUtils logUtils;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(FeedbackService.class);
-
 	@Autowired
-	public FeedbackService() {
+	public FeedbackService(LogUtils logUtils) {
+		this.logUtils = logUtils;
 		logUtils.logMessage(LOGGER, "FeedbackService initialized");
 	}
 

@@ -37,13 +37,13 @@ import com.app.studentromania.util.Utilities;
 @Service
 public class AnalyticsService {
 
-	@Autowired
+	private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsService.class);
+	
 	private LogUtils logUtils;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsService.class);
-
 	@Autowired
-	public AnalyticsService() {
+	public AnalyticsService(LogUtils logUtils) {
+		this.logUtils = logUtils;
 		logUtils.logMessage(LOGGER, "StatisticService initialized");
 	}
 

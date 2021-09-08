@@ -59,11 +59,11 @@ public class ReviewService {
 	@Autowired
 	private ConfigDAO configDAO;
 	
-	@Autowired
 	private LogUtils logUtils;
 
 	@Autowired
-	public ReviewService() {
+	public ReviewService(LogUtils logUtils) {
+		this.logUtils = logUtils;
 		logUtils.logMessage(LOGGER, "ReviewService initialized");
 	}
 

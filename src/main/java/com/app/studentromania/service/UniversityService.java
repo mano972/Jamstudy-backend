@@ -33,12 +33,9 @@ public class UniversityService {
 
 	@Autowired
 	private ConfigDAO configDAO;
-	
-	@Autowired
-	private LogUtils logUtils;
 
 	@Autowired
-	public UniversityService() {
+	public UniversityService(LogUtils logUtils) {
 		logUtils.logMessage(LOGGER, "UniversityService initialized");
 	}
 

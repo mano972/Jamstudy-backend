@@ -66,11 +66,11 @@ public class UserProfileService {
 	@Autowired
 	private EmailHandler emailHandler;
 
-	@Autowired
 	private LogUtils logUtils;
 
 	@Autowired
-	public UserProfileService() {
+	public UserProfileService(LogUtils logUtils) {
+		this.logUtils = logUtils;
 		logUtils.logMessage(LOGGER, "UserProfileService initialized");
 	}
 

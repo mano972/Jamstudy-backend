@@ -17,13 +17,13 @@ import com.app.studentromania.util.LogUtils;
 @Component
 public class UserProfileDAO {
 
-	@Autowired
-	private LogUtils logUtils;
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserProfileDAO.class);
 
 	@Autowired
 	private UserProfileRepo userProfileRepo;
+	
+	@Autowired
+	private LogUtils logUtils;
 
 	@LogExecutionTime
 	public List<UserProfile> getAllUserProfiles() {

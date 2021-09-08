@@ -19,13 +19,13 @@ import com.couchbase.client.java.query.N1qlQueryResult;
 @Component
 public class ReviewDAO {
 
-	@Autowired
-	private LogUtils logUtils;
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReviewDAO.class);
 
 	@Autowired
 	private ReviewRepo reviewRepo;
+	
+	@Autowired
+	private LogUtils logUtils;
 
 	public List<Review> getAllReviews() {
 		return reviewRepo.findAll();

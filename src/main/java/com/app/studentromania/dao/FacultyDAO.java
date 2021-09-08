@@ -22,14 +22,14 @@ import com.couchbase.client.java.query.N1qlQueryRow;
 
 @Component
 public class FacultyDAO {
-	
-	@Autowired
-	private LogUtils logUtils;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FacultyDAO.class);
 
 	@Autowired
 	private FacultyRepo facultyRepo;
+	
+	@Autowired
+	private LogUtils logUtils;
 
 	public List<Faculty> getAllFaculties() {
 		return facultyRepo.findAll();

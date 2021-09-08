@@ -23,14 +23,14 @@ import com.app.studentromania.util.LogUtils;
 
 @Service
 public class NewsletterService {
-	
-	@Autowired
-	private LogUtils logUtils;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(NewsletterService.class);
+	
+	private LogUtils logUtils;
 
 	@Autowired
-	public NewsletterService() {
+	public NewsletterService(LogUtils logUtils) {
+		this.logUtils = logUtils;
 		logUtils.logMessage(LOGGER, "NewsletterService initialized");
 	}
 
