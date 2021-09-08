@@ -21,7 +21,6 @@ import com.app.studentromania.dto.UniversityResponseDTO;
 import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.model.University;
 import com.app.studentromania.util.Constants;
-import com.app.studentromania.util.LogUtils;
 
 @Service
 public class UniversityService {
@@ -35,8 +34,8 @@ public class UniversityService {
 	private ConfigDAO configDAO;
 
 	@Autowired
-	public UniversityService(LogUtils logUtils) {
-		logUtils.logMessage(LOGGER, "UniversityService initialized");
+	public UniversityService() {
+//		logUtils.logMessage(LOGGER, "UniversityService initialized");
 	}
 
 	public ResponseDTO getAllUniversities() {

@@ -23,13 +23,13 @@ public class ConfigService {
 
 	@Autowired
 	private ConfigDAO configDAO;
-	
+
+	@Autowired
 	private LogUtils logUtils;
 
 	@Autowired
-	public ConfigService(LogUtils logUtils) {
-		this.logUtils = logUtils;
-		logUtils.logMessage(LOGGER, "ConfigService initialized");
+	public ConfigService() {
+//		logUtils.logMessage(LOGGER, "ConfigService initialized");
 	}
 
 	public ResponseDTO getAllConfigs() {

@@ -22,12 +22,12 @@ public class FeedbackService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FeedbackService.class);
 	
+	@Autowired
 	private LogUtils logUtils;
 
 	@Autowired
-	public FeedbackService(LogUtils logUtils) {
-		this.logUtils = logUtils;
-		logUtils.logMessage(LOGGER, "FeedbackService initialized");
+	public FeedbackService() {
+//		logUtils.logMessage(LOGGER, "FeedbackService initialized");
 	}
 
 	@Autowired

@@ -66,12 +66,12 @@ public class UserProfileService {
 	@Autowired
 	private EmailHandler emailHandler;
 
+	@Autowired
 	private LogUtils logUtils;
 
 	@Autowired
-	public UserProfileService(LogUtils logUtils) {
-		this.logUtils = logUtils;
-		logUtils.logMessage(LOGGER, "UserProfileService initialized");
+	public UserProfileService() {
+//		logUtils.logMessage(LOGGER, "UserProfileService initialized");
 	}
 
 	public ResponseDTO getAllUserProfiles() {
@@ -488,6 +488,7 @@ public class UserProfileService {
 	}
 
 	public ResponseDTO deleteAllUserProfiles() {
+		// also remove from newsletter
 		userProfileDAO.deleteAllUserProfiles();
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}

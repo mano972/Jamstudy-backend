@@ -41,13 +41,13 @@ public class QuestionService {
 
 	@Autowired
 	private FacultyDAO facultyDAO;
-	
+
+	@Autowired
 	private LogUtils logUtils;
 
 	@Autowired
-	public QuestionService(LogUtils logUtils) {
-		this.logUtils = logUtils;
-		LOGGER.info("QuestionService initialized");
+	public QuestionService() {
+//		LOGGER.info("QuestionService initialized");
 	}
 
 	public ResponseDTO getFilteredQuestionsByFacultyId(String facultyId, QuestionFilter questionFilter) {

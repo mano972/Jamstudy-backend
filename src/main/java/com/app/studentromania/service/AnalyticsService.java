@@ -38,13 +38,13 @@ import com.app.studentromania.util.Utilities;
 public class AnalyticsService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AnalyticsService.class);
-	
+
+	@Autowired
 	private LogUtils logUtils;
 
 	@Autowired
-	public AnalyticsService(LogUtils logUtils) {
-		this.logUtils = logUtils;
-		logUtils.logMessage(LOGGER, "StatisticService initialized");
+	public AnalyticsService() {
+//		logUtils.logMessage(LOGGER, "StatisticService initialized");
 	}
 
 	@Autowired

@@ -58,13 +58,13 @@ public class ReviewService {
 
 	@Autowired
 	private ConfigDAO configDAO;
-	
+
+	@Autowired
 	private LogUtils logUtils;
 
 	@Autowired
-	public ReviewService(LogUtils logUtils) {
-		this.logUtils = logUtils;
-		logUtils.logMessage(LOGGER, "ReviewService initialized");
+	public ReviewService() {
+//		logUtils.logMessage(LOGGER, "ReviewService initialized");
 	}
 
 	public ResponseDTO getAllReviews() {
