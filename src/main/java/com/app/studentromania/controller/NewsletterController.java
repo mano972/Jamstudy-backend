@@ -23,7 +23,7 @@ public class NewsletterController {
 	@Autowired
 	private NewsletterService newsletterService;
 
-	@PostMapping
+	@PostMapping("/save")
 	@VerifyAdmin
 	public ResponseEntity<String> saveNewsletter() {
 		return newsletterService.saveNewsletter().createRestResponse();

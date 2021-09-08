@@ -2302,7 +2302,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t{\n\t\t\"configKey\": \"faculties_licence_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\Fac12Sept2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"faculties_master_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\FacMasterPrograms04Oct2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_username\",\n\t\t\"configValue\": \"jamstudyadmin\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_pass\",\n\t\t\"configValue\": \"93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D\"\n\t},\n\t{\n\t\t\"configKey\": \"register_confirmation_email_subject\",\n\t\t\"configValue\": \"Confirma crearea unui cont nou pe platforma Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"register_confirmation_email_text\",\n\t\t\"configValue\": \"Bun venit in comunitatea Unistart! \\n \\n Acceseaza link-ul pentru a confirma crearea unui cont nou. \\n \\n Foloseste platforma Unistart pentru a gasi facultatea potrivita pentru tine. \\n In cazul in care esti student sau absolvent, lasa o evaluarea facultatii tale si ajuta un elev sa ia decizia potrivita. \\n \\n Cu drag, Echipa Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"register_confirmation_email_url\",\n\t\t\"configValue\": \"https://unistart.ro/login.html?token=\"\n\t},\n\t{\n\t\t\"configKey\": \"reset_pass_email_subject\",\n\t\t\"configValue\": \"Reseteaza parola contului tau Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"reset_pass_email_text\",\n\t\t\"configValue\": \"Salut %s! \\n \\n Ai cerut resetarea parolei pentru contul tau Unistart. Te rugam acceseaza link-ul de mai jos. \\n \\n %s \\n \\n În cazul în care nu ai solicitat schimbarea parolei, este în regulă să nu întreprinzi o acțiune. Dacă ești îngrijorat de securitatea contului tău, îți recomandăm să ne scrii la office@unistart.ro. \\n \\n Cu drag, Echipa Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"reset_pass_email_url\",\n\t\t\"configValue\": \"https://unistart.ro/change.html?token=\"\n\t}\n]"
+							"raw": "[\n\t{\n\t\t\"configKey\": \"faculties_licence_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\Fac12Sept2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"faculties_master_filepath\",\n\t\t\"configValue\": \"C:\\\\Jamstudy_data\\\\FacMasterPrograms04Oct2019.csv\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_username\",\n\t\t\"configValue\": \"jamstudyadmin\"\n\t},\n\t{\n\t\t\"configKey\": \"admin_pass\",\n\t\t\"configValue\": \"93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D\"\n\t},\n\t{\n\t\t\"configKey\": \"register_confirmation_email_subject\",\n\t\t\"configValue\": \"Confirma crearea unui cont nou pe platforma Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"register_confirmation_email_text\",\n\t\t\"configValue\": \"Bun venit in comunitatea Unistart! \\n \\n Acceseaza link-ul pentru a confirma crearea unui cont nou. \\n \\n Foloseste platforma Unistart pentru a gasi facultatea potrivita pentru tine. \\n In cazul in care esti student sau absolvent, lasa o evaluarea facultatii tale si ajuta un elev sa ia decizia potrivita. \\n \\n Cu drag, \\nEchipa Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"register_confirmation_email_url\",\n\t\t\"configValue\": \"https://unistart.ro/login.html?token=\"\n\t},\n\t{\n\t\t\"configKey\": \"reset_pass_email_subject\",\n\t\t\"configValue\": \"Reseteaza parola contului tau Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"reset_pass_email_text\",\n\t\t\"configValue\": \"Salut%s! \\n \\n Ai cerut resetarea parolei pentru contul tau Unistart. Te rugam acceseaza link-ul de mai jos. \\n \\n %s \\n \\n In cazul in care nu ai solicitat schimbarea parolei, este in regula sa nu intreprinzi o actiune. Daca esti îngrijorat de securitatea contului tau, iti recomandam sa ne scrii la office@unistart.ro \\n \\n Cu drag, \\nEchipa Unistart\"\n\t},\n\t{\n\t\t\"configKey\": \"reset_pass_email_url\",\n\t\t\"configValue\": \"https://unistart.ro/change.html?token=\"\n\t}\n]"
 						},
 						"url": {
 							"raw": "{{host}}/v1/config/configs",
@@ -2712,14 +2712,15 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/v1/Jamstudy/newsletter",
+							"raw": "{{host}}/v1/Jamstudy/newsletter/save",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
 								"Jamstudy",
-								"newsletter"
+								"newsletter",
+								"save"
 							]
 						}
 					},

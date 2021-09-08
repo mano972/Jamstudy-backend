@@ -507,7 +507,7 @@ public class UserProfileService {
 				Constants.DEFAULT_REGISTER_CONFIRMATION_EMAIL_URL) + userProfile.getEmailConfirmationToken();
 		String message = String
 				.format(configDAO.getValueByConfigKey(Constants.CONFIG_KEY_REGISTER_CONFIRMATION_EMAIL_TEXT,
-						Constants.CONFIG_KEY_REGISTER_CONFIRMATION_EMAIL_TEXT), confirmationUrl);
+						Constants.DEFAULT_REGISTER_CONFIRMATION_EMAIL_TEXT), confirmationUrl);
 
 		return emailHandler.sendEmail(to, subject, message);
 	}
@@ -532,7 +532,7 @@ public class UserProfileService {
 		String userFirstName = !StringUtils.isEmpty(userProfile.getFirstName()) ? (", " + userProfile.getFirstName())
 				: "";
 		String message = String.format(configDAO.getValueByConfigKey(Constants.CONFIG_KEY_RESET_PASS_EMAIL_TEXT,
-				Constants.CONFIG_KEY_RESET_PASS_EMAIL_TEXT), userFirstName, resetUrl);
+				Constants.DEFAULT_RESET_PASS_EMAIL_TEXT), userFirstName, resetUrl);
 
 		return emailHandler.sendEmail(to, subject, message);
 	}

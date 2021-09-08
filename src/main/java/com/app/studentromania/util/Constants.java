@@ -47,11 +47,11 @@ public class Constants {
 	public static final int SAME_FACULTY_REVIEW_DAYS = 150;
 	
 	public static final String DEFAULT_REGISTER_CONFIRMATION_EMAIL_SUBJECT = "Confirma crearea unui cont nou pe platforma Unistart";
-	public static final String DEFAULT_REGISTER_CONFIRMATION_EMAIL_TEXT = "Bun venit in comunitatea Unistart! \n \n Acceseaza link-ul pentru a confirma crearea unui cont nou. \n \n Foloseste platforma Unistart pentru a gasi facultatea potrivita pentru tine. \n In cazul in care esti student sau absolvent, lasa o evaluarea facultatii tale si ajuta un elev sa ia decizia potrivita. \n \n Cu drag, Echipa Unistart";
+	public static final String DEFAULT_REGISTER_CONFIRMATION_EMAIL_TEXT = "Bun venit in comunitatea Unistart! \n \n Acceseaza link-ul pentru a confirma crearea unui cont nou. \n \n Foloseste platforma Unistart pentru a gasi facultatea potrivita pentru tine. \n In cazul in care esti student sau absolvent, lasa o evaluarea facultatii tale si ajuta un elev sa ia decizia potrivita. \n \n Cu drag, \n Echipa Unistart";
 	public static final String DEFAULT_REGISTER_CONFIRMATION_EMAIL_URL = "https://unistart.ro/login.html?token=";
 
 	public static final String DEFAULT_RESET_PASS_EMAIL_SUBJECT = "Reseteaza parola contului tau Unistart";
-	public static final String DEFAULT_RESET_PASS_EMAIL_TEXT = "Salut %s! \n \n Ai cerut resetarea parolei pentru contul tau Unistart. Te rugam acceseaza link-ul de mai jos. \n \n %s \n \n În cazul în care nu ai solicitat schimbarea parolei, este în regulă să nu întreprinzi o acțiune. Dacă ești îngrijorat de securitatea contului tău, îți recomandăm să ne scrii la office@unistart.ro. \n \n Cu drag, Echipa Unistart";
+	public static final String DEFAULT_RESET_PASS_EMAIL_TEXT = "Salut%s! \n \n Ai cerut resetarea parolei pentru contul tau Unistart. Te rugam acceseaza link-ul de mai jos. \n \n %s \n \n In cazul in care nu ai solicitat schimbarea parolei, este in regula sa nu intreprinzi o actiune. Daca esti îngrijorat de securitatea contului tau, iti recomandam sa ne scrii la office@unistart.ro \n \n Cu drag, \n Echipa Unistart";
 	public static final String DEFAULT_RESET_PASS_EMAIL_URL = "https://unistart.ro/change.html?token=";
 
 }
