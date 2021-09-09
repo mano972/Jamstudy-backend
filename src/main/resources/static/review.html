@@ -72,7 +72,7 @@
 								<div class="card text-center">
 									<div class="content">
 										<!-- <img id="floating-card-icon-2" src="./assets/img/floating-card-icon.png"></img> -->
-										<h4 class="text-left">Evaluează experienţa la această facultate</h4>
+										<h4 class="text-left">Evaluează experienţa la această facultate, 100% anonim</h4>
 										<h5 class="text-left">Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. 
 										<h5 class="text-left">Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum. Evaluarea ta poate face diferența. Durează doar un minut.</h5>
 										<div id="progress-2" class="progress">
@@ -94,7 +94,7 @@
 								<div class="card text-center">
 									<div class="content">
 										<img id="floating-card-icon" src="./assets/img/floating-card-icon.png"></img>
-										<h4 class="text-left">Evaluează experienţa la această facultate</h4>
+										<h4 class="text-left">Evaluează experienţa la această facultate, 100% anonim</h4>
 										<h5 class="text-left">Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. 
 										<h5 class="text-left">Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum. Evaluarea ta poate face diferența. Durează doar un minut.</h5>
 										<br>
@@ -811,6 +811,7 @@ $(document).ready(function() {
 	redirectIfNotLoggedIn();
 	myAccountText();
 
+	loadUser();
 	var queryParams = new URLSearchParams(window.location.search);
 	facultyId = queryParams.get("faculty");
 	reviewId = queryParams.get("review");
@@ -952,6 +953,8 @@ function loadFaculty(){
 <!-- } -->
 
 function postReview(){
+
+	redirectIfNotLoggedIn();
 
 	var nextbutton = document.getElementById("next-step");
 
@@ -1402,6 +1405,9 @@ function validateEmail(email) {
 function showTab(n) {
 	var step = n + 1;
 	increaseReviewStatistic(step);
+	
+	document.body.scrollTop = 0; // For Safari
+	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 
   // This function will display the specified tab of the form...
   var x = document.getElementsByClassName("tab");

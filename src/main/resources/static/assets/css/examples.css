@@ -508,16 +508,6 @@
 .blog {
   background-color: #FFFFFF;
 }
-.blog .navbar {
-  border-bottom: 0 none;
-  margin-bottom: 0px;
-}
-.blog .navbar .navbar-brand {
-  color: #66615b;
-}
-.blog .navbar input {
-  background-color: #FFFFFF;
-}
 .blog .title h3 {
   margin-top: -10px;
 }

@@ -37,14 +37,16 @@ public class Constants {
 
 	public static final int MAX_FAVORITE_FACULTIES = 10;
 	public static final int MAX_REVIEWS = 5;
+	public static final int SAME_FACULTY_REVIEW_DAYS = 150;
+	public static final int REVIEW_MIN_LENGTH = 30;
+	public static final int REVIEW_MAX_LENGTH = 1400;
+	
 
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 			Pattern.CASE_INSENSITIVE);
 
 	public static final Pattern VALID_PASSWORD_REGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z][A-Z]).{7,22}$",
 			Pattern.CASE_INSENSITIVE);
-
-	public static final int SAME_FACULTY_REVIEW_DAYS = 150;
 	
 	public static final String DEFAULT_REGISTER_CONFIRMATION_EMAIL_SUBJECT = "Confirma crearea unui cont nou pe platforma Unistart";
 	public static final String DEFAULT_REGISTER_CONFIRMATION_EMAIL_TEXT = "Bun venit in comunitatea Unistart! \n \n Acceseaza link-ul pentru a confirma crearea unui cont nou. \n \n Foloseste platforma Unistart pentru a gasi facultatea potrivita pentru tine. \n In cazul in care esti student sau absolvent, lasa o evaluarea facultatii tale si ajuta un elev sa ia decizia potrivita. \n \n Cu drag, \n Echipa Unistart";

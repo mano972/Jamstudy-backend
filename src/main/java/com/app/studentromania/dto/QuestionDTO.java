@@ -6,7 +6,13 @@ public class QuestionDTO {
 
 	private String facultyId;
 
+	private String userId;
+
 	private String questionText;
+
+	private String category;
+
+	private Boolean delete;
 
 	/*
 	 * true for upvote, false for not upvote (reversal of upvote)
@@ -29,6 +35,14 @@ public class QuestionDTO {
 		this.facultyId = facultyId;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
 	public String getQuestionText() {
 		return questionText;
 	}
@@ -43,6 +57,22 @@ public class QuestionDTO {
 
 	public void setUpvote(Boolean upvote) {
 		this.upvote = upvote;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public Boolean getDelete() {
+		return delete;
+	}
+
+	public void setDelete(Boolean delete) {
+		this.delete = delete;
 	}
 
 }

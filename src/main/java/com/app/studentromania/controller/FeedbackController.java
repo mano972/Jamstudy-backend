@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.studentromania.annotation.JWTAuth;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.dto.FeedbackEntryDTO;
 import com.app.studentromania.service.FeedbackService;
@@ -35,6 +36,7 @@ public class FeedbackController {
 	}
 
 	@PutMapping("/add")
+	@JWTAuth
 	public ResponseEntity<String> addFeedbackEntry(@RequestBody FeedbackEntryDTO feedbackEntryDTO) {
 		return feedbackService.addFeedbackEntry(feedbackEntryDTO).createRestResponse();
 	}

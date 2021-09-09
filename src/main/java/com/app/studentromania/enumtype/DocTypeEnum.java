@@ -12,7 +12,8 @@ public enum DocTypeEnum {
 	ANALYTICS("ANALYTICS"), 
 	NEWSLETTER("NEWSLETTER"),
 	FEEDBACK("FEEDBACK"),
-	ARCHIVED_REVIEW("ARCHIVED_REVIEW");
+	ARCHIVED_REVIEW("ARCHIVED_REVIEW"),
+	ARTICLE("ARTICLE");
 	// @formatter:on
 
 	private final String docTypeText;

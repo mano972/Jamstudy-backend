@@ -38,60 +38,61 @@ public enum ErrorsEnum {
 	REVIEW_UPDATE_DIFFERENT_USER(HttpStatus.BAD_REQUEST,
 			"User-ul care a editat evaluarea este diferit de userul care a creat-o.", -38),
 	REVIEW_NOT_EDITABLE(HttpStatus.NOT_ACCEPTABLE, "Evaluarea nu mai este editabilă.", -39),
+	REVIEW_LENGTH_ERROR(HttpStatus.NOT_ACCEPTABLE, "Lungimea textului evaluarii nu este corecta.", -49),
 
 	// Question
-	QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "Întrebarea nu a fost gasită.", -40),
+	QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "Întrebarea nu a fost gasită.", -50),
 
 	// Answer
-	ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "Raspunsul nu a fost gasit.", -50),
+	ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "Raspunsul nu a fost gasit.", -60),
 
 	// UserProfile
-	USERPROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "Nu există user cu acest email.", -60),
-	USERPROFILE_EXISTS(HttpStatus.NOT_ACCEPTABLE, "Un user cu acest email există deja.", -61),
-	USERPROFILE_LOGIN_WRONG_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Datele de autentificare sunt incorecte.", -62),
-	USERPROFILE_EMAIL_PASSWORD_MISSING(HttpStatus.BAD_REQUEST, "Email/parola nu au fost completate.", -63),
-	JWT_GENERATION_ERROR(HttpStatus.BAD_REQUEST, "Eroare la generarea JWT.", -64),
-	JWT_MISSING(HttpStatus.UNAUTHORIZED, "Token-ul JWT lipseste din request.", -65),
-	JWT_VERIFY_ERROR(HttpStatus.UNAUTHORIZED, "Token-ul JWT nu este corect.", -66),
-	JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "Token-ul JWT a expirat.", -67),
+	USERPROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "Nu există user cu acest email.", -70),
+	USERPROFILE_EXISTS(HttpStatus.NOT_ACCEPTABLE, "Un user cu acest email există deja.", -71),
+	USERPROFILE_LOGIN_WRONG_CREDENTIALS(HttpStatus.UNAUTHORIZED, "Datele de autentificare sunt incorecte.", -72),
+	USERPROFILE_EMAIL_PASSWORD_MISSING(HttpStatus.BAD_REQUEST, "Email/parola nu au fost completate.", -73),
+	JWT_GENERATION_ERROR(HttpStatus.BAD_REQUEST, "Eroare la generarea JWT.", -74),
+	JWT_MISSING(HttpStatus.UNAUTHORIZED, "Token-ul JWT lipseste din request.", -75),
+	JWT_VERIFY_ERROR(HttpStatus.UNAUTHORIZED, "Token-ul JWT nu este corect.", -76),
+	JWT_EXPIRED(HttpStatus.UNAUTHORIZED, "Token-ul JWT a expirat.", -77),
 	USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "Este nevoie de autentificare pentru a folosi această funcționalitate.",
-			-68),
+			-78),
 	USERPROFILE_MAX_FAVORITE_FACULTIES(HttpStatus.NOT_ACCEPTABLE,
-			"Ai adăugat deja numărul maxim de facultăți favorite.", -69),
-	REGISTER_EMAIL_NOT_VALID(HttpStatus.NOT_ACCEPTABLE, "Adresa de email nu este validă.", -70),
+			"Ai adăugat deja numărul maxim de facultăți favorite.", -79),
+	REGISTER_EMAIL_NOT_VALID(HttpStatus.NOT_ACCEPTABLE, "Adresa de email nu este validă.", -80),
 	REGISTER_TERMS_AND_CONDITIONS(HttpStatus.NOT_ACCEPTABLE,
-			"Trebuie să accepți Termenii și condițiile de utilizare și Politica de prelucrare a datelor.", -71),
+			"Trebuie să accepți Termenii și condițiile de utilizare și Politica de prelucrare a datelor.", -81),
 	REGISTER_PASSWORD_ERROR(HttpStatus.NOT_ACCEPTABLE,
-			"Parola trebuie să fie de minim 7 caractere și să conțină litere și cifre.", -72),
-	USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED(HttpStatus.UNAUTHORIZED, "Adresa de email nu a fost încă confirmată.", -73),
+			"Parola trebuie să fie de minim 7 caractere și să conțină litere și cifre.", -82),
+	USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED(HttpStatus.UNAUTHORIZED, "Adresa de email nu a fost încă confirmată.", -83),
 	USERPROFILE_REGISTER_VERIFICATION_FAILED(HttpStatus.UNAUTHORIZED,
-			"Verificarea adresei de email a eșuat. Link-ul nu mai este valabil.", -74),
+			"Verificarea adresei de email a eșuat. Link-ul nu mai este valabil.", -84),
 	USERPROFILE_REGISTER_VERIFICATION_EXPIRED(HttpStatus.UNAUTHORIZED,
-			"Timpul alocat verificării adresei de email a expirat.", -75),
+			"Timpul alocat verificării adresei de email a expirat.", -85),
 	USERPROFILE_RESET_PASS_VERIFICATION_FAILED(HttpStatus.UNAUTHORIZED,
-			"Resetarea parolei a eșuat. Link-ul nu mai este valabil.", -76),
-	USERPROFILE_EMAIL_CONFIRMATION_FAILED(HttpStatus.BAD_REQUEST, "Email-ul de confirmare nu a putut fi trimis.", -77),
+			"Resetarea parolei a eșuat. Link-ul nu mai este valabil.", -86),
+	USERPROFILE_EMAIL_CONFIRMATION_FAILED(HttpStatus.BAD_REQUEST, "Email-ul de confirmare nu a putut fi trimis.", -87),
 
 	// Statistic
-	ANALYTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics document was not found.", -80),
-	ANALYTICS_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics document already exists.", -81),
-	ANALYTICS_EXCEL_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics excel document already exists.", -82),
-	ANALYTICS_EXCEL_DOCUMENT_ERROR(HttpStatus.BAD_REQUEST, "Analytics excel error.", -83),
-	ANALYTICS_EXCEL_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics excel document was not found.", -84),
+	ANALYTICS_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics document was not found.", -90),
+	ANALYTICS_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics document already exists.", -91),
+	ANALYTICS_EXCEL_DOCUMENT_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Analytics excel document already exists.", -92),
+	ANALYTICS_EXCEL_DOCUMENT_ERROR(HttpStatus.BAD_REQUEST, "Analytics excel error.", -93),
+	ANALYTICS_EXCEL_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Analytics excel document was not found.", -94),
 
 	// Newsletter
-	NEWSLETTER_NOT_FOUND(HttpStatus.NOT_FOUND, "Newsletter was not found.", -90),
+	NEWSLETTER_NOT_FOUND(HttpStatus.NOT_FOUND, "Newsletter was not found.", -100),
 	NEWSLETTER_EMAIL_ALREADY_EXISTS(HttpStatus.BAD_REQUEST,
-			"Deja ești abonat la newsletter cu această adresă de e-mail. Îți mulțumim!", -91),
-	NEWSLETTER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Newsletter document already exists.", -92),
+			"Deja ești abonat la newsletter cu această adresă de e-mail. Îți mulțumim!", -101),
+	NEWSLETTER_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Newsletter document already exists.", -102),
 
 	// Feedback
-	FEEDBACK_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Feedback document was not found.", -100),
-	FEEDBACK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Feedback document already exists.", -101),
+	FEEDBACK_DOCUMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Feedback document was not found.", -110),
+	FEEDBACK_ALREADY_EXISTS(HttpStatus.BAD_REQUEST, "Feedback document already exists.", -111),
 
 	// Email
-	EMAIL_AUTH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Email: eroare la autentificare.", -110),
-	EMAIL_SENDING_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Email: eroare generală.", -111);
+	EMAIL_AUTH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Email: eroare la autentificare.", -120),
+	EMAIL_SENDING_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Email: eroare generală.", -121);
 
 	private String errorDescription;
 	private int errorCode;

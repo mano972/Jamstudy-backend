@@ -30,18 +30,21 @@ public class ReviewController {
 
 	@GetMapping
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> getAllReviews() {
 		return reviewService.getAllReviews().createRestResponse();
 	}
 
 	@GetMapping("/{reviewId}")
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> getByReviewId(@PathVariable String reviewId) {
 		return reviewService.getByReviewId(reviewId).createRestResponse();
 	}
 
 	@GetMapping("/faculty/{facultyId}")
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> getByFacultyId(@PathVariable String facultyId, ReviewFilter reviewFilter) {
 		return reviewService.getFilteredReviewsByFacultyId(facultyId, reviewFilter).createRestResponse();
 	}
@@ -74,6 +77,7 @@ public class ReviewController {
 
 	@PutMapping("/{reviewId}/report")
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> reportReview(@PathVariable String reviewId) {
 		return reviewService.reportReview(reviewId).createRestResponse();
 	}

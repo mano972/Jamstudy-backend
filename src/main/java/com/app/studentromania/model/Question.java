@@ -23,16 +23,34 @@ public class Question extends ParentEntity {
 	private String facultyId;
 
 	@Field
+	private String facultyName;
+
+	@Field
+	private String userId;
+	
+	@Field
+	private String userEmail;
+
+	@Field
 	private String questionText;
 
 	@Field
 	private int upvotes;
 
 	@Field
+	private String category;
+
+	@Field
 	private Date questionDate;
 
 	@Field
+	private String formattedQuestionDate;
+
+	@Field
 	private List<Answer> answers = new ArrayList<>();
+
+	@Field
+	private int reports;
 
 	public String getQuestionId() {
 		return questionId;
@@ -48,6 +66,30 @@ public class Question extends ParentEntity {
 
 	public void setFacultyId(String facultyId) {
 		this.facultyId = facultyId;
+	}
+
+	public String getFacultyName() {
+		return facultyName;
+	}
+
+	public void setFacultyName(String facultyName) {
+		this.facultyName = facultyName;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 	public String getQuestionText() {
@@ -66,6 +108,14 @@ public class Question extends ParentEntity {
 		this.upvotes = upvotes;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	public Date getQuestionDate() {
 		return questionDate;
 	}
@@ -74,12 +124,28 @@ public class Question extends ParentEntity {
 		this.questionDate = questionDate;
 	}
 
+	public String getFormattedQuestionDate() {
+		return formattedQuestionDate;
+	}
+
+	public void setFormattedQuestionDate(String formattedQuestionDate) {
+		this.formattedQuestionDate = formattedQuestionDate;
+	}
+
 	public List<Answer> getAnswers() {
 		return answers;
 	}
 
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
+	}
+
+	public int getReports() {
+		return reports;
+	}
+
+	public void setReports(int reports) {
+		this.reports = reports;
 	}
 
 }

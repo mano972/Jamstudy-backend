@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.app.studentromania.dao.ConfigDAO;
 import com.app.studentromania.dao.FacultyDAO;
 import com.app.studentromania.dao.QuestionDAO;
+import com.app.studentromania.dao.UserProfileDAO;
 import com.app.studentromania.dto.AnswerDTO;
 import com.app.studentromania.dto.QuestionDTO;
 import com.app.studentromania.dto.QuestionResponseDTO;
@@ -24,9 +25,11 @@ import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.model.Answer;
 import com.app.studentromania.model.Faculty;
 import com.app.studentromania.model.Question;
+import com.app.studentromania.model.UserProfile;
 import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.LogUtils;
 import com.app.studentromania.util.QuestionFilter;
+import com.app.studentromania.util.Utilities;
 
 @Service
 public class QuestionService {
@@ -43,7 +46,13 @@ public class QuestionService {
 	private FacultyDAO facultyDAO;
 
 	@Autowired
+	private UserProfileDAO userProfileDAO;
+
+	@Autowired
 	private LogUtils logUtils;
+
+	@Autowired
+	private CustomRequestContext customRequestContext;
 
 	public ResponseDTO getFilteredQuestionsByFacultyId(String facultyId, QuestionFilter questionFilter) {
 		List<Question> questions = questionDAO.getFilteredQuestionsByFacultyId(facultyId, questionFilter);
@@ -61,6 +70,14 @@ public class QuestionService {
 	}
 
 	public ResponseDTO createQuestion(QuestionDTO questionDTO) {
+		String userId = customRequestContext.getUserId();
+
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+		if (!userProfileOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		}
+		UserProfile userProfile = userProfileOpt.get();
+
 		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(questionDTO.getFacultyId());
 		if (!facultyOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
@@ -68,8 +85,13 @@ public class QuestionService {
 		Question question = new Question();
 		String generatedId = configDAO.generateDocumentId(Constants.QUESTION_PREFIX_ID);
 		question.setQuestionId(generatedId);
-		question.setQuestionDate(new Date());
+		question.setFacultyName(facultyOpt.get().getFacultyName());
+		Date currentDate = new Date();
+		question.setQuestionDate(currentDate);
+		question.setFormattedQuestionDate(Utilities.getFormattedDate(currentDate));
 		mapToQuestion(questionDTO, question);
+		question.setUserId(userProfile.getUserId());
+		question.setUserEmail(userProfile.getEmail());
 		questionDAO.createQuestion(question);
 		QuestionResponseDTO questionResponseDTO = new QuestionResponseDTO();
 		questionResponseDTO.setQuestionId(question.getQuestionId());

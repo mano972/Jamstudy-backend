@@ -101,6 +101,7 @@ public class UserProfileController {
 
 	@PutMapping("/reset")
 	@RestCall
+	@JWTAuth
 	public ResponseEntity<String> resetPassword(@RequestBody UserProfileDTO userProfileDTO) {
 		return userProfileService.resetPassword(userProfileDTO).createRestResponse();
 	}

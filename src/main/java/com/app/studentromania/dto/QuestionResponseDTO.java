@@ -13,6 +13,8 @@ public class QuestionResponseDTO {
 
 	private String questionText;
 
+	private String category;
+
 	private int upvotes;
 
 	private Date questionDate;
@@ -41,6 +43,14 @@ public class QuestionResponseDTO {
 
 	public void setQuestionText(String questionText) {
 		this.questionText = questionText;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public int getUpvotes() {

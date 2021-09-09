@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -163,6 +164,10 @@ public class ReviewService {
 		addedReview.setFacultyId(review.getFacultyId());
 		addedReview.setAddedDate(currentDate);
 		userProfile.getAddedReviews().add(addedReview);
+		userProfile.setUserStatus(ObjectUtils.firstNonNull(userProfile.getUserStatus(), review.getUserStatus()));
+		userProfile.setUserYear(ObjectUtils.firstNonNull(userProfile.getUserYear(), review.getUserYear()));
+		userProfile
+				.setIsUserWorking(ObjectUtils.firstNonNull(userProfile.getIsUserWorking(), review.getIsUserWorking()));
 		userProfileDAO.updateUserProfile(userProfile);
 
 		ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
@@ -187,6 +192,7 @@ public class ReviewService {
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
 		}
+		UserProfile userProfile = userProfileOpt.get();
 
 		Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewDTO.getReviewId());
 		if (!reviewOpt.isPresent()) {
@@ -207,9 +213,13 @@ public class ReviewService {
 		mapToReview(reviewDTO, review);
 		if (BooleanUtils.isTrue(reviewDTO.getDelete())) {
 			review.setDocType(DocTypeEnum.ARCHIVED_REVIEW.toString());
-			userProfileOpt.get().getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
-			userProfileDAO.updateUserProfile(userProfileOpt.get());
+			userProfile.getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
 		}
+		userProfile.setUserStatus(ObjectUtils.firstNonNull(userProfile.getUserStatus(), review.getUserStatus()));
+		userProfile.setUserYear(ObjectUtils.firstNonNull(userProfile.getUserYear(), review.getUserYear()));
+		userProfile
+				.setIsUserWorking(ObjectUtils.firstNonNull(userProfile.getIsUserWorking(), review.getIsUserWorking()));
+		userProfileDAO.updateUserProfile(userProfile);
 		reviewDAO.updateReview(review);
 		ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
 		reviewResponseDTO.setReviewId(review.getReviewId());
@@ -373,6 +383,9 @@ public class ReviewService {
 			if (reviewDTO.getDifficulty() < 1 || reviewDTO.getDifficulty() > 5) {
 				return ErrorsEnum.REVIEW_DIFFICULTY_ERROR;
 			}
+		}
+		if (reviewDTO.getReviewText().length() < 30 || reviewDTO.getReviewText().length() > 1400) {
+			return ErrorsEnum.REVIEW_LENGTH_ERROR;
 		}
 		List<UserProfileReview> userAddedReviews = userProfile.getAddedReviews();
 		if (userAddedReviews.size() >= Constants.MAX_REVIEWS) {

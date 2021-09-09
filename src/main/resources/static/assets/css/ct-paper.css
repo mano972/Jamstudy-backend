@@ -3455,9 +3455,9 @@ textarea.form-control {
 
 @media (max-width:992px) {
   .img-faculty-cover-profile {
-	margin-left: -15px;
-	margin-right: -15px;
-	margin-top: -20px;
+	margin-left: -5px;
+	margin-right: -5px;
+	/* margin-top: -20px; */
   }
 }
 
@@ -9712,8 +9712,15 @@ $ct-series-colors: (
 
 @media (max-width:992px) {
   .card {
-	margin-left: -15px;
-	margin-right: -15px;
+	margin-left: -5px;
+	margin-right: -5px;
+  }
+}
+
+@media (max-width:992px) {
+  .inner-card {
+	margin-left: -12px !important;
+	margin-right: -12px !important;
   }
 }
 

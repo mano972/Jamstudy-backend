@@ -214,7 +214,6 @@ function loginWithFb(userData) {
 // Logout from facebook
 function fbLogout() {
     FB.logout(function() {
-		console.log("Logging out");
     });
 }
 
