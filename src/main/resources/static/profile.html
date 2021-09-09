@@ -332,7 +332,7 @@
 			</div>
 			<div class="divider"></div>
 			<div class="right-side">
-				<button id="see-all-reviews-modal" type="button" class="btn btn-warning btn-simple" data-dismiss="modal" style="color: orange;">Vezi toate evaluările</button>
+				<button id="see-all-reviews-modal" type="button" class="btn btn-warning btn-simple" data-dismiss="modal" onclick="seeAllReviews()" style="color: orange;">Vezi toate evaluările</button>
 			</div>
 		  </div>
 		</div>
@@ -997,8 +997,8 @@ function loadGeneralReviewCard(response) {
 		document.getElementById("faculty-profile-review-header").innerHTML += facultyProfileTabString;
 		
 		if (document.getElementById("see-all-reviews")) {
-					document.getElementById("see-all-reviews").innerHTML = 'Vezi toate evaluările (' + responseReview.result.count + ')';
-				}
+			document.getElementById("see-all-reviews").innerHTML = 'Vezi toate evaluările (' + responseReview.result.count + ')';
+		}
 					
 				   
 
@@ -1917,9 +1917,6 @@ function seeFullReview(el, reviewArray) {
 		);
 
 		document.getElementById('review-modal-text').innerHTML = facultyReviewsString;
-		document.getElementById('see-all-reviews-modal').onclick = function() {
-			seeAllReviews();
-		};
 	
 }
 

@@ -1,5 +1,6 @@
 package com.app.studentromania.repo;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +105,18 @@ public class ReviewRepo {
 
 		return template.findByN1QL(
 				N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue(), userId)), Review.class);
+	}
+	
+	@Query
+	@LogExecutionTime
+	@LogParameters
+	public List<Review> getReviewsByReviewDate(Date reviewDate) {
+		String query = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
+				+ Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET + " WHERE docType = $1 AND reviewDate >= $2 ";
+
+		return template.findByN1QL(
+				N1qlQuery.parameterized(query,
+						JsonArray.from(DocTypeEnum.REVIEW.getValue(), reviewDate)), Review.class);
 	}
 
 	@Query

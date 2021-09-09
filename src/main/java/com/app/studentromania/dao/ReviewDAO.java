@@ -1,5 +1,6 @@
 package com.app.studentromania.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ public class ReviewDAO {
 
 	@Autowired
 	private ReviewRepo reviewRepo;
-	
+
 	@Autowired
 	private LogUtils logUtils;
 
@@ -49,6 +50,10 @@ public class ReviewDAO {
 
 	public List<Review> getReviewsByUserId(String userId) {
 		return reviewRepo.getReviewsByUserId(userId);
+	}
+
+	public List<Review> getReviewsByReviewDate(Date reviewDate) {
+		return reviewRepo.getReviewsByReviewDate(reviewDate);
 	}
 
 	public long countFilteredReviews(String facultyId, ReviewFilter reviewFilter) {

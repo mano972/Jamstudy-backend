@@ -1,6 +1,7 @@
 package com.app.studentromania.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -147,10 +148,16 @@ public class NewsletterService {
 	}
 
 	public ResponseDTO sendNewsletter(NewsletterDTO newsletterDTO) {
+		startSendNewsletter(newsletterDTO.getTo(), newsletterDTO.getSubject(), newsletterDTO.getNewsletterBody(),
+				newsletterDTO.getInlineImages());
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
 
-		if (!StringUtils.isEmpty(newsletterDTO.getTo())) {
-			ErrorsEnum errors = emailHandler.sendEmail(newsletterDTO.getTo(), newsletterDTO.getSubject(),
-					newsletterDTO.getNewsletterBody(), newsletterDTO.getInlineImages());
+	public ResponseDTO startSendNewsletter(String to, String subject, String newsletterBody,
+			Map<String, String> inlineImages) {
+
+		if (!StringUtils.isEmpty(to)) {
+			ErrorsEnum errors = emailHandler.sendEmail(to, subject, newsletterBody, inlineImages);
 			if (errors != ErrorsEnum.NO_ERROR) {
 				return ResponseDTO.createErrorResponse(errors);
 			}
@@ -160,11 +167,10 @@ public class NewsletterService {
 				return ResponseDTO.createErrorResponse(ErrorsEnum.NEWSLETTER_NOT_FOUND);
 			}
 			Newsletter newsletter = newsletters.get(0);
-			List<String> emails = newsletter.getEmails();
-			logUtils.logMessage(LOGGER, "Number of newsletter emails to send: " + emails.size());
-			for (String email : emails) {
-				emailHandler.sendEmail(email, newsletterDTO.getSubject(), newsletterDTO.getNewsletterBody(),
-						newsletterDTO.getInlineImages());
+			List<String> userEmails = newsletter.getEmails();
+			logUtils.logMessage(LOGGER, "Number of newsletter emails to send: " + userEmails.size());
+			for (String userEmail : userEmails) {
+				emailHandler.sendEmail(userEmail, subject, newsletterBody, inlineImages);
 			}
 		}
 		logUtils.logMessage(LOGGER, "Newsletter emails were sent!");

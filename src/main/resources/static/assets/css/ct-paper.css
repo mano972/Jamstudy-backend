@@ -1173,7 +1173,10 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
   background: #555; 
 }
 
-
+.fa-disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
 
 /*       CT colors          */
 .ct-blue,
@@ -3074,7 +3077,7 @@ textarea.form-control {
 
 /*      Checkbox and radio         */
 .checkbox-big {
-	font-size: 16px !important;
+	font-size: 15px !important;
 }
 
 .checkbox,
@@ -9726,6 +9729,19 @@ $ct-series-colors: (
 
 .card .filter-category {
 	
+}
+
+@media (max-width:992px) {
+	.notify-checkbox {
+		margin-top: 18px !important;
+		margin-bottom: -18px !important;
+	}
+}
+
+@media (min-width:992px) {
+	.notify-checkbox {
+		margin-top: 10px !important;
+	}
 }
 
 .card label {

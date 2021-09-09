@@ -817,6 +817,8 @@ function addToFavorites(el, facultyId, hasText) {
 		favorite = false; // remove from favorites
 	}
 	
+	$(el).addClass("fa-disabled");
+	
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/favorite/" + facultyId);
 	
 	var body = {
@@ -869,6 +871,9 @@ function addToFavorites(el, facultyId, hasText) {
 			} else {
 				document.getElementById('modal-text').innerHTML = "Facultatea nu a putut fi salvată";
 			}
+		},
+		complete: function (data) {
+			$(el).removeClass("fa-disabled");
 		}
 	});
 	
@@ -911,6 +916,8 @@ function upvoteReview(el) {
 	
 	var backendUrl = new URL(backendUrlRoot + "/v1/review/" + reviewId + "/upvote");
 	
+	$(el).addClass("fa-disabled");
+	
 	var body = {
 		upvote: upvote
 	};
@@ -949,6 +956,9 @@ function upvoteReview(el) {
 				document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
 				document.getElementById('modal-text').innerHTML = "Evaluarea nu a putut fi votată";
 			}
+		},
+		complete: function(data) {
+			$(el).removeClass("fa-disabled");
 		}
 	});
 
@@ -986,6 +996,55 @@ function reportReview(el) {
 		});
 	
 	}
+}
+
+function addToNotifications(el, facultyId) {
+	
+	var allowNotification = false;
+	var notificationElementId = $("label[for=allow-notification]").attr("for");
+	var notificationElement = $("input[id='" + notificationElementId + "']");
+	if (notificationElement.prop("checked") === false) { // if it was not previously checked, it was checked now
+		allowNotification = true;;
+	}
+	
+	$(el).addClass("fa-disabled");
+	
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/notification/" + facultyId);
+	
+	var body = {
+		allowNotification: allowNotification
+	};
+	
+	$.ajax({
+		url: backendUrl,
+		type: 'PUT',
+		dataType: 'json',
+		contentType: 'application/json',
+		crossDomain: true,
+		data: JSON.stringify(body),
+		success: function (data) {
+			
+		},
+		error: function(error) {
+			checkLoggedInUser(error.status);
+			$("#general-modal").modal();
+			document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+			if (error.responseJSON) {
+				if (error.responseJSON.control) {
+					var errorDescription = error.responseJSON.control.errorDescription;
+					document.getElementById('modal-text').innerHTML = errorDescription;
+				} else {
+					document.getElementById('modal-text').innerHTML = "Notificările nu au putut fi activate.";
+				}
+			} else {
+				document.getElementById('modal-text').innerHTML = "Notificările nu au putut fi activate.";
+			}
+		},
+		complete: function (data) {
+			$(el).removeClass("fa-disabled");
+		}
+	});
+	
 }
 
 function goToReviews(facultyId) {

@@ -2044,14 +2044,13 @@
 							"raw": "{\n\t\"allowNotification\": true\n}"
 						},
 						"url": {
-							"raw": "{{host}}/v1/userprofile/1/notification/1",
+							"raw": "{{host}}/v1/userprofile/notification/1",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
 								"userprofile",
-								"1",
 								"notification",
 								"1"
 							]
@@ -2167,6 +2166,45 @@
 				},
 				{
 					"name": "get user profiles to notify (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/v1/userprofile/usersnotify",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"userprofile",
+								"usersnotify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "notify users",
 					"request": {
 						"auth": {
 							"type": "basic",

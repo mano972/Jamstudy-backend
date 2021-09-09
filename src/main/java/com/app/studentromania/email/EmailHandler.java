@@ -36,14 +36,20 @@ public class EmailHandler {
 	private static final String pass = "aizxrovqrmnvyxfp";
 
 	public ErrorsEnum sendEmail(String to, String subject, String message) {
-		return handleSendEmail(to, subject, message, null);
+		return handleSendEmail(to, subject, message, null, false);
 	}
 
 	public ErrorsEnum sendEmail(String to, String subject, String message, Map<String, String> mapInlineImage) {
-		return handleSendEmail(to, subject, message, mapInlineImage);
+		return handleSendEmail(to, subject, message, mapInlineImage, false);
 	}
 
-	private ErrorsEnum handleSendEmail(String to, String subject, String message, Map<String, String> mapInlineImages) {
+	public ErrorsEnum sendEmail(String to, String subject, String message, Map<String, String> mapInlineImage,
+			boolean isHtml) {
+		return handleSendEmail(to, subject, message, mapInlineImage, isHtml);
+	}
+
+	private ErrorsEnum handleSendEmail(String to, String subject, String message, Map<String, String> mapInlineImages,
+			boolean isHtml) {
 
 		Session session = null;
 		Properties mailProps = getEmailProperties();
@@ -73,8 +79,11 @@ public class EmailHandler {
 			emailMessage.append("\n");
 
 			BodyPart messageBodyPart = new MimeBodyPart();
-			messageBodyPart.setText(emailMessage.toString());
-//			messageBodyPart.setContent(emailMessage.toString(), "text/html");
+			if (isHtml) {
+				messageBodyPart.setContent(emailMessage.toString(), "text/html");
+			} else {
+				messageBodyPart.setText(emailMessage.toString());
+			}
 			multipart.addBodyPart(messageBodyPart);
 
 			// adds inline image attachments

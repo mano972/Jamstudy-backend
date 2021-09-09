@@ -52,11 +52,18 @@ public class UserProfileController {
 		return userProfileService.getUserProfile().createRestResponse();
 	}
 
-	@GetMapping("/notify")
+	@GetMapping("/usersnotify")
 	@RestCall
 	@VerifyAdmin
 	public ResponseEntity<String> getUsersToNotify() {
 		return userProfileService.getUsersToNotify().createRestResponse();
+	}
+
+	@GetMapping("/notify")
+	@RestCall
+	@VerifyAdmin
+	public ResponseEntity<String> notifyUsers() {
+		return userProfileService.notifyUsers().createRestResponse();
 	}
 
 	@PostMapping("/register")

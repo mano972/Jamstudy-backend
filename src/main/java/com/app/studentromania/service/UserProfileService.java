@@ -2,6 +2,7 @@ package com.app.studentromania.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Service;
 import com.app.studentromania.auth.JWTAuthenticationService;
 import com.app.studentromania.dao.ConfigDAO;
 import com.app.studentromania.dao.FacultyDAO;
+import com.app.studentromania.dao.ReviewDAO;
 import com.app.studentromania.dao.UserProfileDAO;
 import com.app.studentromania.dto.AuthResponseDTO;
 import com.app.studentromania.dto.ResponseDTO;
@@ -59,6 +62,9 @@ public class UserProfileService {
 
 	@Autowired
 	private FacultyDAO facultyDAO;
+
+	@Autowired
+	private ReviewDAO reviewDAO;
 
 	@Autowired
 	private ConfigDAO configDAO;
@@ -123,6 +129,44 @@ public class UserProfileService {
 		response.put("userProfiles", facultiesToNotifyPerEmail);
 
 		return ResponseDTO.createSuccessResponse(response);
+	}
+
+	public ResponseDTO notifyUsers() {
+		startNotifyUsers();
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
+	public void startNotifyUsers() {
+		List<UserProfile> usersToNotify = userProfileDAO.getUsersToNotify();
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DAY_OF_MONTH, -7);
+		Date oneWeekAgo = cal.getTime();
+		Map<String, Long> facultyReviewsMap = reviewDAO.getReviewsByReviewDate(oneWeekAgo).stream()
+				.map(review -> review.getFacultyId())
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+		int notifiedUsersCount = 0;
+		for (UserProfile user : usersToNotify) {
+			boolean sendEmail = false;
+			StringBuilder sb = new StringBuilder();
+			sb.append("Salut! \n Au fost adaugate evaluari noi pentru facultatile pe care le urmaresti.");
+			for (UserProfileFaculty f : user.getFavoriteFaculties()) {
+				if (f.isAllowNotification() && facultyReviewsMap.keySet().contains(f.getFacultyId())) {
+					sb.append("\n").append(f.getFacultyName()).append(": ")
+							.append(facultyReviewsMap.get(f.getFacultyId())).append(" evaluari noi.");
+					sendEmail = true;
+				}
+			}
+			if (sendEmail) {
+				String emailMessage = sb.toString();
+				String subject = "Noi evaluari pentru facultatile favorite";
+				emailHandler.sendEmail(user.getEmail(), subject, emailMessage);
+				notifiedUsersCount++;
+			}
+		}
+		logUtils.logMessage(LOGGER, "Number of notified users: " + notifiedUsersCount);
 	}
 
 	public ResponseDTO loginWithFacebook(UserProfileDTO userProfileDTO) {
