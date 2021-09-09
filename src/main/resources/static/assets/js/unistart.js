@@ -985,6 +985,12 @@ function reportReview(el) {
 	}
 }
 
+function goToReviews(facultyId) {
+	var urlFacultyRedirect = "./profile.html?id=" + facultyId + "#reviews";
+	location.href = urlFacultyRedirect;
+}
+
+
 function redirectIfNotLoggedIn() {
 	var jwtToken = getUField("ut");
 	if (!jwtToken) {

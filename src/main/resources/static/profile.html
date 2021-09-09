@@ -647,7 +647,7 @@ function loadProfileHeader(response) {
 					+				'<div class="col-lg-8 col-md-7 col-sm-10 col-xs-12">'
 					+					'<div>'
 					+						'<h4 class="faculty-title-profile">' + facultyName + '</h4>'
-					+						'<span><strong>' + universityName + '</strong></span>'
+					+						'<a data-toggle="tooltip" title="Filtrează după universitate" onclick="searchByUniversityName(this)"><strong>' + universityName + '</strong></a>'
 					+						'<br>'
 					+						'<small class="text-muted">' + facultyCity + '</small>'
 					+						'<br>'
@@ -1616,7 +1616,7 @@ function loadOtherFacultiesFromSameUniversityContent(response) {
 			var urlProfileRedirect = "./profile.html?id=";
 			
 			otherFacultiesString += (
-						'<div class="' + colWidth + '"><div class="card"> <div class="content"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + faculty.facultyName + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + faculty.facultyCity + '</small> <div class="rating-search-list"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </div> </div>  </div> </div> </div> </div>');
+						'<div class="' + colWidth + '"><div class="card"> <div class="content"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + faculty.facultyName + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + faculty.facultyCity + '</small> <br> <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+faculty.facultyId+'&quot;)"> <i class="fa fa-star rating-suggestion-card" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </a> </div>  </div> </div> </div> </div>');
 
 		if (i==(faculties.length - 1) || i%otherFacultiesPerSlide==(otherFacultiesPerSlide-1)) {
 			otherFacultiesString += ('</div> </div>');
@@ -1933,6 +1933,16 @@ function seeFullReview(el, reviewArray) {
 			seeAllReviews();
 		};
 	
+}
+
+function searchByUniversityName(el) {
+	var universityName = el.text;
+	var url = "./search.html";
+	var searchInputParam = "q=" + universityName;
+	var domainsParam = "d=";
+	var citiesParam = "c=";
+	var finalUrl = url + "?" + searchInputParam + "&" + domainsParam + "&" + citiesParam;
+    location.href = finalUrl;
 }
 
 function addToRecentlyViewed() {

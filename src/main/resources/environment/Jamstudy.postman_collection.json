@@ -2712,13 +2712,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{host}}/v1/Jamstudy/newsletter/save",
+							"raw": "{{host}}/v1/newsletter/save",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
-								"Jamstudy",
 								"newsletter",
 								"save"
 							]
@@ -2756,13 +2755,12 @@
 							"raw": "{\r\n    \"to\": \"andrei_manolache2000@yahoo.com\",\r\n    \"subject\": \"test a 1\",\r\n    \"newsletterBody\": \"abc abc\",\r\n    \"inlineImages\": {}\r\n}"
 						},
 						"url": {
-							"raw": "{{host}}/v1/Jamstudy/newsletter/send",
+							"raw": "{{host}}/v1/newsletter/send",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
-								"Jamstudy",
 								"newsletter",
 								"send"
 							]

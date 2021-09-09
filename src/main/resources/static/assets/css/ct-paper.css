@@ -338,8 +338,8 @@ a {
   transition: all 150ms linear;
 }
 a:hover, a:focus {
-  color: #3091B2;
-  text-decoration: none;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 hr {
@@ -569,8 +569,8 @@ select {
   }
 }
 
-.rating-search-list {
-	margin-top: 4px;
+.rating-suggestion-card {
+	margin-top: 5px;
 }
 
 .rating-profile-big {
@@ -9744,9 +9744,10 @@ $ct-series-colors: (
   /* color: #444444; */
   z-index: 3;
 }
-.card a:hover, .card a:focus {
+.card a:hover:not(.btn), .card a:focus:not(.btn){
   color: #333333;
-  /* text-decoration: underline; */
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .card a.website {
