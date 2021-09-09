@@ -998,12 +998,10 @@ function reportReview(el) {
 	}
 }
 
-function addToNotifications(el, facultyId) {
+function addToNotifications(el, facultyId, i) {
 	
 	var allowNotification = false;
-	var notificationElementId = $("label[for=allow-notification]").attr("for");
-	var notificationElement = $("input[id='" + notificationElementId + "']");
-	if (notificationElement.prop("checked") === false) { // if it was not previously checked, it was checked now
+	if ($("#allow-notification-" + i).prop("checked") === false) { // if it was not previously checked, it was checked now
 		allowNotification = true;;
 	}
 	

@@ -680,7 +680,6 @@ function loadSavedFacultiesContent(userSavedFaculties, facultiesResponse) {
 		} else {
 			avgRating = avgRating.toFixed(1);
 		}
-		
 		var countRev = facultiesResponse[i].countRev;
 		var countRevText;
 		if (!countRev) {
@@ -711,23 +710,21 @@ function loadSavedFacultiesContent(userSavedFaculties, facultiesResponse) {
 			favoriteText = "Salvează";
 		}
 		
-		var checkboxString = '<label class="checkbox checkbox-azure checkbox-big notify-checkbox" for="allow-notification" onclick="addToNotifications(this, &quot;'+facultyId+'&quot;)"><span class="icons"><span class="first-icon fa fa-square fa-base" aria-hidden="true"></span><span class="second-icon fa fa-check-square fa-base" aria-hidden="true"></span></span><input type="checkbox" name="notification" value="" id="allow-notification" data-toggle="checkbox">Notifica-ma cand apar evaluari noi</label>';
-		
-		document.getElementById("saved-faculties").innerHTML += ('<div class="col-xs-12"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5><strong>' + facultyName + '</strong></h5> </a> <h6>' + universityName + '</h6> <small class="text-muted">' + facultyCity + '</small> <br> <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)"> <i class="fa fa-star rating-suggestion-card" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </a> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4">' + checkboxString + ' <div class="row save-compare-user-profile"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div></div>');
-		
 		var allowNotification = false;
-		for (i in userSavedFaculties) {
-			if (facultyId === userSavedFaculties[i].facultyId) {
-				allowNotification = userSavedFaculties[i].allowNotification;
+		for (j in userSavedFaculties) {
+			if (facultyId === userSavedFaculties[j].facultyId) {
+				allowNotification = userSavedFaculties[j].allowNotification;
+				break;
 			}
 		}
+		var checkedString = "";
 		if (allowNotification) {
-			$("#allow-notification").prop('checked', true);
-			$("label[for='allow-notification']").addClass("checked");
-		} else {
-			$("#allow-notification").prop('checked', false);
-			$("label[for='allow-notification']").removeClass("checked");
+			checkedString = "checked";
 		}
+		
+		var checkboxString = '<label id="notification-checkbox-' + i + '" class="checkbox checkbox-azure checkbox-big notify-checkbox ' + checkedString + '" for="allow-notification" onclick="addToNotifications(this, &quot;'+facultyId+'&quot;, ' + i +')"><span class="icons"><span class="first-icon fa fa-square fa-base" aria-hidden="true"></span><span class="second-icon fa fa-check-square fa-base" aria-hidden="true"></span></span><input type="checkbox" name="notification" value="" id="allow-notification-' + i + '" data-toggle="checkbox" ' + checkedString + '>Notifica-ma cand apar evaluari noi</label>';
+		
+		document.getElementById("saved-faculties").innerHTML += ('<div class="col-xs-12"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5><strong>' + facultyName + '</strong></h5> </a> <h6>' + universityName + '</h6> <small class="text-muted">' + facultyCity + '</small> <br> <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)"> <i class="fa fa-star rating-suggestion-card" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </a> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4">' + checkboxString + ' <div class="row save-compare-user-profile"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div></div>');
 		
 	}
 			

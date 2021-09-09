@@ -12,6 +12,8 @@ public class NewsletterDTO {
 
 	private Map<String, String> inlineImages;
 
+	private Boolean isHtml;
+
 	public String getTo() {
 		return to;
 	}
@@ -42,6 +44,14 @@ public class NewsletterDTO {
 
 	public void setInlineImages(Map<String, String> inlineImages) {
 		this.inlineImages = inlineImages;
+	}
+
+	public Boolean getIsHtml() {
+		return isHtml;
+	}
+
+	public void setIsHtml(Boolean isHtml) {
+		this.isHtml = isHtml;
 	}
 
 }

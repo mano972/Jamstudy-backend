@@ -16,6 +16,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +45,12 @@ public class EmailHandler {
 	}
 
 	public ErrorsEnum sendEmail(String to, String subject, String message, Map<String, String> mapInlineImage,
-			boolean isHtml) {
+			Boolean isHtml) {
 		return handleSendEmail(to, subject, message, mapInlineImage, isHtml);
 	}
 
 	private ErrorsEnum handleSendEmail(String to, String subject, String message, Map<String, String> mapInlineImages,
-			boolean isHtml) {
+			Boolean isHtml) {
 
 		Session session = null;
 		Properties mailProps = getEmailProperties();
@@ -75,11 +76,10 @@ public class EmailHandler {
 
 			Multipart multipart = new MimeMultipart();
 			StringBuilder emailMessage = new StringBuilder(message);
-
 			emailMessage.append("\n");
 
 			BodyPart messageBodyPart = new MimeBodyPart();
-			if (isHtml) {
+			if (BooleanUtils.isTrue(isHtml)) {
 				messageBodyPart.setContent(emailMessage.toString(), "text/html");
 			} else {
 				messageBodyPart.setText(emailMessage.toString());

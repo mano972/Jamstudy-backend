@@ -149,12 +149,12 @@ public class NewsletterService {
 
 	public ResponseDTO sendNewsletter(NewsletterDTO newsletterDTO) {
 		startSendNewsletter(newsletterDTO.getTo(), newsletterDTO.getSubject(), newsletterDTO.getNewsletterBody(),
-				newsletterDTO.getInlineImages());
+				newsletterDTO.getInlineImages(), newsletterDTO.getIsHtml());
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
 	public ResponseDTO startSendNewsletter(String to, String subject, String newsletterBody,
-			Map<String, String> inlineImages) {
+			Map<String, String> inlineImages, Boolean isHtml) {
 
 		if (!StringUtils.isEmpty(to)) {
 			ErrorsEnum errors = emailHandler.sendEmail(to, subject, newsletterBody, inlineImages);
@@ -170,7 +170,7 @@ public class NewsletterService {
 			List<String> userEmails = newsletter.getEmails();
 			logUtils.logMessage(LOGGER, "Number of newsletter emails to send: " + userEmails.size());
 			for (String userEmail : userEmails) {
-				emailHandler.sendEmail(userEmail, subject, newsletterBody, inlineImages);
+				emailHandler.sendEmail(userEmail, subject, newsletterBody, inlineImages, isHtml);
 			}
 		}
 		logUtils.logMessage(LOGGER, "Newsletter emails were sent!");
