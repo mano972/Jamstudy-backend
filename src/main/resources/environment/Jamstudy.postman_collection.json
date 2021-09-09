@@ -1917,21 +1917,25 @@
 							{
 								"key": "Content-Type",
 								"value": "application/json"
+							},
+							{
+								"key": "Token",
+								"value": "Bearer {{token}}",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"userName\": \"userName1\"\n    }"
+							"raw": "{\n    \"userName\": \"userName1\"\n}"
 						},
 						"url": {
-							"raw": "{{host}}/v1/userprofile/1",
+							"raw": "{{host}}/v1/userprofile",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"v1",
-								"userprofile",
-								"1"
+								"userprofile"
 							]
 						}
 					},
@@ -2065,10 +2069,9 @@
 								"value": "application/json"
 							},
 							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
+								"key": "Token",
+								"value": "Bearer {{token}}",
+								"type": "text"
 							}
 						],
 						"url": {
