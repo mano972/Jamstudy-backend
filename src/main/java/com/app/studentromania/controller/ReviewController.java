@@ -20,7 +20,7 @@ import com.app.studentromania.dto.ReviewDTO;
 import com.app.studentromania.service.ReviewService;
 import com.app.studentromania.util.ReviewFilter;
 
-@CrossOrigin(origins = "https://unistart.ro")
+@CrossOrigin()
 @RestController
 @RequestMapping("${base.path}/review")
 public class ReviewController {

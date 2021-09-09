@@ -551,6 +551,8 @@ function resetPass(e) {
 	var errorForgot = document.getElementById('error-forgot-email');
 
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/reset");
+	
+	document.getElementById("forgot-button").disabled = true; 
 		
 	var body = {
 		email: email
@@ -582,6 +584,8 @@ function resetPass(e) {
 			} else {
 				errorForgot.innerHTML = "Parola nu a putut fi schimbată. Te rugăm să încerci din nou mai târziu.";
 			}
+			
+			document.getElementById("forgot-button").disabled = false; 
 					
 		}
 	});
