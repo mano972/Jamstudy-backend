@@ -1,6 +1,7 @@
 package com.app.studentromania.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class UserProfileDTO {
 
@@ -40,6 +41,10 @@ public class UserProfileDTO {
 	private String userStatus;
 
 	private String userYear;
+
+	private List<String> userDomainInterest;
+
+	private List<String> userCityInterest;
 
 	public String getUserId() {
 		return userId;
@@ -175,6 +180,22 @@ public class UserProfileDTO {
 
 	public void setUserYear(String userYear) {
 		this.userYear = userYear;
+	}
+
+	public List<String> getUserDomainInterest() {
+		return userDomainInterest;
+	}
+
+	public void setUserDomainInterest(List<String> userDomainInterest) {
+		this.userDomainInterest = userDomainInterest;
+	}
+
+	public List<String> getUserCityInterest() {
+		return userCityInterest;
+	}
+
+	public void setUserCityInterest(List<String> userCityInterest) {
+		this.userCityInterest = userCityInterest;
 	}
 
 }

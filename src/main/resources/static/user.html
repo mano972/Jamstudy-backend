@@ -14,6 +14,16 @@
     <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
     <link href="./assets/css/demo.css" rel="stylesheet" />
     <link href="./assets/css/examples.css" rel="stylesheet" />
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-W7XYVR8RJ0"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-W7XYVR8RJ0');
+	</script>
         
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -325,6 +335,8 @@ function loadUserProfileInfoContent(userResponse) {
 	var userStatus = userResponse.userStatus;
 	var userYear = userResponse.userYear;
 	var subscribeToNewsletter = userResponse.subscribeToNewsletter;
+	var userDomainInterest = userResponse.userDomainInterest;
+	var userCityInterest = userResponse.userCityInterest;
 	
 	var userSavedFaculties = userResponse.favoriteFaculties;
 	getSavedFaculties(userSavedFaculties);
@@ -361,7 +373,7 @@ function loadUserProfileInfoContent(userResponse) {
 												
 +'												<div id="user-status" class="col-xs-12 user-profile-form-input">		'
 +'													<label>Status</label> 												'
-+'													<div class="radio-toolbar" onchange="showYears(); showUserWork()">'
++'													<div class="radio-toolbar" onchange="showYears(); showUserWork(); showUserDomainInterest(); showUserCityInterest();">'
 +'													 <input type="radio" id="status-pupil" name="status" value="ELEV">'
 +'													  <label for="status-pupil">Elev</label>'
 													  
@@ -384,19 +396,19 @@ function loadUserProfileInfoContent(userResponse) {
 												
 +'												<div id="user-years" class="col-xs-12 user-profile-form-input" style="display: none">'
 +'													<label>Anul</label> 		'
-+'															<div class="radio-toolbar">'
-+'															  <input type="radio" id="year1" name="years" value="Anul 1">'
-+'															  <label for="year1">Anul 1</label>'
++'													<div class="radio-toolbar">'
++'														<input type="radio" id="year1" name="years" value="Anul 1">'
++'														<label for="year1">Anul 1</label>'
 
-+'															  <input type="radio" id="year2" name="years" value="Anul 2">'
-+'															  <label for="year2">Anul 2</label>'
++'														<input type="radio" id="year2" name="years" value="Anul 2">'
++'														<label for="year2">Anul 2</label>'
 
-+'															  <input type="radio" id="year3" name="years" value="Anul 3">'
-+'															  <label for="year3">Anul 3</label>'
++'														<input type="radio" id="year3" name="years" value="Anul 3">'
++'														<label for="year3">Anul 3</label>'
 															  
-+'															  <input type="radio" id="year4" name="years" value="Anul 4+">'
-+'															  <label for="year4">Anul 4+</label>'
-+'															</div>'
++'														<input type="radio" id="year4" name="years" value="Anul 4+">'
++'														<label for="year4">Anul 4+</label>'
++'													</div>'
 +'												</div>'
 
 +'												<div id="user-work" class="col-xs-12 user-profile-form-input" style="display: none;">'
@@ -411,6 +423,49 @@ function loadUserProfileInfoContent(userResponse) {
 <!-- +'														 	 <input type="radio" id="work-not-applied" name="work" value="2">' -->
 <!-- +'														 	 <label for="work-not-applied">Nu se aplica</label>' -->
 +'															</div>'
++'												</div>'
+
++'												<div id="user-domain-interest" class="col-xs-12 user-profile-form-input" style="display: none">'
++'													<label>In ce domenii ai fi interesat sa studiezi?</label> 		'
++'													<div class="checkbox-toolbar">'
++'														<input type="checkbox" name="domeniu" id="d1" value="Științe Economice"><label for="d1">Științe Economice</label>'
++'														<input type="checkbox" name="domeniu" id="d2" value="Științe Inginerești"><label for="d2">Științe Inginereşti</label>'
++'														<input type="checkbox" name="domeniu" id="d3" value="Științe Politice și Comunicare"><label for="d3">Științe Politice și Comunicare</label>'
++'														<input type="checkbox" name="domeniu" id="d4" value="Științe Umaniste"><label for="d4">Științe Umaniste</label>'
++'														<input type="checkbox" name="domeniu" id="d5" value="Științe Juridice"><label for="d5">Științe Juridice</label>'
++'														<input type="checkbox" name="domeniu" id="d6" value="Medicină"><label for="d6">Medicină</label>'
++'														<input type="checkbox" name="domeniu" id="d7" value="Științe ale Naturii"><label for="d7">Științe ale Naturii</label>'
++'														<input type="checkbox" name="domeniu" id="d8" value="Arte Arhitectură și Urbanism"><label for="d8">Arte, Arhitectură și Urbanism</label>'
++'														<input type="checkbox" name="domeniu" id="d9" value="Științe Exacte"><label for="d9">Științe Exacte</label>'
++'														<input type="checkbox" name="domeniu" id="d10" value="Științe Sociale și Psihologie"><label for="d10">Științe Sociale și Psihologie</label>'
++'														<input type="checkbox" name="domeniu" id="d11" value="Științe Agricole"><label for="d11">Științe Agricole</label>'
++'														<input type="checkbox" name="domeniu" id="d12" value="Ştiința Sportului şi Educației Fizice"><label for="d12">Știința Sportului şi Educației Fizice</label>'
++'														<input type="checkbox" name="domeniu" id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică"><label for="d13">Științe Militare şi de Informații</label>'
++'														<input type="checkbox" name="domeniu" id="d14" value="Teologie"><label for="d14">Teologie</label>'
++'													</div>'
++'												</div>'
+
++'												<div id="user-city-interest" class="col-xs-12 user-profile-form-input" style="display: none">'
++'													<label>In ce orase ai fi interesat sa studiezi?</label> 		'
++'													<div class="checkbox-toolbar">'
++'														<input type="checkbox" name="oras" id="c1" value="Bucureşti"><label for="c1">Bucureşti</label>'
++'														<input type="checkbox" name="oras" id="c2" value="Cluj-Napoca; Cluj"><label for="c2">Cluj-Napoca</label>'
++'														<input type="checkbox" name="oras" id="c3" value="Timişoara; Timiş"><label for="c3">Timişoara</label>'
++'														<input type="checkbox" name="oras" id="c4" value="Iaşi; Iaşi"><label for="c4">Iaşi</label>'
++'														<input type="checkbox" name="oras" id="c5" value="Constanţa; Constanţa"><label for="c5">Constanţa</label>'
++'														<input type="checkbox" name="oras" id="c6" value="Craiova; Dolj"><label for="c6">Craiova</label>'
++'														<input type="checkbox" name="oras" id="c10" value="Oradea; Bihor"><label for="c10">Oradea</label>'
++'														<input type="checkbox" name="oras" id="c7" value="Braşov; Braşov"><label for="c7">Braşov</label>'
++'														<input type="checkbox" name="oras" id="c8" value="Piteşti; Argeş"><label for="c8">Piteşti</label>'
++'														<input type="checkbox" name="oras" id="c9" value="Târgovişte; Dâmboviţa"><label for="c9">Târgovişte</label>'
++'														<input type="checkbox" name="oras" id="c11" value="Alba Iulia; Alba"><label for="c11">Alba Iulia</label>'
++'														<input type="checkbox" name="oras" id="c12" value="Sibiu; Sibiu"><label for="c12">Sibiu</label>'
++'														<input type="checkbox" name="oras" id="c13" value="Galaţi; Galaţi"><label for="c13">Galaţi</label>'
++'														<input type="checkbox" name="oras" id="c14" value="Arad; Arad"><label for="c14">Arad</label>'
++'														<input type="checkbox" name="oras" id="c15" value="Târgu Mureş; Mureş"><label for="c15">Târgu Mureş</label>'
++'														<input type="checkbox" name="oras" id="c16" value="Suceava; Suceava"><label for="c16">Suceava</label>'
++'														<input type="checkbox" name="oras" id="c17" value="Alba Iulia; Alba"><label for="c17">Alba Iulia</label>'
++'													</div>'
 +'												</div>'
 
 
@@ -471,6 +526,32 @@ function loadUserProfileInfoContent(userResponse) {
 	
 	showUserWork();
 	
+	if (userDomainInterest) {
+		var i;
+		for (i=0;i < userDomainInterest.length; i++) {
+			var checkboxElements = document.querySelectorAll("input[type='checkbox'][value='" + userDomainInterest + "']");
+			if (checkboxElements && checkboxElements.length > 0) {
+				var domainId = checkboxElements[0].id;
+				$("#" + domainId).prop('checked', true);
+				$("label[for='" + domainId + "']").addClass("checked");
+			}
+		}
+	}
+	if (userCityInterest) {
+		var j;
+		for (j=0;j < userCityInterest.length; j++) {
+			var checkboxElements = document.querySelectorAll("input[type='checkbox'][value='" + userCityInterest + "']");
+			if (checkboxElements && checkboxElements.length > 0) {
+				var cityId = checkboxElements[0].id;
+				$("#" + cityId).prop('checked', true);
+				$("label[for='" + cityId + "']").addClass("checked");
+			}
+		}
+	}
+	
+	showUserDomainInterest();
+	showUserCityInterest();
+	
 	if (subscribeToNewsletter) {
 		$("#newsletter-check").prop('checked', true);
 		$("label[for='newsletter-check']").addClass("checked");
@@ -502,6 +583,12 @@ function loadUserProfileInfoContent(userResponse) {
 		document.getElementById('save-profile-area').style.display = "inline";
 	}
 	document.getElementById("user-work").oninput = function () {
+		document.getElementById('save-profile-area').style.display = "inline";
+	}
+	document.getElementById("user-domain-interest").oninput = function () {
+		document.getElementById('save-profile-area').style.display = "inline";
+	}
+	document.getElementById("user-city-interest").oninput = function () {
 		document.getElementById('save-profile-area').style.display = "inline";
 	}
 	$("#newsletter-check").change(function() {
@@ -580,6 +667,17 @@ function saveUserProfileInfo(el) {
 	  }
 	}
 	
+	var userDomainInterest = []
+	var checkboxesDomains = document.querySelectorAll('input[name=domeniu]:checked');
+	for (var i = 0; i < checkboxesDomains.length; i++) {
+		userDomainInterest.push(checkboxesDomains[i].value)
+	}
+	var userCityInterest = []
+	var checkboxesCities = document.querySelectorAll('input[name=oras]:checked');
+	for (var i = 0; i < checkboxesCities.length; i++) {
+		userCityInterest.push(checkboxesCities[i].value.replace(";", ","))
+	}
+	
 	var subscribeToNewsletter = false;
 	var newsletterCheckBoxElementId = $("label[for=newsletter-check]").attr("for");
 	var newsletterCheckBoxElement = $("input[id='" + newsletterCheckBoxElementId + "']");
@@ -595,6 +693,8 @@ function saveUserProfileInfo(el) {
 		userStatus: userStatus,
 		userYear: userYear,
 		isUserWorking: userWorking,
+		userDomainInterest : userDomainInterest,
+		userCityInterest: userCityInterest,
 		subscribeToNewsletter: subscribeToNewsletter
 	}
 	

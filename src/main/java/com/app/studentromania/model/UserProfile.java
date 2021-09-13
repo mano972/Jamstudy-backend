@@ -74,6 +74,12 @@ public class UserProfile extends ParentEntity {
 	private String userYear;
 
 	@Field
+	private List<String> userDomainInterest  = new ArrayList<>();
+
+	@Field
+	private List<String> userCityInterest  = new ArrayList<>();
+
+	@Field
 	private List<UserProfileFaculty> favoriteFaculties = new ArrayList<>();
 
 	@Field
@@ -241,6 +247,22 @@ public class UserProfile extends ParentEntity {
 
 	public void setUserYear(String userYear) {
 		this.userYear = userYear;
+	}
+
+	public List<String> getUserDomainInterest() {
+		return userDomainInterest;
+	}
+
+	public void setUserDomainInterest(List<String> userDomainInterest) {
+		this.userDomainInterest = userDomainInterest;
+	}
+
+	public List<String> getUserCityInterest() {
+		return userCityInterest;
+	}
+
+	public void setUserCityInterest(List<String> userCityInterest) {
+		this.userCityInterest = userCityInterest;
 	}
 
 	public List<UserProfileFaculty> getFavoriteFaculties() {

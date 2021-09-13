@@ -2,6 +2,7 @@ package com.app.studentromania.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -409,10 +410,19 @@ public class UserProfileService {
 		} else if (BooleanUtils.isFalse(userProfileDTO.getSubscribeToNewsletter())) {
 			newsletterService.removeEmailFromNewsletter(userProfile.getEmail());
 		}
+		/*
+		 * mapper has an issue. it cannot map internal lists from which elements were
+		 * removed.
+		 */
+		if (userProfileDTO.getUserDomainInterest() != null) {
+			userProfile.setUserDomainInterest(new ArrayList<>());
+		}
+		if (userProfileDTO.getUserCityInterest() != null) {
+			userProfile.setUserCityInterest(new ArrayList<>());
+		}
 		userProfileDAO.updateUserProfile(userProfile);
 		UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO();
 		userProfileResponseDTO.setUserId(userProfile.getUserId());
-		userProfileResponseDTO.setUserName(userProfile.getUserName());
 
 		return ResponseDTO.createSuccessResponse(new JSONObject(userProfileResponseDTO));
 	}
@@ -477,6 +487,7 @@ public class UserProfileService {
 			favoriteFaculty.setFacultyName(facultyOpt.get().getFacultyName());
 			favoriteFaculty.setUniversityId(facultyOpt.get().getUniversityId());
 			favoriteFaculty.setUniversityName(facultyOpt.get().getUniversityName());
+			favoriteFaculty.setAllowNotification(true);
 			favoriteFaculty.setAddedDate(new Date());
 			favoriteFaculties.add(favoriteFaculty);
 			logUtils.logMessage(LOGGER, "Faculty " + favoriteFaculty.getFacultyName()

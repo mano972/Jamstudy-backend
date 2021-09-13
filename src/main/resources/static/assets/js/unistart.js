@@ -1137,6 +1137,36 @@ function showUserWork() {
 	  
 	  if (userStatusValue != 'ELEV') {
 		userWorkComponent.style.display = "inline";
+	  } else {
+		userWorkComponent.style.display = "none";
+	  }
+	  
+	}
+}
+
+function showUserDomainInterest() {
+	if(document.querySelectorAll('input[name=status]:checked').length > 0) {
+	  var userStatusValue = document.querySelectorAll('input[name=status]:checked')[0].value;
+	  var userDomainInterestComponent = document.getElementById("user-domain-interest");
+	  
+	  if (userStatusValue === 'ELEV') {
+		userDomainInterestComponent.style.display = "inline";
+	  } else {
+		userDomainInterestComponent.style.display = "none";
+	  }
+	  
+	}
+}
+
+function showUserCityInterest() {
+	if(document.querySelectorAll('input[name=status]:checked').length > 0) {
+	  var userStatusValue = document.querySelectorAll('input[name=status]:checked')[0].value;
+	  var userCityInterestComponent = document.getElementById("user-city-interest");
+	  
+	  if (userStatusValue === 'ELEV') {
+		userCityInterestComponent.style.display = "inline";
+	  } else {
+		userCityInterestComponent.style.display = "none";
 	  }
 	  
 	}

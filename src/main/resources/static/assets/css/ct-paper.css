@@ -649,7 +649,40 @@ select {
   background: transparent linear-gradient(272deg, #4991FD 0%, #61A0FF 100%) 0% 0% no-repeat padding-box;
 }
 
-/*       Checkboxes         */
+
+/*       Checkboxes 1         */
+
+.checkbox-toolbar input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-toolbar label {
+  display: inline-block;
+  /* width: 120px; */
+  height: 33px;
+  color: #2d7ee0;
+  background-color: #ffffff;
+  border: 2px solid #2B74E3;
+  border-radius: 10px;
+  padding: 4px 11px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.checkbox-toolbar label:hover {
+	background-color: #ebf3ff;
+}
+
+.checkbox-toolbar input[type="checkbox"]:checked+label {
+  color: white;
+  background: transparent linear-gradient(272deg, #4991FD 0%, #61A0FF 100%) 0% 0% no-repeat padding-box;
+}
+
+
+/*       Checkboxes 2        */
 
 ul.ks-cboxtags {
 	max-width: 1000px;

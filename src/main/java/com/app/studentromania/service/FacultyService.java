@@ -217,8 +217,8 @@ public class FacultyService {
 		}
 		Faculty faculty = facultyOpt.get();
 		/*
-		 * mapper are o problema. nu poate mapa liste interne din care s-au scos
-		 * elemente.
+		 * mapper has an issue. it cannot map internal lists from which elements were
+		 * removed.
 		 */
 		if (facultyDTO.getFacultyDomainsLicense() != null) {
 			faculty.setFacultyDomainsLicense(new ArrayList<>());
