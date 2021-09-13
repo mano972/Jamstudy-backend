@@ -738,6 +738,10 @@ function validatePass(pass) {
 
 function goToAddReview(el, facultyId) {
 	increaseReviewStatistic(0);
+	gtag('event', 'add_review', {
+	  'step': '0',
+	  'page_name': el.baseURI
+	});
 	var jwtToken = getUField("ut");
 	if (!jwtToken) {
 		el.setAttribute("data-toggle", 'modal');

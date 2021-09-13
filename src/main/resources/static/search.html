@@ -5,7 +5,7 @@
 	<link rel="icon" type="image/png" href="./assets/img/graduation_cap_small.png">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
-	<title>UniStart</title>
+	<title>Unistart - Caută</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -548,12 +548,18 @@ function loadData(loadMore) {
 			cityNames.push(document.getElementById(cityParams[cCounter]).value);
 		}
 		
+		gtag('event', 'search_faculties', {
+			'search_keyword': finalSearchInput,
+			'search_domains': domainNames,
+			'search_cities': cityNames,
+			'sorting_order': sortingOrder
+		});
+		
 		var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
 		
 		if (offset) {
 			backendUrl.searchParams.append("offset", offset);
 		}
-		
 		if (numberOfResultsPerPage) {
 			backendUrl.searchParams.append("limit", numberOfResultsPerPage);
 		}

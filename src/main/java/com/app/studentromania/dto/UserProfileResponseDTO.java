@@ -30,6 +30,10 @@ public class UserProfileResponseDTO {
 
 	private String userYear;
 
+	private List<String> userDomainInterest;
+
+	private List<String> userCityInterest;
+
 	private Boolean subscribeToNewsletter;
 
 	private List<UserProfileFaculty> favoriteFaculties;
@@ -126,6 +130,22 @@ public class UserProfileResponseDTO {
 
 	public void setUserYear(String userYear) {
 		this.userYear = userYear;
+	}
+
+	public List<String> getUserDomainInterest() {
+		return userDomainInterest;
+	}
+
+	public void setUserDomainInterest(List<String> userDomainInterest) {
+		this.userDomainInterest = userDomainInterest;
+	}
+
+	public List<String> getUserCityInterest() {
+		return userCityInterest;
+	}
+
+	public void setUserCityInterest(List<String> userCityInterest) {
+		this.userCityInterest = userCityInterest;
 	}
 
 	public Boolean getSubscribeToNewsletter() {
