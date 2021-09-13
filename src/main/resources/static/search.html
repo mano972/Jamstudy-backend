@@ -548,12 +548,14 @@ function loadData(loadMore) {
 			cityNames.push(document.getElementById(cityParams[cCounter]).value);
 		}
 		
-		gtag('event', 'search_faculties', {
-			'search_keyword': finalSearchInput,
-			'search_domains': domainNames,
-			'search_cities': cityNames,
-			'sorting_order': sortingOrder
-		});
+		if (!loadMore) {
+			gtag('event', 'search_faculties', {
+				'search_keyword': finalSearchInput,
+				'search_domains': domainNames,
+				'search_cities': cityNames,
+				'sorting_order': sortingOrder
+			});
+		}
 		
 		var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
 		

@@ -1071,7 +1071,7 @@ function loadGeneralPresentationCard(response) {
 
 			document.getElementById("faculty-profile-presentation-header").innerHTML = '';
 			
-			var generalPresentationArray = [{'label': 'Website', 'value': websiteString, }, {'label': 'Email', 'value': facultyEmail, }, {'label': 'Adresă', 'value': facultyAddress, }, {'label': 'Telefon', 'value': facultyPhone, }, {'label': 'Descriere', 'value': facultyDescriptionString, }, {'label': 'Durată', 'value': noOfYears, }, {'label': 'Locuri licență', 'value': availablePlacesLicense, }, {'label': 'Locuri master', 'value': availablePlacesMaster, }, {'label': 'Locuri buget licență', 'value': budgetPlacesLicense, }, {'label': 'Locuri buget master', 'value': budgetPlacesMaster, }, {'label': 'Locuri taxă licență', 'value': taxPlacesLicense, }, {'label': 'Locuri taxă master', 'value': taxPlacesMaster, }, {'label': 'Studenți activi licență', 'value': enrolledStudentsLicence, }, {'label': 'Studenți activi master', 'value': enrolledStudentsMaster, }, {'label': 'Număr profesori', 'value': noOfProfessors, }, {'label': 'Nr. studenți raportat la profesori', 'value': noOfStudentsPerProfessor, }];
+			var generalPresentationArray = [{'label': 'Website', 'value': websiteString, }, {'label': 'Email', 'value': facultyEmail, }, {'label': 'Adresă', 'value': facultyAddress, }, {'label': 'Telefon', 'value': facultyPhone, }, {'label': 'Descriere', 'value': facultyDescriptionString, }, {'label': 'Durată', 'value': noOfYears, }, {'label': 'Locuri licență', 'value': availablePlacesLicense, }, {'label': 'Locuri masterat', 'value': availablePlacesMaster, }, {'label': 'Locuri buget licență', 'value': budgetPlacesLicense, }, {'label': 'Locuri buget masterat', 'value': budgetPlacesMaster, }, {'label': 'Locuri taxă licență', 'value': taxPlacesLicense, }, {'label': 'Locuri taxă masterat', 'value': taxPlacesMaster, }, {'label': 'Studenți activi licență', 'value': enrolledStudentsLicence, }, {'label': 'Studenți activi masterat', 'value': enrolledStudentsMaster, }, {'label': 'Număr profesori', 'value': noOfProfessors, }, {'label': 'Nr. studenți raportat la profesori', 'value': noOfStudentsPerProfessor, }];
 			
 			let presentationContent = new Map();
 			presentationContent.set('Website', websiteString);
@@ -1081,13 +1081,13 @@ function loadGeneralPresentationCard(response) {
 			presentationContent.set('Descriere', facultyDescription);
 			presentationContent.set('Durată', noOfYears);
 			presentationContent.set('Locuri licență', availablePlacesLicense);
-			presentationContent.set('Locuri master', availablePlacesMaster);
+			presentationContent.set('Locuri masterat', availablePlacesMaster);
 			presentationContent.set('Locuri buget licență', budgetPlacesLicense);
-			presentationContent.set('Locuri buget master', budgetPlacesMaster);
+			presentationContent.set('Locuri buget masterat', budgetPlacesMaster);
 			presentationContent.set('Locuri taxă licență', taxPlacesLicense);
-			presentationContent.set('Locuri taxă master', taxPlacesMaster);
+			presentationContent.set('Locuri taxă masterat', taxPlacesMaster);
 			presentationContent.set('Studenți activi licență', enrolledStudentsLicence);
-			presentationContent.set('Studenți activi master', enrolledStudentsMaster);
+			presentationContent.set('Studenți activi masterat', enrolledStudentsMaster);
 			presentationContent.set('Număr profesori', noOfProfessors);
 			presentationContent.set('Nr. studenți raportat la profesori', noOfStudentsPerProfessor);
 			
@@ -1186,7 +1186,7 @@ function loadProgramsCard(response) {
 					programType = "Licență";
 					programTypeLabelColorClass = "label-info";
 				} else if (programType === "MASTER") {
-					programType = "Master";
+					programType = "Masterat";
 					programTypeLabelColorClass = "label-warning";
 				}
 				var leftColumn = "";

@@ -401,15 +401,6 @@ public class UserProfileService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
 		}
 		UserProfile userProfile = userProfileOpt.get();
-		mapToUserProfile(userProfileDTO, userProfile);
-		if (userProfileDTO.getBirthDate() != null) {
-			userProfile.setFormattedBirthDate(Utilities.getFormattedBirthDate(userProfileDTO.getBirthDate()));
-		}
-		if (BooleanUtils.isTrue(userProfileDTO.getSubscribeToNewsletter())) {
-			newsletterService.addEmailToNewsletter(userProfile.getEmail());
-		} else if (BooleanUtils.isFalse(userProfileDTO.getSubscribeToNewsletter())) {
-			newsletterService.removeEmailFromNewsletter(userProfile.getEmail());
-		}
 		/*
 		 * mapper has an issue. it cannot map internal lists from which elements were
 		 * removed.
@@ -419,6 +410,15 @@ public class UserProfileService {
 		}
 		if (userProfileDTO.getUserCityInterest() != null) {
 			userProfile.setUserCityInterest(new ArrayList<>());
+		}
+		mapToUserProfile(userProfileDTO, userProfile);
+		if (userProfileDTO.getBirthDate() != null) {
+			userProfile.setFormattedBirthDate(Utilities.getFormattedBirthDate(userProfileDTO.getBirthDate()));
+		}
+		if (BooleanUtils.isTrue(userProfileDTO.getSubscribeToNewsletter())) {
+			newsletterService.addEmailToNewsletter(userProfile.getEmail());
+		} else if (BooleanUtils.isFalse(userProfileDTO.getSubscribeToNewsletter())) {
+			newsletterService.removeEmailFromNewsletter(userProfile.getEmail());
 		}
 		userProfileDAO.updateUserProfile(userProfile);
 		UserProfileResponseDTO userProfileResponseDTO = new UserProfileResponseDTO();
