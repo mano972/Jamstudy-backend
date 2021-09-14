@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.data.couchbase.core.mapping.Document;
 
 import com.app.studentromania.enumtype.DocTypeEnum;
+import com.couchbase.client.java.repository.annotation.Field;
 
 @Document
 public class Article extends ParentEntity {
@@ -13,22 +14,31 @@ public class Article extends ParentEntity {
 		super(DocTypeEnum.ARTICLE);
 	}
 
+	@Field
 	private String articleId;
 
+	@Field
 	private String authorName;
 
+	@Field
 	private String articleTitle;
 
+	@Field
 	private String articleText;
 
+	@Field
 	private String articlePhoto;
 
+	@Field
 	private Date articleDate;
 
+	@Field
 	private String formattedArticleDate;
 
+	@Field
 	private int viewCount;
 
+	@Field
 	private int helpful;
 
 	public String getArticleId() {

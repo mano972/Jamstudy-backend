@@ -1,7 +1,6 @@
 package com.app.studentromania.config;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +20,17 @@ public class DBGeneral extends AbstractCouchbaseConfiguration {
 
 	@Override
 	protected List<String> getBootstrapHosts() {
-		return new ArrayList<String>(Arrays.asList(HOST));
+		return Collections.singletonList(couchbaseProperties.getCouchbaseHost());
 	}
 
 	@Override
 	protected String getBucketName() {
-		return BUCKET;
+		return couchbaseProperties.getCouchbaseBucket();
 	}
 
 	@Override
 	protected String getBucketPassword() {
-		return PASSWORD;
+		return couchbaseProperties.getCouchbasePassword();
 	}
 
 	@Override
