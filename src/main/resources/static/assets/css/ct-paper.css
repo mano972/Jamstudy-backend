@@ -1211,6 +1211,21 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
   cursor: not-allowed !important;
 }
 
+.img-article-cover {
+	height: 370px;
+	background-image: url(../../assets/img/article1.png);
+	box-shadow: 0px 0px 5px rgba(204, 197, 185, 0.5);
+	border: 2px solid black;
+}
+
+@media (max-width:992px) {
+  .img-article-cover {
+	margin-left: -5px;
+	margin-right: -5px;
+	/* margin-top: -20px; */
+  }
+}
+
 /*       CT colors          */
 .ct-blue,
 .checkbox-blue.checkbox.checked .second-icon,
@@ -9807,7 +9822,7 @@ $ct-series-colors: (
 }
 
 .card a.website {
-	color: #1861bf;
+	color: #2d7ee0;
 }
 
 .card a.website:hover, .card a.website:focus {

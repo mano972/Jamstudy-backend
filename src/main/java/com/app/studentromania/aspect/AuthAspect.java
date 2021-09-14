@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.app.studentromania.config.AuthProperties;
 import com.app.studentromania.dao.UserProfileDAO;
 import com.app.studentromania.dto.ResponseDTO;
 import com.app.studentromania.enumtype.ErrorsEnum;
@@ -35,7 +36,9 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 @Aspect
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class JWTAuthAspect {
+public class AuthAspect {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthAspect.class);
 
 	@Autowired
 	private UserProfileDAO userProfileDAO;
@@ -46,13 +49,14 @@ public class JWTAuthAspect {
 	@Autowired
 	private LogUtils logUtils;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(JWTAuthAspect.class);
+	@Autowired
+	private AuthProperties authProperties;
 
-	@Around("@annotation(com.app.studentromania.annotation.JWTAuth)")
+	@Around("@annotation(com.app.studentromania.annotation.Auth)")
 	public Object auth(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
-		final String algorithmSecret = "amFtc3R1ZHlzZWNyZXQ";
-		final String issuer = "unistart";
+		final String algorithmSecret = authProperties.getSecret();
+		final String issuer = authProperties.getIssuer();
 
 		customRequestContext.setUserId(null);
 		customRequestContext.setTraceId(Utilities.getTraceId());

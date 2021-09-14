@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.studentromania.annotation.JWTAuth;
+import com.app.studentromania.annotation.Auth;
 import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.annotation.VerifyLoggedIn;
@@ -31,14 +31,14 @@ public class QuestionController {
 
 	@GetMapping("/faculty/{facultyId}")
 	@RestCall
-	@JWTAuth
+	@Auth
 	public ResponseEntity<String> getByFacultyId(@PathVariable String facultyId, QuestionFilter questionFilter) {
 		return questionService.getFilteredQuestionsByFacultyId(facultyId, questionFilter).createRestResponse();
 	}
 
 	@PostMapping("/{facultyId}")
 	@RestCall
-	@JWTAuth
+	@Auth
 	@VerifyLoggedIn
 	public ResponseEntity<String> createQuestion(@PathVariable String facultyId, @RequestBody QuestionDTO questionDTO) {
 		questionDTO.setFacultyId(facultyId);
@@ -47,7 +47,7 @@ public class QuestionController {
 
 	@PostMapping("/{questionId}/answer")
 	@RestCall
-	@JWTAuth
+	@Auth
 	@VerifyLoggedIn
 	public ResponseEntity<String> createAnswer(@PathVariable String questionId, @RequestBody AnswerDTO answerDTO) {
 		answerDTO.setQuestionId(questionId);
@@ -56,7 +56,7 @@ public class QuestionController {
 
 	@PutMapping("/{questionId}/upvote")
 	@RestCall
-	@JWTAuth
+	@Auth
 	public ResponseEntity<String> upvoteQuestion(@PathVariable String questionId,
 			@RequestBody QuestionDTO questionDTO) {
 		questionDTO.setQuestionId(questionId);
@@ -65,7 +65,7 @@ public class QuestionController {
 
 	@PutMapping("/{questionId}/upvoteanswer/{answerId}")
 	@RestCall
-	@JWTAuth
+	@Auth
 	public ResponseEntity<String> upvoteAnswer(@PathVariable String questionId, @PathVariable String answerId,
 			@RequestBody AnswerDTO answerDTO) {
 		answerDTO.setQuestionId(questionId);

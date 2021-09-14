@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.studentromania.annotation.JWTAuth;
+import com.app.studentromania.annotation.Auth;
 import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.annotation.VerifyLoggedIn;
@@ -46,7 +46,7 @@ public class UserProfileController {
 
 	@GetMapping
 	@RestCall
-	@JWTAuth
+	@Auth
 	@VerifyLoggedIn
 	public ResponseEntity<String> getUserProfile() {
 		return userProfileService.getUserProfile().createRestResponse();
@@ -100,7 +100,7 @@ public class UserProfileController {
 
 	@PutMapping("/change")
 	@RestCall
-	@JWTAuth
+	@Auth
 	public ResponseEntity<String> changePassword(@RequestBody UserProfileDTO userProfileDTO)
 			throws NoSuchAlgorithmException, InvalidKeySpecException {
 		return userProfileService.changePassword(userProfileDTO).createRestResponse();
@@ -108,7 +108,7 @@ public class UserProfileController {
 
 	@PutMapping("/reset")
 	@RestCall
-	@JWTAuth
+	@Auth
 	public ResponseEntity<String> resetPassword(@RequestBody UserProfileDTO userProfileDTO) {
 		return userProfileService.resetPassword(userProfileDTO).createRestResponse();
 	}
@@ -121,7 +121,7 @@ public class UserProfileController {
 
 	@PutMapping
 	@RestCall
-	@JWTAuth
+	@Auth
 	@VerifyLoggedIn
 	public ResponseEntity<String> updateUserProfile(@RequestBody UserProfileDTO userProfileDTO) {
 		return userProfileService.updateUserProfile(userProfileDTO).createRestResponse();
@@ -129,14 +129,14 @@ public class UserProfileController {
 
 	@PutMapping("/recent/{facultyId}")
 	@RestCall
-	@JWTAuth
+	@Auth
 	public ResponseEntity<String> addRecentFaculty(@PathVariable String facultyId) {
 		return userProfileService.addRecentFaculty(facultyId).createRestResponse();
 	}
 
 	@PutMapping("/favorite/{facultyId}")
 	@RestCall
-	@JWTAuth
+	@Auth
 	@VerifyLoggedIn
 	public ResponseEntity<String> addFavoriteFaculty(@PathVariable String facultyId,
 			@RequestBody UserProfileDTO userProfileDTO) {
@@ -145,7 +145,7 @@ public class UserProfileController {
 
 	@PutMapping("/notification/{facultyId}")
 	@RestCall
-	@JWTAuth
+	@Auth
 	@VerifyLoggedIn
 	public ResponseEntity<String> allowNotificationForFaculty(@PathVariable String facultyId,
 			@RequestBody UserProfileDTO userProfileDTO) {

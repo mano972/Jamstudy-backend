@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.studentromania.annotation.JWTAuth;
+import com.app.studentromania.annotation.Auth;
 import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.annotation.VerifyLoggedIn;
@@ -30,28 +30,28 @@ public class ReviewController {
 
 	@GetMapping
 	@RestCall
-	@JWTAuth
+	@Auth
 	public ResponseEntity<String> getAllReviews() {
 		return reviewService.getAllReviews().createRestResponse();
 	}
 
 	@GetMapping("/{reviewId}")
 	@RestCall
-	@JWTAuth
+	@Auth
 	public ResponseEntity<String> getByReviewId(@PathVariable String reviewId) {
 		return reviewService.getByReviewId(reviewId).createRestResponse();
 	}
 
 	@GetMapping("/faculty/{facultyId}")
 	@RestCall
-	@JWTAuth
+	@Auth
 	public ResponseEntity<String> getByFacultyId(@PathVariable String facultyId, ReviewFilter reviewFilter) {
 		return reviewService.getFilteredReviewsByFacultyId(facultyId, reviewFilter).createRestResponse();
 	}
 
 	@GetMapping("/user")
 	@RestCall
-	@JWTAuth
+	@Auth
 	@VerifyLoggedIn
 	public ResponseEntity<String> getUserReviews() {
 		return reviewService.getUserReviews().createRestResponse();
@@ -59,7 +59,7 @@ public class ReviewController {
 
 	@PostMapping("/{facultyId}")
 	@RestCall
-	@JWTAuth
+	@Auth
 	@VerifyLoggedIn
 	public ResponseEntity<String> createReview(@PathVariable String facultyId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setFacultyId(facultyId);
@@ -68,7 +68,7 @@ public class ReviewController {
 
 	@PutMapping("/{reviewId}")
 	@RestCall
-	@JWTAuth
+	@Auth
 	@VerifyLoggedIn
 	public ResponseEntity<String> updateReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setReviewId(reviewId);
@@ -77,14 +77,14 @@ public class ReviewController {
 
 	@PutMapping("/{reviewId}/report")
 	@RestCall
-	@JWTAuth
+	@Auth
 	public ResponseEntity<String> reportReview(@PathVariable String reviewId) {
 		return reviewService.reportReview(reviewId).createRestResponse();
 	}
 
 	@PutMapping("/{reviewId}/upvote")
 	@RestCall
-	@JWTAuth
+	@Auth
 	@VerifyLoggedIn
 	public ResponseEntity<String> upvoteReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
 		reviewDTO.setReviewId(reviewId);

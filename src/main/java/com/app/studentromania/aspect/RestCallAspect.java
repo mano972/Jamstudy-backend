@@ -21,10 +21,10 @@ import com.app.studentromania.util.LogUtils;
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class RestCallAspect {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(RestCallAspect.class);
+
 	@Autowired
 	private LogUtils logUtils;
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(RestCallAspect.class);
 
 	@Around("@annotation(com.app.studentromania.annotation.RestCall)")
 	public Object manageRestCall(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {

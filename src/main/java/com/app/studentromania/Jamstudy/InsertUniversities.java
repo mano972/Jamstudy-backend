@@ -47,17 +47,8 @@ public class InsertUniversities {
 	//@formatter:on
 
 	public static void main(String[] args) {
-//		List<University> univList = parseUniversities();
-//		insertUniversities(univList);
-		long x = 0;
-		long y = 0;
-		
-		do {
-			y = 200;
-			System.out.println(x);
-			x++;
-			
-		} while(x < y);
+		List<University> univList = parseUniversities();
+		insertUniversities(univList);
 	}
 
 	private static List<University> parseUniversities() {

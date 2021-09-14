@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.studentromania.annotation.JWTAuth;
+import com.app.studentromania.annotation.Auth;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.dto.NewsletterDTO;
 import com.app.studentromania.dto.SubscribeDTO;
@@ -37,7 +37,7 @@ public class NewsletterController {
 	}
 
 	@PutMapping("/subscribe")
-	@JWTAuth
+	@Auth
 	public ResponseEntity<String> addEmail(@RequestBody SubscribeDTO subscribeDTO) {
 		return newsletterService.addEmail(subscribeDTO.getEmail()).createRestResponse();
 	}

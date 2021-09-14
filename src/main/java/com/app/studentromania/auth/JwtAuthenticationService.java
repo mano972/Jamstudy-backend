@@ -3,27 +3,35 @@ package com.app.studentromania.auth;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.app.studentromania.config.AuthProperties;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 
-public class JWTAuthenticationService {
+@Service
+public class JwtAuthenticationService {
+
+	@Autowired
+	AuthProperties authProperties;
 
 //	public static Cookie createAuthCookie() {
 //		Cookie cookie = new Cookie(name, value); //name and value of the cookie
-//		cookie.setMaxAge(expire); //expire could be 60 (seconds)
+//		cookie.setMaxAge(expire);
 //		cookie.setHttpOnly(true);
 //		cookie.setSecure(true);
 //		cookie.setPath("/");
 //		return cookie;
 //	}
 
-	public static String generateJWT(String userId) {
+	public String generateJWT(String userId) {
 		String jwtToken = null;
 		try {
-			final Integer hours = 120;
-			final String algorithmSecret = "amFtc3R1ZHlzZWNyZXQ";
-			final String issuer = "unistart";
+			final Integer hours = authProperties.getExpirationHours();
+			final String algorithmSecret = authProperties.getSecret();
+			final String issuer = authProperties.getIssuer();
 
 			Algorithm algorithm = Algorithm.HMAC256(algorithmSecret);
 			Calendar cal = Calendar.getInstance();

@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.studentromania.auth.JWTAuthenticationService;
+import com.app.studentromania.auth.JwtAuthenticationService;
 import com.app.studentromania.dao.ConfigDAO;
 import com.app.studentromania.dao.FacultyDAO;
 import com.app.studentromania.dao.ReviewDAO;
@@ -75,6 +75,9 @@ public class UserProfileService {
 
 	@Autowired
 	private LogUtils logUtils;
+
+	@Autowired
+	private JwtAuthenticationService jwtAuthenticationService;
 
 	public ResponseDTO getAllUserProfiles() {
 		List<UserProfile> userProfiles = userProfileDAO.getAllUserProfiles();
@@ -181,7 +184,7 @@ public class UserProfileService {
 			userProfile.setLastLogin(new Date());
 			userProfileDAO.updateUserProfile(userProfile);
 
-			String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
+			String jwtToken = jwtAuthenticationService.generateJWT(userProfile.getUserId());
 			if (StringUtils.isBlank(jwtToken)) {
 				logUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
 				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
@@ -212,7 +215,7 @@ public class UserProfileService {
 			userProfile.setLastLogin(new Date());
 			userProfileDAO.createUserProfile(userProfile);
 
-			String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
+			String jwtToken = jwtAuthenticationService.generateJWT(userProfile.getUserId());
 			if (StringUtils.isBlank(jwtToken)) {
 				logUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
 				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
@@ -247,7 +250,7 @@ public class UserProfileService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_LOGIN_EMAIL_NOT_CONFIRMED);
 		}
 
-		String jwtToken = JWTAuthenticationService.generateJWT(userProfile.getUserId());
+		String jwtToken = jwtAuthenticationService.generateJWT(userProfile.getUserId());
 		if (StringUtils.isBlank(jwtToken)) {
 			logUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
 			return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);

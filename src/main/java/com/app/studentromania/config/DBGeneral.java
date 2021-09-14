@@ -6,20 +6,18 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.couchbase.config.AbstractCouchbaseConfiguration;
 import org.springframework.data.couchbase.core.convert.MappingCouchbaseConverter;
 
 @Configuration
-@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class DBGeneral extends AbstractCouchbaseConfiguration {
 
 	@Autowired
-	ConfigProperties configurationProperties;
+	private CouchbaseProperties couchbaseProperties;
 
-	private final String HOST = "localhost";
-	private final String BUCKET = "JamstudyBucket"; // also username
-	private final String PASSWORD = "jamstudy123";
+	private final String HOST = couchbaseProperties.getCouchbaseHost();
+	private final String BUCKET = couchbaseProperties.getCouchbaseBucket(); // also username
+	private final String PASSWORD = couchbaseProperties.getCouchbasePassword();
 
 	@Override
 	protected List<String> getBootstrapHosts() {

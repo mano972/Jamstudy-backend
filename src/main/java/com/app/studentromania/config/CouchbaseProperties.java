@@ -1,16 +1,13 @@
 package com.app.studentromania.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:config.properties")
-@ConfigurationProperties(prefix = "app")
-public class ConfigProperties {
+//@PropertySource("classpath:config.properties")
+@ConfigurationProperties(prefix = "db")
+public class CouchbaseProperties {
 
-	@Value("couchbaseHost")
 	private String couchbaseHost;
 	private String couchbaseBucket;
 	private String couchbasePassword;

@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.app.studentromania.config.MailProperties;
 import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.util.LogUtils;
 
@@ -33,8 +34,11 @@ public class EmailHandler {
 	@Autowired
 	private LogUtils logUtils;
 
-	private static final String user = "office@unistart.ro";
-	private static final String pass = "aizxrovqrmnvyxfp";
+	@Autowired
+	private MailProperties mailProperties;
+
+	private final String user = mailProperties.getUser();
+	private final String pass = mailProperties.getPassword();
 
 	public ErrorsEnum sendEmail(String to, String subject, String message) {
 		return handleSendEmail(to, subject, message, null, false);
