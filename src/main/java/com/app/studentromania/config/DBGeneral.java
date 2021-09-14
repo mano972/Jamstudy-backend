@@ -11,26 +11,30 @@ import org.springframework.data.couchbase.core.convert.MappingCouchbaseConverter
 @Configuration
 public class DBGeneral extends AbstractCouchbaseConfiguration {
 
-	@Autowired
-	private CouchbaseProperties couchbaseProperties;
+	private String host;
+	private String bucket; // also username
+	private String password;
 
-	private final String HOST = couchbaseProperties.getCouchbaseHost();
-	private final String BUCKET = couchbaseProperties.getCouchbaseBucket(); // also username
-	private final String PASSWORD = couchbaseProperties.getCouchbasePassword();
+	@Autowired
+	public DBGeneral(CouchbaseProperties couchbaseProperties) {
+		host = couchbaseProperties.getCouchbaseHost();
+		bucket = couchbaseProperties.getCouchbaseBucket();
+		password = couchbaseProperties.getCouchbasePassword();
+	}
 
 	@Override
 	protected List<String> getBootstrapHosts() {
-		return Collections.singletonList(couchbaseProperties.getCouchbaseHost());
+		return Collections.singletonList(host);
 	}
 
 	@Override
 	protected String getBucketName() {
-		return couchbaseProperties.getCouchbaseBucket();
+		return bucket;
 	}
 
 	@Override
 	protected String getBucketPassword() {
-		return couchbaseProperties.getCouchbasePassword();
+		return password;
 	}
 
 	@Override
