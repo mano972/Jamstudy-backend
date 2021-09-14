@@ -34,11 +34,14 @@ public class EmailHandler {
 	@Autowired
 	private LogUtils logUtils;
 
-	@Autowired
-	private MailProperties mailProperties;
+	private String user;
+	private String pass;
 
-	private final String user = mailProperties.getUser();
-	private final String pass = mailProperties.getPassword();
+	@Autowired
+	public EmailHandler(MailProperties mailProperties) {
+		user = mailProperties.getUser();
+		pass = mailProperties.getPassword();
+	}
 
 	public ErrorsEnum sendEmail(String to, String subject, String message) {
 		return handleSendEmail(to, subject, message, null, false);

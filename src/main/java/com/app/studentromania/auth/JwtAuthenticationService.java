@@ -15,7 +15,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 public class JwtAuthenticationService {
 
 	@Autowired
-	AuthProperties authProperties;
+	private AuthProperties authProperties;
 
 //	public static Cookie createAuthCookie() {
 //		Cookie cookie = new Cookie(name, value); //name and value of the cookie
