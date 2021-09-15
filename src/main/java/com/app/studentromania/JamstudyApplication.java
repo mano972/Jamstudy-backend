@@ -8,9 +8,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.couchbase.repository.config.EnableCouchbaseRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @EnableCouchbaseRepositories
@@ -26,17 +23,6 @@ public class JamstudyApplication extends SpringBootServletInitializer {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(JamstudyApplication.class);
-	}
-
-	@RestController
-	class HelloController {
-
-		@RequestMapping("/hello/{name}")
-		String hello(@PathVariable String name) {
-
-			return "Hi " + name + "!!!";
-
-		}
 	}
 
 }
