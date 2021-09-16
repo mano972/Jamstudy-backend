@@ -178,31 +178,15 @@ public class UserProfileService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_PASSWORD_MISSING);
 		}
 		Optional<UserProfile> userProfileOpt = userProfileDAO.getByEmail(userProfileDTO.getEmail());
+		UserProfile userProfile = null;
 		if (userProfileOpt.isPresent()) { // login
-			UserProfile userProfile = userProfileOpt.get();
+			userProfile = userProfileOpt.get();
 			mapToUserProfile(userProfileDTO, userProfile);
+			userProfile.setEmailConfirmed(true);
 			userProfile.setLastLogin(new Date());
 			userProfileDAO.updateUserProfile(userProfile);
-
-			String jwtToken = jwtAuthenticationService.generateJWT(userProfile.getUserId());
-			if (StringUtils.isBlank(jwtToken)) {
-				logUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
-				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
-			}
-
-			AuthResponseDTO authResponseDTO = new AuthResponseDTO();
-			authResponseDTO.setJwtToken(jwtToken);
-			authResponseDTO.setFirstName(userProfile.getFirstName());
-			authResponseDTO.setLastName(userProfile.getLastName());
-			authResponseDTO.setFavoriteFaculties(userProfile.getFavoriteFaculties());
-			authResponseDTO.setRecentFaculties(userProfile.getRecentFaculties());
-			authResponseDTO.setAddedReviews(userProfile.getAddedReviews());
-			authResponseDTO.setLikedReviews(userProfile.getLikedReviews());
-			JSONObject response = new JSONObject(authResponseDTO);
-
-			return ResponseDTO.createSuccessResponse(response);
 		} else { // register
-			UserProfile userProfile = new UserProfile();
+			userProfile = new UserProfile();
 			String generatedId = configDAO.generateDocumentId(Constants.USERPROFILE_PREFIX_ID);
 			userProfile.setUserId(generatedId);
 			mapToUserProfile(userProfileDTO, userProfile);
@@ -214,25 +198,25 @@ public class UserProfileService {
 			userProfile.setRegisterType(RegisterTypeEnum.FACEBOOK.getValue());
 			userProfile.setLastLogin(new Date());
 			userProfileDAO.createUserProfile(userProfile);
-
-			String jwtToken = jwtAuthenticationService.generateJWT(userProfile.getUserId());
-			if (StringUtils.isBlank(jwtToken)) {
-				logUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
-				return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
-			}
-
-			AuthResponseDTO authResponseDTO = new AuthResponseDTO();
-			authResponseDTO.setJwtToken(jwtToken);
-			authResponseDTO.setFirstName(userProfile.getFirstName());
-			authResponseDTO.setLastName(userProfile.getLastName());
-			authResponseDTO.setFavoriteFaculties(userProfile.getFavoriteFaculties());
-			authResponseDTO.setRecentFaculties(userProfile.getRecentFaculties());
-			authResponseDTO.setAddedReviews(userProfile.getAddedReviews());
-			authResponseDTO.setLikedReviews(userProfile.getLikedReviews());
-			JSONObject response = new JSONObject(authResponseDTO);
-
-			return ResponseDTO.createSuccessResponse(response);
 		}
+		
+		String jwtToken = jwtAuthenticationService.generateJWT(userProfile.getUserId());
+		if (StringUtils.isBlank(jwtToken)) {
+			logUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
+			return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
+		}
+		
+		AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+		authResponseDTO.setJwtToken(jwtToken);
+		authResponseDTO.setFirstName(userProfile.getFirstName());
+		authResponseDTO.setLastName(userProfile.getLastName());
+		authResponseDTO.setFavoriteFaculties(userProfile.getFavoriteFaculties());
+		authResponseDTO.setRecentFaculties(userProfile.getRecentFaculties());
+		authResponseDTO.setAddedReviews(userProfile.getAddedReviews());
+		authResponseDTO.setLikedReviews(userProfile.getLikedReviews());
+		JSONObject response = new JSONObject(authResponseDTO);
+		
+		return ResponseDTO.createSuccessResponse(response);
 
 	}
 
