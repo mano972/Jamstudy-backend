@@ -108,6 +108,11 @@ public class UserProfileRepo {
 	public void save(UserProfile userProfile) {
 		template.save(userProfile);
 	}
+	
+	@LogExecutionTime
+	public void delete(UserProfile userProfile) {
+		template.remove(userProfile);
+	}
 
 	@LogExecutionTime
 	public void deleteAll() {

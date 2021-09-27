@@ -2243,6 +2243,49 @@
 					"response": []
 				},
 				{
+					"name": "delete by user id (admin)",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "93E493C20FFDD3F7A2219584BE7E807EA2CA8ACCAA66A0F6C06ED24200A3B16D",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jamstudyadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host}}/v1/userprofile/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v1",
+								"userprofile",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "delete user profiles (admin)",
 					"request": {
 						"auth": {

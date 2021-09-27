@@ -1,5 +1,6 @@
 package com.app.studentromania.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -65,7 +66,7 @@ public class NewsletterService {
 	}
 
 	public ResponseDTO addEmail(String email) {
-		ErrorsEnum errors = addEmailToNewsletter(email);
+		ErrorsEnum errors = addEmailToNewsletter(email.toLowerCase());
 		if (errors != ErrorsEnum.NO_ERROR) {
 			return ResponseDTO.createErrorResponse(errors);
 		}
@@ -95,7 +96,7 @@ public class NewsletterService {
 	}
 
 	public ResponseDTO removeEmail(String email) {
-		ErrorsEnum errors = removeEmailFromNewsletter(email);
+		ErrorsEnum errors = removeEmailFromNewsletter(email.toLowerCase());
 		if (errors != ErrorsEnum.NO_ERROR) {
 			return ResponseDTO.createErrorResponse(errors);
 		}
@@ -108,16 +109,18 @@ public class NewsletterService {
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
-	public ErrorsEnum removeEmailFromNewsletter(String email) {
+	public ErrorsEnum removeEmailFromNewsletter(String emailToRemove) {
+		return removeEmailFromNewsletter(Arrays.asList(emailToRemove));
+	}
+
+	public ErrorsEnum removeEmailFromNewsletter(List<String> emailsToRemove) {
 		List<Newsletter> newsletters = newsletterRepo.findAll();
 		if (CollectionUtils.isEmpty(newsletters)) {
 			return ErrorsEnum.NEWSLETTER_NOT_FOUND;
 		}
 		Newsletter newsletter = newsletters.get(0);
 		List<String> emails = newsletter.getEmails();
-		if (emails.contains(email)) {
-			emails.remove(email);
-		}
+		emails.removeAll(emailsToRemove);
 		newsletter.setEmails(emails);
 		newsletterRepo.save(newsletter);
 		return ErrorsEnum.NO_ERROR;

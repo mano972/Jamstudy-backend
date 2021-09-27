@@ -6994,7 +6994,7 @@ body > .navbar-collapse.collapse {
 @media (max-width:992px) {
 	.modal-dialog-register {
 	  position: relative;
-	  width: 450px;
+	  width: 350px;
 	  margin: 10px auto;
 	}
 }

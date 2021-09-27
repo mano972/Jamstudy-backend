@@ -284,24 +284,24 @@
 		</div>
 	</footer>
 	
-	<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<div id="modal-header-text">
-				<i class="far fa-envelope fa-2x"></i>
+			<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<div id="modal-header-text">
+						<i class="far fa-envelope fa-2x"></i>
+					</div>
+				  </div>
+				  <div id="modal-text" class="modal-body modal-info text-center">
+					&nbsp;
+				  </div>
+				  <div id="general-modal-footer" class="modal-footer">
+					   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+				  </div>
+				</div>
+			  </div>
 			</div>
-		  </div>
-		  <div id="modal-text" class="modal-body modal-info text-center">
-			&nbsp;
-		  </div>
-		  <div id="general-modal-footer" class="modal-footer">
-			   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
 	
 				<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 <div class="modal-dialog-login">
@@ -314,7 +314,7 @@
 							<br>
 							<form class="register-form">
 								<!-- <label>Email</label> --> 
-								<input id="login-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorLoginEmail()">
+								<input id="login-email" type="email" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorLoginEmail()">
 								<small id="error-login-email" class="error-message"></small>
 								<br>
 								<!-- <label>Parolă</label> -->
@@ -346,7 +346,7 @@
 							<br>
 							<form class="register-form">
 								<!-- <label>Email</label> -->
-								<input id="register-email" type="text" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
+								<input id="register-email" type="email" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
 								<small id="error-register-email" class="error-message"></small>
 								<br>
 								<!-- <label>Parola</label> -->
@@ -366,7 +366,7 @@
 								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
 								<!-- <h5>sau</h5> -->
 								<div id="reg-line"></div>
-								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+								<button id="register-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
 							</form>
 							<div class="forgot">
 								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>

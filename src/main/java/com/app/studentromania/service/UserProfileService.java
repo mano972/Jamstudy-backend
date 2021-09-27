@@ -182,6 +182,7 @@ public class UserProfileService {
 		if (userProfileOpt.isPresent()) { // login
 			userProfile = userProfileOpt.get();
 			mapToUserProfile(userProfileDTO, userProfile);
+			userProfile.setEmail(userProfileDTO.getEmail().toLowerCase());
 			userProfile.setEmailConfirmed(true);
 			userProfile.setLastLogin(new Date());
 			userProfileDAO.updateUserProfile(userProfile);
@@ -190,6 +191,7 @@ public class UserProfileService {
 			String generatedId = configDAO.generateDocumentId(Constants.USERPROFILE_PREFIX_ID);
 			userProfile.setUserId(generatedId);
 			mapToUserProfile(userProfileDTO, userProfile);
+			userProfile.setEmail(userProfileDTO.getEmail().toLowerCase());
 			if (newsletterService.emailExists(userProfile.getEmail())) {
 				userProfile.setSubscribeToNewsletter(true);
 			}
@@ -199,13 +201,13 @@ public class UserProfileService {
 			userProfile.setLastLogin(new Date());
 			userProfileDAO.createUserProfile(userProfile);
 		}
-		
+
 		String jwtToken = jwtAuthenticationService.generateJWT(userProfile.getUserId());
 		if (StringUtils.isBlank(jwtToken)) {
 			logUtils.logMessage(LOGGER, "Error when generating JWT token for userId " + userProfile.getUserId());
 			return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
 		}
-		
+
 		AuthResponseDTO authResponseDTO = new AuthResponseDTO();
 		authResponseDTO.setJwtToken(jwtToken);
 		authResponseDTO.setFirstName(userProfile.getFirstName());
@@ -215,7 +217,7 @@ public class UserProfileService {
 		authResponseDTO.setAddedReviews(userProfile.getAddedReviews());
 		authResponseDTO.setLikedReviews(userProfile.getLikedReviews());
 		JSONObject response = new JSONObject(authResponseDTO);
-		
+
 		return ResponseDTO.createSuccessResponse(response);
 
 	}
@@ -275,6 +277,7 @@ public class UserProfileService {
 		userProfile.setUserId(generatedId);
 		String securePassword = SecurityUtils.generateSecurePassword(userProfileDTO.getPassword());
 		mapToUserProfile(userProfileDTO, userProfile);
+		userProfile.setEmail(userProfileDTO.getEmail().toLowerCase());
 		userProfile.setPassword(securePassword);
 		if (BooleanUtils.isTrue(userProfileDTO.getSubscribeToNewsletter())) {
 			newsletterService.addEmailToNewsletter(userProfile.getEmail());
@@ -524,8 +527,22 @@ public class UserProfileService {
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
 
+	public ResponseDTO deleteByUserId(String userId) {
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+		if (!userProfileOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		}
+		newsletterService.removeEmailFromNewsletter(userProfileOpt.get().getEmail());
+		userProfileDAO.deleteUserProfile(userProfileOpt.get());
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
 	public ResponseDTO deleteAllUserProfiles() {
-		// also remove from newsletter
+		List<String> emailsToRemove = new ArrayList<>();
+		for (UserProfile userProfile : userProfileDAO.getAllUserProfiles()) {
+			emailsToRemove.add(userProfile.getEmail());
+		}
+		newsletterService.removeEmailFromNewsletter(emailsToRemove);
 		userProfileDAO.deleteAllUserProfiles();
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
@@ -611,6 +628,7 @@ public class UserProfileService {
 			@Override
 			protected void configure() {
 				skip(destination.getPassword());
+				skip(destination.getEmail());
 			}
 		});
 		mapper.map(userProfileDTO, userProfile);

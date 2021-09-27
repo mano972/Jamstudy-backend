@@ -146,11 +146,12 @@ function loginWithFb(userData) {
 	
 	if (document.getElementById("login-button")) {
 		document.getElementById("login-button").disabled = true; 
+		document.getElementById("login-fb-button").disabled = true; 
 	}
 	if (document.getElementById("register-button")) {
 		document.getElementById("register-button").disabled = true; 
+		document.getElementById("register-fb-button").disabled = true; 
 	}
-	document.getElementById("login-fb-button").disabled = true; 
 	
 	$.ajax({
 		url: backendUrl,
@@ -202,11 +203,12 @@ function loginWithFb(userData) {
 		
 			if (document.getElementById("login-button")) {
 				document.getElementById("login-button").disabled = false; 
+				document.getElementById("login-fb-button").disabled = false; 
 			}
 			if (document.getElementById("register-button")) {
 				document.getElementById("register-button").disabled = false; 
+				document.getElementById("register-fb-button").disabled = false; 
 			}
-			document.getElementById("login-fb-button").disabled = false; 
 		}
 	});
 }
@@ -404,7 +406,7 @@ function register(e) {
 	}
 	
 	document.getElementById("register-button").disabled = true; 
-	document.getElementById("login-fb-button").disabled = true; 
+	document.getElementById("register-fb-button").disabled = true; 
 	
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/register");
 		
@@ -415,6 +417,9 @@ function register(e) {
 		acceptTermsAndConditions: acceptTermsAndConditions
 	};
 	
+	$("#general-modal").modal();
+	document.getElementById('modal-text').innerHTML = "Se procesează...";
+	
 	$.ajax({
 		url: backendUrl,
 		type: 'POST',
@@ -423,7 +428,6 @@ function register(e) {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (response) {
-			$("#general-modal").modal();
 			document.getElementById('modal-text').innerHTML = "Un email cu instrucțiuni a fost trimis la adresa de email introdusă.";
 			$("#general-modal").on("hidden.bs.modal", function () {
 					var currentLocationPath = window.location.pathname;
@@ -453,7 +457,7 @@ function register(e) {
 			// }
 		
 			document.getElementById("register-button").disabled = false;
-			document.getElementById("login-fb-button").disabled = false; 			
+			document.getElementById("register-fb-button").disabled = false; 			
 		}
 	});
 	

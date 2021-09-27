@@ -154,6 +154,12 @@ public class UserProfileController {
 
 	@DeleteMapping
 	@VerifyAdmin
+	public ResponseEntity<String> deleteByUserId(@PathVariable String userId) {
+		return userProfileService.deleteByUserId(userId).createRestResponse();
+	}
+
+	@DeleteMapping
+	@VerifyAdmin
 	public ResponseEntity<String> deleteAllUserProfiles() {
 		return userProfileService.deleteAllUserProfiles().createRestResponse();
 	}

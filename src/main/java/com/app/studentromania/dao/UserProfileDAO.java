@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.app.studentromania.annotation.LogExecutionTime;
-import com.app.studentromania.annotation.LogParameters;
 import com.app.studentromania.model.UserProfile;
 import com.app.studentromania.repo.UserProfileRepo;
 import com.app.studentromania.util.LogUtils;
@@ -21,47 +19,34 @@ public class UserProfileDAO {
 
 	@Autowired
 	private UserProfileRepo userProfileRepo;
-	
+
 	@Autowired
 	private LogUtils logUtils;
 
-	@LogExecutionTime
 	public List<UserProfile> getAllUserProfiles() {
 		return userProfileRepo.findAll();
 	}
 
-	@LogExecutionTime
-	@LogParameters
 	public Optional<UserProfile> getByUserId(String userId) {
 		return userProfileRepo.findByUserId(userId).stream().findFirst();
 	}
 
-	@LogExecutionTime
-	@LogParameters
 	public Optional<UserProfile> getByUserName(String userName) {
 		return userProfileRepo.findByUserName(userName).stream().findFirst();
 	}
 
-	@LogExecutionTime
-	@LogParameters
 	public Optional<UserProfile> getByEmail(String email) {
-		return userProfileRepo.findByEmail(email).stream().findFirst();
+		return userProfileRepo.findByEmail(email.toLowerCase()).stream().findFirst();
 	}
 
-	@LogExecutionTime
-	@LogParameters
 	public Optional<UserProfile> getByEmailConfirmationToken(String token) {
 		return userProfileRepo.findByEmailConfirmationToken(token).stream().findFirst();
 	}
 
-	@LogExecutionTime
-	@LogParameters
 	public Optional<UserProfile> getByPasswordResetToken(String token) {
 		return userProfileRepo.findByPasswordResetToken(token).stream().findFirst();
 	}
 
-	@LogExecutionTime
-	@LogParameters
 	public List<UserProfile> getUsersToNotify() {
 		return userProfileRepo.findUsersToNotify();
 	}
@@ -82,7 +67,11 @@ public class UserProfileDAO {
 		userProfileRepo.save(userProfile);
 	}
 
-	@LogExecutionTime
+	public void deleteUserProfile(UserProfile userProfile) {
+		userProfileRepo.delete(userProfile);
+		logUtils.logMessage(LOGGER, "User Profile " + userProfile.getUserId() + " was deleted!");
+	}
+
 	public void deleteAllUserProfiles() {
 		userProfileRepo.deleteAll();
 	}
