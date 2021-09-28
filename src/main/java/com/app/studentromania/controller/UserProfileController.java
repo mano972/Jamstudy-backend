@@ -152,7 +152,7 @@ public class UserProfileController {
 		return userProfileService.allowNotificationForFaculty(facultyId, userProfileDTO).createRestResponse();
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/{userId}")
 	@VerifyAdmin
 	public ResponseEntity<String> deleteByUserId(@PathVariable String userId) {
 		return userProfileService.deleteByUserId(userId).createRestResponse();
