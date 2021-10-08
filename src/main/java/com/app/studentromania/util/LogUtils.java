@@ -18,43 +18,42 @@ public class LogUtils {
 	private CustomRequestContext customRequestContext;
 
 	public void logMessage(Logger logger, String message) {
-		logger.info(message + ". TraceId [" + customRequestContext.getTraceId() + "]");
+		logger.info(message + ". TraceId [" + getTraceId() + "]");
 	}
 
 	public void logAuth(Logger logger, String endPointName, String userId) {
 		logger.info("*** [" + userId + "] Authorizing for <" + endPointName + "> at [" + new Date() + "]"
-				+ ". TraceId [" + customRequestContext.getTraceId() + "]");
+				+ ". TraceId [" + getTraceId() + "]");
 	}
 
 	public void logStart(Logger logger, String endPointName) {
 		logger.info("*** [" + getUserId() + "] Starting <" + endPointName + "> at [" + new Date() + "]" + ". TraceId ["
-				+ customRequestContext.getTraceId() + "]");
+				+ getTraceId() + "]");
 	}
 
 	public void logSuccess(Logger logger, String endPointName) {
 		logger.info("*** [" + getUserId() + "]  Finished with success <" + endPointName + "> at [" + new Date() + "]"
-				+ ". TraceId [" + customRequestContext.getTraceId() + "]");
+				+ ". TraceId [" + getTraceId() + "]");
 	}
 
 	public void logError(Logger logger, String endPointName, Throwable e) {
 		logger.error("*** [" + getUserId() + "] Failed to run <" + endPointName + "> at [" + new Date() + "]"
-				+ ". TraceId [" + customRequestContext.getTraceId() + "]", e);
+				+ ". TraceId [" + getTraceId() + "]", e);
 	}
 
 	public void logExecutionTime(Logger logger, String endPointName, long totalTime) {
 		logger.info(">>> Execution time for <" + endPointName + "> is " + getDurationInSeconds(totalTime) + " seconds"
-				+ ". TraceId [" + customRequestContext.getTraceId() + "]");
+				+ ". TraceId [" + getTraceId() + "]");
 	}
 
 	public void logDataBaseExecutionTime(Logger logger, String methodName, long totalTime) {
 		logger.info(">>> Execution time for database call <" + methodName + "> is " + getDurationInSeconds(totalTime)
-				+ " seconds" + ". TraceId [" + customRequestContext.getTraceId() + "]");
+				+ " seconds" + ". TraceId [" + getTraceId() + "]");
 	}
 
 	public void logEndPointExecutionTime(Logger logger, String endPointName, long totalTime) {
 		logger.info(">>> *** [" + getUserId() + "] Execution time for endpoint <" + endPointName + "> is "
-				+ getDurationInSeconds(totalTime) + " seconds" + ". TraceId [" + customRequestContext.getTraceId()
-				+ "]");
+				+ getDurationInSeconds(totalTime) + " seconds" + ". TraceId [" + getTraceId() + "]");
 	}
 
 	public void logParameter(Logger logger, String paramaterName, String parameterValue) {
@@ -72,6 +71,10 @@ public class LogUtils {
 		} else {
 			return "visitor";
 		}
+	}
+
+	private String getTraceId() {
+		return customRequestContext.getTraceId();
 	}
 
 }

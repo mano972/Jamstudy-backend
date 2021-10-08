@@ -184,6 +184,11 @@ public class UserProfileService {
 			mapToUserProfile(userProfileDTO, userProfile);
 			userProfile.setEmail(userProfileDTO.getEmail().toLowerCase());
 			userProfile.setEmailConfirmed(true);
+			if (BooleanUtils.isTrue(userProfileDTO.getSubscribeToNewsletter())) {
+				newsletterService.addEmailToNewsletter(userProfile.getEmail());
+			} else if (newsletterService.emailExists(userProfile.getEmail())) {
+				userProfile.setSubscribeToNewsletter(true);
+			}
 			userProfile.setLastLogin(new Date());
 			userProfileDAO.updateUserProfile(userProfile);
 		} else { // register
@@ -192,7 +197,9 @@ public class UserProfileService {
 			userProfile.setUserId(generatedId);
 			mapToUserProfile(userProfileDTO, userProfile);
 			userProfile.setEmail(userProfileDTO.getEmail().toLowerCase());
-			if (newsletterService.emailExists(userProfile.getEmail())) {
+			if (BooleanUtils.isTrue(userProfileDTO.getSubscribeToNewsletter())) {
+				newsletterService.addEmailToNewsletter(userProfile.getEmail());
+			} else if (newsletterService.emailExists(userProfile.getEmail())) {
 				userProfile.setSubscribeToNewsletter(true);
 			}
 			userProfile.setAcceptTermsAndConditions(true);

@@ -17,9 +17,9 @@ public class DBGeneral extends AbstractCouchbaseConfiguration {
 
 	@Autowired
 	public DBGeneral(CouchbaseProperties couchbaseProperties) {
-		host = couchbaseProperties.getCouchbaseHost();
-		bucket = couchbaseProperties.getCouchbaseBucket();
-		password = couchbaseProperties.getCouchbasePassword();
+		this.host = couchbaseProperties.getCouchbaseHost();
+		this.bucket = couchbaseProperties.getCouchbaseBucket();
+		this.password = couchbaseProperties.getCouchbasePassword();
 	}
 
 	@Override

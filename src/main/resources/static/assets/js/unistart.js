@@ -137,11 +137,21 @@ function loginWithFb(userData) {
 	var email = userData.email;
 	var firstName = userData.first_name;
 	var lastName = userData.last_name;
+	
+	subscribeToNewsletter = false;
+	if (document.getElementById("register-button")) {
+		var newsletterCheckBoxElementId = $("label[for=newsletter-check]").attr("for");
+		var newsletterCheckBoxElement = $("input[id='" + newsletterCheckBoxElementId + "']");
+		if (newsletterCheckBoxElement.prop("checked") === true) {
+			subscribeToNewsletter = true;;
+		}
+	}
 		
 	var body = {
 		email: email,
 		firstName: firstName,
-		lastName: lastName
+		lastName: lastName,
+		subscribeToNewsletter: subscribeToNewsletter
 	};
 	
 	if (document.getElementById("login-button")) {
@@ -428,7 +438,7 @@ function register(e) {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (response) {
-			document.getElementById('modal-text').innerHTML = "Un email cu instrucțiuni a fost trimis la adresa de email introdusă.";
+			document.getElementById('modal-text').innerHTML = "Un email cu instrucțiuni a fost trimis la adresa de email introdusă. Te rugăm să verifici și în SPAM.";
 			$("#general-modal").on("hidden.bs.modal", function () {
 					var currentLocationPath = window.location.pathname;
 				if (currentLocationPath.includes("register")) {
