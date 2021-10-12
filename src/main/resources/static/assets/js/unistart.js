@@ -338,7 +338,7 @@ function login(e) {
 				if (error.responseJSON.control) {
 					var errorDescription = error.responseJSON.control.errorDescription;
 					if (error.responseJSON.control.errorCode === -83) { // email address was not yet confirmed
-						var resendEmailString = '<a onclick="resendConfirmationEmail(&quot;'+userEmail+'&quot;, null)"><b>Retrimite email de confirmare.</b></a>';
+						var resendEmailString = '<a onclick="resendConfirmationEmail(&quot;'+userEmail+'&quot;, null)"><b>&nbspRetrimite email de confirmare.</b></a>';
 						errorDescription = errorDescription + resendEmailString;
 					}
 					errorLogin.innerHTML = errorDescription;
@@ -442,7 +442,7 @@ function register(e) {
 			$("#general-modal").modal();
 			document.getElementById('modal-text').innerHTML = "Un email cu instrucțiuni a fost trimis la adresa de email introdusă. Te rugăm să verifici și în SPAM.";
 			$("#general-modal").on("hidden.bs.modal", function () {
-					var currentLocationPath = window.location.pathname;
+				var currentLocationPath = window.location.pathname;
 				if (currentLocationPath.includes("register")) {
 					var urlHomepageRedirect = "./";
 					window.location.replace(urlHomepageRedirect);
@@ -713,7 +713,8 @@ function resendConfirmationEmail(email, token) {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (response) {
-			
+			$("#general-modal").modal();
+			document.getElementById('modal-text').innerHTML = "Un email cu instrucțiuni a fost trimis la adresa de email introdusă. Te rugăm să verifici și în SPAM.";
 		},
 		
 		error: function(error) {

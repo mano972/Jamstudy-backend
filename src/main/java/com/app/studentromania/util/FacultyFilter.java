@@ -166,26 +166,11 @@ public class FacultyFilter {
 		return 0;
 	}
 
-//	public String getSearchByClause() {
-//		if (StringUtils.isEmpty(searchBy)) {
-//			return StringUtils.EMPTY;
-//		}
-//		if (isJoin()) {
-//			return " and (UPPER(f.facultyName) LIKE '%" + searchBy.toUpperCase()
-//					+ "%' or UPPER(f.facultyShortname) LIKE '%" + searchBy.toUpperCase()
-//					+ "%' or UPPER(f.universityName) LIKE '%" + searchBy.toUpperCase()
-//					+ "%' or UPPER(f.facultyCity) LIKE '%" + searchBy.toUpperCase() + "%')";
-//		}
-//		return " and (UPPER(facultyName) LIKE '%" + searchBy.toUpperCase() + "%' or UPPER(facultyShortname) LIKE '%"
-//				+ searchBy.toUpperCase() + "%' or UPPER(universityName) LIKE '%" + searchBy.toUpperCase() + "%' "
-//				+ " or UPPER(facultyCity) LIKE '%" + searchBy.toUpperCase() + "%') ";
-//	}
-
 	public String getSearchByClause() {
 		if (StringUtils.isEmpty(searchBy)) {
 			return StringUtils.EMPTY;
 		}
-		searchBy = searchBy.replaceAll("[ĂăÂâ]", "A").replaceAll("[ŞşȘș]", "S").replaceAll("[ŢţȚț]", "T");
+		searchBy = searchBy.replaceAll("[ĂăÂâ]", "A").replaceAll("[ŞşȘș]", "S").replaceAll("[ŢţȚț]", "T").replaceAll("[Îî]", "I");
 		if (isJoin()) {
 			return " and (UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.facultyName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T'), '[Îî]', 'I')) LIKE '%"
 					+ searchBy.toUpperCase().trim() + "%' "
