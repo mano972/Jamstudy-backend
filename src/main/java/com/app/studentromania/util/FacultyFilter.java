@@ -187,22 +187,22 @@ public class FacultyFilter {
 		}
 		searchBy = searchBy.replaceAll("[ĂăÂâ]", "A").replaceAll("[ŞşȘș]", "S").replaceAll("[ŢţȚț]", "T");
 		if (isJoin()) {
-			return " and (UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.facultyName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+			return " and (UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.facultyName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T'), '[Îî]', 'I')) LIKE '%"
 					+ searchBy.toUpperCase().trim() + "%' "
-					+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.universityName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+					+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.universityName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T'), '[Îî]', 'I')) LIKE '%"
 					+ searchBy.toUpperCase().trim() + "%' "
-					+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.facultyShortname, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+					+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.facultyShortname, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T'), '[Îî]', 'I')) LIKE '%"
 					+ searchBy.toUpperCase().trim() + "%' "
-					+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.facultyCity, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+					+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(f.facultyCity, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T'), '[Îî]', 'I')) LIKE '%"
 					+ searchBy.toUpperCase().trim() + "%') ";
 		}
-		return " and (UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(facultyName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+		return " and (UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(facultyName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T'), '[Îî]', 'I')) LIKE '%"
 				+ searchBy.toUpperCase().trim() + "%' "
-				+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(universityName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+				+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(universityName, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T'), '[Îî]', 'I')) LIKE '%"
 				+ searchBy.toUpperCase().trim() + "%' "
-				+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(facultyShortname, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+				+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(facultyShortname, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T'), '[Îî]', 'I')) LIKE '%"
 				+ searchBy.toUpperCase().trim() + "%' "
-				+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(facultyCity, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T')) LIKE '%"
+				+ " or UPPER(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(facultyCity, '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T'), '[Îî]', 'I')) LIKE '%"
 				+ searchBy.toUpperCase().trim() + "%') ";
 	}
 

@@ -83,8 +83,10 @@
 									<div class="content">
 										<!-- <img id="floating-card-icon-2" src="./assets/img/floating-card-icon.png"></img> -->
 										<h4 class="text-left">Evaluează experienţa la această facultate, 100% anonim</h4>
-										<h5 class="text-left">Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. 
-										<h5 class="text-left">Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum. Evaluarea ta poate face diferența. Durează doar un minut.</h5>
+										<div id="review-motivation-text-2">
+											<h5 class="text-left">Adu-ți aminte cât de mult te-ai gândit ce facultate să urmezi și cât de mult ți-ai fi dorit să ştii cum se desfașoară orele, cât de pregatiți sunt profesorii, ce oportunități de job-uri vei avea, situația asociațiilor studențești sau viața de cămin. 
+											<h5 class="text-left">Acum ai ocazia să adaugi o evaluare pentru facultatea aleasă si să ajuți cu informații un elev care dorește să o ia pe același drum. Evaluarea ta poate face diferența. Durează doar un minut.</h5>
+										</div>
 										<div id="progress-2" class="progress">
 											<div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
 												<span><b>Pasul 1 din 3</b></span>
@@ -809,13 +811,6 @@ showTab(currentTab); // Display the current tab
 var facultyId;
 var reviewId;
 
-  <!-- $(window).load(function() { -->
-  <!-- console.log("st"); -->
-    <!-- $('#load1').hide(); -->
-	  <!-- console.log("fn"); -->
-  <!-- }); -->
-
-
 $(document).ready(function() {
 
 	redirectIfNotLoggedIn();
@@ -1414,6 +1409,11 @@ function validateEmail(email) {
 
 function showTab(n) {
 	var step = n + 1;
+	if (step > 1) {
+		if (document.getElementById("review-motivation-text-2")) {
+			document.getElementById("review-motivation-text-2").style.display = "none";
+		}
+	}
 	increaseReviewStatistic(step);
 	gtag('event', 'add_review', {
 	  'step': step,

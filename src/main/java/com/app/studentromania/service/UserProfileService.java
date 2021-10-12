@@ -292,7 +292,6 @@ public class UserProfileService {
 			userProfile.setSubscribeToNewsletter(true);
 		}
 		userProfile.setRegisterType(RegisterTypeEnum.REGULAR.getValue());
-//		userProfile.setAcceptTermsAndConditions(true);
 		createRegistrationVerificationToken(userProfile);
 		userProfileDAO.createUserProfile(userProfile);
 		ErrorsEnum emailError = sendRegistrationConfirmationEmail(userProfile);
@@ -306,11 +305,16 @@ public class UserProfileService {
 	}
 
 	public ResponseDTO resendConfirmation(UserProfileDTO userProfileDTO) {
-		Optional<UserProfile> userProfileOpt = userProfileDAO
-				.getByEmailConfirmationToken(userProfileDTO.getEmailConfirmationToken());
+		Optional<UserProfile> userProfileOpt = Optional.empty();
+		if (StringUtils.isNotEmpty(userProfileDTO.getEmail())) {
+			userProfileOpt = userProfileDAO.getByEmail(userProfileDTO.getEmail());
+		} else if (StringUtils.isNotEmpty(userProfileDTO.getEmailConfirmationToken())) {
+			userProfileOpt = userProfileDAO.getByEmailConfirmationToken(userProfileDTO.getEmailConfirmationToken());
+		}
 		if (!userProfileOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_CONFIRMATION_FAILED);
 		}
+		
 		UserProfile userProfile = userProfileOpt.get();
 		createRegistrationVerificationToken(userProfile);
 		userProfileDAO.updateUserProfile(userProfile);

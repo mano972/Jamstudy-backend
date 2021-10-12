@@ -337,6 +337,10 @@ function login(e) {
 			if (error.responseJSON) {
 				if (error.responseJSON.control) {
 					var errorDescription = error.responseJSON.control.errorDescription;
+					if (error.responseJSON.control.errorCode === -83) { // email address was not yet confirmed
+						var resendEmailString = '<a onclick="resendConfirmationEmail(&quot;'+userEmail+'&quot;, null)"><b>Retrimite email de confirmare.</b></a>';
+						errorDescription = errorDescription + resendEmailString;
+					}
 					errorLogin.innerHTML = errorDescription;
 				} else {
 					errorLogin.innerHTML = "A apărut o eroare. Te rugăm să încerci din nou mai târziu.";
@@ -427,9 +431,6 @@ function register(e) {
 		acceptTermsAndConditions: acceptTermsAndConditions
 	};
 	
-	$("#general-modal").modal();
-	document.getElementById('modal-text').innerHTML = "Se procesează...";
-	
 	$.ajax({
 		url: backendUrl,
 		type: 'POST',
@@ -438,6 +439,7 @@ function register(e) {
 		crossDomain: true,
 		data: JSON.stringify(body),
 		success: function (response) {
+			$("#general-modal").modal();
 			document.getElementById('modal-text').innerHTML = "Un email cu instrucțiuni a fost trimis la adresa de email introdusă. Te rugăm să verifici și în SPAM.";
 			$("#general-modal").on("hidden.bs.modal", function () {
 					var currentLocationPath = window.location.pathname;
@@ -473,6 +475,7 @@ function register(e) {
 	
 }
 
+// token can be empty, if user changes password when logged in. token exists only when user forgot password.
 function changePass(e, token) {
 	e.preventDefault();
 
@@ -556,6 +559,7 @@ function changePass(e, token) {
 	
 }
 
+// send email with password reset instructions
 function resetPass(e) {
 	e.preventDefault();
 	
@@ -692,10 +696,12 @@ function verifyReset(token) {
 
 }
 
-function resendConfirmationEmail(token) {
+// either email or token
+function resendConfirmationEmail(email, token) {
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/resendconfirmation");
 		
 	var body = {
+		email: email,
 		emailConfirmationToken: token
 	};
 	
