@@ -1070,6 +1070,66 @@ function addToNotifications(el, facultyId, i) {
 	
 }
 
+function initiateAutocomplete() {
+
+	let inputValue = '';
+	let showNoResults = false;
+
+	const autocomplete = document.querySelector('#search-fieldset');
+	const input = document.querySelector('#search-input');
+	<!-- const noResults = document.querySelector('#no-results'); -->
+
+	new Autocomplete('#search-fieldset', {
+	
+		search: input => {
+			var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
+			if (input) {
+				backendUrl.searchParams.append("searchBy", input);
+			}
+			var numberOfSuggestions = 5;
+			backendUrl.searchParams.append("limit", numberOfSuggestions);
+
+			return new Promise(resolve => {
+			  if (input.length < 3) {
+				return resolve([])
+			  }
+
+			  fetch(backendUrl)
+				.then(response => response.json())
+				.then(data => {
+				  const results = data.result.faculties.map((result) => {
+					return result;
+				  })
+				  resolve(results)
+				})
+			})
+		},
+		renderResult: (result, props) => {
+			return ' <li ' + props + '>	<div>	 ' + result.facultyName + '	</div>	<small class="text-muted">	' + result.universityName + '	</small></li>	'
+		},
+		getResultValue: result => result.facultyName,
+		onSubmit: result => {
+			var urlProfileRedirect = "./profile.html?id=" + result.facultyId;
+			location.href = urlProfileRedirect;
+		}
+	
+	
+	  
+	  <!-- onUpdate: (results, selectedIndex) => { -->
+		<!-- showNoResults = inputValue && results.length === 0 -->
+		
+		<!-- if (showNoResults) { -->
+		  <!-- autocomplete.classList.add('no-results') -->
+		  <!-- input.setAttribute('aria-describedby', 'no-results') -->
+		<!-- } else { -->
+		  <!-- autocomplete.classList.remove('no-results') -->
+		  <!-- input.removeAttribute('aria-describedby') -->
+		<!-- } -->
+	  <!-- } -->
+	})
+
+}
+
 function goToReviews(facultyId) {
 	var urlFacultyRedirect = "./profile.html?id=" + facultyId + "#reviews";
 	location.href = urlFacultyRedirect;

@@ -1226,6 +1226,89 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
   }
 }
 
+  /*      Auto-complete         */
+
+/* #no-results { */
+  /* display: none; */
+  /* position: absolute; */
+  /* z-index: 1; */
+  /* width: 100%; */
+  /* top: 100%; */
+/* } */
+
+/* .no-results #no-results { */
+  /* display: block; */
+/* } */
+
+#search-input { 
+	z-index: 2000;
+}
+
+.autocomplete-result-list {
+  margin: 0;
+  border: 2px solid #eaeaea;
+  padding: 0;
+  box-sizing: border-box;
+  max-height: 396px;
+  overflow-y: auto;
+  background-color: #fff;
+  list-style: none;
+  box-shadow: 0 7px 11px rgba(0, 0, 0, 0.16);
+  z-index: 1010 !important;
+}
+
+[data-position="below"] .autocomplete-result-list {
+  /* margin-top: -1px; */
+  border-top-color: transparent;
+  border-radius: 0 0 8px 8px;
+  padding-bottom: 8px;
+}
+
+[data-position="above"] .autocomplete-result-list {
+  /* margin-bottom: -1px; */
+  border-bottom-color: transparent;
+  border-radius: 8px 8px 0 0;
+  padding-top: 8px;
+}
+
+/* Loading spinner */
+#search-fieldset[data-loading="true"]::after {
+  content: "";
+  border: 3px solid rgba(0, 0, 0, 0.12);
+  border-right: 3px solid rgba(0, 0, 0, 0.48);
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 35px;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: rotate 1s infinite linear;
+}
+
+/* Single result item */
+.autocomplete-result {
+  cursor: default;
+  padding: 9px 9px 9px 22px;
+  /* background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjY2NjIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+'); */
+  /* background-repeat: no-repeat; */
+  /* background-position: 12px center; */
+}
+
+.autocomplete-result:hover,
+.autocomplete-result[aria-selected="true"] {
+  background-color: #f5d487;
+}
+
+@keyframes rotate {
+  from {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateY(-50%) rotate(359deg);
+  }
+}
+
 /*       CT colors          */
 .ct-blue,
 .checkbox-blue.checkbox.checked .second-icon,

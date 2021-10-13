@@ -90,7 +90,10 @@
 									<div class="content">
 										<h5 class="title">Caută după cuvinte cheie</h5>
 										<div class="form-group">
-											<input id="search-input" type="text" value="" placeholder="Facultate, Universitate, Oraș ...." class="form-control" spellcheck="false"/>
+											<fieldset id="search-fieldset" class="search-fieldset">
+												<input id="search-input" type="text" value="" placeholder="Facultate, Universitate, Oraș ...." class="form-control" spellcheck="false"/>
+												<ul class="autocomplete-result-list"></ul>
+											</fieldset>
 										</div>	
 										<h5 class="title">Sau vezi ce facultate ți se potrivește după domeniul de studiu si oraș</h5>
 										<img src="./assets/img/graduation_cap_small.png" style="display:inline-block; vertical-align: middle; margin-right: 10px" alt="Domeniu de studiu"></img>
@@ -478,6 +481,7 @@
 </body>
 
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
 
 <script>
 
@@ -494,6 +498,7 @@ $(document).ready(function() {
 	myAccountText();
 	loadUser();
 	loadTopFaculties();
+	initiateAutocomplete();
 	homePageStatistic();
 });
 
