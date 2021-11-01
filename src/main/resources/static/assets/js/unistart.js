@@ -1085,6 +1085,7 @@ function initiateAutocomplete() {
 			var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
 			if (input) {
 				backendUrl.searchParams.append("searchBy", input);
+				backendUrl.searchParams.append("orderBy", "viewsCount,desc");
 			}
 			var numberOfSuggestions = 5;
 			backendUrl.searchParams.append("limit", numberOfSuggestions);

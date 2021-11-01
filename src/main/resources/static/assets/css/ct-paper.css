@@ -1298,6 +1298,7 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 .autocomplete-result:hover,
 .autocomplete-result[aria-selected="true"] {
   background-color: #f5d487;
+  cursor: pointer;
 }
 
 @keyframes rotate {
