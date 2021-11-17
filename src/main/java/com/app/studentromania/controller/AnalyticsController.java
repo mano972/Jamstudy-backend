@@ -1,6 +1,9 @@
 package com.app.studentromania.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
+import com.app.studentromania.dto.ResponseDTO;
 import com.app.studentromania.service.AnalyticsService;
 
 @CrossOrigin()
@@ -53,7 +59,7 @@ public class AnalyticsController {
 	public ResponseEntity<String> reviewIntentionStatistic(@RequestParam int s) {
 		return analyticsService.increaseReviewStatistic(s).createRestResponse();
 	}
-	
+
 	@PutMapping("/profile")
 	public ResponseEntity<String> facultyViewCount(@RequestParam String facultyId) {
 		return analyticsService.increaseFacultyViewCountStatistic(facultyId).createRestResponse();
@@ -63,6 +69,16 @@ public class AnalyticsController {
 	@VerifyAdmin
 	public ResponseEntity<String> getAnalytics() {
 		return analyticsService.getAnalytics().createRestResponse();
+	}
+
+	@GetMapping(value = "/file", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@RestCall
+	public @ResponseBody ResponseEntity<?> getAnalyticsFile() throws IOException {
+		ResponseDTO responseDTO = analyticsService.getAnalyticsFile();
+		if (responseDTO.getJsonObject() != null) {
+			return responseDTO.createRestResponse();
+		}
+		return responseDTO.createMediaRestResponse();
 	}
 
 }

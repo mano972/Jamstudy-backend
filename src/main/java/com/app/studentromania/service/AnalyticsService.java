@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
@@ -180,6 +182,15 @@ public class AnalyticsService {
 		JSONObject response = new JSONObject(analytics);
 
 		return ResponseDTO.createSuccessResponse(response);
+	}
+
+	public ResponseDTO getAnalyticsFile() throws IOException {
+		File file = new File(Constants.ANALYTICS_EXCEL_PATH);
+		if (file.exists()) {
+			InputStream in = getClass().getClassLoader().getResourceAsStream(Constants.ANALYTICS_EXCEL_PATH);
+			return ResponseDTO.createMediaSuccessResponse(IOUtils.toByteArray(in));
+		}
+		return ResponseDTO.createErrorResponse(ErrorsEnum.ANALYTICS_EXCEL_DOCUMENT_NOT_FOUND);
 	}
 
 	private ErrorsEnum createAnalyticsExcelDocument() {

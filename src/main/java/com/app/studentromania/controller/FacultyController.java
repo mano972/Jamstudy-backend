@@ -38,7 +38,7 @@ public class FacultyController {
 	public ResponseEntity<String> getFilteredFaculties(FacultyFilter facultyFilter) {
 		return facultyService.getFilteredFaculties(facultyFilter).createRestResponse();
 	}
-	
+
 	@GetMapping("/details")
 	@RestCall
 	@Auth
@@ -86,9 +86,9 @@ public class FacultyController {
 	public @ResponseBody ResponseEntity<?> getFacultyLogo(@PathVariable String facultyId) throws IOException {
 		ResponseDTO responseDTO = facultyService.getFacultyLogo(facultyId);
 		if (responseDTO.getJsonObject() != null) {
-			return facultyService.getFacultyLogo(facultyId).createRestResponse();
+			return responseDTO.createRestResponse();
 		}
-		return facultyService.getFacultyLogo(facultyId).createMediaRestResponse();
+		return responseDTO.createMediaRestResponse();
 	}
 
 	@PostMapping("/{universityId}")
