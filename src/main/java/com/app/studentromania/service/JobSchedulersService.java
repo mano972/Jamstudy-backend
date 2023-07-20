@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.app.studentromania.util.LogUtils;
+import java.util.Date;
 
 @Service
 public class JobSchedulersService {
@@ -15,15 +15,12 @@ public class JobSchedulersService {
 
 	@Autowired
 	private FacultyService facultyService;
-	
-	@Autowired
-	private LogUtils logUtils;
 
 	@Scheduled(fixedDelay = 1_800_000)
 	public void facultyReviewDetailsUpdateScheduler() {
-		logUtils.logStart(LOGGER, "facultyReviewDetailsUpdateScheduler");
+		LOGGER.info("Starting <facultyReviewDetailsUpdateScheduler> at [" + new Date() + "]");
 		facultyService.updateAllFacultiesReviewDetails();
-		logUtils.logSuccess(LOGGER, "facultyReviewDetailsUpdateScheduler");
+		LOGGER.info("Finished with success <facultyReviewDetailsUpdateScheduler> at [" + new Date() + "]");
 	}
 
 }
