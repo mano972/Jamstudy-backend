@@ -1276,6 +1276,32 @@ function increaseReviewStatistic(step) {
 	});
 }
 
+function setBusinessText() {
+	var backendUrl = new URL(backendUrlRoot + "/v1/config/business");
+	$.ajax({
+		url: backendUrl,
+		type: "GET",
+		success: function(response) {
+			if (response.control.errorCode === 0) {
+				if (document.getElementById('businessTextId') !== null) {
+					document.getElementById("businessTextId").innerHTML = response.result.configValue;
+				}
+				if (document.getElementById('businessTextId1') !== null) {
+					document.getElementById("businessTextId1").innerHTML = response.result.configValue;
+				}
+				if (document.getElementById('businessTextId2') !== null) {
+					document.getElementById("businessTextId2").innerHTML = response.result.configValue;
+				}
+			} else {
+				console.log(response.control.errorDescription);
+			}
+		},
+		error: function(error) {
+		}
+	});
+
+}
+
 function getUField(key) {
 	var u = localStorage.getItem("u");
 	if (u) {

@@ -38,6 +38,12 @@ public class ConfigController {
 		return configService.getByConfigKey(configKey).createRestResponse();
 	}
 
+	@GetMapping("/business")
+	@RestCall
+	public ResponseEntity<String> getBusiness() {
+		return configService.getByConfigKey("business").createRestResponse();
+	}
+
 	@PostMapping
 	@RestCall
 	@VerifyAdmin
