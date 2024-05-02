@@ -9,6 +9,7 @@
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
+	<meta name="google-signin-client_id" content="801355334630-8i08j4vg23mh4b1eogrs5c0jrm5etb2n.apps.googleusercontent.com">
     
     <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet" />
     <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
@@ -263,6 +264,7 @@
 								<!-- <h5>sau</h5> -->
 								<div id="reg-line"></div>
 								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+								<button id="login-google-button" class="g-signin2 btn btn-google btn-block btn-fill" data-onsuccess="googleLogin"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
 							</form>
 							<div class="forgot">
 								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
@@ -306,6 +308,7 @@
 								<!-- <h5>sau</h5> -->
 								<div id="reg-line"></div>
 								<button id="register-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
+								<button id="register-google-button" class="g-signin2 btn btn-google btn-block btn-fill" data-onsuccess="googleLogin"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
 							</form>
 							<div class="forgot">
 								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
@@ -333,6 +336,7 @@
 <script src="./assets/js/ct-paper.js"></script>
 <script src="./assets/js/demo.js"></script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 
 <script type="text/javascript">
 

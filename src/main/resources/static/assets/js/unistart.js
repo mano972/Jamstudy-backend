@@ -48,6 +48,7 @@ window.fbAsyncInit = function() {
     });
 };
 
+
 // Load the JavaScript SDK asynchronously
 (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -126,13 +127,22 @@ function fbLogin(e) {
 function getFbUserData(){
     FB.api('/me', {locale: 'en_US', fields: 'id,first_name,last_name,email'},
     function (response) {
-		loginWithFb(response);
+		loginWithSocialMediaAccount(response, "FACEBOOK");
     });
 }
 
-function loginWithFb(userData) {
+function googleLogin(googleUser) {
+	const profile = googleUser.getBasicProfile();
+	var userData = {};
+	userData.email = profile.getEmail();
+	userData.first_name = profile.getGivenName();
+	userData.last_name = profile.getFamilyName();
+	loginWithSocialMediaAccount(userData, "GOOGLE");
+}
+
+function loginWithSocialMediaAccount(userData, registerType) {
 	
-	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/loginfb");
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/loginSocialMedia");
 	
 	var email = userData.email;
 	var firstName = userData.first_name;
@@ -143,7 +153,7 @@ function loginWithFb(userData) {
 		var newsletterCheckBoxElementId = $("label[for=newsletter-check]").attr("for");
 		var newsletterCheckBoxElement = $("input[id='" + newsletterCheckBoxElementId + "']");
 		if (newsletterCheckBoxElement.prop("checked") === true) {
-			subscribeToNewsletter = true;;
+			subscribeToNewsletter = true;
 		}
 	}
 		
@@ -151,16 +161,19 @@ function loginWithFb(userData) {
 		email: email,
 		firstName: firstName,
 		lastName: lastName,
+		registerType: registerType,
 		subscribeToNewsletter: subscribeToNewsletter
 	};
 	
 	if (document.getElementById("login-button")) {
 		document.getElementById("login-button").disabled = true; 
-		document.getElementById("login-fb-button").disabled = true; 
+		document.getElementById("login-fb-button").disabled = true;
+		document.getElementById("login-google-button").disabled = true;
 	}
 	if (document.getElementById("register-button")) {
 		document.getElementById("register-button").disabled = true; 
-		document.getElementById("register-fb-button").disabled = true; 
+		document.getElementById("register-fb-button").disabled = true;
+		document.getElementById("register-google-button").disabled = true;
 	}
 	
 	$.ajax({
@@ -213,11 +226,13 @@ function loginWithFb(userData) {
 		
 			if (document.getElementById("login-button")) {
 				document.getElementById("login-button").disabled = false; 
-				document.getElementById("login-fb-button").disabled = false; 
+				document.getElementById("login-fb-button").disabled = false;
+				document.getElementById("login-google-button").disabled = false;
 			}
 			if (document.getElementById("register-button")) {
 				document.getElementById("register-button").disabled = false; 
-				document.getElementById("register-fb-button").disabled = false; 
+				document.getElementById("register-fb-button").disabled = false;
+				document.getElementById("register-google-button").disabled = false;
 			}
 		}
 	});
@@ -227,6 +242,13 @@ function loginWithFb(userData) {
 function fbLogout() {
     FB.logout(function() {
     });
+}
+
+//Logout from google
+function googleLogout() {
+	var auth2 = gapi.auth2.getAuthInstance();
+	auth2.signOut().then(function () {
+	});
 }
 
 function clearErrorLoginEmail() {
@@ -292,8 +314,9 @@ function login(e) {
 	}
 	
 	document.getElementById("login-button").disabled = true; 
-	document.getElementById("login-fb-button").disabled = true; 
-	
+	document.getElementById("login-fb-button").disabled = true;
+	document.getElementById("login-google-button").disabled = true;
+
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/login");
 		
 	var body = {
@@ -356,6 +379,7 @@ function login(e) {
 		
 			document.getElementById("login-button").disabled = false;
 			document.getElementById("login-fb-button").disabled = false;
+			document.getElementById("login-google-button").disabled = false;
 		}
 	});
 	
@@ -420,8 +444,9 @@ function register(e) {
 	}
 	
 	document.getElementById("register-button").disabled = true; 
-	document.getElementById("register-fb-button").disabled = true; 
-	
+	document.getElementById("register-fb-button").disabled = true;
+	document.getElementById("register-google-button").disabled = true;
+
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/register");
 		
 	var body = {
@@ -469,7 +494,8 @@ function register(e) {
 			// }
 		
 			document.getElementById("register-button").disabled = false;
-			document.getElementById("register-fb-button").disabled = false; 			
+			document.getElementById("register-fb-button").disabled = false;
+			document.getElementById("register-google-button").disabled = false;
 		}
 	});
 	
@@ -743,6 +769,7 @@ function logout() {
             fbLogout();
         }
     });
+	googleLogout();
 	var urlHomepageRedirect = "./";
 	window.location.replace(urlHomepageRedirect);
 }

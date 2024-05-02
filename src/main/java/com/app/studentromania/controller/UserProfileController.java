@@ -80,10 +80,10 @@ public class UserProfileController {
 		return userProfileService.login(userProfileDTO).createRestResponse();
 	}
 
-	@PostMapping("/loginfb")
+	@PostMapping("/loginSocialMedia")
 	@RestCall
-	public ResponseEntity<String> loginWithFacebook(@RequestBody UserProfileDTO userProfileDTO) {
-		return userProfileService.loginWithFacebook(userProfileDTO).createRestResponse();
+	public ResponseEntity<String> loginWithSocialMedia(@RequestBody UserProfileDTO userProfileDTO) {
+		return userProfileService.loginWithSocialMedia(userProfileDTO).createRestResponse();
 	}
 
 	@PutMapping("/resendconfirmation")

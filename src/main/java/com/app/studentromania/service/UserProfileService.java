@@ -173,7 +173,7 @@ public class UserProfileService {
 		logUtils.logMessage(LOGGER, "Number of notified users: " + notifiedUsersCount);
 	}
 
-	public ResponseDTO loginWithFacebook(UserProfileDTO userProfileDTO) {
+	public ResponseDTO loginWithSocialMedia(UserProfileDTO userProfileDTO) {
 		if (StringUtils.isEmpty(userProfileDTO.getEmail())) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_EMAIL_PASSWORD_MISSING);
 		}
@@ -204,7 +204,7 @@ public class UserProfileService {
 			}
 			userProfile.setAcceptTermsAndConditions(true);
 			userProfile.setEmailConfirmed(true);
-			userProfile.setRegisterType(RegisterTypeEnum.FACEBOOK.getValue());
+			userProfile.setRegisterType(userProfileDTO.getRegisterType());
 			userProfile.setLastLogin(new Date());
 			userProfileDAO.createUserProfile(userProfile);
 		}
@@ -215,14 +215,7 @@ public class UserProfileService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_GENERATION_ERROR);
 		}
 
-		AuthResponseDTO authResponseDTO = new AuthResponseDTO();
-		authResponseDTO.setJwtToken(jwtToken);
-		authResponseDTO.setFirstName(userProfile.getFirstName());
-		authResponseDTO.setLastName(userProfile.getLastName());
-		authResponseDTO.setFavoriteFaculties(userProfile.getFavoriteFaculties());
-		authResponseDTO.setRecentFaculties(userProfile.getRecentFaculties());
-		authResponseDTO.setAddedReviews(userProfile.getAddedReviews());
-		authResponseDTO.setLikedReviews(userProfile.getLikedReviews());
+		AuthResponseDTO authResponseDTO = buildAuthReponseDto(userProfile, jwtToken);
 		JSONObject response = new JSONObject(authResponseDTO);
 
 		return ResponseDTO.createSuccessResponse(response);
@@ -252,14 +245,7 @@ public class UserProfileService {
 		userProfile.setLastLogin(new Date());
 		userProfileDAO.updateUserProfile(userProfile);
 
-		AuthResponseDTO authResponseDTO = new AuthResponseDTO();
-		authResponseDTO.setJwtToken(jwtToken);
-		authResponseDTO.setFirstName(userProfile.getFirstName());
-		authResponseDTO.setLastName(userProfile.getLastName());
-		authResponseDTO.setFavoriteFaculties(userProfile.getFavoriteFaculties());
-		authResponseDTO.setRecentFaculties(userProfile.getRecentFaculties());
-		authResponseDTO.setAddedReviews(userProfile.getAddedReviews());
-		authResponseDTO.setLikedReviews(userProfile.getLikedReviews());
+		AuthResponseDTO authResponseDTO = buildAuthReponseDto(userProfile, jwtToken);
 		JSONObject response = new JSONObject(authResponseDTO);
 
 		return ResponseDTO.createSuccessResponse(response);
@@ -622,6 +608,18 @@ public class UserProfileService {
 		}
 
 		return ErrorsEnum.NO_ERROR;
+	}
+
+	private AuthResponseDTO buildAuthReponseDto(UserProfile userProfile, String jwtToken) {
+		AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+		authResponseDTO.setJwtToken(jwtToken);
+		authResponseDTO.setFirstName(userProfile.getFirstName());
+		authResponseDTO.setLastName(userProfile.getLastName());
+		authResponseDTO.setFavoriteFaculties(userProfile.getFavoriteFaculties());
+		authResponseDTO.setRecentFaculties(userProfile.getRecentFaculties());
+		authResponseDTO.setAddedReviews(userProfile.getAddedReviews());
+		authResponseDTO.setLikedReviews(userProfile.getLikedReviews());
+		return authResponseDTO;
 	}
 
 	private boolean isPasswordValid(String pass) {

@@ -46,6 +46,8 @@ public class UserProfileDTO {
 
 	private List<String> userCityInterest;
 
+	private String registerType;
+
 	public String getUserId() {
 		return userId;
 	}
@@ -198,4 +200,10 @@ public class UserProfileDTO {
 		this.userCityInterest = userCityInterest;
 	}
 
+	public String getRegisterType() {
+		return registerType;
+	}
+	public void setRegisterType(String registerType) {
+		this.registerType = registerType;
+	}
 }
