@@ -103,8 +103,9 @@
 												<br>
 												<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
 												<br>
-												<button id="register-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true" onclick="fbLogin(event)"> </i>Loghează-te cu Facebook</button>
-												<button id="register-google-button" class="g-signin2 btn btn-google btn-block btn-fill" data-onsuccess="googleLogin"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
+<!--												<button id="register-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true" onclick="fbLogin(event)"> </i>Loghează-te cu Facebook</button>-->
+												<button id="register-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
+												<div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
 											</form>
 											<br>
 											<br>
@@ -259,6 +260,7 @@
 <script src="./assets/js/ct-paper.js"></script>
 <script src="./assets/js/demo.js"></script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script src="https://accounts.google.com/gsi/client?hl=ro" async></script>
 
 <script type="text/javascript">
 
@@ -267,8 +269,7 @@ const backendUrlRoot = "https://unistart.ro/Jamstudy";
 $().ready(function(){    
 	checkLogin();
 });
-	
-	
+
 </script>
     
 </html>

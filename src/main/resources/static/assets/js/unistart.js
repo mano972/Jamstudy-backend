@@ -131,13 +131,29 @@ function getFbUserData(){
     });
 }
 
-function googleLogin(googleUser) {
-	const profile = googleUser.getBasicProfile();
-	var userData = {};
-	userData.email = profile.getEmail();
-	userData.first_name = profile.getGivenName();
-	userData.last_name = profile.getFamilyName();
+function googleButtonClick(e) {
+	e.preventDefault();
+
+	document.getElementsByClassName("L5Fo6c-bF1uUb")[0].click();
+}
+
+function googleLogin(response) {
+	let payload = parseGoogleJwt(response.credential);
+	let userData = {};
+	userData.email = payload.email;
+	userData.first_name = payload.given_name;
+	userData.last_name = payload.family_name;
 	loginWithSocialMediaAccount(userData, "GOOGLE");
+}
+
+function parseGoogleJwt (token) {
+	var base64Url = token.split('.')[1];
+	var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+	var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+		return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+	}).join(''));
+
+	return JSON.parse(jsonPayload);
 }
 
 function loginWithSocialMediaAccount(userData, registerType) {
@@ -167,12 +183,12 @@ function loginWithSocialMediaAccount(userData, registerType) {
 	
 	if (document.getElementById("login-button")) {
 		document.getElementById("login-button").disabled = true; 
-		document.getElementById("login-fb-button").disabled = true;
+		// document.getElementById("login-fb-button").disabled = true;
 		document.getElementById("login-google-button").disabled = true;
 	}
 	if (document.getElementById("register-button")) {
 		document.getElementById("register-button").disabled = true; 
-		document.getElementById("register-fb-button").disabled = true;
+		// document.getElementById("register-fb-button").disabled = true;
 		document.getElementById("register-google-button").disabled = true;
 	}
 	
@@ -226,12 +242,12 @@ function loginWithSocialMediaAccount(userData, registerType) {
 		
 			if (document.getElementById("login-button")) {
 				document.getElementById("login-button").disabled = false; 
-				document.getElementById("login-fb-button").disabled = false;
+				// document.getElementById("login-fb-button").disabled = false;
 				document.getElementById("login-google-button").disabled = false;
 			}
 			if (document.getElementById("register-button")) {
 				document.getElementById("register-button").disabled = false; 
-				document.getElementById("register-fb-button").disabled = false;
+				// document.getElementById("register-fb-button").disabled = false;
 				document.getElementById("register-google-button").disabled = false;
 			}
 		}
@@ -242,13 +258,6 @@ function loginWithSocialMediaAccount(userData, registerType) {
 function fbLogout() {
     FB.logout(function() {
     });
-}
-
-//Logout from google
-function googleLogout() {
-	var auth2 = gapi.auth2.getAuthInstance();
-	auth2.signOut().then(function () {
-	});
 }
 
 function clearErrorLoginEmail() {
@@ -314,7 +323,7 @@ function login(e) {
 	}
 	
 	document.getElementById("login-button").disabled = true; 
-	document.getElementById("login-fb-button").disabled = true;
+	// document.getElementById("login-fb-button").disabled = true;
 	document.getElementById("login-google-button").disabled = true;
 
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/login");
@@ -378,7 +387,7 @@ function login(e) {
 			// }
 		
 			document.getElementById("login-button").disabled = false;
-			document.getElementById("login-fb-button").disabled = false;
+			// document.getElementById("login-fb-button").disabled = false;
 			document.getElementById("login-google-button").disabled = false;
 		}
 	});
@@ -444,7 +453,7 @@ function register(e) {
 	}
 	
 	document.getElementById("register-button").disabled = true; 
-	document.getElementById("register-fb-button").disabled = true;
+	// document.getElementById("register-fb-button").disabled = true;
 	document.getElementById("register-google-button").disabled = true;
 
 	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/register");
@@ -494,7 +503,7 @@ function register(e) {
 			// }
 		
 			document.getElementById("register-button").disabled = false;
-			document.getElementById("register-fb-button").disabled = false;
+			// document.getElementById("register-fb-button").disabled = false;
 			document.getElementById("register-google-button").disabled = false;
 		}
 	});
@@ -769,7 +778,6 @@ function logout() {
             fbLogout();
         }
     });
-	googleLogout();
 	var urlHomepageRedirect = "./";
 	window.location.replace(urlHomepageRedirect);
 }

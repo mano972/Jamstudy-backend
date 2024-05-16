@@ -288,8 +288,10 @@
 								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
 								<!-- <h5>sau</h5> -->
 								<div id="reg-line"></div>
-								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
-                                <button id="login-google-button" class="g-signin2 btn btn-google btn-block btn-fill" data-onsuccess="googleLogin"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
+<!--								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>-->
+                                <button id="login-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
+                                <div id="g_id_onload" data-client_id="801355334630-8i08j4vg23mh4b1eogrs5c0jrm5etb2n.apps.googleusercontent.com" data-callback="googleLogin" data-auto_prompt="false"></div>
+                                <div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
                             </form>
 							<div class="forgot">
 								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
@@ -332,8 +334,9 @@
 								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
 								<!-- <h5>sau</h5> -->
 								<div id="reg-line"></div>
-								<button id="register-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>
-                                <button id="register-google-button" class="g-signin2 btn btn-google btn-block btn-fill" data-onsuccess="googleLogin"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
+<!--								<button id="register-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>-->
+                                <button id="register-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
+                                <div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
                             </form>
 							<div class="forgot">
 								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
@@ -361,7 +364,6 @@
 <script src="./assets/js/ct-paper.js"></script>
 <script src="./assets/js/demo.js"></script>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-
-<script type="text/javascript">
+<script src="https://accounts.google.com/gsi/client?hl=ro" async></script>
     
 </html>

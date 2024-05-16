@@ -4021,6 +4021,7 @@ textarea.form-control {
 .btn-google:disabled, .btn-google[disabled], .btn-google.disabled {
   background-color: transparent;
   border-color: #dd4b39;
+  opacity: 0.5 !important;
 }
 .btn-google.btn-fill {
   color: #FFFFFF;
