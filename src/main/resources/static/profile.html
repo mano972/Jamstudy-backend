@@ -124,13 +124,6 @@
 										<!-- populated dynamically -->
 									</div>
 								</div>
-								
-<!--								<div class="row">-->
-<!--									<div id="faculty-profile-programs-header" class="col-md-12 col-md-offset-0">-->
-<!--										&lt;!&ndash; populated dynamically &ndash;&gt;-->
-<!--									</div>-->
-<!--								</div>-->
-								
 								<div class="row">
 									<div class="col-md-12 col-md-offset-0">
 										<div id="map" class="map"></div>
@@ -1346,8 +1339,8 @@ function getCompanies(companyIds) {
 		success: function(response) {
 			if (response.control.errorCode === 0) {
 
-				var companiesResponse = response.result.companies;
-				loadCompaniesCard(companiesResponse);
+				var companies = response.result.companies;
+				loadCompaniesCard(companies);
 
 			} else {
 				console.log(response.control.errorDescription);
@@ -1363,9 +1356,7 @@ function getCompanies(companyIds) {
 	});
 }
 
-function loadCompaniesCard(response) {
-
-	var companies = response.result.companies;
+function loadCompaniesCard(companies) {
 
 	document.getElementById("faculty-profile-companies-header").innerHTML = '';
 
@@ -1400,7 +1391,7 @@ function loadCompaniesCard(response) {
 		if (i%2 === 0) {
 			leftColumn = "left-program-column";
 			rowStart = ' <div class="row general-presentation-row">';
-			if (i !== 0) {
+			if (i != 0) {
 				rowStart = '<hr> ' + rowStart;
 			}
 		}
@@ -1454,6 +1445,8 @@ function loadCompaniesCard(response) {
 	fullCompaniesString += stringIntro;
 	fullCompaniesString += companiesString;
 	fullCompaniesString += stringOutro;
+
+	console.log(fullCompaniesString);
 
 	document.getElementById("faculty-profile-companies-header").innerHTML += fullCompaniesString;
 }
