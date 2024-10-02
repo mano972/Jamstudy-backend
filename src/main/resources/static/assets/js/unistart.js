@@ -134,7 +134,11 @@ function getFbUserData(){
 function googleButtonClick(e) {
 	e.preventDefault();
 
-	document.getElementsByClassName("L5Fo6c-bF1uUb")[0].click();
+	if (document.getElementsByClassName("L5Fo6c-bF1uUb")[0]) {
+		document.getElementsByClassName("L5Fo6c-bF1uUb")[0].click();
+	} else if (document.getElementsByClassName("nsm7Bb-HzV7m-LgbsSe")[0]) {
+		document.getElementsByClassName("nsm7Bb-HzV7m-LgbsSe")[0].click();
+	}
 }
 
 function googleLogin(response) {

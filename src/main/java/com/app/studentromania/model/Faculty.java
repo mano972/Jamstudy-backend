@@ -189,6 +189,9 @@ public class Faculty extends ParentEntity {
 	private Double avgRatingTimeBalance;
 
 	@Field
+	private List<String> companyIds;
+
+	@Field
 	private int viewsCount;
 
 	public String getFacultyId() {
@@ -559,6 +562,13 @@ public class Faculty extends ParentEntity {
 		this.avgRatingTimeBalance = avgRatingTimeBalance;
 	}
 
+	public List<String> getCompanyIds() {
+		return companyIds;
+	}
+
+	public void setCompanyIds(List<String> companyIds) {
+		this.companyIds = companyIds;
+	}
 	public int getViewsCount() {
 		return viewsCount;
 	}

@@ -68,6 +68,8 @@ public class FacultyDTO {
 
 	private Integer annualTax;
 
+	private List<String> companyIds;
+
 	public String getFacultyId() {
 		return facultyId;
 	}
@@ -316,4 +318,10 @@ public class FacultyDTO {
 		this.annualTax = annualTax;
 	}
 
+	public List<String> getCompanyIds() {
+		return companyIds;
+	}
+	public void setCompanyIds(List<String> companyIds) {
+		this.companyIds = companyIds;
+	}
 }

@@ -384,7 +384,7 @@ public class ReviewService {
 				return ErrorsEnum.REVIEW_DIFFICULTY_ERROR;
 			}
 		}
-		if (reviewDTO.getReviewText().length() < 30 || reviewDTO.getReviewText().length() > 1400) {
+		if (reviewDTO.getReviewText().length() < Constants.REVIEW_MIN_LENGTH || reviewDTO.getReviewText().length() > Constants.REVIEW_MAX_LENGTH) {
 			return ErrorsEnum.REVIEW_LENGTH_ERROR;
 		}
 		List<UserProfileReview> userAddedReviews = userProfile.getAddedReviews();

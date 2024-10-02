@@ -44,6 +44,8 @@ public class UserProfileResponseDTO {
 
 	private List<UserProfileReview> addedReviews;
 
+	private List<String> favoriteCompanies;
+
 	public String getUserId() {
 		return userId;
 	}
@@ -186,6 +188,12 @@ public class UserProfileResponseDTO {
 
 	public void setAddedReviews(List<UserProfileReview> addedReviews) {
 		this.addedReviews = addedReviews;
+	}
+	public List<String> getFavoriteCompanies() {
+		return favoriteCompanies;
+	}
+	public void setFavoriteCompanies(List<String> favoriteCompanies) {
+		this.favoriteCompanies = favoriteCompanies;
 	}
 
 }

@@ -116,6 +116,10 @@
 											<div id="user-reviews" class="row">
 												<!-- populated dynamically -->									
 											</div>
+
+											<div id="saved-companies" class="row">
+												<!-- populated dynamically -->
+											</div>
 											
 											<div class="row">
 												<div class="col-md-4 col-md-offset-4" style="margin-top: 30px;">
@@ -341,6 +345,8 @@ function loadUserProfileInfoContent(userResponse) {
 	
 	var userSavedFaculties = userResponse.favoriteFaculties;
 	getSavedFaculties(userSavedFaculties);
+	// var companyIds = userResponse.favoriteCompanies;
+	// getSavedCompanies("companyIds");
 	
 	var userProfileHeaderString = 
 												'<div class="col-xs-12 user-profile-header">'
@@ -727,7 +733,7 @@ function getSavedFaculties(userSavedFaculties) {
 	// or use the user profile call to get the faculty ids
 	var savedFacultiesIds = getUField("usf");
 	
-	if (!savedFacultiesIds || savedFacultiesIds.length == 0) {
+	if (!savedFacultiesIds || savedFacultiesIds.length === 0) {
 		document.getElementById("saved-faculties").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Facultati salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai salvat nicio facultate</h5> </div>';
 		return;
 	}
@@ -759,7 +765,7 @@ function getSavedFaculties(userSavedFaculties) {
 }
 
 function loadSavedFacultiesContent(userSavedFaculties, facultiesResponse) {
-	if (facultiesResponse.length == 0) {
+	if (facultiesResponse.length === 0) {
 		document.getElementById("saved-faculties").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Facultati salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai salvat nicio facultate</h5> </div>';
 		return;
 	}
@@ -828,7 +834,76 @@ function loadSavedFacultiesContent(userSavedFaculties, facultiesResponse) {
 		document.getElementById("saved-faculties").innerHTML += ('<div class="col-xs-12"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5><strong>' + facultyName + '</strong></h5> </a> <h6>' + universityName + '</h6> <small class="text-muted">' + facultyCity + '</small> <br> <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)"> <i class="fa fa-star rating-suggestion-card" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </a> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4">' + checkboxString + ' <div class="row save-compare-user-profile"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div></div>');
 		
 	}
-			
+}
+
+function getSavedCompanies(companyIds) {
+	if (!companyIds || companyIds.length === 0) {
+		document.getElementById("saved-companies").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Companii salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai salvat nicio companie</h5> </div>';
+		return;
+	}
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/company");
+	backendUrl.searchParams.append("companyIds", companyIds);
+
+	$.ajax({
+		url: backendUrl,
+		type: "GET",
+		success: function(response) {
+			if (response.control.errorCode === 0) {
+
+				var companiesResponse = response.result.companies;
+				// loadSavedFacultiesContent(userSavedFaculties, facultiesResponse);
+
+			} else {
+				console.log(response.control.errorDescription);
+			}
+
+		},
+		error: function(error) {
+			checkLoggedInUser(error.status)
+		},
+		complete: function (data) {
+			<!-- document.getElementById("loading").style.display = "none"; -->
+		}
+	});
+}
+
+function loadSavedCompaniesContent(userSavedCompanies, companiesResponse) {
+	if (companiesResponse.length === 0) {
+		document.getElementById("saved-companies").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Companii salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai salvat nicio companie</h5> </div>';
+		return;
+	}
+
+	var savedCompaniesHeaderString =
+			'										<div class="col-xs-12 user-profile-header">'
+			+'											<h4 class="text-center"><strong>Companii salvate</strong></h4>'
+			+'											<hr>'
+			+'										</div>';
+	document.getElementById("saved-companies").innerHTML = savedCompaniesHeaderString;
+
+
+	var i;
+	for (i in companiesResponse) {
+		var companyId = companiesResponse[i].companyId;
+		var companyName = companiesResponse[i].companyName;
+		var companyCities = companiesResponse[i].companyCities;
+
+		// var savedFacultiesIds = getUField("usf");
+		// var favoriteClass;
+		// var favoriteText;
+		// if (savedFacultiesIds && savedFacultiesIds.includes(facultyId)) {
+		// 	favoriteClass = "fas fa-heart fa-lg";
+		// 	favoriteText = "Salvată";
+		// } else {
+		// 	favoriteClass = "far fa-heart fa-lg";
+		// 	favoriteText = "Salvează";
+		// }
+	}
+
+
+	document.getElementById("saved-companies").innerHTML += ('<div class="col-xs-12"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4"><div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <h5><strong>' + companyName + '</strong></h5> <small class="text-muted">' + companyCities + '</small> <br> </div> </div> </div> </div> </div> </div>');
+
+
 }
 
 function getUserReviews() {

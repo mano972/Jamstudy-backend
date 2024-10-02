@@ -92,6 +92,9 @@ public class UserProfile extends ParentEntity {
 	private List<UserProfileReview> addedReviews = new ArrayList<>();
 
 	@Field
+	private List<String> favoriteCompanies = new ArrayList<>();
+
+	@Field
 	private String registerType;
 
 	@Field
@@ -296,7 +299,12 @@ public class UserProfile extends ParentEntity {
 	public void setAddedReviews(List<UserProfileReview> addedReviews) {
 		this.addedReviews = addedReviews;
 	}
-
+	public List<String> getFavoriteCompanies() {
+		return favoriteCompanies;
+	}
+	public void setFavoriteCompanies(List<String> favoriteCompanies) {
+		this.favoriteCompanies = favoriteCompanies;
+	}
 	public String getRegisterType() {
 		return registerType;
 	}

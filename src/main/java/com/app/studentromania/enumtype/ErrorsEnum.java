@@ -58,7 +58,7 @@ public enum ErrorsEnum {
 	USER_NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "Este nevoie de autentificare pentru a folosi această funcționalitate.",
 			-78),
 	USERPROFILE_MAX_FAVORITE_FACULTIES(HttpStatus.NOT_ACCEPTABLE,
-			"Ai adăugat deja numărul maxim de facultăți favorite.", -79),
+			"Ai adăugat deja numărul maxim de favorite.", -79),
 	REGISTER_EMAIL_NOT_VALID(HttpStatus.NOT_ACCEPTABLE, "Adresa de email nu este validă.", -80),
 	REGISTER_TERMS_AND_CONDITIONS(HttpStatus.NOT_ACCEPTABLE,
 			"Trebuie să accepți Termenii și condițiile de utilizare și Politica de prelucrare a datelor.", -81),
@@ -92,7 +92,11 @@ public enum ErrorsEnum {
 
 	// Email
 	EMAIL_AUTH_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Email: eroare la autentificare.", -120),
-	EMAIL_SENDING_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Email: eroare generală.", -121);
+	EMAIL_SENDING_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Email: eroare generală.", -121),
+
+	// Company
+	COMPANY_EXISTS(HttpStatus.NOT_ACCEPTABLE, "Compania exista deja.", -130),
+	COMPANY_NOT_FOUND(HttpStatus.NOT_FOUND, "Compania nu a fost gasita.", -131);
 
 	private String errorDescription;
 	private int errorCode;

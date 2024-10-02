@@ -100,6 +100,8 @@ public class FacultyResponseDTO {
 	
 	private Double avgRatingTimeBalance;
 
+	private List<String> companyIds;
+
 	public String getFacultyId() {
 		return facultyId;
 	}
@@ -476,4 +478,10 @@ public class FacultyResponseDTO {
 		this.avgRatingTimeBalance = avgRatingTimeBalance;
 	}
 
+	public List<String> getCompanyIds() {
+		return companyIds;
+	}
+	public void setCompanyIds(List<String> companyIds) {
+		this.companyIds = companyIds;
+	}
 }

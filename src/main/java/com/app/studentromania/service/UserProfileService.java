@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.studentromania.auth.JwtAuthenticationService;
+import com.app.studentromania.dao.CompanyDAO;
 import com.app.studentromania.dao.ConfigDAO;
 import com.app.studentromania.dao.FacultyDAO;
 import com.app.studentromania.dao.ReviewDAO;
@@ -39,6 +40,7 @@ import com.app.studentromania.dto.UserProfileResponseDTO;
 import com.app.studentromania.email.EmailHandler;
 import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.enumtype.RegisterTypeEnum;
+import com.app.studentromania.model.Company;
 import com.app.studentromania.model.Faculty;
 import com.app.studentromania.model.UserProfile;
 import com.app.studentromania.model.UserProfileFaculty;
@@ -63,6 +65,9 @@ public class UserProfileService {
 
 	@Autowired
 	private FacultyDAO facultyDAO;
+
+	@Autowired
+	private CompanyDAO companyDAO;
 
 	@Autowired
 	private ReviewDAO reviewDAO;
@@ -490,6 +495,44 @@ public class UserProfileService {
 		}
 
 		userProfile.setFavoriteFaculties(favoriteFaculties);
+		userProfileDAO.updateUserProfile(userProfile);
+
+		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
+	public ResponseDTO addFavoriteCompany(String companyId, UserProfileDTO userProfileDTO) {
+		String userId = customRequestContext.getUserId();
+
+		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+		if (!userProfileOpt.isPresent()) {
+			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		}
+		UserProfile userProfile = userProfileOpt.get();
+		List<String> favoriteCompanies = userProfile.getFavoriteCompanies();
+		if (userProfileDTO.getAddFavoriteCompany()) { // add
+			Optional<Company> companyOpt = companyDAO.getByCompanyId(companyId);
+			if (!companyOpt.isPresent()) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.COMPANY_NOT_FOUND);
+			}
+			if (favoriteCompanies.contains(companyId)) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.COMPANY_EXISTS);
+			}
+			if (favoriteCompanies.size() >= Constants.MAX_FAVORITE_COMPANIES) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_MAX_FAVORITE_FACULTIES);
+			}
+			favoriteCompanies.add(companyId);
+			logUtils.logMessage(LOGGER, "Company " + companyOpt.get().getCompanyName()
+					+ " was added to favorite companies for User Profile " + userProfile.getUserId());
+		} else { // remove
+			boolean removedFavoriteCompany = favoriteCompanies.remove(companyId);
+			if (!removedFavoriteCompany) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.COMPANY_NOT_FOUND);
+			}
+			logUtils.logMessage(LOGGER, "Company " + companyId
+					+ " was removed from favorite companies for User Profile " + userProfile.getUserId());
+		}
+
+		userProfile.setFavoriteCompanies(favoriteCompanies);
 		userProfileDAO.updateUserProfile(userProfile);
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);

@@ -143,6 +143,15 @@ public class UserProfileController {
 		return userProfileService.addFavoriteFaculty(facultyId, userProfileDTO).createRestResponse();
 	}
 
+	@PutMapping("/favorite/company/{companyId}")
+	@RestCall
+	@Auth
+	@VerifyLoggedIn
+	public ResponseEntity<String> addFavoriteCompany(@PathVariable String companyId,
+			@RequestBody UserProfileDTO userProfileDTO) {
+		return userProfileService.addFavoriteCompany(companyId, userProfileDTO).createRestResponse();
+	}
+
 	@PutMapping("/notification/{facultyId}")
 	@RestCall
 	@Auth

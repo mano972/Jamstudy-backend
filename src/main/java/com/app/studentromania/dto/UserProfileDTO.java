@@ -22,6 +22,11 @@ public class UserProfileDTO {
 	 */
 	private Boolean addFavoriteFaculty;
 
+	/*
+	 * true for add, false for remove
+	 */
+	private Boolean addFavoriteCompany;
+
 	private Boolean allowNotification;
 
 	private Boolean acceptTermsAndConditions;
@@ -135,7 +140,12 @@ public class UserProfileDTO {
 	public void setAddFavoriteFaculty(Boolean addFavoriteFaculty) {
 		this.addFavoriteFaculty = addFavoriteFaculty;
 	}
-
+	public Boolean getAddFavoriteCompany() {
+		return addFavoriteCompany;
+	}
+	public void setAddFavoriteCompany(Boolean addFavoriteCompany) {
+		this.addFavoriteCompany = addFavoriteCompany;
+	}
 	public Boolean getAllowNotification() {
 		return allowNotification;
 	}

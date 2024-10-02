@@ -119,12 +119,17 @@
 										<!-- populated dynamically -->
 									</div>
 								</div>
-								
 								<div class="row">
-									<div id="faculty-profile-programs-header" class="col-md-12 col-md-offset-0">
+									<div id="faculty-profile-companies-header" class="col-md-12 col-md-offset-0">
 										<!-- populated dynamically -->
 									</div>
 								</div>
+								
+<!--								<div class="row">-->
+<!--									<div id="faculty-profile-programs-header" class="col-md-12 col-md-offset-0">-->
+<!--										&lt;!&ndash; populated dynamically &ndash;&gt;-->
+<!--									</div>-->
+<!--								</div>-->
 								
 								<div class="row">
 									<div class="col-md-12 col-md-offset-0">
@@ -190,6 +195,13 @@
 									</div>
 								</div>
 
+							</div>
+							<div class="tab-pane" id="faculty-programs">
+								<div class="row">
+									<div id="faculty-profile-programs-header" class="col-md-12 col-md-offset-0">
+										<!-- populated dynamically -->
+									</div>
+								</div>
 							</div>
 <!-- 							<div class="tab-pane" id="statistics">
 								<p>Statistics</p>
@@ -538,6 +550,8 @@ function getFaculty() {
 			if (response.control.errorCode === 0) {
 				loadProfileHeader(response);
 				loadProfileTab(response);
+				loadFacultyProgramsTab(response);
+				getCompanies(response.result.companyIds);
 				getOtherFacultiesFromSameUniversity(response.result.universityId);
 			} else {
 				console.log(response.control.errorDescription);
@@ -708,6 +722,7 @@ function loadProfileHeader(response) {
 					+						'<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">'
 					+							'<li class="active"><a href="#profile" data-toggle="tab" onclick="addHash(this)">Profil</a></li>'
 					+							'<li><a id="reviews-tab" href="#reviews" data-toggle="tab" onclick="addHash(this)">Evaluări</a></li>'
+					+							'<li><a id="faculty-programs-tab" href="#faculty-programs" data-toggle="tab" onclick="addHash(this)">Programe de studiu</a></li>'
 					<!-- +							'<li><a href="#statistics" data-toggle="tab" onclick="addHash(this)">Statistici</a></li>' -->
 					<!-- +							'<li><a href="#qa" data-toggle="tab" onclick="addHash(this)">Q&A</a></li>' -->
 					+						'</ul>'
@@ -724,7 +739,6 @@ function loadProfileHeader(response) {
 function loadProfileTab(response) {
 	loadGeneralReviewCard(response);
 	loadGeneralPresentationCard(response);
-	loadProgramsCard(response);
 }
 
 function loadGeneralReviewCard(response) {
@@ -1100,7 +1114,7 @@ function loadGeneralPresentationCard(response) {
 			presentationContent.set('Nr. studenți raportat la profesori', noOfStudentsPerProfessor);
 			
 			//caz special website
-			var generalPresentationContentString;
+			var generalPresentationContentString = "";
 
 			var i;
 			for (i=0;i<16;i=i+2) {
@@ -1317,6 +1331,133 @@ function loadProgramsCard(response) {
 			document.getElementById("faculty-profile-programs-header").innerHTML += fullProgramsString;
 }
 
+function getCompanies(companyIds) {
+	if (!companyIds || companyIds.length === 0) {
+		return;
+	}
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/company");
+	backendUrl.searchParams.append("companyIds", companyIds);
+	backendUrl.searchParams.append("facultyId", facultyId);
+
+	$.ajax({
+		url: backendUrl,
+		type: "GET",
+		success: function(response) {
+			if (response.control.errorCode === 0) {
+
+				var companiesResponse = response.result.companies;
+				loadCompaniesCard(companiesResponse);
+
+			} else {
+				console.log(response.control.errorDescription);
+			}
+
+		},
+		error: function(error) {
+			checkLoggedInUser(error.status)
+		},
+		complete: function (data) {
+			<!-- document.getElementById("loading").style.display = "none"; -->
+		}
+	});
+}
+
+function loadCompaniesCard(response) {
+
+	var companies = response.result.companies;
+
+	document.getElementById("faculty-profile-companies-header").innerHTML = '';
+
+	var stringIntro =
+			'<div class="card">'
+			+'											<div id="content-companies" class="content">'
+			+'												<div class="row">'
+			+'													<div class="col-md-5 col-md-offset-0 col-xs-10 col-xs-offset-0 text-start">'
+			+'														<h5><strong>Oportunități în carieră</strong></h5>'
+			+'													</div>'
+			+'												</div>';
+
+	var stringOutro =
+			'</div>'
+			+'										</div>';
+
+	var companiesString = '';
+	var i;
+	for (i in companies) {
+
+		var company = companies[i];
+		var companyName = company.companyName;
+		var companyCities = company.companyCities;
+		var minSalary = company.minSalary;
+		var maxSalary = company.maxSalary;
+		var averageSalary = company.averageSalary;
+		var companyJobRoles = company.companyJobRoles;
+
+		var leftColumn = "";
+		var rowStart = "";
+		var rowEnd = "";
+		if (i%2 === 0) {
+			leftColumn = "left-program-column";
+			rowStart = ' <div class="row general-presentation-row">';
+			if (i !== 0) {
+				rowStart = '<hr> ' + rowStart;
+			}
+		}
+		// if card is last, end the row (regardless if it is left or right card)
+		var lastIndex = companies.length - 1;
+		if (i%2 === 1 || i === lastIndex) {
+			rowEnd = '</div>';
+		}
+
+		var jobRolesString = '';
+		var c;
+		for (c in companyJobRoles) {
+			var jobRole = companyJobRoles[c];
+			var jobRoleName = jobRole.jobRoleName;
+			var roleMinSalary = jobRole.minSalary;
+			var roleMaxSalary = jobRole.maxSalary;
+			var roleAverageSalary = jobRole.averageSalary;
+
+			var jobRoleRowString = (
+					'														<div class="col-xs-12">'
+					+'															<div class="col-md-4 col-xs-12">'
+					+'																<label>' + jobRoleName + '</label>'
+					+'															</div>'
+					+'															<div class="col-md-8 col-xs-12">'
+					+'																<span>' + roleMinSalary + ' - ' + roleMaxSalary + ' RON' + '</span>'
+					+'															</div>'
+					+'														</div>'
+			);
+
+			jobRolesString += jobRoleRowString;
+
+		}
+
+		var companyRowString = (
+				rowStart +
+				'													<div class="' + leftColumn + ' col-md-6 col-md-offset-0 col-xs-12">'
+				+'														<div class="col-md-12 col-md-offset-0 col-xs-12">'
+				+'															<h5><b>' + companyName + '</b></h5>'
+				+'														</div>'
+				+ jobRolesString
+				+'													</div>'
+				+rowEnd
+		);
+
+
+		companiesString += companyRowString;
+
+	}
+
+	var fullCompaniesString = "";
+	fullCompaniesString += stringIntro;
+	fullCompaniesString += companiesString;
+	fullCompaniesString += stringOutro;
+
+	document.getElementById("faculty-profile-companies-header").innerHTML += fullCompaniesString;
+}
+
 function loadReviewsTab(response, loadMore) {
 
 		if (loadMore) {
@@ -1519,6 +1660,10 @@ function loadReviewsTab(response, loadMore) {
 		
 		}
 	
+}
+
+function loadFacultyProgramsTab(response) {
+	loadProgramsCard(response);
 }
 
 function getOtherFacultiesFromSameUniversity(universityId) {

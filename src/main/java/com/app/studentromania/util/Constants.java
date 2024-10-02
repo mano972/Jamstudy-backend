@@ -10,6 +10,7 @@ public class Constants {
 	public static final String QUESTION_PREFIX_ID = "QUE";
 	public static final String ANSWER_PREFIX_ID = "ANS";
 	public static final String USERPROFILE_PREFIX_ID = "USR";
+	public static final String COMPANY_PREFIX_ID = "COM";
 
 	public static final String BUCKET = "JamstudyBucket";
 
@@ -35,11 +36,12 @@ public class Constants {
 
 	public static final String JWT_TOKEN_REQUEST_HEADER = "Token";
 
-	public static final int MAX_FAVORITE_FACULTIES = 10;
+	public static final int MAX_FAVORITE_FACULTIES = 15;
 	public static final int MAX_REVIEWS = 5;
 	public static final int SAME_FACULTY_REVIEW_DAYS = 150;
 	public static final int REVIEW_MIN_LENGTH = 30;
 	public static final int REVIEW_MAX_LENGTH = 1400;
+	public static final int MAX_FAVORITE_COMPANIES = 20;
 	
 
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
