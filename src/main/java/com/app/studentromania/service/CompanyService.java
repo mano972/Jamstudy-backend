@@ -100,9 +100,11 @@ public class CompanyService {
                                     }
                                 }));
             }
-            faculty.getCompanyIds().add(company.getCompanyId());
+            if (!faculty.getCompanyIds().contains(company.getCompanyId())) {
+                faculty.getCompanyIds().add(company.getCompanyId());
+                facultyDAO.updateFaculty(faculty);
+            }
             companyDAO.updateCompany(company);
-            facultyDAO.updateFaculty(faculty);
             CompanyResponseDTO companyResponseDTO = mapToCompanyResponseDTO(company);
             companiesArray.put(new JSONObject(companyResponseDTO));
         });
