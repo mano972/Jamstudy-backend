@@ -46,7 +46,8 @@ public class ReviewRepo {
 		String query = selectStatement + getFilteredReviewsStatement(reviewFilter) + reviewFilter.getOrderByClause()
 				+ paginationStatement;
 
-		return template.findByN1QL(N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue())),
+		return template.findByN1QL(N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue(),
+						reviewFilter.getOffset(), reviewFilter.getLimit())),
 				Review.class);
 	}
 
