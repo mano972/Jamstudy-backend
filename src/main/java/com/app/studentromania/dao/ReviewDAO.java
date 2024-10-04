@@ -28,8 +28,8 @@ public class ReviewDAO {
 	@Autowired
 	private LogUtils logUtils;
 
-	public List<Review> getAllReviews() {
-		return reviewRepo.findAll();
+	public List<Review> getAllReviews(ReviewFilter reviewFilter) {
+		return reviewRepo.findAll(reviewFilter);
 	}
 
 	public Optional<Review> getByReviewId(String reviewId) {
@@ -56,8 +56,12 @@ public class ReviewDAO {
 		return reviewRepo.getReviewsByReviewDate(reviewDate);
 	}
 
-	public long countFilteredReviews(String facultyId, ReviewFilter reviewFilter) {
+	public long countFilteredReviewsByFacultyId(String facultyId, ReviewFilter reviewFilter) {
 		return reviewRepo.countFilteredReviewsByFacultyId(facultyId, reviewFilter);
+	}
+
+	public long countFilteredReviews(ReviewFilter reviewFilter) {
+		return reviewRepo.countFilteredReviews(reviewFilter);
 	}
 
 	public void updateReviewsDetailsForFaculty(Faculty faculty) {

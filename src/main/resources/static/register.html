@@ -33,40 +33,9 @@
       
 </head>
 <body>
-    <nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-		  <a class="navbar-brand" href="./">
-			<img class="main-logo" src="./assets/img/unistart_logo_huge.png">
-		  </a>
-        </div>
-    
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navigation-example-2">
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a href="./" class="btn btn-simple">Acasă</a>
-            </li>
-              <li>
-                  <a href="./search.html" class="btn btn-simple">Facultăți</a>
-              </li>
-			  <li>
-				  <a href="./comparison.html" class="btn btn-simple">Compară</a>
-			  </li>
-              <li>
-                  <a href="./contact.html" class="btn btn-simple">Contact</a>
-              </li>
-           </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-->
-    </nav>  
+	<nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
+		<!-- populated dynamically -->
+	</nav>
     
     
 	<div class="wrapper">
@@ -150,79 +119,11 @@
 				</div>
 			</div>
 		</div>
-	</div>  
- 
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-7">
-               	<div class="links">
-					<ul class="uppercase-links">
-						<li>
-							<a href="./">
-								Acasă
-							</a>
-						</li>
-						<li>
-							<a href="./search.html">
-								Facultăți
-							</a>
-						</li>
-						<li>
-							<a href="./comparison.html">
-								Compară
-							</a>
-						</li>
-						<li>
-							<a href="./contact.html">
-							   Contact
-							</a>
-						</li>
-					</ul>
-					<ul>
-						<li>
-							<a href="./terms.html">
-							   Termeni și condiții
-							</a>
-						</li>
-						<li>
-							<a href="./policy.html">
-							   Politica de confidențialitate
-							</a>
-						</li>
-					</ul>
-					<hr>
+	</div>
 
-					<div class="copyright">
-						© 2020 Jamstudy, din dragoste pentru educaţie
-					</div>
-				</div>
-            </div>
-
-            <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
-                <div class="social-area">
-                        <a href="http://twitter.com" target="_blank"><button class="btn btn-icon btn-fill btn-twitter">
-                            <i class="fa fa-twitter"></i>
-                        </button>    
-						</a>
-                        <a href="https://www.facebook.com/UnistartFb" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">
-                            <i class="fa fa-facebook"> </i>
-                        </button>
-						</a>
-                        <a href="https://www.instagram.com/unistart.ro" target="_blank"><button class="btn btn-icon btn-fill btn-instagram">
-                            <i class="fa fa-instagram"></i>
-                        </button>
-						</a>
-                        <a href="http://youtube.com" target="_blank"><button class="btn btn-icon btn-fill btn-youtube">
-                            <i class="fa fa-youtube"></i>
-                        </button>
-						</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</footer>
+	<footer class="footer" id="footer">
+		<!-- populated dynamically -->
+	</footer>
 
 			<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
 			  <div class="modal-dialog">
@@ -266,7 +167,9 @@
 
 const backendUrlRoot = "https://unistart.ro/Jamstudy";
 
-$().ready(function(){    
+$().ready(function(){
+	getPageHeader();
+	getPageFooter();
 	checkLogin();
 });
 

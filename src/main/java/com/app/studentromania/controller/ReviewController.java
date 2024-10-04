@@ -31,8 +31,8 @@ public class ReviewController {
 	@GetMapping
 	@RestCall
 	@Auth
-	public ResponseEntity<String> getAllReviews() {
-		return reviewService.getAllReviews().createRestResponse();
+	public ResponseEntity<String> getAllReviews(ReviewFilter reviewFilter) {
+		return reviewService.getAllReviews(reviewFilter).createRestResponse();
 	}
 
 	@GetMapping("/{reviewId}")

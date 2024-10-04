@@ -38,6 +38,21 @@ public class ReviewRepo {
 	@Query
 	@LogExecutionTime
 	@LogParameters
+	public List<Review> findAll(ReviewFilter reviewFilter) {
+		String selectStatement = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
+				+ Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET + " WHERE docType = $1 ";
+
+		String paginationStatement = " offset $2 limit $3 ";
+		String query = selectStatement + getFilteredReviewsStatement(reviewFilter) + reviewFilter.getOrderByClause()
+				+ paginationStatement;
+
+		return template.findByN1QL(N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue())),
+				Review.class);
+	}
+
+	@Query
+	@LogExecutionTime
+	@LogParameters
 	public List<Review> findByReviewId(String reviewId) {
 		String query = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
 				+ Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET + " WHERE docType = $1 AND reviewId = $2 ";
@@ -80,6 +95,21 @@ public class ReviewRepo {
 
 		N1qlQueryResult result = template
 				.queryN1QL(N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue(), facultyId)));
+		long count = result.allRows().get(0).value().getLong("countResults");
+
+		return count;
+	}
+
+	@Query
+	@LogExecutionTime
+	@LogParameters
+	public long countFilteredReviews(ReviewFilter reviewFilter) {
+		String selectStatement = "SELECT count(*) as countResults FROM " + Constants.BUCKET
+				+ " WHERE docType = $1 ";
+		String query = selectStatement + getFilteredReviewsStatement(reviewFilter);
+
+		N1qlQueryResult result = template
+				.queryN1QL(N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue())));
 		long count = result.allRows().get(0).value().getLong("countResults");
 
 		return count;

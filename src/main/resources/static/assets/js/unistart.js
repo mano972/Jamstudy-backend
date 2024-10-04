@@ -5,7 +5,6 @@ $.ajaxSetup({
   }
 });
 
-
 function myAccount(el) {
 	var jwtToken = getUField("ut");
 	if (jwtToken) {
@@ -1339,6 +1338,128 @@ function setBusinessText() {
 		}
 	});
 
+}
+
+function getPageHeader() {
+	var headerString = '      <div class="container">\n' +
+		'        <!-- Brand and toggle get grouped for better mobile display -->\n' +
+		'        <div class="navbar-header">\n' +
+		'          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">\n' +
+		'            <span class="sr-only">Toggle navigation</span>\n' +
+		'            <span class="icon-bar"></span>\n' +
+		'            <span class="icon-bar"></span>\n' +
+		'            <span class="icon-bar"></span>\n' +
+		'          </button>\n' +
+		'\t\t  <a class="navbar-brand" href="./">\n' +
+		'\t\t\t<img class="main-logo" src="./assets/img/unistart_logo_huge.png">\n' +
+		'\t\t  </a>\n' +
+		'        </div>\n' +
+		'    \n' +
+		'        <!-- Collect the nav links, forms, and other content for toggling -->\n' +
+		'        <div class="collapse navbar-collapse" id="navigation-example-2">\n' +
+		'          <ul class="nav navbar-nav navbar-right">\n' +
+		'            <li>\n' +
+		'                <a href="./" class="btn btn-simple">Acasă</a>\n' +
+		'            </li>\n' +
+		'            <li>\n' +
+		'                <a href="./search.html" class="btn btn-simple">Facultăți</a>\n' +
+		'            </li>\n' +
+		'            <li>\n' +
+		'                <a href="./reviews.html" class="btn btn-simple">Evaluări</a>\n' +
+		'            </li>\n' +
+		'			<li>\n' +
+		'				<a href="./comparison.html" class="btn btn-simple">Compară</a>\n' +
+		'			</li>\n' +
+		'            <li>\n' +
+		'                <a href="./contact.html" class="btn btn-simple">Contact</a>\n' +
+		'            </li>\n' +
+		'			<li>\n' +
+		'                <a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>\n' +
+		'            </li>\n' +
+		'           </ul>\n' +
+		'        </div><!-- /.navbar-collapse -->\n' +
+		'      </div><!-- /.container-->';
+
+	document.getElementById('demo-navbar').innerHTML = headerString;
+}
+
+function getPageFooter() {
+	var footerString = '    <div class="container">\n' +
+		'        <div class="row">\n' +
+		'            <div class="col-md-6 col-sm-7">\n' +
+		'                <div class="links">\n' +
+		'                    <ul class="uppercase-links">\n' +
+		'                        <li>\n' +
+		'                            <a href="./">\n' +
+		'                                Acasă\n' +
+		'                            </a>\n' +
+		'                        </li>\n' +
+		'                        <li>\n' +
+		'                            <a href="./search.html">\n' +
+		'                                Facultăți\n' +
+		'                            </a>\n' +
+		'                        </li>\n' +
+		'                        <li>\n' +
+		'                            <a href="./reviews.html">\n' +
+		'                                Evaluări\n' +
+		'                            </a>\n' +
+		'                        </li>\n' +
+		'                        <li>\n' +
+		'                            <a href="./comparison.html">\n' +
+		'                                Compară\n' +
+		'                            </a>\n' +
+		'                        </li>\n' +
+		'                        <li>\n' +
+		'                            <a href="./contact.html">\n' +
+		'                               Contact\n' +
+		'                            </a>\n' +
+		'                        </li>\n' +
+		'                    </ul>\n' +
+		'					 <ul>\n' +
+		'						<li>\n' +
+		'                            <a href="./terms.html">\n' +
+		'                               Termeni și condiții\n' +
+		'                            </a>\n' +
+		'                        </li>\n' +
+		'						 <li>\n' +
+		'                            <a href="./policy.html">\n' +
+		'                               Politica de confidențialitate\n' +
+		'                            </a>\n' +
+		'                        </li>\n' +
+		'					</ul>\n' +
+		'                    <hr>\n' +
+		'\n' +
+		'                    <div class="copyright">\n' +
+		'                        © 2020 Jamstudy, din dragoste pentru educaţie\n' +
+		'                    </div>\n' +
+		'                </div>\n' +
+		'            </div>\n' +
+		'\n' +
+		'            <div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">\n' +
+		'                <div class="social-area">\n' +
+		'                        <a href="http://twitter.com" target="_blank"><button class="btn btn-icon btn-fill btn-twitter">\n' +
+		'                            <i class="fa fa-twitter"></i>\n' +
+		'                        </button>    \n' +
+		'						</a>\n' +
+		'                        <a href="https://www.facebook.com/UnistartFb" target="_blank"><button class="btn btn-icon btn-fill btn-facebook">\n' +
+		'                            <i class="fa fa-facebook"> </i>\n' +
+		'                        </button>\n' +
+		'						</a>\n' +
+		'						<a href="https://www.instagram.com/unistart.ro" target="_blank"><button class="btn btn-icon btn-fill btn-instagram">\n' +
+		'                            <i class="fa fa-instagram"></i>\n' +
+		'                        </button>\n' +
+		'						</a>\n' +
+		'                        <a href="http://youtube.com" target="_blank"><button class="btn btn-icon btn-fill btn-youtube">\n' +
+		'                            <i class="fa fa-youtube"></i>\n' +
+		'                        </button>\n' +
+		'						</a>\n' +
+		'                </div>\n' +
+		'            </div>\n' +
+		'        </div>\n' +
+		'\n' +
+		'    </div>';
+
+	document.getElementById('footer').innerHTML = footerString;
 }
 
 function getUField(key) {

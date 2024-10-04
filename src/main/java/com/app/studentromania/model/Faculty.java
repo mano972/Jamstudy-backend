@@ -189,7 +189,7 @@ public class Faculty extends ParentEntity {
 	private Double avgRatingTimeBalance;
 
 	@Field
-	private List<String> companyIds;
+	private List<String> companyIds = new ArrayList<>();
 
 	@Field
 	private int viewsCount;

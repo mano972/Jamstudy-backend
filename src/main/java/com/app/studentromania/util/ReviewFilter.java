@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 public class ReviewFilter {
 
 	private static final int DEFAULT_LIMIT = 25;
+	private static final int ADMIN_LIMIT = 999;
 	private static final String DEFAULT_SORT_FIELD = "reviewDate";
 	private static final String DEFAULT_SORT_DIRECTION = "desc";
 	private static final String SORT_SPLIT_CHARACTER = ",";
@@ -62,7 +63,7 @@ public class ReviewFilter {
 	}
 
 	public Integer getLimit() {
-		if (limit == null || limit == 0) {
+		if (limit == null || limit == 0 || (limit > 25 && limit != ADMIN_LIMIT)) {
 			return DEFAULT_LIMIT;
 		}
 		return limit;

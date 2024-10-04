@@ -63,8 +63,9 @@ public class ReviewService {
 	@Autowired
 	private LogUtils logUtils;
 
-	public ResponseDTO getAllReviews() {
-		List<Review> reviews = reviewDAO.getAllReviews();
+	public ResponseDTO getAllReviews(ReviewFilter reviewFilters) {
+		List<Review> reviews = reviewDAO.getAllReviews(reviewFilters);
+		long count = reviewDAO.countFilteredReviews(reviewFilters);
 		JSONArray reviewsArray = new JSONArray();
 		reviews.forEach(review -> {
 			ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
@@ -72,6 +73,7 @@ public class ReviewService {
 		});
 		JSONObject response = new JSONObject();
 		response.put("reviews", reviewsArray);
+		response.put("count", count);
 
 		return ResponseDTO.createSuccessResponse(response);
 	}
@@ -90,7 +92,7 @@ public class ReviewService {
 
 	public ResponseDTO getFilteredReviewsByFacultyId(String facultydId, ReviewFilter reviewFilters) {
 		List<Review> reviews = reviewDAO.getFilteredReviewsByFacultyId(facultydId, reviewFilters);
-		long count = reviewDAO.countFilteredReviews(facultydId, reviewFilters);
+		long count = reviewDAO.countFilteredReviewsByFacultyId(facultydId, reviewFilters);
 		JSONArray reviewsArray = new JSONArray();
 		reviews.forEach(review -> {
 			ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
