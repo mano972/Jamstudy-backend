@@ -1049,7 +1049,7 @@ function loadGeneralPresentationCard(response) {
 			);
 			document.getElementById("faculty-profile-presentation-header").innerHTML += facultyProfilePresentationString;
 			
-			loadMap(response.result.facultyAddress);
+			loadMap(response.result.facultyAddress, response.result.facultyCity);
 
 }
 
@@ -1697,13 +1697,31 @@ function seeAllReviews() {
 	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
-function loadMap(address) {
+function loadMap(address, city) {
 
 	var zoom = 14;
 	if (!address) {
-		address = 'Romania';
-		zoom = 7;
+		if (!city) {
+			address = 'Romania';
+			zoom = 7;
+		} else {
+			address = city;
+			zoom = 7;
+		}
 	}
+
+	if (address.includes('nr.')) {
+		address = address.replace('nr.', '');
+	} else if (address.includes('Nr.')) {
+		address = address.replace('Nr.', '');
+	}
+
+	var city0 = city.split(",")[0];
+	if (!address.includes(city0)) {
+		address = address + ', ' + city;
+	}
+
+	console.log(address);
 	
 	var data = {
     "format": "json",
