@@ -239,7 +239,7 @@ public class ReviewService {
 	}
 
 	public void updateFacultyReviewDetails(Faculty faculty) {
-		logUtils.logMessage(LOGGER,
+		logUtils.logMessageNoRequest(LOGGER,
 				"Faculty " + faculty.getFacultyId() + " currently has the following review details. avgRating: "
 						+ faculty.getAvgRating() + " countRev: " + faculty.getCountRev() + " avgDifficulty: "
 						+ faculty.getAvgDifficulty() + " percentageWouldRecommend: "
@@ -248,7 +248,7 @@ public class ReviewService {
 		reviewDAO.updateReviewsDetailsForFaculty(faculty);
 		facultyDAO.updateFaculty(faculty);
 
-		logUtils.logMessage(LOGGER,
+		logUtils.logMessageNoRequest(LOGGER,
 				"Faculty " + faculty.getFacultyId() + " was updated with the following review details. avgRating: "
 						+ faculty.getAvgRating() + " countRev: " + faculty.getCountRev() + " avgDifficulty: "
 						+ faculty.getAvgDifficulty() + " percentageWouldRecommend: "

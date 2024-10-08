@@ -1267,7 +1267,8 @@ function loadCompaniesCard(companies) {
 			+'													<div class="col-md-5 col-md-offset-0 col-xs-10 col-xs-offset-0 text-start">'
 			+'														<h5><strong>Oportunități în carieră</strong></h5>'
 			+'													</div>'
-			+'												</div>';
+			+'												</div>'
+			+'												<br>';
 
 	var stringOutro =
 			'</div>'
@@ -1278,12 +1279,21 @@ function loadCompaniesCard(companies) {
 	for (i in companies) {
 
 		var company = companies[i];
+		var companyId = company.companyId;
 		var companyName = company.companyName;
-		var companyCities = company.companyCities;
+		var companyCities = company.companyCities.join("/");
 		var minSalary = company.minSalary;
 		var maxSalary = company.maxSalary;
 		var averageSalary = company.averageSalary;
 		var companyJobRoles = company.companyJobRoles;
+
+		var savedCompaniesIds = getUField("usc");
+		var favoriteClass;
+		if (savedCompaniesIds && savedCompaniesIds.includes(companyId)) {
+			favoriteClass = "fas fa-heart fa-lg align";
+		} else {
+			favoriteClass = "far fa-heart fa-lg align";
+		}
 
 		var leftColumn = "";
 		var rowStart = "";
@@ -1328,8 +1338,16 @@ function loadCompaniesCard(companies) {
 		var companyRowString = (
 				rowStart +
 				'													<div class="' + leftColumn + ' col-md-6 col-md-offset-0 col-xs-12">'
-				+'														<div class="col-md-12 col-md-offset-0 col-xs-12">'
-				+'															<h5><b>' + companyName + '</b></h5>'
+				+'														<div class="col-md-6 col-md-offset-0 col-xs-6">'
+				+'															<b>' + companyName + '</b>'
+				+'														<br>'
+				+'															<small class="text-muted">' + companyCities + '</small>'
+				+'														<br>'
+				+'														</div>'
+				+'														<div class="col-xs-6 col-xs-offset-0 col-md-6 col-md-offset-0 save-compare-profile">	'
+				+'															<div class="align">'
+				+'																<button class="btn-danger btn btn-simple save align" style="margin-bottom: 20px" onclick="addCompanyToFavorites(this, &quot;'+companyId+'&quot;, false)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i></button>'
+				+'															</div>'
 				+'														</div>'
 				+ jobRolesString
 				+'													</div>'
@@ -1714,14 +1732,14 @@ function loadMap(address, city) {
 		address = address.replace('nr.', '');
 	} else if (address.includes('Nr.')) {
 		address = address.replace('Nr.', '');
+	} else if (address.includes('nr')) {
+		address = address.replace('nr', '');
 	}
 
 	var city0 = city.split(",")[0];
 	if (!address.includes(city0)) {
 		address = address + ', ' + city;
 	}
-
-	console.log(address);
 	
 	var data = {
     "format": "json",

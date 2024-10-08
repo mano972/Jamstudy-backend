@@ -184,10 +184,8 @@ $().ready(function(){
 	myAccountText();
 	loadUser();
 	getUserProfileInfo();
-	<!-- getSavedFaculties(); -->
 	getUserReviews();
 	getRecentlyViewedFaculties();
-	
 });
 
 window.addEventListener('beforeunload', function(e) {
@@ -245,8 +243,8 @@ function loadUserProfileInfoContent(userResponse) {
 	
 	var userSavedFaculties = userResponse.favoriteFaculties;
 	getSavedFaculties(userSavedFaculties);
-	// var companyIds = userResponse.favoriteCompanies;
-	// getSavedCompanies("companyIds");
+	var companyIds = userResponse.favoriteCompanies;
+	getSavedCompanies(companyIds);
 	
 	var userProfileHeaderString = 
 												'<div class="col-xs-12 user-profile-header">'
@@ -731,7 +729,53 @@ function loadSavedFacultiesContent(userSavedFaculties, facultiesResponse) {
 		
 		var checkboxString = '<label id="notification-checkbox-' + i + '" class="checkbox checkbox-azure checkbox-big notify-checkbox ' + checkedString + '" for="allow-notification" onclick="addToNotifications(this, &quot;'+facultyId+'&quot;, ' + i +')"><span class="icons"><span class="first-icon fa fa-square fa-base" aria-hidden="true"></span><span class="second-icon fa fa-check-square fa-base" aria-hidden="true"></span></span><input type="checkbox" name="notification" value="" id="allow-notification-' + i + '" data-toggle="checkbox" ' + checkedString + '>Notifica-ma cand apar evaluari noi</label>';
 		
-		document.getElementById("saved-faculties").innerHTML += ('<div class="col-xs-12"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5><strong>' + facultyName + '</strong></h5> </a> <h6>' + universityName + '</h6> <small class="text-muted">' + facultyCity + '</small> <br> <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)"> <i class="fa fa-star rating-suggestion-card" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </a> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4">' + checkboxString + ' <div class="row save-compare-user-profile"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div></div>');
+		document.getElementById("saved-faculties").innerHTML += (
+				'<div class="col-xs-12">' +
+				'  <div class="card inner-card">' +
+				'    <div class="content">' +
+				'      <div class="row">' +
+				'        <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">' +
+				'          <a href="' + urlProfileRedirect + facultyId + '">' +
+				'            <div class="img-faculty-logo-block-base img-faculty-search-logo-block">' +
+				'              <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img>' +
+				'            </div>' +
+				'          </a>' +
+				'        </div>' +
+				'        <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;">' +
+				'          <a href="' + urlProfileRedirect + facultyId + '">' +
+				'            <h5>' +
+				'              <strong>' + facultyName + '</strong>' +
+				'            </h5>' +
+				'          </a>' +
+				'          <h6>' + universityName + '</h6>' +
+				'          <small class="text-muted">' + facultyCity + '</small>' +
+				'          <br>' +
+				'          <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)">' +
+				'            <i class="fa fa-star rating-suggestion-card" style="color: orange"></i>' +
+				'            <strong style="color: orange">' + avgRating + '</strong>' +
+				'            <strong>' + countRevText + '</strong>' +
+				'          </a>' +
+				'        </div>' +
+				'        <div class="col-xs-12 col-xs-offset-0 col-md-4">' + checkboxString +
+				'          <div class="row save-compare-user-profile">' +
+				'            <div class="col-xs-6">' +
+				'              <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)">' +
+				'                <i class="' + favoriteClass + '" style="margin-right: 7px"></i>' +
+				'                <span>' + favoriteText + '</span>' +
+				'              </button>' +
+				'            </div>' +
+				'            <div class="col-xs-6 text-right">' +
+				'              <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)">' +
+				'                <i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i>' +
+				'                <span>Compară</span>' +
+				'              </button>' +
+				'            </div>' +
+				'          </div>' +
+				'        </div>' +
+				'      </div>' +
+				'    </div>' +
+				'  </div>' +
+				'</div>');
 		
 	}
 }
@@ -752,7 +796,8 @@ function getSavedCompanies(companyIds) {
 			if (response.control.errorCode === 0) {
 
 				var companiesResponse = response.result.companies;
-				// loadSavedFacultiesContent(userSavedFaculties, facultiesResponse);
+				console.log(companiesResponse);
+				// loadSavedCompaniesContent(companyIds, companiesResponse);
 
 			} else {
 				console.log(response.control.errorDescription);
@@ -788,20 +833,44 @@ function loadSavedCompaniesContent(userSavedCompanies, companiesResponse) {
 		var companyName = companiesResponse[i].companyName;
 		var companyCities = companiesResponse[i].companyCities;
 
-		// var savedFacultiesIds = getUField("usf");
-		// var favoriteClass;
-		// var favoriteText;
-		// if (savedFacultiesIds && savedFacultiesIds.includes(facultyId)) {
-		// 	favoriteClass = "fas fa-heart fa-lg";
-		// 	favoriteText = "Salvată";
-		// } else {
-		// 	favoriteClass = "far fa-heart fa-lg";
-		// 	favoriteText = "Salvează";
-		// }
+		var savedCompaniesIds = getUField("usc");
+		var favoriteClass;
+		var favoriteText;
+		if (savedCompaniesIds && savedCompaniesIds.includes(companyId)) {
+			favoriteClass = "fas fa-heart fa-lg";
+			favoriteText = "Salvată";
+		} else {
+			favoriteClass = "far fa-heart fa-lg";
+			favoriteText = "Salvează";
+		}
 	}
 
-
-	document.getElementById("saved-companies").innerHTML += ('<div class="col-xs-12"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4"><div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <h5><strong>' + companyName + '</strong></h5> <small class="text-muted">' + companyCities + '</small> <br> </div> </div> </div> </div> </div> </div>');
+	document.getElementById("saved-companies").innerHTML += (
+			'<div class="col-xs-6">' +
+			'  <div class="card inner-card">' +
+			'    <div class="content">' +
+			'      <div class="row">' +
+			'        <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;">' +
+			'          <h5>' +
+			'            <strong>' + companyName + '</strong>' +
+			'          </h5>' +
+			'          <small class="text-muted">' + companyCities + '</small>' +
+			'          <br>' +
+			'        </div>' +
+			'        <div class="col-xs-12 col-xs-offset-0 col-md-6">' +
+			'          <div class="row save-compare-profile">' +
+			'            <div class="col-xs-6">' +
+			'              <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+companyId+'&quot;, true)">' +
+			'                <i class="' + favoriteClass + '" style="margin-right: 7px"></i>' +
+			'                <span>' + favoriteText + '</span>' +
+			'              </button>' +
+			'            </div>' +
+			'          </div>' +
+			'        </div>' +
+			'      </div>' +
+			'    </div>' +
+			'  </div>' +
+			'</div>');
 
 
 }

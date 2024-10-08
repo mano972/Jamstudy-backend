@@ -75,7 +75,6 @@ public class EmailHandler {
 		logUtils.logMessage(LOGGER, "Mail session created = " + session.getProperties().toString());
 
 		try {
-
 			Message mimeMessage = new MimeMessage(session);
 			mimeMessage.setFrom(new InternetAddress(user, "Echipa Unistart"));
 			mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));

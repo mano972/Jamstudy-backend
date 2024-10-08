@@ -86,10 +86,12 @@ function loadUser() {
 				for (i in savedFaculties) {
 					savedFacultiesIds.push(savedFaculties[i].facultyId);
 				}
+				var savedCompaniesIds =  response.result.favoriteCompanies; // list of ids
 				var likedReviewsIds = userResponse.likedReviews;
 				var addedReviews = userResponse.addedReviews;
 				
 				setUField("usf", savedFacultiesIds);
+				setUField("usc", savedCompaniesIds);
 				setUField("ulr", likedReviewsIds);
 				setUField("uar", addedReviews);
 				
@@ -210,11 +212,13 @@ function loginWithSocialMediaAccount(userData, registerType) {
 			for (i in savedFaculties) {
 				savedFacultiesIds.push(savedFaculties[i].facultyId);
 			}
+			var savedCompaniesIds =  response.result.favoriteCompanies; // list of ids
 			var likedReviewsIds = response.result.likedReviews;
 			var addedReviews = response.result.addedReviews;
 			
 			setUField("ut", jwtToken);
 			setUField("usf", savedFacultiesIds);
+			setUField("usc", savedCompaniesIds);
 			setUField("ulr", likedReviewsIds);
 			setUField("uar", addedReviews);
 			
@@ -352,11 +356,13 @@ function login(e) {
 			for (i in savedFaculties) {
 				savedFacultiesIds.push(savedFaculties[i].facultyId);
 			}
+			var savedCompaniesIds =  response.result.favoriteCompanies; // list of ids
 			var likedReviewsIds = response.result.likedReviews;
 			var addedReviews = response.result.addedReviews;
 			
 			setUField("ut", jwtToken);
 			setUField("usf", savedFacultiesIds);
+			setUField("usc", savedCompaniesIds);
 			setUField("ulr", likedReviewsIds);
 			setUField("uar", addedReviews);
 			
@@ -939,8 +945,6 @@ function addToFavorites(el, facultyId, hasText) {
 			$(el).removeClass("fa-disabled");
 		}
 	});
-	
-
 }
 
 function upvoteReview(el) {
@@ -1108,6 +1112,88 @@ function addToNotifications(el, facultyId, i) {
 	
 }
 
+function addCompanyToFavorites(el, companyId, hasText) {
+
+	var jwtToken = getUField("ut");
+	if (!jwtToken) {
+		el.setAttribute("data-toggle", 'modal');
+		el.setAttribute("data-target", '#login-modal');
+		return false;
+	}
+
+	var icon = $(el).children()[0];
+	var regularIcon = "far";
+	var solidIcon = "fas";
+
+	// or check using localstorage
+	var favorite;
+	if ($(icon).hasClass(regularIcon)) {
+		favorite = true;
+	} else {
+		favorite = false; // remove from favorites
+	}
+
+	$(el).addClass("fa-disabled");
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile/favorite/company/" + companyId);
+
+	var body = {
+		addFavoriteCompany: favorite
+	};
+
+	$.ajax({
+		url: backendUrl,
+		type: 'PUT',
+		dataType: 'json',
+		contentType: 'application/json',
+		crossDomain: true,
+		data: JSON.stringify(body),
+		success: function (data) {
+			var savedCompaniesIds = getUField("usc");
+			if (!savedCompaniesIds) {
+				savedCompaniesIds = [];
+			}
+			if ($(icon).hasClass(regularIcon)) {
+				$(icon).removeClass(regularIcon);
+				$(icon).addClass(solidIcon);
+				if (hasText) {
+					icon.nextSibling.innerHTML = "Salvată";
+				}
+				savedCompaniesIds.push(companyId);
+				setUField("usc", savedCompaniesIds);
+			} else {
+				$(icon).removeClass(solidIcon);
+				$(icon).addClass(regularIcon);
+				if (hasText) {
+					icon.nextSibling.innerHTML = "Salvează";
+				}
+				savedCompaniesIds = savedCompaniesIds.filter(function(value, index, arr){
+					return companyId != value;
+				});
+				setUField("usc", savedCompaniesIds);
+			}
+		},
+		error: function(error) {
+			checkLoggedInUser(error.status);
+			$("#general-modal").modal();
+			document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+			if (error.responseJSON) {
+				if (error.responseJSON.control) {
+					var errorDescription = error.responseJSON.control.errorDescription;
+					document.getElementById('modal-text').innerHTML = errorDescription;
+				} else {
+					document.getElementById('modal-text').innerHTML = "Compania nu a putut fi salvată";
+				}
+			} else {
+				document.getElementById('modal-text').innerHTML = "Compania nu a putut fi salvată";
+			}
+		},
+		complete: function (data) {
+			$(el).removeClass("fa-disabled");
+		}
+	});
+}
+
 function initiateAutocomplete() {
 
 	let inputValue = '';
@@ -1125,7 +1211,7 @@ function initiateAutocomplete() {
 				backendUrl.searchParams.append("searchBy", input);
 				backendUrl.searchParams.append("orderBy", "viewsCount,desc");
 			}
-			var numberOfSuggestions = 5;
+			var numberOfSuggestions = 7;
 			backendUrl.searchParams.append("limit", numberOfSuggestions);
 
 			return new Promise(resolve => {

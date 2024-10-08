@@ -207,9 +207,14 @@
 							</div>
 					</div>
 					<div class="row">
-						<div class="col-md-4 col-md-offset-4 col-xs-12">
+						<div class="col-md-2 col-md-offset-4 col-xs-12">
 							<div class="text-center">
-								<a id="see-all-filtered-faculties-button" type="button" class="btn btn-warning btn-block" >Vezi tot</a>
+								<a id="see-all-filtered-faculties-button" type="button" class="btn btn-warning btn-block" >Vezi toate facultățile</a>
+							</div>
+						</div>
+						<div class="col-md-2 col-xs-12">
+							<div class="text-center">
+								<a id="see-all-reviews-button" type="button" class="btn btn-warning btn-block" >Vezi toate evaluările</a>
 							</div>
 						</div>
 					</div>
@@ -446,7 +451,7 @@ function loadTopFaculties() {
 			var urlProfileRedirect = "./profile.html?id=";
 			
 			if (response.result.faculties.length > 0) {
-				document.getElementById("see-all-filtered-faculties-button").innerHTML = 'Vezi tot (' + response.result.count + ')';
+				document.getElementById("see-all-filtered-faculties-button").innerHTML = 'Vezi toate facultățile (' + response.result.count + ')';
 			
 				var avgRatingTop = response.result.faculties[0].avgRating;
 				if (!avgRatingTop) {
@@ -732,6 +737,11 @@ document.getElementById("see-all-filtered-faculties-button").onclick = function 
 	var citiesParam = "c=" + arrayCities;
 	var finalUrl = url + "?" + searchInputParam + "&" + domainsParam + "&" + citiesParam;
     location.href = finalUrl;
+};
+
+document.getElementById("see-all-reviews-button").onclick = function () {
+	var url = "./reviews.html";
+	location.href = url;
 };
 
 document.getElementById("search-input").addEventListener("keyup", function(event) {

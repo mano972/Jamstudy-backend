@@ -81,7 +81,7 @@ public class FacultyDAO {
 	public void updateFaculty(Faculty faculty) {
 		faculty.setUpdateDateWithCurrentDate();
 		facultyRepo.save(faculty);
-		logUtils.logMessage(LOGGER, "Faculty " + faculty.getFacultyId() + " was updated!");
+		logUtils.logMessageNoRequest(LOGGER, "Faculty " + faculty.getFacultyId() + " was updated!");
 	}
 
 	public void deleteAllFaculties() {

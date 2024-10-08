@@ -14,11 +14,15 @@ import com.app.studentromania.service.CustomRequestContext;
 @Component
 public class LogUtils {
 
-	@Autowired
+	@Autowired(required = false)
 	private CustomRequestContext customRequestContext;
 
 	public void logMessage(Logger logger, String message) {
 		logger.info(message + ". TraceId [" + getTraceId() + "]");
+	}
+
+	public void logMessageNoRequest(Logger logger, String message) {
+		logger.info(message);
 	}
 
 	public void logAuth(Logger logger, String endPointName, String userId) {

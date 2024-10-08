@@ -13,6 +13,8 @@ public class AuthResponseDTO {
 
 	private List<UserProfileFaculty> favoriteFaculties;
 
+	private List<String> favoriteCompanies;
+
 	private List<UserProfileFaculty> recentFaculties;
 
 	private List<String> likedReviews;
@@ -43,6 +45,14 @@ public class AuthResponseDTO {
 
 	public void setFavoriteFaculties(List<UserProfileFaculty> favoriteFaculties) {
 		this.favoriteFaculties = favoriteFaculties;
+	}
+
+	public List<String> getFavoriteCompanies() {
+		return favoriteCompanies;
+	}
+
+	public void setFavoriteCompanies(List<String> favoriteCompanies) {
+		this.favoriteCompanies = favoriteCompanies;
 	}
 
 	public List<UserProfileFaculty> getRecentFaculties() {

@@ -659,6 +659,7 @@ public class UserProfileService {
 		authResponseDTO.setFirstName(userProfile.getFirstName());
 		authResponseDTO.setLastName(userProfile.getLastName());
 		authResponseDTO.setFavoriteFaculties(userProfile.getFavoriteFaculties());
+		authResponseDTO.setFavoriteCompanies(userProfile.getFavoriteCompanies());
 		authResponseDTO.setRecentFaculties(userProfile.getRecentFaculties());
 		authResponseDTO.setAddedReviews(userProfile.getAddedReviews());
 		authResponseDTO.setLikedReviews(userProfile.getLikedReviews());
