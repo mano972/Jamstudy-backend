@@ -14,7 +14,7 @@ import com.app.studentromania.service.CustomRequestContext;
 @Component
 public class LogUtils {
 
-	@Autowired(required = false)
+	@Autowired
 	private CustomRequestContext customRequestContext;
 
 	public void logMessage(Logger logger, String message) {
@@ -23,6 +23,10 @@ public class LogUtils {
 
 	public void logMessageNoRequest(Logger logger, String message) {
 		logger.info(message);
+	}
+
+	public void logErrorMessage(Logger logger, String message, Throwable e) {
+		logger.error(message + ". TraceId [" + getTraceId() + "]", e);
 	}
 
 	public void logAuth(Logger logger, String endPointName, String userId) {

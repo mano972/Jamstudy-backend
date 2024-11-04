@@ -30,7 +30,7 @@ public class CompanyController {
     @GetMapping
     @RestCall
     @Auth
-    public ResponseEntity<String> getByCompanyIds(@RequestParam List<String> companyIds, @RequestParam String facultyId) {
+    public ResponseEntity<String> getByCompanyIds(@RequestParam List<String> companyIds, @RequestParam(required = false) String facultyId) {
         return companyService.getByCompanyIds(companyIds, facultyId).createRestResponse();
     }
 

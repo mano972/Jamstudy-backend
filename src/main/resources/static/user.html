@@ -796,8 +796,7 @@ function getSavedCompanies(companyIds) {
 			if (response.control.errorCode === 0) {
 
 				var companiesResponse = response.result.companies;
-				console.log(companiesResponse);
-				// loadSavedCompaniesContent(companyIds, companiesResponse);
+				loadSavedCompaniesContent(companiesResponse);
 
 			} else {
 				console.log(response.control.errorDescription);
@@ -813,7 +812,7 @@ function getSavedCompanies(companyIds) {
 	});
 }
 
-function loadSavedCompaniesContent(userSavedCompanies, companiesResponse) {
+function loadSavedCompaniesContent(companiesResponse) {
 	if (companiesResponse.length === 0) {
 		document.getElementById("saved-companies").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Companii salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai salvat nicio companie</h5> </div>';
 		return;
@@ -843,36 +842,34 @@ function loadSavedCompaniesContent(userSavedCompanies, companiesResponse) {
 			favoriteClass = "far fa-heart fa-lg";
 			favoriteText = "Salvează";
 		}
+
+		document.getElementById("saved-companies").innerHTML += (
+				'<div class="col-xs-6">' +
+				'  <div class="card inner-card">' +
+				'    <div class="content">' +
+				'      <div class="row">' +
+				'        <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;">' +
+				'          <h5>' +
+				'            <strong>' + companyName + '</strong>' +
+				'          </h5>' +
+				'          <small class="text-muted">' + companyCities + '</small>' +
+				'          <br>' +
+				'        </div>' +
+				'        <div class="col-xs-12 col-xs-offset-0 col-md-6">' +
+				'          <div class="row">' +
+				'            <div class="col-xs-12 save-compare-profile">' +
+				'              <button class="btn-danger btn btn-simple save" onclick="addCompanyToFavorites(this, &quot;'+companyId+'&quot;, true)">' +
+				'                <i class="' + favoriteClass + '" style="margin-right: 7px"></i>' +
+				'                <span>' + favoriteText + '</span>' +
+				'              </button>' +
+				'            </div>' +
+				'          </div>' +
+				'        </div>' +
+				'      </div>' +
+				'    </div>' +
+				'  </div>' +
+				'</div>');
 	}
-
-	document.getElementById("saved-companies").innerHTML += (
-			'<div class="col-xs-6">' +
-			'  <div class="card inner-card">' +
-			'    <div class="content">' +
-			'      <div class="row">' +
-			'        <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;">' +
-			'          <h5>' +
-			'            <strong>' + companyName + '</strong>' +
-			'          </h5>' +
-			'          <small class="text-muted">' + companyCities + '</small>' +
-			'          <br>' +
-			'        </div>' +
-			'        <div class="col-xs-12 col-xs-offset-0 col-md-6">' +
-			'          <div class="row save-compare-profile">' +
-			'            <div class="col-xs-6">' +
-			'              <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+companyId+'&quot;, true)">' +
-			'                <i class="' + favoriteClass + '" style="margin-right: 7px"></i>' +
-			'                <span>' + favoriteText + '</span>' +
-			'              </button>' +
-			'            </div>' +
-			'          </div>' +
-			'        </div>' +
-			'      </div>' +
-			'    </div>' +
-			'  </div>' +
-			'</div>');
-
-
 }
 
 function getUserReviews() {

@@ -69,7 +69,7 @@ public class EmailHandler {
 				}
 			});
 		} catch (Exception e) {
-			logUtils.logMessage(LOGGER, "Email authentication error. " + to);
+			logUtils.logErrorMessage(LOGGER, "Email authentication error. " + to, e);
 			return ErrorsEnum.EMAIL_AUTH_ERROR;
 		}
 		logUtils.logMessage(LOGGER, "Mail session created = " + session.getProperties().toString());
@@ -116,11 +116,11 @@ public class EmailHandler {
 
 			Transport.send(mimeMessage);
 		} catch (Exception e) {
-			logUtils.logMessage(LOGGER, "Error. Email was not sent to email address: " + to);
+			logUtils.logErrorMessage(LOGGER, "Error. Email was not sent to email address: " + to, e);
 			return ErrorsEnum.EMAIL_SENDING_ERROR;
 		}
 
-		logUtils.logMessage(LOGGER, "Email was sent succesfully to email address: " + to);
+		logUtils.logMessage(LOGGER, "Email was sent successfully to email address: " + to);
 		return ErrorsEnum.NO_ERROR;
 	}
 
