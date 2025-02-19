@@ -48,7 +48,7 @@
 								<div class="content">
 									<div class="row">
 										<div class="col-md-12 col-md-offset-0">
-											<h3>Autentificare</h3>
+											<h3 data-i18n-key="login-header">Autentificare</h3>
 											<br>
 											<form class="register-form">
 												<!-- <label>Email</label> --> 
@@ -59,10 +59,10 @@
 												<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100" oninput="clearErrorLoginPass()">
 												<small id="error-login" class="error-message"></small>
 												<br>
-												<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
+												<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)" data-i18n-key="login-button-message">Intră în cont</button>
 												<br>
 <!--												<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>-->
-												<button id="login-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
+												<button id="login-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"></i><span data-i18n-key="login-google">Loghează-te cu Google</span></button>
 												<div id="g_id_onload" data-client_id="801355334630-8i08j4vg23mh4b1eogrs5c0jrm5etb2n.apps.googleusercontent.com" data-callback="googleLogin" data-auto_prompt="false"></div>
 												<div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
 											</form>
@@ -70,10 +70,10 @@
 											<br>
 											<div class="forgot">
 												<!-- <div class="text-left"> -->
-													<a href="./forgot.html" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
+													<a href="./forgot.html" class="btn btn-simple btn-info btn-reg" data-i18n-key="login-forgot-password">Am uitat parola</a>
 												<!-- </div> -->
 												<!-- <div class="text-right"> -->
-													<a href="./register.html" class="btn btn-simple btn-info btn-reg" style="float: right;">Nu ai cont? Înregistrează-te</a>
+													<a href="./register.html" class="btn btn-simple btn-info btn-reg" style="float: right;" data-i18n-key="login-send-to-register">Nu ai cont? Înregistrează-te</a>
 												<!-- </div> -->
 											</div>
 										</div>
@@ -86,22 +86,21 @@
 								<div class="content">
 									<div class="row">
 										<div class="col-md-12 col-md-offset-0">
-											<h5><b>Beneficiile unui cont de utilizator</b></h5>
+											<h5><b data-i18n-key="login-account-benefits">Beneficiile unui cont de utilizator</b></h5>
 											<br>
-											<p>Fa-ti cont pe Unistart pentru a putea avea access la toate sectiunile platformei.</p>
+											<p data-i18n-key="benefits-subtitle">Fa-ti cont pe Unistart pentru a putea avea access la toate sectiunile platformei.</p>
 											<br>
-											<p>• Evalueaza facultati.</p>
+											<p>• <span data-i18n-key="benefits-1">Evalueaza facultati.</span></p>
 											<br>
-											<p>• Salveaza facultatile favorite.</p>
+											<p>• <span data-i18n-key="benefits-2">Salveaza facultatile favorite.</span></p>
 											<br>
-											<p>• Personalizeaza-ti contul.</p>
+											<p>• <span data-i18n-key="benefits-4">Personalizeaza-ti contul.</span></p>
 											<br>
-											<p>• Voteaza evaluari.</p>
+											<p>• <span data-i18n-key="benefits-5">Voteaza evaluari.</span></p>
 											<br>
-											<p>• (In curand) Opteaza pentru a primi notificari pentru facultatile favorite.</p>
+											<p>• <span data-i18n-key="benefits-6">(In curand) Opteaza pentru a primi notificari pentru facultatile favorite.</span></p>
 											<br>
-											<p>• Vei avea acces la viitoarele functionalitati dedicate exclusiv utilizatorilor inregistrati.</p>
-											
+											<p>• <span data-i18n-key="benefits-7">Vei avea acces la viitoarele functionalitati dedicate exclusiv utilizatorilor inregistrati.</span></p>
 										</div>
 									</div>
 								</div>
@@ -171,6 +170,17 @@ $().ready(function(){
 		verifyRegister(confirmationToken);
 	}
 });
+
+window.onload = function() {
+	translatePlaceholders();
+
+  };
+
+function translatePlaceholders() {
+	var passwordElement = document.getElementById("login-pass");
+	var translatedPlaceholder = translateKey("password");
+	passwordElement.setAttribute("placeholder", translatedPlaceholder);
+}
 	
 </script>
     

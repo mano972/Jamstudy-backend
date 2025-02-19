@@ -57,7 +57,7 @@
 											<div class="row">
 												<div class="list-options col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
 													<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12 col-xs-offset-0">
-														<span><b>Căutare</b></span><br>
+														<span><b data-i18n-key="search-v2">Căutare</b></span><br>
 														<fieldset id="search-fieldset" class="search-fieldset">
 															<input id="search-input" class="form-control" type="text" value="" placeholder="Facultate, Universitate, Oraș ..." spellcheck="false"/>
 															<i id="search-button" class="fa fa-search inner-icon" onclick="search()" aria-hidden="true"></i>
@@ -70,7 +70,7 @@
 														</fieldset>
 													</div>
 													<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12 col-xs-offset-0">
-														<span><b>Sortare</b></span><br>
+														<span><b data-i18n-key="sort">Sortare</b></span><br>
 														<select id="sorting" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadData(false)">
 															<option value="facultyName,asc">Facultate ascendent</option>
 															<option value="facultyName,desc">Facultate descendent</option>
@@ -100,45 +100,31 @@
 												<div id="search-filter" class="collapse in">	
 													<div style="display:inline-block; break-inside: avoid-column;">
 														<div class="row text-center">
-															<h5><b>Domenii de studiu</b></h5>
+															<h5><b data-i18n-key="study-domains">Domenii de studiu</b></h5>
 														</div>
-														<label class="checkbox checkbox-azure" for="d1"><input type="checkbox" name="domeniu" value="Științe Economice" id="d1" data-toggle="checkbox">Științe Economice</label>
-														<label class="checkbox checkbox-azure" for="d2"><input type="checkbox" name="domeniu" value="Științe Inginerești" id="d2" data-toggle="checkbox">Științe Inginerești</label>
-														<label class="checkbox checkbox-azure" for="d3"><input type="checkbox" name="domeniu" value="Științe Politice și Comunicare" id="d3" data-toggle="checkbox">Științe Politice și Comunicare</label>
-														<label class="checkbox checkbox-azure" for="d4"><input type="checkbox" name="domeniu" value="Științe Umaniste" id="d4" data-toggle="checkbox">Științe Umaniste</label>
-														<label class="checkbox checkbox-azure" for="d5"><input type="checkbox" name="domeniu" value="Științe Juridice" id="d5" data-toggle="checkbox">Științe Juridice</label>
-														<label class="checkbox checkbox-azure" for="d6"><input type="checkbox" name="domeniu" value="Medicină" id="d6" data-toggle="checkbox">Medicină</label>
-														<label class="checkbox checkbox-azure" for="d7"><input type="checkbox" name="domeniu" value="Științe ale Naturii" id="d7" data-toggle="checkbox">Științe ale Naturii</label>
-														<label class="checkbox checkbox-azure" for="d8"><input type="checkbox" name="domeniu" value="Arte Arhitectură și Urbanism" id="d8" data-toggle="checkbox">Arte, Arhitectură și Urbanism</label>
-														<label class="checkbox checkbox-azure" for="d9"><input type="checkbox" name="domeniu" value="Științe Exacte" id="d9" data-toggle="checkbox">Științe Exacte</label>
-														<label class="checkbox checkbox-azure" for="d10"><input type="checkbox" name="domeniu" value="Științe Sociale și Psihologie" id="d10" data-toggle="checkbox">Științe Sociale și Psihologie</label>
-														<label class="checkbox checkbox-azure" for="d11"><input type="checkbox" name="domeniu" value="Științe Agricole" id="d11" data-toggle="checkbox">Științe Agricole</label>
-														<label class="checkbox checkbox-azure" for="d12"><input type="checkbox" name="domeniu" value="Ştiinţa Sportului şi Educaţiei Fizice" id="d12" data-toggle="checkbox">Știința Sportului și Educației Fizice</label>
-														<label class="checkbox checkbox-azure" for="d13"><input type="checkbox" name="domeniu" value="Ştiinţe Militare Informaţii şi Ordine publică" id="d13" data-toggle="checkbox">Științe Militare și de Informații</label>
-														<label class="checkbox checkbox-azure" for="d14"><input type="checkbox" name="domeniu" value="Teologie" id="d14" data-toggle="checkbox">Teologie</label>
+														<label class="checkbox checkbox-azure" for="d1"><input type="checkbox" name="domeniu" value="Științe Economice" id="d1" data-toggle="checkbox"><span data-i18n-key="domain-economy">Științe Economice</span></label>
+														<label class="checkbox checkbox-azure" for="d2"><input type="checkbox" name="domeniu" value="Științe Inginerești" id="d2" data-toggle="checkbox"><span data-i18n-key="domain-engineering">Științe Inginerești</span></label>
+														<label class="checkbox checkbox-azure" for="d3"><input type="checkbox" name="domeniu" value="Științe Politice și Comunicare" id="d3" data-toggle="checkbox"><span data-i18n-key="domain-politics">Științe Politice și Comunicare</span></label>
+														<label class="checkbox checkbox-azure" for="d4"><input type="checkbox" name="domeniu" value="Științe Umaniste" id="d4" data-toggle="checkbox"><span data-i18n-key="domain-humanities">Științe Umaniste</span></label>
+														<label class="checkbox checkbox-azure" for="d5"><input type="checkbox" name="domeniu" value="Științe Juridice" id="d5" data-toggle="checkbox"><span data-i18n-key="domain-judicial">Științe Juridice</span></label>
+														<label class="checkbox checkbox-azure" for="d6"><input type="checkbox" name="domeniu" value="Medicină" id="d6" data-toggle="checkbox"><span data-i18n-key="domain-medicine">Medicină</span></label>
+														<label class="checkbox checkbox-azure" for="d7"><input type="checkbox" name="domeniu" value="Științe ale Naturii" id="d7" data-toggle="checkbox"><span data-i18n-key="domain-nature">Științe ale Naturii</span></label>
+														<label class="checkbox checkbox-azure" for="d8"><input type="checkbox" name="domeniu" value="Arte Arhitectură și Urbanism" id="d8" data-toggle="checkbox"><span data-i18n-key="domain-art-v2">Arte, Arhitectură și Urbanism</span></label>
+														<label class="checkbox checkbox-azure" for="d9"><input type="checkbox" name="domeniu" value="Științe Exacte" id="d9" data-toggle="checkbox"><span data-i18n-key="domain-exact">Științe Exacte</span></label>
+														<label class="checkbox checkbox-azure" for="d10"><input type="checkbox" name="domeniu" value="Științe Sociale și Psihologie" id="d10" data-toggle="checkbox"><span data-i18n-key="domain-social">Științe Sociale și Psihologie</span></label>
+														<label class="checkbox checkbox-azure" for="d11"><input type="checkbox" name="domeniu" value="Științe Agricole" id="d11" data-toggle="checkbox"><span data-i18n-key="domain-agriculture">Științe Agricole</span></label>
+														<label class="checkbox checkbox-azure" for="d12"><input type="checkbox" name="domeniu" value="Ştiinţa Sportului şi Educaţiei Fizice" id="d12" data-toggle="checkbox"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label>
+														<label class="checkbox checkbox-azure" for="d13"><input type="checkbox" name="domeniu" value="Ştiinţe Militare Informaţii şi Ordine publică" id="d13" data-toggle="checkbox"><span data-i18n-key="domain-military-v2">Științe Militare și de Informații</span></label>
+														<label class="checkbox checkbox-azure" for="d14"><input type="checkbox" name="domeniu" value="Teologie" id="d14" data-toggle="checkbox"><span data-i18n-key="domain-theology">Teologie</span></label>
 													</div>
 													<hr id="hr-filter-domains">
 													<div style="display:inline-block; break-inside: avoid-column;">
 														<div class="row text-center">
-															<h5><b>Orașe</b></h5>
+															<h5><b data-i18n-key="cities">Orașe</b></h5>
 														</div>
-														<label class="checkbox checkbox-azure" for="c1"><input type="checkbox" name="oras" value="Bucureşti" id="c1" data-toggle="checkbox">Bucureşti</label>
-														<label class="checkbox checkbox-azure" for="c2"><input type="checkbox" name="oras" value="Cluj-Napoca; Cluj" id="c2" data-toggle="checkbox">Cluj-Napoca</label>
-														<label class="checkbox checkbox-azure" for="c3"><input type="checkbox" name="oras" value="Timişoara; Timiş" id="c3" data-toggle="checkbox">Timişoara</label>
-														<label class="checkbox checkbox-azure" for="c4"><input type="checkbox" name="oras" value="Iaşi; Iaşi" id="c4" data-toggle="checkbox">Iaşi</label>
-														<label class="checkbox checkbox-azure" for="c5"><input type="checkbox" name="oras" value="Constanţa; Constanţa" id="c5" data-toggle="checkbox">Constanţa</label>
-														<label class="checkbox checkbox-azure" for="c6"><input type="checkbox" name="oras" value="Craiova; Dolj" id="c6" data-toggle="checkbox">Craiova</label>
-														<label class="checkbox checkbox-azure" for="c10"><input type="checkbox" name="oras" value="Oradea; Bihor" id="c10" data-toggle="checkbox">Oradea</label>
-														<label class="checkbox checkbox-azure" for="c7"><input type="checkbox" name="oras" value="Braşov; Braşov" id="c7" data-toggle="checkbox">Braşov</label>
-														<label class="checkbox checkbox-azure" for="c8"><input type="checkbox" name="oras" value="Piteşti; Argeş" id="c8" data-toggle="checkbox">Piteşti</label>
-														<label class="checkbox checkbox-azure" for="c9"><input type="checkbox" name="oras" value="Târgovişte; Dâmboviţa" id="c9" data-toggle="checkbox">Târgovişte</label>
-														<label class="checkbox checkbox-azure" for="c11"><input type="checkbox" name="oras" value="Alba Iulia; Alba" id="c11" data-toggle="checkbox">Alba Iulia</label>
-														<label class="checkbox checkbox-azure" for="c12"><input type="checkbox" name="oras" value="Sibiu; Sibiu" id="c12" data-toggle="checkbox">Sibiu</label>
-														<label class="checkbox checkbox-azure" for="c13"><input type="checkbox" name="oras" value="Galaţi; Galaţi" id="c13" data-toggle="checkbox">Galaţi</label>
-														<label class="checkbox checkbox-azure" for="c14"><input type="checkbox" name="oras" value="Arad; Arad" id="c14" data-toggle="checkbox">Arad</label>
-														<label class="checkbox checkbox-azure" for="c15"><input type="checkbox" name="oras" value="Târgu Mureş; Mureş" id="c15" data-toggle="checkbox">Târgu Mureş</label>
-														<label class="checkbox checkbox-azure" for="c16"><input type="checkbox" name="oras" value="Suceava; Suceava" id="c16" data-toggle="checkbox">Suceava</label>
-														<label class="checkbox checkbox-azure" for="c17"><input type="checkbox" name="oras" value="Alba Iulia; Alba" id="c17" data-toggle="checkbox">Alba Iulia</label>
+														<div id="cities-select">
+															<!--populated dynamically-->
+														</div>
 													</div>
 												</div>
 											</div>
@@ -210,33 +196,8 @@
 				<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 <div class="modal-dialog-login">
 					<div class="modal-content">
-						<div class="login-card">
-							<div class="close close-login" data-dismiss="modal">
-								<i class="fa fa-close"></i>
-							</div>
-							<h3 class="title">Autentificare</h3>
-							<br>
-							<form class="register-form">
-								<!-- <label>Email</label> --> 
-								<input id="login-email" type="email" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorLoginEmail()">
-								<small id="error-login-email" class="error-message"></small>
-								<br>
-								<!-- <label>Parolă</label> -->
-								<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100" oninput="clearErrorLoginPass()">
-								<small id="error-login" class="error-message"></small>
-								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
-								<!-- <h5>sau</h5> -->
-								<div id="reg-line"></div>
-<!--								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>-->
-								<button id="login-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
-								<div id="g_id_onload" data-client_id="801355334630-8i08j4vg23mh4b1eogrs5c0jrm5etb2n.apps.googleusercontent.com" data-callback="googleLogin" data-auto_prompt="false"></div>
-								<div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
-							</form>
-							<div class="forgot">
-								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
-								<a href="./forgot.html" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
-								<a class="btn btn-simple btn-info btn-reg" data-dismiss="modal" data-toggle="modal" data-target="#register-modal">Nu ai cont? Înregistrează-te</a>
-							</div>
+						<div id="login-card" class="login-card">
+							<!-- populated dynamically -->
 						</div>
 					</div>
 				</div>
@@ -245,41 +206,8 @@
 			<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 <div class="modal-dialog-register">
 					<div class="modal-content">
-						<div class="register-card">
-							<div class="close close-login" data-dismiss="modal">
-								<i class="fa fa-close"></i>
-							</div>
-							<h3 class="title">Creare cont nou</h3>
-							<br>
-							<form class="register-form">
-								<!-- <label>Email</label> -->
-								<input id="register-email" type="email" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
-								<small id="error-register-email" class="error-message"></small>
-								<br>
-								<!-- <label>Parola</label> -->
-								<fieldset class="search-fieldset">
-									<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorRegisterPass()">
-									<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
-								</fieldset>
-								<!-- <label>Confirmă Parola</label> -->
-								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorRegisterConfirmPass()">
-								<small id="error-register" class="error-message"></small>
-								
-								<div>
-									<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</label>
-									<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox">Vreau să fiu la curent cu ultimele noutăți</label>
-								</div>
-								
-								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
-								<!-- <h5>sau</h5> -->
-								<div id="reg-line"></div>
-<!--								<button id="register-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>-->
-								<button id="register-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
-								<div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
-							</form>
-							<div class="forgot">
-								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
-							</div>
+						<div id="register-card" class="register-card">
+							<!-- populated dynamically -->
 						</div>
 					</div>
 				</div>
@@ -321,6 +249,9 @@ $(document).ready(function() {
 	getPageHeader();
 	getPageFooter();
 	myAccountText();
+	getLoginModal();
+	getRegisterModal();
+	getCitiesForSearchPage();
 	finalSearchInput = queryParams.get("q");
 	if(queryParams.get("d")) {
 		urlDomainInput = queryParams.get("d").split(',');
@@ -336,13 +267,25 @@ $(document).ready(function() {
 	if (finalSearchInput) {
 		document.getElementById("search-input").value = finalSearchInput;
 	}
-	
+
+	addCitiesCheckboxesEvent();
 	initializeCheckboxes();
 	initiateAutocomplete();
 	loadUser();
 	loadData(false);	
 	getRecentlyViewedFaculties();
 });
+
+window.onload = function() {
+	translatePlaceholders();
+
+  };
+
+function translatePlaceholders() {
+	var searchInputElement = document.getElementById("search-input");
+	var translatedPlaceholder = translateKey("search-keywords-placeholder");
+	searchInputElement.setAttribute("placeholder", translatedPlaceholder);
+}
 
 function initializeCheckboxes() {
 	var i;
@@ -404,7 +347,7 @@ function clearCheckboxes() {
 	$("input:checkbox").attr('checked', false);
 }
 
-$.each($("input[name=domeniu]"), function(){
+$.each($("input[name=domeniu]"), function() {
 	$("label[for='" + $(this).attr("id") + "']").click(function() {
 	
 	var checkBoxElementId = $(this).attr("for");
@@ -422,23 +365,25 @@ $.each($("input[name=domeniu]"), function(){
 	});
 });
 
-$.each($("input[name=oras]"), function(){
-	$("label[for='" + $(this).attr("id") + "']").click(function() {
-	
-	var checkBoxElementId = $(this).attr("for");
-	var checkBoxElement = $("input[id='" + checkBoxElementId + "']");
-	
-	if (checkBoxElement.prop("checked") === true) { //if it was already checked, it means now it is removed
-		cityParams = cityParams.filter(function(value, index, arr){ return value !== checkBoxElement.attr("id");});
-	} else {
-		cityParams.push($(this).attr("for"));
-	}
-	queryParams.set("c", cityParams);
-	history.replaceState(null, null, "?" + queryParams.toString());
+function addCitiesCheckboxesEvent() {
+	$.each($("input[name=oras]"), function() {
+		$("label[for='" + $(this).attr("id") + "']").click(function() {
 
-	loadData(false);
+		var checkBoxElementId = $(this).attr("for");
+		var checkBoxElement = $("input[id='" + checkBoxElementId + "']");
+
+		if (checkBoxElement.prop("checked") === true) { //if it was already checked, it means now it is removed
+			cityParams = cityParams.filter(function(value, index, arr){ return value !== checkBoxElement.attr("id");});
+		} else {
+			cityParams.push($(this).attr("for"));
+		}
+		queryParams.set("c", cityParams);
+		history.replaceState(null, null, "?" + queryParams.toString());
+		console.log("aaaa");
+		loadData(false);
+		});
 	});
-});
+}
 
 
 function loadData(loadMore) {
@@ -530,7 +475,7 @@ function loadData(loadMore) {
 				document.getElementById("load-more-faculties-main").innerHTML = '<div class="card">'
 																				+ '<div class="content"> '
 																					+ '<div class="text-center row"> '
-																						+ '<button id="load-more-faculties" class="btn btn-info btn-fill" type="submit" onclick="loadMore()">Încarcă mai multe rezultate</button>'
+																						+ '<button id="load-more-faculties" class="btn btn-info btn-fill" type="submit" onclick="loadMore()" data-i18n-key="load-more">Încarcă mai multe rezultate</button>'
 																					+ '</div> '
 																				+ '</div> '
 																			+ '</div>';
@@ -558,9 +503,9 @@ function loadData(loadMore) {
 				if (!countRev) {
 					countRevText = "";
 				} else if (countRev === 1) {
-					countRevText = "din 1 evaluare";
+					countRevText = "<span data-i18n-key='from'>din</span> 1 <span data-i18n-key='review-v2'>evaluare</span>";
 				} else {
-					countRevText = "din " + countRev + " evaluări";
+					countRevText = "<span data-i18n-key='from'>din</span> " + countRev + " <span data-i18n-key='reviews-v2'>evaluări</span>";
 				}
 				
 				var facultyId = response.result.faculties[i].facultyId;
@@ -579,16 +524,16 @@ function loadData(loadMore) {
 				var favoriteText;
 				if (savedFacultiesIds && savedFacultiesIds.includes(facultyId)) {
 					favoriteClass = "fas fa-heart fa-lg";
-					favoriteText = "Salvată";
+					favoriteText = "<span data-i18n-key='saved'>Salvată</span>";
 				} else {
 					favoriteClass = "far fa-heart fa-lg";
-					favoriteText = "Salvează";
+					favoriteText = "<span data-i18n-key='save'>Salvează</span>";
 				}
 	
-				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5><strong>' + facultyName + '</strong></h5> </a> <a data-toggle="tooltip" title="Filtrează după universitate" onclick="searchByUniversityName(this)"><h6><strong>' + universityName + '</strong></h6></a> <small class="text-muted">' + facultyCity + '</small> <br> <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </a> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> Adaugă evaluare</a> <div class="row save-compare-search-list"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span>Compară</span> </button></div> </div> </div> </div> </div> </div>');
+				document.getElementById("faculty-entries").innerHTML += ('<div class="card"> <div class="content"> <div class="row"> <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">  <a href="' + urlProfileRedirect + facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-search-logo-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img> </div> </a> </div> <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;"> <a href="' + urlProfileRedirect + facultyId + '"> <h5><strong>' + facultyName + '</strong></h5> </a> <a data-toggle="tooltip" title="Filtrează după universitate" onclick="searchByUniversityName(this)"><h6><strong>' + universityName + '</strong></h6></a> <small class="text-muted">' + facultyCity + '</small> <br> <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </a> </div> <div class="col-xs-12 col-xs-offset-0 col-md-4" style="margin-top:10px;"> <a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px;"></i> <span data-i18n-key="add-review">Adaugă evaluare</span></a> <div class="row save-compare-search-list"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i>' + favoriteText + '</button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span data-i18n-key="compare">Compară</span> </button></div> </div> </div> </div> </div> </div>');
 
+				translatePage();
 			}
-			
           },
           error: function(error) {
 			checkLoggedInUser(error.status);

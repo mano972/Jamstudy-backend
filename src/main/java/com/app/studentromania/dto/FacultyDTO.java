@@ -36,6 +36,8 @@ public class FacultyDTO {
 
 	private String facultyDescription;
 
+	private String countryCode;
+
 	private List<FacultyProgram> licensePrograms;
 
 	private List<String> facultyDomainsLicense;
@@ -188,6 +190,14 @@ public class FacultyDTO {
 
 	public void setFacultyDescription(String facultyDescription) {
 		this.facultyDescription = facultyDescription;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 
 	public List<FacultyProgram> getLicensePrograms() {

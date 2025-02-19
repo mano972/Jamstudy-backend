@@ -35,6 +35,7 @@ public class Constants {
 	public static final String BIRTH_DATE_FORMAT = "yyyy-MM-dd";
 
 	public static final String JWT_TOKEN_REQUEST_HEADER = "Token";
+	public static final String COUNTRY_CODE_TOKEN_REQUEST_HEADER = "Code";
 
 	public static final int MAX_FAVORITE_FACULTIES = 15;
 	public static final int MAX_REVIEWS = 5;

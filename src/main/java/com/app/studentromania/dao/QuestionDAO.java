@@ -24,6 +24,10 @@ public class QuestionDAO {
 		return questionRepo.getFilteredQuestionsByFacultyId(facultyId, questionFilter);
 	}
 
+	public long countFilteredQuestions(String facultyId, QuestionFilter questionFilter) {
+		return questionRepo.countFilteredQuestionsByFacultyId(facultyId, questionFilter);
+	}
+
 	public Optional<Question> getByQuestionId(String questionId) {
 		return questionRepo.findByQuestionId(questionId).stream().findFirst();
 	}

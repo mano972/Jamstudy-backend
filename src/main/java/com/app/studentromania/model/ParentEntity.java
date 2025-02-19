@@ -28,6 +28,9 @@ public abstract class ParentEntity {
 	@Field
 	private String docType;
 
+	@Field
+	private String countryCode;
+
 	public ParentEntity(DocTypeEnum docType) {
 		initParentEntity(docType);
 		setId(UUID.randomUUID().toString());
@@ -96,4 +99,11 @@ public abstract class ParentEntity {
 		this.docType = docType;
 	}
 
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 }

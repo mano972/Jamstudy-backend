@@ -56,6 +56,9 @@ public class FacultyService {
 	private ConfigDAO configDAO;
 
 	@Autowired
+	private CustomRequestContext customRequestContext;
+
+	@Autowired
 	private LogUtils logUtils;
 
 	public List<Faculty> getAllFaculties() {
@@ -63,6 +66,7 @@ public class FacultyService {
 	}
 
 	public ResponseDTO getFilteredFaculties(FacultyFilter facultyFilter) {
+		facultyFilter.setCountryCode(customRequestContext.getCountryCode());
 		List<Faculty> faculties = facultyDAO.getFilteredFaculties(facultyFilter);
 		long count = facultyDAO.countFilteredFaculties(facultyFilter);
 		JSONArray facultiesArray = new JSONArray();
@@ -81,6 +85,7 @@ public class FacultyService {
 	}
 
 	public ResponseDTO getFilteredFacultiesDetailed(FacultyFilter facultyFilter) {
+		facultyFilter.setCountryCode(customRequestContext.getCountryCode());
 		List<Faculty> faculties = facultyDAO.getFilteredFaculties(facultyFilter);
 		long count = facultyDAO.countFilteredFaculties(facultyFilter);
 		JSONArray facultiesArray = new JSONArray();
@@ -96,6 +101,7 @@ public class FacultyService {
 	}
 
 	public ResponseDTO getUniversitiesForFilter(FacultyFilter facultyFilter) {
+		facultyFilter.setCountryCode(customRequestContext.getCountryCode());
 		List<UniversityFilterRowResponseDTO> listResponseDTOs = facultyDAO.getUniversitiesForFilter(facultyFilter);
 		JSONArray listResponseArray = new JSONArray();
 		listResponseDTOs.forEach(universityFilterRowResponseDTO -> {
@@ -108,6 +114,7 @@ public class FacultyService {
 	}
 
 	public ResponseDTO getFacultyCitiesForFilter(FacultyFilter facultyFilter) {
+		facultyFilter.setCountryCode(customRequestContext.getCountryCode());
 		List<CityFilterResponseDTO> listResponseDTOs = facultyDAO.getFacultyCitiesForFilter(facultyFilter);
 		JSONArray listResponseArray = new JSONArray();
 		listResponseDTOs.forEach(cityFilterResponseDTO -> {

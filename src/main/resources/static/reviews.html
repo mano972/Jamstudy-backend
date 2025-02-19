@@ -54,14 +54,14 @@
                                                 <div class="row">
                                                     <div class="list-options col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 col-xs-12 col-xs-offset-0">
                                                         <div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12 col-xs-offset-0">
-                                                            <span><b>Căutare</b></span><br>
+                                                            <span><b data-i18n-key="search-v2">Căutare</b></span><br>
                                                             <fieldset class="search-fieldset">
                                                                 <input id="search-review-keyword" class="form-control" type="text" value="" placeholder="Cuvânt cheie..." spellcheck="false"/>
                                                                 <i id="search-reviews-icon" class="fa fa-search inner-icon" aria-hidden="true" onclick="getReviews(false)"></i>
                                                             </fieldset>
                                                         </div>
                                                         <div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12 col-xs-offset-0">
-                                                            <span><b>Sortare</b></span><br>
+                                                            <span><b data-i18n-key="sort">Sortare</b></span><br>
                                                             <select id="reviews-sorting" class="selectpicker" data-style="form-control" data-menu-style="" onchange="getReviews(false)">
                                                                 <option value="upvotes,desc">Cel mai votat</option>
                                                                 <option value="reviewDate,desc" selected="selected">Cel mai recent</option>
@@ -144,34 +144,9 @@
 			<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 <div class="modal-dialog-login">
 					<div class="modal-content">
-						<div class="login-card">
-							<div class="close close-login" data-dismiss="modal">
-								<i class="fa fa-close"></i>
-							</div>
-							<h3 class="title">Autentificare</h3>
-							<br>
-							<form class="register-form">
-								<!-- <label>Email</label> --> 
-								<input id="login-email" type="email" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorLoginEmail()">
-								<small id="error-login-email" class="error-message"></small>
-								<br>
-								<!-- <label>Parolă</label> -->
-								<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100" oninput="clearErrorLoginPass()">
-								<small id="error-login" class="error-message"></small>
-								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
-								<!-- <h5>sau</h5> -->
-								<div id="reg-line"></div>
-<!--								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>-->
-                                <button id="login-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
-                                <div id="g_id_onload" data-client_id="801355334630-8i08j4vg23mh4b1eogrs5c0jrm5etb2n.apps.googleusercontent.com" data-callback="googleLogin" data-auto_prompt="false"></div>
-                                <div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
-                            </form>
-							<div class="forgot">
-								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
-								<a href="./forgot.html" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
-								<a class="btn btn-simple btn-info btn-reg" data-dismiss="modal" data-toggle="modal" data-target="#register-modal">Nu ai cont? Înregistrează-te</a>
-							</div>
-						</div>
+                        <div id="login-card" class="login-card">
+                            <!-- populated dynamically -->
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -179,42 +154,9 @@
 			<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 <div class="modal-dialog-register">
 					<div class="modal-content">
-						<div class="register-card">
-							<div class="close close-login" data-dismiss="modal">
-								<i class="fa fa-close"></i>
-							</div>	
-							<h3 class="title">Creare cont nou</h3>
-							<br>
-							<form class="register-form">
-								<!-- <label>Email</label> -->
-								<input id="register-email" type="email" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
-								<small id="error-register-email" class="error-message"></small>
-								<br>
-								<!-- <label>Parola</label> -->
-								<fieldset class="search-fieldset">
-									<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorRegisterPass()">
-									<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
-								</fieldset>
-								<!-- <label>Confirmă Parola</label> -->
-								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorRegisterConfirmPass()">
-								<small id="error-register" class="error-message"></small>
-								
-								<div>
-									<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</label>
-									<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox">Vreau să fiu la curent cu ultimele noutăți</label>
-								</div>
-								
-								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
-								<!-- <h5>sau</h5> -->
-								<div id="reg-line"></div>
-<!--								<button id="register-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>-->
-                                <button id="register-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
-                                <div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
-                            </form>
-							<div class="forgot">
-								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
-							</div>
-						</div>
+                        <div id="register-card" class="register-card">
+                            <!-- populated dynamically -->
+                        </div>
 					</div>
 				</div>
 			</div>	
@@ -257,6 +199,8 @@
         getPageHeader();
         getPageFooter();
         myAccountText();
+        getLoginModal();
+	    getRegisterModal();
         loadUser();
         getReviews(false);
         getRecentlyViewedFaculties();
@@ -334,7 +278,7 @@
             document.getElementById("load-more-reviews-main").innerHTML = '<div class="card">'
                 + '<div class="content"> '
                 + '<div class="text-center row"> '
-                + '<button id="load-more-reviews" class="btn btn-info btn-fill" type="submit" onclick="loadMore()">Încarcă mai multe rezultate</button>'
+                + '<button id="load-more-reviews" class="btn btn-info btn-fill" type="submit" onclick="loadMore()" data-i18n-key="load-more">Încarcă mai multe rezultate</button>'
                 + '</div> '
                 + '</div> '
                 + '</div>';
@@ -361,7 +305,6 @@
 
                     var facultyId = response.result.reviews[i].facultyId;
                     var faculty = facultyResponse.result.faculties.filter(f => facultyId === f.facultyId)[0];
-                    console.log(faculty);
 
                     var urlProfileRedirect = "./profile.html?id=";
 
@@ -380,9 +323,9 @@
                     if (!countRev) {
                         countRevText = "";
                     } else if (countRev === 1) {
-                        countRevText = "din 1 evaluare";
+                        countRevText = "<span data-i18n-key='from'>din</span> 1 <span data-i18n-key='review-v2'>evaluare</span>";
                     } else {
-                        countRevText = "din " + countRev + " evaluări";
+                        countRevText = "<span data-i18n-key='from'>din</span> " + countRev + " <span data-i18n-key='reviews-v2'>evaluări</span>";
                     }
 
                     var universityNameForLogo = universityName.replaceAll("\"", "_");
@@ -429,26 +372,30 @@
                     var wouldRecommendText;
                     var wouldRecommendBoxClass;
                     var wouldRecommendTextClass;
+                    var wouldRecommendTranslation;
                     if (wouldRecommend === true) {
                         wouldRecommendText = "Ar recomanda";
                         wouldRecommendBoxClass = "box green";
                         wouldRecommendTextClass = "would-recommend-text";
+                        wouldRecommendTranslation = "would-recommend";
                     } else if (wouldRecommend === false) {
                         wouldRecommendText = "Nu ar recomanda";
                         wouldRecommendBoxClass = "box red";
                         wouldRecommendTextClass = "would-not-recommend-text";
+                        wouldRecommendTranslation = "would-not-recommend";
                     } else {
                         wouldRecommendText = "";
                         wouldRecommendBoxClass = "";
                         wouldRecommendTextClass = "";
+                        wouldRecommendTranslation = "";
                     }
 
                     var difficulty = response.result.reviews[i].difficulty;
                     var difficultyText;
                     if (difficulty) {
-                        difficultyText = 'Dificultate:&nbsp' + difficulty + '/5';
+                        difficultyText = ':&nbsp' + difficulty + '/5';
                     } else {
-                        difficultyText = "";
+                        difficultyText = ": N/A";
                     }
                     var wouldRecommendAndDifficultyRowString;
                     if (wouldRecommendText || difficulty) {
@@ -458,10 +405,10 @@
                             +'														<div  class="col-xs-6">'
                             +'															<div class="'+ wouldRecommendBoxClass + '">'
                             +'															</div>'
-                            +'															<span class=' + wouldRecommendTextClass + '>&nbsp&nbsp' + wouldRecommendText + '</span>'
+                            +'															<span class=' + wouldRecommendTextClass + ' data-i18n-key=' + wouldRecommendTranslation + '>&nbsp&nbsp' + wouldRecommendText + '</span>'
                             +'														</div>'
                             +'													<div  class="col-xs-6">'
-                            +'															<span style="color: #707070;">&nbsp&nbsp' + difficultyText + '</span>'
+                            +'															<span style="color: #707070;" data-i18n-key="difficulty">&nbsp&nbsp Dificultate</span><span style="color: #707070;">' + difficultyText + '</span>'
                             +'														</div>'
                             +'													</div>';
                     } else {
@@ -514,7 +461,7 @@
                     var cardEnd = '		</div>'
                         +'			</div>';
 
-                    var facultyString =                     ('<div class="row" style="margin-bottom: 8px;">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + urlProfileRedirect + facultyId +'">	<div class="img-faculty-logo-block-base img-faculty-home-logo-block">													<img src="' + logoSrc + '"  class="img-faculty-logo-base img-faculty-logo-home center-logo-home" ></img>								</div>					</a>												</div>												<div class="col-md-9 col-xs-12 align" >					<div>								<a href="' + urlProfileRedirect + facultyId + '">														<h5><strong>' + facultyName + '</strong></h5>													</a>						<a data-toggle="tooltip" title="Filtrează după universitate" onclick="searchByUniversityName(this)">							<h6><strong>' + universityName + '</strong></h6>					</a>								<small class="text-muted">' + facultyCity + '</small>													<br>		<a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </a>  </div>	<div class="row margin-top-faculty-runnerups">	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-5">													<a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>		' + searchCompareString2 + '		</div>						</div>										</div>						'+ searchCompareString1 + '		</div>');
+                    var facultyString =                     ('<div class="row" style="margin-bottom: 8px;">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + urlProfileRedirect + facultyId +'">	<div class="img-faculty-logo-block-base img-faculty-home-logo-block">													<img src="' + logoSrc + '"  class="img-faculty-logo-base img-faculty-logo-home center-logo-home" ></img>								</div>					</a>												</div>												<div class="col-md-9 col-xs-12 align" >					<div>								<a href="' + urlProfileRedirect + facultyId + '">														<h5><strong>' + facultyName + '</strong></h5>													</a>						<a data-toggle="tooltip" title="Filtrează după universitate" onclick="searchByUniversityName(this)">							<h6><strong>' + universityName + '</strong></h6>					</a>								<small class="text-muted">' + facultyCity + '</small>													<br>		<a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </a>  </div>	<div class="row margin-top-faculty-runnerups">	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-5">													<a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="add-review">Adaugă evaluare</span></a>		' + searchCompareString2 + '		</div>						</div>										</div>						'+ searchCompareString1 + '		</div>');
 
 
                     var reviewString = (
@@ -577,7 +524,7 @@
                         +'													</div>'
                         +'													<div class="row">'
                         +'														<div class="col-md-3 col-md-offset-0 col-sm-3 col-sm-offset-0 col-xs-4 col-xs-offset-0">'
-                        +'															<button class="btn btn-simple btn-info" onclick="viewMore(' + i +')" id="view-more-button-' + i + '">+ Vezi tot</button>'
+                        +'															<button class="btn btn-simple btn-info" onclick="viewMore(' + i +')" id="view-more-button-' + i + '" data-i18n-key="see-all">+ Vezi tot</button>'
                         +'														</div>'
                         +'														<div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10 text-right">'
                         +'															<i class="' + upvotedRevClass + '" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align" style="margin-right: 20px;">' + upvotes + '</span>'
@@ -588,6 +535,7 @@
                     );
                     var finalReviewCard = cardBegin + facultyString + reviewString + cardEnd;
                     document.getElementById("review-entries").innerHTML += finalReviewCard;
+                    translatePage();
                 }
             } else {
                     console.log(facultyResponse.control.errorDescription);
@@ -609,10 +557,14 @@
         if (moreText.style.display === "none") {
             btnText.innerHTML = "- Vezi mai putin";
             moreText.style.display = "inline";
+            btnText.setAttribute("data-i18n-key", "see-less");
         } else {
             btnText.innerHTML = "+ Vezi tot";
             moreText.style.display = "none";
+            btnText.setAttribute("data-i18n-key", "see-all");
         }
+
+        translateElement(btnText);
     }
 
     function getRecentlyViewedFaculties() {

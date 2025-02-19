@@ -55,7 +55,7 @@ public class QuestionRepo {
 		String selectStatement = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
 				+ Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET + " WHERE docType = $1 and facultyId = $2 ";
 		String paginationStatement = " offset $3 limit $4 ";
-		String query = selectStatement + questionFilter.getOrderByClause() + paginationStatement;
+		String query = selectStatement + questionFilter.getSearchByClause() + questionFilter.getOrderByClause() + paginationStatement;
 
 		return template
 				.findByN1QL(
@@ -64,6 +64,21 @@ public class QuestionRepo {
 										JsonArray.from(DocTypeEnum.QUESTION.getValue(), facultyId,
 												questionFilter.getOffset(), questionFilter.getLimit())),
 						Question.class);
+	}
+
+	@Query
+	@LogExecutionTime
+	@LogParameters
+	public long countFilteredQuestionsByFacultyId(String facultyId, QuestionFilter questionFilter) {
+		String selectStatement = "SELECT count(*) as countResults FROM " + Constants.BUCKET
+				+ " WHERE docType = $1 AND facultyId = $2 ";
+		String query = selectStatement + questionFilter.getSearchByClause();
+
+		N1qlQueryResult result = template
+				.queryN1QL(N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.QUESTION.getValue(), facultyId)));
+		long count = result.allRows().get(0).value().getLong("countResults");
+
+		return count;
 	}
 
 	@Query

@@ -13,6 +13,8 @@ public class CustomRequestContext {
 
 	private String traceId;
 
+	private String countryCode;
+
 	public String getUserId() {
 		return userId;
 	}
@@ -29,4 +31,11 @@ public class CustomRequestContext {
 		this.traceId = traceId;
 	}
 
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
 }

@@ -25,6 +25,7 @@ public class FacultyFilter {
 	private List<String> admissionType;
 	private Double ratingFrom;
 	private Integer countRevFrom;
+	private String countryCode;
 	private String orderBy;
 	private Integer limit;
 	private Integer pageNumber;
@@ -33,7 +34,7 @@ public class FacultyFilter {
 
 	public FacultyFilter(String searchBy, List<String> facultyIds, List<String> universityIds,
 			List<String> facultyCities, List<String> facultyDomains, List<String> admissionType, Double ratingFrom,
-			Integer countRevFrom, String orderBy, Integer limit, Integer pageNumber, Integer offset) {
+			Integer countRevFrom, String countryCode, String orderBy, Integer limit, Integer pageNumber, Integer offset) {
 		super();
 		this.searchBy = searchBy;
 		this.facultyIds = facultyIds;
@@ -43,6 +44,7 @@ public class FacultyFilter {
 		this.admissionType = admissionType;
 		this.ratingFrom = ratingFrom;
 		this.countRevFrom = countRevFrom;
+		this.countryCode = countryCode;
 		this.orderBy = orderBy;
 		this.limit = limit;
 		this.pageNumber = pageNumber;
@@ -111,6 +113,14 @@ public class FacultyFilter {
 
 	public void setCountRevFrom(Integer countRevFrom) {
 		this.countRevFrom = countRevFrom;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 
 	public String getOrderBy() {
@@ -252,6 +262,16 @@ public class FacultyFilter {
 			return " and f.avgRating >= " + ratingFrom;
 		}
 		return " and avgRating >= " + ratingFrom;
+	}
+
+	public String getCountryCodeClause() {
+		if (countryCode == null) {
+			return StringUtils.EMPTY;
+		}
+		if (isJoin()) {
+			return " and f.countryCode = " + countryCode;
+		}
+		return " and countryCode = " + countryCode;
 	}
 
 	public String getCountRevFromClause() {

@@ -9,17 +9,27 @@ public class QuestionFilter {
 	private static final String DEFAULT_SORT_DIRECTION = "desc";
 	private static final String SORT_SPLIT_CHARACTER = ",";
 
+	private String searchBy;
 	private String orderBy;
 	private Integer limit;
 	private Integer offset;
 	private Integer pageNumber;
 
-	public QuestionFilter(String orderBy, Integer limit, Integer offset, Integer pageNumber) {
+	public QuestionFilter(String searchBy, String orderBy, Integer limit, Integer offset, Integer pageNumber) {
 		super();
+		this.searchBy = searchBy;
 		this.orderBy = orderBy;
 		this.limit = limit;
 		this.offset = offset;
 		this.pageNumber = pageNumber;
+	}
+
+	public String getSearchBy() {
+		return searchBy;
+	}
+
+	public void setSearchBy(String searchBy) {
+		this.searchBy = searchBy;
 	}
 
 	public String getOrderBy() {
@@ -57,6 +67,13 @@ public class QuestionFilter {
 		this.pageNumber = pageNumber;
 	}
 
+	public String getSearchByClause() {
+		if (StringUtils.isEmpty(searchBy)) {
+			return StringUtils.EMPTY;
+		}
+		return " and (UPPER(questionText) LIKE '%" + searchBy.toUpperCase() + "%') ";
+	}
+
 	public String getOrderByClause() {
 		if (StringUtils.isEmpty(orderBy)) {
 			return " order by " + DEFAULT_SORT_FIELD + " " + DEFAULT_SORT_DIRECTION;
@@ -67,10 +84,12 @@ public class QuestionFilter {
 
 	@Override
 	public String toString() {
-		return "QuestionFilter [orderBy=" + orderBy + ", limit=" + limit + ", offset=" + offset + ", pageNumber="
-				+ pageNumber + "]";
+		return "QuestionFilter{" +
+				"searchBy='" + searchBy + '\'' +
+				", orderBy='" + orderBy + '\'' +
+				", limit=" + limit +
+				", offset=" + offset +
+				", pageNumber=" + pageNumber +
+				'}';
 	}
-	
-	
-
 }

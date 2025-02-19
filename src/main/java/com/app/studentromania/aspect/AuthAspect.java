@@ -64,6 +64,8 @@ public class AuthAspect {
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
 
+		final String countryCode = request.getHeader(Constants.COUNTRY_CODE_TOKEN_REQUEST_HEADER);
+		customRequestContext.setCountryCode(countryCode != null ? countryCode : "ro");
 		final String jwtAuthHeader = request.getHeader(Constants.JWT_TOKEN_REQUEST_HEADER);
 
 		try {

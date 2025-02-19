@@ -103,33 +103,8 @@
 			<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 <div class="modal-dialog-login">
 					<div class="modal-content">
-						<div class="login-card">
-							<div class="close close-login" data-dismiss="modal">
-								<i class="fa fa-close"></i>
-							</div>
-							<h3 class="title">Autentificare</h3>
-							<br>
-							<form class="register-form">
-								<!-- <label>Email</label> --> 
-								<input id="login-email" type="email" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorLoginEmail()">
-								<small id="error-login-email" class="error-message"></small>
-								<br>
-								<!-- <label>Parolă</label> -->
-								<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100" oninput="clearErrorLoginPass()">
-								<small id="error-login" class="error-message"></small>
-								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
-								<!-- <h5>sau</h5> -->
-								<div id="reg-line"></div>
-<!--								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>-->
-								<button id="login-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
-								<div id="g_id_onload" data-client_id="801355334630-8i08j4vg23mh4b1eogrs5c0jrm5etb2n.apps.googleusercontent.com" data-callback="googleLogin" data-auto_prompt="false"></div>
-								<div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
-							</form>
-							<div class="forgot">
-								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
-								<a href="./forgot.html" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
-								<a class="btn btn-simple btn-info btn-reg" data-dismiss="modal" data-toggle="modal" data-target="#register-modal">Nu ai cont? Înregistrează-te</a>
-							</div>
+						<div id="login-card" class="login-card">
+							<!-- populated dynamically -->
 						</div>
 					</div>
 				</div>
@@ -138,41 +113,8 @@
 			<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 <div class="modal-dialog-register">
 					<div class="modal-content">
-						<div class="register-card">
-							<div class="close close-login" data-dismiss="modal">
-								<i class="fa fa-close"></i>
-							</div>
-							<h3 class="title">Creare cont nou</h3>
-							<br>
-							<form class="register-form">
-								<!-- <label>Email</label> -->
-								<input id="register-email" type="email" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
-								<small id="error-register-email" class="error-message"></small>
-								<br>
-								<!-- <label>Parola</label> -->
-								<fieldset class="search-fieldset">
-									<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorRegisterPass()">
-									<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
-								</fieldset>
-								<!-- <label>Confirmă Parola</label> -->
-								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorRegisterConfirmPass()">
-								<small id="error-register" class="error-message"></small>
-								
-								<div>
-									<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</label>
-									<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox">Vreau să fiu la curent cu ultimele noutăți</label>
-								</div>
-								
-								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
-								<!-- <h5>sau</h5> -->
-								<div id="reg-line"></div>
-<!--								<button id="register-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>-->
-								<button id="register-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
-								<div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
-							</form>
-							<div class="forgot">
-								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
-							</div>
+						<div id="register-card" class="register-card">
+							<!-- populated dynamically -->
 						</div>
 					</div>
 				</div>
@@ -207,6 +149,8 @@ $().ready(function(){
 	getPageHeader();
 	getPageFooter();
 	myAccountText();
+	getLoginModal();
+	getRegisterModal();
 	var queryParams = new URLSearchParams(window.location.search);
 	resetToken = queryParams.get("token");
 	var jwtToken = getUField("ut");

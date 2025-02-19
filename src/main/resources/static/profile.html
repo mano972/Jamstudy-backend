@@ -106,7 +106,7 @@
 													<div class ="list-options col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 col-xs-12">
 														<div class="content">
 															<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12">
-																<span><b>Căutare</b></span><br>
+																<span><b data-i18n-key="search-v2">Căutare</b></span><br>
 																<fieldset class="search-fieldset">
 																	<input id="search-review-keyword" class="form-control" type="text" value="" placeholder="Cuvânt cheie..." spellcheck="false"/>
 																	<i id="search-reviews-icon" class="fa fa-search inner-icon" aria-hidden="true" onclick="getReviews(false)"></i>
@@ -121,7 +121,7 @@
 																		<!-- <option value="30">30</option> -->
 																	<!-- </select>			 -->
 																<!-- </div> -->
-																<span><b>Sortare</b></span><br>
+																<span><b data-i18n-key="sort">Sortare</b></span><br>
 																<select id="reviews-sorting" class="selectpicker" data-style="form-control" data-menu-style="" onchange="getReviews(false)">
 																	<option value="upvotes,desc">Cel mai votat</option>
 																	<option value="reviewDate,desc">Cel mai recent</option>
@@ -139,13 +139,13 @@
 								</div>
 								
 								<div class="row">
-										<div id="faculty-profile-review-entries" class="faculty-review-card-fixed col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-8 col-lg-offset-0">
-											<div class="text-center">
-												<div class="uil-reload-css reload-background" style=""><div></div></div>
-											</div>
-											<!-- populated dynamically -->
-											<br>
+									<div id="faculty-profile-review-entries" class="faculty-review-card-fixed col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-8 col-lg-offset-0">
+										<div class="text-center">
+											<div class="uil-reload-css reload-background" style=""><div></div></div>
 										</div>
+										<!-- populated dynamically -->
+										<br>
+									</div>
 								</div>
 								
 								<div class="row">
@@ -153,11 +153,57 @@
 										<!-- populated dynamically -->
 									</div>
 								</div>
-
 							</div>
 							<div class="tab-pane" id="faculty-programs">
 								<div class="row">
 									<div id="faculty-profile-programs-header" class="col-md-12 col-md-offset-0">
+										<!-- populated dynamically -->
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane" id="qa">
+								<div class="row">
+									<div class="faculty-review-card-fixed col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-8 col-lg-offset-0">
+										<div class="card">
+											<div class="content">
+												<div class="row">
+													<div class ="list-options col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 col-xs-12">
+														<div class="content">
+															<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12">
+																<span><b>Căutare</b></span><br>
+																<fieldset class="search-fieldset">
+																	<input id="search-question-keyword" class="form-control" type="text" value="" placeholder="Cuvânt cheie..." spellcheck="false"/>
+																	<i id="search-questions-icon" class="fa fa-search inner-icon" aria-hidden="true" onclick="getQA(false)"></i>
+																</fieldset>
+															</div>
+															<div class="col-lg-offset-0 col-lg-6 col-md-offset-0 col-md-6 col-sm-6 col-xs-12">
+																<span><b>Sortare</b></span><br>
+																<select id="questions-sorting" class="selectpicker" data-style="form-control" data-menu-style="" onchange="getQA(false)">
+																	<option value="questionDate,desc">Cea mai recentă</option>
+																	<option value="questionDate,asc">Cea mai veche</option>
+																	<option value="upvotes,desc">Cea mai votată</option>
+																</select>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div id="faculty-profile-questions-entries" class="faculty-review-card-fixed col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-8 col-lg-offset-0">
+										<div class="text-center">
+											<div class="uil-reload-css reload-background" style=""><div></div></div>
+										</div>
+										<!-- populated dynamically -->
+										<br>
+									</div>
+								</div>
+
+								<div class="row">
+									<div id="load-more-questions-main" class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-8 col-lg-offset-0">
 										<!-- populated dynamically -->
 									</div>
 								</div>
@@ -247,7 +293,7 @@
 			</div>
 			<div class="divider"></div>
 			<div class="right-side">
-				<button id="see-all-reviews-modal" type="button" class="btn btn-warning btn-simple" data-dismiss="modal" onclick="seeAllReviews()" style="color: orange;">Vezi toate evaluările</button>
+				<button id="see-all-reviews-modal" type="button" class="btn btn-warning btn-simple" data-dismiss="modal" onclick="seeAllReviews()" style="color: orange;" data-i18n-key="see-all-reviews">Vezi toate evaluările</button>
 			</div>
 		  </div>
 		</div>
@@ -257,33 +303,8 @@
 			<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 <div class="modal-dialog-login">
 					<div class="modal-content">
-						<div class="login-card">
-							<div class="close close-login" data-dismiss="modal">
-								<i class="fa fa-close"></i>
-							</div>
-							<h3 class="title">Autentificare</h3>
-							<br>
-							<form class="register-form">
-								<!-- <label>Email</label> --> 
-								<input id="login-email" type="email" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorLoginEmail()">
-								<small id="error-login-email" class="error-message"></small>
-								<br>
-								<!-- <label>Parolă</label> -->
-								<input id="login-pass" type="password" class="form-control" placeholder="Parolă" maxlength="100" oninput="clearErrorLoginPass()">
-								<small id="error-login" class="error-message"></small>
-								<button id="login-button" class="btn btn-info btn-block btn-fill" onclick="login(event)">Intră în cont</button>
-								<!-- <h5>sau</h5> -->
-								<div id="reg-line"></div>
-<!--								<button id="login-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>-->
-								<button id="login-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
-								<div id="g_id_onload" data-client_id="801355334630-8i08j4vg23mh4b1eogrs5c0jrm5etb2n.apps.googleusercontent.com" data-callback="googleLogin" data-auto_prompt="false"></div>
-								<div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
-							</form>
-							<div class="forgot">
-								<a href="./login.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
-								<a href="./forgot.html" class="btn btn-simple btn-info btn-reg">Am uitat parola</a>
-								<a class="btn btn-simple btn-info btn-reg" data-dismiss="modal" data-toggle="modal" data-target="#register-modal">Nu ai cont? Înregistrează-te</a>
-							</div>
+						<div id="login-card" class="login-card">
+							<!-- populated dynamically -->
 						</div>
 					</div>
 				</div>
@@ -292,41 +313,8 @@
 			<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				 <div class="modal-dialog-register">
 					<div class="modal-content">
-						<div class="register-card">
-							<div class="close close-login" data-dismiss="modal">
-								<i class="fa fa-close"></i>
-							</div>
-							<h3 class="title">Creare cont nou</h3>
-							<br>
-							<form class="register-form">
-								<!-- <label>Email</label> -->
-								<input id="register-email" type="email" class="form-control" placeholder="Email" maxlength="100" oninput="clearErrorRegisterEmail()">
-								<small id="error-register-email" class="error-message"></small>
-								<br>
-								<!-- <label>Parola</label> -->
-								<fieldset class="search-fieldset">
-									<input id="register-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorRegisterPass()">
-									<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
-								</fieldset>
-								<!-- <label>Confirmă Parola</label> -->
-								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorRegisterConfirmPass()">
-								<small id="error-register" class="error-message"></small>
-								
-								<div>
-									<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</label>
-									<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox">Vreau să fiu la curent cu ultimele noutăți</label>
-								</div>
-								
-								<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
-								<!-- <h5>sau</h5> -->
-								<div id="reg-line"></div>
-<!--								<button id="register-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true"> </i>Loghează-te cu Facebook</button>-->
-								<button id="register-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
-								<div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
-							</form>
-							<div class="forgot">
-								<a href="./register.html" class="btn btn-simple btn-info">Beneficiile unui cont de utilizator</a>
-							</div>
+						<div id="register-card" class="register-card">
+							<!-- populated dynamically -->
 						</div>
 					</div>
 				</div>
@@ -351,7 +339,8 @@ var reviewTop = [];
 $wrapper = $("#wrapper");
 $(document).on({
     <!-- ajaxStart: function() { $wrapper.addClass("loading");    }, -->
-    ajaxStop: function() { 
+    ajaxStop: function() {
+    	translatePage();
 		$wrapper.removeClass("loading");
 		document.getElementById("main-loading").style.display = "none";
 	}    
@@ -360,6 +349,7 @@ $(document).on({
 
 var facultyId;
 var currentlyVisibleReviewsNo = 0;
+var currentlyVisibleQuestionsNo = 0;
 var facultyDescription;
 
 $(document).ready(function() {
@@ -367,11 +357,14 @@ $(document).ready(function() {
 	getPageHeader();
 	getPageFooter();
 	myAccountText();
+	getLoginModal();
+	getRegisterModal();
 	var queryParams = new URLSearchParams(window.location.search);
 	facultyId = queryParams.get("id");
 	loadUser();
 	getFaculty();
 	getReviews(false);
+	getQA(false);
 	addToRecentlyViewed();
 	increaseViewCount();
   
@@ -381,6 +374,7 @@ function addHash(obj) {
 	var hash = obj.href.split("#")[1];
 	history.replaceState(null, null, "#" + hash);
 	<!-- location.hash = hash; -->
+	translatePage();
 }
 
 function updateDonutChart (el, percent, donut) {
@@ -425,10 +419,14 @@ function viewMore(i) {
   if (moreText.style.display === "none") {
 		btnText.innerHTML = "- Vezi mai putin";
 		moreText.style.display = "inline";
+		btnText.setAttribute("data-i18n-key", "see-less");
   } else {
 		btnText.innerHTML = "+ Vezi tot";
 		moreText.style.display = "none";
+		btnText.setAttribute("data-i18n-key", "see-all");
   }
+
+  translateElement(btnText);
 } 
 
 function getFaculty() {
@@ -446,6 +444,7 @@ function getFaculty() {
 				loadFacultyProgramsTab(response);
 				getCompanies(response.result.companyIds);
 				getOtherFacultiesFromSameUniversity(response.result.universityId);
+
 			} else {
 				console.log(response.control.errorDescription);
 			}
@@ -516,6 +515,62 @@ function loadMore() {
 	getReviews(true);
 }
 
+function getQA(loadMore) {
+
+	var numberOfResultsPerPage = 10;
+	var sortingOrder = document.getElementById("questions-sorting").value;
+	var searchKeyword = document.getElementById("search-question-keyword").value;
+
+	var offset;
+	if (loadMore) {
+		offset = currentlyVisibleQuestionsNo;
+	} else {
+		offset = 0;
+	}
+
+	var backendUrlQuestions = new URL(backendUrlRoot + "/v1/question/faculty/" + facultyId);
+
+	if (offset) {
+		backendUrlQuestions.searchParams.append("offset", offset);
+	}
+	if (numberOfResultsPerPage) {
+		backendUrlQuestions.searchParams.append("limit", numberOfResultsPerPage);
+	}
+	if (sortingOrder) {
+		backendUrlQuestions.searchParams.append("orderBy", sortingOrder);
+	}
+	if (searchKeyword) {
+		backendUrlQuestions.searchParams.append("searchBy", searchKeyword);
+	}
+
+	$.ajax({
+	  url: backendUrlQuestions,
+	  type: "GET",
+	   beforeSend : function(request) {
+		if (!loadMore) {
+			document.getElementById("faculty-profile-questions-entries").innerHTML = '	<div class="text-center">'
+																					+'<div class="uil-reload-css reload-background" style=""><div></div></div>'
+																				+'</div>';
+			document.getElementById("load-more-questions-main").innerHTML = '';
+		} else {
+			document.getElementById("load-more-questions-main").innerHTML = '<div class="text-center"><div class="uil-reload-css reload-background" style=""><div></div></div></div>';
+		}
+	  },
+	  success: function(response) {
+
+		loadQATab(response, loadMore);
+
+	  },
+	  error: function(error) {
+		checkLoggedInUser(error.status)
+	  }
+	});
+}
+
+function loadMoreQA() {
+	getQA(true);
+}
+
 function loadProfileHeader(response) {
 			document.getElementById("faculty-cover").classList.toggle("img-faculty-cover-profile");
 
@@ -539,9 +594,9 @@ function loadProfileHeader(response) {
 			if (!countRev) {
 				countRevText = "";
 			} else if (countRev === 1) {
-				countRevText = "(1 evaluare)";
+				countRevText = "(1 <span data-i18n-key='review-v2'>evaluare</span>)";
 			} else {
-				countRevText = "(" + countRev + " evaluări)";
+				countRevText = "(" + countRev + " <span data-i18n-key='reviews-v2'>evaluare</span>)";
 			}
 			var universityNameForLogo = universityName.replaceAll("\"", "_");
 			var logoName = facultyName + universityNameForLogo;
@@ -553,10 +608,10 @@ function loadProfileHeader(response) {
 			var favoriteText;
 			if (savedFacultiesIds && savedFacultiesIds.includes(facultyId)) {
 				favoriteClass = "fas fa-heart fa-2x align";
-				favoriteText = "Salvată";
+				favoriteText = "<span data-i18n-key='saved'>Salvată</span>";
 			} else {
 				favoriteClass = "far fa-heart fa-2x align";
-				favoriteText = "Salvează";
+				favoriteText = "<span data-i18n-key='save'>Salvează</span>";
 			}
 			
 			var accessWebisteUrl = response.result.facultyWebsite;
@@ -595,29 +650,29 @@ function loadProfileHeader(response) {
 					+						'<button class="btn-danger btn btn-simple save align" style="margin-bottom: 20px" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span class="align">' + favoriteText + '</span></button>'	
 					+					'</div>	'	
 					+					'<div class="align" style="float: right;">'
-					+						'<button class="compare btn btn-simple align" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-2x align" style="margin-right: 7px; "></i><span class="align">Compară</span> </button>	'	
+					+						'<button class="compare btn btn-simple align" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)"><i class="fas fa-plus-circle fa-2x align" style="margin-right: 7px;"></i><span class="align" data-i18n-key="compare">Compară</span> </button>	'
 					+					'</div>	'						
 					+				'</div>'
 					+			'</div>'					
 					+			'<br>'	
 					+			'<div class="row">	'
 					+				'<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-3 col-lg-offset-9">'
-					+					'<a data-toggle="tooltip" title="' + accessWebisteUrl + '" href="' + accessWebisteUrl + '" target="_blank" class="btn btn-success btn-fill btn-block visit-website-button"><i class="fas fa-external-link-alt fa-lg" style="color: white; margin-right: 7px"></i>Accesează website</a>'
+					+					'<a data-toggle="tooltip" title="' + accessWebisteUrl + '" href="' + accessWebisteUrl + '" target="_blank" class="btn btn-success btn-fill btn-block visit-website-button"><i class="fas fa-external-link-alt fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="access-website">Accesează website</span></a>'
 					+				'</div>'
 					+			'</div>'
 					+			'<div class="row nav-row-faculty-profile">	'	
 					+				'<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-push-6 col-md-5 col-md-push-6 col-lg-3 col-lg-push-8">'
-					+					'<a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i>Adaugă evaluare</a>'
+					+					'<a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="add-review">Adaugă evaluare</span></a>'
 					+				'</div>'						
 					+				'<div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-6 col-md-pull-6 col-lg-6 col-lg-pull-4">'
 					+					'<div class="nav-tabs-navigation">'
 					+						'<div class="nav-tabs-wrapper">'
 					+						'<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">'
-					+							'<li class="active"><a href="#profile" data-toggle="tab" onclick="addHash(this)">Profil</a></li>'
-					+							'<li><a id="reviews-tab" href="#reviews" data-toggle="tab" onclick="addHash(this)">Evaluări</a></li>'
-					+							'<li><a id="faculty-programs-tab" href="#faculty-programs" data-toggle="tab" onclick="addHash(this)">Programe de studiu</a></li>'
+					+							'<li class="active"><a href="#profile" data-toggle="tab" onclick="addHash(this)"><span data-i18n-key="profile">Profil</span></a></li>'
+					+							'<li><a id="reviews-tab" href="#reviews" data-toggle="tab" onclick="addHash(this)"><span data-i18n-key="reviews-v1">Evaluări</span></a></li>'
+					+							'<li><a id="faculty-programs-tab" href="#faculty-programs" data-toggle="tab" onclick="addHash(this)"><span data-i18n-key="study-programs">Programe de studiu</span></a></li>'
+<!--					+							'<li><a id="q&a-tab" href="#qa" data-toggle="tab" onclick="addHash(this)">Q&A</a></li>'-->
 					<!-- +							'<li><a href="#statistics" data-toggle="tab" onclick="addHash(this)">Statistici</a></li>' -->
-					<!-- +							'<li><a href="#qa" data-toggle="tab" onclick="addHash(this)">Q&A</a></li>' -->
 					+						'</ul>'
 					+						'</div>'
 					+					'</div>'
@@ -647,9 +702,9 @@ function loadGeneralReviewCard(response) {
 		if (!countRev) {
 			countRevText = "";
 		} else if (countRev === 1) {
-			countRevText = "(1 evaluare)";
+			countRevText = "(1 <span data-i18n-key='review-v2'>evaluare</span>)";
 		} else {
-			countRevText = "(" + countRev + " evaluări)";
+			countRevText = "(" + countRev + " <span data-i18n-key='reviews-v2'>evaluare</span>)";
 		}
 		
 		var wouldRecommend;
@@ -710,7 +765,7 @@ function loadGeneralReviewCard(response) {
 					   
 							if (responseReview.result.reviews.length > 0) {
 								if (document.getElementById("reviews-tab")) {
-									document.getElementById("reviews-tab").innerHTML = 'Evaluări (' + responseReview.result.count + ')';
+									document.getElementById("reviews-tab").innerHTML = '<span data-i18n-key="reviews-v1">Evaluări</span> (' + responseReview.result.count + ')';
 								}
 								for (i in responseReview.result.reviews) {
 									reviewId = responseReview.result.reviews[i].reviewId;
@@ -736,13 +791,13 @@ function loadGeneralReviewCard(response) {
 									
 									reviewTop.push(responseReview.result.reviews[i]);
 									
-									cardReviewStr += '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>				<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6>											<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">&nbsp' + generalRating + '</strong>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal">Vezi tot</span>	 										</div>											</div>';
+									cardReviewStr += '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>				<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6>											<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">&nbsp' + generalRating + '</strong>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal" data-i18n-key="see-all-v2">Vezi tot</span>	 										</div>											</div>';
 								}
 								seeAllReviewsButtonStr = '<div class="text-center">'
-+'															<a id="see-all-reviews" type="button" class="btn btn-warning" onclick="seeAllReviews()" style="color: orange;">Vezi toate evaluările</a>'
++'															<a id="see-all-reviews" type="button" class="btn btn-warning" onclick="seeAllReviews()" style="color: orange;" data-i18n-key="see-all-reviews">Vezi toate evaluările</a>'
 +'														</div>';
 							}  else {
-								var noReviewsText = "Nu există evaluări";
+								var noReviewsText = "<span data-i18n-key='no-reviews'>Nu există evaluări</span>";
 								cardReviewStr = '<div class="card-review-brief">			<div class="content" >			<p class="text-muted">' + noReviewsText + '</p>												</div>											</div>';
 							}
 							
@@ -754,7 +809,7 @@ function loadGeneralReviewCard(response) {
 +'											<div class="content">'
 +'												<div class="row">'
 +'													<div class="col-md-5 col-md-offset-0 col-xs-10 col-xs-offset-0 text-start">'
-+'														<h5><strong>Evaluare</strong></h5>'
++'														<h5><strong data-i18n-key="review-v1">Evaluare</strong></h5>'
 +'													</div>'
 +'												</div>'
 +'												<div class="row">'
@@ -798,10 +853,10 @@ function loadGeneralReviewCard(response) {
 +'												</div>'
 +'												<div class="row" style="margin-top: 8px;">'
 +'													<div class="col-md-5 col-md-offset-1 col-xs-6 text-center">'
-+															'<span style="color: #646669;">Ar recomanda facultatea</span>'
++															'<span style="color: #646669;" data-i18n-key="would-recommend-faculty">Ar recomanda facultatea</span>'
 +'													</div>'
 +'													<div class="col-md-5 col-md-offset-0 col-xs-6 text-center">'
-+															'<span style="color: #646669;">Dificultate</span>'
++															'<span style="color: #646669;" data-i18n-key="difficulty">Dificultate</span>'
 +'													</div>'
 +'												</div>'
 +'												<hr>'
@@ -812,37 +867,37 @@ function loadGeneralReviewCard(response) {
 +'													<div class="col-md-4 col-md-offset-0">'
 +'														<div class="card-review-categories">'
 +'															<div class="review-category-entry">'
-+'																<strong>Profesori și cursuri</strong>'
++'																<strong data-i18n-key="review-professors-and-courses">Profesori și cursuri</strong>'
 +'																<br>'
 +'																<i class="fa fa-star" style="color: orange"></i>'
 +'																<strong style="color: orange">&nbsp' + avgRatingCoursesAndLecturers + '</strong>'
 +'															</div>'
 +'															<div class="review-category-entry">'
-+'																<strong>Oportunități în carieră</strong>'
++'																<strong data-i18n-key="review-career-opportunities">Oportunități în carieră</strong>'
 +'																<br>'
 +'																<i class="fa fa-star" style="color: orange"></i>'
 +'																<strong style="color: orange">&nbsp' + avgRatingJobProspects + '</strong>'
 +'															</div>'
 +'															<div class="review-category-entry">'
-+'																<strong>Cazare</strong>'
++'																<strong data-i18n-key="review-acommodation">Cazare</strong>'
 +'																<br>'
 +'																<i class="fa fa-star" style="color: orange"></i>'
 +'																<strong style="color: orange">&nbsp' + avgRatingAccomodation + '</strong>'
 +'															</div>'
 +'															<div class="review-category-entry">'
-+'																<strong>Asociații studențești</strong>'
++'																<strong data-i18n-key="review-student-associations">Asociații studențești</strong>'
 +'																<br>'
 +'																<i class="fa fa-star" style="color: orange"></i>'
 +'																<strong style="color: orange">&nbsp' + avgRatingStudentOrganisations + '</strong>'
 +'															</div>'
 +'															<div class="review-category-entry">'
-+'																<strong>Facilități</strong>'
++'																<strong data-i18n-key="review-facilities">Facilități</strong>'
 +'																<br>'
 +'																<i class="fa fa-star" style="color: orange"></i>'
 +'																<strong style="color: orange">&nbsp' + avgRatingFacultyFacilities + '</strong>'
 +'															</div>'
 +'															<div class="review-category-entry">'
-+'																<strong>Timp de studiu vs. timp liber</strong>'
++'																<strong data-i18n-key="review-study-time-vs-free-time">Timp de studiu vs. timp liber</strong>'
 +'																<br>'
 +'																<i class="fa fa-star" style="color: orange"></i>'
 +'																<strong style="color: orange">&nbsp' + avgRatingTimeBalance + '</strong>'
@@ -853,7 +908,7 @@ function loadGeneralReviewCard(response) {
 +'												<hr>'
 +'												<div class="row">'
 +'													<div class="stars-index col-md-1 col-xs-2">'
-+'														<small>5 stele</small>'
++'														<small data-i18n-key="review-5-stars">5 stele</small>'
 +'													</div>'
 +'													<div class="stars-percentage-bar col-md-10 col-xs-8">'
 +'														<div class="progress progress-thin" style="width: 100%; display: inline-block; vertical-align: middle;">'
@@ -867,7 +922,7 @@ function loadGeneralReviewCard(response) {
 +'												</div>'
 +'												<div class="row">'
 +'													<div class="stars-index col-md-1 col-xs-2">'
-+'														<small>4 stele</small>'
++'														<small data-i18n-key="review-4-stars">4 stele</small>'
 +'													</div>'
 +'													<div class="stars-percentage-bar col-md-10 col-xs-8">'
 +'														<div class="progress progress-thin" style="width: 100%; display: inline-block; vertical-align: middle;">'
@@ -881,7 +936,7 @@ function loadGeneralReviewCard(response) {
 +'												</div>'
 +'												<div class="row">'
 +'													<div class="stars-index col-md-1 col-xs-2">'
-+'														<small>3 stele</small>'
++'														<small data-i18n-key="review-3-stars">3 stele</small>'
 +'													</div>'
 +'													<div class="stars-percentage-bar col-md-10 col-xs-8">'
 +'														<div class="progress progress-thin" style="width: 100%; display: inline-block; vertical-align: middle;">'
@@ -895,7 +950,7 @@ function loadGeneralReviewCard(response) {
 +'												</div>'
 +'												<div class="row">'
 +'													<div class="stars-index col-md-1 col-xs-2">'
-+'														<small>2 stele</small>'
++'														<small data-i18n-key="review-2-stars">2 stele</small>'
 +'													</div>'
 +'													<div class="stars-percentage-bar col-md-10 col-xs-8">'
 +'														<div class="progress progress-thin" style="width: 100%; display: inline-block; vertical-align: middle;">'
@@ -909,7 +964,7 @@ function loadGeneralReviewCard(response) {
 +'												</div>'
 +'												<div class="row">'
 +'													<div class="stars-index col-md-1 col-xs-2">'
-+'														<small>1 stea</small>'
++'														<small data-i18n-key="review-1-stars">1 stea</small>'
 +'													</div>'
 +'													<div class="stars-percentage-bar col-md-10 col-xs-8">'
 +'														<div class="progress progress-thin" style="width: 100%; display: inline-block; vertical-align: middle;">'
@@ -986,7 +1041,24 @@ function loadGeneralPresentationCard(response) {
 
 			document.getElementById("faculty-profile-presentation-header").innerHTML = '';
 			
-			var generalPresentationArray = [{'label': 'Website', 'value': websiteString, }, {'label': 'Email', 'value': facultyEmail, }, {'label': 'Adresă', 'value': facultyAddress, }, {'label': 'Telefon', 'value': facultyPhone, }, {'label': 'Descriere', 'value': facultyDescriptionString, }, {'label': 'Durată', 'value': noOfYears, }, {'label': 'Locuri licență', 'value': availablePlacesLicense, }, {'label': 'Locuri masterat', 'value': availablePlacesMaster, }, {'label': 'Locuri buget licență', 'value': budgetPlacesLicense, }, {'label': 'Locuri buget masterat', 'value': budgetPlacesMaster, }, {'label': 'Locuri taxă licență', 'value': taxPlacesLicense, }, {'label': 'Locuri taxă masterat', 'value': taxPlacesMaster, }, {'label': 'Studenți activi licență', 'value': enrolledStudentsLicence, }, {'label': 'Studenți activi masterat', 'value': enrolledStudentsMaster, }, {'label': 'Număr profesori', 'value': noOfProfessors, }, {'label': 'Nr. studenți raportat la profesori', 'value': noOfStudentsPerProfessor, }];
+			var generalPresentationArray = [
+			{'label': '<span data-i18n-key="faculty-general-presentation-website">Website</span>', 'value': websiteString, },
+			{'label': '<span data-i18n-key="email">Email</span>', 'value': facultyEmail, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-address">Adresă</span>', 'value': facultyAddress, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-phone">Telefon</span>', 'value': facultyPhone, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-description">Descriere</span>', 'value': facultyDescriptionString, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-duration">Durată</span>', 'value': noOfYears, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-license-places">Locuri licență</span>', 'value': availablePlacesLicense, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-master-places">Locuri masterat</span>', 'value': availablePlacesMaster, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-license-budget-places">Locuri buget licență</span>', 'value': budgetPlacesLicense, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-master-budget-places">Locuri buget masterat</span>', 'value': budgetPlacesMaster, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-license-tax-places">Locuri taxă licență</span>', 'value': taxPlacesLicense, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-master-tax-places">Locuri taxă masterat</span>', 'value': taxPlacesMaster, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-license-active-students">Studenți activi licență</span>', 'value': enrolledStudentsLicence, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-master-active-students">Studenți activi masterat</span>', 'value': enrolledStudentsMaster, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-number-of-professors">Număr profesori</span>', 'value': noOfProfessors, },
+			{'label': '<span data-i18n-key="faculty-general-presentation-students-to-professors-ratio">Nr. studenți raportat la profesori</span>', 'value': noOfStudentsPerProfessor, }
+			];
 			
 			let presentationContent = new Map();
 			presentationContent.set('Website', websiteString);
@@ -1038,7 +1110,7 @@ function loadGeneralPresentationCard(response) {
 +'											<div class="content">'
 +'												<div class="row">'
 +'													<div class="col-md-5 col-md-offset-0 col-xs-10 col-xs-offset-0 text-start">'
-+'														<h5><strong>Prezentare generală</strong></h5>'
++'														<h5><strong data-i18n-key="faculty-general-presentation">Prezentare generală</strong></h5>'
 +'													</div>'
 +'												</div>'
 +'												<br>'
@@ -1065,7 +1137,7 @@ function loadProgramsCard(response) {
 +'											<div id="content-faculty-programs" class="content">'
 +'												<div class="row">'
 +'													<div class="col-md-5 col-md-offset-0 col-xs-10 col-xs-offset-0 text-start">'
-+'														<h5><strong>Programe de studiu</strong></h5>'
++'														<h5><strong data-i18n-key="study-programs">Programe de studiu</strong></h5>'
 +'													</div>'
 +'												</div>';
 
@@ -1129,7 +1201,7 @@ function loadProgramsCard(response) {
 +'														</div>'
 +'														<div class="col-xs-12">'
 +'															<div class="col-md-4 col-xs-12">'
-+'																<label>Domeniu</label>'
++'																<label data-i18n-key="study-programs-domain">Domeniu</label>'
 +'															</div>'
 +'															<div class="col-md-8 col-xs-12">'
 +'																<span>' + domainOfLicenseOrMaster + '</span>'
@@ -1137,7 +1209,7 @@ function loadProgramsCard(response) {
 +'														</div>'
 +'														<div class="col-xs-12">'
 +'															<div class="col-md-4 col-xs-12">'
-+'																<label>Specializare</label>'
++'																<label data-i18n-key="study-programs-specialization">Specializare</label>'
 +'															</div>'
 +'															<div class="col-md-8 col-xs-12">'
 +'																<span>' + specialization + '</span>'
@@ -1145,7 +1217,7 @@ function loadProgramsCard(response) {
 +'														</div>'
 +'														<div class="col-xs-12">'
 +'															<div class="col-md-4 col-xs-12">'
-+'																<label>Admitere</label>'
++'																<label data-i18n-key="study-programs-admission">Admitere</label>'
 +'															</div>'
 +'															<div class="col-md-8 col-xs-12">'
 +'																<span>' + admissionType + '</span>'
@@ -1153,7 +1225,7 @@ function loadProgramsCard(response) {
 +'														</div>'
 +'														<div class="col-xs-12">'
 +'															<div class="col-md-4 col-xs-12">'
-+'																<label>Acreditare</label>'
++'																<label  data-i18n-key="study-programs-accreditation">Acreditare</label>'
 +'															</div>'
 +'															<div class="col-md-8 col-xs-12">'
 +'																<span>' + programAccreditation + '</span>'
@@ -1161,7 +1233,7 @@ function loadProgramsCard(response) {
 +'														</div>'
 +'														<div class="col-xs-12">'
 +'															<div class="col-md-4 col-xs-12">'
-+'																<label>Locuri disponibile</label>'
++'																<label data-i18n-key="study-programs-available-places">Locuri disponibile</label>'
 +'															</div>'
 +'															<div class="col-md-8 col-xs-12">'
 +'																<span>' + programAvailablePlaces + '</span>'
@@ -1169,7 +1241,7 @@ function loadProgramsCard(response) {
 +'														</div>'
 +'														<div class="col-xs-12">'
 +'															<div class="col-md-4 col-xs-12">'
-+'																<label>Locuri buget</label>'
++'																<label data-i18n-key="study-programs-budget-places">Locuri buget</label>'
 +'															</div>'
 +'															<div class="col-md-8 col-xs-12">'
 +'																<span>' + programBudgetPlaces + '</span>'
@@ -1177,7 +1249,7 @@ function loadProgramsCard(response) {
 +'														</div>'
 +'														<div class="col-xs-12">'
 +'															<div class="col-md-4 col-xs-12">'
-+'																<label>Locuri taxă</label>'
++'																<label data-i18n-key="study-programs-tax-places">Locuri taxă</label>'
 +'															</div>'
 +'															<div class="col-md-8 col-xs-12">'
 +'																<span>' + programTaxPlaces + '</span>'
@@ -1185,7 +1257,7 @@ function loadProgramsCard(response) {
 +'														</div>'
 +'														<div class="col-xs-12">'
 +'															<div class="col-md-4 col-xs-12">'
-+'																<label>Ultima notă</label>'
++'																<label data-i18n-key="study-programs-last-grade">Ultima notă</label>'
 +'															</div>'
 +'															<div class="col-md-8 col-xs-12">'
 +'																<span>' + lastGrade + '</span>'
@@ -1193,7 +1265,7 @@ function loadProgramsCard(response) {
 +'														</div>'
 +'														<div class="col-xs-12">'
 +'															<div class="col-md-4 col-xs-12">'
-+'																<label>Candidați pe loc</label>'
++'																<label data-i18n-key="study-programs-candidates-per-place">Candidați pe loc</label>'
 +'															</div>'
 +'															<div class="col-md-8 col-xs-12">'
 +'																<span>' + candidatesPerPlace + '</span>'
@@ -1201,7 +1273,7 @@ function loadProgramsCard(response) {
 +'														</div>'
 +'														<div class="col-xs-12">'
 +'															<div class="col-md-4 col-xs-12">'
-+'																<label>Taxa anuală</label>'
++'																<label data-i18n-key="study-programs-annual-tax">Taxa anuală</label>'
 +'															</div>'
 +'															<div class="col-md-8 col-xs-12">'
 +'																<span>' + annualTax + " RON" + '</span>'
@@ -1265,7 +1337,7 @@ function loadCompaniesCard(companies) {
 			+'											<div id="content-companies" class="content">'
 			+'												<div class="row">'
 			+'													<div class="col-md-5 col-md-offset-0 col-xs-10 col-xs-offset-0 text-start">'
-			+'														<h5><strong>Oportunități în carieră</strong></h5>'
+			+'														<h5><strong data-i18n-key="faculty-career-opportunities">Oportunități în carieră</strong></h5>'
 			+'													</div>'
 			+'												</div>'
 			+'												<br>';
@@ -1413,26 +1485,30 @@ function loadReviewsTab(response, loadMore) {
 			var wouldRecommendText;
 			var wouldRecommendBoxClass;
 			var wouldRecommendTextClass;
+			var wouldRecommendTranslation;
 			if (wouldRecommend === true) {
 				wouldRecommendText = "Ar recomanda";
 				wouldRecommendBoxClass = "box green";
 				wouldRecommendTextClass = "would-recommend-text";
+				wouldRecommendTranslation = "would-recommend";
 			} else if (wouldRecommend === false) {
 				wouldRecommendText = "Nu ar recomanda";
 				wouldRecommendBoxClass = "box red";
 				wouldRecommendTextClass = "would-not-recommend-text";
+				wouldRecommendTranslation = "would-not-recommend";
 			} else {
 				wouldRecommendText = "";
 				wouldRecommendBoxClass = "";
 				wouldRecommendTextClass = "";
+				wouldRecommendTranslation = "";
 			}
 			
 			var difficulty = response.result.reviews[i].difficulty;
 			var difficultyText;
 			if (difficulty) {
-				difficultyText = 'Dificultate:&nbsp' + difficulty + '/5';
+				difficultyText = ':&nbsp' + difficulty + '/5';
 			} else {
-				difficultyText = "";
+				difficultyText = ": N/A";
 			}
 			var wouldRecommendAndDifficultyRowString;
 			if (wouldRecommendText || difficulty) {
@@ -1442,10 +1518,10 @@ function loadReviewsTab(response, loadMore) {
 				+'														<div  class="col-xs-6">'
 				+'															<div class="'+ wouldRecommendBoxClass + '">'
 				+'															</div>'
-				+'															<span class=' + wouldRecommendTextClass + '>&nbsp&nbsp' + wouldRecommendText + '</span>'
+				+'															<span class=' + wouldRecommendTextClass + ' data-i18n-key=' + wouldRecommendTranslation + '>&nbsp&nbsp' + wouldRecommendText + '</span>'
 				+'														</div>'
 				+'													<div  class="col-xs-6">'
-				+'															<span style="color: #707070;">&nbsp&nbsp' + difficultyText + '</span>'
+				+'															<span style="color: #707070;" data-i18n-key="difficulty">&nbsp&nbsp Dificultate</span><span style="color: #707070;">' + difficultyText + '</span>'
 				+'														</div>'
 				+'													</div>';
 			} else {
@@ -1555,7 +1631,7 @@ function loadReviewsTab(response, loadMore) {
 	+'													</div>'
 	+'													<div class="row">'
 	+'														<div class="col-md-3 col-md-offset-0 col-sm-3 col-sm-offset-0 col-xs-4 col-xs-offset-0">'
-	+'															<button class="btn btn-simple btn-info" onclick="viewMore(' + i +')" id="view-more-button-' + i + '">+ Vezi tot</button>'
+	+'															<button class="btn btn-simple btn-info" onclick="viewMore(' + i +')" id="view-more-button-' + i + '" data-i18n-key="see-all">+ Vezi tot</button>'
 	+'														</div>'
 	+'														<div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10 text-right">'
 	+'															<i class="' + upvotedRevClass + '" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align" style="margin-right: 20px;">' + upvotes + '</span>'
@@ -1571,6 +1647,31 @@ function loadReviewsTab(response, loadMore) {
 		
 		}
 	
+}
+
+function loadQATab(response, loadMore) {
+	if (loadMore) {
+		currentlyVisibleQuestionsNo += response.result.questions.length;
+	} else {
+		document.getElementById("faculty-profile-question-entries").innerHTML = '';
+		currentlyVisibleQuestionsNo = response.result.questions.length;
+	}
+
+	if  (currentlyVisibleQuestionsNo >= response.result.count) {
+		document.getElementById("load-more-questions-main").innerHTML = '';
+	} else {
+		document.getElementById("load-more-questions-main").innerHTML = '<div class="card">'
+																	+ '<div class="content"> '
+																		+ '<div class="text-center row"> '
+																			+ '<button id="load-more-questions" class="btn btn-info btn-fill" type="submit" onclick="loadMoreQA()">Încarcă mai multe rezultate</button>'
+																		+ '</div> '
+																	+ '</div> '
+																+ '</div>';
+	}
+
+	if (response.result.questions.length == 0) {
+		document.getElementById("faculty-profile-question-entries").innerHTML = '<div class="text-center text-muted"> <h4>Nu au fost găsite rezultate</h4> </div>';
+	}
 }
 
 function loadFacultyProgramsTab(response) {
@@ -1621,7 +1722,7 @@ function loadOtherFacultiesFromSameUniversityContent(response) {
 	var otherFacultiesString = 
 '						<div class="row">'
 +'							<div class="col-xs-12">'
-+'								<h4 class="title">Alte facultăți de la aceeași universitate</h4>         '           
++'								<h4 class="title" data-i18n-key="other-faculties-same-university">Alte facultăți de la aceeași universitate</h4>         '
 +'							</div>'
 +'						</div>';
 

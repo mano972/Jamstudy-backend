@@ -56,7 +56,7 @@ public class QuestionService {
 
 	public ResponseDTO getFilteredQuestionsByFacultyId(String facultyId, QuestionFilter questionFilter) {
 		List<Question> questions = questionDAO.getFilteredQuestionsByFacultyId(facultyId, questionFilter);
-		long count = questionDAO.countByFacultyId(facultyId);
+		long count = questionDAO.countFilteredQuestions(facultyId, questionFilter);
 		JSONArray questionsArray = new JSONArray();
 		questions.forEach(question -> {
 			QuestionResponseDTO questionResponseDTO = mapToQuestionResponseDTO(question);

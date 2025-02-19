@@ -3820,6 +3820,27 @@ textarea.form-control {
 	}
 }
 
+.img-ro-flag {
+	background-image: url(../../assets/img/ro-flag.jpg);
+    background-size: 30px 20px;
+	box-shadow: 0px 0px 5px rgba(204, 197, 185, 0.5);
+	border: 2px solid black;
+}
+
+.img-uk-flag {
+	background-image: url(../../assets/img/uk-flag.jpg);
+    background-size: 30px 20px;
+	box-shadow: 0px 0px 5px rgba(204, 197, 185, 0.5);
+	border: 2px solid black;
+}
+
+.img-lt-flag {
+	background-image: url(../../assets/img/lt-flag.jpg);
+    background-size: 30px 20px;
+	box-shadow: 0px 0px 5px rgba(204, 197, 185, 0.5);
+	border: 2px solid black;
+}
+
 .user-profile-header {
 	margin: 20px 0;
 }

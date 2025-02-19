@@ -48,7 +48,7 @@
 								<div class="content">
 									<div class="row">
 										<div class="col-md-12 col-md-offset-0">
-											<h3>Creare cont nou</h3>
+											<h3 data-i18n-key="register-header">Creare cont nou</h3>
 											<br>
 											<form class="register-form">
 												<!-- <label>Email</label> -->
@@ -66,20 +66,20 @@
 												<small id="error-register" class="error-message"></small>
 												<br>
 												<div>
-													<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</label>
-													<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox">Vreau să fiu la curent cu ultimele noutăți</label>
+													<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox"><span data-i18n-key="register-terms-and-conditions">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</span></label>
+													<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox"><span data-i18n-key="register-subscribe">Vreau să fiu la curent cu ultimele noutăți</span></label>
 												</div>
 												<br>
-												<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)">Înregistrare</button>
+												<button id="register-button" class="btn btn-info btn-block btn-fill" onclick="register(event)" data-i18n-key="register-button-message">Înregistrare</button>
 												<br>
 <!--												<button id="register-fb-button" class="btn btn-facebook btn-block btn-fill" onclick="fbLogin(event)"><i class="fa fa-facebook" aria-hidden="true" onclick="fbLogin(event)"> </i>Loghează-te cu Facebook</button>-->
-												<button id="register-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"> </i>Loghează-te cu Google</button>
+												<button id="register-google-button" class="btn btn-google btn-block btn-fill" onclick="googleButtonClick(event)"><i class="fa fa-google" aria-hidden="true"></i><span data-i18n-key="login-google">Loghează-te cu Google</span></button>
 												<div class="g_id_signin btn-block" style="display: none" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="center" data-locale="ro"></div>
 											</form>
 											<br>
 											<br>
 											<div class="forgot">
-													<a href="./login.html" class="btn btn-simple btn-info btn-reg">Ai deja cont? Autentifică-te</a>
+													<a href="./login.html" class="btn btn-simple btn-info btn-reg" data-i18n-key="register-send-to-login">Ai deja cont? Autentifică-te</a>
 											</div>
 										</div>
 									</div>
@@ -91,22 +91,21 @@
 								<div class="content">
 									<div class="row">
 										<div class="col-md-12 col-md-offset-0">
-											<h5><b>Beneficiile unui cont de utilizator</b></h5>
+											<h5><b data-i18n-key="login-account-benefits">Beneficiile unui cont de utilizator</b></h5>
 											<br>
-											<p>Fa-ti cont pe Unistart pentru a putea avea access la toate sectiunile platformei.</p>
+											<p data-i18n-key="benefits-subtitle">Fa-ti cont pe Unistart pentru a putea avea access la toate sectiunile platformei.</p>
 											<br>
-											<p>• Evalueaza facultati.</p>
+											<p>• <span data-i18n-key="benefits-1">Evalueaza facultati.</span></p>
 											<br>
-											<p>• Salveaza facultatile favorite.</p>
+											<p>• <span data-i18n-key="benefits-2">Salveaza facultatile favorite.</span></p>
 											<br>
-											<p>• Personalizeaza-ti contul.</p>
+											<p>• <span data-i18n-key="benefits-4">Personalizeaza-ti contul.</span></p>
 											<br>
-											<p>• Voteaza evaluari.</p>
+											<p>• <span data-i18n-key="benefits-5">Voteaza evaluari.</span></p>
 											<br>
-											<p>• (In curand) Opteaza pentru a primi notificari pentru facultatile favorite.</p>
+											<p>• <span data-i18n-key="benefits-6">(In curand) Opteaza pentru a primi notificari pentru facultatile favorite.</span></p>
 											<br>
-											<p>• Vei avea acces la viitoarele functionalitati dedicate exclusiv utilizatorilor inregistrati.</p>
-											
+											<p>• <span data-i18n-key="benefits-7">Vei avea acces la viitoarele functionalitati dedicate exclusiv utilizatorilor inregistrati.</span></p>
 										</div>
 									</div>
 								</div>
