@@ -227,7 +227,7 @@ public class ReviewRepo {
 
 	private String getFilteredReviewsStatement(ReviewFilter reviewFilter) {
 		String filteredStatement = reviewFilter.getSearchByClause() + reviewFilter.getRatingFromClause()
-				+ reviewFilter.getRatingToClause();
+				+ reviewFilter.getRatingToClause() + reviewFilter.getCountryCodeClause();
 		return filteredStatement;
 	}
 

@@ -265,13 +265,13 @@ public class FacultyFilter {
 	}
 
 	public String getCountryCodeClause() {
-		if (countryCode == null) {
+		if (StringUtils.isEmpty(countryCode)) {
 			return StringUtils.EMPTY;
 		}
 		if (isJoin()) {
-			return " and f.countryCode = " + countryCode;
+			return " and f.countryCode IN " + JsonArray.from(countryCode);
 		}
-		return " and countryCode = " + countryCode;
+		return " and countryCode IN " + JsonArray.from(countryCode);
 	}
 
 	public String getCountRevFromClause() {
@@ -297,10 +297,22 @@ public class FacultyFilter {
 
 	@Override
 	public String toString() {
-		return "FacultyFilter [searchBy=" + searchBy + ", universityIds=" + universityIds + ", facultyCities="
-				+ facultyCities + ", facultyDomains=" + facultyDomains + ", admissionType=" + admissionType
-				+ ", ratingFrom=" + ratingFrom + ", orderBy=" + orderBy + ", limit=" + limit + ", pageNumber="
-				+ pageNumber + ", offset=" + offset + ", join=" + join + "]";
+		return "FacultyFilter{" +
+				"searchBy='" + searchBy + '\'' +
+				", facultyIds=" + facultyIds +
+				", universityIds=" + universityIds +
+				", facultyCities=" + facultyCities +
+				", facultyDomains=" + facultyDomains +
+				", admissionType=" + admissionType +
+				", ratingFrom=" + ratingFrom +
+				", countRevFrom=" + countRevFrom +
+				", countryCode='" + countryCode + '\'' +
+				", orderBy='" + orderBy + '\'' +
+				", limit=" + limit +
+				", pageNumber=" + pageNumber +
+				", offset=" + offset +
+				", join=" + join +
+				'}';
 	}
 
 	private List<String> replaceCharacters(List<String> list) {

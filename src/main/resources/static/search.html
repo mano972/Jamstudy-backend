@@ -59,7 +59,7 @@
 													<div class ="col-md-6 col-md-offset-0 col-sm-6 col-xs-12 col-xs-offset-0">
 														<span><b data-i18n-key="search-v2">Căutare</b></span><br>
 														<fieldset id="search-fieldset" class="search-fieldset">
-															<input id="search-input" class="form-control" type="text" value="" placeholder="Facultate, Universitate, Oraș ..." spellcheck="false"/>
+															<input id="search-input" class="form-control" type="text" value="" placeholder="" spellcheck="false"/>
 															<i id="search-button" class="fa fa-search inner-icon" onclick="search()" aria-hidden="true"></i>
 															<ul class="autocomplete-result-list"></ul>
 															<!-- <ul id="no-results" class="autocomplete-result-list" visible="false"> -->
@@ -102,20 +102,9 @@
 														<div class="row text-center">
 															<h5><b data-i18n-key="study-domains">Domenii de studiu</b></h5>
 														</div>
-														<label class="checkbox checkbox-azure" for="d1"><input type="checkbox" name="domeniu" value="Științe Economice" id="d1" data-toggle="checkbox"><span data-i18n-key="domain-economy">Științe Economice</span></label>
-														<label class="checkbox checkbox-azure" for="d2"><input type="checkbox" name="domeniu" value="Științe Inginerești" id="d2" data-toggle="checkbox"><span data-i18n-key="domain-engineering">Științe Inginerești</span></label>
-														<label class="checkbox checkbox-azure" for="d3"><input type="checkbox" name="domeniu" value="Științe Politice și Comunicare" id="d3" data-toggle="checkbox"><span data-i18n-key="domain-politics">Științe Politice și Comunicare</span></label>
-														<label class="checkbox checkbox-azure" for="d4"><input type="checkbox" name="domeniu" value="Științe Umaniste" id="d4" data-toggle="checkbox"><span data-i18n-key="domain-humanities">Științe Umaniste</span></label>
-														<label class="checkbox checkbox-azure" for="d5"><input type="checkbox" name="domeniu" value="Științe Juridice" id="d5" data-toggle="checkbox"><span data-i18n-key="domain-judicial">Științe Juridice</span></label>
-														<label class="checkbox checkbox-azure" for="d6"><input type="checkbox" name="domeniu" value="Medicină" id="d6" data-toggle="checkbox"><span data-i18n-key="domain-medicine">Medicină</span></label>
-														<label class="checkbox checkbox-azure" for="d7"><input type="checkbox" name="domeniu" value="Științe ale Naturii" id="d7" data-toggle="checkbox"><span data-i18n-key="domain-nature">Științe ale Naturii</span></label>
-														<label class="checkbox checkbox-azure" for="d8"><input type="checkbox" name="domeniu" value="Arte Arhitectură și Urbanism" id="d8" data-toggle="checkbox"><span data-i18n-key="domain-art-v2">Arte, Arhitectură și Urbanism</span></label>
-														<label class="checkbox checkbox-azure" for="d9"><input type="checkbox" name="domeniu" value="Științe Exacte" id="d9" data-toggle="checkbox"><span data-i18n-key="domain-exact">Științe Exacte</span></label>
-														<label class="checkbox checkbox-azure" for="d10"><input type="checkbox" name="domeniu" value="Științe Sociale și Psihologie" id="d10" data-toggle="checkbox"><span data-i18n-key="domain-social">Științe Sociale și Psihologie</span></label>
-														<label class="checkbox checkbox-azure" for="d11"><input type="checkbox" name="domeniu" value="Științe Agricole" id="d11" data-toggle="checkbox"><span data-i18n-key="domain-agriculture">Științe Agricole</span></label>
-														<label class="checkbox checkbox-azure" for="d12"><input type="checkbox" name="domeniu" value="Ştiinţa Sportului şi Educaţiei Fizice" id="d12" data-toggle="checkbox"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label>
-														<label class="checkbox checkbox-azure" for="d13"><input type="checkbox" name="domeniu" value="Ştiinţe Militare Informaţii şi Ordine publică" id="d13" data-toggle="checkbox"><span data-i18n-key="domain-military-v2">Științe Militare și de Informații</span></label>
-														<label class="checkbox checkbox-azure" for="d14"><input type="checkbox" name="domeniu" value="Teologie" id="d14" data-toggle="checkbox"><span data-i18n-key="domain-theology">Teologie</span></label>
+														<div id="domains-select">
+															<!--populated dynamically-->
+														</div>
 													</div>
 													<hr id="hr-filter-domains">
 													<div style="display:inline-block; break-inside: avoid-column;">
@@ -251,6 +240,7 @@ $(document).ready(function() {
 	myAccountText();
 	getLoginModal();
 	getRegisterModal();
+	getDomainsForSearchPage();
 	getCitiesForSearchPage();
 	finalSearchInput = queryParams.get("q");
 	if(queryParams.get("d")) {
@@ -268,6 +258,7 @@ $(document).ready(function() {
 		document.getElementById("search-input").value = finalSearchInput;
 	}
 
+	addDomainsCheckboxesEvent();
 	addCitiesCheckboxesEvent();
 	initializeCheckboxes();
 	initiateAutocomplete();
@@ -347,23 +338,25 @@ function clearCheckboxes() {
 	$("input:checkbox").attr('checked', false);
 }
 
-$.each($("input[name=domeniu]"), function() {
-	$("label[for='" + $(this).attr("id") + "']").click(function() {
-	
-	var checkBoxElementId = $(this).attr("for");
-	var checkBoxElement = $("input[id='" + checkBoxElementId + "']");
-	
-	if (checkBoxElement.prop("checked") === true) { //if it was already checked, it means now it is removed
-		domainParams = domainParams.filter(function(value, index, arr){ return value !== checkBoxElement.attr("id");});
-	} else { //if it was not checked, it means now it is checked
-		domainParams.push($(this).attr("for"));
-	}
-	queryParams.set("d", domainParams);
-	history.replaceState(null, null, "?" + queryParams.toString());
+function addDomainsCheckboxesEvent() {
+	$.each($("input[name=domeniu]"), function() {
+		$("label[for='" + $(this).attr("id") + "']").click(function() {
 
-	loadData(false);
+		var checkBoxElementId = $(this).attr("for");
+		var checkBoxElement = $("input[id='" + checkBoxElementId + "']");
+
+		if (checkBoxElement.prop("checked") === true) { //if it was already checked, it means now it is removed
+			domainParams = domainParams.filter(function(value, index, arr){ return value !== checkBoxElement.attr("id");});
+		} else { //if it was not checked, it means now it is checked
+			domainParams.push($(this).attr("for"));
+		}
+		queryParams.set("d", domainParams);
+		history.replaceState(null, null, "?" + queryParams.toString());
+
+		loadData(false);
+		});
 	});
-});
+}
 
 function addCitiesCheckboxesEvent() {
 	$.each($("input[name=oras]"), function() {
@@ -379,7 +372,6 @@ function addCitiesCheckboxesEvent() {
 		}
 		queryParams.set("c", cityParams);
 		history.replaceState(null, null, "?" + queryParams.toString());
-		console.log("aaaa");
 		loadData(false);
 		});
 	});

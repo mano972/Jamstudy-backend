@@ -60,7 +60,7 @@
   "domain-judicial": "Teisės mokslai",
   "domain-medicine": "Medicina",
   "domain-nature": "Gamtos mokslai",
-  "domain-art-v1": "Menas, Architektūra ir Urbanistika",
+  "domain-art-v1": "Menas Architektūra ir Urbanistika",
   "domain-art-v2": "Menas, Architektūra ir Urbanistika",
   "domain-exact": "Tiksliuosius mokslus",
   "domain-social": "Socialiniai mokslai ir psichologija",
@@ -136,6 +136,7 @@
   "study-programs-candidates-per-place": "Kandidatai vienai vietai",
   "study-programs-annual-tax": "Metinė mokestis",
   "no-reviews": "Atsiliepimų nėra",
+  "no-more-reviews": "Daugiau atsiliepimų apie šį fakultetą nėra",
 
   "compare-faculties": "Palyginti fakultetus",
   "compare-suggestions": "Palyginimo pasiūlymai",

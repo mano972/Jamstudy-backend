@@ -139,21 +139,24 @@ public class FacultyRepo {
 		String filteredStatement = facultyFilter.getSearchByClause() + facultyFilter.getFacultyIdsClause()
 				+ facultyFilter.getUniversityIdsClause() + facultyFilter.getFacultyCitiesClause()
 				+ facultyFilter.getFacultyDomainsClause() + facultyFilter.getAdmissionTypeClause()
-				+ facultyFilter.getRatingFromClause() + facultyFilter.getCountRevFromClause();
+				+ facultyFilter.getRatingFromClause() + facultyFilter.getCountRevFromClause()
+				+ facultyFilter.getCountryCodeClause();
 		return filteredStatement;
 	}
 
 	private String getFilteredFacultiesStatementForUniversitiesForFilter(FacultyFilter facultyFilter) {
 		String filteredStatement = facultyFilter.getSearchByClause() + facultyFilter.getFacultyCitiesClause()
 				+ facultyFilter.getFacultyDomainsClause() + facultyFilter.getAdmissionTypeClause()
-				+ facultyFilter.getRatingFromClause() + facultyFilter.getCountRevFromClause();
+				+ facultyFilter.getRatingFromClause() + facultyFilter.getCountRevFromClause()
+				+ facultyFilter.getCountryCodeClause();
 		return filteredStatement;
 	}
 
 	private String getFilteredFacultiesStatementForCitiesForFilter(FacultyFilter facultyFilter) {
 		String filteredStatement = facultyFilter.getSearchByClause() + facultyFilter.getUniversityIdsClause()
 				+ facultyFilter.getFacultyDomainsClause() + facultyFilter.getAdmissionTypeClause()
-				+ facultyFilter.getRatingFromClause() + facultyFilter.getCountRevFromClause();
+				+ facultyFilter.getRatingFromClause() + facultyFilter.getCountRevFromClause()
+				+ facultyFilter.getCountryCodeClause();
 		return filteredStatement;
 	}
 

@@ -1276,7 +1276,7 @@ function loadProgramsCard(response) {
 +'																<label data-i18n-key="study-programs-annual-tax">Taxa anuală</label>'
 +'															</div>'
 +'															<div class="col-md-8 col-xs-12">'
-+'																<span>' + annualTax + " RON" + '</span>'
++'																<span>' + annualTax + '</span>'
 +'															</div>'
 +'														</div>'
 +'													</div>'
@@ -1398,7 +1398,7 @@ function loadCompaniesCard(companies) {
 					+'																<label>' + jobRoleName + '</label>'
 					+'															</div>'
 					+'															<div class="col-md-8 col-xs-12">'
-					+'																<span>' + roleMinSalary + ' - ' + roleMaxSalary + ' RON' + '</span>'
+					+'																<span>' + roleMinSalary + ' - ' + roleMaxSalary + '</span>'
 					+'															</div>'
 					+'														</div>'
 			);
@@ -1435,8 +1435,6 @@ function loadCompaniesCard(companies) {
 	fullCompaniesString += stringIntro;
 	fullCompaniesString += companiesString;
 	fullCompaniesString += stringOutro;
-
-	console.log(fullCompaniesString);
 
 	document.getElementById("faculty-profile-companies-header").innerHTML += fullCompaniesString;
 }
@@ -1817,29 +1815,43 @@ function seeAllReviews() {
 }
 
 function loadMap(address, city) {
+	const currentUrl = window.location.href;
 
-	var zoom = 14;
-	if (!address) {
-		if (!city) {
-			address = 'Romania';
-			zoom = 7;
-		} else {
-			address = city;
-			zoom = 7;
+	if (currentUrl.includes("unistart.ro")) {
+		var zoom = 14;
+		if (!address) {
+			if (!city) {
+				address = 'Romania';
+				zoom = 7;
+			} else {
+				address = city;
+				zoom = 7;
+			}
 		}
-	}
 
-	if (address.includes('nr.')) {
-		address = address.replace('nr.', '');
-	} else if (address.includes('Nr.')) {
-		address = address.replace('Nr.', '');
-	} else if (address.includes('nr')) {
-		address = address.replace('nr', '');
-	}
+		if (address.includes('nr.')) {
+			address = address.replace('nr.', '');
+		} else if (address.includes('Nr.')) {
+			address = address.replace('Nr.', '');
+		} else if (address.includes('nr')) {
+			address = address.replace('nr', '');
+		}
 
-	var city0 = city.split(",")[0];
-	if (!address.includes(city0)) {
-		address = address + ', ' + city;
+		var city0 = city.split(",")[0];
+		if (!address.includes(city0)) {
+			address = address + ', ' + city;
+		}
+	} else if (currentUrl.includes("unistart.lt")) {
+		var zoom = 14;
+		if (!address) {
+			if (!city) {
+				address = 'Lithuania';
+				zoom = 7;
+			} else {
+				address = city;
+				zoom = 7;
+			}
+		}
 	}
 	
 	var data = {
@@ -1868,11 +1880,17 @@ function loadMap(address, city) {
 }
 
 function createMap(response, zoom) {
+		const currentUrl = window.location.href;
 		var longitude;
 		var latitude;
 		if (!response || response.length == 0) {
-			longitude = '24.697';
-			latitude = '45.905';
+			if (currentUrl.includes("unistart.ro")) {
+				longitude = '24.697';
+				latitude = '45.905';
+			} else if (currentUrl.includes("unistart.lt")) {
+				longitude = '24.000';
+				latitude = '55.000';
+			}
 			zoom = 7;
 		} else {
 			longitude = response[0].lon;

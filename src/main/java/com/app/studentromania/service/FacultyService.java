@@ -204,6 +204,7 @@ public class FacultyService {
 		faculty.setFacultyId(generatedId);
 		faculty.setUniversityName(universityOpt.get().getUniversityName());
 		mapToFaculty(facultyDTO, faculty);
+		faculty.setCountryCode(customRequestContext.getCountryCode());
 		facultyDAO.createFaculty(faculty);
 		FacultyResponseDTO facultyResponseDTO = new FacultyResponseDTO();
 		facultyResponseDTO.setFacultyId(faculty.getFacultyId());

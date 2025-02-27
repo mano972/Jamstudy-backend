@@ -1,7 +1,8 @@
 
 $.ajaxSetup({
   headers: {
-    Token: getUField("ut") ? "Bearer " + getUField("ut") : null
+    Token: getUField("ut") ? "Bearer " + getUField("ut") : null,
+    Code: window.location.href.includes("unistart.lt") ? "LT" : "RO"
   }
 });
 
@@ -1220,7 +1221,12 @@ function initiateAutocomplete() {
 				return resolve([])
 			  }
 
-			  fetch(backendUrl)
+			  fetch(backendUrl, {
+			    method: "GET",
+                headers: {
+                  "Code": window.location.href.includes("unistart.lt") ? "LT" : "RO",
+                }
+			  })
 				.then(response => response.json())
 				.then(data => {
 				  const results = data.result.faculties.map((result) => {
@@ -1427,6 +1433,185 @@ function setBusinessText() {
 
 }
 
+function getDomainsForHomePage() {
+    const currentUrl = window.location.href;
+    var domainsString =
+                '<li><input type="checkbox" name="domeniu" id="d1" value="Științe Economice"><label for="d1"><span data-i18n-key="domain-economy">Științe Economice</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d2" value="Științe Inginerești"><label for="d2"><span data-i18n-key="domain-politics">Științe Inginerești</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d3" value="Științe Politice și Comunicare"><label for="d3"><span data-i18n-key="domain-politics">Științe Politice și Comunicare</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d4" value="Științe Umaniste"><label for="d4"><span data-i18n-key="domain-humanities">Științe Umaniste</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d5" value="Științe Juridice"><label for="d5"><span data-i18n-key="domain-judicial">Științe Juridice</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d6" value="Medicină"><label for="d6"><span data-i18n-key="domain-medicine">Medicină</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d7" value="Științe ale Naturii"><label for="d7"><span data-i18n-key="domain-nature">Științe ale Naturii</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d8" value="Arte Arhitectură și Urbanism"><label for="d8"><span data-i18n-key="domain-art-v2">Arte, Arhitectură și Urbanism</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d9" value="Științe Exacte"><label for="d9"><span data-i18n-key="domain-exact">Științe Exacte</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d10" value="Științe Sociale și Psihologie"><label for="d10"><span data-i18n-key="domain-social">Științe Sociale și Psihologie</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d11" value="Științe Agricole"><label for="d11"><span data-i18n-key="domain-agriculture">Științe Agricole</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d12" value="Ştiința Sportului şi Educației Fizice"><label for="d12"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică"><label for="d13"><span data-i18n-key="domain-military-v2">Științe Militare și de Informații</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d14" value="Teologie"><label for="d14"><span data-i18n-key="domain-theology">Teologie</span></label></li>';
+
+    if (currentUrl.includes("unistart.ro")) {
+        domainsString =
+                '<li><input type="checkbox" name="domeniu" id="d1" value="Științe Economice"><label for="d1"><span data-i18n-key="domain-economy">Științe Economice</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d2" value="Științe Inginerești"><label for="d2"><span data-i18n-key="domain-politics">Științe Inginerești</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d3" value="Științe Politice și Comunicare"><label for="d3"><span data-i18n-key="domain-politics">Științe Politice și Comunicare</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d4" value="Științe Umaniste"><label for="d4"><span data-i18n-key="domain-humanities">Științe Umaniste</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d5" value="Științe Juridice"><label for="d5"><span data-i18n-key="domain-judicial">Științe Juridice</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d6" value="Medicină"><label for="d6"><span data-i18n-key="domain-medicine">Medicină</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d7" value="Științe ale Naturii"><label for="d7"><span data-i18n-key="domain-nature">Științe ale Naturii</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d8" value="Arte Arhitectură și Urbanism"><label for="d8"><span data-i18n-key="domain-art-v2">Arte, Arhitectură și Urbanism</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d9" value="Științe Exacte"><label for="d9"><span data-i18n-key="domain-exact">Științe Exacte</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d10" value="Științe Sociale și Psihologie"><label for="d10"><span data-i18n-key="domain-social">Științe Sociale și Psihologie</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d11" value="Științe Agricole"><label for="d11"><span data-i18n-key="domain-agriculture">Științe Agricole</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d12" value="Ştiința Sportului şi Educației Fizice"><label for="d12"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică"><label for="d13"><span data-i18n-key="domain-military-v2">Științe Militare și de Informații</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d14" value="Teologie"><label for="d14"><span data-i18n-key="domain-theology">Teologie</span></label></li>';
+
+    } else if (currentUrl.includes("unistart.lt")) {
+        domainsString =
+                '<li><input type="checkbox" name="domeniu" id="d1" value="Ekonomikos mokslai"><label for="d1"><span data-i18n-key="domain-economy">Ekonomikos mokslai</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d2" value="Inžinerijos mokslai"><label for="d2"><span data-i18n-key="domain-politics">Inžinerijos mokslai</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d3" value="Politikos ir komunikacijos mokslai"><label for="d3"><span data-i18n-key="domain-politics">Politikos ir komunikacijos mokslai</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d4" value="Humanitariniai mokslai"><label for="d4"><span data-i18n-key="domain-humanities">Humanitariniai mokslai</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d5" value="Teisės mokslai"><label for="d5"><span data-i18n-key="domain-judicial">Teisės mokslai</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d6" value="Medicina"><label for="d6"><span data-i18n-key="domain-medicine">Medicina</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d7" value="Gamtos mokslai"><label for="d7"><span data-i18n-key="domain-nature">Gamtos mokslai</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d8" value="Menas Architektūra ir Urbanistika"><label for="d8"><span data-i18n-key="domain-art-v2">Menas, Architektūra ir Urbanistika</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d9" value="Tiksliuosius mokslus"><label for="d9"><span data-i18n-key="domain-exact">Tiksliuosius mokslus</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d10" value="Socialiniai mokslai ir psichologija"><label for="d10"><span data-i18n-key="domain-social">Socialiniai mokslai ir psichologija</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d11" value="Žemės ūkio mokslai"><label for="d11"><span data-i18n-key="domain-agriculture">Žemės ūkio mokslai</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d12" value="Sporto ir kūno kultūros mokslai"><label for="d12"><span data-i18n-key="domain-sports">Sporto ir kūno kultūros mokslai</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d13" value="Kariniai mokslai ir žvalgyba"><label for="d13"><span data-i18n-key="domain-military-v2">Kariniai mokslai ir žvalgyba</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d14" value="Teologija"><label for="d14"><span data-i18n-key="domain-theology">Teologija</span></label></li>';
+
+    }
+        document.getElementById("domains-select").innerHTML = domainsString;
+}
+
+function getDomainsForHomePageFilterDropdown() {
+    const currentUrl = window.location.href;
+    var domainsString =
+                '<select id="top-by-domain" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadTopFaculties()">'+
+                    '<option id= "all" value="Toate">Toate domeniile</option>'+
+                    '<option id="d1" value="Științe Economice">Științe Economice</option>'+
+                    '<option id="d2" value="Științe Inginerești">Științe Inginerești</option>'+
+                    '<option id="d3" value="Științe Politice și Comunicare">Științe Politice și Comunicare</option>'+
+                    '<option id="d4" value="Științe Umaniste">Științe Umaniste</option>'+
+                    '<option id="d5" value="Științe Juridice">Științe Juridice</option>'+
+                    '<option id="d6" value="Medicină">Medicină</option>'+
+                    '<option id="d7" value="Științe ale Naturii">Științe ale Naturii</option>'+
+                    '<option id="d8" value="Arte Arhitectură și Urbanism">Arte, Arhitectură și Urbanism</option>'+
+                    '<option id="d9" value="Științe Exacte">Științe Exacte</option>'+
+                    '<option id="d10" value="Științe Sociale și Psihologie">Științe Sociale și Psihologie</option>'+
+                    '<option id="d11" value="Științe Agricole">Științe Agricole</option>'+
+                    '<option id="d12" value="Ştiinţa Sportului şi Educaţiei Fizice">Știința Sportului şi Educației Fizice</option>'+
+                    '<option id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică">Științe Militare şi de Informații</option>'+
+                    '<option id="d14" value="Teologie">Teologie</option>'+
+                '</select>';
+
+    if (currentUrl.includes("unistart.ro")) {
+    var domainsString =
+                '<select id="top-by-domain" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadTopFaculties()">'+
+                    '<option id= "all" value="Toate">Toate domeniile</option>'+
+                    '<option id="d1" value="Științe Economice">Științe Economice</option>'+
+                    '<option id="d2" value="Științe Inginerești">Științe Inginerești</option>'+
+                    '<option id="d3" value="Științe Politice și Comunicare">Științe Politice și Comunicare</option>'+
+                    '<option id="d4" value="Științe Umaniste">Științe Umaniste</option>'+
+                    '<option id="d5" value="Științe Juridice">Științe Juridice</option>'+
+                    '<option id="d6" value="Medicină">Medicină</option>'+
+                    '<option id="d7" value="Științe ale Naturii">Științe ale Naturii</option>'+
+                    '<option id="d8" value="Arte Arhitectură și Urbanism">Arte, Arhitectură și Urbanism</option>'+
+                    '<option id="d9" value="Științe Exacte">Științe Exacte</option>'+
+                    '<option id="d10" value="Științe Sociale și Psihologie">Științe Sociale și Psihologie</option>'+
+                    '<option id="d11" value="Științe Agricole">Științe Agricole</option>'+
+                    '<option id="d12" value="Ştiinţa Sportului şi Educaţiei Fizice">Știința Sportului şi Educației Fizice</option>'+
+                    '<option id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică">Științe Militare şi de Informații</option>'+
+                    '<option id="d14" value="Teologie">Teologie</option>'+
+                '</select>';
+
+    } else if (currentUrl.includes("unistart.lt")) {
+    var domainsString =
+                '<select id="top-by-domain" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadTopFaculties()">'+
+                    '<option id= "all" value="Toate">Visos sritys</option>'+
+                    '<option id="d1" value="Ekonomikos mokslai">Ekonomikos mokslai</option>'+
+                    '<option id="d2" value="Inžinerijos mokslai">Inžinerijos mokslai</option>'+
+                    '<option id="d3" value="Politikos ir komunikacijos mokslai">Politikos ir komunikacijos mokslai</option>'+
+                    '<option id="d4" value="Humanitariniai mokslai">Humanitariniai mokslai</option>'+
+                    '<option id="d5" value="Teisės mokslai">Teisės mokslai</option>'+
+                    '<option id="d6" value="Medicina">Medicina</option>'+
+                    '<option id="d7" value="Gamtos mokslai">Gamtos mokslai</option>'+
+                    '<option id="d8" value="Menas Architektūra ir Urbanistika">Menas, Architektūra ir Urbanistika</option>'+
+                    '<option id="d9" value="Tiksliuosius mokslus">Tiksliuosius mokslus</option>'+
+                    '<option id="d10" value="Socialiniai mokslai ir psichologija">Socialiniai mokslai ir psichologija</option>'+
+                    '<option id="d11" value="Žemės ūkio mokslai">Žemės ūkio mokslai</option>'+
+                    '<option id="d12" value="Sporto ir kūno kultūros mokslai">Sporto ir kūno kultūros mokslai</option>'+
+                    '<option id="d13" value="Kariniai mokslai ir žvalgyba">Kariniai mokslai ir žvalgyba</option>'+
+                    '<option id="d14" value="Teologija">Teologija</option>'+
+                '</select>';
+
+    }
+        document.getElementById("dropdown-domains").innerHTML = domainsString;
+}
+
+function getDomainsForSearchPage() {
+
+    const currentUrl = window.location.href;
+    var domainsString =
+                '<label class="checkbox checkbox-azure" for="d1"><input type="checkbox" name="domeniu" value="Științe Economice" id="d1" data-toggle="checkbox"><span data-i18n-key="domain-economy">Științe Economice</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d2"><input type="checkbox" name="domeniu" value="Științe Inginerești" id="d2" data-toggle="checkbox"><span data-i18n-key="domain-engineering">Științe Inginerești</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d3"><input type="checkbox" name="domeniu" value="Științe Politice și Comunicare" id="d3" data-toggle="checkbox"><span data-i18n-key="domain-politics">Științe Politice și Comunicare</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d4"><input type="checkbox" name="domeniu" value="Științe Umaniste" id="d4" data-toggle="checkbox"><span data-i18n-key="domain-humanities">Științe Umaniste</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d5"><input type="checkbox" name="domeniu" value="Științe Juridice" id="d5" data-toggle="checkbox"><span data-i18n-key="domain-judicial">Științe Juridice</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d6"><input type="checkbox" name="domeniu" value="Medicină" id="d6" data-toggle="checkbox"><span data-i18n-key="domain-medicine">Medicină</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d7"><input type="checkbox" name="domeniu" value="Științe ale Naturii" id="d7" data-toggle="checkbox"><span data-i18n-key="domain-nature">Științe ale Naturii</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d8"><input type="checkbox" name="domeniu" value="Arte Arhitectură și Urbanism" id="d8" data-toggle="checkbox"><span data-i18n-key="domain-art-v2">Arte, Arhitectură și Urbanism</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d9"><input type="checkbox" name="domeniu" value="Științe Exacte" id="d9" data-toggle="checkbox"><span data-i18n-key="domain-exact">Științe Exacte</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d10"><input type="checkbox" name="domeniu" value="Științe Sociale și Psihologie" id="d10" data-toggle="checkbox"><span data-i18n-key="domain-social">Științe Sociale și Psihologie</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d11"><input type="checkbox" name="domeniu" value="Științe Agricole" id="d11" data-toggle="checkbox"><span data-i18n-key="domain-agriculture">Științe Agricole</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d12"><input type="checkbox" name="domeniu" value="Ştiinţa Sportului şi Educaţiei Fizice" id="d12" data-toggle="checkbox"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d13"><input type="checkbox" name="domeniu" value="Ştiinţe Militare Informaţii şi Ordine publică" id="d13" data-toggle="checkbox"><span data-i18n-key="domain-military-v2">Științe Militare și de Informații</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d14"><input type="checkbox" name="domeniu" value="Teologie" id="d14" data-toggle="checkbox"><span data-i18n-key="domain-theology">Teologie</span></label>';
+
+
+    if (currentUrl.includes("unistart.ro")) {
+        domainsString =
+                '<label class="checkbox checkbox-azure" for="d1"><input type="checkbox" name="domeniu" value="Științe Economice" id="d1" data-toggle="checkbox"><span data-i18n-key="domain-economy">Științe Economice</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d2"><input type="checkbox" name="domeniu" value="Științe Inginerești" id="d2" data-toggle="checkbox"><span data-i18n-key="domain-engineering">Științe Inginerești</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d3"><input type="checkbox" name="domeniu" value="Științe Politice și Comunicare" id="d3" data-toggle="checkbox"><span data-i18n-key="domain-politics">Științe Politice și Comunicare</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d4"><input type="checkbox" name="domeniu" value="Științe Umaniste" id="d4" data-toggle="checkbox"><span data-i18n-key="domain-humanities">Științe Umaniste</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d5"><input type="checkbox" name="domeniu" value="Științe Juridice" id="d5" data-toggle="checkbox"><span data-i18n-key="domain-judicial">Științe Juridice</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d6"><input type="checkbox" name="domeniu" value="Medicină" id="d6" data-toggle="checkbox"><span data-i18n-key="domain-medicine">Medicină</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d7"><input type="checkbox" name="domeniu" value="Științe ale Naturii" id="d7" data-toggle="checkbox"><span data-i18n-key="domain-nature">Științe ale Naturii</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d8"><input type="checkbox" name="domeniu" value="Arte Arhitectură și Urbanism" id="d8" data-toggle="checkbox"><span data-i18n-key="domain-art-v2">Arte, Arhitectură și Urbanism</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d9"><input type="checkbox" name="domeniu" value="Științe Exacte" id="d9" data-toggle="checkbox"><span data-i18n-key="domain-exact">Științe Exacte</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d10"><input type="checkbox" name="domeniu" value="Științe Sociale și Psihologie" id="d10" data-toggle="checkbox"><span data-i18n-key="domain-social">Științe Sociale și Psihologie</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d11"><input type="checkbox" name="domeniu" value="Științe Agricole" id="d11" data-toggle="checkbox"><span data-i18n-key="domain-agriculture">Științe Agricole</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d12"><input type="checkbox" name="domeniu" value="Ştiinţa Sportului şi Educaţiei Fizice" id="d12" data-toggle="checkbox"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d13"><input type="checkbox" name="domeniu" value="Ştiinţe Militare Informaţii şi Ordine publică" id="d13" data-toggle="checkbox"><span data-i18n-key="domain-military-v2">Științe Militare și de Informații</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d14"><input type="checkbox" name="domeniu" value="Teologija" id="d14" data-toggle="checkbox"><span data-i18n-key="domain-theology">Teologija</span></label>';
+
+    } else if (currentUrl.includes("unistart.lt")) {
+        domainsString =
+                '<label class="checkbox checkbox-azure" for="d1"><input type="checkbox" name="domeniu" value="Ekonomikos mokslai" id="d1" data-toggle="checkbox"><span data-i18n-key="domain-economy">Ekonomikos mokslai</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d2"><input type="checkbox" name="domeniu" value="Inžinerijos mokslai" id="d2" data-toggle="checkbox"><span data-i18n-key="domain-engineering">Inžinerijos mokslai</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d3"><input type="checkbox" name="domeniu" value="Politikos ir komunikacijos mokslai" id="d3" data-toggle="checkbox"><span data-i18n-key="domain-politics">Politikos ir komunikacijos mokslai</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d4"><input type="checkbox" name="domeniu" value="Humanitariniai mokslai" id="d4" data-toggle="checkbox"><span data-i18n-key="domain-humanities">Humanitariniai mokslai</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d5"><input type="checkbox" name="domeniu" value="Teisės mokslai" id="d5" data-toggle="checkbox"><span data-i18n-key="domain-judicial">Teisės mokslai</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d6"><input type="checkbox" name="domeniu" value="Medicina" id="d6" data-toggle="checkbox"><span data-i18n-key="domain-medicine">Medicina</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d7"><input type="checkbox" name="domeniu" value="Gamtos mokslai" id="d7" data-toggle="checkbox"><span data-i18n-key="domain-nature">Gamtos mokslai</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d8"><input type="checkbox" name="domeniu" value="Menas Architektūra ir Urbanistika" id="d8" data-toggle="checkbox"><span data-i18n-key="domain-art-v2">Menas, Architektūra ir Urbanistika</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d9"><input type="checkbox" name="domeniu" value="Tiksliuosius mokslus" id="d9" data-toggle="checkbox"><span data-i18n-key="domain-exact">Tiksliuosius mokslus</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d10"><input type="checkbox" name="domeniu" value="Socialiniai mokslai ir psichologija" id="d10" data-toggle="checkbox"><span data-i18n-key="domain-social">Socialiniai mokslai ir psichologija</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d11"><input type="checkbox" name="domeniu" value="Žemės ūkio mokslai" id="d11" data-toggle="checkbox"><span data-i18n-key="domain-agriculture">Žemės ūkio mokslai</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d12"><input type="checkbox" name="domeniu" value="Sporto ir kūno kultūros mokslai" id="d12" data-toggle="checkbox"><span data-i18n-key="domain-sports">Sporto ir kūno kultūros mokslai</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d13"><input type="checkbox" name="domeniu" value="Kariniai mokslai ir žvalgyba" id="d13" data-toggle="checkbox"><span data-i18n-key="domain-military-v2">Kariniai mokslai ir žvalgyba</span></label>'+
+                '<label class="checkbox checkbox-azure" for="d14"><input type="checkbox" name="domeniu" value="Teologie" id="d14" data-toggle="checkbox"><span data-i18n-key="domain-theology">Teologie</span></label>';
+
+    }
+    document.getElementById("domains-select").innerHTML = domainsString;
+}
+
 function getCitiesForHomePage() {
     const currentUrl = window.location.href;
     var citiesString =
@@ -1482,56 +1667,59 @@ function getCitiesForHomePageFilterDropdown() {
     const currentUrl = window.location.href;
     var citiesString =
                 '<select id="top-by-city" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadTopFaculties()">'+
-                '<option id= "all" value="Toate">Toate oraşele</option>'+
-                '<option id="c1" value="Bucureşti">Bucureşti</option>'+
-                '<option id="c2" value="Cluj-Napoca; Cluj">Cluj-Napoca</option>'+
-                '<option id="c3" value="Timişoara; Timiş">Timişoara</option>'+
-                '<option id="c4" value="Iaşi; Iaşi">Iaşi</option>'+
-                '<option id="c5" value="Constanţa; Constanţa">Constanţa</option>'+
-                '<option id="c6" value="Craiova; Dolj">Craiova</option>'+
-                '<option id="c10" value="Oradea; Bihor">Oradea</option>'+
-                '<option id="c7" value="Braşov; Braşov">Braşov</option>'+
-                '<option id="c8" value="Piteşti; Argeş">Piteşti</option>'+
-                '<option id="c9" value="Târgovişte; Dâmboviţa">Târgovişte</option>'+
-                '<option id="c11" value="Alba Iulia; Alba">Alba Iulia</option>'+
-                '<option id="c12" value="Sibiu; Sibiu">Sibiu</option>'+
-                '<option id="c13" value="Galaţi; Galaţi">Galaţi</option>'+
-                '<option id="c14" value="Arad; Arad">Arad</option>'+
-                '<option id="c15" value="Târgu Mureş; Mureş">Târgu Mureş</option>'+
-                '<option id="c16" value="Suceava; Suceava">Suceava</option>'+
-                '<option id="c17" value="Alba Iulia; Alba">Alba Iulia</option>';
+                    '<option id= "all" value="Toate">Toate oraşele</option>'+
+                    '<option id="c1" value="Bucureşti">Bucureşti</option>'+
+                    '<option id="c2" value="Cluj-Napoca; Cluj">Cluj-Napoca</option>'+
+                    '<option id="c3" value="Timişoara; Timiş">Timişoara</option>'+
+                    '<option id="c4" value="Iaşi; Iaşi">Iaşi</option>'+
+                    '<option id="c5" value="Constanţa; Constanţa">Constanţa</option>'+
+                    '<option id="c6" value="Craiova; Dolj">Craiova</option>'+
+                    '<option id="c10" value="Oradea; Bihor">Oradea</option>'+
+                    '<option id="c7" value="Braşov; Braşov">Braşov</option>'+
+                    '<option id="c8" value="Piteşti; Argeş">Piteşti</option>'+
+                    '<option id="c9" value="Târgovişte; Dâmboviţa">Târgovişte</option>'+
+                    '<option id="c11" value="Alba Iulia; Alba">Alba Iulia</option>'+
+                    '<option id="c12" value="Sibiu; Sibiu">Sibiu</option>'+
+                    '<option id="c13" value="Galaţi; Galaţi">Galaţi</option>'+
+                    '<option id="c14" value="Arad; Arad">Arad</option>'+
+                    '<option id="c15" value="Târgu Mureş; Mureş">Târgu Mureş</option>'+
+                    '<option id="c16" value="Suceava; Suceava">Suceava</option>'+
+                    '<option id="c17" value="Alba Iulia; Alba">Alba Iulia</option>'+
+                '</select>';
 
     if (currentUrl.includes("unistart.ro")) {
     var citiesString =
                 '<select id="top-by-city" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadTopFaculties()">'+
-                '<option id= "all" value="Toate">Toate oraşele</option>'+
-                '<option id="c1" value="Bucureşti">Bucureşti</option>'+
-                '<option id="c2" value="Cluj-Napoca; Cluj">Cluj-Napoca</option>'+
-                '<option id="c3" value="Timişoara; Timiş">Timişoara</option>'+
-                '<option id="c4" value="Iaşi; Iaşi">Iaşi</option>'+
-                '<option id="c5" value="Constanţa; Constanţa">Constanţa</option>'+
-                '<option id="c6" value="Craiova; Dolj">Craiova</option>'+
-                '<option id="c10" value="Oradea; Bihor">Oradea</option>'+
-                '<option id="c7" value="Braşov; Braşov">Braşov</option>'+
-                '<option id="c8" value="Piteşti; Argeş">Piteşti</option>'+
-                '<option id="c9" value="Târgovişte; Dâmboviţa">Târgovişte</option>'+
-                '<option id="c11" value="Alba Iulia; Alba">Alba Iulia</option>'+
-                '<option id="c12" value="Sibiu; Sibiu">Sibiu</option>'+
-                '<option id="c13" value="Galaţi; Galaţi">Galaţi</option>'+
-                '<option id="c14" value="Arad; Arad">Arad</option>'+
-                '<option id="c15" value="Târgu Mureş; Mureş">Târgu Mureş</option>'+
-                '<option id="c16" value="Suceava; Suceava">Suceava</option>'+
-                '<option id="c17" value="Alba Iulia; Alba">Alba Iulia</option>';
+                    '<option id= "all" value="Toate">Toate oraşele</option>'+
+                    '<option id="c1" value="Bucureşti">Bucureşti</option>'+
+                    '<option id="c2" value="Cluj-Napoca; Cluj">Cluj-Napoca</option>'+
+                    '<option id="c3" value="Timişoara; Timiş">Timişoara</option>'+
+                    '<option id="c4" value="Iaşi; Iaşi">Iaşi</option>'+
+                    '<option id="c5" value="Constanţa; Constanţa">Constanţa</option>'+
+                    '<option id="c6" value="Craiova; Dolj">Craiova</option>'+
+                    '<option id="c10" value="Oradea; Bihor">Oradea</option>'+
+                    '<option id="c7" value="Braşov; Braşov">Braşov</option>'+
+                    '<option id="c8" value="Piteşti; Argeş">Piteşti</option>'+
+                    '<option id="c9" value="Târgovişte; Dâmboviţa">Târgovişte</option>'+
+                    '<option id="c11" value="Alba Iulia; Alba">Alba Iulia</option>'+
+                    '<option id="c12" value="Sibiu; Sibiu">Sibiu</option>'+
+                    '<option id="c13" value="Galaţi; Galaţi">Galaţi</option>'+
+                    '<option id="c14" value="Arad; Arad">Arad</option>'+
+                    '<option id="c15" value="Târgu Mureş; Mureş">Târgu Mureş</option>'+
+                    '<option id="c16" value="Suceava; Suceava">Suceava</option>'+
+                    '<option id="c17" value="Alba Iulia; Alba">Alba Iulia</option>'+
+                '</select>';
 
     } else if (currentUrl.includes("unistart.lt")) {
     var citiesString =
                 '<select id="top-by-city" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadTopFaculties()">'+
-                '<option id= "all" value="Toate">Visi miestai</option>'+
-                '<option id="c1" value="Vilnius">Vilnius</option>'+
-                '<option id="c2" value="Kaunas">Kaunas</option>'+
-                '<option id="c3" value="Klaipėda">Klaipėda</option>'+
-                '<option id="c4" value="Šiauliai">Šiauliai</option>'+
-                '<option id="c5" value="Panevėžys">Panevėžys</option>';
+                    '<option id= "all" value="Toate">Visi miestai</option>'+
+                    '<option id="c1" value="Vilnius">Vilnius</option>'+
+                    '<option id="c2" value="Kaunas">Kaunas</option>'+
+                    '<option id="c3" value="Klaipėda">Klaipėda</option>'+
+                    '<option id="c4" value="Šiauliai">Šiauliai</option>'+
+                    '<option id="c5" value="Panevėžys">Panevėžys</option>'+
+                '</select>';
 
     }
         document.getElementById("dropdown-cities").innerHTML = citiesString;
@@ -2017,6 +2205,7 @@ const ro_json = {
                     "study-programs-candidates-per-place": "Candidați pe loc",
                     "study-programs-annual-tax": "Taxa anuală",
                     "no-reviews": "Nu există evaluări",
+                    "no-more-reviews": "Nu mai există alte evaluări pentru această facultate",
 
                     "compare-faculties": "Compară facultăți",
                     "compare-suggestions": "Sugestii de comparație",
@@ -2220,6 +2409,7 @@ const en_json = {
                   "study-programs-candidates-per-place": "Candidates per place",
                   "study-programs-annual-tax": "Annual tax",
                   "no-reviews": "There are no reviews",
+                  "no-more-reviews": "There are no more reviews for this faculty",
 
                   "compare-faculties": "Compare faculties",
                   "compare-suggestions": "Comparison suggestions",
@@ -2348,7 +2538,7 @@ const lt_json = {
                   "domain-judicial": "Teisės mokslai",
                   "domain-medicine": "Medicina",
                   "domain-nature": "Gamtos mokslai",
-                  "domain-art-v1": "Menas, Architektūra ir Urbanistika",
+                  "domain-art-v1": "Menas Architektūra ir Urbanistika",
                   "domain-art-v2": "Menas, Architektūra ir Urbanistika",
                   "domain-exact": "Tiksliuosius mokslus",
                   "domain-social": "Socialiniai mokslai ir psichologija",
@@ -2424,6 +2614,7 @@ const lt_json = {
                   "study-programs-candidates-per-place": "Kandidatai vienai vietai",
                   "study-programs-annual-tax": "Metinė mokestis",
                   "no-reviews": "Atsiliepimų nėra",
+                  "no-more-reviews": "Daugiau atsiliepimų apie šį fakultetą nėra",
 
                   "compare-faculties": "Palyginti fakultetus",
                   "compare-suggestions": "Palyginimo pasiūlymai",

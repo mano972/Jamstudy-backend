@@ -1,5 +1,6 @@
 package com.app.studentromania.util;
 
+import com.couchbase.client.java.document.json.JsonArray;
 import org.apache.commons.lang3.StringUtils;
 
 public class ReviewFilter {
@@ -13,17 +14,19 @@ public class ReviewFilter {
 	private String searchBy;
 	private Double ratingFrom;
 	private Double ratingTo;
+	private String countryCode;
 	private String orderBy;
 	private Integer limit;
 	private Integer pageNumber;
 	private Integer offset;
 
-	public ReviewFilter(String searchBy, Double ratingFrom, Double ratingTo, String orderBy, Integer limit,
+	public ReviewFilter(String searchBy, Double ratingFrom, Double ratingTo, String countryCode, String orderBy, Integer limit,
 			Integer pageNumber, Integer offset) {
 		super();
 		this.searchBy = searchBy;
 		this.ratingFrom = ratingFrom;
 		this.ratingTo = ratingTo;
+		this.countryCode = countryCode;
 		this.orderBy = orderBy;
 		this.limit = limit;
 		this.pageNumber = pageNumber;
@@ -52,6 +55,14 @@ public class ReviewFilter {
 
 	public void setRatingTo(Double ratingTo) {
 		this.ratingTo = ratingTo;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 
 	public String getOrderBy() {
@@ -113,6 +124,13 @@ public class ReviewFilter {
 		return " and generalRating <= " + ratingTo;
 	}
 
+	public String getCountryCodeClause() {
+		if (StringUtils.isEmpty(countryCode)) {
+			return StringUtils.EMPTY;
+		}
+		return " and countryCode IN " + JsonArray.from(countryCode);
+	}
+
 	public String getOrderByClause() {
 		if (StringUtils.isEmpty(orderBy)) {
 			return " order by " + DEFAULT_SORT_FIELD + " " + DEFAULT_SORT_DIRECTION;
@@ -123,11 +141,15 @@ public class ReviewFilter {
 
 	@Override
 	public String toString() {
-		return "ReviewFilter [searchBy=" + searchBy + ", ratingFrom=" + ratingFrom + ", ratingTo=" + ratingTo
-				+ ", orderBy=" + orderBy + ", limit=" + limit + ", pageNumber=" + pageNumber + ", offset=" + offset
-				+ "]";
+		return "ReviewFilter{" +
+				"searchBy='" + searchBy + '\'' +
+				", ratingFrom=" + ratingFrom +
+				", ratingTo=" + ratingTo +
+				", countryCode='" + countryCode + '\'' +
+				", orderBy='" + orderBy + '\'' +
+				", limit=" + limit +
+				", pageNumber=" + pageNumber +
+				", offset=" + offset +
+				'}';
 	}
-	
-	
-
 }

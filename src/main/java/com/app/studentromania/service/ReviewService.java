@@ -64,6 +64,7 @@ public class ReviewService {
 	private LogUtils logUtils;
 
 	public ResponseDTO getAllReviews(ReviewFilter reviewFilters) {
+		reviewFilters.setCountryCode(customRequestContext.getCountryCode());
 		List<Review> reviews = reviewDAO.getAllReviews(reviewFilters);
 		long count = reviewDAO.countFilteredReviews(reviewFilters);
 		JSONArray reviewsArray = new JSONArray();
@@ -91,6 +92,7 @@ public class ReviewService {
 	}
 
 	public ResponseDTO getFilteredReviewsByFacultyId(String facultydId, ReviewFilter reviewFilters) {
+		reviewFilters.setCountryCode(customRequestContext.getCountryCode());
 		List<Review> reviews = reviewDAO.getFilteredReviewsByFacultyId(facultydId, reviewFilters);
 		long count = reviewDAO.countFilteredReviewsByFacultyId(facultydId, reviewFilters);
 		JSONArray reviewsArray = new JSONArray();
@@ -159,6 +161,7 @@ public class ReviewService {
 		mapToReview(reviewDTO, review);
 		review.setUserId(userProfile.getUserId());
 		review.setUserEmail(userProfile.getEmail());
+		review.setCountryCode(customRequestContext.getCountryCode());
 		reviewDAO.createReview(review);
 
 		UserProfileReview addedReview = new UserProfileReview();

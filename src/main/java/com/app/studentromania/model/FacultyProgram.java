@@ -31,6 +31,10 @@ public class FacultyProgram {
 
 	private Integer annualTax;
 
+	private Integer noOfYears;
+
+	private String programVolume;
+
 	public String getProgramName() {
 		return programName;
 	}
@@ -135,4 +139,19 @@ public class FacultyProgram {
 		this.annualTax = annualTax;
 	}
 
+	public Integer getNoOfYears() {
+		return noOfYears;
+	}
+
+	public void setNoOfYears(Integer noOfYears) {
+		this.noOfYears = noOfYears;
+	}
+
+	public String getProgramVolume() {
+		return programVolume;
+	}
+
+	public void setProgramVolume(String programVolume) {
+		this.programVolume = programVolume;
+	}
 }

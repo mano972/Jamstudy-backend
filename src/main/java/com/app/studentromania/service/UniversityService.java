@@ -29,6 +29,9 @@ public class UniversityService {
 	@Autowired
 	private ConfigDAO configDAO;
 
+	@Autowired
+	private CustomRequestContext customRequestContext;
+
 	public ResponseDTO getAllUniversities() {
 		List<University> universities = universityDAO.getAllUniversities();
 		JSONArray universitiesArray = new JSONArray();
@@ -58,6 +61,7 @@ public class UniversityService {
 		String generatedId = configDAO.generateDocumentId(Constants.UNIVERSITY_PREFIX_ID);
 		University university = new University();
 		university.setUniversityId(generatedId);
+		university.setCountryCode(customRequestContext.getCountryCode());
 		mapToUniversity(universityDTO, university);
 		universityDAO.createUniversity(university);
 		UniversityResponseDTO universityResponseDTO = new UniversityResponseDTO();

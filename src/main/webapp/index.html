@@ -57,7 +57,7 @@
 						<h5 class="title" data-i18n-key="search-keywords">Caută după cuvinte cheie</h5>
 						<div class="form-group">
 							<fieldset id="search-fieldset" class="search-fieldset">
-								<input id="search-input" type="text" value="" placeholder="Facultate, Universitate, Oraș ...." class="form-control" spellcheck="false"/>
+								<input id="search-input" type="text" value="" placeholder="" class="form-control" spellcheck="false"/>
 								<ul class="autocomplete-result-list"></ul>
 							</fieldset>
 						</div>
@@ -66,20 +66,9 @@
 						<div id="horizontal-line"></div>
 						<div class="content">
 							<ul class="ks-cboxtags">
-								<li><input type="checkbox" name="domeniu" id="d1" value="Științe Economice"><label for="d1"><span data-i18n-key="domain-economy">Științe Economice</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d2" value="Științe Inginerești"><label for="d2"><span data-i18n-key="domain-politics">Științe Politice și Comunicare</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d3" value="Științe Politice și Comunicare"><label for="d3"><span data-i18n-key="domain-politics">Științe Politice și Comunicare</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d4" value="Științe Umaniste"><label for="d4"><span data-i18n-key="domain-humanities">Științe Umaniste</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d5" value="Științe Juridice"><label for="d5"><span data-i18n-key="domain-judicial">Științe Juridice</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d6" value="Medicină"><label for="d6"><span data-i18n-key="domain-medicine">Medicină</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d7" value="Științe ale Naturii"><label for="d7"><span data-i18n-key="domain-nature">Științe ale Naturii</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d8" value="Arte Arhitectură și Urbanism"><label for="d8"><span data-i18n-key="domain-art-v2">Arte, Arhitectură și Urbanism</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d9" value="Științe Exacte"><label for="d9"><span data-i18n-key="domain-exact">Științe Exacte</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d10" value="Științe Sociale și Psihologie"><label for="d10"><span data-i18n-key="domain-social">Științe Sociale și Psihologie</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d11" value="Științe Agricole"><label for="d11"><span data-i18n-key="domain-agriculture">Științe Agricole</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d12" value="Ştiința Sportului şi Educației Fizice"><label for="d12"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică"><label for="d13"><span data-i18n-key="domain-military-v2">Științe Militare și de Informații</span></label></li>
-								<li><input type="checkbox" name="domeniu" id="d14" value="Teologie"><label for="d14"><span data-i18n-key="domain-theology">Teologie</span></label></li>
+								<div id="domains-select">
+									<!--populated dynamically-->
+								</div>
 							</ul>
 						</div>
 
@@ -126,30 +115,15 @@
 					<div class ="list-options col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
 						<div class="col-lg-offset-0 col-lg-3 col-md-offset-0 col-md-5 col-sm-6 col-xs-12">
 							<span><b></b></span><br>
-							<select id="top-by-domain" class="selectpicker" data-style="form-control" data-menu-style="" onchange="loadTopFaculties()">
-								<option id= "all" value="Toate">Toate domeniile</option>
-								<option id="d1" value="Științe Economice">Științe Economice</option>
-								<option id="d2" value="Științe Inginerești">Științe Inginerești</option>
-								<option id="d3" value="Științe Politice și Comunicare">Științe Politice și Comunicare</option>
-								<option id="d4" value="Științe Umaniste">Științe Umaniste</option>
-								<option id="d5" value="Științe Juridice">Științe Juridice</option>
-								<option id="d6" value="Medicină">Medicină</option>
-								<option id="d7" value="Științe ale Naturii">Științe ale Naturii</option>
-								<option id="d8" value="Arte Arhitectură și Urbanism">Arte, Arhitectură și Urbanism</option>
-								<option id="d9" value="Științe Exacte">Științe Exacte</option>
-								<option id="d10" value="Științe Sociale și Psihologie">Științe Sociale și Psihologie</option>
-								<option id="d11" value="Științe Agricole">Științe Agricole</option>
-								<option id="d12" value="Ştiinţa Sportului şi Educaţiei Fizice">Știința Sportului şi Educației Fizice</option>
-								<option id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică">Științe Militare şi de Informații</option>
-								<option id="d14" value="Teologie">Teologie</option>
-							</select>
+							<div id="dropdown-domains">
+								<!--populated dynamically-->
+							</div>
 						</div>
 						<div class="col-lg-3 col-md-5 col-sm-6 col-xs-12">
 							<span><b></b></span><br>
 							<div id="dropdown-cities">
 								<!--populated dynamically-->
 							</div>
-							</select>
 						</div>
 
 					</div>
@@ -321,7 +295,9 @@
         myAccountText();
         getLoginModal();
         getRegisterModal();
+        getDomainsForHomePage();
         getCitiesForHomePage();
+        getDomainsForHomePageFilterDropdown();
         getCitiesForHomePageFilterDropdown();
         loadUser();
         loadTopFaculties();
@@ -510,14 +486,14 @@
 
                                 var secondRevCard;
                                 if ($(window).width() > 992) {
-                                    secondRevCard = '<div class="card-review-brief">												<div class="content" >													<h6></h6>													<small class="text-muted"><i>Nu mai există alte evaluări pentru această facultate</i></small>				</div>											</div>';
+                                    secondRevCard = '<div class="card-review-brief">												<div class="content" >													<h6></h6>													<small class="text-muted" data-i18n-key="no-more-reviews"><i>Nu mai există alte evaluări pentru această facultate</i></small>				</div>											</div>';
                                 } else {
                                     secondRevCard = '';
                                 }
 
                                 cardReviewStr = '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>			<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6>										<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span id="see-full-review" class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal" data-i18n-key="see-all-v2">Vezi tot</span>							</div>											</div>' + secondRevCard;
                             } else {
-                                var noReviewsText = "Nu există evaluări";
+                                var noReviewsText = "<span data-i18n-key='no-reviews'>Nu există evaluări</span>";
 
                                 cardReviewStr = '<div class="card-review-brief">			<div class="content" >			<p class="text-muted">' + noReviewsText + '</p>												</div>											</div>';
                             }
