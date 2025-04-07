@@ -1,8 +1,11 @@
 package com.app.studentromania.controller;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-
+import com.app.studentromania.annotation.Auth;
+import com.app.studentromania.annotation.RestCall;
+import com.app.studentromania.annotation.VerifyAdmin;
+import com.app.studentromania.annotation.VerifyLoggedIn;
+import com.app.studentromania.dto.UserProfileDTO;
+import com.app.studentromania.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,162 +18,159 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.studentromania.annotation.Auth;
-import com.app.studentromania.annotation.RestCall;
-import com.app.studentromania.annotation.VerifyAdmin;
-import com.app.studentromania.annotation.VerifyLoggedIn;
-import com.app.studentromania.dto.UserProfileDTO;
-import com.app.studentromania.service.UserProfileService;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 @CrossOrigin()
 @RestController
 @RequestMapping("${base.path}/userprofile")
 public class UserProfileController {
 
-	@Autowired
-	private UserProfileService userProfileService;
+    @Autowired
+    private UserProfileService userProfileService;
 
-	@GetMapping("/profiles")
-	@RestCall
-	@VerifyAdmin
-	public ResponseEntity<String> getAllUserProfiles() {
-		return userProfileService.getAllUserProfiles().createRestResponse();
-	}
+    @GetMapping("/profiles")
+    @RestCall
+    @VerifyAdmin
+    public ResponseEntity<String> getAllUserProfiles() {
+        return userProfileService.getAllUserProfiles().createRestResponse();
+    }
 
-	@GetMapping("/{userId}")
-	@RestCall
-	@VerifyAdmin
-	public ResponseEntity<String> getByUserId(@PathVariable String userId) {
-		return userProfileService.getByUserId(userId).createRestResponse();
-	}
+    @GetMapping("/{userId}")
+    @RestCall
+    @VerifyAdmin
+    public ResponseEntity<String> getByUserId(@PathVariable String userId) {
+        return userProfileService.getByUserId(userId).createRestResponse();
+    }
 
-	@GetMapping
-	@RestCall
-	@Auth
-	@VerifyLoggedIn
-	public ResponseEntity<String> getUserProfile() {
-		return userProfileService.getUserProfile().createRestResponse();
-	}
+    @GetMapping
+    @RestCall
+    @Auth
+    @VerifyLoggedIn
+    public ResponseEntity<String> getUserProfile() {
+        return userProfileService.getUserProfile().createRestResponse();
+    }
 
-	@GetMapping("/usersnotify")
-	@RestCall
-	@VerifyAdmin
-	public ResponseEntity<String> getUsersToNotify() {
-		return userProfileService.getUsersToNotify().createRestResponse();
-	}
+    @GetMapping("/usersnotify")
+    @RestCall
+    @VerifyAdmin
+    public ResponseEntity<String> getUsersToNotify() {
+        return userProfileService.getUsersToNotify().createRestResponse();
+    }
 
-	@GetMapping("/notify")
-	@RestCall
-	@VerifyAdmin
-	public ResponseEntity<String> notifyUsers() {
-		return userProfileService.notifyUsers().createRestResponse();
-	}
+    @GetMapping("/notify")
+    @RestCall
+    @VerifyAdmin
+    public ResponseEntity<String> notifyUsers() {
+        return userProfileService.notifyUsers().createRestResponse();
+    }
 
-	@PostMapping("/register")
-	@RestCall
-	public ResponseEntity<String> register(@RequestBody UserProfileDTO userProfileDTO)
-			throws NoSuchAlgorithmException, InvalidKeySpecException {
-		return userProfileService.register(userProfileDTO).createRestResponse();
-	}
+    @PostMapping("/register")
+    @RestCall
+    @Auth
+    public ResponseEntity<String> register(@RequestBody UserProfileDTO userProfileDTO)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
+        return userProfileService.register(userProfileDTO).createRestResponse();
+    }
 
-	@PostMapping("/login")
-	@RestCall
-	public ResponseEntity<String> login(@RequestBody UserProfileDTO userProfileDTO)
-			throws NoSuchAlgorithmException, InvalidKeySpecException {
-		return userProfileService.login(userProfileDTO).createRestResponse();
-	}
+    @PostMapping("/login")
+    @RestCall
+    public ResponseEntity<String> login(@RequestBody UserProfileDTO userProfileDTO)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
+        return userProfileService.login(userProfileDTO).createRestResponse();
+    }
 
-	@PostMapping("/loginSocialMedia")
-	@RestCall
-	public ResponseEntity<String> loginWithSocialMedia(@RequestBody UserProfileDTO userProfileDTO) {
-		return userProfileService.loginWithSocialMedia(userProfileDTO).createRestResponse();
-	}
+    @PostMapping("/loginSocialMedia")
+    @RestCall
+    public ResponseEntity<String> loginWithSocialMedia(@RequestBody UserProfileDTO userProfileDTO) {
+        return userProfileService.loginWithSocialMedia(userProfileDTO).createRestResponse();
+    }
 
-	@PutMapping("/resendconfirmation")
-	@RestCall
-	public ResponseEntity<String> resendConfirmation(@RequestBody UserProfileDTO userProfileDTO) {
-		return userProfileService.resendConfirmation(userProfileDTO).createRestResponse();
-	}
+    @PutMapping("/resendconfirmation")
+    @RestCall
+    public ResponseEntity<String> resendConfirmation(@RequestBody UserProfileDTO userProfileDTO) {
+        return userProfileService.resendConfirmation(userProfileDTO).createRestResponse();
+    }
 
-	@PutMapping("/verifyregister")
-	@RestCall
-	public ResponseEntity<String> verifyRegistration(@RequestBody UserProfileDTO userProfileDTO) {
-		return userProfileService.verifyRegistration(userProfileDTO).createRestResponse();
-	}
+    @PutMapping("/verifyregister")
+    @RestCall
+    public ResponseEntity<String> verifyRegistration(@RequestBody UserProfileDTO userProfileDTO) {
+        return userProfileService.verifyRegistration(userProfileDTO).createRestResponse();
+    }
 
-	@PutMapping("/change")
-	@RestCall
-	@Auth
-	public ResponseEntity<String> changePassword(@RequestBody UserProfileDTO userProfileDTO)
-			throws NoSuchAlgorithmException, InvalidKeySpecException {
-		return userProfileService.changePassword(userProfileDTO).createRestResponse();
-	}
+    @PutMapping("/change")
+    @RestCall
+    @Auth
+    public ResponseEntity<String> changePassword(@RequestBody UserProfileDTO userProfileDTO)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
+        return userProfileService.changePassword(userProfileDTO).createRestResponse();
+    }
 
-	@PutMapping("/reset")
-	@RestCall
-	@Auth
-	public ResponseEntity<String> resetPassword(@RequestBody UserProfileDTO userProfileDTO) {
-		return userProfileService.resetPassword(userProfileDTO).createRestResponse();
-	}
+    @PutMapping("/reset")
+    @RestCall
+    @Auth
+    public ResponseEntity<String> resetPassword(@RequestBody UserProfileDTO userProfileDTO) {
+        return userProfileService.resetPassword(userProfileDTO).createRestResponse();
+    }
 
-	@PutMapping("/verifyreset")
-	@RestCall
-	public ResponseEntity<String> verifyPasswordReset(@RequestBody UserProfileDTO userProfileDTO) {
-		return userProfileService.verifyPasswordReset(userProfileDTO).createRestResponse();
-	}
+    @PutMapping("/verifyreset")
+    @RestCall
+    public ResponseEntity<String> verifyPasswordReset(@RequestBody UserProfileDTO userProfileDTO) {
+        return userProfileService.verifyPasswordReset(userProfileDTO).createRestResponse();
+    }
 
-	@PutMapping
-	@RestCall
-	@Auth
-	@VerifyLoggedIn
-	public ResponseEntity<String> updateUserProfile(@RequestBody UserProfileDTO userProfileDTO) {
-		return userProfileService.updateUserProfile(userProfileDTO).createRestResponse();
-	}
+    @PutMapping
+    @RestCall
+    @Auth
+    @VerifyLoggedIn
+    public ResponseEntity<String> updateUserProfile(@RequestBody UserProfileDTO userProfileDTO) {
+        return userProfileService.updateUserProfile(userProfileDTO).createRestResponse();
+    }
 
-	@PutMapping("/recent/{facultyId}")
-	@RestCall
-	@Auth
-	public ResponseEntity<String> addRecentFaculty(@PathVariable String facultyId) {
-		return userProfileService.addRecentFaculty(facultyId).createRestResponse();
-	}
+    @PutMapping("/recent/{facultyId}")
+    @RestCall
+    @Auth
+    public ResponseEntity<String> addRecentFaculty(@PathVariable String facultyId) {
+        return userProfileService.addRecentFaculty(facultyId).createRestResponse();
+    }
 
-	@PutMapping("/favorite/{facultyId}")
-	@RestCall
-	@Auth
-	@VerifyLoggedIn
-	public ResponseEntity<String> addFavoriteFaculty(@PathVariable String facultyId,
-			@RequestBody UserProfileDTO userProfileDTO) {
-		return userProfileService.addFavoriteFaculty(facultyId, userProfileDTO).createRestResponse();
-	}
+    @PutMapping("/favorite/{facultyId}")
+    @RestCall
+    @Auth
+    @VerifyLoggedIn
+    public ResponseEntity<String> addFavoriteFaculty(@PathVariable String facultyId,
+                                                     @RequestBody UserProfileDTO userProfileDTO) {
+        return userProfileService.addFavoriteFaculty(facultyId, userProfileDTO).createRestResponse();
+    }
 
-	@PutMapping("/favorite/company/{companyId}")
-	@RestCall
-	@Auth
-	@VerifyLoggedIn
-	public ResponseEntity<String> addFavoriteCompany(@PathVariable String companyId,
-			@RequestBody UserProfileDTO userProfileDTO) {
-		return userProfileService.addFavoriteCompany(companyId, userProfileDTO).createRestResponse();
-	}
+    @PutMapping("/favorite/company/{companyId}")
+    @RestCall
+    @Auth
+    @VerifyLoggedIn
+    public ResponseEntity<String> addFavoriteCompany(@PathVariable String companyId,
+                                                     @RequestBody UserProfileDTO userProfileDTO) {
+        return userProfileService.addFavoriteCompany(companyId, userProfileDTO).createRestResponse();
+    }
 
-	@PutMapping("/notification/{facultyId}")
-	@RestCall
-	@Auth
-	@VerifyLoggedIn
-	public ResponseEntity<String> allowNotificationForFaculty(@PathVariable String facultyId,
-			@RequestBody UserProfileDTO userProfileDTO) {
-		return userProfileService.allowNotificationForFaculty(facultyId, userProfileDTO).createRestResponse();
-	}
+    @PutMapping("/notification/{facultyId}")
+    @RestCall
+    @Auth
+    @VerifyLoggedIn
+    public ResponseEntity<String> allowNotificationForFaculty(@PathVariable String facultyId,
+                                                              @RequestBody UserProfileDTO userProfileDTO) {
+        return userProfileService.allowNotificationForFaculty(facultyId, userProfileDTO).createRestResponse();
+    }
 
-	@DeleteMapping("/{userId}")
-	@VerifyAdmin
-	public ResponseEntity<String> deleteByUserId(@PathVariable String userId) {
-		return userProfileService.deleteByUserId(userId).createRestResponse();
-	}
+    @DeleteMapping("/{userId}")
+    @VerifyAdmin
+    public ResponseEntity<String> deleteByUserId(@PathVariable String userId) {
+        return userProfileService.deleteByUserId(userId).createRestResponse();
+    }
 
-	@DeleteMapping
-	@VerifyAdmin
-	public ResponseEntity<String> deleteAllUserProfiles() {
-		return userProfileService.deleteAllUserProfiles().createRestResponse();
-	}
+    @DeleteMapping
+    @VerifyAdmin
+    public ResponseEntity<String> deleteAllUserProfiles() {
+        return userProfileService.deleteAllUserProfiles().createRestResponse();
+    }
 
 }

@@ -1,5 +1,13 @@
 package com.app.studentromania.controller;
 
+import com.app.studentromania.annotation.Auth;
+import com.app.studentromania.annotation.RestCall;
+import com.app.studentromania.annotation.VerifyAdmin;
+import com.app.studentromania.annotation.VerifyEntityAdmin;
+import com.app.studentromania.annotation.VerifyLoggedIn;
+import com.app.studentromania.dto.ReviewDTO;
+import com.app.studentromania.service.ReviewService;
+import com.app.studentromania.util.ReviewFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,101 +20,101 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.studentromania.annotation.Auth;
-import com.app.studentromania.annotation.RestCall;
-import com.app.studentromania.annotation.VerifyAdmin;
-import com.app.studentromania.annotation.VerifyLoggedIn;
-import com.app.studentromania.dto.ReviewDTO;
-import com.app.studentromania.service.ReviewService;
-import com.app.studentromania.util.ReviewFilter;
-
 @CrossOrigin()
 @RestController
 @RequestMapping("${base.path}/review")
 public class ReviewController {
 
-	@Autowired
-	private ReviewService reviewService;
+    @Autowired
+    private ReviewService reviewService;
 
-	@GetMapping
-	@RestCall
-	@Auth
-	public ResponseEntity<String> getAllReviews(ReviewFilter reviewFilter) {
-		return reviewService.getAllReviews(reviewFilter).createRestResponse();
-	}
+    @GetMapping
+    @RestCall
+    public ResponseEntity<String> getAllReviews(ReviewFilter reviewFilter) {
+        return reviewService.getAllReviews(reviewFilter).createRestResponse();
+    }
 
-	@GetMapping("/{reviewId}")
-	@RestCall
-	@Auth
-	public ResponseEntity<String> getByReviewId(@PathVariable String reviewId) {
-		return reviewService.getByReviewId(reviewId).createRestResponse();
-	}
+    @GetMapping("/{reviewId}")
+    @RestCall
+    @Auth
+    public ResponseEntity<String> getByReviewId(@PathVariable String reviewId) {
+        return reviewService.getByReviewId(reviewId).createRestResponse();
+    }
 
-	@GetMapping("/faculty/{facultyId}")
-	@RestCall
-	@Auth
-	public ResponseEntity<String> getByFacultyId(@PathVariable String facultyId, ReviewFilter reviewFilter) {
-		return reviewService.getFilteredReviewsByFacultyId(facultyId, reviewFilter).createRestResponse();
-	}
+    @GetMapping("/faculty/{facultyId}")
+    @RestCall
+    @Auth
+    public ResponseEntity<String> getByFacultyId(@PathVariable String facultyId, ReviewFilter reviewFilter) {
+        return reviewService.getFilteredReviewsByFacultyId(facultyId, reviewFilter).createRestResponse();
+    }
 
-	@GetMapping("/user")
-	@RestCall
-	@Auth
-	@VerifyLoggedIn
-	public ResponseEntity<String> getUserReviews() {
-		return reviewService.getUserReviews().createRestResponse();
-	}
+    @GetMapping("/user")
+    @RestCall
+    @Auth
+    @VerifyLoggedIn
+    public ResponseEntity<String> getUserReviews() {
+        return reviewService.getUserReviews().createRestResponse();
+    }
 
-	@PostMapping("/{facultyId}")
-	@RestCall
-	@Auth
-	@VerifyLoggedIn
-	public ResponseEntity<String> createReview(@PathVariable String facultyId, @RequestBody ReviewDTO reviewDTO) {
-		reviewDTO.setFacultyId(facultyId);
-		return reviewService.createReview(reviewDTO).createRestResponse();
-	}
+    @PostMapping("/{facultyId}")
+    @RestCall
+    @Auth
+    @VerifyLoggedIn
+    public ResponseEntity<String> createReview(@PathVariable String facultyId, @RequestBody ReviewDTO reviewDTO) {
+        reviewDTO.setFacultyId(facultyId);
+        return reviewService.createReview(reviewDTO).createRestResponse();
+    }
 
-	@PutMapping("/{reviewId}")
-	@RestCall
-	@Auth
-	@VerifyLoggedIn
-	public ResponseEntity<String> updateReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
-		reviewDTO.setReviewId(reviewId);
-		return reviewService.updateReview(reviewDTO).createRestResponse();
-	}
+    @PutMapping("/{reviewId}")
+    @RestCall
+    @Auth
+    @VerifyLoggedIn
+    public ResponseEntity<String> updateReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
+        reviewDTO.setReviewId(reviewId);
+        return reviewService.updateReview(reviewDTO).createRestResponse();
+    }
 
-	@PutMapping("/{reviewId}/report")
-	@RestCall
-	@Auth
-	public ResponseEntity<String> reportReview(@PathVariable String reviewId) {
-		return reviewService.reportReview(reviewId).createRestResponse();
-	}
+    @PutMapping("/{reviewId}/reply")
+    @RestCall
+    @Auth
+    @VerifyEntityAdmin
+    public ResponseEntity<String> updateReviewAnswerText(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
+        reviewDTO.setReviewId(reviewId);
+        return reviewService.updateReviewAnswerText(reviewDTO).createRestResponse();
+    }
 
-	@PutMapping("/{reviewId}/upvote")
-	@RestCall
-	@Auth
-	@VerifyLoggedIn
-	public ResponseEntity<String> upvoteReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
-		reviewDTO.setReviewId(reviewId);
-		return reviewService.upvoteReview(reviewDTO).createRestResponse();
-	}
+    @PutMapping("/{reviewId}/report")
+    @RestCall
+    @Auth
+    public ResponseEntity<String> reportReview(@PathVariable String reviewId) {
+        return reviewService.reportReview(reviewId).createRestResponse();
+    }
 
-	@DeleteMapping("/{reviewId}")
-	@VerifyAdmin
-	public ResponseEntity<String> deleteByReviewId(@PathVariable String reviewId) {
-		return reviewService.deleteByReviewId(reviewId).createRestResponse();
-	}
+    @PutMapping("/{reviewId}/upvote")
+    @RestCall
+    @Auth
+    @VerifyLoggedIn
+    public ResponseEntity<String> upvoteReview(@PathVariable String reviewId, @RequestBody ReviewDTO reviewDTO) {
+        reviewDTO.setReviewId(reviewId);
+        return reviewService.upvoteReview(reviewDTO).createRestResponse();
+    }
 
-	@DeleteMapping("/faculty/{facultyId}")
-	@VerifyAdmin
-	public ResponseEntity<String> deleteByFacultyId(@PathVariable String facultyId) {
-		return reviewService.deleteByFacultyId(facultyId).createRestResponse();
-	}
+    @DeleteMapping("/{reviewId}")
+    @VerifyAdmin
+    public ResponseEntity<String> deleteByReviewId(@PathVariable String reviewId) {
+        return reviewService.deleteByReviewId(reviewId).createRestResponse();
+    }
 
-	@DeleteMapping
-	@VerifyAdmin
-	public ResponseEntity<String> deleteAllReviews() {
-		return reviewService.deleteAllReviews().createRestResponse();
-	}
+    @DeleteMapping("/faculty/{facultyId}")
+    @VerifyAdmin
+    public ResponseEntity<String> deleteByFacultyId(@PathVariable String facultyId) {
+        return reviewService.deleteByFacultyId(facultyId).createRestResponse();
+    }
+
+    @DeleteMapping
+    @VerifyAdmin
+    public ResponseEntity<String> deleteAllReviews() {
+        return reviewService.deleteAllReviews().createRestResponse();
+    }
 
 }

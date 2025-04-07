@@ -1,580 +1,650 @@
 package com.app.studentromania.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.data.couchbase.core.mapping.Document;
-
 import com.app.studentromania.enumtype.DocTypeEnum;
 import com.couchbase.client.java.repository.annotation.Field;
+import org.springframework.data.couchbase.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Document
 public class Faculty extends ParentEntity {
 
-	public Faculty() {
-		super(DocTypeEnum.FACULTY);
-	}
+    public Faculty() {
+        super(DocTypeEnum.FACULTY);
+    }
 
-	@Field
-	private String facultyId;
+    @Field
+    private String facultyId;
 
-	@Field
-	private String universityId;
+    @Field
+    private String universityId;
 
-	@Field
-	private String universityName;
+    @Field
+    private String universityName;
 
-	@Field
-	private Integer availablePlacesLicense;
+    @Field
+    private Integer availablePlacesLicense;
 
-	@Field
-	private Integer availablePlacesMaster;
+    @Field
+    private Integer availablePlacesMaster;
 
-	@Field
-	private String facultyAddress;
+    @Field
+    private String facultyAddress;
 
-	@Field
-	private String facultyCity;
+    @Field
+    private String facultyCity;
 
-	@Field
-	private String facultyCover;
+    @Field
+    private String facultyCover;
 
-	@Field
-	private String facultyEmail;
+    @Field
+    private String facultyEmail;
 
-	@Field
-	private String facultyLogo;
+    @Field
+    private String facultyLogo;
 
-	@Field
-	private String facultyName;
+    @Field
+    private String facultyName;
 
-	@Field
-	private String facultyPhone;
+    @Field
+    private String facultyPhone;
 
-	@Field
-	private String facultyShortname;
+    @Field
+    private String facultyShortname;
 
-	@Field
-	private String facultyWebsite;
+    @Field
+    private String facultyWebsite;
 
-	@Field
-	private String facultyDescription;
+    @Field
+    private String facultyDescription;
 
-	@Field
-	private List<FacultyProgram> licensePrograms = new ArrayList<>();
+    @Field
+    private String facultyPresentation;
 
-	/** List of all license facultyProgram domains */
-	@Field
-	private List<String> facultyDomainsLicense = new ArrayList<>();
+    @Field
+    private boolean isSubscribed;
 
-	@Field
-	private List<FacultyProgram> masterPrograms = new ArrayList<>();
+    @Field
+    private List<FacultyProgram> licensePrograms = new ArrayList<>();
 
-	/** List of all master facultyProgram domains */
-	@Field
-	private List<String> facultyDomainsMaster = new ArrayList<>();
+    /**
+     * List of all license facultyProgram domains
+     */
+    @Field
+    private List<String> facultyDomainsLicense = new ArrayList<>();
 
-	/*
-	 * PUBLIC sau PRIVAT. S-ar putea sa nu fie date bune.
-	 */
-	@Field
-	private String facultyType;
+    @Field
+    private List<FacultyProgram> masterPrograms = new ArrayList<>();
 
-	@Field
-	private Integer noOfYears;
+    /**
+     * List of all master facultyProgram domains
+     */
+    @Field
+    private List<String> facultyDomainsMaster = new ArrayList<>();
 
-	/** List of all license facultyProgram budget places */
-	@Field
-	private Integer budgetPlacesLicense;
+    /*
+     * PUBLIC sau PRIVAT. S-ar putea sa nu fie date bune.
+     */
+    @Field
+    private String facultyType;
 
-	/** List of all license facultyProgram tax places */
-	@Field
-	private Integer taxPlacesLicense;
+    @Field
+    private Integer noOfYears;
 
-	/** List of all master facultyProgram budget places */
-	@Field
-	private Integer budgetPlacesMaster;
+    /**
+     * List of all license facultyProgram budget places
+     */
+    @Field
+    private Integer budgetPlacesLicense;
 
-	/** List of all master facultyProgram tax places */
-	@Field
-	private Integer taxPlacesMaster;
+    /**
+     * List of all license facultyProgram tax places
+     */
+    @Field
+    private Integer taxPlacesLicense;
 
-	/** Number of license students */
-	@Field
-	private Integer enrolledStudentsLicence;
+    /**
+     * List of all master facultyProgram budget places
+     */
+    @Field
+    private Integer budgetPlacesMaster;
 
-	/** Number of master students */
-	@Field
-	private Integer enrolledStudentsMaster;
+    /**
+     * List of all master facultyProgram tax places
+     */
+    @Field
+    private Integer taxPlacesMaster;
 
-	@Field
-	private Integer noOfProfessors;
+    /**
+     * Number of license students
+     */
+    @Field
+    private Integer enrolledStudentsLicence;
 
-	@Field
-	private Integer noOfStudentsPerProfessor;
+    /**
+     * Number of master students
+     */
+    @Field
+    private Integer enrolledStudentsMaster;
 
-	@Field
-	private String accreditation;
+    @Field
+    private Integer noOfProfessors;
 
-	/** Average rating */
+    @Field
+    private Integer noOfStudentsPerProfessor;
+
+    @Field
+    private String accreditation;
+
+    /**
+     * Average rating
+     */
 //	@Formula("(select ifnull(avg(r.general_rating), 0) from Review r where r.faculty_id = faculty_id)")
 //	@Transient
-	@Field
-	private Double avgRating;
+    @Field
+    private Double avgRating;
 
-	/** Number of reviews */
+    /**
+     * Number of reviews
+     */
 //	@Formula("(select count(r.review_id) from Review r where r.faculty_id = faculty_id)")
 //	@Transient
-	@Field
-	private Integer countRev;
+    @Field
+    private Integer countRev;
 
-	/** Average difficulty */
+    /**
+     * Average difficulty
+     */
 //	@Formula("(select ifnull(avg(r.difficulty), 0) from Review r where r.faculty_id = faculty_id)")
 //	@Transient
-	@Field
-	private Double avgDifficulty;
+    @Field
+    private Double avgDifficulty;
 
-	/** Percentage of users who would recommend the faculty */
+    /**
+     * Percentage of users who would recommend the faculty
+     */
 //	@Formula("(select (count(CASE WHEN r.would_recommend = 1 THEN 1 END) / count(*)) * 100 from Review r where r.faculty_id = faculty_id)")
 //	@Transient
-	@Field
-	private Integer percentageWouldRecommend;
+    @Field
+    private Integer percentageWouldRecommend;
+
+    /**
+     * Number of 5 star ratings
+     */
+    @Field
+    private Integer countRev5Stars;
+
+    /**
+     * Number of 4 star ratings
+     */
+    @Field
+    private Integer countRev4Stars;
+
+    /**
+     * Number of 3 star ratings
+     */
+    @Field
+    private Integer countRev3Stars;
+
+    /**
+     * Number of 2 star ratings
+     */
+    @Field
+    private Integer countRev2Stars;
+
+    /**
+     * Number of 1 star ratings
+     */
+    @Field
+    private Integer countRev1Star;
+
+    /**
+     * Average rating for job prospects
+     */
+    @Field
+    private Double avgRatingJobProspects;
+
+    /**
+     * Average rating for courses and lectures
+     */
+    @Field
+    private Double avgRatingCoursesAndLecturers;
+
+    /**
+     * Average rating for student organisations
+     */
+    @Field
+    private Double avgRatingStudentOrganisations;
+
+    /**
+     * Average rating for accommodation (student dorms or other rent places)
+     */
+    @Field
+    private Double avgRatingAccomodation;
+
+    /**
+     * Average rating for faculty facilities
+     */
+    @Field
+    private Double avgRatingFacultyFacilities;
+
+    /**
+     * Average rating for student support (students or professors)
+     */
+    @Field
+    private Double avgRatingStudentSupport;
+
+    /**
+     * Average rating for study/free time balance
+     */
+    @Field
+    private Double avgRatingTimeBalance;
+
+    @Field
+    private List<String> companyIds = new ArrayList<>();
+
+    @Field
+    private int viewsCount;
+
+    public String getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(String facultyId) {
+        this.facultyId = facultyId;
+    }
+
+    public String getUniversityId() {
+        return universityId;
+    }
+
+    public void setUniversityId(String universityId) {
+        this.universityId = universityId;
+    }
+
+    public String getUniversityName() {
+        return universityName;
+    }
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
+    }
 
-	/** Number of 5 star ratings */
-	@Field
-	private Integer countRev5Stars;
+    public Integer getAvailablePlacesLicense() {
+        return availablePlacesLicense;
+    }
 
-	/** Number of 4 star ratings */
-	@Field
-	private Integer countRev4Stars;
+    public void setAvailablePlacesLicense(Integer availablePlacesLicense) {
+        this.availablePlacesLicense = availablePlacesLicense;
+    }
 
-	/** Number of 3 star ratings */
-	@Field
-	private Integer countRev3Stars;
+    public Integer getAvailablePlacesMaster() {
+        return availablePlacesMaster;
+    }
 
-	/** Number of 2 star ratings */
-	@Field
-	private Integer countRev2Stars;
+    public void setAvailablePlacesMaster(Integer availablePlacesMaster) {
+        this.availablePlacesMaster = availablePlacesMaster;
+    }
 
-	/** Number of 1 star ratings */
-	@Field
-	private Integer countRev1Star;
+    public String getFacultyAddress() {
+        return facultyAddress;
+    }
 
-	/** Average rating for job prospects */
-	@Field
-	private Double avgRatingJobProspects;
+    public void setFacultyAddress(String facultyAddress) {
+        this.facultyAddress = facultyAddress;
+    }
 
-	/** Average rating for courses and lectures */
-	@Field
-	private Double avgRatingCoursesAndLecturers;
+    public String getFacultyCity() {
+        return facultyCity;
+    }
 
-	/** Average rating for student organisations */
-	@Field
-	private Double avgRatingStudentOrganisations;
+    public void setFacultyCity(String facultyCity) {
+        this.facultyCity = facultyCity;
+    }
 
-	/** Average rating for accommodation (student dorms or other rent places) */
-	@Field
-	private Double avgRatingAccomodation;
+    public String getFacultyCover() {
+        return facultyCover;
+    }
 
-	/** Average rating for faculty facilities */
-	@Field
-	private Double avgRatingFacultyFacilities;
+    public void setFacultyCover(String facultyCover) {
+        this.facultyCover = facultyCover;
+    }
 
-	/** Average rating for student support (students or professors) */
-	@Field
-	private Double avgRatingStudentSupport;
+    public String getFacultyEmail() {
+        return facultyEmail;
+    }
 
-	/** Average rating for study/free time balance */
-	@Field
-	private Double avgRatingTimeBalance;
+    public void setFacultyEmail(String facultyEmail) {
+        this.facultyEmail = facultyEmail;
+    }
 
-	@Field
-	private List<String> companyIds = new ArrayList<>();
+    public String getFacultyLogo() {
+        return facultyLogo;
+    }
 
-	@Field
-	private int viewsCount;
+    public void setFacultyLogo(String facultyLogo) {
+        this.facultyLogo = facultyLogo;
+    }
 
-	public String getFacultyId() {
-		return facultyId;
-	}
+    public String getFacultyName() {
+        return facultyName;
+    }
 
-	public void setFacultyId(String facultyId) {
-		this.facultyId = facultyId;
-	}
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
+    }
 
-	public String getUniversityId() {
-		return universityId;
-	}
+    public String getFacultyPhone() {
+        return facultyPhone;
+    }
 
-	public void setUniversityId(String universityId) {
-		this.universityId = universityId;
-	}
+    public void setFacultyPhone(String facultyPhone) {
+        this.facultyPhone = facultyPhone;
+    }
 
-	public String getUniversityName() {
-		return universityName;
-	}
+    public String getFacultyShortname() {
+        return facultyShortname;
+    }
 
-	public void setUniversityName(String universityName) {
-		this.universityName = universityName;
-	}
+    public void setFacultyShortname(String facultyShortname) {
+        this.facultyShortname = facultyShortname;
+    }
 
-	public Integer getAvailablePlacesLicense() {
-		return availablePlacesLicense;
-	}
+    public String getFacultyWebsite() {
+        return facultyWebsite;
+    }
 
-	public void setAvailablePlacesLicense(Integer availablePlacesLicense) {
-		this.availablePlacesLicense = availablePlacesLicense;
-	}
+    public void setFacultyWebsite(String facultyWebsite) {
+        this.facultyWebsite = facultyWebsite;
+    }
 
-	public Integer getAvailablePlacesMaster() {
-		return availablePlacesMaster;
-	}
+    public String getFacultyDescription() {
+        return facultyDescription;
+    }
 
-	public void setAvailablePlacesMaster(Integer availablePlacesMaster) {
-		this.availablePlacesMaster = availablePlacesMaster;
-	}
+    public void setFacultyDescription(String facultyDescription) {
+        this.facultyDescription = facultyDescription;
+    }
 
-	public String getFacultyAddress() {
-		return facultyAddress;
-	}
+    public String getFacultyPresentation() {
+        return facultyPresentation;
+    }
 
-	public void setFacultyAddress(String facultyAddress) {
-		this.facultyAddress = facultyAddress;
-	}
+    public void setFacultyPresentation(String facultyPresentation) {
+        this.facultyPresentation = facultyPresentation;
+    }
 
-	public String getFacultyCity() {
-		return facultyCity;
-	}
+    public boolean isSubscribed() {
+        return isSubscribed;
+    }
 
-	public void setFacultyCity(String facultyCity) {
-		this.facultyCity = facultyCity;
-	}
+    public void setSubscribed(boolean subscribed) {
+        isSubscribed = subscribed;
+    }
 
-	public String getFacultyCover() {
-		return facultyCover;
-	}
+    public List<FacultyProgram> getLicensePrograms() {
+        return licensePrograms;
+    }
 
-	public void setFacultyCover(String facultyCover) {
-		this.facultyCover = facultyCover;
-	}
+    public void setLicensePrograms(List<FacultyProgram> licensePrograms) {
+        this.licensePrograms = licensePrograms;
+    }
 
-	public String getFacultyEmail() {
-		return facultyEmail;
-	}
+    public List<String> getFacultyDomainsLicense() {
+        return facultyDomainsLicense;
+    }
 
-	public void setFacultyEmail(String facultyEmail) {
-		this.facultyEmail = facultyEmail;
-	}
+    public void setFacultyDomainsLicense(List<String> facultyDomainsLicense) {
+        this.facultyDomainsLicense = facultyDomainsLicense;
+    }
 
-	public String getFacultyLogo() {
-		return facultyLogo;
-	}
+    public List<FacultyProgram> getMasterPrograms() {
+        return masterPrograms;
+    }
 
-	public void setFacultyLogo(String facultyLogo) {
-		this.facultyLogo = facultyLogo;
-	}
+    public void setMasterPrograms(List<FacultyProgram> masterPrograms) {
+        this.masterPrograms = masterPrograms;
+    }
 
-	public String getFacultyName() {
-		return facultyName;
-	}
+    public List<String> getFacultyDomainsMaster() {
+        return facultyDomainsMaster;
+    }
 
-	public void setFacultyName(String facultyName) {
-		this.facultyName = facultyName;
-	}
+    public void setFacultyDomainsMaster(List<String> facultyDomainsMaster) {
+        this.facultyDomainsMaster = facultyDomainsMaster;
+    }
 
-	public String getFacultyPhone() {
-		return facultyPhone;
-	}
+    public String getFacultyType() {
+        return facultyType;
+    }
 
-	public void setFacultyPhone(String facultyPhone) {
-		this.facultyPhone = facultyPhone;
-	}
+    public void setFacultyType(String facultyType) {
+        this.facultyType = facultyType;
+    }
 
-	public String getFacultyShortname() {
-		return facultyShortname;
-	}
+    public Integer getNoOfYears() {
+        return noOfYears;
+    }
 
-	public void setFacultyShortname(String facultyShortname) {
-		this.facultyShortname = facultyShortname;
-	}
+    public void setNoOfYears(Integer noOfYears) {
+        this.noOfYears = noOfYears;
+    }
 
-	public String getFacultyWebsite() {
-		return facultyWebsite;
-	}
+    public Integer getBudgetPlacesLicense() {
+        return budgetPlacesLicense;
+    }
 
-	public void setFacultyWebsite(String facultyWebsite) {
-		this.facultyWebsite = facultyWebsite;
-	}
+    public void setBudgetPlacesLicense(Integer budgetPlacesLicense) {
+        this.budgetPlacesLicense = budgetPlacesLicense;
+    }
 
-	public String getFacultyDescription() {
-		return facultyDescription;
-	}
+    public Integer getTaxPlacesLicense() {
+        return taxPlacesLicense;
+    }
 
-	public void setFacultyDescription(String facultyDescription) {
-		this.facultyDescription = facultyDescription;
-	}
+    public void setTaxPlacesLicense(Integer taxPlacesLicense) {
+        this.taxPlacesLicense = taxPlacesLicense;
+    }
 
-	public List<FacultyProgram> getLicensePrograms() {
-		return licensePrograms;
-	}
+    public Integer getBudgetPlacesMaster() {
+        return budgetPlacesMaster;
+    }
 
-	public void setLicensePrograms(List<FacultyProgram> licensePrograms) {
-		this.licensePrograms = licensePrograms;
-	}
+    public void setBudgetPlacesMaster(Integer budgetPlacesMaster) {
+        this.budgetPlacesMaster = budgetPlacesMaster;
+    }
 
-	public List<String> getFacultyDomainsLicense() {
-		return facultyDomainsLicense;
-	}
+    public Integer getTaxPlacesMaster() {
+        return taxPlacesMaster;
+    }
 
-	public void setFacultyDomainsLicense(List<String> facultyDomainsLicense) {
-		this.facultyDomainsLicense = facultyDomainsLicense;
-	}
+    public void setTaxPlacesMaster(Integer taxPlacesMaster) {
+        this.taxPlacesMaster = taxPlacesMaster;
+    }
 
-	public List<FacultyProgram> getMasterPrograms() {
-		return masterPrograms;
-	}
+    public Integer getEnrolledStudentsLicence() {
+        return enrolledStudentsLicence;
+    }
 
-	public void setMasterPrograms(List<FacultyProgram> masterPrograms) {
-		this.masterPrograms = masterPrograms;
-	}
+    public void setEnrolledStudentsLicence(Integer enrolledStudentsLicence) {
+        this.enrolledStudentsLicence = enrolledStudentsLicence;
+    }
 
-	public List<String> getFacultyDomainsMaster() {
-		return facultyDomainsMaster;
-	}
+    public Integer getEnrolledStudentsMaster() {
+        return enrolledStudentsMaster;
+    }
 
-	public void setFacultyDomainsMaster(List<String> facultyDomainsMaster) {
-		this.facultyDomainsMaster = facultyDomainsMaster;
-	}
+    public void setEnrolledStudentsMaster(Integer enrolledStudentsMaster) {
+        this.enrolledStudentsMaster = enrolledStudentsMaster;
+    }
 
-	public String getFacultyType() {
-		return facultyType;
-	}
+    public Integer getNoOfProfessors() {
+        return noOfProfessors;
+    }
 
-	public void setFacultyType(String facultyType) {
-		this.facultyType = facultyType;
-	}
+    public void setNoOfProfessors(Integer noOfProfessors) {
+        this.noOfProfessors = noOfProfessors;
+    }
 
-	public Integer getNoOfYears() {
-		return noOfYears;
-	}
+    public Integer getNoOfStudentsPerProfessor() {
+        return noOfStudentsPerProfessor;
+    }
 
-	public void setNoOfYears(Integer noOfYears) {
-		this.noOfYears = noOfYears;
-	}
+    public void setNoOfStudentsPerProfessor(Integer noOfStudentsPerProfessor) {
+        this.noOfStudentsPerProfessor = noOfStudentsPerProfessor;
+    }
 
-	public Integer getBudgetPlacesLicense() {
-		return budgetPlacesLicense;
-	}
+    public String getAccreditation() {
+        return accreditation;
+    }
 
-	public void setBudgetPlacesLicense(Integer budgetPlacesLicense) {
-		this.budgetPlacesLicense = budgetPlacesLicense;
-	}
+    public void setAccreditation(String accreditation) {
+        this.accreditation = accreditation;
+    }
 
-	public Integer getTaxPlacesLicense() {
-		return taxPlacesLicense;
-	}
+    public Double getAvgRating() {
+        return avgRating;
+    }
 
-	public void setTaxPlacesLicense(Integer taxPlacesLicense) {
-		this.taxPlacesLicense = taxPlacesLicense;
-	}
+    public void setAvgRating(Double avgRating) {
+        this.avgRating = avgRating;
+    }
 
-	public Integer getBudgetPlacesMaster() {
-		return budgetPlacesMaster;
-	}
+    public Integer getCountRev() {
+        return countRev;
+    }
 
-	public void setBudgetPlacesMaster(Integer budgetPlacesMaster) {
-		this.budgetPlacesMaster = budgetPlacesMaster;
-	}
+    public void setCountRev(Integer countRev) {
+        this.countRev = countRev;
+    }
 
-	public Integer getTaxPlacesMaster() {
-		return taxPlacesMaster;
-	}
+    public Double getAvgDifficulty() {
+        return avgDifficulty;
+    }
 
-	public void setTaxPlacesMaster(Integer taxPlacesMaster) {
-		this.taxPlacesMaster = taxPlacesMaster;
-	}
+    public void setAvgDifficulty(Double avgDifficulty) {
+        this.avgDifficulty = avgDifficulty;
+    }
 
-	public Integer getEnrolledStudentsLicence() {
-		return enrolledStudentsLicence;
-	}
+    public Integer getPercentageWouldRecommend() {
+        return percentageWouldRecommend;
+    }
 
-	public void setEnrolledStudentsLicence(Integer enrolledStudentsLicence) {
-		this.enrolledStudentsLicence = enrolledStudentsLicence;
-	}
+    public void setPercentageWouldRecommend(Integer percentageWouldRecommend) {
+        this.percentageWouldRecommend = percentageWouldRecommend;
+    }
 
-	public Integer getEnrolledStudentsMaster() {
-		return enrolledStudentsMaster;
-	}
+    public Integer getCountRev5Stars() {
+        return countRev5Stars;
+    }
 
-	public void setEnrolledStudentsMaster(Integer enrolledStudentsMaster) {
-		this.enrolledStudentsMaster = enrolledStudentsMaster;
-	}
+    public void setCountRev5Stars(Integer countRev5Stars) {
+        this.countRev5Stars = countRev5Stars;
+    }
 
-	public Integer getNoOfProfessors() {
-		return noOfProfessors;
-	}
+    public Integer getCountRev4Stars() {
+        return countRev4Stars;
+    }
 
-	public void setNoOfProfessors(Integer noOfProfessors) {
-		this.noOfProfessors = noOfProfessors;
-	}
+    public void setCountRev4Stars(Integer countRev4Stars) {
+        this.countRev4Stars = countRev4Stars;
+    }
 
-	public Integer getNoOfStudentsPerProfessor() {
-		return noOfStudentsPerProfessor;
-	}
+    public Integer getCountRev3Stars() {
+        return countRev3Stars;
+    }
 
-	public void setNoOfStudentsPerProfessor(Integer noOfStudentsPerProfessor) {
-		this.noOfStudentsPerProfessor = noOfStudentsPerProfessor;
-	}
+    public void setCountRev3Stars(Integer countRev3Stars) {
+        this.countRev3Stars = countRev3Stars;
+    }
 
-	public String getAccreditation() {
-		return accreditation;
-	}
+    public Integer getCountRev2Stars() {
+        return countRev2Stars;
+    }
 
-	public void setAccreditation(String accreditation) {
-		this.accreditation = accreditation;
-	}
+    public void setCountRev2Stars(Integer countRev2Stars) {
+        this.countRev2Stars = countRev2Stars;
+    }
 
-	public Double getAvgRating() {
-		return avgRating;
-	}
+    public Integer getCountRev1Star() {
+        return countRev1Star;
+    }
 
-	public void setAvgRating(Double avgRating) {
-		this.avgRating = avgRating;
-	}
+    public void setCountRev1Star(Integer countRev1Star) {
+        this.countRev1Star = countRev1Star;
+    }
 
-	public Integer getCountRev() {
-		return countRev;
-	}
+    public Double getAvgRatingJobProspects() {
+        return avgRatingJobProspects;
+    }
 
-	public void setCountRev(Integer countRev) {
-		this.countRev = countRev;
-	}
+    public void setAvgRatingJobProspects(Double avgRatingJobProspects) {
+        this.avgRatingJobProspects = avgRatingJobProspects;
+    }
 
-	public Double getAvgDifficulty() {
-		return avgDifficulty;
-	}
+    public Double getAvgRatingCoursesAndLecturers() {
+        return avgRatingCoursesAndLecturers;
+    }
 
-	public void setAvgDifficulty(Double avgDifficulty) {
-		this.avgDifficulty = avgDifficulty;
-	}
+    public void setAvgRatingCoursesAndLecturers(Double avgRatingCoursesAndLecturers) {
+        this.avgRatingCoursesAndLecturers = avgRatingCoursesAndLecturers;
+    }
 
-	public Integer getPercentageWouldRecommend() {
-		return percentageWouldRecommend;
-	}
+    public Double getAvgRatingStudentOrganisations() {
+        return avgRatingStudentOrganisations;
+    }
 
-	public void setPercentageWouldRecommend(Integer percentageWouldRecommend) {
-		this.percentageWouldRecommend = percentageWouldRecommend;
-	}
+    public void setAvgRatingStudentOrganisations(Double avgRatingStudentOrganisations) {
+        this.avgRatingStudentOrganisations = avgRatingStudentOrganisations;
+    }
 
-	public Integer getCountRev5Stars() {
-		return countRev5Stars;
-	}
+    public Double getAvgRatingAccomodation() {
+        return avgRatingAccomodation;
+    }
 
-	public void setCountRev5Stars(Integer countRev5Stars) {
-		this.countRev5Stars = countRev5Stars;
-	}
+    public void setAvgRatingAccomodation(Double avgRatingAccomodation) {
+        this.avgRatingAccomodation = avgRatingAccomodation;
+    }
 
-	public Integer getCountRev4Stars() {
-		return countRev4Stars;
-	}
-
-	public void setCountRev4Stars(Integer countRev4Stars) {
-		this.countRev4Stars = countRev4Stars;
-	}
-
-	public Integer getCountRev3Stars() {
-		return countRev3Stars;
-	}
-
-	public void setCountRev3Stars(Integer countRev3Stars) {
-		this.countRev3Stars = countRev3Stars;
-	}
-
-	public Integer getCountRev2Stars() {
-		return countRev2Stars;
-	}
-
-	public void setCountRev2Stars(Integer countRev2Stars) {
-		this.countRev2Stars = countRev2Stars;
-	}
-
-	public Integer getCountRev1Star() {
-		return countRev1Star;
-	}
-
-	public void setCountRev1Star(Integer countRev1Star) {
-		this.countRev1Star = countRev1Star;
-	}
-
-	public Double getAvgRatingJobProspects() {
-		return avgRatingJobProspects;
-	}
-
-	public void setAvgRatingJobProspects(Double avgRatingJobProspects) {
-		this.avgRatingJobProspects = avgRatingJobProspects;
-	}
-
-	public Double getAvgRatingCoursesAndLecturers() {
-		return avgRatingCoursesAndLecturers;
-	}
-
-	public void setAvgRatingCoursesAndLecturers(Double avgRatingCoursesAndLecturers) {
-		this.avgRatingCoursesAndLecturers = avgRatingCoursesAndLecturers;
-	}
-
-	public Double getAvgRatingStudentOrganisations() {
-		return avgRatingStudentOrganisations;
-	}
-
-	public void setAvgRatingStudentOrganisations(Double avgRatingStudentOrganisations) {
-		this.avgRatingStudentOrganisations = avgRatingStudentOrganisations;
-	}
-
-	public Double getAvgRatingAccomodation() {
-		return avgRatingAccomodation;
-	}
-
-	public void setAvgRatingAccomodation(Double avgRatingAccomodation) {
-		this.avgRatingAccomodation = avgRatingAccomodation;
-	}
-
-	public Double getAvgRatingFacultyFacilities() {
-		return avgRatingFacultyFacilities;
-	}
-
-	public void setAvgRatingFacultyFacilities(Double avgRatingFacultyFacilities) {
-		this.avgRatingFacultyFacilities = avgRatingFacultyFacilities;
-	}
-
-	public Double getAvgRatingStudentSupport() {
-		return avgRatingStudentSupport;
-	}
-
-	public void setAvgRatingStudentSupport(Double avgRatingStudentSupport) {
-		this.avgRatingStudentSupport = avgRatingStudentSupport;
-	}
-
-	public Double getAvgRatingTimeBalance() {
-		return avgRatingTimeBalance;
-	}
-
-	public void setAvgRatingTimeBalance(Double avgRatingTimeBalance) {
-		this.avgRatingTimeBalance = avgRatingTimeBalance;
-	}
-
-	public List<String> getCompanyIds() {
-		return companyIds;
-	}
-
-	public void setCompanyIds(List<String> companyIds) {
-		this.companyIds = companyIds;
-	}
-	public int getViewsCount() {
-		return viewsCount;
-	}
-
-	public void setViewsCount(int viewsCount) {
-		this.viewsCount = viewsCount;
-	}
+    public Double getAvgRatingFacultyFacilities() {
+        return avgRatingFacultyFacilities;
+    }
+
+    public void setAvgRatingFacultyFacilities(Double avgRatingFacultyFacilities) {
+        this.avgRatingFacultyFacilities = avgRatingFacultyFacilities;
+    }
+
+    public Double getAvgRatingStudentSupport() {
+        return avgRatingStudentSupport;
+    }
+
+    public void setAvgRatingStudentSupport(Double avgRatingStudentSupport) {
+        this.avgRatingStudentSupport = avgRatingStudentSupport;
+    }
+
+    public Double getAvgRatingTimeBalance() {
+        return avgRatingTimeBalance;
+    }
+
+    public void setAvgRatingTimeBalance(Double avgRatingTimeBalance) {
+        this.avgRatingTimeBalance = avgRatingTimeBalance;
+    }
+
+    public List<String> getCompanyIds() {
+        return companyIds;
+    }
+
+    public void setCompanyIds(List<String> companyIds) {
+        this.companyIds = companyIds;
+    }
+
+    public int getViewsCount() {
+        return viewsCount;
+    }
+
+    public void setViewsCount(int viewsCount) {
+        this.viewsCount = viewsCount;
+    }
 
 }

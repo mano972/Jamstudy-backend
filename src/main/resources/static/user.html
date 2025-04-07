@@ -1,149 +1,170 @@
 <!doctype html>
 <html lang="ro">
 <head>
-	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="./assets/img/graduation_cap_small.png">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	
-	<title>Unistart - User</title>
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/png" href="./assets/img/graduation_cap_small.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
-    
-    <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet" />
+    <title>Unistart - User</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+    <meta name="viewport" content="width=device-width"/>
+
+    <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet"/>
     <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
-    <link href="./assets/css/demo.css" rel="stylesheet" />
-    <link href="./assets/css/examples.css" rel="stylesheet" />
-	
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-W7XYVR8RJ0"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
+    <link href="./assets/css/demo.css" rel="stylesheet"/>
+    <link href="./assets/css/examples.css" rel="stylesheet"/>
 
-	  gtag('config', 'G-W7XYVR8RJ0');
-	</script>
-        
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W7XYVR8RJ0"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-W7XYVR8RJ0');
+    </script>
+
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> 
-	<script src="https://kit.fontawesome.com/6f635d9dad.js" crossorigin="anonymous"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6f635d9dad.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
-	<nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
-		<!-- populated dynamically -->
-	</nav>
-    
-    
-     <div id="wrapper" class="wrapper loading">
-		<div class="main">
-			<div class="section section-white">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="user-profile-card-fixed col-md-8 col-md-offset-2">
-							<div class="card">
-								<div id="content-user-profile-top" class="content">
-									<div class="row">
-										<div class="col-md-12 col-md-offset-0">
-											<div id="user-profile-top" class="user-profile-text text-center">
-												<!-- populated dynamically -->
-											</div>
-										</div>
-									</div>
-								</div>
-								<div id="content-user-profile" class="content">
-									<div class="row">
-										<div class="col-md-offset-1 col-md-10 col-xs-12">
-											<div id="user-profile-info" class="row">
-												<div class="text-center">
-													<div id="loading" class='uil-reload-css reload-background' style=''><div></div></div>
-												</div>
-												<!-- populated dynamically -->
-											</div>
-											<div id="profile-notifications" class="row">
-												<div class="col-md-6 col-xs-12 user-profile-form-input" style="margin-top: 30px;">
-													<label class="checkbox checkbox-azure checkbox-big" for="newsletter-check"><input type="checkbox" name="newsletter" value="" id="newsletter-check" data-toggle="checkbox">Abonare la newsletter</label>
-												</div>
-											</div>
-											<div class="row">
-												<div id="save-profile-area" class="col-md-3 col-md-offset-9" style="margin-top: 10px; display: none">
-													<button id="save-profile-button" class="btn btn-block btn-success btn-fill" onclick="saveUserProfileInfo(this)">Salvează</button>
-												</div>
-											</div>
+<nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
+    <!-- populated dynamically -->
+</nav>
 
 
-											<div id="saved-faculties" class="row">
-													<!-- populated dynamically -->
-											</div>
-											
-											<div id="user-reviews" class="row">
-												<!-- populated dynamically -->									
-											</div>
+<div id="wrapper" class="wrapper loading">
+    <div class="main">
+        <div class="section section-white">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="user-profile-card-fixed col-md-8 col-md-offset-2">
+                        <div class="card">
+                            <div id="content-user-profile-top" class="content">
+                                <div class="row">
+                                    <div class="col-md-12 col-md-offset-0">
+                                        <div id="user-profile-top" class="user-profile-text text-center">
+                                            <!-- populated dynamically -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="content-user-profile" class="content">
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10 col-xs-12">
+                                        <div id="user-profile-info" class="row">
+                                            <div class="text-center">
+                                                <div id="loading" class='uil-reload-css reload-background' style=''>
+                                                    <div></div>
+                                                </div>
+                                            </div>
+                                            <!-- populated dynamically -->
+                                        </div>
+                                        <div id="profile-notifications" class="row">
+                                            <div class="col-md-6 col-xs-12 user-profile-form-input"
+                                                 style="margin-top: 30px;">
+                                                <label class="checkbox checkbox-azure checkbox-big"
+                                                       for="newsletter-check"><input type="checkbox" name="newsletter"
+                                                                                     value="" id="newsletter-check"
+                                                                                     data-toggle="checkbox"
+                                                                                     data-i18n-key="user-profile-subscribe-text">Abonare
+                                                    la newsletter</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div id="save-profile-area" class="col-md-3 col-md-offset-9"
+                                                 style="margin-top: 10px; display: none">
+                                                <button id="save-profile-button"
+                                                        class="btn btn-block btn-success btn-fill"
+                                                        onclick="saveUserProfileInfo(this)" data-i18n-key="save">
+                                                    Salvează
+                                                </button>
+                                            </div>
+                                        </div>
 
-											<div id="saved-companies" class="row">
-												<!-- populated dynamically -->
-											</div>
-											
-											<div class="row">
-												<div class="col-md-4 col-md-offset-4" style="margin-top: 30px;">
-													<button id="logout-profile-button" class="btn btn-block btn-danger btn-fill" onclick="logout()">Iesi din cont</button>
-												</div>
-											</div>
 
-											
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>  
-				</div>
-			</div>
-			
-			<div id="recent-faculties-section" class="section-white">
-				<div class="container-fluid">		
-					<div class="row">
-						<div id="recently-viewed-faculties" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-xs-offset-0">
-							<!-- populated dynamically -->
-						</div>
-					</div>
-				</div>		
-			</div>
-		</div>
-		<div class="floating-button">
-			<a href="./contact.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
-		</div>
-	</div>
+                                        <div id="saved-faculties" class="row">
+                                            <!-- populated dynamically -->
+                                        </div>
 
-	<footer class="footer" id="footer">
-		<!-- populated dynamically -->
-	</footer>
+                                        <div id="user-reviews" class="row">
+                                            <!-- populated dynamically -->
+                                        </div>
 
-			<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
-			  <div class="modal-dialog">
-				<div class="modal-content">
-				  <div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<div id="modal-header-text">
-						<i class="far fa-envelope fa-2x"></i>
-					</div>
-				  </div>
-				  <div id="modal-text" class="modal-body modal-info text-center">
-					&nbsp;
-				  </div>
-				  <div id="general-modal-footer" class="modal-footer">
-					   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
-				  </div>
-				</div>
-			  </div>
-			</div>
-			
-			<div id="main-loading" class="text-center">
-				<div id="loading" class='uil-reload-css reload-background'><div></div></div>
-			</div>	
+                                        <div id="saved-companies" class="row">
+                                            <!-- populated dynamically -->
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 col-md-offset-4" style="margin-top: 30px;">
+                                                <button id="logout-profile-button"
+                                                        class="btn btn-block btn-danger btn-fill" onclick="logout()"
+                                                        data-i18n-key="user-profile-sign-out">Iesi din cont
+                                                </button>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="recent-faculties-section" class="section-white">
+            <div class="container-fluid">
+                <div class="row">
+                    <div id="recently-viewed-faculties"
+                         class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-xs-offset-0">
+                        <!-- populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="floating-button">
+        <a href="./contact.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
+    </div>
+</div>
+
+<footer class="footer" id="footer">
+    <!-- populated dynamically -->
+</footer>
+
+<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     style="z-index: 1051">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div id="modal-header-text">
+                    <i class="far fa-envelope fa-2x"></i>
+                </div>
+            </div>
+            <div id="modal-text" class="modal-body modal-info text-center">
+                &nbsp;
+            </div>
+            <div id="general-modal-footer" class="modal-footer">
+                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="main-loading" class="text-center">
+    <div id="loading" class='uil-reload-css reload-background'>
+        <div></div>
+    </div>
+</div>
 
 </body>
 
@@ -166,1169 +187,1169 @@
 
 <script type="text/javascript">
 
-const backendUrlRoot = "https://unistart.ro/Jamstudy";
-
-$wrapper = $("#wrapper");
-$(document).on({
-    <!-- ajaxStart: function() { $wrapper.addClass("loading");    }, -->
-    ajaxStop: function() { 
-		$wrapper.removeClass("loading");
-		document.getElementById("main-loading").style.display = "none";
-	}    
-});
-
-$().ready(function(){
-	getPageHeader();
-	getPageFooter();
-	redirectIfNotLoggedIn();
-	myAccountText();
-	loadUser();
-	getUserProfileInfo();
-	getUserReviews();
-	getRecentlyViewedFaculties();
-});
-
-window.addEventListener('beforeunload', function(e) {
-  if(document.getElementById('save-profile-area').style.display == "inline") {
-    //following two lines will cause the browser to ask the user if they
-    //want to leave. The text of this dialog is controlled by the browser.
-    e.preventDefault(); //per the standard
-    e.returnValue = ''; //required for Chrome
-  }
-  //else: user is allowed to leave without a warning dialog
-});
-
-function getUserProfileInfo() {
-	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile");
-	
-	$.ajax({
-	  url: backendUrl,
-	  type: "GET",
-	  success: function(response) {
-		if (response.control.errorCode === 0) {
-		
-			var userResponse = response.result;
-			loadUserProfileInfoContent(userResponse);
-			checkProfileComplete();
-
-		} else {
-			console.log(response.control.errorDescription);
-		}
-
-	  },
-	  error: function(error) {
-		checkLoggedInUser(error.status)
-	  },
-	  complete: function (data) {
-		<!-- document.getElementById("loading").style.display = "none"; -->
-	  }
-	});
-	
-}
-
-function loadUserProfileInfoContent(userResponse) {
-
-	var firstName = userResponse.firstName ? userResponse.firstName : "";
-	var lastName = userResponse.lastName ? userResponse.lastName : "";
-	var email = userResponse.email ? userResponse.email : "";
-	var location = userResponse.location ? userResponse.location : "";
-	var birthDate = userResponse.birthDate ? userResponse.birthDate : "";
-	var formattedBirthDate = userResponse.formattedBirthDate ? userResponse.formattedBirthDate : "";
-	var userWorking = userResponse.isUserWorking;
-	var userStatus = userResponse.userStatus;
-	var userYear = userResponse.userYear;
-	var subscribeToNewsletter = userResponse.subscribeToNewsletter;
-	var userDomainInterest = userResponse.userDomainInterest;
-	var userCityInterest = userResponse.userCityInterest;
-	
-	var userSavedFaculties = userResponse.favoriteFaculties;
-	getSavedFaculties(userSavedFaculties);
-	var companyIds = userResponse.favoriteCompanies;
-	getSavedCompanies(companyIds);
-	
-	var userProfileHeaderString = 
-												'<div class="col-xs-12 user-profile-header">'
-+'													<h4 class="text-center"><strong>Profil si informatii</strong></h4>'
-+'													<hr>'
-+'												</div>';
-	document.getElementById("user-profile-info").innerHTML = userProfileHeaderString;
-	
-	var userProfileString = (
-'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
-+'													<label>Nume</label> '
-+'													<input id="profile-name" type="text" class="form-control" value="' + lastName + '" placeholder="Nume" maxlength="100" spellcheck="false">'
-+'												</div>'
-+'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
-+'													<label>Prenume</label> '
-+'													<input id="profile-first-name" type="text" class="form-control" value="' + firstName + '" placeholder="Prenume" maxlength="100" spellcheck="false">'
-+'												</div>'
-+'												<div class="col-md-12 col-xs-12 user-profile-form-input">'
-+'													<label>Email</label> '
-+'													<input id="profile-email" type="text" class="form-control" value="' + email + '" placeholder="Email" readonly>'
-+'													<a href="./change.html" class="btn btn-simple btn-info">Resetează parola</a>'
-+'												</div>'
-+'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
-+'													<label>Localitate</label> '
-+'													<input id="profile-city" type="text" class="form-control" value="' + location + '" placeholder="Localitate" maxlength="50" spellcheck="false">'
-+'												</div>'
-+'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
-+'													<label>Data nasterii</label> '
-+'													<input id="profile-birth-date" type="date" class="form-control datepicker" value="' + formattedBirthDate + '" placeholder="" maxlength="50">'
-+'												</div>'
-												
-+'												<div id="user-status" class="col-xs-12 user-profile-form-input">		'
-+'													<label>Status</label> 												'
-+'													<div class="radio-toolbar" onchange="showYears(); showUserWork(); showUserDomainInterest(); showUserCityInterest();">'
-+'													 <input type="radio" id="status-pupil" name="status" value="ELEV">'
-+'													  <label for="status-pupil">Elev</label>'
-													  
-+'													  <input type="radio" id="status-student" name="status" value="STUDENT">'
-+'													  <label for="status-student">Student</label>'
-
-+'													  <input type="radio" id="status-master" name="status" value="MASTERAND">'
-+'													  <label for="status-master">Masterand</label>'
-
-+'													  <input type="radio" id="status-alumni" name="status" value="ABSOLVENT">'
-+'													  <label for="status-alumni">Absolvent</label>'
-													  
-+'													  <input type="radio" id="status-drop" name="status" value="DROP-OUT">'
-+'													  <label for="status-drop">M-am retras</label>'
-													  
-+'													  <input type="radio" id="status-other" name="status" value="ALTUL">'
-+'													  <label for="status-other">Altul</label>'
-+'													</div>'
-+'												</div>'
-												
-+'												<div id="user-years" class="col-xs-12 user-profile-form-input" style="display: none">'
-+'													<label>Anul</label> 		'
-+'													<div class="radio-toolbar">'
-+'														<input type="radio" id="year1" name="years" value="Anul 1">'
-+'														<label for="year1">Anul 1</label>'
-
-+'														<input type="radio" id="year2" name="years" value="Anul 2">'
-+'														<label for="year2">Anul 2</label>'
-
-+'														<input type="radio" id="year3" name="years" value="Anul 3">'
-+'														<label for="year3">Anul 3</label>'
-															  
-+'														<input type="radio" id="year4" name="years" value="Anul 4+">'
-+'														<label for="year4">Anul 4+</label>'
-+'													</div>'
-+'												</div>'
-
-+'												<div id="user-work" class="col-xs-12 user-profile-form-input" style="display: none;">'
-+'													<label>Ai reușit să te angajezi, in domeniu, in timpul facultății sau la cel mult 6 luni dupa terminarea ei?</label>'
-+'															<div class="radio-toolbar">'
-+'														 	 <input type="radio" id="work-yes" name="work" value="1">'
-+'														 	 <label for="work-yes">Da</label>'
-
-+'															  <input type="radio" id="work-no" name="work" value="0">'
-+'															  <label for="work-no">Nu</label>'
-
-<!-- +'														 	 <input type="radio" id="work-not-applied" name="work" value="2">' -->
-<!-- +'														 	 <label for="work-not-applied">Nu se aplica</label>' -->
-+'															</div>'
-+'												</div>'
-
-+'												<div id="user-domain-interest" class="col-xs-12 user-profile-form-input" style="display: none">'
-+'													<label>In ce domenii ai fi interesat sa studiezi?</label> 		'
-+'													<div class="checkbox-toolbar">'
-+'														<input type="checkbox" name="domeniu" id="d1" value="Științe Economice"><label for="d1">Științe Economice</label>'
-+'														<input type="checkbox" name="domeniu" id="d2" value="Științe Inginerești"><label for="d2">Științe Inginereşti</label>'
-+'														<input type="checkbox" name="domeniu" id="d3" value="Științe Politice și Comunicare"><label for="d3">Științe Politice și Comunicare</label>'
-+'														<input type="checkbox" name="domeniu" id="d4" value="Științe Umaniste"><label for="d4">Științe Umaniste</label>'
-+'														<input type="checkbox" name="domeniu" id="d5" value="Științe Juridice"><label for="d5">Științe Juridice</label>'
-+'														<input type="checkbox" name="domeniu" id="d6" value="Medicină"><label for="d6">Medicină</label>'
-+'														<input type="checkbox" name="domeniu" id="d7" value="Științe ale Naturii"><label for="d7">Științe ale Naturii</label>'
-+'														<input type="checkbox" name="domeniu" id="d8" value="Arte Arhitectură și Urbanism"><label for="d8">Arte, Arhitectură și Urbanism</label>'
-+'														<input type="checkbox" name="domeniu" id="d9" value="Științe Exacte"><label for="d9">Științe Exacte</label>'
-+'														<input type="checkbox" name="domeniu" id="d10" value="Științe Sociale și Psihologie"><label for="d10">Științe Sociale și Psihologie</label>'
-+'														<input type="checkbox" name="domeniu" id="d11" value="Științe Agricole"><label for="d11">Științe Agricole</label>'
-+'														<input type="checkbox" name="domeniu" id="d12" value="Ştiința Sportului şi Educației Fizice"><label for="d12">Știința Sportului şi Educației Fizice</label>'
-+'														<input type="checkbox" name="domeniu" id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică"><label for="d13">Științe Militare şi de Informații</label>'
-+'														<input type="checkbox" name="domeniu" id="d14" value="Teologie"><label for="d14">Teologie</label>'
-+'													</div>'
-+'												</div>'
-
-+'												<div id="user-city-interest" class="col-xs-12 user-profile-form-input" style="display: none">'
-+'													<label>In ce orase ai fi interesat sa studiezi?</label> 		'
-+'													<div class="checkbox-toolbar">'
-+'														<input type="checkbox" name="oras" id="c1" value="Bucureşti"><label for="c1">Bucureşti</label>'
-+'														<input type="checkbox" name="oras" id="c2" value="Cluj-Napoca; Cluj"><label for="c2">Cluj-Napoca</label>'
-+'														<input type="checkbox" name="oras" id="c3" value="Timişoara; Timiş"><label for="c3">Timişoara</label>'
-+'														<input type="checkbox" name="oras" id="c4" value="Iaşi; Iaşi"><label for="c4">Iaşi</label>'
-+'														<input type="checkbox" name="oras" id="c5" value="Constanţa; Constanţa"><label for="c5">Constanţa</label>'
-+'														<input type="checkbox" name="oras" id="c6" value="Craiova; Dolj"><label for="c6">Craiova</label>'
-+'														<input type="checkbox" name="oras" id="c10" value="Oradea; Bihor"><label for="c10">Oradea</label>'
-+'														<input type="checkbox" name="oras" id="c7" value="Braşov; Braşov"><label for="c7">Braşov</label>'
-+'														<input type="checkbox" name="oras" id="c8" value="Piteşti; Argeş"><label for="c8">Piteşti</label>'
-+'														<input type="checkbox" name="oras" id="c9" value="Târgovişte; Dâmboviţa"><label for="c9">Târgovişte</label>'
-+'														<input type="checkbox" name="oras" id="c11" value="Alba Iulia; Alba"><label for="c11">Alba Iulia</label>'
-+'														<input type="checkbox" name="oras" id="c12" value="Sibiu; Sibiu"><label for="c12">Sibiu</label>'
-+'														<input type="checkbox" name="oras" id="c13" value="Galaţi; Galaţi"><label for="c13">Galaţi</label>'
-+'														<input type="checkbox" name="oras" id="c14" value="Arad; Arad"><label for="c14">Arad</label>'
-+'														<input type="checkbox" name="oras" id="c15" value="Târgu Mureş; Mureş"><label for="c15">Târgu Mureş</label>'
-+'														<input type="checkbox" name="oras" id="c16" value="Suceava; Suceava"><label for="c16">Suceava</label>'
-+'														<input type="checkbox" name="oras" id="c17" value="Alba Iulia; Alba"><label for="c17">Alba Iulia</label>'
-+'													</div>'
-+'												</div>'
-
-
-	);
-	
-	document.getElementById("user-profile-info").innerHTML += userProfileString;
-	
-	
-	switch(userStatus) {
-	case "ELEV":
-		document.getElementById('status-pupil').checked = true;
-		break;
-	case "STUDENT":
-		document.getElementById('status-student').checked = true;
-		break;
-	case "MASTERAND":
-		document.getElementById('status-master').checked = true;
-		break;
-	case "ABSOLVENT":
-		document.getElementById('status-alumni').checked = true;
-		break;
-	case "DROP-OUT":
-		document.getElementById('status-drop').checked = true;
-		break;
-	case "ALTUL":
-		document.getElementById('status-other').checked = true;
-		break;
-	}
-	
-	switch(userYear) {
-	case "Anul 1":
-		document.getElementById('year1').checked = true;
-		break;
-	case "Anul 2":
-		document.getElementById('year2').checked = true;
-		break;
-	case "Anul 3":
-		document.getElementById('year3').checked = true;
-		break;
-	case "Anul 4+":
-		document.getElementById('year4').checked = true;
-		break;
-	}
-	
-	showYears();
-	
-	switch(userWorking) {
-	case true:
-		document.getElementById('work-yes').checked = true;
-		break;
-	case false:
-		document.getElementById('work-no').checked = true;
-		break;
-	<!-- default: -->
-		<!-- document.getElementById('work-not-applied').checked = true; -->
-		<!-- break; -->
-	}
-	
-	showUserWork();
-	
-	if (userDomainInterest) {
-		var i;
-		for (i=0;i < userDomainInterest.length; i++) {
-			var checkboxElements = document.querySelectorAll("input[type='checkbox'][value='" + userDomainInterest + "']");
-			if (checkboxElements && checkboxElements.length > 0) {
-				var domainId = checkboxElements[0].id;
-				$("#" + domainId).prop('checked', true);
-				$("label[for='" + domainId + "']").addClass("checked");
-			}
-		}
-	}
-	if (userCityInterest) {
-		var j;
-		for (j=0;j < userCityInterest.length; j++) {
-			var checkboxElements = document.querySelectorAll("input[type='checkbox'][value='" + userCityInterest + "']");
-			if (checkboxElements && checkboxElements.length > 0) {
-				var cityId = checkboxElements[0].id;
-				$("#" + cityId).prop('checked', true);
-				$("label[for='" + cityId + "']").addClass("checked");
-			}
-		}
-	}
-	
-	showUserDomainInterest();
-	showUserCityInterest();
-	
-	if (subscribeToNewsletter) {
-		$("#newsletter-check").prop('checked', true);
-		$("label[for='newsletter-check']").addClass("checked");
-	} else {
-		$("#newsletter-check").prop('checked', false);
-		$("label[for='newsletter-check']").removeClass("checked");
-	}
-	
-	
-	document.getElementById("profile-name").oninput = function () {
-		document.getElementById('save-profile-area').style.display = "inline";
-	}
-	document.getElementById("profile-first-name").oninput = function () {
-		document.getElementById('save-profile-area').style.display = "inline";
-	}
-	document.getElementById("profile-email").oninput = function () {
-		document.getElementById('save-profile-area').style.display = "inline";
-	}
-	document.getElementById("profile-city").oninput = function () {
-		document.getElementById('save-profile-area').style.display = "inline";
-	}
-	document.getElementById("profile-birth-date").oninput = function () {
-		document.getElementById('save-profile-area').style.display = "inline";
-	}
-	document.getElementById("user-status").oninput = function () {
-		document.getElementById('save-profile-area').style.display = "inline";
-	}
-	document.getElementById("user-years").oninput = function () {
-		document.getElementById('save-profile-area').style.display = "inline";
-	}
-	document.getElementById("user-work").oninput = function () {
-		document.getElementById('save-profile-area').style.display = "inline";
-	}
-	document.getElementById("user-domain-interest").oninput = function () {
-		document.getElementById('save-profile-area').style.display = "inline";
-	}
-	document.getElementById("user-city-interest").oninput = function () {
-		document.getElementById('save-profile-area').style.display = "inline";
-	}
-	$("#newsletter-check").change(function() {
-		document.getElementById('save-profile-area').style.display = "inline";
-	});
-
-}
-
-function checkProfileComplete() {
-	var firstName = document.getElementById("profile-first-name").value;
-	var lastName = document.getElementById("profile-name").value;
-	var location = document.getElementById("profile-city").value;
-	var birthDate = document.getElementById("profile-birth-date").value;
-	var userStatusRadio = document.getElementsByName('status');
-	var userStatus;
-	for (var i = 0, length = userStatusRadio.length; i < length; i++) {
-	  if (userStatusRadio[i].checked) {
-		userStatus = userStatusRadio[i].value;
-		break;
-	  }
-	}
-	
-	var firstNameText = firstName ? (" " + firstName) : "";
-	var userProfileTopString
-	if (!firstName || !lastName || !location || !birthDate || !userStatus) {
-	userProfileTopString = 
-		'											<h3>'
-		+'												Hei' + firstNameText + ', profilul tau este incomplet!'
-		+'											</h3>'
-		+'											<h5>'
-		+'												Ca sa iti putem oferi o experienta personalizata, te rugam sa completezi profilul.'
-		+'											</h5>';
-	} else {
-		userProfileTopString = 
-		'											<h3>'
-		+'												Hei' + firstNameText + ', profilul tau este complet!'
-		+'											</h3>'
-		+'											<h5>'
-		+'												Ne bucuram sa iti putem oferi o experienta personalizata.'
-		+'											</h5>';
-	}
-	
-	document.getElementById("user-profile-top").innerHTML = userProfileTopString;
-}
-
-function saveUserProfileInfo(el) {
-
-	var firstName = document.getElementById("profile-first-name").value ? document.getElementById("profile-first-name").value : "";
-	var lastName = document.getElementById("profile-name").value ? document.getElementById("profile-name").value : "";
-	var loc = document.getElementById("profile-city").value ? document.getElementById("profile-city").value : "";
-	var birthDate = document.getElementById("profile-birth-date").value ? document.getElementById("profile-birth-date").value : null;
-	
-	var userStatusRadio = document.getElementsByName('status');
-	var userStatus;
-	for (var i = 0, length = userStatusRadio.length; i < length; i++) {
-	  if (userStatusRadio[i].checked) {
-		userStatus = userStatusRadio[i].value;
-		break;
-	  }
-	}
-	var yearsRadio = document.getElementsByName('years');
-	var userYear;
-	for (var i = 0, length = yearsRadio.length; i < length; i++) {
-	  if (yearsRadio[i].checked) {
-		userYear = yearsRadio[i].value;
-		break;
-	  }
-	}
-	
-	var userWorkingRadio = document.getElementsByName('work');
-	var userWorking;
-	for (var i = 0, length = userWorkingRadio.length; i < length; i++) {
-	  if (userWorkingRadio[i].checked && userWorkingRadio[i].value != 2) {
-		userWorking = userWorkingRadio[i].value;
-		break;
-	  }
-	}
-	
-	var userDomainInterest = []
-	var checkboxesDomains = document.querySelectorAll('input[name=domeniu]:checked');
-	for (var i = 0; i < checkboxesDomains.length; i++) {
-		userDomainInterest.push(checkboxesDomains[i].value)
-	}
-	var userCityInterest = []
-	var checkboxesCities = document.querySelectorAll('input[name=oras]:checked');
-	for (var i = 0; i < checkboxesCities.length; i++) {
-		userCityInterest.push(checkboxesCities[i].value.replace(";", ","))
-	}
-	
-	var subscribeToNewsletter = false;
-	var newsletterCheckBoxElementId = $("label[for=newsletter-check]").attr("for");
-	var newsletterCheckBoxElement = $("input[id='" + newsletterCheckBoxElementId + "']");
-	if (newsletterCheckBoxElement.prop("checked") === true) {
-		subscribeToNewsletter = true;;
-	}
-	
-	var body = {
-		firstName: firstName,
-		lastName: lastName,
-		location: loc,
-		birthDate: birthDate,
-		userStatus: userStatus,
-		userYear: userYear,
-		isUserWorking: userWorking,
-		userDomainInterest : userDomainInterest,
-		userCityInterest: userCityInterest,
-		subscribeToNewsletter: subscribeToNewsletter
-	}
-	
-	var backendUrl = new URL(backendUrlRoot + "/v1/userprofile");
-	
-	$.ajax({
-		url: backendUrl,
-		type: 'PUT',
-		dataType: 'json',
-		contentType: 'application/json',
-		crossDomain: true,
-		data: JSON.stringify(body),
-		success: function (data) {
-			document.getElementById('save-profile-area').style.display = "none";
-			location.reload();
-		},
-		error: function(error) {
-			checkLoggedInUser(error.status);
-			$("#general-modal").modal();
-			document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
-			document.getElementById('modal-text').innerHTML = "Eroare. Profilul nu a putut fi salvat";
-		}
-	});
-	
-}
-
-function getSavedFaculties(userSavedFaculties) {
-
-	// or use the user profile call to get the faculty ids
-	var savedFacultiesIds = getUField("usf");
-	
-	if (!savedFacultiesIds || savedFacultiesIds.length === 0) {
-		document.getElementById("saved-faculties").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Facultati salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai salvat nicio facultate</h5> </div>';
-		return;
-	}
-	
-	var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
-	backendUrl.searchParams.append("facultyIds", savedFacultiesIds.join());
-	
-	$.ajax({
-	  url: backendUrl,
-	  type: "GET",
-	  success: function(response) {
-		if (response.control.errorCode === 0) {
-		
-			var facultiesResponse = response.result.faculties;
-			loadSavedFacultiesContent(userSavedFaculties, facultiesResponse);
-
-		} else {
-			console.log(response.control.errorDescription);
-		}
-
-	  },
-	  error: function(error) {
-		checkLoggedInUser(error.status)
-	  },
-	  complete: function (data) {
-		<!-- document.getElementById("loading").style.display = "none"; -->
-	  }
-	});
-}
-
-function loadSavedFacultiesContent(userSavedFaculties, facultiesResponse) {
-	if (facultiesResponse.length === 0) {
-		document.getElementById("saved-faculties").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Facultati salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai salvat nicio facultate</h5> </div>';
-		return;
-	}
-	
-	var urlProfileRedirect = "./profile.html?id=";
-	
-	var savedFacultiesHeaderString = 
-	'										<div class="col-xs-12 user-profile-header">'
-	+'											<h4 class="text-center"><strong>Facultati salvate</strong></h4>'
-	+'											<hr>'
-	+'										</div>';
-	document.getElementById("saved-faculties").innerHTML = savedFacultiesHeaderString;
-	
-	var i;
-	for (i in facultiesResponse) {
-		var avgRating = facultiesResponse[i].avgRating;
-		if (!avgRating) {
-			avgRating = "N/A";
-		} else {
-			avgRating = avgRating.toFixed(1);
-		}
-		var countRev = facultiesResponse[i].countRev;
-		var countRevText;
-		if (!countRev) {
-			countRevText = "";
-		} else if (countRev === 1) {
-			countRevText = "din 1 evaluare";
-		} else {
-			countRevText = "din " + countRev + " evaluări";
-		}
-		
-		var facultyId = facultiesResponse[i].facultyId;
-		var facultyName = facultiesResponse[i].facultyName;
-		var universityName = facultiesResponse[i].universityName;
-		var facultyCity = facultiesResponse[i].facultyCity;
-		
-		var universityNameForLogo = universityName.replaceAll("\"", "_");
-		var logoName = facultyName + universityNameForLogo;
-		var logoSrc = backendUrlRoot + "/v1/faculty/" + facultiesResponse[i].facultyId + "/logo";	
-		
-		var savedFacultiesIds = getUField("usf");
-		var favoriteClass;
-		var favoriteText;
-		if (savedFacultiesIds && savedFacultiesIds.includes(facultyId)) {
-			favoriteClass = "fas fa-heart fa-lg";
-			favoriteText = "Salvată";
-		} else {
-			favoriteClass = "far fa-heart fa-lg";
-			favoriteText = "Salvează";
-		}
-		
-		var allowNotification = false;
-		for (j in userSavedFaculties) {
-			if (facultyId === userSavedFaculties[j].facultyId) {
-				allowNotification = userSavedFaculties[j].allowNotification;
-				break;
-			}
-		}
-		var checkedString = "";
-		if (allowNotification) {
-			checkedString = "checked";
-		}
-		
-		var checkboxString = '<label id="notification-checkbox-' + i + '" class="checkbox checkbox-azure checkbox-big notify-checkbox ' + checkedString + '" for="allow-notification" onclick="addToNotifications(this, &quot;'+facultyId+'&quot;, ' + i +')"><span class="icons"><span class="first-icon fa fa-square fa-base" aria-hidden="true"></span><span class="second-icon fa fa-check-square fa-base" aria-hidden="true"></span></span><input type="checkbox" name="notification" value="" id="allow-notification-' + i + '" data-toggle="checkbox" ' + checkedString + '>Notifica-ma cand apar evaluari noi</label>';
-		
-		document.getElementById("saved-faculties").innerHTML += (
-				'<div class="col-xs-12">' +
-				'  <div class="card inner-card">' +
-				'    <div class="content">' +
-				'      <div class="row">' +
-				'        <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">' +
-				'          <a href="' + urlProfileRedirect + facultyId + '">' +
-				'            <div class="img-faculty-logo-block-base img-faculty-search-logo-block">' +
-				'              <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img>' +
-				'            </div>' +
-				'          </a>' +
-				'        </div>' +
-				'        <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;">' +
-				'          <a href="' + urlProfileRedirect + facultyId + '">' +
-				'            <h5>' +
-				'              <strong>' + facultyName + '</strong>' +
-				'            </h5>' +
-				'          </a>' +
-				'          <h6>' + universityName + '</h6>' +
-				'          <small class="text-muted">' + facultyCity + '</small>' +
-				'          <br>' +
-				'          <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)">' +
-				'            <i class="fa fa-star rating-suggestion-card" style="color: orange"></i>' +
-				'            <strong style="color: orange">' + avgRating + '</strong>' +
-				'            <strong>' + countRevText + '</strong>' +
-				'          </a>' +
-				'        </div>' +
-				'        <div class="col-xs-12 col-xs-offset-0 col-md-4">' + checkboxString +
-				'          <div class="row save-compare-user-profile">' +
-				'            <div class="col-xs-6">' +
-				'              <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)">' +
-				'                <i class="' + favoriteClass + '" style="margin-right: 7px"></i>' +
-				'                <span>' + favoriteText + '</span>' +
-				'              </button>' +
-				'            </div>' +
-				'            <div class="col-xs-6 text-right">' +
-				'              <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)">' +
-				'                <i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i>' +
-				'                <span>Compară</span>' +
-				'              </button>' +
-				'            </div>' +
-				'          </div>' +
-				'        </div>' +
-				'      </div>' +
-				'    </div>' +
-				'  </div>' +
-				'</div>');
-		
-	}
-}
-
-function getSavedCompanies(companyIds) {
-	if (!companyIds || companyIds.length === 0) {
-		document.getElementById("saved-companies").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Companii salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai salvat nicio companie</h5> </div>';
-		return;
-	}
-
-	var backendUrl = new URL(backendUrlRoot + "/v1/company");
-	backendUrl.searchParams.append("companyIds", companyIds);
-
-	$.ajax({
-		url: backendUrl,
-		type: "GET",
-		success: function(response) {
-			if (response.control.errorCode === 0) {
-
-				var companiesResponse = response.result.companies;
-				loadSavedCompaniesContent(companiesResponse);
-
-			} else {
-				console.log(response.control.errorDescription);
-			}
-
-		},
-		error: function(error) {
-			checkLoggedInUser(error.status)
-		},
-		complete: function (data) {
-			<!-- document.getElementById("loading").style.display = "none"; -->
-		}
-	});
-}
-
-function loadSavedCompaniesContent(companiesResponse) {
-	if (companiesResponse.length === 0) {
-		document.getElementById("saved-companies").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Companii salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai salvat nicio companie</h5> </div>';
-		return;
-	}
-
-	var savedCompaniesHeaderString =
-			'										<div class="col-xs-12 user-profile-header">'
-			+'											<h4 class="text-center"><strong>Companii salvate</strong></h4>'
-			+'											<hr>'
-			+'										</div>';
-	document.getElementById("saved-companies").innerHTML = savedCompaniesHeaderString;
-
-
-	var i;
-	for (i in companiesResponse) {
-		var companyId = companiesResponse[i].companyId;
-		var companyName = companiesResponse[i].companyName;
-		var companyCities = companiesResponse[i].companyCities;
-
-		var savedCompaniesIds = getUField("usc");
-		var favoriteClass;
-		var favoriteText;
-		if (savedCompaniesIds && savedCompaniesIds.includes(companyId)) {
-			favoriteClass = "fas fa-heart fa-lg";
-			favoriteText = "Salvată";
-		} else {
-			favoriteClass = "far fa-heart fa-lg";
-			favoriteText = "Salvează";
-		}
-
-		document.getElementById("saved-companies").innerHTML += (
-				'<div class="col-xs-6">' +
-				'  <div class="card inner-card">' +
-				'    <div class="content">' +
-				'      <div class="row">' +
-				'        <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;">' +
-				'          <h5>' +
-				'            <strong>' + companyName + '</strong>' +
-				'          </h5>' +
-				'          <small class="text-muted">' + companyCities + '</small>' +
-				'          <br>' +
-				'        </div>' +
-				'        <div class="col-xs-12 col-xs-offset-0 col-md-6">' +
-				'          <div class="row">' +
-				'            <div class="col-xs-12 save-compare-profile">' +
-				'              <button class="btn-danger btn btn-simple save" onclick="addCompanyToFavorites(this, &quot;'+companyId+'&quot;, true)">' +
-				'                <i class="' + favoriteClass + '" style="margin-right: 7px"></i>' +
-				'                <span>' + favoriteText + '</span>' +
-				'              </button>' +
-				'            </div>' +
-				'          </div>' +
-				'        </div>' +
-				'      </div>' +
-				'    </div>' +
-				'  </div>' +
-				'</div>');
-	}
-}
-
-function getUserReviews() {
-
-	<!-- document.getElementById("loading").style.display = "inline-block"; -->
-	
-	var sortingOrder = "reviewDate,asc";
-
-	var backendUrl = new URL(backendUrlRoot + "/v1/review/user");
-	
-	$.ajax({
-	  url: backendUrl,
-	  type: "GET",
-	  success: function(response) {
-		if (response.control.errorCode === 0) {
-		
-			var reviewsResponse = response.result.reviews;
-			loadUserReviewsContent(reviewsResponse);
-
-		} else {
-			console.log(response.control.errorDescription);
-		}
-
-	  },
-	  error: function(error) {
-		checkLoggedInUser(error.status)
-	  },
-	  complete: function (data) {
-		<!-- document.getElementById("loading").style.display = "none"; -->
-	  }
-	});
-}
-
-function loadUserReviewsContent(reviewsResponse) {
-	if (reviewsResponse.length == 0) {
-		document.getElementById("user-reviews").innerHTML = '											<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong>Evaluarile mele</strong></h4><hr></div><div class="text-center text-muted"> <h5>Nu ai adăugat nicio evaluare</h5> </div>';
-		return;
-	}
-	
-	var facultyReviewHeaderString = 
-	'										<div class="col-xs-12 user-profile-header">'
-	+'											<h4 class="text-center"><strong>Evaluarile mele</strong></h4>'
-	+'											<hr>'
-	+'										</div>';
-	document.getElementById("user-reviews").innerHTML = facultyReviewHeaderString;
-	
-		var i;
-		for (i in reviewsResponse) {
-
-			var reviewId = reviewsResponse[i].reviewId;
-			var facultyId = reviewsResponse[i].facultyId;
-			var facultyName = reviewsResponse[i].facultyName;
-			var userName = reviewsResponse[i].userName ? reviewsResponse[i].userName : "";
-			var formattedReviewDate = reviewsResponse[i].formattedReviewDate ? reviewsResponse[i].formattedReviewDate : "N/A";
-			var userStatus = reviewsResponse[i].userStatus ? reviewsResponse[i].userStatus.toLowerCase() : "";
-			if (userStatus === 'drop-out') {
-				userStatus = "";
-			}
-			var userDomainOfLicenseOrMaster = reviewsResponse[i].userDomainOfLicenseOrMaster ? reviewsResponse[i].userDomainOfLicenseOrMaster : "";
-			var userProgramName = reviewsResponse[i].userProgramName ? reviewsResponse[i].userProgramName : "";
-			var userYear = reviewsResponse[i].userYear ? reviewsResponse[i].userYear : "";
-			var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
-			var upvotes = reviewsResponse[i].upvotes ? reviewsResponse[i].upvotes : 0;
-			var wouldRecommend = reviewsResponse[i].wouldRecommend;
-			var wouldRecommendText;
-			var wouldRecommendBoxClass;
-			var wouldRecommendTextClass;
-			if (wouldRecommend === true) {
-				wouldRecommendText = "Ar recomanda";
-				wouldRecommendBoxClass = "box green";
-				wouldRecommendTextClass = "would-recommend-text";
-			} else if (wouldRecommend === false) {
-				wouldRecommendText = "Nu ar recomanda";
-				wouldRecommendBoxClass = "box red";
-				wouldRecommendTextClass = "would-not-recommend-text";
-			} else {
-				wouldRecommendText = "";
-				wouldRecommendBoxClass = "";
-				wouldRecommendTextClass = "";
-			}
-			
-			var difficulty = reviewsResponse[i].difficulty;
-			var difficultyText;
-			if (difficulty) {
-				difficultyText = 'Dificultate:&nbsp' + difficulty + '/5';
-			} else {
-				difficultyText = "";
-			}
-			var wouldRecommendAndDifficultyRowString;
-			if (wouldRecommendText || difficulty) {
-				wouldRecommendAndDifficultyRowString = 
-																'<br>'
-				+'													<div class="row">'
-				+'														<div  class="col-xs-6">'
-				+'															<div class="'+ wouldRecommendBoxClass + '">'
-				+'															</div>'
-				+'															<span class=' + wouldRecommendTextClass + '>&nbsp&nbsp' + wouldRecommendText + '</span>'
-				+'														</div>'
-				+'													<div  class="col-xs-6">'
-				+'															<span style="color: #707070;">&nbsp&nbsp' + difficultyText + '</span>'
-				+'														</div>'
-				+'													</div>';
-			} else {
-				wouldRecommendAndDifficultyRowString = "";
-			}
-			
-			var upvotedReviewsIds = getUField("ulr");
-			var upvotedRevClass;
-			var upvotedRevText;
-			if (upvotedReviewsIds && upvotedReviewsIds.includes(reviewId)) {
-				upvotedRevClass = "fas fa-thumbs-up fa-lg like-review align";
-			} else {
-				upvotedRevClass = "far fa-thumbs-up fa-lg like-review align";
-			}
-			
-			var editReviewRedirectUrl = "./review.html?review=" + reviewId + "&faculty=" +facultyId;
-			var canEdit = reviewsResponse[i].canEdit;
-			var editString = '';
-			if (canEdit) {
-				editString = 
-	'														<div  class="col-xs-4 col-md-2 text-right">'
-	+'															<a href="' + editReviewRedirectUrl + '"><i data-toggle="tooltip" title="Editează" class="fas fa-edit fa-lg edit-review align" style="margin-right: 20px;"></i></a>'
-	+'															<i data-toggle="tooltip" title="Șterge" class="far fa-trash-alt fa-lg delete-review align" onclick="deleteReviewModal(this, &quot;'+reviewId+'&quot;)"></i>'
-	+'														</div>';
-			}
-
-			var urlProfileRedirect = "./profile.html?id=";
-			var facultyNameString = "";
-			if (facultyName) {
-				facultyNameString = '<a href="' + urlProfileRedirect + facultyId + '"><h5><strong>' + facultyName + '</strong></h5></a>'
-			}
-			
-			
-			var generalRating = reviewsResponse[i].generalRating ? reviewsResponse[i].generalRating : "N/A";
-			var reviewText = reviewsResponse[i].reviewText ? reviewsResponse[i].reviewText : "N/A";
-			
-			var jobProspectsReviewCategory = reviewsResponse[i].jobProspectsReview;
-			var jobProspectsReviewRating = (jobProspectsReviewCategory && jobProspectsReviewCategory.generalRating) ? jobProspectsReviewCategory.generalRating : "N/A";
-			var jobProspectsReviewText = (jobProspectsReviewCategory && jobProspectsReviewCategory.reviewText) ? jobProspectsReviewCategory.reviewText : "";
-			
-			var coursesAndLecturersReviewCategory = reviewsResponse[i].coursesAndLecturersReview;
-			var coursesAndLecturersReviewRating = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.generalRating) ? coursesAndLecturersReviewCategory.generalRating : "N/A";
-			var coursesAndLecturersReviewText = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.reviewText) ? coursesAndLecturersReviewCategory.reviewText : "";
-			
-			var studentOrganisationsReviewCategory = reviewsResponse[i].studentOrganisationsReview;
-			var studentOrganisationsReviewRating = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.generalRating) ? studentOrganisationsReviewCategory.generalRating : "N/A";
-			var studentOrganisationsReviewText = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.reviewText) ? studentOrganisationsReviewCategory.reviewText : "";
-			
-			var accomodationReviewCategory = reviewsResponse[i].accomodationReview;
-			var accomodationReviewRating = (accomodationReviewCategory && accomodationReviewCategory.generalRating) ? accomodationReviewCategory.generalRating : "N/A";
-			var accomodationReviewText = (accomodationReviewCategory && accomodationReviewCategory.reviewText) ? accomodationReviewCategory.reviewText : "";
-			
-			var facultyFacilitiesReviewCategory = reviewsResponse[i].facultyFacilitiesReview;
-			var facultyFacilitiesReviewRating = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.generalRating) ? facultyFacilitiesReviewCategory.generalRating : "N/A";
-			var facultyFacilitiesReviewText = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "";
-			
-			<!-- var studentSupportReviewCategory = reviewsResponse[i].studentSupportReview; -->
-			<!-- var studentSupportReviewRating = (studentSupportReviewCategory && studentSupportReviewCategory.generalRating) ? studentSupportReviewCategory.generalRating : "N/A"; -->
-			<!-- var studentSupportReviewText = (studentSupportReviewCategory && studentSupportReviewCategory.reviewText) ? studentSupportReviewCategory.reviewText : ""; -->
-			
-			var timeBalanceReviewCategory = reviewsResponse[i].timeBalanceReview;
-			var timeBalanceReviewRating = (timeBalanceReviewCategory && timeBalanceReviewCategory.generalRating) ? timeBalanceReviewCategory.generalRating : "N/A";
-			var timeBalanceReviewText = (timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : "";	
-
-
-			var facultyReviewsString = (
-
-	'										<div class="col-xs-12">'
-	+'										<div class="card inner-card">'		
-	+'											<div class="content">'
-	+'												<div data-reviewid=' + reviewId + ' class="review-entry">'
-	+'													<div class="row">'
-	+'														<div  class="col-xs-8 col-md-10">'
-	+															facultyNameString
-	+'															<h5 id="reviewer-details">' + userName + '</h5> '
-	+'															<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6> '
-	+'															<small id="review-date" class="text-muted"><i>' + formattedReviewDate + '</i></small> 	'
-	+'														</div>'
-	+													editString
-	+'													</div>													'
-	+													wouldRecommendAndDifficultyRowString
-	+'													<br>'
-	+'													<div class="row">'
-	+'														<div class="col-xs-12">		'
-	+'															<i class="fa fa-star" style="color: orange"></i>'
-	+'															<strong style="color: orange">&nbsp' + generalRating + '</strong>													'
-	+'															<p>' + reviewText + '</p>'
-	+'														</div>'
-	+'													</div>'
-	+'													<br>'
-	+'													<div id="view-more-text-' + i + '" style="display: none">'
-	+'														<div class="row">'
-	+'															<div class="review-card-category-item col-md-6 col-xs-12">		'
-	+'																<i class="fa fa-star" style="color: orange"></i>'
-	+'																<strong style="color: orange">&nbsp' + coursesAndLecturersReviewRating + '</strong>  <span><b>&nbsp&nbspProfesori și cursuri</b></span>'
-	+'																<p>' + coursesAndLecturersReviewText + '</p>'
-	+'															</div>'
-	+'															<div class="review-card-category-item col-md-6 col-xs-12">			'
-	+'																<i class="fa fa-star" style="color: orange"></i>'
-	+'																<strong style="color: orange">&nbsp' + jobProspectsReviewRating + '</strong> <span><b>&nbsp&nbspOportunități în carieră</b></span>													'
-	+'																<p>' + jobProspectsReviewText + '</p>'
-	+'															</div>'
-	+'														</div>'
-	+'														<div class="row">'
-	+'															<div class="review-card-category-item col-md-6 col-xs-12">			'
-	+'																<i class="fa fa-star" style="color: orange"></i>'
-	+'																<strong style="color: orange">&nbsp' + accomodationReviewRating + '</strong> <span><b>&nbsp&nbspAcomodare</b></span>'
-	+'																<p>' + accomodationReviewText + '</p>'
-	+'															</div>'
-	+'															<div class="review-card-category-item col-md-6 col-xs-12">	'
-	+'																<i class="fa fa-star" style="color: orange"></i>'
-	+'																<strong style="color: orange">&nbsp' + studentOrganisationsReviewRating + '</strong> <span><b>&nbsp&nbspAsociații studențești</b></span>													'
-	+'																<p>' + studentOrganisationsReviewText + '</p>'
-	+'															</div>'
-	+'														</div>	'
-	+'														<div class="row">'
-	+'															<div class="review-card-category-item col-md-6 col-xs-12">		'
-	+'																<i class="fa fa-star" style="color: orange"></i>'
-	+'																<strong style="color: orange">&nbsp' + facultyFacilitiesReviewRating + '</strong> <span><b>&nbsp&nbspFacilități</b></span>'
-	+'																<p>' + facultyFacilitiesReviewText + '</p>'
-	+'															</div>'
-	+'															<div class="review-card-category-item col-md-6 col-xs-12">		'
-	+'																<i class="fa fa-star" style="color: orange"></i>'
-	+'																<strong style="color: orange">&nbsp' + timeBalanceReviewRating + '</strong> <span><b>&nbsp&nbspTimp la facultate vs. timp liber</b></span>													'
-	+'																<p>' + timeBalanceReviewText + '</p>'
-	+'															</div>'
-	+'														</div>'
-	+'													</div>'
-	+'													<div class="row">'
-	+'														<div class="col-md-3 col-md-offset-0 col-sm-3 col-sm-offset-0 col-xs-4 col-xs-offset-0">'
-	+'															<button class="btn btn-simple btn-info" onclick="viewMore(' + i +')" id="view-more-button-' + i + '">+ Vezi tot</button>'
-	+'														</div>'
-	+'														<div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10 text-right">'
-	+'															<i class="' + upvotedRevClass + '" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align">' + upvotes + '</span>'
-	+'														</div>'
-	+'													</div>'
-	+'												</div>'	
-	+'											</div>'
-	+'										</div>'
-	+'										</div>'
-
-			);
-			document.getElementById("user-reviews").innerHTML += facultyReviewsString;
-		
-		}
-	
-	
-}
-
-function getRecentlyViewedFaculties() {
-
-	if (typeof(Storage) == "undefined") {
-		return;
-	}
-
-	var facultyIdsString = localStorage.getItem("rvi");
-	var facultyIds;
-	if (facultyIdsString) {
-		facultyIds = facultyIdsString.split(",");
-	}
-	if (!facultyIds || facultyIds.length === 0) {
-		document.getElementById("recently-viewed-faculties").innerHTML = '';
-		document.getElementById("recent-faculties-section").style.padding = '0px';
-		return;
-	}
-
-	var limit = 16;
-	var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
-	backendUrl.searchParams.append("facultyIds", facultyIds.join());
-	backendUrl.searchParams.append("limit", limit);
-	
-	  $.ajax({
-	  url: backendUrl,
-	  type: "GET",
-	  beforeSend : function(request) {
-			document.getElementById("recently-viewed-faculties").innerHTML = '	<div class="text-center" style="height: 350px;">'
-																					+'<div class="uil-reload-css reload-background" style=""><div></div></div>'
-																				+'</div>';
-			
-		  },
-	  success: function(response) {
-		if (response.control.errorCode === 0) {
-			var facultyIdsCopy = facultyIds.slice();
-			var sortedResponse = response.result.faculties.map(function(item) {
-				var n = facultyIdsCopy.indexOf(item.facultyId);
-				facultyIdsCopy[n] = '';
-				return [n, item]
-			}).sort(function (a, b) { return a[0] - b[0];  }).map(function(j) { return j[1] });
-			sortedResponse = sortedResponse.reverse();
-			loadRecentlyViewedFacultiesContent(sortedResponse);
-		} else {
-			console.log(response.control.errorDescription);
-		}
-
-	  },
-	  error: function(error) {
-		checkLoggedInUser(error.status);
-	  }
-	});
-}
-
-function loadRecentlyViewedFacultiesContent(sortedResponse) {
-
-	var faculties = sortedResponse;
-	
-	if (faculties.length == 0 ) {
-		document.getElementById("recently-viewed-faculties").innerHTML = '';
-		document.getElementById("recent-faculties-section").style.padding = '0px';
-		return;
-	}
-	
-	
-	var recentFacultiesString = 
-'						<div class="row">'
-+'							<div class="col-xs-12">'
-+'								<h4 class="title">Recent vizualizate</h4>         '           
-+'							</div>'
-+'						</div>';
-
-	var windowWidth = $(window).width();
-	var colWidth;
-	var recentFacultiesPerSlide;
-	if (windowWidth > 1200) {
-		colWidth = 'col-md-3';
-		recentFacultiesPerSlide = 4;
-	} else if (windowWidth > 992) {
-		colWidth = 'col-md-4';
-		recentFacultiesPerSlide = 3;
-	} else if (windowWidth > 768) {
-		colWidth = 'col-sm-6';
-		recentFacultiesPerSlide = 2;
-	} else {
-		colWidth = 'col-xs-12';
-		recentFacultiesPerSlide = 1;
-	}
-	
-	recentFacultiesString += 
-'						<div class="row">'
-+'							<div class="col-md-12">'
-+'							  <div class="carousel slide media-carousel" id="media">'
-+'								<div id="recent-faculties-carousel" class="carousel-inner">';
-	
-	var i;
-	for (i in faculties) {
-	
-			if (i == 0) {
-				recentFacultiesString += (
-		'						<div class="item active">'
-		+'							<div class="row">');
-			}
-			if (i!=0 && (i%recentFacultiesPerSlide)==0) {
-				recentFacultiesString += (
-		'						<div class="item">'
-		+'							<div class="row">');
-			}
-			var faculty = faculties[i];
-			var universityNameFront;
-			var universityName = faculty.universityName;
-			if (universityName.length > 50) {
-				universityNameFront = universityName.substring(0, 50).concat('...');
-			} else {
-				universityNameFront = universityName;
-			}
-			var universityNameTooltipTitle = universityName.replaceAll("\"", "");
-			
-			var avgRating = faculties[i].avgRating;
-			if (!avgRating) {
-				avgRating = "N/A";
-			} else {
-				avgRating = avgRating.toFixed(1);
-			}
-			
-			var logoSrc = backendUrlRoot + "/v1/faculty/" + faculties[i].facultyId + "/logo";	
-			
-			var urlProfileRedirect = "./profile.html?id=";
-			
-			recentFacultiesString += (
-						'<div class="' + colWidth + '"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + faculty.facultyName + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + faculty.facultyCity + '</small> <br> <a  data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+faculty.facultyId+'&quot;)"> <i class="fa fa-star rating-suggestion-card" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </a> </div>  </div> </div> </div> </div>');
-
-		if (i==(faculties.length - 1) || i%recentFacultiesPerSlide==(recentFacultiesPerSlide-1)) {
-			recentFacultiesString += ('</div> </div>');
-		}
-		
-	}
-	
-	recentFacultiesString += 
-'								</div>'
-+'								<a data-slide="prev" href="#media" class="left carousel-control">‹</a>'
-+'								<a data-slide="next" href="#media" class="right carousel-control">›</a>'
-+'							  </div>    '                      
-+'							</div>'
-+'						</div>';
-	
-	document.getElementById("recently-viewed-faculties").innerHTML = recentFacultiesString;
-	
-	$('#media').carousel('pause');
-	
-}
-
-function deleteReviewModal(el, reviewId) {
-	el.setAttribute("data-toggle", 'modal');
-	el.setAttribute("data-target", '#general-modal');
-	
-	document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation fa-2x"></i>';
-	document.getElementById('modal-text').innerHTML = "Esti sigur ca vrei sa stergi aceasta evaluare?";
-	document.getElementById('general-modal-footer').innerHTML = 
-					'<div class="left-side">'
-					+'	<button type="button" class="btn btn-default btn-simple" data-dismiss="modal" style="color: red;" onclick="deleteReview(&quot;'+reviewId+'&quot;)">Da</button>'
-					+'</div>'
-					+'<div class="divider"></div>'
-					+'<div class="right-side">'
-					+'	<button type="button" class="btn btn-simple" data-dismiss="modal">Nu</button>'
-					+'</div>';
-
-}
-
-function deleteReview(reviewId) {
-
-	var backendUrl = new URL(backendUrlRoot + "/v1/review/" + reviewId);
-
-	var body = {
-		delete: true
-	}
-	
-	$.ajax({
-	url: backendUrl,
-	type: 'PUT',
-	dataType: 'json',
-	contentType: 'application/json',
-	crossDomain: true,
-	data: JSON.stringify(body),
-	success: function (data) {
-		var addedReviews = getUField("uar");
-		addedReviews = addedReviews.filter(function(value, index, arr){
-			return reviewId != value.reviewId;
-		});
-		setUField("uar", addedReviews);
-		location.reload();
-	},
-	error: function(error) {
-		checkLoggedInUser(error.status);
-	}
-	});
-
-}
-
-function viewMore(i) {
-  var moreText = document.getElementById("view-more-text-" + i);
-  var btnText = document.getElementById("view-more-button-" + i);
-  
-  if (moreText.style.display === "none") {
-		btnText.innerHTML = "- Vezi mai putin";
-		moreText.style.display = "inline";
-  } else {
-		btnText.innerHTML = "+ Vezi tot";
-		moreText.style.display = "none";
-  }
-}
-	
+    const backendUrlRoot = "https://unistart.ro/Jamstudy";
+
+    $wrapper = $("#wrapper");
+    $(document).on({
+        <!-- ajaxStart: function() { $wrapper.addClass("loading");    }, -->
+        ajaxStop: function() {
+            $wrapper.removeClass("loading");
+            document.getElementById("main-loading").style.display = "none";
+        }
+    });
+
+    $().ready(function(){
+        getPageHeader();
+        getPageFooter();
+        redirectIfNotLoggedIn();
+        myAccountText();
+        loadUser();
+        getUserProfileInfo();
+        getUserReviews();
+        getRecentlyViewedFaculties();
+    });
+
+    window.addEventListener('beforeunload', function(e) {
+      if(document.getElementById('save-profile-area').style.display == "inline") {
+        //following two lines will cause the browser to ask the user if they
+        //want to leave. The text of this dialog is controlled by the browser.
+        e.preventDefault(); //per the standard
+        e.returnValue = ''; //required for Chrome
+      }
+      //else: user is allowed to leave without a warning dialog
+    });
+
+    function getUserProfileInfo() {
+        var backendUrl = new URL(backendUrlRoot + "/v1/userprofile");
+
+        $.ajax({
+          url: backendUrl,
+          type: "GET",
+          success: function(response) {
+            if (response.control.errorCode === 0) {
+
+                var userResponse = response.result;
+                loadUserProfileInfoContent(userResponse);
+                checkProfileComplete();
+
+            } else {
+                console.log(response.control.errorDescription);
+            }
+
+          },
+          error: function(error) {
+            checkLoggedInUser(error.status)
+          },
+          complete: function (data) {
+            <!-- document.getElementById("loading").style.display = "none"; -->
+          }
+        });
+
+    }
+
+    function loadUserProfileInfoContent(userResponse) {
+
+        var firstName = userResponse.firstName ? userResponse.firstName : "";
+        var lastName = userResponse.lastName ? userResponse.lastName : "";
+        var email = userResponse.email ? userResponse.email : "";
+        var location = userResponse.location ? userResponse.location : "";
+        var birthDate = userResponse.birthDate ? userResponse.birthDate : "";
+        var formattedBirthDate = userResponse.formattedBirthDate ? userResponse.formattedBirthDate : "";
+        var userWorking = userResponse.isUserWorking;
+        var userStatus = userResponse.userStatus;
+        var userYear = userResponse.userYear;
+        var subscribeToNewsletter = userResponse.subscribeToNewsletter;
+        var userDomainInterest = userResponse.userDomainInterest;
+        var userCityInterest = userResponse.userCityInterest;
+
+        var userSavedFaculties = userResponse.favoriteFaculties;
+        getSavedFaculties(userSavedFaculties);
+        var companyIds = userResponse.favoriteCompanies;
+        getSavedCompanies(companyIds);
+
+        var userProfileHeaderString =
+                                                    '<div class="col-xs-12 user-profile-header">'
+    +'													<h4 class="text-center" data-i18n-key="user-profile-profile-text"><strong>Profil si informatii</strong></h4>'
+    +'													<hr>'
+    +'												</div>';
+        document.getElementById("user-profile-info").innerHTML = userProfileHeaderString;
+
+        var userProfileString = (
+    '												<div class="col-md-6 col-xs-12 user-profile-form-input">'
+    +'													<label data-i18n-key="user-profile-last-name">Nume</label> '
+    +'													<input id="profile-name" type="text" class="form-control" value="' + lastName + '" placeholder="Nume" maxlength="100" spellcheck="false">'
+    +'												</div>'
+    +'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
+    +'													<label data-i18n-key="user-profile-first-name">Prenume</label> '
+    +'													<input id="profile-first-name" type="text" class="form-control" value="' + firstName + '" placeholder="Prenume" maxlength="100" spellcheck="false">'
+    +'												</div>'
+    +'												<div class="col-md-12 col-xs-12 user-profile-form-input">'
+    +'													<label>Email</label> '
+    +'													<input id="profile-email" type="text" class="form-control" value="' + email + '" placeholder="Email" readonly>'
+    +'													<a href="./change.html" class="btn btn-simple btn-info" data-i18n-key="user-profile-reset-password">Reset password</a>'
+    +'												</div>'
+    +'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
+    +'													<label data-i18n-key="user-profile-city">Localitate</label> '
+    +'													<input id="profile-city" type="text" class="form-control" value="' + location + '" placeholder="Localitate" maxlength="50" spellcheck="false">'
+    +'												</div>'
+    +'												<div class="col-md-6 col-xs-12 user-profile-form-input">'
+    +'													<label data-i18n-key="user-profile-birthday">Data nasterii</label> '
+    +'													<input id="profile-birth-date" type="date" class="form-control datepicker" value="' + formattedBirthDate + '" placeholder="" maxlength="50">'
+    +'												</div>'
+
+    +'												<div id="user-status" class="col-xs-12 user-profile-form-input">		'
+    +'													<label>Status</label> 												'
+    +'													<div class="radio-toolbar" onchange="showYears(); showUserWork(); showUserDomainInterest(); showUserCityInterest();">'
+    +'													 <input type="radio" id="status-pupil" name="status" value="ELEV">'
+    +'													  <label for="status-pupil">Elev</label>'
+
+    +'													  <input type="radio" id="status-student" name="status" value="STUDENT">'
+    +'													  <label for="status-student" data-i18n-key="student">Student</label>'
+
+    +'													  <input type="radio" id="status-master" name="status" value="MASTERAND">'
+    +'													  <label for="status-master" data-i18n-key="master-student">Masterand</label>'
+
+    +'													  <input type="radio" id="status-alumni" name="status" value="ABSOLVENT">'
+    +'													  <label for="status-alumni" data-i18n-key="alumni">Absolvent</label>'
+
+    +'													  <input type="radio" id="status-drop" name="status" value="DROP-OUT">'
+    +'													  <label for="status-drop" data-i18n-key="retired">M-am retras</label>'
+
+    +'													  <input type="radio" id="status-other" name="status" value="ALTUL">'
+    +'													  <label for="status-other" data-i18n-key="other">Altul</label>'
+    +'													</div>'
+    +'												</div>'
+
+    +'												<div id="user-years" class="col-xs-12 user-profile-form-input" style="display: none">'
+    +'													<label>Anul</label> 		'
+    +'													<div class="radio-toolbar">'
+    +'														<input type="radio" id="year1" name="years" value="Anul 1">'
+    +'														<label for="year1"><span data-i18n-key="the-year">Anul</span> 1</label>'
+
+    +'														<input type="radio" id="year2" name="years" value="Anul 2">'
+    +'														<label for="year2"><span data-i18n-key="the-year">Anul</span> 2</label>'
+
+    +'														<input type="radio" id="year3" name="years" value="Anul 3">'
+    +'														<label for="year3"><span data-i18n-key="the-year">Anul</span> 3</label>'
+
+    +'														<input type="radio" id="year4" name="years" value="Anul 4+">'
+    +'														<label for="year4"><span data-i18n-key="the-year">Anul</span> 4+</label>'
+    +'													</div>'
+    +'												</div>'
+
+    +'												<div id="user-work" class="col-xs-12 user-profile-form-input" style="display: none;">'
+    +'													<label data-i18n-key="add-review-manage-to-get-hired">Ai reușit să te angajezi, in domeniu, in timpul facultății sau la cel mult 6 luni dupa terminarea ei?</label>'
+    +'															<div class="radio-toolbar">'
+    +'														 	 <input type="radio" id="work-yes" name="work" value="1">'
+    +'														 	 <label for="work-yes" data-i18n-key="yes">Da</label>'
+
+    +'															  <input type="radio" id="work-no" name="work" value="0">'
+    +'															  <label for="work-no" data-i18n-key="no">Nu</label>'
+
+    <!-- +'														 	 <input type="radio" id="work-not-applied" name="work" value="2">' -->
+    <!-- +'														 	 <label for="work-not-applied" data-i18n-key="not-applicable">Nu se aplica</label>' -->
+    +'															</div>'
+    +'												</div>'
+
+    +'												<div id="user-domain-interest" class="col-xs-12 user-profile-form-input" style="display: none">'
+    +'													<label data-i18n-key="user-profile-domains-text">In ce domenii ai fi interesat sa studiezi?</label> 		'
+    +'													<div class="checkbox-toolbar">'
+    +'														<input type="checkbox" name="domeniu" id="d1" value="Științe Economice"><label for="d1">Științe Economice</label>'
+    +'														<input type="checkbox" name="domeniu" id="d2" value="Științe Inginerești"><label for="d2">Științe Inginereşti</label>'
+    +'														<input type="checkbox" name="domeniu" id="d3" value="Științe Politice și Comunicare"><label for="d3">Științe Politice și Comunicare</label>'
+    +'														<input type="checkbox" name="domeniu" id="d4" value="Științe Umaniste"><label for="d4">Științe Umaniste</label>'
+    +'														<input type="checkbox" name="domeniu" id="d5" value="Științe Juridice"><label for="d5">Științe Juridice</label>'
+    +'														<input type="checkbox" name="domeniu" id="d6" value="Medicină"><label for="d6">Medicină</label>'
+    +'														<input type="checkbox" name="domeniu" id="d7" value="Științe ale Naturii"><label for="d7">Științe ale Naturii</label>'
+    +'														<input type="checkbox" name="domeniu" id="d8" value="Arte Arhitectură și Urbanism"><label for="d8">Arte, Arhitectură și Urbanism</label>'
+    +'														<input type="checkbox" name="domeniu" id="d9" value="Științe Exacte"><label for="d9">Științe Exacte</label>'
+    +'														<input type="checkbox" name="domeniu" id="d10" value="Științe Sociale și Psihologie"><label for="d10">Științe Sociale și Psihologie</label>'
+    +'														<input type="checkbox" name="domeniu" id="d11" value="Științe Agricole"><label for="d11">Științe Agricole</label>'
+    +'														<input type="checkbox" name="domeniu" id="d12" value="Ştiința Sportului şi Educației Fizice"><label for="d12">Știința Sportului şi Educației Fizice</label>'
+    +'														<input type="checkbox" name="domeniu" id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică"><label for="d13">Științe Militare şi de Informații</label>'
+    +'														<input type="checkbox" name="domeniu" id="d14" value="Teologie"><label for="d14">Teologie</label>'
+    +'													</div>'
+    +'												</div>'
+
+    +'												<div id="user-city-interest" class="col-xs-12 user-profile-form-input" style="display: none">'
+    +'													<label data-i18n-key="user-profile-cities-text">In ce orase ai fi interesat sa studiezi?</label> 		'
+    +'													<div class="checkbox-toolbar">'
+    +'														<input type="checkbox" name="oras" id="c1" value="Bucureşti"><label for="c1">Bucureşti</label>'
+    +'														<input type="checkbox" name="oras" id="c2" value="Cluj-Napoca; Cluj"><label for="c2">Cluj-Napoca</label>'
+    +'														<input type="checkbox" name="oras" id="c3" value="Timişoara; Timiş"><label for="c3">Timişoara</label>'
+    +'														<input type="checkbox" name="oras" id="c4" value="Iaşi; Iaşi"><label for="c4">Iaşi</label>'
+    +'														<input type="checkbox" name="oras" id="c5" value="Constanţa; Constanţa"><label for="c5">Constanţa</label>'
+    +'														<input type="checkbox" name="oras" id="c6" value="Craiova; Dolj"><label for="c6">Craiova</label>'
+    +'														<input type="checkbox" name="oras" id="c10" value="Oradea; Bihor"><label for="c10">Oradea</label>'
+    +'														<input type="checkbox" name="oras" id="c7" value="Braşov; Braşov"><label for="c7">Braşov</label>'
+    +'														<input type="checkbox" name="oras" id="c8" value="Piteşti; Argeş"><label for="c8">Piteşti</label>'
+    +'														<input type="checkbox" name="oras" id="c9" value="Târgovişte; Dâmboviţa"><label for="c9">Târgovişte</label>'
+    +'														<input type="checkbox" name="oras" id="c11" value="Alba Iulia; Alba"><label for="c11">Alba Iulia</label>'
+    +'														<input type="checkbox" name="oras" id="c12" value="Sibiu; Sibiu"><label for="c12">Sibiu</label>'
+    +'														<input type="checkbox" name="oras" id="c13" value="Galaţi; Galaţi"><label for="c13">Galaţi</label>'
+    +'														<input type="checkbox" name="oras" id="c14" value="Arad; Arad"><label for="c14">Arad</label>'
+    +'														<input type="checkbox" name="oras" id="c15" value="Târgu Mureş; Mureş"><label for="c15">Târgu Mureş</label>'
+    +'														<input type="checkbox" name="oras" id="c16" value="Suceava; Suceava"><label for="c16">Suceava</label>'
+    +'														<input type="checkbox" name="oras" id="c17" value="Alba Iulia; Alba"><label for="c17">Alba Iulia</label>'
+    +'													</div>'
+    +'												</div>'
+
+
+        );
+
+        document.getElementById("user-profile-info").innerHTML += userProfileString;
+
+
+        switch(userStatus) {
+        case "ELEV":
+            document.getElementById('status-pupil').checked = true;
+            break;
+        case "STUDENT":
+            document.getElementById('status-student').checked = true;
+            break;
+        case "MASTERAND":
+            document.getElementById('status-master').checked = true;
+            break;
+        case "ABSOLVENT":
+            document.getElementById('status-alumni').checked = true;
+            break;
+        case "DROP-OUT":
+            document.getElementById('status-drop').checked = true;
+            break;
+        case "ALTUL":
+            document.getElementById('status-other').checked = true;
+            break;
+        }
+
+        switch(userYear) {
+        case "Anul 1":
+            document.getElementById('year1').checked = true;
+            break;
+        case "Anul 2":
+            document.getElementById('year2').checked = true;
+            break;
+        case "Anul 3":
+            document.getElementById('year3').checked = true;
+            break;
+        case "Anul 4+":
+            document.getElementById('year4').checked = true;
+            break;
+        }
+
+        showYears();
+
+        switch(userWorking) {
+        case true:
+            document.getElementById('work-yes').checked = true;
+            break;
+        case false:
+            document.getElementById('work-no').checked = true;
+            break;
+        <!-- default: -->
+            <!-- document.getElementById('work-not-applied').checked = true; -->
+            <!-- break; -->
+        }
+
+        showUserWork();
+
+        if (userDomainInterest) {
+            var i;
+            for (i=0;i < userDomainInterest.length; i++) {
+                var checkboxElements = document.querySelectorAll("input[type='checkbox'][value='" + userDomainInterest + "']");
+                if (checkboxElements && checkboxElements.length > 0) {
+                    var domainId = checkboxElements[0].id;
+                    $("#" + domainId).prop('checked', true);
+                    $("label[for='" + domainId + "']").addClass("checked");
+                }
+            }
+        }
+        if (userCityInterest) {
+            var j;
+            for (j=0;j < userCityInterest.length; j++) {
+                var checkboxElements = document.querySelectorAll("input[type='checkbox'][value='" + userCityInterest + "']");
+                if (checkboxElements && checkboxElements.length > 0) {
+                    var cityId = checkboxElements[0].id;
+                    $("#" + cityId).prop('checked', true);
+                    $("label[for='" + cityId + "']").addClass("checked");
+                }
+            }
+        }
+
+        showUserDomainInterest();
+        showUserCityInterest();
+
+        if (subscribeToNewsletter) {
+            $("#newsletter-check").prop('checked', true);
+            $("label[for='newsletter-check']").addClass("checked");
+        } else {
+            $("#newsletter-check").prop('checked', false);
+            $("label[for='newsletter-check']").removeClass("checked");
+        }
+
+
+        document.getElementById("profile-name").oninput = function () {
+            document.getElementById('save-profile-area').style.display = "inline";
+        }
+        document.getElementById("profile-first-name").oninput = function () {
+            document.getElementById('save-profile-area').style.display = "inline";
+        }
+        document.getElementById("profile-email").oninput = function () {
+            document.getElementById('save-profile-area').style.display = "inline";
+        }
+        document.getElementById("profile-city").oninput = function () {
+            document.getElementById('save-profile-area').style.display = "inline";
+        }
+        document.getElementById("profile-birth-date").oninput = function () {
+            document.getElementById('save-profile-area').style.display = "inline";
+        }
+        document.getElementById("user-status").oninput = function () {
+            document.getElementById('save-profile-area').style.display = "inline";
+        }
+        document.getElementById("user-years").oninput = function () {
+            document.getElementById('save-profile-area').style.display = "inline";
+        }
+        document.getElementById("user-work").oninput = function () {
+            document.getElementById('save-profile-area').style.display = "inline";
+        }
+        document.getElementById("user-domain-interest").oninput = function () {
+            document.getElementById('save-profile-area').style.display = "inline";
+        }
+        document.getElementById("user-city-interest").oninput = function () {
+            document.getElementById('save-profile-area').style.display = "inline";
+        }
+        $("#newsletter-check").change(function() {
+            document.getElementById('save-profile-area').style.display = "inline";
+        });
+
+    }
+
+    function checkProfileComplete() {
+        var firstName = document.getElementById("profile-first-name").value;
+        var lastName = document.getElementById("profile-name").value;
+        var location = document.getElementById("profile-city").value;
+        var birthDate = document.getElementById("profile-birth-date").value;
+        var userStatusRadio = document.getElementsByName('status');
+        var userStatus;
+        for (var i = 0, length = userStatusRadio.length; i < length; i++) {
+          if (userStatusRadio[i].checked) {
+            userStatus = userStatusRadio[i].value;
+            break;
+          }
+        }
+
+        var firstNameText = firstName ? (" " + firstName) : "";
+        var userProfileTopString
+        if (!firstName || !lastName || !location || !birthDate || !userStatus) {
+        userProfileTopString =
+            '											<h3 data-i18n-key="user-profile-title-v1">'
+            +'												Hei' + firstNameText + ', profilul tau este incomplet!'
+            +'											</h3>'
+            +'											<h5 data-i18n-key="user-profile-subtitle-v1">'
+            +'												Ca sa iti putem oferi o experienta personalizata, te rugam sa completezi profilul.'
+            +'											</h5>';
+        } else {
+            userProfileTopString =
+            '											<h3 data-i18n-key="user-profile-title-v2">'
+            +'												Hei' + firstNameText + ', profilul tau este complet!'
+            +'											</h3>'
+            +'											<h5 data-i18n-key="user-profile-subtitle-v2">'
+            +'												Ne bucuram sa iti putem oferi o experienta personalizata.'
+            +'											</h5>';
+        }
+
+        document.getElementById("user-profile-top").innerHTML = userProfileTopString;
+    }
+
+    function saveUserProfileInfo(el) {
+
+        var firstName = document.getElementById("profile-first-name").value ? document.getElementById("profile-first-name").value : "";
+        var lastName = document.getElementById("profile-name").value ? document.getElementById("profile-name").value : "";
+        var loc = document.getElementById("profile-city").value ? document.getElementById("profile-city").value : "";
+        var birthDate = document.getElementById("profile-birth-date").value ? document.getElementById("profile-birth-date").value : null;
+
+        var userStatusRadio = document.getElementsByName('status');
+        var userStatus;
+        for (var i = 0, length = userStatusRadio.length; i < length; i++) {
+          if (userStatusRadio[i].checked) {
+            userStatus = userStatusRadio[i].value;
+            break;
+          }
+        }
+        var yearsRadio = document.getElementsByName('years');
+        var userYear;
+        for (var i = 0, length = yearsRadio.length; i < length; i++) {
+          if (yearsRadio[i].checked) {
+            userYear = yearsRadio[i].value;
+            break;
+          }
+        }
+
+        var userWorkingRadio = document.getElementsByName('work');
+        var userWorking;
+        for (var i = 0, length = userWorkingRadio.length; i < length; i++) {
+          if (userWorkingRadio[i].checked && userWorkingRadio[i].value != 2) {
+            userWorking = userWorkingRadio[i].value;
+            break;
+          }
+        }
+
+        var userDomainInterest = []
+        var checkboxesDomains = document.querySelectorAll('input[name=domeniu]:checked');
+        for (var i = 0; i < checkboxesDomains.length; i++) {
+            userDomainInterest.push(checkboxesDomains[i].value)
+        }
+        var userCityInterest = []
+        var checkboxesCities = document.querySelectorAll('input[name=oras]:checked');
+        for (var i = 0; i < checkboxesCities.length; i++) {
+            userCityInterest.push(checkboxesCities[i].value.replace(";", ","))
+        }
+
+        var subscribeToNewsletter = false;
+        var newsletterCheckBoxElementId = $("label[for=newsletter-check]").attr("for");
+        var newsletterCheckBoxElement = $("input[id='" + newsletterCheckBoxElementId + "']");
+        if (newsletterCheckBoxElement.prop("checked") === true) {
+            subscribeToNewsletter = true;;
+        }
+
+        var body = {
+            firstName: firstName,
+            lastName: lastName,
+            location: loc,
+            birthDate: birthDate,
+            userStatus: userStatus,
+            userYear: userYear,
+            isUserWorking: userWorking,
+            userDomainInterest : userDomainInterest,
+            userCityInterest: userCityInterest,
+            subscribeToNewsletter: subscribeToNewsletter
+        }
+
+        var backendUrl = new URL(backendUrlRoot + "/v1/userprofile");
+
+        $.ajax({
+            url: backendUrl,
+            type: 'PUT',
+            dataType: 'json',
+            contentType: 'application/json',
+            crossDomain: true,
+            data: JSON.stringify(body),
+            success: function (data) {
+                document.getElementById('save-profile-area').style.display = "none";
+                location.reload();
+            },
+            error: function(error) {
+                checkLoggedInUser(error.status);
+                $("#general-modal").modal();
+                document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+                document.getElementById('modal-text').innerHTML = "Eroare. Profilul nu a putut fi salvat";
+            }
+        });
+
+    }
+
+    function getSavedFaculties(userSavedFaculties) {
+
+        // or use the user profile call to get the faculty ids
+        var savedFacultiesIds = getUField("usf");
+
+        if (!savedFacultiesIds || savedFacultiesIds.length === 0) {
+            document.getElementById("saved-faculties").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong data-i18n-key="user-profile-saved-faculties">Facultati salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5 data-i18n-key="user-profile-saved-faculties-empty">Nu ai salvat nicio facultate</h5> </div>';
+            return;
+        }
+
+        var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
+        backendUrl.searchParams.append("facultyIds", savedFacultiesIds.join());
+
+        $.ajax({
+          url: backendUrl,
+          type: "GET",
+          success: function(response) {
+            if (response.control.errorCode === 0) {
+
+                var facultiesResponse = response.result.faculties;
+                loadSavedFacultiesContent(userSavedFaculties, facultiesResponse);
+
+            } else {
+                console.log(response.control.errorDescription);
+            }
+
+          },
+          error: function(error) {
+            checkLoggedInUser(error.status)
+          },
+          complete: function (data) {
+            <!-- document.getElementById("loading").style.display = "none"; -->
+          }
+        });
+    }
+
+    function loadSavedFacultiesContent(userSavedFaculties, facultiesResponse) {
+        if (facultiesResponse.length === 0) {
+            document.getElementById("saved-faculties").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong data-i18n-key="user-profile-saved-faculties">Facultati salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5 data-i18n-key="user-profile-saved-faculties-empty">Nu ai salvat nicio facultate</h5> </div>';
+            return;
+        }
+
+        var urlProfileRedirect = "./profile.html?id=";
+
+        var savedFacultiesHeaderString =
+        '										<div class="col-xs-12 user-profile-header">'
+        +'											<h4 class="text-center"><strong data-i18n-key="user-profile-saved-faculties">Facultati salvate</strong></h4>'
+        +'											<hr>'
+        +'										</div>';
+        document.getElementById("saved-faculties").innerHTML = savedFacultiesHeaderString;
+
+        var i;
+        for (i in facultiesResponse) {
+            var avgRating = facultiesResponse[i].avgRating;
+            if (!avgRating) {
+                avgRating = "N/A";
+            } else {
+                avgRating = avgRating.toFixed(1);
+            }
+            var countRev = facultiesResponse[i].countRev;
+            var countRevText;
+            if (!countRev) {
+                countRevText = "";
+            } else if (countRev === 1) {
+                countRevText = "din 1 evaluare";
+            } else {
+                countRevText = "din " + countRev + " evaluări";
+            }
+
+            var facultyId = facultiesResponse[i].facultyId;
+            var facultyName = facultiesResponse[i].facultyName;
+            var universityName = facultiesResponse[i].universityName;
+            var facultyCity = facultiesResponse[i].facultyCity;
+
+            var universityNameForLogo = universityName.replaceAll("\"", "_");
+            var logoName = facultyName + universityNameForLogo;
+            var logoSrc = backendUrlRoot + "/v1/faculty/" + facultiesResponse[i].facultyId + "/logo";
+
+            var savedFacultiesIds = getUField("usf");
+            var favoriteClass;
+            var favoriteText;
+            if (savedFacultiesIds && savedFacultiesIds.includes(facultyId)) {
+                favoriteClass = "fas fa-heart fa-lg";
+                favoriteText = "Salvată";
+            } else {
+                favoriteClass = "far fa-heart fa-lg";
+                favoriteText = "Salvează";
+            }
+
+            var allowNotification = false;
+            for (j in userSavedFaculties) {
+                if (facultyId === userSavedFaculties[j].facultyId) {
+                    allowNotification = userSavedFaculties[j].allowNotification;
+                    break;
+                }
+            }
+            var checkedString = "";
+            if (allowNotification) {
+                checkedString = "checked";
+            }
+
+            var checkboxString = '<label id="notification-checkbox-' + i + '" class="checkbox checkbox-azure checkbox-big notify-checkbox ' + checkedString + '" for="allow-notification" onclick="addToNotifications(this, &quot;'+facultyId+'&quot;, ' + i +')"><span class="icons"><span class="first-icon fa fa-square fa-base" aria-hidden="true"></span><span class="second-icon fa fa-check-square fa-base" aria-hidden="true"></span></span><input type="checkbox" name="notification" value="" id="allow-notification-' + i + '" data-toggle="checkbox" ' + checkedString + ' data-i18n-key="user-profile-notify-text">Notifica-ma cand apar evaluari noi</label>';
+
+            document.getElementById("saved-faculties").innerHTML += (
+                    '<div class="col-xs-12">' +
+                    '  <div class="card inner-card">' +
+                    '    <div class="content">' +
+                    '      <div class="row">' +
+                    '        <div class="col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">' +
+                    '          <a href="' + urlProfileRedirect + facultyId + '">' +
+                    '            <div class="img-faculty-logo-block-base img-faculty-search-logo-block">' +
+                    '              <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-search center-logo-search"></img>' +
+                    '            </div>' +
+                    '          </a>' +
+                    '        </div>' +
+                    '        <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;">' +
+                    '          <a href="' + urlProfileRedirect + facultyId + '">' +
+                    '            <h5>' +
+                    '              <strong>' + facultyName + '</strong>' +
+                    '            </h5>' +
+                    '          </a>' +
+                    '          <h6>' + universityName + '</h6>' +
+                    '          <small class="text-muted">' + facultyCity + '</small>' +
+                    '          <br>' +
+                    '          <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)">' +
+                    '            <i class="fa fa-star rating-suggestion-card" style="color: orange"></i>' +
+                    '            <strong style="color: orange">' + avgRating + '</strong>' +
+                    '            <strong>' + countRevText + '</strong>' +
+                    '          </a>' +
+                    '        </div>' +
+                    '        <div class="col-xs-12 col-xs-offset-0 col-md-4">' + checkboxString +
+                    '          <div class="row save-compare-user-profile">' +
+                    '            <div class="col-xs-6">' +
+                    '              <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyId+'&quot;, true)">' +
+                    '                <i class="' + favoriteClass + '" style="margin-right: 7px"></i>' +
+                    '                <span>' + favoriteText + '</span>' +
+                    '              </button>' +
+                    '            </div>' +
+                    '            <div class="col-xs-6 text-right">' +
+                    '              <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, true)">' +
+                    '                <i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i>' +
+                    '                <span>Compară</span>' +
+                    '              </button>' +
+                    '            </div>' +
+                    '          </div>' +
+                    '        </div>' +
+                    '      </div>' +
+                    '    </div>' +
+                    '  </div>' +
+                    '</div>');
+
+        }
+    }
+
+    function getSavedCompanies(companyIds) {
+        if (!companyIds || companyIds.length === 0) {
+            document.getElementById("saved-companies").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong data-i18n-key="user-profile-saved-companies">Companii salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5 data-i18n-key="user-profile-saved-companies">Nu ai salvat nicio companie</h5> </div>';
+            return;
+        }
+
+        var backendUrl = new URL(backendUrlRoot + "/v1/company");
+        backendUrl.searchParams.append("companyIds", companyIds);
+
+        $.ajax({
+            url: backendUrl,
+            type: "GET",
+            success: function(response) {
+                if (response.control.errorCode === 0) {
+
+                    var companiesResponse = response.result.companies;
+                    loadSavedCompaniesContent(companiesResponse);
+
+                } else {
+                    console.log(response.control.errorDescription);
+                }
+
+            },
+            error: function(error) {
+                checkLoggedInUser(error.status)
+            },
+            complete: function (data) {
+                <!-- document.getElementById("loading").style.display = "none"; -->
+            }
+        });
+    }
+
+    function loadSavedCompaniesContent(companiesResponse) {
+        if (companiesResponse.length === 0) {
+            document.getElementById("saved-companies").innerHTML = '<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong data-i18n-key="user-profile-saved-companies">Companii salvate</strong></h4><hr></div><div class="text-center text-muted"> <h5 data-i18n-key="user-profile-saved-companies-empty">Nu ai salvat nicio companie</h5> </div>';
+            return;
+        }
+
+        var savedCompaniesHeaderString =
+                '										<div class="col-xs-12 user-profile-header">'
+                +'											<h4 class="text-center"><strong data-i18n-key="user-profile-saved-companies">Companii salvate</strong></h4>'
+                +'											<hr>'
+                +'										</div>';
+        document.getElementById("saved-companies").innerHTML = savedCompaniesHeaderString;
+
+
+        var i;
+        for (i in companiesResponse) {
+            var companyId = companiesResponse[i].companyId;
+            var companyName = companiesResponse[i].companyName;
+            var companyCities = companiesResponse[i].companyCities;
+
+            var savedCompaniesIds = getUField("usc");
+            var favoriteClass;
+            var favoriteText;
+            if (savedCompaniesIds && savedCompaniesIds.includes(companyId)) {
+                favoriteClass = "fas fa-heart fa-lg";
+                favoriteText = "Salvată";
+            } else {
+                favoriteClass = "far fa-heart fa-lg";
+                favoriteText = "Salvează";
+            }
+
+            document.getElementById("saved-companies").innerHTML += (
+                    '<div class="col-xs-6">' +
+                    '  <div class="card inner-card">' +
+                    '    <div class="content">' +
+                    '      <div class="row">' +
+                    '        <div class="col-xs-12 col-md-6" style="display:inline; vertical-align: middle;">' +
+                    '          <h5>' +
+                    '            <strong>' + companyName + '</strong>' +
+                    '          </h5>' +
+                    '          <small class="text-muted">' + companyCities + '</small>' +
+                    '          <br>' +
+                    '        </div>' +
+                    '        <div class="col-xs-12 col-xs-offset-0 col-md-6">' +
+                    '          <div class="row">' +
+                    '            <div class="col-xs-12 save-compare-profile">' +
+                    '              <button class="btn-danger btn btn-simple save" onclick="addCompanyToFavorites(this, &quot;'+companyId+'&quot;, true)">' +
+                    '                <i class="' + favoriteClass + '" style="margin-right: 7px"></i>' +
+                    '                <span>' + favoriteText + '</span>' +
+                    '              </button>' +
+                    '            </div>' +
+                    '          </div>' +
+                    '        </div>' +
+                    '      </div>' +
+                    '    </div>' +
+                    '  </div>' +
+                    '</div>');
+        }
+    }
+
+    function getUserReviews() {
+
+        <!-- document.getElementById("loading").style.display = "inline-block"; -->
+
+        var sortingOrder = "reviewDate,asc";
+
+        var backendUrl = new URL(backendUrlRoot + "/v1/review/user");
+
+        $.ajax({
+          url: backendUrl,
+          type: "GET",
+          success: function(response) {
+            if (response.control.errorCode === 0) {
+
+                var reviewsResponse = response.result.reviews;
+                loadUserReviewsContent(reviewsResponse);
+
+            } else {
+                console.log(response.control.errorDescription);
+            }
+
+          },
+          error: function(error) {
+            checkLoggedInUser(error.status)
+          },
+          complete: function (data) {
+            <!-- document.getElementById("loading").style.display = "none"; -->
+          }
+        });
+    }
+
+    function loadUserReviewsContent(reviewsResponse) {
+        if (reviewsResponse.length == 0) {
+            document.getElementById("user-reviews").innerHTML = '											<div class="col-xs-12 user-profile-header"><h4 class="text-center"><strong data-i18n-key="user-profile-my-reviews">Evaluarile mele</strong></h4><hr></div><div class="text-center text-muted"> <h5 data-i18n-key="user-profile-my-reviews-empty">Nu ai adăugat nicio evaluare</h5> </div>';
+            return;
+        }
+
+        var facultyReviewHeaderString =
+        '										<div class="col-xs-12 user-profile-header">'
+        +'											<h4 class="text-center"><strong data-i18n-key="user-profile-my-reviews">Evaluarile mele</strong></h4>'
+        +'											<hr>'
+        +'										</div>';
+        document.getElementById("user-reviews").innerHTML = facultyReviewHeaderString;
+
+            var i;
+            for (i in reviewsResponse) {
+
+                var reviewId = reviewsResponse[i].reviewId;
+                var facultyId = reviewsResponse[i].facultyId;
+                var facultyName = reviewsResponse[i].facultyName;
+                var userName = reviewsResponse[i].userName ? reviewsResponse[i].userName : "";
+                var formattedReviewDate = reviewsResponse[i].formattedReviewDate ? reviewsResponse[i].formattedReviewDate : "N/A";
+                var userStatus = reviewsResponse[i].userStatus ? reviewsResponse[i].userStatus.toLowerCase() : "";
+                if (userStatus === 'drop-out') {
+                    userStatus = "";
+                }
+                var userDomainOfLicenseOrMaster = reviewsResponse[i].userDomainOfLicenseOrMaster ? reviewsResponse[i].userDomainOfLicenseOrMaster : "";
+                var userProgramName = reviewsResponse[i].userProgramName ? reviewsResponse[i].userProgramName : "";
+                var userYear = reviewsResponse[i].userYear ? reviewsResponse[i].userYear : "";
+                var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
+                var upvotes = reviewsResponse[i].upvotes ? reviewsResponse[i].upvotes : 0;
+                var wouldRecommend = reviewsResponse[i].wouldRecommend;
+                var wouldRecommendText;
+                var wouldRecommendBoxClass;
+                var wouldRecommendTextClass;
+                if (wouldRecommend === true) {
+                    wouldRecommendText = "Ar recomanda";
+                    wouldRecommendBoxClass = "box green";
+                    wouldRecommendTextClass = "would-recommend-text";
+                } else if (wouldRecommend === false) {
+                    wouldRecommendText = "Nu ar recomanda";
+                    wouldRecommendBoxClass = "box red";
+                    wouldRecommendTextClass = "would-not-recommend-text";
+                } else {
+                    wouldRecommendText = "";
+                    wouldRecommendBoxClass = "";
+                    wouldRecommendTextClass = "";
+                }
+
+                var difficulty = reviewsResponse[i].difficulty;
+                var difficultyText;
+                if (difficulty) {
+                    difficultyText = 'Dificultate:&nbsp' + difficulty + '/5';
+                } else {
+                    difficultyText = "";
+                }
+                var wouldRecommendAndDifficultyRowString;
+                if (wouldRecommendText || difficulty) {
+                    wouldRecommendAndDifficultyRowString =
+                                                                    '<br>'
+                    +'													<div class="row">'
+                    +'														<div  class="col-xs-6">'
+                    +'															<div class="'+ wouldRecommendBoxClass + '">'
+                    +'															</div>'
+                    +'															<span class=' + wouldRecommendTextClass + '>&nbsp&nbsp' + wouldRecommendText + '</span>'
+                    +'														</div>'
+                    +'													<div  class="col-xs-6">'
+                    +'															<span style="color: #707070;">&nbsp&nbsp' + difficultyText + '</span>'
+                    +'														</div>'
+                    +'													</div>';
+                } else {
+                    wouldRecommendAndDifficultyRowString = "";
+                }
+
+                var upvotedReviewsIds = getUField("ulr");
+                var upvotedRevClass;
+                var upvotedRevText;
+                if (upvotedReviewsIds && upvotedReviewsIds.includes(reviewId)) {
+                    upvotedRevClass = "fas fa-thumbs-up fa-lg like-review align";
+                } else {
+                    upvotedRevClass = "far fa-thumbs-up fa-lg like-review align";
+                }
+
+                var editReviewRedirectUrl = "./review.html?review=" + reviewId + "&faculty=" +facultyId;
+                var canEdit = reviewsResponse[i].canEdit;
+                var editString = '';
+                if (canEdit) {
+                    editString =
+        '														<div  class="col-xs-4 col-md-2 text-right">'
+        +'															<a href="' + editReviewRedirectUrl + '"><i data-toggle="tooltip" title="Editează" class="fas fa-edit fa-lg edit-review align" style="margin-right: 20px;"></i></a>'
+        +'															<i data-toggle="tooltip" title="Șterge" class="far fa-trash-alt fa-lg delete-review align" onclick="deleteReviewModal(this, &quot;'+reviewId+'&quot;)"></i>'
+        +'														</div>';
+                }
+
+                var urlProfileRedirect = "./profile.html?id=";
+                var facultyNameString = "";
+                if (facultyName) {
+                    facultyNameString = '<a href="' + urlProfileRedirect + facultyId + '"><h5><strong>' + facultyName + '</strong></h5></a>'
+                }
+
+
+                var generalRating = reviewsResponse[i].generalRating ? reviewsResponse[i].generalRating : "N/A";
+                var reviewText = reviewsResponse[i].reviewText ? reviewsResponse[i].reviewText : "N/A";
+
+                var jobProspectsReviewCategory = reviewsResponse[i].jobProspectsReview;
+                var jobProspectsReviewRating = (jobProspectsReviewCategory && jobProspectsReviewCategory.generalRating) ? jobProspectsReviewCategory.generalRating : "N/A";
+                var jobProspectsReviewText = (jobProspectsReviewCategory && jobProspectsReviewCategory.reviewText) ? jobProspectsReviewCategory.reviewText : "";
+
+                var coursesAndLecturersReviewCategory = reviewsResponse[i].coursesAndLecturersReview;
+                var coursesAndLecturersReviewRating = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.generalRating) ? coursesAndLecturersReviewCategory.generalRating : "N/A";
+                var coursesAndLecturersReviewText = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.reviewText) ? coursesAndLecturersReviewCategory.reviewText : "";
+
+                var studentOrganisationsReviewCategory = reviewsResponse[i].studentOrganisationsReview;
+                var studentOrganisationsReviewRating = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.generalRating) ? studentOrganisationsReviewCategory.generalRating : "N/A";
+                var studentOrganisationsReviewText = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.reviewText) ? studentOrganisationsReviewCategory.reviewText : "";
+
+                var accomodationReviewCategory = reviewsResponse[i].accomodationReview;
+                var accomodationReviewRating = (accomodationReviewCategory && accomodationReviewCategory.generalRating) ? accomodationReviewCategory.generalRating : "N/A";
+                var accomodationReviewText = (accomodationReviewCategory && accomodationReviewCategory.reviewText) ? accomodationReviewCategory.reviewText : "";
+
+                var facultyFacilitiesReviewCategory = reviewsResponse[i].facultyFacilitiesReview;
+                var facultyFacilitiesReviewRating = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.generalRating) ? facultyFacilitiesReviewCategory.generalRating : "N/A";
+                var facultyFacilitiesReviewText = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "";
+
+                <!-- var studentSupportReviewCategory = reviewsResponse[i].studentSupportReview; -->
+                <!-- var studentSupportReviewRating = (studentSupportReviewCategory && studentSupportReviewCategory.generalRating) ? studentSupportReviewCategory.generalRating : "N/A"; -->
+                <!-- var studentSupportReviewText = (studentSupportReviewCategory && studentSupportReviewCategory.reviewText) ? studentSupportReviewCategory.reviewText : ""; -->
+
+                var timeBalanceReviewCategory = reviewsResponse[i].timeBalanceReview;
+                var timeBalanceReviewRating = (timeBalanceReviewCategory && timeBalanceReviewCategory.generalRating) ? timeBalanceReviewCategory.generalRating : "N/A";
+                var timeBalanceReviewText = (timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : "";
+
+
+                var facultyReviewsString = (
+
+        '										<div class="col-xs-12">'
+        +'										<div class="card inner-card">'
+        +'											<div class="content">'
+        +'												<div data-reviewid=' + reviewId + ' class="review-entry">'
+        +'													<div class="row">'
+        +'														<div  class="col-xs-8 col-md-10">'
+        +															facultyNameString
+        +'															<h5 id="reviewer-details">' + userName + '</h5> '
+        +'															<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6> '
+        +'															<small id="review-date" class="text-muted"><i>' + formattedReviewDate + '</i></small> 	'
+        +'														</div>'
+        +													editString
+        +'													</div>													'
+        +													wouldRecommendAndDifficultyRowString
+        +'													<br>'
+        +'													<div class="row">'
+        +'														<div class="col-xs-12">		'
+        +'															<i class="fa fa-star" style="color: orange"></i>'
+        +'															<strong style="color: orange">&nbsp' + generalRating + '</strong>													'
+        +'															<p>' + reviewText + '</p>'
+        +'														</div>'
+        +'													</div>'
+        +'													<br>'
+        +'													<div id="view-more-text-' + i + '" style="display: none">'
+        +'														<div class="row">'
+        +'															<div class="review-card-category-item col-md-6 col-xs-12">		'
+        +'																<i class="fa fa-star" style="color: orange"></i>'
+        +'																<strong style="color: orange">&nbsp' + coursesAndLecturersReviewRating + '</strong>  <span><b>&nbsp&nbspProfesori și cursuri</b></span>'
+        +'																<p>' + coursesAndLecturersReviewText + '</p>'
+        +'															</div>'
+        +'															<div class="review-card-category-item col-md-6 col-xs-12">			'
+        +'																<i class="fa fa-star" style="color: orange"></i>'
+        +'																<strong style="color: orange">&nbsp' + jobProspectsReviewRating + '</strong> <span><b>&nbsp&nbspOportunități în carieră</b></span>													'
+        +'																<p>' + jobProspectsReviewText + '</p>'
+        +'															</div>'
+        +'														</div>'
+        +'														<div class="row">'
+        +'															<div class="review-card-category-item col-md-6 col-xs-12">			'
+        +'																<i class="fa fa-star" style="color: orange"></i>'
+        +'																<strong style="color: orange">&nbsp' + accomodationReviewRating + '</strong> <span><b>&nbsp&nbspAcomodare</b></span>'
+        +'																<p>' + accomodationReviewText + '</p>'
+        +'															</div>'
+        +'															<div class="review-card-category-item col-md-6 col-xs-12">	'
+        +'																<i class="fa fa-star" style="color: orange"></i>'
+        +'																<strong style="color: orange">&nbsp' + studentOrganisationsReviewRating + '</strong> <span><b>&nbsp&nbspAsociații studențești</b></span>													'
+        +'																<p>' + studentOrganisationsReviewText + '</p>'
+        +'															</div>'
+        +'														</div>	'
+        +'														<div class="row">'
+        +'															<div class="review-card-category-item col-md-6 col-xs-12">		'
+        +'																<i class="fa fa-star" style="color: orange"></i>'
+        +'																<strong style="color: orange">&nbsp' + facultyFacilitiesReviewRating + '</strong> <span><b>&nbsp&nbspFacilități</b></span>'
+        +'																<p>' + facultyFacilitiesReviewText + '</p>'
+        +'															</div>'
+        +'															<div class="review-card-category-item col-md-6 col-xs-12">		'
+        +'																<i class="fa fa-star" style="color: orange"></i>'
+        +'																<strong style="color: orange">&nbsp' + timeBalanceReviewRating + '</strong> <span><b>&nbsp&nbspTimp la facultate vs. timp liber</b></span>													'
+        +'																<p>' + timeBalanceReviewText + '</p>'
+        +'															</div>'
+        +'														</div>'
+        +'													</div>'
+        +'													<div class="row">'
+        +'														<div class="col-md-3 col-md-offset-0 col-sm-3 col-sm-offset-0 col-xs-4 col-xs-offset-0">'
+        +'															<button class="btn btn-simple btn-info" onclick="viewMore(' + i +')" id="view-more-button-' + i + '">+ Vezi tot</button>'
+        +'														</div>'
+        +'														<div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10 text-right">'
+        +'															<i class="' + upvotedRevClass + '" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align">' + upvotes + '</span>'
+        +'														</div>'
+        +'													</div>'
+        +'												</div>'
+        +'											</div>'
+        +'										</div>'
+        +'										</div>'
+
+                );
+                document.getElementById("user-reviews").innerHTML += facultyReviewsString;
+
+            }
+
+
+    }
+
+    function getRecentlyViewedFaculties() {
+
+        if (typeof(Storage) == "undefined") {
+            return;
+        }
+
+        var facultyIdsString = localStorage.getItem("rvi");
+        var facultyIds;
+        if (facultyIdsString) {
+            facultyIds = facultyIdsString.split(",");
+        }
+        if (!facultyIds || facultyIds.length === 0) {
+            document.getElementById("recently-viewed-faculties").innerHTML = '';
+            document.getElementById("recent-faculties-section").style.padding = '0px';
+            return;
+        }
+
+        var limit = 16;
+        var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
+        backendUrl.searchParams.append("facultyIds", facultyIds.join());
+        backendUrl.searchParams.append("limit", limit);
+
+          $.ajax({
+          url: backendUrl,
+          type: "GET",
+          beforeSend : function(request) {
+                document.getElementById("recently-viewed-faculties").innerHTML = '	<div class="text-center" style="height: 350px;">'
+                                                                                        +'<div class="uil-reload-css reload-background" style=""><div></div></div>'
+                                                                                    +'</div>';
+
+              },
+          success: function(response) {
+            if (response.control.errorCode === 0) {
+                var facultyIdsCopy = facultyIds.slice();
+                var sortedResponse = response.result.faculties.map(function(item) {
+                    var n = facultyIdsCopy.indexOf(item.facultyId);
+                    facultyIdsCopy[n] = '';
+                    return [n, item]
+                }).sort(function (a, b) { return a[0] - b[0];  }).map(function(j) { return j[1] });
+                sortedResponse = sortedResponse.reverse();
+                loadRecentlyViewedFacultiesContent(sortedResponse);
+            } else {
+                console.log(response.control.errorDescription);
+            }
+
+          },
+          error: function(error) {
+            checkLoggedInUser(error.status);
+          }
+        });
+    }
+
+    function loadRecentlyViewedFacultiesContent(sortedResponse) {
+
+        var faculties = sortedResponse;
+
+        if (faculties.length == 0 ) {
+            document.getElementById("recently-viewed-faculties").innerHTML = '';
+            document.getElementById("recent-faculties-section").style.padding = '0px';
+            return;
+        }
+
+
+        var recentFacultiesString =
+    '						<div class="row">'
+    +'							<div class="col-xs-12">'
+    +'								<h4 class="title">Recent vizualizate</h4>         '
+    +'							</div>'
+    +'						</div>';
+
+        var windowWidth = $(window).width();
+        var colWidth;
+        var recentFacultiesPerSlide;
+        if (windowWidth > 1200) {
+            colWidth = 'col-md-3';
+            recentFacultiesPerSlide = 4;
+        } else if (windowWidth > 992) {
+            colWidth = 'col-md-4';
+            recentFacultiesPerSlide = 3;
+        } else if (windowWidth > 768) {
+            colWidth = 'col-sm-6';
+            recentFacultiesPerSlide = 2;
+        } else {
+            colWidth = 'col-xs-12';
+            recentFacultiesPerSlide = 1;
+        }
+
+        recentFacultiesString +=
+    '						<div class="row">'
+    +'							<div class="col-md-12">'
+    +'							  <div class="carousel slide media-carousel" id="media">'
+    +'								<div id="recent-faculties-carousel" class="carousel-inner">';
+
+        var i;
+        for (i in faculties) {
+
+                if (i == 0) {
+                    recentFacultiesString += (
+            '						<div class="item active">'
+            +'							<div class="row">');
+                }
+                if (i!=0 && (i%recentFacultiesPerSlide)==0) {
+                    recentFacultiesString += (
+            '						<div class="item">'
+            +'							<div class="row">');
+                }
+                var faculty = faculties[i];
+                var universityNameFront;
+                var universityName = faculty.universityName;
+                if (universityName.length > 50) {
+                    universityNameFront = universityName.substring(0, 50).concat('...');
+                } else {
+                    universityNameFront = universityName;
+                }
+                var universityNameTooltipTitle = universityName.replaceAll("\"", "");
+
+                var avgRating = faculties[i].avgRating;
+                if (!avgRating) {
+                    avgRating = "N/A";
+                } else {
+                    avgRating = avgRating.toFixed(1);
+                }
+
+                var logoSrc = backendUrlRoot + "/v1/faculty/" + faculties[i].facultyId + "/logo";
+
+                var urlProfileRedirect = "./profile.html?id=";
+
+                recentFacultiesString += (
+                            '<div class="' + colWidth + '"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + faculty.facultyName + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + faculty.facultyCity + '</small> <br> <a  data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+faculty.facultyId+'&quot;)"> <i class="fa fa-star rating-suggestion-card" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </a> </div>  </div> </div> </div> </div>');
+
+            if (i==(faculties.length - 1) || i%recentFacultiesPerSlide==(recentFacultiesPerSlide-1)) {
+                recentFacultiesString += ('</div> </div>');
+            }
+
+        }
+
+        recentFacultiesString +=
+    '								</div>'
+    +'								<a data-slide="prev" href="#media" class="left carousel-control">‹</a>'
+    +'								<a data-slide="next" href="#media" class="right carousel-control">›</a>'
+    +'							  </div>    '
+    +'							</div>'
+    +'						</div>';
+
+        document.getElementById("recently-viewed-faculties").innerHTML = recentFacultiesString;
+
+        $('#media').carousel('pause');
+
+    }
+
+    function deleteReviewModal(el, reviewId) {
+        el.setAttribute("data-toggle", 'modal');
+        el.setAttribute("data-target", '#general-modal');
+
+        document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation fa-2x"></i>';
+        document.getElementById('modal-text').innerHTML = "Esti sigur ca vrei sa stergi aceasta evaluare?";
+        document.getElementById('general-modal-footer').innerHTML =
+                        '<div class="left-side">'
+                        +'	<button type="button" class="btn btn-default btn-simple" data-dismiss="modal" style="color: red;" onclick="deleteReview(&quot;'+reviewId+'&quot;)">Da</button>'
+                        +'</div>'
+                        +'<div class="divider"></div>'
+                        +'<div class="right-side">'
+                        +'	<button type="button" class="btn btn-simple" data-dismiss="modal">Nu</button>'
+                        +'</div>';
+
+    }
+
+    function deleteReview(reviewId) {
+
+        var backendUrl = new URL(backendUrlRoot + "/v1/review/" + reviewId);
+
+        var body = {
+            delete: true
+        }
+
+        $.ajax({
+        url: backendUrl,
+        type: 'PUT',
+        dataType: 'json',
+        contentType: 'application/json',
+        crossDomain: true,
+        data: JSON.stringify(body),
+        success: function (data) {
+            var addedReviews = getUField("uar");
+            addedReviews = addedReviews.filter(function(value, index, arr){
+                return reviewId != value.reviewId;
+            });
+            setUField("uar", addedReviews);
+            location.reload();
+        },
+        error: function(error) {
+            checkLoggedInUser(error.status);
+        }
+        });
+
+    }
+
+    function viewMore(i) {
+      var moreText = document.getElementById("view-more-text-" + i);
+      var btnText = document.getElementById("view-more-button-" + i);
+
+      if (moreText.style.display === "none") {
+            btnText.innerHTML = "- Vezi mai putin";
+            moreText.style.display = "inline";
+      } else {
+            btnText.innerHTML = "+ Vezi tot";
+            moreText.style.display = "none";
+      }
+    }
+
 </script>
-    
+
 </html>

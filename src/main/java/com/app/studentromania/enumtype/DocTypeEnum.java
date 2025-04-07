@@ -14,7 +14,8 @@ public enum DocTypeEnum {
 	FEEDBACK("FEEDBACK"),
 	ARCHIVED_REVIEW("ARCHIVED_REVIEW"),
 	ARTICLE("ARTICLE"),
-	COMPANY("COMPANY");
+	COMPANY("COMPANY"),
+	ENTITY_PROFILE("ENTITY_PROFILE");
 	// @formatter:on
 
 	private final String docTypeText;

@@ -11,6 +11,7 @@
   "saved": "Saved",
   "compare": "Compare",
   "see-comparison": "See Comparisons",
+  "see-description": "See description",
   "review-v1": "Review",
   "review-v2": "review",
   "reviews-v1": "Reviews",
@@ -47,7 +48,6 @@
   "retired": "I dropped out",
   "other": "Other",
   "the-year": "Year",
-
   "app-title": "Unistart - Faculty Reviews",
   "title": "Choose the right faculty for you",
   "search-keywords": "Search by keywords",
@@ -69,17 +69,14 @@
   "domain-military-v1": "Military Sciences, Information, and Public Order",
   "domain-military-v2": "Military and Information Sciences",
   "domain-theology": "Theology",
-
   "top-faculties-title": "Top Faculties according to students",
   "top-faculties-subtitle": "The top is based on the ratings given by students to faculties on the UNISTART platform",
   "all-domains": "All domains",
   "all-cities": "All cities",
   "first-place": "First place",
-
   "newsletter-title": "We help you make the right decisions for your education!",
   "newsletter-subtitle": "Subscribe to our newsletter and receive useful weekly news and updates from the education field!",
   "newsletter-subscribe-me": "Subscribe me",
-
   "sort-faculty-name-asc": "Faculty ascending",
   "sort-faculty-name-desc": "Faculty descending",
   "sort-university-name-asc": "University ascending",
@@ -88,7 +85,6 @@
   "sort-city-desc": "City descending",
   "sort-rating-asc": "Rating ascending",
   "sort-rating-desc": "Rating descending",
-
   "access-website": "Access website",
   "profile": "Profile",
   "would-recommend-faculty": "Would recommend the faculty",
@@ -106,6 +102,7 @@
   "review-3-stars": "3 stars",
   "review-2-stars": "2 stars",
   "review-1-stars": "1 star",
+  "faculty-official-presentation": "Official presentation",
   "faculty-general-presentation": "General presentation",
   "faculty-general-presentation-website": "Website",
   "faculty-general-presentation-address": "Address",
@@ -137,18 +134,15 @@
   "study-programs-annual-tax": "Annual tax",
   "no-reviews": "There are no reviews",
   "no-more-reviews": "There are no more reviews for this faculty",
-
   "compare-faculties": "Compare faculties",
   "compare-suggestions": "Comparison suggestions",
   "compare-add-faculty": "Add a faculty to start",
   "compare-search-faculties": "Search for Faculties",
-
   "contact-us": "Contact us",
   "contact-subtitle": "Tell us what you think about the Unistart platform, report a bug, or simply leave us a message.",
   "contact-name": "Name",
   "contact-message": "Message",
   "contact-send": "Send",
-
   "login-header": "Login",
   "login-button-message": "Sign in to your account",
   "login-google": "Sign in with Google",
@@ -169,7 +163,6 @@
   "benefits-5": "Vote on reviews.",
   "benefits-6": "(Coming soon) Opt to receive notifications for favorite faculties.",
   "benefits-7": "You will have access to future features exclusive to registered users.",
-
   "add-review-general-review-title": "General review",
   "add-review-give-rating": "Add rating",
   "add-review-very-unsatisfied": "Very unsatisfied",
@@ -199,6 +192,26 @@
   "add-review-acommodation-placeholder": "Do you live in a dormitory or rent? Describe the accommodation, price, conditions...",
   "add-review-student-associations-placeholder": "How well represented do you feel by the student associations? What kind of activities and events do they organize?",
   "add-review-facilities-placeholder": "Describe the facilities and their condition (library, auditorium, laboratories, equipment).",
-  "add-review-study-time-vs-free-time-placeholder": "How many hours do you spend per week at university? How many hours do you study or work on projects?"
-
+  "add-review-study-time-vs-free-time-placeholder": "How many hours do you spend per week at university? How many hours do you study or work on projects?",
+  "user-profile-title-v1": "Your profile is incomplete!",
+  "user-profile-title-v2": "Your profile is complete!",
+  "user-profile-subtitle-v1": "In order to provide you with a personalized experience, please complete your profile.",
+  "user-profile-subtitle-v2": "We are happy to offer you a personalized experience.",
+  "user-profile-profile-text": "Profile and Information",
+  "user-profile-last-name": "Last name",
+  "user-profile-first-name": "First name",
+  "user-profile-reset-password": "Reset password",
+  "user-profile-city": "City",
+  "user-profile-birthday": "Birthday",
+  "user-profile-domains-text": "In which fields would you be interested in studying?",
+  "user-profile-cities-text": "In which cities would you be interested in studying?",
+  "user-profile-subscribe-text": "Subscribe to newsletter",
+  "user-profile-saved-faculties": "Saved faculties",
+  "user-profile-saved-faculties-empty": "You have not saved any faculties",
+  "user-profile-notify-text": "Notify me when new reviews are available",
+  "user-profile-my-reviews": "My reviews",
+  "user-profile-my-reviews-empty": "You have not added any reviews",
+  "user-profile-saved-companies": "Saved companies",
+  "user-profile-saved-companies-empty": "You have not saved any companies",
+  "user-profile-sign-out": "Sign out"
 }

@@ -4,231 +4,241 @@ import com.app.studentromania.model.CategoryReview;
 
 public class ReviewDTO {
 
-	private String reviewId;
+    private String reviewId;
 
-	private String facultyId;
+    private String facultyId;
 
-	private Integer generalRating;
+    private Integer generalRating;
 
-	private Integer isUserWorking;
+    private Integer isUserWorking;
 
-	private String reviewText;
+    private String reviewText;
 
-	private CategoryReview jobProspectsReview;
+    private String reviewAnswerText;
 
-	private CategoryReview coursesAndLecturersReview;
+    private CategoryReview jobProspectsReview;
 
-	private CategoryReview studentOrganisationsReview;
+    private CategoryReview coursesAndLecturersReview;
 
-	private CategoryReview accomodationReview;
+    private CategoryReview studentOrganisationsReview;
 
-	private CategoryReview facultyFacilitiesReview;
+    private CategoryReview accomodationReview;
 
-	private CategoryReview studentSupportReview;
+    private CategoryReview facultyFacilitiesReview;
 
-	private CategoryReview timeBalanceReview;
+    private CategoryReview studentSupportReview;
 
-	private Integer upvotes;
+    private CategoryReview timeBalanceReview;
 
-	/*
-	 * true for upvote, false for downvote (reversal of upvote)
-	 */
-	private Boolean upvote;
+    private Integer upvotes;
 
-	private String userStatus;
+    /*
+     * true for upvote, false for downvote (reversal of upvote)
+     */
+    private Boolean upvote;
 
-	private Boolean wouldRecommend;
+    private String userStatus;
 
-	private Integer difficulty;
+    private Boolean wouldRecommend;
 
-	private String userDomainOfLicenseOrMaster;
+    private Integer difficulty;
 
-	private String userProgramName;
+    private String userDomainOfLicenseOrMaster;
 
-	private String userYear;
+    private String userProgramName;
 
-	private Boolean delete;
+    private String userYear;
 
-	public String getReviewId() {
-		return reviewId;
-	}
+    private Boolean delete;
 
-	public void setReviewId(String reviewId) {
-		this.reviewId = reviewId;
-	}
+    public String getReviewId() {
+        return reviewId;
+    }
 
-	public String getFacultyId() {
-		return facultyId;
-	}
+    public void setReviewId(String reviewId) {
+        this.reviewId = reviewId;
+    }
 
-	public void setFacultyId(String facultyId) {
-		this.facultyId = facultyId;
-	}
+    public String getFacultyId() {
+        return facultyId;
+    }
 
-	public Integer getGeneralRating() {
-		return generalRating;
-	}
+    public void setFacultyId(String facultyId) {
+        this.facultyId = facultyId;
+    }
 
-	public void setGeneralRating(Integer generalRating) {
-		this.generalRating = generalRating;
-	}
+    public Integer getGeneralRating() {
+        return generalRating;
+    }
 
-	public Integer getIsUserWorking() {
-		return isUserWorking;
-	}
+    public void setGeneralRating(Integer generalRating) {
+        this.generalRating = generalRating;
+    }
 
-	public void setIsUserWorking(Integer isUserWorking) {
-		this.isUserWorking = isUserWorking;
-	}
+    public Integer getIsUserWorking() {
+        return isUserWorking;
+    }
 
-	public String getReviewText() {
-		return reviewText;
-	}
+    public void setIsUserWorking(Integer isUserWorking) {
+        this.isUserWorking = isUserWorking;
+    }
 
-	public void setReviewText(String reviewText) {
-		this.reviewText = reviewText;
-	}
+    public String getReviewText() {
+        return reviewText;
+    }
 
-	public CategoryReview getJobProspectsReview() {
-		return jobProspectsReview;
-	}
+    public void setReviewText(String reviewText) {
+        this.reviewText = reviewText;
+    }
 
-	public void setJobProspectsReview(CategoryReview jobProspectsReview) {
-		this.jobProspectsReview = jobProspectsReview;
-	}
+    public String getReviewAnswerText() {
+        return reviewAnswerText;
+    }
 
-	public CategoryReview getCoursesAndLecturersReview() {
-		return coursesAndLecturersReview;
-	}
+    public void setReviewAnswerText(String reviewAnswerText) {
+        this.reviewAnswerText = reviewAnswerText;
+    }
 
-	public void setCoursesAndLecturersReview(CategoryReview coursesAndLecturersReview) {
-		this.coursesAndLecturersReview = coursesAndLecturersReview;
-	}
+    public CategoryReview getJobProspectsReview() {
+        return jobProspectsReview;
+    }
 
-	public CategoryReview getStudentOrganisationsReview() {
-		return studentOrganisationsReview;
-	}
+    public void setJobProspectsReview(CategoryReview jobProspectsReview) {
+        this.jobProspectsReview = jobProspectsReview;
+    }
 
-	public void setStudentOrganisationsReview(CategoryReview studentOrganisationsReview) {
-		this.studentOrganisationsReview = studentOrganisationsReview;
-	}
+    public CategoryReview getCoursesAndLecturersReview() {
+        return coursesAndLecturersReview;
+    }
 
-	public CategoryReview getAccomodationReview() {
-		return accomodationReview;
-	}
+    public void setCoursesAndLecturersReview(CategoryReview coursesAndLecturersReview) {
+        this.coursesAndLecturersReview = coursesAndLecturersReview;
+    }
 
-	public void setAccomodationReview(CategoryReview accomodationReview) {
-		this.accomodationReview = accomodationReview;
-	}
+    public CategoryReview getStudentOrganisationsReview() {
+        return studentOrganisationsReview;
+    }
 
-	public CategoryReview getFacultyFacilitiesReview() {
-		return facultyFacilitiesReview;
-	}
+    public void setStudentOrganisationsReview(CategoryReview studentOrganisationsReview) {
+        this.studentOrganisationsReview = studentOrganisationsReview;
+    }
 
-	public void setFacultyFacilitiesReview(CategoryReview facultyFacilitiesReview) {
-		this.facultyFacilitiesReview = facultyFacilitiesReview;
-	}
+    public CategoryReview getAccomodationReview() {
+        return accomodationReview;
+    }
 
-	public CategoryReview getStudentSupportReview() {
-		return studentSupportReview;
-	}
+    public void setAccomodationReview(CategoryReview accomodationReview) {
+        this.accomodationReview = accomodationReview;
+    }
 
-	public void setStudentSupportReview(CategoryReview studentSupportReview) {
-		this.studentSupportReview = studentSupportReview;
-	}
+    public CategoryReview getFacultyFacilitiesReview() {
+        return facultyFacilitiesReview;
+    }
 
-	public CategoryReview getTimeBalanceReview() {
-		return timeBalanceReview;
-	}
+    public void setFacultyFacilitiesReview(CategoryReview facultyFacilitiesReview) {
+        this.facultyFacilitiesReview = facultyFacilitiesReview;
+    }
 
-	public void setTimeBalanceReview(CategoryReview timeBalanceReview) {
-		this.timeBalanceReview = timeBalanceReview;
-	}
+    public CategoryReview getStudentSupportReview() {
+        return studentSupportReview;
+    }
 
-	public Integer getUpvotes() {
-		return upvotes;
-	}
+    public void setStudentSupportReview(CategoryReview studentSupportReview) {
+        this.studentSupportReview = studentSupportReview;
+    }
 
-	public void setUpvotes(Integer upvotes) {
-		this.upvotes = upvotes;
-	}
+    public CategoryReview getTimeBalanceReview() {
+        return timeBalanceReview;
+    }
 
-	public Boolean getUpvote() {
-		return upvote;
-	}
+    public void setTimeBalanceReview(CategoryReview timeBalanceReview) {
+        this.timeBalanceReview = timeBalanceReview;
+    }
 
-	public void setUpvote(Boolean upvote) {
-		this.upvote = upvote;
-	}
+    public Integer getUpvotes() {
+        return upvotes;
+    }
 
-	public String getUserStatus() {
-		return userStatus;
-	}
+    public void setUpvotes(Integer upvotes) {
+        this.upvotes = upvotes;
+    }
 
-	public void setUserStatus(String userStatus) {
-		this.userStatus = userStatus;
-	}
+    public Boolean getUpvote() {
+        return upvote;
+    }
 
-	public Boolean getWouldRecommend() {
-		return wouldRecommend;
-	}
+    public void setUpvote(Boolean upvote) {
+        this.upvote = upvote;
+    }
 
-	public void setWouldRecommend(Boolean wouldRecommend) {
-		this.wouldRecommend = wouldRecommend;
-	}
+    public String getUserStatus() {
+        return userStatus;
+    }
 
-	public Integer getDifficulty() {
-		return difficulty;
-	}
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
+    }
 
-	public void setDifficulty(Integer difficulty) {
-		this.difficulty = difficulty;
-	}
+    public Boolean getWouldRecommend() {
+        return wouldRecommend;
+    }
 
-	public String getUserDomainOfLicenseOrMaster() {
-		return userDomainOfLicenseOrMaster;
-	}
+    public void setWouldRecommend(Boolean wouldRecommend) {
+        this.wouldRecommend = wouldRecommend;
+    }
 
-	public void setUserDomainOfLicenseOrMaster(String userDomainOfLicenseOrMaster) {
-		this.userDomainOfLicenseOrMaster = userDomainOfLicenseOrMaster;
-	}
+    public Integer getDifficulty() {
+        return difficulty;
+    }
 
-	public String getUserProgramName() {
-		return userProgramName;
-	}
+    public void setDifficulty(Integer difficulty) {
+        this.difficulty = difficulty;
+    }
 
-	public void setUserProgramName(String userProgramName) {
-		this.userProgramName = userProgramName;
-	}
+    public String getUserDomainOfLicenseOrMaster() {
+        return userDomainOfLicenseOrMaster;
+    }
 
-	public String getUserYear() {
-		return userYear;
-	}
+    public void setUserDomainOfLicenseOrMaster(String userDomainOfLicenseOrMaster) {
+        this.userDomainOfLicenseOrMaster = userDomainOfLicenseOrMaster;
+    }
 
-	public void setUserYear(String userYear) {
-		this.userYear = userYear;
-	}
+    public String getUserProgramName() {
+        return userProgramName;
+    }
 
-	public Boolean getDelete() {
-		return delete;
-	}
+    public void setUserProgramName(String userProgramName) {
+        this.userProgramName = userProgramName;
+    }
 
-	public void setDelete(Boolean delete) {
-		this.delete = delete;
-	}
+    public String getUserYear() {
+        return userYear;
+    }
 
-	@Override
-	public String toString() {
-		return "ReviewDTO [reviewId=" + reviewId + ", facultyId=" + facultyId + ", generalRating=" + generalRating
-				+ ", isUserWorking=" + isUserWorking + ", reviewText=" + reviewText + ", jobProspectsReview="
-				+ jobProspectsReview + ", coursesAndLecturersReview=" + coursesAndLecturersReview
-				+ ", studentOrganisationsReview=" + studentOrganisationsReview + ", accomodationReview="
-				+ accomodationReview + ", facultyFacilitiesReview=" + facultyFacilitiesReview
-				+ ", studentSupportReview=" + studentSupportReview + ", timeBalanceReview=" + timeBalanceReview
-				+ ", upvotes=" + upvotes + ", upvote=" + upvote + ", userStatus=" + userStatus + ", wouldRecommend="
-				+ wouldRecommend + ", difficulty=" + difficulty + ", userDomainOfLicenseOrMaster="
-				+ userDomainOfLicenseOrMaster + ", userProgramName=" + userProgramName + ", userYear=" + userYear
-				+ ", delete=" + delete + "]";
-	}
+    public void setUserYear(String userYear) {
+        this.userYear = userYear;
+    }
+
+    public Boolean getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Boolean delete) {
+        this.delete = delete;
+    }
+
+    @Override
+    public String toString() {
+        return "ReviewDTO [reviewId=" + reviewId + ", facultyId=" + facultyId + ", generalRating=" + generalRating
+                + ", isUserWorking=" + isUserWorking + ", reviewText=" + reviewText + ", jobProspectsReview="
+                + jobProspectsReview + ", coursesAndLecturersReview=" + coursesAndLecturersReview
+                + ", studentOrganisationsReview=" + studentOrganisationsReview + ", accomodationReview="
+                + accomodationReview + ", facultyFacilitiesReview=" + facultyFacilitiesReview
+                + ", studentSupportReview=" + studentSupportReview + ", timeBalanceReview=" + timeBalanceReview
+                + ", upvotes=" + upvotes + ", upvote=" + upvote + ", userStatus=" + userStatus + ", wouldRecommend="
+                + wouldRecommend + ", difficulty=" + difficulty + ", userDomainOfLicenseOrMaster="
+                + userDomainOfLicenseOrMaster + ", userProgramName=" + userProgramName + ", userYear=" + userYear
+                + ", delete=" + delete + "]";
+    }
 
 }

@@ -1,27 +1,5 @@
 package com.app.studentromania.service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.app.studentromania.dao.ConfigDAO;
 import com.app.studentromania.dao.FacultyDAO;
 import com.app.studentromania.dao.ReviewDAO;
@@ -39,415 +17,464 @@ import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.LogUtils;
 import com.app.studentromania.util.ReviewFilter;
 import com.app.studentromania.util.Utilities;
+import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewService {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ReviewService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReviewService.class);
 
-	@Autowired
-	private CustomRequestContext customRequestContext;
+    @Autowired
+    private CustomRequestContext customRequestContext;
 
-	@Autowired
-	private ReviewDAO reviewDAO;
+    @Autowired
+    private ReviewDAO reviewDAO;
 
-	@Autowired
-	private FacultyDAO facultyDAO;
+    @Autowired
+    private FacultyDAO facultyDAO;
 
-	@Autowired
-	private UserProfileDAO userProfileDAO;
+    @Autowired
+    private UserProfileDAO userProfileDAO;
 
-	@Autowired
-	private ConfigDAO configDAO;
+    @Autowired
+    private ConfigDAO configDAO;
 
-	@Autowired
-	private LogUtils logUtils;
+    @Autowired
+    private LogUtils logUtils;
 
-	public ResponseDTO getAllReviews(ReviewFilter reviewFilters) {
-		reviewFilters.setCountryCode(customRequestContext.getCountryCode());
-		List<Review> reviews = reviewDAO.getAllReviews(reviewFilters);
-		long count = reviewDAO.countFilteredReviews(reviewFilters);
-		JSONArray reviewsArray = new JSONArray();
-		reviews.forEach(review -> {
-			ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
-			reviewsArray.put(new JSONObject(reviewResponseDTO));
-		});
-		JSONObject response = new JSONObject();
-		response.put("reviews", reviewsArray);
-		response.put("count", count);
+    public ResponseDTO getAllReviews(ReviewFilter reviewFilters) {
+        reviewFilters.setCountryCode(customRequestContext.getCountryCode());
+        List<Review> reviews = reviewDAO.getAllReviews(reviewFilters);
+        long count = reviewDAO.countFilteredReviews(reviewFilters);
+        JSONArray reviewsArray = new JSONArray();
+        reviews.forEach(review -> {
+            ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
+            reviewsArray.put(new JSONObject(reviewResponseDTO));
+        });
+        JSONObject response = new JSONObject();
+        response.put("reviews", reviewsArray);
+        response.put("count", count);
 
-		return ResponseDTO.createSuccessResponse(response);
-	}
+        return ResponseDTO.createSuccessResponse(response);
+    }
 
-	public ResponseDTO getByReviewId(String reviewId) {
-		Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewId);
-		if (!reviewOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
-		}
-		Review review = reviewOpt.get();
-		ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
-		JSONObject response = new JSONObject(reviewResponseDTO);
+    public ResponseDTO getByReviewId(String reviewId) {
+        Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewId);
+        if (!reviewOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
+        }
+        Review review = reviewOpt.get();
+        ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
+        JSONObject response = new JSONObject(reviewResponseDTO);
 
-		return ResponseDTO.createSuccessResponse(response);
-	}
+        return ResponseDTO.createSuccessResponse(response);
+    }
 
-	public ResponseDTO getFilteredReviewsByFacultyId(String facultydId, ReviewFilter reviewFilters) {
-		reviewFilters.setCountryCode(customRequestContext.getCountryCode());
-		List<Review> reviews = reviewDAO.getFilteredReviewsByFacultyId(facultydId, reviewFilters);
-		long count = reviewDAO.countFilteredReviewsByFacultyId(facultydId, reviewFilters);
-		JSONArray reviewsArray = new JSONArray();
-		reviews.forEach(review -> {
-			ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
-			reviewsArray.put(new JSONObject(reviewResponseDTO));
-		});
-		JSONObject response = new JSONObject();
-		response.put("reviews", reviewsArray);
-		response.put("count", count);
+    public ResponseDTO getFilteredReviewsByFacultyId(String facultyId, ReviewFilter reviewFilters) {
+        reviewFilters.setCountryCode(customRequestContext.getCountryCode());
+        List<Review> reviews = reviewDAO.getFilteredReviewsByFacultyId(facultyId, reviewFilters);
+        long count = reviewDAO.countFilteredReviewsByFacultyId(facultyId, reviewFilters);
+        JSONArray reviewsArray = new JSONArray();
+        reviews.forEach(review -> {
+            ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
+            reviewsArray.put(new JSONObject(reviewResponseDTO));
+        });
+        JSONObject response = new JSONObject();
+        response.put("reviews", reviewsArray);
+        response.put("count", count);
 
-		return ResponseDTO.createSuccessResponse(response);
-	}
+        return ResponseDTO.createSuccessResponse(response);
+    }
 
-	public ResponseDTO getUserReviews() {
-		String userId = customRequestContext.getUserId();
+    public ResponseDTO getAllReviewsByFacultyId(String facultyId) {
+        List<Review> reviews = reviewDAO.getReviewsByFacultyId(facultyId);
+        JSONArray reviewsArray = new JSONArray();
+        reviews.forEach(review -> {
+            ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
+            reviewsArray.put(new JSONObject(reviewResponseDTO));
+        });
+        JSONObject response = new JSONObject();
+        response.put("reviews", reviewsArray);
 
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
-		if (!userProfileOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
-		}
-		UserProfile userProfile = userProfileOpt.get();
+        return ResponseDTO.createSuccessResponse(response);
+    }
 
-		List<Review> reviews = reviewDAO.getReviewsByUserId(userProfile.getUserId());
+    public ResponseDTO getUserReviews() {
+        String userId = customRequestContext.getUserId();
 
-		JSONArray reviewsArray = new JSONArray();
-		reviews.forEach(review -> {
-			ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
-			LocalDateTime dueDate = LocalDateTime.now().minusDays(2);
-			if (review.getReviewDate().after(Date.from(dueDate.atZone(ZoneId.systemDefault()).toInstant()))) {
-				reviewResponseDTO.setCanEdit(true);
-			}
-			reviewsArray.put(new JSONObject(reviewResponseDTO));
-		});
-		JSONObject response = new JSONObject();
-		response.put("reviews", reviewsArray);
+        Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+        if (!userProfileOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+        }
+        UserProfile userProfile = userProfileOpt.get();
 
-		return ResponseDTO.createSuccessResponse(response);
-	}
+        List<Review> reviews = reviewDAO.getReviewsByUserId(userProfile.getUserId());
 
-	public ResponseDTO createReview(ReviewDTO reviewDTO) {
-		String userId = customRequestContext.getUserId();
+        JSONArray reviewsArray = new JSONArray();
+        reviews.forEach(review -> {
+            ReviewResponseDTO reviewResponseDTO = mapToReviewResponseDTO(review);
+            LocalDateTime dueDate = LocalDateTime.now().minusDays(2);
+            if (review.getReviewDate().after(Date.from(dueDate.atZone(ZoneId.systemDefault()).toInstant()))) {
+                reviewResponseDTO.setCanEdit(true);
+            }
+            reviewsArray.put(new JSONObject(reviewResponseDTO));
+        });
+        JSONObject response = new JSONObject();
+        response.put("reviews", reviewsArray);
 
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
-		if (!userProfileOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
-		}
-		UserProfile userProfile = userProfileOpt.get();
+        return ResponseDTO.createSuccessResponse(response);
+    }
 
-		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(reviewDTO.getFacultyId());
-		if (!facultyOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
-		}
-		Faculty faculty = facultyOpt.get();
-		ErrorsEnum error = validateReviewCreate(reviewDTO, userProfile);
-		if (ErrorsEnum.NO_ERROR != error) {
-			return ResponseDTO.createErrorResponse(error);
-		}
-		String generatedId = configDAO.generateDocumentId(Constants.REVIEW_PREFIX_ID);
-		Review review = new Review();
-		review.setReviewId(generatedId);
-		review.setFacultyName(faculty.getFacultyName());
-		Date currentDate = new Date();
-		review.setReviewDate(currentDate);
-		review.setFormattedReviewDate(Utilities.getFormattedDate(currentDate));
-		mapToReview(reviewDTO, review);
-		review.setUserId(userProfile.getUserId());
-		review.setUserEmail(userProfile.getEmail());
-		review.setCountryCode(customRequestContext.getCountryCode());
-		reviewDAO.createReview(review);
+    public ResponseDTO createReview(ReviewDTO reviewDTO) {
+        String userId = customRequestContext.getUserId();
 
-		UserProfileReview addedReview = new UserProfileReview();
-		addedReview.setReviewId(review.getReviewId());
-		addedReview.setFacultyId(review.getFacultyId());
-		addedReview.setAddedDate(currentDate);
-		userProfile.getAddedReviews().add(addedReview);
-		userProfile.setUserStatus(ObjectUtils.firstNonNull(userProfile.getUserStatus(), review.getUserStatus()));
-		userProfile.setUserYear(ObjectUtils.firstNonNull(userProfile.getUserYear(), review.getUserYear()));
-		userProfile
-				.setIsUserWorking(ObjectUtils.firstNonNull(userProfile.getIsUserWorking(), review.getIsUserWorking()));
-		userProfileDAO.updateUserProfile(userProfile);
+        Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+        if (!userProfileOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+        }
+        UserProfile userProfile = userProfileOpt.get();
 
-		ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
-		reviewResponseDTO.setReviewId(review.getReviewId());
-		reviewResponseDTO.setFacultyId(review.getFacultyId());
+        Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(reviewDTO.getFacultyId());
+        if (!facultyOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
+        }
+        Faculty faculty = facultyOpt.get();
+        ErrorsEnum error = validateReviewCreate(reviewDTO, userProfile);
+        if (ErrorsEnum.NO_ERROR != error) {
+            return ResponseDTO.createErrorResponse(error);
+        }
+        String generatedId = configDAO.generateDocumentId(Constants.REVIEW_PREFIX_ID);
+        Review review = new Review();
+        review.setReviewId(generatedId);
+        review.setFacultyName(faculty.getFacultyName());
+        Date currentDate = new Date();
+        review.setReviewDate(currentDate);
+        review.setFormattedReviewDate(Utilities.getFormattedDate(currentDate));
+        mapToReview(reviewDTO, review);
+        review.setUserId(userProfile.getUserId());
+        review.setUserEmail(userProfile.getEmail());
+        review.setCountryCode(customRequestContext.getCountryCode());
+        reviewDAO.createReview(review);
 
-		// review document arrives late in database
-		while (!reviewDAO.getByReviewIdNoLog(review.getReviewId()).isPresent()) {
+        UserProfileReview addedReview = new UserProfileReview();
+        addedReview.setReviewId(review.getReviewId());
+        addedReview.setFacultyId(review.getFacultyId());
+        addedReview.setAddedDate(currentDate);
+        userProfile.getAddedReviews().add(addedReview);
+        userProfile.setUserStatus(ObjectUtils.firstNonNull(userProfile.getUserStatus(), review.getUserStatus()));
+        userProfile.setUserYear(ObjectUtils.firstNonNull(userProfile.getUserYear(), review.getUserYear()));
+        userProfile
+                .setIsUserWorking(ObjectUtils.firstNonNull(userProfile.getIsUserWorking(), review.getIsUserWorking()));
+        userProfileDAO.updateUserProfile(userProfile);
 
-		}
+        ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
+        reviewResponseDTO.setReviewId(review.getReviewId());
+        reviewResponseDTO.setFacultyId(review.getFacultyId());
 
-		// update faculty with new ratings
-		updateFacultyReviewDetails(faculty);
+        // review document arrives late in database
+        while (!reviewDAO.getByReviewIdNoLog(review.getReviewId()).isPresent()) {
 
-		return ResponseDTO.createSuccessResponse(new JSONObject(reviewResponseDTO));
-	}
+        }
 
-	public ResponseDTO updateReview(ReviewDTO reviewDTO) {
-		String userId = customRequestContext.getUserId();
+        // update faculty with new ratings
+        updateFacultyReviewDetails(faculty);
 
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
-		if (!userProfileOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
-		}
-		UserProfile userProfile = userProfileOpt.get();
+        return ResponseDTO.createSuccessResponse(new JSONObject(reviewResponseDTO));
+    }
 
-		Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewDTO.getReviewId());
-		if (!reviewOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
-		}
-		ErrorsEnum error = validateReviewUpdate(reviewDTO);
-		if (ErrorsEnum.NO_ERROR != error) {
-			return ResponseDTO.createErrorResponse(error);
-		}
-		Review review = reviewOpt.get();
-		if (!StringUtils.equals(review.getUserId(), userId)) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_UPDATE_DIFFERENT_USER);
-		}
-		LocalDateTime dueDate = LocalDateTime.now().minusDays(2);
-		if (review.getReviewDate().before(Date.from(dueDate.atZone(ZoneId.systemDefault()).toInstant()))) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_EDITABLE);
-		}
-		mapToReview(reviewDTO, review);
-		if (BooleanUtils.isTrue(reviewDTO.getDelete())) {
-			review.setDocType(DocTypeEnum.ARCHIVED_REVIEW.toString());
-			userProfile.getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
-		}
-		userProfile.setUserStatus(ObjectUtils.firstNonNull(userProfile.getUserStatus(), review.getUserStatus()));
-		userProfile.setUserYear(ObjectUtils.firstNonNull(userProfile.getUserYear(), review.getUserYear()));
-		userProfile
-				.setIsUserWorking(ObjectUtils.firstNonNull(userProfile.getIsUserWorking(), review.getIsUserWorking()));
-		userProfileDAO.updateUserProfile(userProfile);
-		reviewDAO.updateReview(review);
-		ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
-		reviewResponseDTO.setReviewId(review.getReviewId());
-		reviewResponseDTO.setFacultyId(review.getFacultyId());
+    public ResponseDTO updateReview(ReviewDTO reviewDTO) {
+        String userId = customRequestContext.getUserId();
 
-		// update faculty with new ratings
-		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(review.getFacultyId());
-		if (!facultyOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
-		}
-		Faculty faculty = facultyOpt.get();
-		updateFacultyReviewDetails(faculty);
+        Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+        if (!userProfileOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+        }
+        UserProfile userProfile = userProfileOpt.get();
 
-		return ResponseDTO.createSuccessResponse(new JSONObject(reviewResponseDTO));
-	}
+        Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewDTO.getReviewId());
+        if (!reviewOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
+        }
+        ErrorsEnum error = validateReviewUpdate(reviewDTO);
+        if (ErrorsEnum.NO_ERROR != error) {
+            return ResponseDTO.createErrorResponse(error);
+        }
+        Review review = reviewOpt.get();
+        if (!StringUtils.equals(review.getUserId(), userId)) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_UPDATE_DIFFERENT_USER);
+        }
+        LocalDateTime dueDate = LocalDateTime.now().minusDays(2);
+        if (review.getReviewDate().before(Date.from(dueDate.atZone(ZoneId.systemDefault()).toInstant()))) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_EDITABLE);
+        }
+        mapToReview(reviewDTO, review);
+        if (BooleanUtils.isTrue(reviewDTO.getDelete())) {
+            review.setDocType(DocTypeEnum.ARCHIVED_REVIEW.toString());
+            userProfile.getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
+        }
+        userProfile.setUserStatus(ObjectUtils.firstNonNull(userProfile.getUserStatus(), review.getUserStatus()));
+        userProfile.setUserYear(ObjectUtils.firstNonNull(userProfile.getUserYear(), review.getUserYear()));
+        userProfile
+                .setIsUserWorking(ObjectUtils.firstNonNull(userProfile.getIsUserWorking(), review.getIsUserWorking()));
+        userProfileDAO.updateUserProfile(userProfile);
+        reviewDAO.updateReview(review);
+        ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
+        reviewResponseDTO.setReviewId(review.getReviewId());
+        reviewResponseDTO.setFacultyId(review.getFacultyId());
 
-	public void updateFacultyReviewDetails(Faculty faculty) {
-		logUtils.logMessageNoRequest(LOGGER,
-				"Faculty " + faculty.getFacultyId() + " currently has the following review details. avgRating: "
-						+ faculty.getAvgRating() + " countRev: " + faculty.getCountRev() + " avgDifficulty: "
-						+ faculty.getAvgDifficulty() + " percentageWouldRecommend: "
-						+ faculty.getPercentageWouldRecommend());
+        // update faculty with new ratings
+        Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(review.getFacultyId());
+        if (!facultyOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
+        }
+        Faculty faculty = facultyOpt.get();
+        updateFacultyReviewDetails(faculty);
 
-		reviewDAO.updateReviewsDetailsForFaculty(faculty);
-		facultyDAO.updateFaculty(faculty);
+        return ResponseDTO.createSuccessResponse(new JSONObject(reviewResponseDTO));
+    }
 
-		logUtils.logMessageNoRequest(LOGGER,
-				"Faculty " + faculty.getFacultyId() + " was updated with the following review details. avgRating: "
-						+ faculty.getAvgRating() + " countRev: " + faculty.getCountRev() + " avgDifficulty: "
-						+ faculty.getAvgDifficulty() + " percentageWouldRecommend: "
-						+ faculty.getPercentageWouldRecommend());
-	}
+    public ResponseDTO updateReviewAnswerText(ReviewDTO reviewDTO) {
+        Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewDTO.getReviewId());
+        if (!reviewOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
+        }
+        Review review = reviewOpt.get();
+        review.setReviewAnswerText(reviewDTO.getReviewAnswerText());
+        reviewDAO.updateReview(review);
+        ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
+        reviewResponseDTO.setReviewId(review.getReviewId());
+        reviewResponseDTO.setReviewAnswerText(review.getReviewAnswerText());
 
-	public ResponseDTO reportReview(String reviewId) {
-		Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewId);
-		if (!reviewOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
-		}
-		Review review = reviewOpt.get();
-		int reports = review.getReports();
-		review.setReports(++reports);
-		logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was reported!");
-		reviewDAO.updateReview(review);
+        return ResponseDTO.createSuccessResponse(new JSONObject(reviewResponseDTO));
+    }
 
-		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
-	}
+    public void updateFacultyReviewDetails(Faculty faculty) {
+        logUtils.logMessageNoRequest(LOGGER,
+                "Faculty " + faculty.getFacultyId() + " currently has the following review details. avgRating: "
+                        + faculty.getAvgRating() + " countRev: " + faculty.getCountRev() + " avgDifficulty: "
+                        + faculty.getAvgDifficulty() + " percentageWouldRecommend: "
+                        + faculty.getPercentageWouldRecommend());
 
-	public ResponseDTO upvoteReview(ReviewDTO reviewDTO) {
-		String userId = customRequestContext.getUserId();
+        reviewDAO.updateReviewsDetailsForFaculty(faculty);
+        facultyDAO.updateFaculty(faculty);
 
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
-		if (!userProfileOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
-		}
-		UserProfile userProfile = userProfileOpt.get();
+        logUtils.logMessageNoRequest(LOGGER,
+                "Faculty " + faculty.getFacultyId() + " was updated with the following review details. avgRating: "
+                        + faculty.getAvgRating() + " countRev: " + faculty.getCountRev() + " avgDifficulty: "
+                        + faculty.getAvgDifficulty() + " percentageWouldRecommend: "
+                        + faculty.getPercentageWouldRecommend());
+    }
 
-		Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewDTO.getReviewId());
-		if (!reviewOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
-		}
-		Review review = reviewOpt.get();
-		int upvotes = review.getUpvotes();
-		if (reviewDTO.getUpvote()) {
-			if (userProfile.getLikedReviews().contains(reviewDTO.getReviewId())) {
-				return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_ALREADY_UPVOTED);
-			}
-			review.setUpvotes(++upvotes);
-			userProfile.getLikedReviews().add(reviewDTO.getReviewId());
-			logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was upvoted!");
-		} else {
-			if (!userProfile.getLikedReviews().contains(reviewDTO.getReviewId())) {
-				return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_ALREADY_UPVOTED);
-			}
-			if (upvotes == 0) {
-				review.setUpvotes(0);
-			} else {
-				review.setUpvotes(--upvotes);
-			}
-			userProfile.getLikedReviews().remove(reviewDTO.getReviewId());
-			logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was downvoted!");
-		}
-		reviewDAO.updateReview(review);
-		userProfileDAO.updateUserProfile(userProfile);
-		ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
-		reviewResponseDTO.setReviewId(review.getReviewId());
-		reviewResponseDTO.setFacultyId(review.getFacultyId());
-		reviewResponseDTO.setUpvotes(review.getUpvotes());
+    public ResponseDTO reportReview(String reviewId) {
+        Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewId);
+        if (!reviewOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
+        }
+        Review review = reviewOpt.get();
+        int reports = review.getReports();
+        review.setReports(++reports);
+        logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was reported!");
+        reviewDAO.updateReview(review);
 
-		return ResponseDTO.createSuccessResponse(new JSONObject(reviewResponseDTO));
-	}
+        return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+    }
 
-	public ResponseDTO deleteByReviewId(String reviewId) {
-		Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewId);
-		if (!reviewOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
-		}
-		Review review = reviewOpt.get();
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(review.getUserId());
-		if (userProfileOpt.isPresent()) {
-			userProfileOpt.get().getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
-			userProfileDAO.saveUserProfile(userProfileOpt.get());
-		}
-		reviewDAO.deleteReview(review);
+    public ResponseDTO upvoteReview(ReviewDTO reviewDTO) {
+        String userId = customRequestContext.getUserId();
 
-		// update faculty with new ratings
-		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(review.getFacultyId());
-		if (!facultyOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
-		}
-		Faculty faculty = facultyOpt.get();
-		updateFacultyReviewDetails(faculty);
+        Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+        if (!userProfileOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+        }
+        UserProfile userProfile = userProfileOpt.get();
 
-		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
-	}
+        Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewDTO.getReviewId());
+        if (!reviewOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
+        }
+        Review review = reviewOpt.get();
+        int upvotes = review.getUpvotes();
+        if (reviewDTO.getUpvote()) {
+            if (userProfile.getLikedReviews().contains(reviewDTO.getReviewId())) {
+                return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_ALREADY_UPVOTED);
+            }
+            review.setUpvotes(++upvotes);
+            userProfile.getLikedReviews().add(reviewDTO.getReviewId());
+            logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was upvoted!");
+        } else {
+            if (!userProfile.getLikedReviews().contains(reviewDTO.getReviewId())) {
+                return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_ALREADY_UPVOTED);
+            }
+            if (upvotes == 0) {
+                review.setUpvotes(0);
+            } else {
+                review.setUpvotes(--upvotes);
+            }
+            userProfile.getLikedReviews().remove(reviewDTO.getReviewId());
+            logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was downvoted!");
+        }
+        reviewDAO.updateReview(review);
+        userProfileDAO.updateUserProfile(userProfile);
+        ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
+        reviewResponseDTO.setReviewId(review.getReviewId());
+        reviewResponseDTO.setFacultyId(review.getFacultyId());
+        reviewResponseDTO.setUpvotes(review.getUpvotes());
 
-	public ResponseDTO deleteByFacultyId(String facultyId) {
-		List<Review> reviews = reviewDAO.getReviewsByFacultyId(facultyId);
-		for (Review review : reviews) {
-			Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(review.getUserId());
-			if (userProfileOpt.isPresent()) {
-				userProfileOpt.get().getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
-				userProfileDAO.saveUserProfile(userProfileOpt.get());
-			}
-			reviewDAO.deleteReview(review);
-		}
+        return ResponseDTO.createSuccessResponse(new JSONObject(reviewResponseDTO));
+    }
 
-		// update faculty with new ratings
-		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(facultyId);
-		if (!facultyOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
-		}
-		Faculty faculty = facultyOpt.get();
-		updateFacultyReviewDetails(faculty);
+    public ResponseDTO deleteByReviewId(String reviewId) {
+        Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewId);
+        if (!reviewOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
+        }
+        Review review = reviewOpt.get();
+        Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(review.getUserId());
+        if (userProfileOpt.isPresent()) {
+            userProfileOpt.get().getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
+            userProfileDAO.saveUserProfile(userProfileOpt.get());
+        }
+        reviewDAO.deleteReview(review);
 
-		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
-	}
+        // update faculty with new ratings
+        Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(review.getFacultyId());
+        if (!facultyOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
+        }
+        Faculty faculty = facultyOpt.get();
+        updateFacultyReviewDetails(faculty);
 
-	public ResponseDTO deleteAllReviews() {
-		reviewDAO.deleteAllReviews();
-		List<Faculty> faculties = facultyDAO.getAllFaculties();
-		// update all faculties with new ratings
-		for (Faculty faculty : faculties) {
-			updateFacultyReviewDetails(faculty);
-		}
-		List<UserProfile> userProfiles = userProfileDAO.getAllUserProfiles();
-		for (UserProfile userProfile : userProfiles) {
-			userProfile.getAddedReviews().clear();
-			userProfile.getLikedReviews().clear();
-			userProfileDAO.saveUserProfile(userProfile);
-		}
+        return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+    }
 
-		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
-	}
+    public ResponseDTO deleteByFacultyId(String facultyId) {
+        List<Review> reviews = reviewDAO.getReviewsByFacultyId(facultyId);
+        for (Review review : reviews) {
+            Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(review.getUserId());
+            if (userProfileOpt.isPresent()) {
+                userProfileOpt.get().getAddedReviews().removeIf(rev -> rev.getReviewId().equals(review.getReviewId()));
+                userProfileDAO.saveUserProfile(userProfileOpt.get());
+            }
+            reviewDAO.deleteReview(review);
+        }
 
-	private ErrorsEnum validateReviewCreate(ReviewDTO reviewDTO, UserProfile userProfile) {
-		if (reviewDTO.getGeneralRating() == null || reviewDTO.getGeneralRating() < 1
-				|| reviewDTO.getGeneralRating() > 5) {
-			return ErrorsEnum.REVIEW_GENERAL_RATING_ERROR;
-		}
-		if (reviewDTO.getDifficulty() != null) {
-			if (reviewDTO.getDifficulty() < 1 || reviewDTO.getDifficulty() > 5) {
-				return ErrorsEnum.REVIEW_DIFFICULTY_ERROR;
-			}
-		}
-		if (reviewDTO.getReviewText().length() < Constants.REVIEW_MIN_LENGTH || reviewDTO.getReviewText().length() > Constants.REVIEW_MAX_LENGTH) {
-			return ErrorsEnum.REVIEW_LENGTH_ERROR;
-		}
-		List<UserProfileReview> userAddedReviews = userProfile.getAddedReviews();
-		if (userAddedReviews.size() >= Constants.MAX_REVIEWS) {
-			return ErrorsEnum.REVIEW_MAX_NUMBER;
-		}
-		List<UserProfileReview> reviewsForSameFaculty = userAddedReviews.stream()
-				.filter(review -> review.getFacultyId().equals(reviewDTO.getFacultyId())).collect(Collectors.toList());
+        // update faculty with new ratings
+        Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(facultyId);
+        if (!facultyOpt.isPresent()) {
+            return ResponseDTO.createErrorResponse(ErrorsEnum.FACULTY_NOT_FOUND);
+        }
+        Faculty faculty = facultyOpt.get();
+        updateFacultyReviewDetails(faculty);
 
-		if (!reviewsForSameFaculty.isEmpty()) {
-			Collections.sort(reviewsForSameFaculty, new Comparator<UserProfileReview>() {
-				public int compare(UserProfileReview o1, UserProfileReview o2) {
-					if (o1.getAddedDate() == null || o2.getAddedDate() == null) {
-						return 0;
-					}
-					return o1.getAddedDate().compareTo(o2.getAddedDate());
-				}
-			});
+        return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+    }
 
-			Date lastReviewDateForSameFaculty = reviewsForSameFaculty.get(0).getAddedDate();
-			Date currentDate = new Date();
-			long millisSinceLastReview = currentDate.getTime() - lastReviewDateForSameFaculty.getTime();
-			long dueDateMillis = TimeUnit.MILLISECONDS.convert(Constants.SAME_FACULTY_REVIEW_DAYS, TimeUnit.DAYS);
-			long daysLeft = TimeUnit.DAYS.convert(dueDateMillis - millisSinceLastReview, TimeUnit.MILLISECONDS);
+    public ResponseDTO deleteAllReviews() {
+        reviewDAO.deleteAllReviews();
+        List<Faculty> faculties = facultyDAO.getAllFaculties();
+        // update all faculties with new ratings
+        for (Faculty faculty : faculties) {
+            updateFacultyReviewDetails(faculty);
+        }
+        List<UserProfile> userProfiles = userProfileDAO.getAllUserProfiles();
+        for (UserProfile userProfile : userProfiles) {
+            userProfile.getAddedReviews().clear();
+            userProfile.getLikedReviews().clear();
+            userProfileDAO.saveUserProfile(userProfile);
+        }
 
-			if (millisSinceLastReview < dueDateMillis) {
-				return ErrorsEnum.REVIEW_SAME_FACULTY.formatErrorDescription(String.valueOf(daysLeft));
-			}
-		}
+        return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+    }
 
-		return ErrorsEnum.NO_ERROR;
-	}
+    private ErrorsEnum validateReviewCreate(ReviewDTO reviewDTO, UserProfile userProfile) {
+        if (reviewDTO.getGeneralRating() == null || reviewDTO.getGeneralRating() < 1
+                || reviewDTO.getGeneralRating() > 5) {
+            return ErrorsEnum.REVIEW_GENERAL_RATING_ERROR;
+        }
+        if (reviewDTO.getDifficulty() != null) {
+            if (reviewDTO.getDifficulty() < 1 || reviewDTO.getDifficulty() > 5) {
+                return ErrorsEnum.REVIEW_DIFFICULTY_ERROR;
+            }
+        }
+        if (reviewDTO.getReviewText().length() < Constants.REVIEW_MIN_LENGTH || reviewDTO.getReviewText().length() > Constants.REVIEW_MAX_LENGTH) {
+            return ErrorsEnum.REVIEW_LENGTH_ERROR;
+        }
+        List<UserProfileReview> userAddedReviews = userProfile.getAddedReviews();
+        if (userAddedReviews.size() >= Constants.MAX_REVIEWS) {
+            return ErrorsEnum.REVIEW_MAX_NUMBER;
+        }
+        List<UserProfileReview> reviewsForSameFaculty = userAddedReviews.stream()
+                .filter(review -> review.getFacultyId().equals(reviewDTO.getFacultyId())).collect(Collectors.toList());
 
-	private ErrorsEnum validateReviewUpdate(ReviewDTO reviewDTO) {
-		if (reviewDTO.getGeneralRating() != null) {
-			if (reviewDTO.getGeneralRating() < 1 || reviewDTO.getGeneralRating() > 5) {
-				return ErrorsEnum.REVIEW_GENERAL_RATING_ERROR;
-			}
-		}
-		if (reviewDTO.getDifficulty() != null) {
-			if (reviewDTO.getDifficulty() < 1 || reviewDTO.getDifficulty() > 5) {
-				return ErrorsEnum.REVIEW_DIFFICULTY_ERROR;
-			}
-		}
-		return ErrorsEnum.NO_ERROR;
-	}
+        if (!reviewsForSameFaculty.isEmpty()) {
+            Collections.sort(reviewsForSameFaculty, new Comparator<UserProfileReview>() {
+                public int compare(UserProfileReview o1, UserProfileReview o2) {
+                    if (o1.getAddedDate() == null || o2.getAddedDate() == null) {
+                        return 0;
+                    }
+                    return o1.getAddedDate().compareTo(o2.getAddedDate());
+                }
+            });
 
-	private void mapToReview(ReviewDTO reviewDTO, Review review) {
-		ModelMapper mapper = new ModelMapper();
-		mapper.getConfiguration().setSkipNullEnabled(true).setMatchingStrategy(MatchingStrategies.STRICT);
-		mapper.map(reviewDTO, review);
-	}
+            Date lastReviewDateForSameFaculty = reviewsForSameFaculty.get(0).getAddedDate();
+            Date currentDate = new Date();
+            long millisSinceLastReview = currentDate.getTime() - lastReviewDateForSameFaculty.getTime();
+            long dueDateMillis = TimeUnit.MILLISECONDS.convert(Constants.SAME_FACULTY_REVIEW_DAYS, TimeUnit.DAYS);
+            long daysLeft = TimeUnit.DAYS.convert(dueDateMillis - millisSinceLastReview, TimeUnit.MILLISECONDS);
 
-	private ReviewResponseDTO mapToReviewResponseDTO(Review review) {
-		ModelMapper mapper = new ModelMapper();
-		mapper.getConfiguration().setSkipNullEnabled(true).setMatchingStrategy(MatchingStrategies.STRICT);
-		return mapper.map(review, ReviewResponseDTO.class);
-	}
+            if (millisSinceLastReview < dueDateMillis) {
+                return ErrorsEnum.REVIEW_SAME_FACULTY.formatErrorDescription(String.valueOf(daysLeft));
+            }
+        }
+
+        return ErrorsEnum.NO_ERROR;
+    }
+
+    private ErrorsEnum validateReviewUpdate(ReviewDTO reviewDTO) {
+        if (reviewDTO.getGeneralRating() != null) {
+            if (reviewDTO.getGeneralRating() < 1 || reviewDTO.getGeneralRating() > 5) {
+                return ErrorsEnum.REVIEW_GENERAL_RATING_ERROR;
+            }
+        }
+        if (reviewDTO.getDifficulty() != null) {
+            if (reviewDTO.getDifficulty() < 1 || reviewDTO.getDifficulty() > 5) {
+                return ErrorsEnum.REVIEW_DIFFICULTY_ERROR;
+            }
+        }
+        return ErrorsEnum.NO_ERROR;
+    }
+
+    private void mapToReview(ReviewDTO reviewDTO, Review review) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setSkipNullEnabled(true).setMatchingStrategy(MatchingStrategies.STRICT);
+        mapper.map(reviewDTO, review);
+    }
+
+    private ReviewResponseDTO mapToReviewResponseDTO(Review review) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setSkipNullEnabled(true).setMatchingStrategy(MatchingStrategies.STRICT);
+        return mapper.map(review, ReviewResponseDTO.class);
+    }
 
 //	private void updateNewFacultyRating(ReviewDTO reviewDTO) {
 //		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(reviewDTO.getFacultyId());

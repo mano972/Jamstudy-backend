@@ -441,7 +441,7 @@
 													<div class="col-md-12">																
 														<div class="radio-toolbar">
 														  <input type="radio" id="year1" name="years" value="Anul 1">
-															<label for="year1"><span data-i18n-key="the-year">Anul</span> 1</label>
+														  <label for="year1"><span data-i18n-key="the-year">Anul</span> 1</label>
 
 														  <input type="radio" id="year2" name="years" value="Anul 2">
 														  <label for="year2"><span data-i18n-key="the-year">Anul</span> 2</label>
@@ -1001,7 +1001,7 @@ function postReview(){
 						addedReviews.push(newReview);
 						setUField("uar", addedReviews);
 					<!-- document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost adăugată cu succes. "; -->
-					document.getElementById('add-review-modal-text').innerHTML = "Succes. Poti edita evaluarea timp de 48 de ore din sectiunea 'Contul meu'.";
+					document.getElementById('add-review-modal-text').innerHTML = "Success. You can edit the review for 48 hours from your account.";
 					$("#add-review-modal").on("hidden.bs.modal", function () {
 						var urlProfileRedirect = "./profile.html?id=" + facultyId;
 						window.location.replace(urlProfileRedirect);

@@ -1,10 +1,21 @@
 package com.app.studentromania.aspect;
 
-import java.util.Date;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.app.studentromania.config.AuthProperties;
+import com.app.studentromania.dao.EntityProfileDAO;
+import com.app.studentromania.dao.UserProfileDAO;
+import com.app.studentromania.dto.ResponseDTO;
+import com.app.studentromania.enumtype.ErrorsEnum;
+import com.app.studentromania.model.EntityProfile;
+import com.app.studentromania.model.UserProfile;
+import com.app.studentromania.service.CustomRequestContext;
+import com.app.studentromania.util.Constants;
+import com.app.studentromania.util.LogUtils;
+import com.app.studentromania.util.Utilities;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -18,103 +29,99 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.app.studentromania.config.AuthProperties;
-import com.app.studentromania.dao.UserProfileDAO;
-import com.app.studentromania.dto.ResponseDTO;
-import com.app.studentromania.enumtype.ErrorsEnum;
-import com.app.studentromania.model.UserProfile;
-import com.app.studentromania.service.CustomRequestContext;
-import com.app.studentromania.util.Constants;
-import com.app.studentromania.util.LogUtils;
-import com.app.studentromania.util.Utilities;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.Optional;
 
 @Aspect
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class AuthAspect {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AuthAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthAspect.class);
 
-	@Autowired
-	private UserProfileDAO userProfileDAO;
+    @Autowired
+    private UserProfileDAO userProfileDAO;
 
-	@Autowired
-	private CustomRequestContext customRequestContext;
+    @Autowired
+    private EntityProfileDAO entityProfileDAO;
 
-	@Autowired
-	private LogUtils logUtils;
+    @Autowired
+    private CustomRequestContext customRequestContext;
 
-	@Autowired
-	private AuthProperties authProperties;
+    @Autowired
+    private LogUtils logUtils;
 
-	@Around("@annotation(com.app.studentromania.annotation.Auth)")
-	public Object auth(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+    @Autowired
+    private AuthProperties authProperties;
 
-		final String algorithmSecret = authProperties.getSecret();
-		final String issuer = authProperties.getIssuer();
+    @Around("@annotation(com.app.studentromania.annotation.Auth)")
+    public Object auth(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
-		customRequestContext.setUserId(null);
-		customRequestContext.setTraceId(Utilities.getTraceId());
+        final String algorithmSecret = authProperties.getSecret();
+        final String issuer = authProperties.getIssuer();
 
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-				.getRequest();
+        customRequestContext.setUserId(null);
+        customRequestContext.setEntityProfileId(null);
+        customRequestContext.setTraceId(Utilities.getTraceId());
 
-		final String countryCode = request.getHeader(Constants.COUNTRY_CODE_TOKEN_REQUEST_HEADER);
-		customRequestContext.setCountryCode(countryCode != null ? countryCode : "RO");
-		final String jwtAuthHeader = request.getHeader(Constants.JWT_TOKEN_REQUEST_HEADER);
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+                .getRequest();
 
-		try {
-			if (!StringUtils.isBlank(jwtAuthHeader) && jwtAuthHeader.startsWith("Bearer")) {
+        final String countryCode = request.getHeader(Constants.COUNTRY_CODE_TOKEN_REQUEST_HEADER);
+        customRequestContext.setCountryCode(countryCode != null ? countryCode : "RO");
+        final String jwtAuthHeader = request.getHeader(Constants.JWT_TOKEN_REQUEST_HEADER);
 
-				String jwtToken = jwtAuthHeader.replace("Bearer", "").trim();
+        try {
+            if (!StringUtils.isBlank(jwtAuthHeader) && jwtAuthHeader.startsWith("Bearer")) {
 
-				Algorithm algorithm = Algorithm.HMAC256(algorithmSecret);
-				JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).build();
-				verifier.verify(jwtToken);
+                String jwtToken = jwtAuthHeader.replace("Bearer", "").trim();
 
-				DecodedJWT decodedJwtToken = JWT.decode(jwtToken);
-				String userId = decodedJwtToken.getSubject();
-				if (StringUtils.isBlank(userId)) {
-					logUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId is missing from the token");
-					return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
-				}
+                Algorithm algorithm = Algorithm.HMAC256(algorithmSecret);
+                JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).build();
+                verifier.verify(jwtToken);
 
-				final String endPointName = proceedingJoinPoint.getSignature().getName();
-				logUtils.logAuth(LOGGER, endPointName, userId);
+                DecodedJWT decodedJwtToken = JWT.decode(jwtToken);
+                String userId = decodedJwtToken.getSubject();
+                if (StringUtils.isBlank(userId)) {
+                    logUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId is missing from the token");
+                    return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+                }
 
-				Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
-				if (!userProfileOpt.isPresent()) {
-					logUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId does not exist: " + userId);
-					return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
-				}
+                final String endPointName = proceedingJoinPoint.getSignature().getName();
+                logUtils.logAuth(LOGGER, endPointName, userId);
 
-				if (isTokenExpired(decodedJwtToken)) {
-					logUtils.logMessage(LOGGER,
-							"Error when verifying JWT token. Token has expired for userId: " + userId);
-					return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_EXPIRED);
-				}
+                Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+                Optional<EntityProfile> entityProfileOpt = entityProfileDAO.getByEntityId(userId);
+                if (!userProfileOpt.isPresent() && !entityProfileOpt.isPresent()) {
+                    logUtils.logMessage(LOGGER, "Error when verifying JWT token. User/EntityProfile with id does not exist: " + userId);
+                    return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+                } else if (userProfileOpt.isPresent()) {
+                    customRequestContext.setUserId(userId);
+                } else {
+                    customRequestContext.setEntityProfileId(userId);
+                }
 
-				customRequestContext.setUserId(userId);
-			}
+                if (isTokenExpired(decodedJwtToken)) {
+                    logUtils.logMessage(LOGGER,
+                            "Error when verifying JWT token. Token has expired for userId: " + userId);
+                    return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_EXPIRED);
+                }
+            }
 
-		} catch (JWTVerificationException e) {
-			logUtils.logMessage(LOGGER, "Error when verifying JWT token ");
-			return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_VERIFY_ERROR).createRestResponse();
-		}
+        } catch (JWTVerificationException e) {
+            logUtils.logMessage(LOGGER, "Error when verifying JWT token ");
+            return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_VERIFY_ERROR).createRestResponse();
+        }
 
-		Object proceed = proceedingJoinPoint.proceed();
+        Object proceed = proceedingJoinPoint.proceed();
 
-		return proceed;
+        return proceed;
 
-	}
+    }
 
-	private boolean isTokenExpired(DecodedJWT decodedJwtToken) {
-		return decodedJwtToken.getExpiresAt().before(new Date());
-	}
+    private boolean isTokenExpired(DecodedJWT decodedJwtToken) {
+        return decodedJwtToken.getExpiresAt().before(new Date());
+    }
 
 }

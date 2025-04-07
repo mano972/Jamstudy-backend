@@ -9,33 +9,43 @@ import org.springframework.web.context.WebApplicationContext;
 @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class CustomRequestContext {
 
-	private String userId;
+    private String userId;
 
-	private String traceId;
+    private String entityProfileId;
 
-	private String countryCode;
+    private String traceId;
 
-	public String getUserId() {
-		return userId;
-	}
+    private String countryCode;
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public String getTraceId() {
-		return traceId;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public void setTraceId(String traceId) {
-		this.traceId = traceId;
-	}
+    public String getEntityProfileId() {
+        return entityProfileId;
+    }
 
-	public String getCountryCode() {
-		return countryCode;
-	}
+    public void setEntityProfileId(String entityProfileId) {
+        this.entityProfileId = entityProfileId;
+    }
 
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
-	}
+    public String getTraceId() {
+        return traceId;
+    }
+
+    public void setTraceId(String traceId) {
+        this.traceId = traceId;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
 }
