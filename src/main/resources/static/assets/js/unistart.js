@@ -725,10 +725,10 @@ function verifyReset(token) {
 					var errorDescription = error.responseJSON.control.errorDescription;
 					document.getElementById('modal-text').innerHTML = errorDescription;
 				} else {
-					document.getElementById('modal-text').innerHTML = "A apărut o eroare.";
+					document.getElementById('modal-text').innerHTML = "Error.";
 				}
 			} else {
-				document.getElementById('modal-text').innerHTML = "A apărut o eroare.";
+				document.getElementById('modal-text').innerHTML = "Error.";
 			}
 			$("#general-modal").on("hidden.bs.modal", function () {
 				var jwtToken = getUField("ut");

@@ -300,7 +300,7 @@
         }
 
         if (response.result.reviews.length == 0) {
-            document.getElementById("review-entries").innerHTML = '<div class="text-center text-muted"> <h4>Nu au fost găsite rezultate</h4> </div>';
+            document.getElementById("review-entries").innerHTML = '<div class="text-center text-muted"> <h4>No reviews found</h4> </div>';
         }
 
         var facultyIds = response.result.reviews.map(r => r.facultyId);
@@ -320,6 +320,10 @@
 
                     var facultyId = response.result.reviews[i].facultyId;
                     var faculty = facultyResponse.result.faculties.filter(f => facultyId === f.facultyId)[0];
+
+                    console.log(facultyId);
+                    console.log(faculty);
+                    console.log(facultyResponse.result.faculties);
 
                     var urlProfileRedirect = "./profile.html?id=";
 
