@@ -6,6 +6,20 @@ $.ajaxSetup({
   }
 });
 
+// Escapes user/API-supplied text before it is concatenated into an HTML string
+// and assigned via innerHTML/.html() elsewhere in this file and in the static pages.
+function escapeHtml(value) {
+	if (value === null || value === undefined) {
+		return "";
+	}
+	return String(value)
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#39;");
+}
+
 function myAccount(el) {
 	var jwtToken = getUField("ut");
 	if (jwtToken) {
@@ -798,8 +812,8 @@ function validateEmail(email) {
 }
 
 function validatePass(pass) {
-	var lettersNumbers = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/;
-	return lettersNumbers.test(String(pass).toLowerCase());
+	var lettersNumbers = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,22}$/;
+	return lettersNumbers.test(String(pass));
 }
 
 function goToAddReview(el, facultyId) {
@@ -1237,7 +1251,7 @@ function initiateAutocomplete() {
 			})
 		},
 		renderResult: (result, props) => {
-			return ' <li ' + props + '>	<div>	 ' + result.facultyName + '	</div>	<small class="text-muted">	' + result.universityName + '	</small></li>	'
+			return ' <li ' + props + '>	<div>	 ' + escapeHtml(result.facultyName) + '	</div>	<small class="text-muted">	' + escapeHtml(result.universityName) + '	</small></li>	'
 		},
 		getResultValue: result => result.facultyName,
 		onSubmit: result => {
@@ -1894,10 +1908,10 @@ function getRegisterModal() {
                         '								<small id="error-register-email" class="error-message"></small>'+
                         '								<br>'+
                         '								<fieldset class="search-fieldset">'+
-                        '									<input id="register-pass" type="password" class="form-control" placeholder="Password" maxlength="50" oninput="clearErrorRegisterPass()">'+
+                        '									<input id="register-pass" type="password" class="form-control" placeholder="Password" maxlength="22" oninput="clearErrorRegisterPass()">'+
                         '									<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>'+
                         '								</fieldset>'+
-                        '								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirm password" maxlength="50" oninput="clearErrorRegisterConfirmPass()">'+
+                        '								<input id="register-confirm-pass" type="password" class="form-control" placeholder="Confirm password" maxlength="22" oninput="clearErrorRegisterConfirmPass()">'+
                         '								<small id="error-register" class="error-message"></small>'+
 
                         '								<div>'+

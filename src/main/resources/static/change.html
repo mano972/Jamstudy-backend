@@ -53,12 +53,12 @@
 											<form class="register-form">
 												<!-- <label>Parola</label> -->
 												<fieldset class="search-fieldset">
-													<input id="reset-pass" type="password" class="form-control" placeholder="Parola" maxlength="50" oninput="clearErrorResetPass()">
+													<input id="reset-pass" type="password" class="form-control" placeholder="Parola" maxlength="22" oninput="clearErrorResetPass()">
 													<i id="pass-info" data-toggle="tooltip" title="Parola trebuie să aibă minim 7 caractere și să conțină litere și cifre." class="fas fa-info-circle inner-icon" aria-hidden="true"></i>
 												</fieldset>
 												<!-- <label>Confirmă Parola</label> -->
 												<br>
-												<input id="reset-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="50" oninput="clearErrorResetConfirmPass()">
+												<input id="reset-confirm-pass" type="password" class="form-control" placeholder="Confirmă Parola" maxlength="22" oninput="clearErrorResetConfirmPass()">
 												<small id="error-reset" class="error-message"></small>
 												<br>
 												<button id="reset-button" class="btn btn-info btn-block btn-fill" onclick="changePass(event, resetToken)">Schimbă parola</button>

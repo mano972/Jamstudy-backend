@@ -501,9 +501,9 @@ function loadData(loadMore) {
 				}
 				
 				var facultyId = response.result.faculties[i].facultyId;
-				var facultyName = response.result.faculties[i].facultyName;
-				var universityName = response.result.faculties[i].universityName;
-				var facultyCity = response.result.faculties[i].facultyCity;
+				var facultyName = escapeHtml(response.result.faculties[i].facultyName);
+				var universityName = escapeHtml(response.result.faculties[i].universityName);
+				var facultyCity = escapeHtml(response.result.faculties[i].facultyCity);
 				
 				var universityNameForLogo = universityName.replaceAll("\"", "_");
 				var logoName = facultyName + universityNameForLogo;
@@ -645,7 +645,7 @@ function loadRecentlyViewedFacultiesContent(sortedResponse) {
 			}
 			var faculty = faculties[i];
 			var universityNameFront;
-			var universityName = faculty.universityName;
+			var universityName = escapeHtml(faculty.universityName);
 			if (universityName.length > 50) {
 				universityNameFront = universityName.substring(0, 50).concat('...');
 			} else {
@@ -665,7 +665,7 @@ function loadRecentlyViewedFacultiesContent(sortedResponse) {
 			var urlProfileRedirect = "./profile.html?id=";
 			
 			recentFacultiesString += (
-						'<div class="' + colWidth + '"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + faculty.facultyName + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + faculty.facultyCity + '</small> <br> <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+faculty.facultyId+'&quot;)"> <i class="fa fa-star rating-suggestion-card" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </a> </div>  </div> </div> </div> </div>');
+						'<div class="' + colWidth + '"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + escapeHtml(faculty.facultyName) + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + escapeHtml(faculty.facultyCity) + '</small> <br> <a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+faculty.facultyId+'&quot;)"> <i class="fa fa-star rating-suggestion-card" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </a> </div>  </div> </div> </div> </div>');
 
 		if (i==(faculties.length - 1) || i%recentFacultiesPerSlide==(recentFacultiesPerSlide-1)) {
 			recentFacultiesString += ('</div> </div>');

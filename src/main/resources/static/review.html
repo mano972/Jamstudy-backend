@@ -744,8 +744,8 @@ function loadFaculty(){
 	  success: function(response) {
 		
 		if (response.control.errorCode === 0) {
-			var facultyName = response.result.facultyName;
-			var universityName = response.result.universityName;
+			var facultyName = escapeHtml(response.result.facultyName);
+			var universityName = escapeHtml(response.result.universityName);
 			var universityNameForLogo = universityName.replaceAll("\"", "_");
 			var logoName = facultyName + universityNameForLogo;
 			<!-- var logoSrc = "C://logos_jamstudy/" + logoName + ".png"; -->

@@ -57,8 +57,7 @@ public class Constants {
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
             Pattern.CASE_INSENSITIVE);
 
-    public static final Pattern VALID_PASSWORD_REGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z][A-Z]).{7,22}$",
-            Pattern.CASE_INSENSITIVE);
+    public static final Pattern VALID_PASSWORD_REGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{7,22}$");
 
     public static final String DEFAULT_REGISTER_CONFIRMATION_EMAIL_SUBJECT = "Confirma crearea unui cont nou pe platforma Unistart";
     public static final String DEFAULT_REGISTER_CONFIRMATION_EMAIL_TEXT = "Bun venit in comunitatea Unistart! \n \nAcceseaza link-ul pentru a confirma crearea unui cont nou. \n \n %s \n \nFoloseste platforma Unistart pentru a gasi facultatea potrivita pentru tine. \nIn cazul in care esti student sau absolvent, lasa o evaluare facultatii tale si ajuta un elev sa ia decizia potrivita. \n \nCu drag, \nEchipa Unistart";

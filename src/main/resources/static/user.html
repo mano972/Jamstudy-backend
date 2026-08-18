@@ -249,12 +249,12 @@
 
     function loadUserProfileInfoContent(userResponse) {
 
-        var firstName = userResponse.firstName ? userResponse.firstName : "";
-        var lastName = userResponse.lastName ? userResponse.lastName : "";
-        var email = userResponse.email ? userResponse.email : "";
-        var location = userResponse.location ? userResponse.location : "";
+        var firstName = escapeHtml(userResponse.firstName ? userResponse.firstName : "");
+        var lastName = escapeHtml(userResponse.lastName ? userResponse.lastName : "");
+        var email = escapeHtml(userResponse.email ? userResponse.email : "");
+        var location = escapeHtml(userResponse.location ? userResponse.location : "");
         var birthDate = userResponse.birthDate ? userResponse.birthDate : "";
-        var formattedBirthDate = userResponse.formattedBirthDate ? userResponse.formattedBirthDate : "";
+        var formattedBirthDate = escapeHtml(userResponse.formattedBirthDate ? userResponse.formattedBirthDate : "");
         var userWorking = userResponse.isUserWorking;
         var userStatus = userResponse.userStatus;
         var userYear = userResponse.userYear;
@@ -537,7 +537,7 @@
           }
         }
 
-        var firstNameText = firstName ? (" " + firstName) : "";
+        var firstNameText = firstName ? (" " + escapeHtml(firstName)) : "";
         var userProfileTopString
         if (!firstName || !lastName || !location || !birthDate || !userStatus) {
         userProfileTopString =
@@ -717,9 +717,9 @@
             }
 
             var facultyId = facultiesResponse[i].facultyId;
-            var facultyName = facultiesResponse[i].facultyName;
-            var universityName = facultiesResponse[i].universityName;
-            var facultyCity = facultiesResponse[i].facultyCity;
+            var facultyName = escapeHtml(facultiesResponse[i].facultyName);
+            var universityName = escapeHtml(facultiesResponse[i].universityName);
+            var facultyCity = escapeHtml(facultiesResponse[i].facultyCity);
 
             var universityNameForLogo = universityName.replaceAll("\"", "_");
             var logoName = facultyName + universityNameForLogo;
@@ -850,8 +850,8 @@
         var i;
         for (i in companiesResponse) {
             var companyId = companiesResponse[i].companyId;
-            var companyName = companiesResponse[i].companyName;
-            var companyCities = companiesResponse[i].companyCities;
+            var companyName = escapeHtml(companiesResponse[i].companyName);
+            var companyCities = escapeHtml(companiesResponse[i].companyCities);
 
             var savedCompaniesIds = getUField("usc");
             var favoriteClass;
@@ -942,8 +942,8 @@
 
                 var reviewId = reviewsResponse[i].reviewId;
                 var facultyId = reviewsResponse[i].facultyId;
-                var facultyName = reviewsResponse[i].facultyName;
-                var userName = reviewsResponse[i].userName ? reviewsResponse[i].userName : "";
+                var facultyName = escapeHtml(reviewsResponse[i].facultyName);
+                var userName = escapeHtml(reviewsResponse[i].userName ? reviewsResponse[i].userName : "");
                 var formattedReviewDate = reviewsResponse[i].formattedReviewDate ? reviewsResponse[i].formattedReviewDate : "N/A";
                 var userStatus = reviewsResponse[i].userStatus ? reviewsResponse[i].userStatus.toLowerCase() : "";
                 if (userStatus === 'drop-out') {
@@ -952,7 +952,7 @@
                 var userDomainOfLicenseOrMaster = reviewsResponse[i].userDomainOfLicenseOrMaster ? reviewsResponse[i].userDomainOfLicenseOrMaster : "";
                 var userProgramName = reviewsResponse[i].userProgramName ? reviewsResponse[i].userProgramName : "";
                 var userYear = reviewsResponse[i].userYear ? reviewsResponse[i].userYear : "";
-                var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
+                var userDetailsString = escapeHtml(userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : ""));
                 var upvotes = reviewsResponse[i].upvotes ? reviewsResponse[i].upvotes : 0;
                 var wouldRecommend = reviewsResponse[i].wouldRecommend;
                 var wouldRecommendText;
@@ -1025,27 +1025,27 @@
 
 
                 var generalRating = reviewsResponse[i].generalRating ? reviewsResponse[i].generalRating : "N/A";
-                var reviewText = reviewsResponse[i].reviewText ? reviewsResponse[i].reviewText : "N/A";
+                var reviewText = escapeHtml(reviewsResponse[i].reviewText ? reviewsResponse[i].reviewText : "N/A");
 
                 var jobProspectsReviewCategory = reviewsResponse[i].jobProspectsReview;
                 var jobProspectsReviewRating = (jobProspectsReviewCategory && jobProspectsReviewCategory.generalRating) ? jobProspectsReviewCategory.generalRating : "N/A";
-                var jobProspectsReviewText = (jobProspectsReviewCategory && jobProspectsReviewCategory.reviewText) ? jobProspectsReviewCategory.reviewText : "";
+                var jobProspectsReviewText = escapeHtml((jobProspectsReviewCategory && jobProspectsReviewCategory.reviewText) ? jobProspectsReviewCategory.reviewText : "");
 
                 var coursesAndLecturersReviewCategory = reviewsResponse[i].coursesAndLecturersReview;
                 var coursesAndLecturersReviewRating = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.generalRating) ? coursesAndLecturersReviewCategory.generalRating : "N/A";
-                var coursesAndLecturersReviewText = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.reviewText) ? coursesAndLecturersReviewCategory.reviewText : "";
+                var coursesAndLecturersReviewText = escapeHtml((coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.reviewText) ? coursesAndLecturersReviewCategory.reviewText : "");
 
                 var studentOrganisationsReviewCategory = reviewsResponse[i].studentOrganisationsReview;
                 var studentOrganisationsReviewRating = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.generalRating) ? studentOrganisationsReviewCategory.generalRating : "N/A";
-                var studentOrganisationsReviewText = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.reviewText) ? studentOrganisationsReviewCategory.reviewText : "";
+                var studentOrganisationsReviewText = escapeHtml((studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.reviewText) ? studentOrganisationsReviewCategory.reviewText : "");
 
                 var accomodationReviewCategory = reviewsResponse[i].accomodationReview;
                 var accomodationReviewRating = (accomodationReviewCategory && accomodationReviewCategory.generalRating) ? accomodationReviewCategory.generalRating : "N/A";
-                var accomodationReviewText = (accomodationReviewCategory && accomodationReviewCategory.reviewText) ? accomodationReviewCategory.reviewText : "";
+                var accomodationReviewText = escapeHtml((accomodationReviewCategory && accomodationReviewCategory.reviewText) ? accomodationReviewCategory.reviewText : "");
 
                 var facultyFacilitiesReviewCategory = reviewsResponse[i].facultyFacilitiesReview;
                 var facultyFacilitiesReviewRating = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.generalRating) ? facultyFacilitiesReviewCategory.generalRating : "N/A";
-                var facultyFacilitiesReviewText = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "";
+                var facultyFacilitiesReviewText = escapeHtml((facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "");
 
                 <!-- var studentSupportReviewCategory = reviewsResponse[i].studentSupportReview; -->
                 <!-- var studentSupportReviewRating = (studentSupportReviewCategory && studentSupportReviewCategory.generalRating) ? studentSupportReviewCategory.generalRating : "N/A"; -->
@@ -1053,7 +1053,7 @@
 
                 var timeBalanceReviewCategory = reviewsResponse[i].timeBalanceReview;
                 var timeBalanceReviewRating = (timeBalanceReviewCategory && timeBalanceReviewCategory.generalRating) ? timeBalanceReviewCategory.generalRating : "N/A";
-                var timeBalanceReviewText = (timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : "";
+                var timeBalanceReviewText = escapeHtml((timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : "");
 
 
                 var facultyReviewsString = (
@@ -1248,7 +1248,7 @@
                 }
                 var faculty = faculties[i];
                 var universityNameFront;
-                var universityName = faculty.universityName;
+                var universityName = escapeHtml(faculty.universityName);
                 if (universityName.length > 50) {
                     universityNameFront = universityName.substring(0, 50).concat('...');
                 } else {
@@ -1268,7 +1268,7 @@
                 var urlProfileRedirect = "./profile.html?id=";
 
                 recentFacultiesString += (
-                            '<div class="' + colWidth + '"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + faculty.facultyName + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + faculty.facultyCity + '</small> <br> <a  data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+faculty.facultyId+'&quot;)"> <i class="fa fa-star rating-suggestion-card" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </a> </div>  </div> </div> </div> </div>');
+                            '<div class="' + colWidth + '"><div class="card inner-card"> <div class="content"> <div class="row"> <div class="col-xs-6 col-xs-offset-3"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <div class="img-faculty-logo-block-base img-faculty-logo-carousel-block"> <img id="logo" src="' + logoSrc + '" class="img-faculty-logo-base img-faculty-logo-carousel center"></img> </div> </a> </div> <div class="col-xs-12" style="margin-top: 15px; height: 170px;"> <a href="' + urlProfileRedirect + faculty.facultyId + '"> <h5><strong>' + escapeHtml(faculty.facultyName) + '</strong></h5> </a> <small data-toggle="tooltip" title="' + universityNameTooltipTitle + '">' + universityNameFront + '</small> <br> <small class="text-muted">' + escapeHtml(faculty.facultyCity) + '</small> <br> <a  data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+faculty.facultyId+'&quot;)"> <i class="fa fa-star rating-suggestion-card" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> </a> </div>  </div> </div> </div> </div>');
 
             if (i==(faculties.length - 1) || i%recentFacultiesPerSlide==(recentFacultiesPerSlide-1)) {
                 recentFacultiesString += ('</div> </div>');

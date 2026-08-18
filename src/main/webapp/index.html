@@ -406,9 +406,9 @@
                     }
 
                     var facultyIdTop = response.result.faculties[0].facultyId;
-                    var facultyNameTop = response.result.faculties[0].facultyName;
-                    var universityNameTop = response.result.faculties[0].universityName;
-                    var facultyCityTop = response.result.faculties[0].facultyCity;
+                    var facultyNameTop = escapeHtml(response.result.faculties[0].facultyName);
+                    var universityNameTop = escapeHtml(response.result.faculties[0].universityName);
+                    var facultyCityTop = escapeHtml(response.result.faculties[0].facultyCity);
 
                     var universityNameForLogoTop = universityNameTop.replaceAll("\"", "_");
                     var logoNameTop = facultyNameTop + universityNameForLogoTop;
@@ -447,7 +447,7 @@
 
                                 for (i in responseReview.result.reviews) {
                                     reviewId = responseReview.result.reviews[i].reviewId;
-                                    userName = responseReview.result.reviews[i].userName ? responseReview.result.reviews[i].userName : "";
+                                    userName = escapeHtml(responseReview.result.reviews[i].userName ? responseReview.result.reviews[i].userName : "");
                                     userStatus = responseReview.result.reviews[i].userStatus ? responseReview.result.reviews[i].userStatus.toLowerCase() : "";
                                     if (userStatus === 'drop-out') {
                                         userStatus = "";
@@ -455,11 +455,11 @@
                                     userDomainOfLicenseOrMaster = responseReview.result.reviews[i].userDomainOfLicenseOrMaster ? responseReview.result.reviews[i].userDomainOfLicenseOrMaster : "";
                                     userProgramName = responseReview.result.reviews[i].userProgramName ? responseReview.result.reviews[i].userProgramName : "";
                                     userYear = responseReview.result.reviews[i].userYear ? responseReview.result.reviews[i].userYear : "";
-                                    var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
+                                    var userDetailsString = escapeHtml(userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : ""));
                                     reviewDate = responseReview.result.reviews[i].reviewDate ? responseReview.result.reviews[i].reviewDate : "N/A";
                                     formattedReviewDate = responseReview.result.reviews[i].formattedReviewDate ? responseReview.result.reviews[i].formattedReviewDate : "N/A";
                                     generalRating = responseReview.result.reviews[i].generalRating ? responseReview.result.reviews[i].generalRating : "N/A";
-                                    reviewText = responseReview.result.reviews[i].reviewText ? responseReview.result.reviews[i].reviewText : "N/A";
+                                    reviewText = escapeHtml(responseReview.result.reviews[i].reviewText ? responseReview.result.reviews[i].reviewText : "N/A");
                                     var reviewTextFront;
                                     if (reviewText.length > 75) {
                                         reviewTextFront = reviewText.substring(0, 75).concat(' <strong class="review-ellipsis"> ...</strong>');
@@ -494,7 +494,7 @@
                                 var review = responseReview.result.reviews[0];
                                 reviewId = review.reviewId;
                                 formattedReviewDate = review.formattedReviewDate ? review.formattedReviewDate : "N/A";
-                                userName = review.userName ? review.userName : "";
+                                userName = escapeHtml(review.userName ? review.userName : "");
                                 userStatus = review.userStatus ? review.userStatus.toLowerCase() : "";
                                 if (userStatus === 'drop-out') {
                                     userStatus = "";
@@ -502,10 +502,10 @@
                                 userDomainOfLicenseOrMaster = review.userDomainOfLicenseOrMaster ? review.userDomainOfLicenseOrMaster : "";
                                 userProgramName = review.userProgramName ? review.userProgramName : "";
                                 userYear = review.userYear ? review.userYear : "";
-                                var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
+                                var userDetailsString = escapeHtml(userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : ""));
                                 reviewDate = review.reviewDate ? review.reviewDate : "N/A";
                                 generalRating = review.generalRating ? review.generalRating : "N/A";
-                                reviewText = review.reviewText ? review.reviewText : "N/A";
+                                reviewText = escapeHtml(review.reviewText ? review.reviewText : "N/A");
                                 var reviewTextFront;
                                 if (reviewText.length > 75) {
                                     reviewTextFront = reviewText.substring(0, 75).concat(' <strong class="review-ellipsis"> ...</strong>');
@@ -559,9 +559,9 @@
                     }
 
                     var facultyId = response.result.faculties[i].facultyId;
-                    var facultyName = response.result.faculties[i].facultyName;
-                    var universityName = response.result.faculties[i].universityName;
-                    var facultyCity = response.result.faculties[i].facultyCity;
+                    var facultyName = escapeHtml(response.result.faculties[i].facultyName);
+                    var universityName = escapeHtml(response.result.faculties[i].universityName);
+                    var facultyCity = escapeHtml(response.result.faculties[i].facultyCity);
 
                     var universityNameForLogo = universityName.replaceAll("\"", "_");
                     var logoName = facultyName + universityNameForLogo;
@@ -756,7 +756,7 @@
 
             var reviewId = review.reviewId;
             var facultyId = review.facultyId;
-            var userName = review.userName ? review.userName : "";
+            var userName = escapeHtml(review.userName ? review.userName : "");
             var formattedReviewDate = review.formattedReviewDate ? review.formattedReviewDate : "N/A";
             var userStatus = review.userStatus ? review.userStatus.toLowerCase() : "";
             if (userStatus === 'drop-out') {
@@ -765,7 +765,7 @@
             var userDomainOfLicenseOrMaster = review.userDomainOfLicenseOrMaster ? review.userDomainOfLicenseOrMaster : "";
             var userProgramName = review.userProgramName ? review.userProgramName : "";
             var userYear = review.userYear ? review.userYear : "";
-            var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
+            var userDetailsString = escapeHtml(userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : ""));
             var upvotes = review.upvotes ? review.upvotes : 0;
             var wouldRecommend = review.wouldRecommend;
             var wouldRecommendText;
@@ -821,35 +821,35 @@
 
 
             var generalRating = review.generalRating ? review.generalRating : "N/A";
-            var reviewText = review.reviewText ? review.reviewText : "N/A";
+            var reviewText = escapeHtml(review.reviewText ? review.reviewText : "N/A");
 
             var jobProspectsReviewCategory = review.jobProspectsReview;
             var jobProspectsReviewRating = (jobProspectsReviewCategory && jobProspectsReviewCategory.generalRating) ? jobProspectsReviewCategory.generalRating : "N/A";
-            var jobProspectsReviewText = (jobProspectsReviewCategory && jobProspectsReviewCategory.reviewText) ? jobProspectsReviewCategory.reviewText : "";
+            var jobProspectsReviewText = escapeHtml((jobProspectsReviewCategory && jobProspectsReviewCategory.reviewText) ? jobProspectsReviewCategory.reviewText : "");
 
             var coursesAndLecturersReviewCategory = review.coursesAndLecturersReview;
             var coursesAndLecturersReviewRating = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.generalRating) ? coursesAndLecturersReviewCategory.generalRating : "N/A";
-            var coursesAndLecturersReviewText = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.reviewText) ? coursesAndLecturersReviewCategory.reviewText : "";
+            var coursesAndLecturersReviewText = escapeHtml((coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.reviewText) ? coursesAndLecturersReviewCategory.reviewText : "");
 
             var studentOrganisationsReviewCategory = review.studentOrganisationsReview;
             var studentOrganisationsReviewRating = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.generalRating) ? studentOrganisationsReviewCategory.generalRating : "N/A";
-            var studentOrganisationsReviewText = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.reviewText) ? studentOrganisationsReviewCategory.reviewText : "";
+            var studentOrganisationsReviewText = escapeHtml((studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.reviewText) ? studentOrganisationsReviewCategory.reviewText : "");
 
             var accomodationReviewCategory = review.accomodationReview;
             var accomodationReviewRating = (accomodationReviewCategory && accomodationReviewCategory.generalRating) ? accomodationReviewCategory.generalRating : "N/A";
-            var accomodationReviewText = (accomodationReviewCategory && accomodationReviewCategory.reviewText) ? accomodationReviewCategory.reviewText : "";
+            var accomodationReviewText = escapeHtml((accomodationReviewCategory && accomodationReviewCategory.reviewText) ? accomodationReviewCategory.reviewText : "");
 
             var facultyFacilitiesReviewCategory = review.facultyFacilitiesReview;
             var facultyFacilitiesReviewRating = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.generalRating) ? facultyFacilitiesReviewCategory.generalRating : "N/A";
-            var facultyFacilitiesReviewText = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "";
+            var facultyFacilitiesReviewText = escapeHtml((facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "");
 
             var studentSupportReviewCategory = review.studentSupportReview;
             var studentSupportReviewRating = (studentSupportReviewCategory && studentSupportReviewCategory.generalRating) ? studentSupportReviewCategory.generalRating : "N/A";
-            var studentSupportReviewText = (studentSupportReviewCategory && studentSupportReviewCategory.reviewText) ? studentSupportReviewCategory.reviewText : "";
+            var studentSupportReviewText = escapeHtml((studentSupportReviewCategory && studentSupportReviewCategory.reviewText) ? studentSupportReviewCategory.reviewText : "");
 
             var timeBalanceReviewCategory = review.timeBalanceReview;
             var timeBalanceReviewRating = (timeBalanceReviewCategory && timeBalanceReviewCategory.generalRating) ? timeBalanceReviewCategory.generalRating : "N/A";
-            var timeBalanceReviewText = (timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : "";
+            var timeBalanceReviewText = escapeHtml((timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : "");
 
 
             var facultyReviewsString = (

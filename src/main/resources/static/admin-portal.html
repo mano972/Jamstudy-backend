@@ -424,9 +424,9 @@ function getFaculty() {
 
         if (response.control.errorCode === 0) {
             facultyId = response.result.facultyId;
-            var facultyName = response.result.facultyName;
-			var universityName = response.result.universityName;
-			var facultyCity = response.result.facultyCity;
+            var facultyName = escapeHtml(response.result.facultyName);
+			var universityName = escapeHtml(response.result.universityName);
+			var facultyCity = escapeHtml(response.result.facultyCity);
 			var avgRating = response.result.avgRating;
 			if (!avgRating) {
 				avgRating = "N/A";
@@ -573,8 +573,8 @@ function loadReviewsTab(response, loadMore) {
     for (i in response.result.reviews) {
 
         var reviewId = response.result.reviews[i].reviewId;
-        var facultyName = response.result.reviews[i].facultyName;
-        var userName = response.result.reviews[i].userName ? response.result.reviews[i].userName : "";
+        var facultyName = escapeHtml(response.result.reviews[i].facultyName);
+        var userName = escapeHtml(response.result.reviews[i].userName ? response.result.reviews[i].userName : "");
         var formattedReviewDate = response.result.reviews[i].formattedReviewDate ? response.result.reviews[i].formattedReviewDate : "N/A";
         var userStatus = response.result.reviews[i].userStatus ? response.result.reviews[i].userStatus.toLowerCase() : "";
         if (userStatus === 'drop-out') {
@@ -583,7 +583,7 @@ function loadReviewsTab(response, loadMore) {
         var userDomainOfLicenseOrMaster = response.result.reviews[i].userDomainOfLicenseOrMaster ? response.result.reviews[i].userDomainOfLicenseOrMaster : "";
         var userProgramName = response.result.reviews[i].userProgramName ? response.result.reviews[i].userProgramName : "";
         var userYear = response.result.reviews[i].userYear ? response.result.reviews[i].userYear : "";
-        var userDetailsString = userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : "");
+        var userDetailsString = escapeHtml(userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : ""));
         var upvotes = response.result.reviews[i].upvotes ? response.result.reviews[i].upvotes : 0;
         var wouldRecommend = response.result.reviews[i].wouldRecommend;
         var wouldRecommendText;
@@ -641,9 +641,12 @@ function loadReviewsTab(response, loadMore) {
             upvotedRevClass = "far fa-thumbs-up fa-lg like-review align";
         }
 
-        var reviewAnswer = response.result.reviews[i].reviewAnswerText;
+        var reviewAnswerRaw = response.result.reviews[i].reviewAnswerText;
+        window.reviewAnswersByIndex = window.reviewAnswersByIndex || {};
+        window.reviewAnswersByIndex[i] = reviewAnswerRaw;
+        var reviewAnswer = escapeHtml(reviewAnswerRaw);
         var replyAreaString;
-        if (!reviewAnswer || reviewAnswer === "") {
+        if (!reviewAnswerRaw || reviewAnswerRaw === "") {
             replyAreaString =
                                 '<div class="col-xs-12">'
                                     +'<button id="reply-button-' + i + '" class="btn btn-info btn-block btn-fill" onclick="replyButton(' + i +')">Reply</button>'
@@ -663,7 +666,7 @@ function loadReviewsTab(response, loadMore) {
                                             +'</div>'
                                         +'</div>'
                                         +'<div class="col-xs-12">'
-                                            + '<button id="edit-button-' + i + '" class="btn btn-warning btn-block btn-fill" onclick="editButton(' + i +', &quot;' + reviewAnswer +'&quot;)">Edit</button>'
+                                            + '<button id="edit-button-' + i + '" class="btn btn-warning btn-block btn-fill" onclick="editButton(' + i +')">Edit</button>'
                                         +'</div>'
 <!--                                        +'<div class="col-xs-6">'-->
 <!--                                            + '<button id="delete-button-' + i + '" class="btn btn-danger btn-block btn-fill" onclick="deleteButton(i)">Delete</button>'-->
@@ -673,27 +676,27 @@ function loadReviewsTab(response, loadMore) {
         }
 
         var generalRating = response.result.reviews[i].generalRating ? response.result.reviews[i].generalRating : "N/A";
-        var reviewText = response.result.reviews[i].reviewText ? response.result.reviews[i].reviewText : "N/A";
+        var reviewText = escapeHtml(response.result.reviews[i].reviewText ? response.result.reviews[i].reviewText : "N/A");
 
         var jobProspectsReviewCategory = response.result.reviews[i].jobProspectsReview;
         var jobProspectsReviewRating = (jobProspectsReviewCategory && jobProspectsReviewCategory.generalRating) ? jobProspectsReviewCategory.generalRating : "N/A";
-        var jobProspectsReviewText = (jobProspectsReviewCategory && jobProspectsReviewCategory.reviewText) ? jobProspectsReviewCategory.reviewText : "";
+        var jobProspectsReviewText = escapeHtml((jobProspectsReviewCategory && jobProspectsReviewCategory.reviewText) ? jobProspectsReviewCategory.reviewText : "");
 
         var coursesAndLecturersReviewCategory = response.result.reviews[i].coursesAndLecturersReview;
         var coursesAndLecturersReviewRating = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.generalRating) ? coursesAndLecturersReviewCategory.generalRating : "N/A";
-        var coursesAndLecturersReviewText = (coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.reviewText) ? coursesAndLecturersReviewCategory.reviewText : "";
+        var coursesAndLecturersReviewText = escapeHtml((coursesAndLecturersReviewCategory && coursesAndLecturersReviewCategory.reviewText) ? coursesAndLecturersReviewCategory.reviewText : "");
 
         var studentOrganisationsReviewCategory = response.result.reviews[i].studentOrganisationsReview;
         var studentOrganisationsReviewRating = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.generalRating) ? studentOrganisationsReviewCategory.generalRating : "N/A";
-        var studentOrganisationsReviewText = (studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.reviewText) ? studentOrganisationsReviewCategory.reviewText : "";
+        var studentOrganisationsReviewText = escapeHtml((studentOrganisationsReviewCategory && studentOrganisationsReviewCategory.reviewText) ? studentOrganisationsReviewCategory.reviewText : "");
 
         var accomodationReviewCategory = response.result.reviews[i].accomodationReview;
         var accomodationReviewRating = (accomodationReviewCategory && accomodationReviewCategory.generalRating) ? accomodationReviewCategory.generalRating : "N/A";
-        var accomodationReviewText = (accomodationReviewCategory && accomodationReviewCategory.reviewText) ? accomodationReviewCategory.reviewText : "";
+        var accomodationReviewText = escapeHtml((accomodationReviewCategory && accomodationReviewCategory.reviewText) ? accomodationReviewCategory.reviewText : "");
 
         var facultyFacilitiesReviewCategory = response.result.reviews[i].facultyFacilitiesReview;
         var facultyFacilitiesReviewRating = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.generalRating) ? facultyFacilitiesReviewCategory.generalRating : "N/A";
-        var facultyFacilitiesReviewText = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "";
+        var facultyFacilitiesReviewText = escapeHtml((facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "");
 
         <!-- var studentSupportReviewCategory = response.result.reviews[i].studentSupportReview; -->
         <!-- var studentSupportReviewRating = (studentSupportReviewCategory && studentSupportReviewCategory.generalRating) ? studentSupportReviewCategory.generalRating : "N/A"; -->
@@ -701,7 +704,7 @@ function loadReviewsTab(response, loadMore) {
 
         var timeBalanceReviewCategory = response.result.reviews[i].timeBalanceReview;
         var timeBalanceReviewRating = (timeBalanceReviewCategory && timeBalanceReviewCategory.generalRating) ? timeBalanceReviewCategory.generalRating : "N/A";
-        var timeBalanceReviewText = (timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : "";
+        var timeBalanceReviewText = escapeHtml((timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : "");
 
 
         var facultyReviewsString = (
@@ -833,20 +836,24 @@ function submitButton(i) {
 
 }
 
-function editButton(i, reviewAnswer) {
+function editButton(i) {
     document.getElementById("edit-button-" + i).style.display = "none";
 <!--    document.getElementById("delete-button-" + i).style.display = "none";-->
+
+    var reviewAnswer = window.reviewAnswersByIndex ? window.reviewAnswersByIndex[i] : "";
 
     document.getElementById("reply-area-" + i).innerHTML = (
                         '<div class="col-xs-12">'
                         +   '<div class="reply-line col-xs-2">'
                         +    '</div>'
                         +       '<div class="form-group col-xs-11">'
-                        +           '<textarea id="reply-text-' + i + '" class="form-control" rows="5" maxlength="1500" spellcheck="false">' + reviewAnswer + '</textarea>'
+                        +           '<textarea id="reply-text-' + i + '" class="form-control" rows="5" maxlength="1500" spellcheck="false"></textarea>'
                         +       '</div>'
                         +        '<button id="submit-button" class="btn btn-success btn-block btn-fill" onclick="submitButton(' + i + ')">Submit</button>'
                         +'</div>'
     );
+
+    document.getElementById("reply-text-" + i).value = reviewAnswer;
 }
 
 function submitText(e) {
