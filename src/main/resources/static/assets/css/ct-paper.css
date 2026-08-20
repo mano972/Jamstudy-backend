@@ -1055,10 +1055,24 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 }
 
 .emoji > svg {
-  margin: 15px 0; 
+  margin: 15px 0;
   width: 70px;
   height: 70px;
   flex-shrink: 0;
+}
+
+.emoji > div {
+  height: 90px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.emoji > div h4 {
+  margin: 0;
 }
 
 #rating-1:checked ~ .emoji-wrapper > .emoji { transform: translateY(-90px); color: #c91104; }
