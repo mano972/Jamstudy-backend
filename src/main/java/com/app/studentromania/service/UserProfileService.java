@@ -404,9 +404,17 @@ public class UserProfileService {
             userProfile.setUserCityInterest(new ArrayList<>());
         }
         mapToUserProfile(userProfileDTO, userProfile);
-        if (userProfileDTO.getBirthDate() != null) {
-            userProfile.setFormattedBirthDate(Utilities.getFormattedBirthDate(userProfileDTO.getBirthDate()));
-        }
+        /*
+         * The mapper above skips null fields (so omitting a field in the request leaves
+         * it unchanged), but this form always submits the birth date's current state —
+         * including when the user has cleared it. So birthDate/formattedBirthDate are
+         * set explicitly here, bypassing the skip-null mapping, or a cleared date would
+         * never actually persist as cleared.
+         */
+        userProfile.setBirthDate(userProfileDTO.getBirthDate());
+        userProfile.setFormattedBirthDate(userProfileDTO.getBirthDate() != null
+                ? Utilities.getFormattedBirthDate(userProfileDTO.getBirthDate())
+                : null);
         if (BooleanUtils.isTrue(userProfileDTO.getSubscribeToNewsletter())) {
             newsletterService.addEmailToNewsletter(userProfile.getEmail());
         } else if (BooleanUtils.isFalse(userProfileDTO.getSubscribeToNewsletter())) {
