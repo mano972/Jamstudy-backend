@@ -39,6 +39,8 @@ function myAccountText() {
 	}
 }
 
+/* Facebook login is not currently offered on the site — SDK init disabled to avoid
+   loading/talking to Facebook (and setting cookies) on every page load.
 window.fbAsyncInit = function() {
     // FB JavaScript SDK configuration and setup
     FB.init({
@@ -47,7 +49,7 @@ window.fbAsyncInit = function() {
       xfbml            : true,
       version          : 'v11.0'
     });
-    
+
     // Check whether the user already logged in
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
@@ -57,7 +59,7 @@ window.fbAsyncInit = function() {
 			if (!jwtToken) {
 				 fbLogout();
 			}
-		
+
         }
     });
 };
@@ -71,6 +73,7 @@ window.fbAsyncInit = function() {
     js.src = "//connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+*/
 
 /* If browser back button was used, flush cache */
 window.addEventListener( "pageshow", function ( event ) {
@@ -125,10 +128,11 @@ function loadUser() {
 	}
 }
 
+/* Facebook login is not currently offered on the site (button is commented out) — disabled along with the SDK.
 // Facebook login with JavaScript SDK
 function fbLogin(e) {
 	e.preventDefault();
-	
+
     FB.login(function (response) {
         if (response.authResponse) {
             // Get and display the user profile data
@@ -146,10 +150,39 @@ function getFbUserData(){
 		loginWithSocialMediaAccount(response, "FACEBOOK");
     });
 }
+*/
 
+// The Google Sign-In SDK is not loaded on page load — clicking this button is the
+// user's affirmative action that loads it (acts as consent for that specific purpose),
+// consistent with the site's cookie consent approach for non-essential scripts.
 function googleButtonClick(e) {
 	e.preventDefault();
 
+	if (window.google && window.google.accounts && window.google.accounts.id) {
+		clickRenderedGoogleButton();
+	} else {
+		loadGoogleSignInScript(function() {
+			// Give the library a brief moment to parse the DOM and render its buttons.
+			setTimeout(clickRenderedGoogleButton, 200);
+		});
+	}
+}
+
+function loadGoogleSignInScript(onReady) {
+	var existingScript = document.getElementById('google-gsi-script');
+	if (existingScript) {
+		existingScript.addEventListener('load', onReady, { once: true });
+		return;
+	}
+	var script = document.createElement('script');
+	script.id = 'google-gsi-script';
+	script.src = 'https://accounts.google.com/gsi/client?hl=ro';
+	script.async = true;
+	script.onload = onReady;
+	document.head.appendChild(script);
+}
+
+function clickRenderedGoogleButton() {
 	if (document.getElementsByClassName("L5Fo6c-bF1uUb")[0]) {
 		document.getElementsByClassName("L5Fo6c-bF1uUb")[0].click();
 	} else if (document.getElementsByClassName("nsm7Bb-HzV7m-LgbsSe")[0]) {
@@ -276,11 +309,13 @@ function loginWithSocialMediaAccount(userData, registerType) {
 	});
 }
 
+/* Facebook login is not currently offered on the site — logout helper disabled along with the SDK.
 // Logout from facebook
 function fbLogout() {
     FB.logout(function() {
     });
 }
+*/
 
 function clearErrorLoginEmail() {
 	document.getElementById('error-login-email').innerHTML = "";
@@ -797,11 +832,13 @@ function resendConfirmationEmail(email, token) {
 
 function logout() {
 	localStorage.removeItem("u");
+	/* Facebook SDK is disabled (login not currently offered), so FB is not defined — skip the FB logout check.
 	FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
             fbLogout();
         }
     });
+	*/
 	var urlHomepageRedirect = "./";
 	window.location.replace(urlHomepageRedirect);
 }
@@ -2024,6 +2061,11 @@ function getPageFooter() {
 		'                               Politica de confidențialitate\n' +
 		'                            </a>\n' +
 		'                        </li>\n' +
+		'						 <li>\n' +
+		'                            <a href="#" onclick="openCookieSettings(event)" data-i18n-key="header-footer-cookie-settings">\n' +
+		'                               Setări cookie-uri\n' +
+		'                            </a>\n' +
+		'                        </li>\n' +
 		'					</ul>\n' +
 		'                    <hr>\n' +
 		'\n' +
@@ -2752,3 +2794,134 @@ const lt_json = {
                   "user-profile-saved-companies-empty": "Nesate išsaugoję jokių įmonių",
                   "user-profile-sign-out": "Atsijungti"
                 };
+
+/* ---------------- Cookie consent (Google Analytics) ----------------
+   Strictly necessary cookies (session/auth) are unaffected by this and always load.
+   Google Analytics only loads after the user explicitly accepts via the banner below,
+   or has previously done so. Google Sign-In is handled separately, on demand, in
+   googleButtonClick()/loadGoogleSignInScript() above — clicking that button is itself
+   the consent action for loading it. */
+
+var COOKIE_CONSENT_STORAGE_KEY = "cookieConsent"; // "accepted" | "rejected"
+var GA_MEASUREMENT_ID = "G-W7XYVR8RJ0";
+
+function getCookieConsent() {
+	try {
+		return localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY);
+	} catch (e) {
+		return null;
+	}
+}
+
+function setCookieConsent(value) {
+	try {
+		localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, value);
+	} catch (e) {}
+}
+
+function initCookieConsent() {
+	renderCookieConsentBanner();
+	var consent = getCookieConsent();
+	if (consent === "accepted") {
+		loadGoogleAnalytics();
+	} else if (consent !== "rejected") {
+		showCookieConsentBanner();
+	}
+}
+
+function renderCookieConsentBanner() {
+	if (document.getElementById('cookie-consent-banner')) {
+		return;
+	}
+
+	if (!document.getElementById('cookie-consent-style')) {
+		var style = document.createElement('style');
+		style.id = 'cookie-consent-style';
+		style.textContent =
+			'#cookie-consent-banner{position:fixed;left:0;right:0;bottom:0;z-index:10000;' +
+			'background:#1f2937;color:#f5f5f5;padding:16px 24px;display:none;align-items:center;' +
+			'justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 -2px 10px rgba(0,0,0,.25);font-size:14px;}' +
+			'#cookie-consent-banner.cookie-consent-visible{display:flex;}' +
+			'#cookie-consent-banner a{color:#8ecae6;}' +
+			'#cookie-consent-banner .cookie-consent-text{flex:1 1 320px;margin:0;}' +
+			'#cookie-consent-banner .cookie-consent-actions{display:flex;gap:10px;flex:0 0 auto;}' +
+			'#cookie-consent-banner .cookie-consent-actions button{border:none;border-radius:4px;' +
+			'padding:8px 18px;font-size:14px;cursor:pointer;}' +
+			'#cookie-consent-accept{background:#2ba84a;color:#fff;}' +
+			'#cookie-consent-reject{background:transparent;color:#f5f5f5;border:1px solid #f5f5f5;}' +
+			'@media (max-width:480px){#cookie-consent-banner .cookie-consent-actions{width:100%;justify-content:flex-end;}}';
+		document.head.appendChild(style);
+	}
+
+	var bannerHtml =
+		'<div class="cookie-consent-text">' +
+			'Folosim cookie-uri strict necesare pentru funcționarea Site-ului. Cu acordul tău, folosim și cookie-uri de analiză (Google Analytics) pentru a înțelege cum este folosit Site-ul. Poți afla mai multe în ' +
+			'<a href="./policy.html" target="_blank">Politica de confidențialitate</a>.' +
+		'</div>' +
+		'<div class="cookie-consent-actions">' +
+			'<button id="cookie-consent-reject" type="button" onclick="rejectCookieConsent()">Refuză</button>' +
+			'<button id="cookie-consent-accept" type="button" onclick="acceptCookieConsent()">Acceptă</button>' +
+		'</div>';
+
+	var banner = document.createElement('div');
+	banner.id = 'cookie-consent-banner';
+	banner.innerHTML = bannerHtml;
+	document.body.appendChild(banner);
+}
+
+function showCookieConsentBanner() {
+	renderCookieConsentBanner();
+	document.getElementById('cookie-consent-banner').classList.add('cookie-consent-visible');
+}
+
+function hideCookieConsentBanner() {
+	var banner = document.getElementById('cookie-consent-banner');
+	if (banner) {
+		banner.classList.remove('cookie-consent-visible');
+	}
+}
+
+function acceptCookieConsent() {
+	setCookieConsent('accepted');
+	hideCookieConsentBanner();
+	loadGoogleAnalytics();
+}
+
+function rejectCookieConsent() {
+	setCookieConsent('rejected');
+	hideCookieConsentBanner();
+}
+
+function openCookieSettings(e) {
+	if (e) {
+		e.preventDefault();
+	}
+	showCookieConsentBanner();
+}
+
+function loadGoogleAnalytics() {
+	if (document.getElementById('ga-gtag-script')) {
+		return;
+	}
+	var script = document.createElement('script');
+	script.id = 'ga-gtag-script';
+	script.async = true;
+	script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+	document.head.appendChild(script);
+
+	window.dataLayer = window.dataLayer || [];
+	window.gtag = window.gtag || function() { dataLayer.push(arguments); };
+	gtag('js', new Date());
+	gtag('config', GA_MEASUREMENT_ID);
+}
+
+function isAdminPortalPage() {
+	return window.location.pathname.indexOf('admin-portal') !== -1;
+}
+
+$(function() {
+	// Internal admin tool, not public-facing — no analytics/consent banner there.
+	if (!isAdminPortalPage()) {
+		initCookieConsent();
+	}
+});
