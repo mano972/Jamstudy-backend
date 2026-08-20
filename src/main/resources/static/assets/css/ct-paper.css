@@ -248,13 +248,17 @@ body.loading .modal {
 
 .comparison-table {
 	overflow: auto;
-	border: 1px solid #f0edf0;
+	border: 2px solid black;
 	max-width: 0px;
+	box-shadow: 0px 1px 5px rgba(204, 197, 185, 0.5);
+	background-color: #fffffc;
 }
 
 .comparison-cell {
 	width: 300px;
-	border-left: 1px solid #f0edf0;
+	border-left: 1px solid #eef0f3;
+	box-sizing: border-box;
+	transition: background-color .15s ease;
 }
 
 /* @media (max-width:992px) { */
@@ -264,47 +268,108 @@ body.loading .modal {
 /* } */
 
 .comparison-cell-standard {
-  min-height: 54px;
+  min-height: 60px;
+}
+
+.comparison-cell-standard:hover {
+	background-color: #f4f8fd;
 }
 
 .comparison-cell-faculty {
-  min-height: 200px;
+  min-height: 210px;
+  padding-top: 6px;
 }
 
-.comparison-header-cell { 
-	min-height: 54px;
-	background-color: #f0f0f0;
-	color: #51636e;
-	position:absolute; 
+.comparison-header-cell {
+	min-height: 60px;
+	background-color: #f7f9fc;
+	color: #4a5a68;
+	font-weight: 600;
+	position:absolute;
 	left:0;
 	z-index: 1000;
-	float:left;
+	border-right: 1px solid #e4e7ec;
+	box-shadow: 4px 0 10px -6px rgba(20, 40, 70, 0.15);
+}
+
+.comparison-row-label-icon {
+	color: #9aa6b2;
+	margin-right: 6px;
 }
 
 .comparison-row-content {
 	margin-left: 300px;
 }
 
-.comparison-header-cell-blank { 
-	min-height: 200px;
-	background-color: white;
-	position:absolute; 
+.comparison-header-cell-blank {
+	min-height: 210px;
+	background-color: #ffffff;
+	position:absolute;
 	left:0;
 	z-index: 1000;
-	float:left;
+	border-right: 1px solid #e4e7ec;
+	box-shadow: 4px 0 10px -6px rgba(20, 40, 70, 0.15);
 }
 
 .comparison-row {
 	width: 1500px;
 	overflow: auto;
+	border-bottom: 1px solid #eef0f3;
 }
 
-.comparison-even-row { 
-	background-color: white;
+.comparison-row:last-child {
+	border-bottom: none;
 }
 
-.comparison-odd-row { 
-	background-color: #f7f7f7;
+.comparison-even-row {
+	background-color: #ffffff;
+}
+
+.comparison-odd-row {
+	background-color: #fafbfd;
+}
+
+.comparison-value-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 16px;
+	border-radius: 999px;
+	background-color: #fff6e0;
+	font-weight: 600;
+	color: #4a5a68;
+}
+
+.comparison-value-badge .fa-star {
+	color: #f7b500;
+}
+
+.comparison-value-empty {
+	color: #b7bfc8;
+	font-weight: 500;
+}
+
+.comparison-cell-action {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: background-color .15s ease;
+}
+
+.comparison-cell-action:hover {
+	background-color: #eef2f7;
+}
+
+.comparison-cell-action .fa-close {
+	color: #9aa6b2;
+}
+
+.comparison-cell-action .fa-heart {
+	color: #e0576a;
 }
 
 .ranking-t1 {
