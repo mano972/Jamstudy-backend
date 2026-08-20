@@ -2901,6 +2901,59 @@ function loadGoogleAnalytics() {
 	gtag('config', GA_MEASUREMENT_ID);
 }
 
+/* ---------------- Deselectable radio buttons ----------------
+   Native <input type="radio"> can only be *selected* by a click — clicking the option
+   that's already checked does nothing, there's no built-in way back to "nothing
+   selected". This makes every radio group on the site deselectable: clicking an
+   already-checked option unchecks it.
+
+   Radios here are almost always clicked via their <label for="..."> (the input itself
+   is visually hidden by CSS), and a label click only forwards a synthetic `click` to
+   its input — never `mousedown`/`mouseup`. So the usual "snapshot .checked on
+   mousedown" trick needs to resolve the label back to its input first, or it silently
+   never fires for how these controls are actually used. */
+
+function resolveRadioFromEventTarget(target) {
+	if (!target) {
+		return null;
+	}
+	if (target.matches && target.matches('input[type="radio"]')) {
+		return target;
+	}
+	if (target.tagName === 'LABEL') {
+		if (target.htmlFor) {
+			var byId = document.getElementById(target.htmlFor);
+			if (byId && byId.matches && byId.matches('input[type="radio"]')) {
+				return byId;
+			}
+		}
+		var nested = target.querySelector('input[type="radio"]');
+		if (nested) {
+			return nested;
+		}
+	}
+	return null;
+}
+
+var radioCheckedBeforeInteraction = null;
+
+document.addEventListener('mousedown', function (e) {
+	var radio = resolveRadioFromEventTarget(e.target);
+	radioCheckedBeforeInteraction = radio ? radio.checked : null;
+});
+
+document.addEventListener('click', function (e) {
+	var el = e.target;
+	if (!(el && el.matches && el.matches('input[type="radio"]'))) {
+		return;
+	}
+	if (radioCheckedBeforeInteraction === true) {
+		el.checked = false;
+		el.dispatchEvent(new Event('change', { bubbles: true }));
+	}
+	radioCheckedBeforeInteraction = null;
+});
+
 /* ---------------- Pending review draft (write-first, log in later) ----------------
    Lets a user write a review before having an account: if they're not logged in when
    they try to post it, the draft is stashed here and they're prompted to log in/register.
