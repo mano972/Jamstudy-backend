@@ -1460,6 +1460,10 @@ function nextPrev(n) {
   currentTab = currentTab + n;
   // if you have reached the end of the form...
   if (currentTab >= x.length) {
+    // Stay pinned on the last tab — postReview() may fail (validation/network error)
+    // or just pause here to prompt a login, neither of which should let currentTab
+    // drift further out of range on repeat clicks.
+    currentTab = x.length - 1;
     // ... the form gets submitted:
 	postReview();
    // document.getElementById("add-review-form").submit();
