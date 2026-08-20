@@ -269,14 +269,8 @@ function loginWithSocialMediaAccount(userData, registerType) {
 			setUField("usc", savedCompaniesIds);
 			setUField("ulr", likedReviewsIds);
 			setUField("uar", addedReviews);
-			
-			var currentLocationPath = window.location.pathname;
-			if (currentLocationPath.includes("login") || currentLocationPath.includes("register")) {
-				var urlHomepageRedirect = "./";
-				window.location.replace(urlHomepageRedirect);
-			} else {
-				location.reload();
-			}
+
+			redirectAfterLogin();
 		},
 		error: function(error) {
 			if (error.status == 401) {
@@ -415,14 +409,8 @@ function login(e) {
 			setUField("usc", savedCompaniesIds);
 			setUField("ulr", likedReviewsIds);
 			setUField("uar", addedReviews);
-			
-			var currentLocationPath = window.location.pathname;
-			if (currentLocationPath.includes("login")) {
-				var urlHomepageRedirect = "./";
-				window.location.replace(urlHomepageRedirect);
-			} else {
-				location.reload();
-			}
+
+			redirectAfterLogin();
 		},
 		error: function(error) {
 			if (error.responseJSON) {
@@ -853,19 +841,17 @@ function validatePass(pass) {
 	return lettersNumbers.test(String(pass));
 }
 
+// Login is no longer required to start a review — the user can write it first and is
+// only asked to log in/register when they try to post it (see postReview() in review.html).
 function goToAddReview(el, facultyId) {
 	increaseReviewStatistic(0);
-	gtag('event', 'add_review', {
-	  'step': '0',
-	  'page_name': el.baseURI
-	});
-	var jwtToken = getUField("ut");
-	if (!jwtToken) {
-		el.setAttribute("data-toggle", 'modal');
-		el.setAttribute("data-target", '#login-modal');
-		return false;
+	if (typeof gtag === 'function') {
+		gtag('event', 'add_review', {
+		  'step': '0',
+		  'page_name': el.baseURI
+		});
 	}
-	
+
 	var addReviewRedirectUrl = "./review.html?faculty=" + facultyId;
 	location.href = addReviewRedirectUrl;
 }
@@ -2913,6 +2899,92 @@ function loadGoogleAnalytics() {
 	window.gtag = window.gtag || function() { dataLayer.push(arguments); };
 	gtag('js', new Date());
 	gtag('config', GA_MEASUREMENT_ID);
+}
+
+/* ---------------- Pending review draft (write-first, log in later) ----------------
+   Lets a user write a review before having an account: if they're not logged in when
+   they try to post it, the draft is stashed here and they're prompted to log in/register.
+   Read by review.html (to save/restore the draft) and by login()/loginWithSocialMediaAccount()
+   above (to redirect back to the right faculty's review page after a successful login,
+   regardless of which page that login happened on — e.g. after email confirmation on
+   login.html, which normally redirects home). */
+
+var PENDING_REVIEW_STORAGE_PREFIX = "pendingReview_";
+var PENDING_REVIEW_MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000; // 3 days
+
+function savePendingReviewDraft(facultyId, reviewData) {
+	try {
+		var payload = {
+			review: reviewData,
+			savedAt: Date.now()
+		};
+		localStorage.setItem(PENDING_REVIEW_STORAGE_PREFIX + facultyId, JSON.stringify(payload));
+	} catch (e) {}
+}
+
+// Returns null (and silently discards the entry) if the draft is missing or too old —
+// a login that happens weeks after a draft was abandoned shouldn't surprise-redirect
+// the user back to it.
+function getPendingReviewDraft(facultyId) {
+	try {
+		var raw = localStorage.getItem(PENDING_REVIEW_STORAGE_PREFIX + facultyId);
+		if (!raw) {
+			return null;
+		}
+		var draft = JSON.parse(raw);
+		if (!draft.savedAt || (Date.now() - draft.savedAt) > PENDING_REVIEW_MAX_AGE_MS) {
+			clearPendingReviewDraft(facultyId);
+			return null;
+		}
+		return draft;
+	} catch (e) {
+		return null;
+	}
+}
+
+function clearPendingReviewDraft(facultyId) {
+	try {
+		localStorage.removeItem(PENDING_REVIEW_STORAGE_PREFIX + facultyId);
+	} catch (e) {}
+}
+
+// Returns the facultyId of any pending, still-fresh draft found in storage, or null.
+// There should realistically only ever be one at a time (a new draft save doesn't
+// clear a previous, unrelated one, but that's an acceptable edge case rather than
+// something worth building multi-draft handling for).
+function findAnyPendingReviewFacultyId() {
+	try {
+		for (var i = 0; i < localStorage.length; i++) {
+			var key = localStorage.key(i);
+			if (key && key.indexOf(PENDING_REVIEW_STORAGE_PREFIX) === 0) {
+				var facultyId = key.substring(PENDING_REVIEW_STORAGE_PREFIX.length);
+				if (getPendingReviewDraft(facultyId)) { // validates freshness, clears if stale
+					return facultyId;
+				}
+			}
+		}
+	} catch (e) {}
+	return null;
+}
+
+// Called right after a successful login/registration, from whichever page it happened
+// on. Sends the user back to finish a pending review if one exists; otherwise falls
+// back to the normal behavior (reload the current page, or go home if login/register
+// happened on a dedicated page).
+function redirectAfterLogin() {
+	var pendingFacultyId = findAnyPendingReviewFacultyId();
+	if (pendingFacultyId) {
+		window.location.href = "./review.html?faculty=" + pendingFacultyId;
+		return;
+	}
+
+	var currentLocationPath = window.location.pathname;
+	if (currentLocationPath.includes("login") || currentLocationPath.includes("register")) {
+		var urlHomepageRedirect = "./";
+		window.location.replace(urlHomepageRedirect);
+	} else {
+		location.reload();
+	}
 }
 
 function isAdminPortalPage() {

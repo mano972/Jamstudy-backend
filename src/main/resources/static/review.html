@@ -663,7 +663,10 @@ $(document).ready(function() {
 
 	getPageHeader();
 	getPageFooter();
-	redirectIfNotLoggedIn();
+	// Login is no longer required just to open this page — the user can write a
+	// review first and is only asked to log in/register when they try to post it
+	// (see postReview()). Editing an existing review (reviewId present) still
+	// requires login, enforced inside postReview()/checkEditReviewAllowed().
 	myAccountText();
 	getLoginModal();
 	getRegisterModal();
@@ -672,14 +675,16 @@ $(document).ready(function() {
 	var queryParams = new URLSearchParams(window.location.search);
 	facultyId = queryParams.get("faculty");
 	reviewId = queryParams.get("review");
-	
+
 	loadFaculty();
-	
+
 	if (reviewId) {
 		checkEditReviewAllowed();
 		loadReview();
+	} else {
+		restorePendingReviewDraftIfAny();
 	}
-	
+
 	showYears();
 	
 	<!-- loadFields(); -->
@@ -845,9 +850,101 @@ function loadFaculty(){
 	<!-- document.getElementById('error-email').innerHTML = ""; -->
 <!-- } -->
 
-function postReview(){
+// If the user wrote a review before logging in, got sent to log in/register, and is now
+// back here with a session, restore what they wrote and jump straight to the last step
+// (the only step postReview() ever prompts a login from, so that's always where a saved
+// draft belongs).
+function restorePendingReviewDraftIfAny() {
+	if (!facultyId || !getUField("ut")) {
+		return;
+	}
+	var draft = getPendingReviewDraft(facultyId);
+	if (!draft || !draft.review) {
+		return;
+	}
 
-	redirectIfNotLoggedIn();
+	populateReviewFormFromDraft(draft.review);
+
+	var tabs = document.getElementsByClassName("tab");
+	currentTab = tabs.length - 1;
+	for (var i = 0; i < tabs.length; i++) {
+		tabs[i].style.display = (i === currentTab) ? "block" : "none";
+	}
+	showTab(currentTab);
+}
+
+function populateReviewFormFromDraft(review) {
+	if (review.generalRating) {
+		var ratingEl = document.getElementById("rating-" + review.generalRating);
+		if (ratingEl) {
+			ratingEl.checked = true;
+		}
+	}
+	if (review.reviewText) {
+		var reviewTextEl = document.getElementById("general-review-text");
+		reviewTextEl.value = review.reviewText;
+		textCounter(reviewTextEl, 'counter', 'counter-row', 'counter-text', 30);
+	}
+	if (review.difficulty) {
+		var rangeInput = document.querySelector('input[type="range"]');
+		if (rangeInput) {
+			rangeInput.value = review.difficulty;
+			if (typeof rangeValue === 'function') {
+				rangeValue();
+			}
+		}
+	}
+	if (review.wouldRecommend === true || review.wouldRecommend === false) {
+		var recommendEl = document.getElementById(review.wouldRecommend ? "would-recommend-yes" : "would-recommend-no");
+		if (recommendEl) {
+			recommendEl.checked = true;
+		}
+	}
+
+	populateCategoryReview("cat1", review.coursesAndLecturersReview);
+	populateCategoryReview("cat2", review.jobProspectsReview);
+	populateCategoryReview("cat3", review.accomodationReview);
+	populateCategoryReview("cat4", review.studentOrganisationsReview);
+	populateCategoryReview("cat5", review.facultyFacilitiesReview);
+	populateCategoryReview("cat6", review.timeBalanceReview);
+
+	selectRadioByValue('status', review.userStatus);
+	selectRadioByValue('years', review.userYear);
+	selectRadioByValue('work', review.isUserWorking);
+}
+
+function populateCategoryReview(prefix, categoryReview) {
+	if (!categoryReview) {
+		return;
+	}
+	if (categoryReview.generalRating) {
+		var ratingEl = document.getElementById(prefix + "-rating-" + categoryReview.generalRating);
+		if (ratingEl) {
+			ratingEl.checked = true;
+		}
+	}
+	if (categoryReview.reviewText) {
+		var textEl = document.getElementById(prefix + "-review-text");
+		if (textEl) {
+			textEl.value = categoryReview.reviewText;
+		}
+	}
+}
+
+function selectRadioByValue(radioName, value) {
+	if (value === undefined || value === null) {
+		return;
+	}
+	var radios = document.getElementsByName(radioName);
+	for (var i = 0; i < radios.length; i++) {
+		if (radios[i].value == value) {
+			radios[i].checked = true;
+			break;
+		}
+	}
+}
+
+function postReview(){
 
 	var nextbutton = document.getElementById("next-step");
 
@@ -975,7 +1072,20 @@ function postReview(){
 		   <!-- userProgramName: userProgram, -->
 		   isUserWorking: userWorking
 		};
-		
+
+		// Not logged in and trying to create a new review (not editing an existing one):
+		// stash the review so it isn't lost, and ask the user to log in/register instead
+		// of submitting. redirectAfterLogin() (unistart.js) will bring them back here,
+		// to the last step, once they're actually logged in.
+		if (!reviewId && !getUField("ut")) {
+			savePendingReviewDraft(facultyId, review);
+			$("#login-modal").modal('show');
+			return;
+		}
+
+		// Safety net for the edit (PUT) path, which always requires an existing login.
+		redirectIfNotLoggedIn();
+
 		var backendUrl;
 		if (!reviewId) { // if POST create review
 			backendUrl = new URL(backendUrlRoot + "/v1/review/" + facultyId);
@@ -1002,6 +1112,7 @@ function postReview(){
 						}
 						addedReviews.push(newReview);
 						setUField("uar", addedReviews);
+						clearPendingReviewDraft(facultyId);
 					<!-- document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost adăugată cu succes. "; -->
 					document.getElementById('add-review-modal-text').innerHTML = "Success. You can edit the review for 48 hours from your account.";
 					$("#add-review-modal").on("hidden.bs.modal", function () {
@@ -1303,11 +1414,13 @@ function showTab(n) {
 		}
 	}
 	increaseReviewStatistic(step);
-	gtag('event', 'add_review', {
-	  'step': step,
-	  'page_name': "/review.html"
-	});
-	
+	if (typeof gtag === 'function') {
+		gtag('event', 'add_review', {
+		  'step': step,
+		  'page_name': "/review.html"
+		});
+	}
+
 	document.body.scrollTop = 0; // For Safari
 	document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 
