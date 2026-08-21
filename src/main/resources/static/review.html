@@ -1113,8 +1113,7 @@ function postReview(){
 						addedReviews.push(newReview);
 						setUField("uar", addedReviews);
 						clearPendingReviewDraft(facultyId);
-					<!-- document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost adăugată cu succes. "; -->
-					document.getElementById('add-review-modal-text').innerHTML = "Success. You can edit the review for 48 hours from your account.";
+					document.getElementById('add-review-modal-text').innerHTML = translateKey('add-review-success-message');
 					$("#add-review-modal").on("hidden.bs.modal", function () {
 						var urlProfileRedirect = "./profile.html?id=" + facultyId;
 						window.location.replace(urlProfileRedirect);

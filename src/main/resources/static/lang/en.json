@@ -215,6 +215,7 @@
   "qa-ask-question-text-placeholder": "Write your question here. Minimum 10, maximum 1000 characters.",
   "qa-post-question": "Post the question",
   "qa-post-answer": "Post the answer",
+  "add-review-success-message": "Your review was added successfully. You can edit or delete it within 48 hours from your account.",
   "add-review-general-review-placeholder": "Describe your experience in at least 30 characters...",
   "add-review-professors-and-courses-placeholder": "What are the professors like? How are the classes conducted? What are the study materials like?",
   "add-review-career-opportunities-placeholder": "Whether you have graduated or are still a student, describe your experience with employment opportunities...",

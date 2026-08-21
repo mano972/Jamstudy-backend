@@ -9964,6 +9964,20 @@ $ct-series-colors: (
 	margin-top: 3px;
 }
 
+.review-header-actions {
+	text-align: right;
+}
+
+.review-edit-actions {
+	margin-top: 8px;
+}
+
+.review-edit-window-note {
+	font-size: 12px;
+	margin-top: 8px;
+	white-space: nowrap;
+}
+
 .review-badges-row {
 	margin-bottom: 12px;
 }
