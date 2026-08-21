@@ -5,6 +5,7 @@ var transparentDemo = true;
 var fixedTop = false;
 
 var navbar_initialized = false;
+var burger_menu = false;
 
 $(document).ready(function(){
     window_width = $(window).width();

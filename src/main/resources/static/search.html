@@ -405,7 +405,7 @@ function loadData(loadMore) {
 			cityNames.push(document.getElementById(cityParams[cCounter]).value);
 		}
 		
-		if (!loadMore) {
+		if (!loadMore && typeof gtag === 'function') {
 			gtag('event', 'search_faculties', {
 				'search_keyword': finalSearchInput,
 				'search_domains': domainNames,

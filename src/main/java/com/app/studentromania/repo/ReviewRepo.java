@@ -3,6 +3,7 @@ package com.app.studentromania.repo;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.couchbase.core.CouchbaseTemplate;
 import org.springframework.data.couchbase.core.query.Query;
@@ -39,6 +40,11 @@ public class ReviewRepo {
 	@LogExecutionTime
 	@LogParameters
 	public List<Review> findAll(ReviewFilter reviewFilter) {
+		if (StringUtils.isNotEmpty(reviewFilter.getSearchBy())) {
+			return findAllWithFacultySearch(reviewFilter);
+		}
+
+		reviewFilter.setJoin(false);
 		String selectStatement = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
 				+ Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET + " WHERE docType = $1 ";
 
@@ -48,6 +54,24 @@ public class ReviewRepo {
 
 		return template.findByN1QL(N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue(),
 						reviewFilter.getOffset(), reviewFilter.getLimit())),
+				Review.class);
+	}
+
+	// Joins in the faculty documents so a keyword search on the all-faculties review
+	// list can also match facultyName/universityName/facultyShortname/facultyCity,
+	// not just reviewText. Only worth the join when there's actually a keyword.
+	private List<Review> findAllWithFacultySearch(ReviewFilter reviewFilter) {
+		reviewFilter.setJoin(true);
+		String selectStatement = "SELECT r.*, meta(r).cas AS _CAS, meta(r).id AS _ID FROM " + Constants.BUCKET
+				+ " AS r JOIN " + Constants.BUCKET + " AS f ON r.facultyId = f.facultyId AND f.docType = $2"
+				+ " WHERE r.docType = $1 ";
+
+		String paginationStatement = " offset $3 limit $4 ";
+		String query = selectStatement + getFilteredReviewsStatement(reviewFilter) + reviewFilter.getOrderByClause()
+				+ paginationStatement;
+
+		return template.findByN1QL(N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue(),
+						DocTypeEnum.FACULTY.getValue(), reviewFilter.getOffset(), reviewFilter.getLimit())),
 				Review.class);
 	}
 
@@ -105,12 +129,30 @@ public class ReviewRepo {
 	@LogExecutionTime
 	@LogParameters
 	public long countFilteredReviews(ReviewFilter reviewFilter) {
+		if (StringUtils.isNotEmpty(reviewFilter.getSearchBy())) {
+			return countFilteredReviewsWithFacultySearch(reviewFilter);
+		}
+
+		reviewFilter.setJoin(false);
 		String selectStatement = "SELECT count(*) as countResults FROM " + Constants.BUCKET
 				+ " WHERE docType = $1 ";
 		String query = selectStatement + getFilteredReviewsStatement(reviewFilter);
 
 		N1qlQueryResult result = template
 				.queryN1QL(N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue())));
+		long count = result.allRows().get(0).value().getLong("countResults");
+
+		return count;
+	}
+
+	private long countFilteredReviewsWithFacultySearch(ReviewFilter reviewFilter) {
+		reviewFilter.setJoin(true);
+		String selectStatement = "SELECT count(*) as countResults FROM " + Constants.BUCKET + " AS r JOIN "
+				+ Constants.BUCKET + " AS f ON r.facultyId = f.facultyId AND f.docType = $2 WHERE r.docType = $1 ";
+		String query = selectStatement + getFilteredReviewsStatement(reviewFilter);
+
+		N1qlQueryResult result = template.queryN1QL(N1qlQuery.parameterized(query,
+				JsonArray.from(DocTypeEnum.REVIEW.getValue(), DocTypeEnum.FACULTY.getValue())));
 		long count = result.allRows().get(0).value().getLong("countResults");
 
 		return count;

@@ -221,6 +221,14 @@ Global site tag (gtag.js) - Google Analytics
         loadUser();
         getReviews(false);
         getRecentlyViewedFaculties();
+
+        document.getElementById("search-review-keyword").addEventListener("keyup", function(event) {
+          // Number 13 is the "Enter" key on the keyboard
+          if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("search-reviews-icon").click();
+          }
+        });
     });
 
     function loadMore() {
@@ -322,10 +330,6 @@ Global site tag (gtag.js) - Google Analytics
 
                     var facultyId = response.result.reviews[i].facultyId;
                     var faculty = facultyResponse.result.faculties.filter(f => facultyId === f.facultyId)[0];
-
-                    console.log(facultyId);
-                    console.log(faculty);
-                    console.log(facultyResponse.result.faculties);
 
                     var urlProfileRedirect = "./profile.html?id=";
 

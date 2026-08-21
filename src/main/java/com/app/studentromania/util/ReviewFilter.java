@@ -8,6 +8,7 @@ public class ReviewFilter {
 	private static final int DEFAULT_LIMIT = 25;
 	private static final int ADMIN_LIMIT = 999;
 	private static final String DEFAULT_SORT_FIELD = "reviewDate";
+	private static final String DEFAULT_SORT_FIELD_JOIN = "r.reviewDate";
 	private static final String DEFAULT_SORT_DIRECTION = "desc";
 	private static final String SORT_SPLIT_CHARACTER = ",";
 
@@ -19,6 +20,7 @@ public class ReviewFilter {
 	private Integer limit;
 	private Integer pageNumber;
 	private Integer offset;
+	private boolean join;
 
 	public ReviewFilter(String searchBy, Double ratingFrom, Double ratingTo, String countryCode, String orderBy, Integer limit,
 			Integer pageNumber, Integer offset) {
@@ -103,40 +105,69 @@ public class ReviewFilter {
 		this.offset = offset;
 	}
 
+	public boolean isJoin() {
+		return join;
+	}
+
+	public void setJoin(boolean join) {
+		this.join = join;
+	}
+
 	public String getSearchByClause() {
 		if (StringUtils.isEmpty(searchBy)) {
 			return StringUtils.EMPTY;
 		}
-		return " and (UPPER(reviewText) LIKE '%" + searchBy.toUpperCase() + "%') ";
+		String normalizedSearchBy = normalizeDiacritics(searchBy).toUpperCase().trim();
+		if (isJoin()) {
+			return " and (UPPER(" + diacriticsInsensitive("r.reviewText") + ") LIKE '%" + normalizedSearchBy + "%'"
+					+ " or UPPER(" + diacriticsInsensitive("f.facultyName") + ") LIKE '%" + normalizedSearchBy + "%'"
+					+ " or UPPER(" + diacriticsInsensitive("f.universityName") + ") LIKE '%" + normalizedSearchBy + "%'"
+					+ " or UPPER(" + diacriticsInsensitive("f.facultyShortname") + ") LIKE '%" + normalizedSearchBy + "%'"
+					+ " or UPPER(" + diacriticsInsensitive("f.facultyCity") + ") LIKE '%" + normalizedSearchBy + "%') ";
+		}
+		return " and (UPPER(" + diacriticsInsensitive("reviewText") + ") LIKE '%" + normalizedSearchBy + "%') ";
 	}
 
 	public String getRatingFromClause() {
 		if (ratingFrom == null || ratingFrom == 0) {
 			return StringUtils.EMPTY;
 		}
-		return " and generalRating >= " + ratingFrom;
+		return " and " + (isJoin() ? "r." : "") + "generalRating >= " + ratingFrom;
 	}
 
 	public String getRatingToClause() {
 		if (ratingTo == null || ratingTo == 0) {
 			return StringUtils.EMPTY;
 		}
-		return " and generalRating <= " + ratingTo;
+		return " and " + (isJoin() ? "r." : "") + "generalRating <= " + ratingTo;
 	}
 
 	public String getCountryCodeClause() {
 		if (StringUtils.isEmpty(countryCode)) {
 			return StringUtils.EMPTY;
 		}
-		return " and countryCode IN " + JsonArray.from(countryCode);
+		return " and " + (isJoin() ? "r." : "") + "countryCode IN " + JsonArray.from(countryCode);
 	}
 
 	public String getOrderByClause() {
 		if (StringUtils.isEmpty(orderBy)) {
-			return " order by " + DEFAULT_SORT_FIELD + " " + DEFAULT_SORT_DIRECTION;
+			return " order by " + (isJoin() ? DEFAULT_SORT_FIELD_JOIN : DEFAULT_SORT_FIELD) + " " + DEFAULT_SORT_DIRECTION;
 		}
 		String[] sortInfo = orderBy.split(SORT_SPLIT_CHARACTER);
-		return " order by " + sortInfo[0] + " " + sortInfo[1];
+		return " order by " + (isJoin() ? "r." : "") + sortInfo[0] + " " + sortInfo[1];
+	}
+
+	// Some faculties/reviews store ș/ț with the legacy cedilla forms (ş/ţ) instead of
+	// the correct comma-below forms (ș/ț) - same rendered look, different codepoints -
+	// so search needs to be diacritics-insensitive on both the query and the data.
+	private static String normalizeDiacritics(String text) {
+		return text.replaceAll("[ĂăÂâ]", "A").replaceAll("[ŞşȘș]", "S").replaceAll("[ŢţȚț]", "T")
+				.replaceAll("[Îî]", "I");
+	}
+
+	private static String diacriticsInsensitive(String field) {
+		return "REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(REGEXP_REPLACE(" + field
+				+ ", '[ĂăÂâ]', 'A'), '[ŞşȘș]', 'S'), '[ŢţȚț]', 'T'), '[Îî]', 'I')";
 	}
 
 	@Override

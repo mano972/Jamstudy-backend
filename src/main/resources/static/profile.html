@@ -626,10 +626,12 @@ Global site tag (gtag.js) - Google Analytics
 
                 var facultyName = response.result.facultyName;
 
-                gtag('event', 'faculty_profile', {
-                  'faculty_id': facultyId,
-                  'faculty_name': facultyName
-                });
+                if (typeof gtag === 'function') {
+                    gtag('event', 'faculty_profile', {
+                      'faculty_id': facultyId,
+                      'faculty_name': facultyName
+                    });
+                }
 
                 facultyName = escapeHtml(facultyName);
                 var universityName = escapeHtml(response.result.universityName);
@@ -1915,61 +1917,70 @@ Global site tag (gtag.js) - Google Analytics
 
     function loadMap(address, city) {
         const currentUrl = window.location.href;
+        var zoom = 14;
 
-        if (currentUrl.includes("unistart.ro")) {
-            var zoom = 14;
-            if (!address) {
-                if (!city) {
-                    address = 'Romania';
-                    zoom = 7;
-                } else {
-                    address = city;
-                    zoom = 7;
-                }
+        if (!address) {
+            if (!city) {
+                address = currentUrl.includes("unistart.lt") ? 'Lithuania' : 'Romania';
+            } else {
+                address = city;
             }
+            zoom = 7;
+        }
 
-            if (address.includes('nr.')) {
-                address = address.replace('nr.', '');
-            } else if (address.includes('Nr.')) {
-                address = address.replace('Nr.', '');
-            } else if (address.includes('nr')) {
-                address = address.replace('nr', '');
-            }
+        if (address.includes('nr.')) {
+            address = address.replace('nr.', '');
+        } else if (address.includes('Nr.')) {
+            address = address.replace('Nr.', '');
+        } else if (address.includes('nr')) {
+            address = address.replace('nr', '');
+        }
 
-            var city0 = city.split(",")[0];
-            if (!address.includes(city0)) {
+        if (city) {
+            var city0 = city.split(",")[0].trim();
+            if (!normalizeRomanianDiacritics(address).includes(normalizeRomanianDiacritics(city0))) {
                 address = address + ', ' + city;
-            }
-        } else if (currentUrl.includes("unistart.lt")) {
-            var zoom = 14;
-            if (!address) {
-                if (!city) {
-                    address = 'Lithuania';
-                    zoom = 7;
-                } else {
-                    address = city;
-                    zoom = 7;
-                }
             }
         }
 
-        var data = {
+        geocodeAddress(address, zoom, city);
+    }
+
+    // Romanian ș/ț are sometimes stored with the legacy cedilla forms (ş/ţ)
+    // instead of the correct comma-below forms (ș/ț) — same rendered look,
+    // different codepoints, so a plain .includes() check misses the match.
+    function normalizeRomanianDiacritics(text) {
+        return text
+            .replace(/ş/g, 'ș') // ş -> ș
+            .replace(/Ş/g, 'Ș') // Ş -> Ș
+            .replace(/ţ/g, 'ț') // ţ -> ț
+            .replace(/Ţ/g, 'Ț'); // Ţ -> Ț
+    }
+
+    function geocodeAddress(address, zoom, city) {
+        var searchParams = new URLSearchParams({
         "format": "json",
         "addressdetails": 1,
         "q": address,
         "limit": 1
-        };
+        });
 
         delete $.ajaxSettings.headers["Token"]; // workaround
         $.ajax({
           method: "GET",
-          url: "https://nominatim.openstreetmap.org",
-          data: data,
+          url: "https://nominatim.openstreetmap.org/search?" + searchParams.toString(),
           beforeSend : function(request) {
           }
         })
         .success(function(response) {
-            createMap(response, zoom);
+            if ((!response || response.length === 0) && city && address !== city) {
+                // Address is too specific for Nominatim to geocode (e.g. includes
+                // a building/wing name); fall back to the city so the map still
+                // centers somewhere meaningful instead of the whole country.
+                geocodeAddress(city, 12, city);
+            } else {
+                createMap(response, zoom);
+            }
         })
         .error(function(error) {
             console.log(error);
@@ -1983,20 +1994,22 @@ Global site tag (gtag.js) - Google Analytics
             var longitude;
             var latitude;
             if (!response || response.length == 0) {
-                if (currentUrl.includes("unistart.ro")) {
-                    longitude = '24.697';
-                    latitude = '45.905';
-                } else if (currentUrl.includes("unistart.lt")) {
-                    longitude = '24.000';
-                    latitude = '55.000';
+                if (currentUrl.includes("unistart.lt")) {
+                    longitude = 24.000;
+                    latitude = 55.000;
+                } else {
+                    longitude = 24.697;
+                    latitude = 45.905;
                 }
                 zoom = 7;
             } else {
-                longitude = response[0].lon;
-                latitude = response[0].lat;
+                // Nominatim returns lon/lat as strings; OpenLayers' extent/tile-range
+                // math needs real numbers or it silently computes an empty tile range.
+                longitude = parseFloat(response[0].lon);
+                latitude = parseFloat(response[0].lat);
             }
-            <!-- const mapUrl = 'http://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'; -->
-            const mapUrl = 'http://{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+            <!-- const mapUrl = 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'; -->
+            const mapUrl = 'https://{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
             var map = new ol.Map({
                 target: 'map',
                 layers: [
@@ -2034,6 +2047,14 @@ Global site tag (gtag.js) - Google Analytics
                 source: vectorSource
             });
             map.addLayer(vectorLayer);
+
+            // OL 6.5 has no built-in resize observer: if the container's layout
+            // wasn't settled yet on the first render pass, the map is left blank
+            // (controls render, but the tile/vector layers never paint) until the
+            // size is recomputed explicitly.
+            setTimeout(function() {
+                map.updateSize();
+            }, 200);
 
             if ($(window).width() > 992) {
                 const olViewport = document.getElementsByClassName('ol-viewport').length > 0 ? document.getElementsByClassName('ol-viewport')[0] : null;
