@@ -57,12 +57,29 @@ Global site tag (gtag.js) - Google Analytics
 								<h3 class="title" data-i18n-key="compare-faculties">Compară facultăți</h3>
 							</div>
 						</div>
-						
+
+						<div class="row">
+							<div class="col-md-6 col-md-offset-0 col-sm-8 col-xs-12">
+								<fieldset id="compare-search-fieldset" class="search-fieldset">
+									<input id="compare-search-input" class="form-control" type="text" value="" placeholder="" spellcheck="false" autocomplete="off"/>
+									<i id="compare-search-button" class="fa fa-search inner-icon" onclick="searchFacultiesToCompare()" aria-hidden="true"></i>
+									<ul id="compare-search-results" class="autocomplete-result-list" style="display: none; position: absolute; width: 100%; top: 100%; left: 0;"></ul>
+								</fieldset>
+							</div>
+						</div>
+						<br>
+
+						<!-- Radar/spider chart: built but not shipped yet, keeping for later.
+						<div id="comparison-radar-chart" class="row" style="display: none;">
+							(populated dynamically)
+						</div>
+						-->
+
 						<div class="text-center">
 							<div id="loading" class='uil-reload-css reload-background' style=''><div></div></div>
-						</div>	
-						
-						<div id="comparison-table" class="comparison-table row">						
+						</div>
+
+						<div id="comparison-table" class="comparison-table">
 							<!-- populated dynamically -->
 						</div>
 	
@@ -193,7 +210,25 @@ $(document).ready(function() {
 	loadUser();
 	getFaculties();
 
+	document.getElementById("compare-search-input").addEventListener("keyup", function(event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+		}
+		searchFacultiesToCompare();
+	});
+
+	document.addEventListener("click", function(event) {
+		var searchFieldset = document.getElementById("compare-search-fieldset");
+		if (searchFieldset && !searchFieldset.contains(event.target)) {
+			document.getElementById("compare-search-results").style.display = "none";
+		}
+	});
+
 });
+
+window.onload = function() {
+	document.getElementById("compare-search-input").setAttribute("placeholder", translateKey("compare-search-placeholder"));
+};
 
 
 function getFaculties() {
@@ -221,6 +256,7 @@ function getFaculties() {
 		document.getElementById("loading").style.display = "none";
 		var universityIds = ['UNI_JBCh5VDZkN', 'UNI_2pdZxarJlM', 'UNI_7qEOSdaLJ7', 'UNI_88N6eRLyXm', "UNI_ossXtvkhcj"]; // default recommended universityIds
 		getRecommendedFaculties(universityIds, facultyIds);
+		// renderComparisonRadarChart([]); // radar chart not shipped yet, keeping for later
 		translatePage();
 		return;
 	}
@@ -250,6 +286,7 @@ function getFaculties() {
 			}).sort().map(function(j) { return j[1] });
 			constructTable();
 			loadComparisonTableContent(sortedResponse);
+			// renderComparisonRadarChart(sortedResponse); // radar chart not shipped yet, keeping for later
 		} else {
 			console.log(response.control.errorDescription);
 		}
@@ -265,6 +302,139 @@ function getFaculties() {
 	  }
 	});
 }
+
+/* Radar/spider chart: built but not shipped yet, keeping for later.
+// First 3 slots of the dataviz reference categorical palette — the only slots
+// validated pairwise-distinct (CVD-safe) for an "all pairs can be neighbors"
+// chart like an overlaid radar, so the chart caps at 3 series by design.
+var RADAR_SERIES_COLORS = ['#2a78d6', '#eb6834', '#1baf7a'];
+var RADAR_MAX_SERIES = 3;
+var RADAR_CATEGORIES = [
+	{ key: 'avgRatingCoursesAndLecturers', icon: 'fa-graduation-cap', i18nKey: 'review-professors-and-courses' },
+	{ key: 'avgRatingJobProspects', icon: 'fa-briefcase', i18nKey: 'review-career-opportunities' },
+	{ key: 'avgRatingAccomodation', icon: 'fa-home', i18nKey: 'review-acommodation' },
+	{ key: 'avgRatingStudentOrganisations', icon: 'fa-users', i18nKey: 'review-student-associations' },
+	{ key: 'avgRatingFacultyFacilities', icon: 'fa-building', i18nKey: 'review-facilities' },
+	{ key: 'avgRatingTimeBalance', icon: 'fa-clock-o', i18nKey: 'review-study-time-vs-free-time' }
+];
+
+function renderComparisonRadarChart(faculties) {
+	var container = document.getElementById("comparison-radar-chart");
+
+	if (!faculties || faculties.length === 0) {
+		container.innerHTML = "";
+		container.style.display = "none";
+		return;
+	}
+	container.style.display = "";
+
+	var radarFaculties = faculties.slice(0, RADAR_MAX_SERIES);
+	var extraCount = faculties.length - radarFaculties.length;
+
+	var size = 420;
+	var center = size / 2;
+	var maxRadius = 130;
+	var maxValue = 5;
+	var numAxes = RADAR_CATEGORIES.length;
+	var angleStep = (2 * Math.PI) / numAxes;
+
+	function angleFor(index) {
+		return -Math.PI / 2 + index * angleStep;
+	}
+	function pointAtRadius(index, radius) {
+		var angle = angleFor(index);
+		return { x: center + radius * Math.cos(angle), y: center + radius * Math.sin(angle) };
+	}
+	function pointForValue(index, value) {
+		return pointAtRadius(index, (value / maxValue) * maxRadius);
+	}
+
+	// Gridline rings at 1..5 — hairline, recessive, never dashed.
+	var gridRingsSvg = "";
+	for (var ring = 1; ring <= maxValue; ring++) {
+		var ringPoints = [];
+		for (var a = 0; a < numAxes; a++) {
+			var ringPoint = pointForValue(a, ring);
+			ringPoints.push(ringPoint.x + ',' + ringPoint.y);
+		}
+		gridRingsSvg += '<polygon points="' + ringPoints.join(' ') + '" fill="none" stroke="#e1e0d9" stroke-width="1"/>';
+	}
+
+	// Axis spokes + category labels (icon reused from the profile/comparison category rows).
+	var axesSvg = "";
+	var labelsHtml = "";
+	for (a = 0; a < numAxes; a++) {
+		var outerPoint = pointAtRadius(a, maxRadius);
+		axesSvg += '<line x1="' + center + '" y1="' + center + '" x2="' + outerPoint.x + '" y2="' + outerPoint.y + '" stroke="#c3c2b7" stroke-width="1"/>';
+
+		var labelPoint = pointAtRadius(a, maxRadius + 44);
+		var category = RADAR_CATEGORIES[a];
+		labelsHtml +=
+			'<div style="position: absolute; width: 100px; left: ' + labelPoint.x + 'px; top: ' + labelPoint.y + 'px; transform: translate(-50%, -50%); text-align: center; font-size: 12px; color: #52514e;">'
+			+	'<i class="fa ' + category.icon + '" style="color: #898781;"></i><br>'
+			+	'<span data-i18n-key="' + category.i18nKey + '"></span>'
+			+ '</div>';
+	}
+
+	// One polygon + vertex dots per faculty, in the fixed CVD-safe slot order.
+	var seriesSvg = "";
+	var legendHtml = "";
+	for (var s = 0; s < radarFaculties.length; s++) {
+		var faculty = radarFaculties[s];
+		var color = RADAR_SERIES_COLORS[s];
+		var polygonPoints = [];
+		var verticesSvg = "";
+		for (a = 0; a < numAxes; a++) {
+			var rawValue = faculty[RADAR_CATEGORIES[a].key];
+			var value = rawValue ? rawValue : 0;
+			var vertexPoint = pointForValue(a, value);
+			polygonPoints.push(vertexPoint.x + ',' + vertexPoint.y);
+			var displayValue = rawValue ? rawValue.toFixed(1) : "N/A";
+			verticesSvg += '<circle cx="' + vertexPoint.x + '" cy="' + vertexPoint.y + '" r="4" fill="' + color + '" stroke="#fcfcfb" stroke-width="2"><title>' + escapeHtml(faculty.facultyName) + ': ' + displayValue + '</title></circle>';
+		}
+		seriesSvg +=
+			'<polygon points="' + polygonPoints.join(' ') + '" fill="' + color + '" fill-opacity="0.1" stroke="' + color + '" stroke-width="2"/>'
+			+ verticesSvg;
+
+		if (radarFaculties.length > 1) {
+			legendHtml +=
+				'<span style="display: inline-flex; align-items: center; margin: 0 12px;">'
+				+	'<span style="display: inline-block; width: 12px; height: 12px; background: ' + color + '; border-radius: 2px; margin-right: 6px;"></span>'
+				+	'<span>' + escapeHtml(faculty.facultyName) + '</span>'
+				+ '</span>';
+		}
+	}
+
+	var titleHtml = radarFaculties.length === 1
+		? '<h4 class="text-center">' + escapeHtml(radarFaculties[0].facultyName) + '</h4>'
+		: '<h4 class="text-center" data-i18n-key="compare-radar-title">Comparație vizuală</h4>';
+
+	var extraNoteHtml = extraCount > 0
+		? '<p class="text-center text-muted"><small><span data-i18n-key="compare-radar-first-three">Graficul arată primele 3 facultăți din tabel</span></small></p>'
+		: '';
+
+	container.innerHTML =
+		'<div class="col-xs-12">'
+		+	'<div class="card">'
+		+		'<div class="content">'
+		+			titleHtml
+		+			'<div style="position: relative; width: ' + size + 'px; max-width: 100%; margin: 0 auto;">'
+		+				'<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '" style="max-width: 100%; height: auto;">'
+		+					gridRingsSvg
+		+					axesSvg
+		+					seriesSvg
+		+				'</svg>'
+		+				labelsHtml
+		+			'</div>'
+		+			'<div class="text-center" style="margin-top: 10px;">' + legendHtml + '</div>'
+		+			extraNoteHtml
+		+		'</div>'
+		+	'</div>'
+		+ '</div>';
+
+	translatePage();
+}
+*/
 
 function constructTable() {
 	var collColumnWidth = "col-xs-3";
@@ -706,6 +876,79 @@ function loadRecommendedFacultiesContent(response, comparedFacultyIds) {
 	
 	$('#media').carousel('pause');
 	
+}
+
+function searchFacultiesToCompare() {
+	var input = document.getElementById("compare-search-input").value;
+	var resultsList = document.getElementById("compare-search-results");
+
+	if (!input || input.length < 3) {
+		resultsList.innerHTML = "";
+		resultsList.style.display = "none";
+		return;
+	}
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
+	backendUrl.searchParams.append("searchBy", input);
+	backendUrl.searchParams.append("orderBy", "viewsCount,desc");
+	backendUrl.searchParams.append("limit", 15);
+
+	fetch(backendUrl, {
+		method: "GET",
+		headers: {
+			"Code": window.location.href.includes("unistart.lt") ? "LT" : "RO",
+		}
+	})
+	.then(function(response) { return response.json(); })
+	.then(function(data) {
+		renderCompareSearchResults(data.result ? data.result.faculties : []);
+	})
+	.catch(function(error) {
+		console.log(error);
+	});
+}
+
+function renderCompareSearchResults(faculties) {
+	var resultsList = document.getElementById("compare-search-results");
+
+	var facultyIdsString = localStorage.getItem("fci");
+	var alreadyAddedIds = facultyIdsString ? facultyIdsString.split(",") : [];
+
+	var availableFaculties = faculties.filter(function(faculty) {
+		return !alreadyAddedIds.includes(faculty.facultyId);
+	}).slice(0, 7);
+
+	if (availableFaculties.length === 0) {
+		resultsList.innerHTML = '<li class="autocomplete-result" data-i18n-key="compare-search-no-results">Nu au fost găsite rezultate</li>';
+		resultsList.style.display = "block";
+		return;
+	}
+
+	var resultsHtml = "";
+	var i;
+	for (i in availableFaculties) {
+		var faculty = availableFaculties[i];
+		var facultyName = escapeHtml(faculty.facultyName);
+		var universityName = escapeHtml(faculty.universityName);
+		var logoSrc = backendUrlRoot + "/v1/faculty/" + faculty.facultyId + "/logo";
+
+		resultsHtml +=
+			'<li class="autocomplete-result" onclick="addToCompareTableFromSearch(&quot;' + faculty.facultyId + '&quot;)">'
+			+	'<img src="' + logoSrc + '" style="height: 24px; width: 24px; object-fit: contain; margin-right: 8px; vertical-align: middle;">'
+			+	'<b>' + facultyName + '</b> <span class="text-muted">' + universityName + '</span>'
+			+ '</li>';
+	}
+
+	resultsList.innerHTML = resultsHtml;
+	resultsList.style.display = "block";
+	translatePage();
+}
+
+function addToCompareTableFromSearch(facultyId) {
+	document.getElementById("compare-search-input").value = "";
+	document.getElementById("compare-search-results").innerHTML = "";
+	document.getElementById("compare-search-results").style.display = "none";
+	addToCompareTable(null, facultyId);
 }
 
 function addToCompareTable(button, facultyId) {

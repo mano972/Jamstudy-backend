@@ -960,6 +960,7 @@ Global site tag (gtag.js) - Google Analytics
                                                         + cardReviewStr + seeAllReviewsButtonStr
     +'													</div>'
     +'													<div class="col-md-4 col-md-offset-0">'
+    <!-- +'														<div id="faculty-profile-radar-chart"></div>' -->
     +'														<div class="card-review-categories">'
     +'															<div class="review-category-entry">'
     +'																<i class="fa fa-graduation-cap comparison-row-label-icon" style="color: #000;"></i>'
@@ -1083,6 +1084,8 @@ Global site tag (gtag.js) - Google Analytics
             );
             document.getElementById("faculty-profile-review-header").innerHTML += facultyProfileTabString;
 
+            // renderFacultyRadarChart(response.result); // radar chart not shipped yet, keeping for later
+
             if (document.getElementById("see-all-reviews")) {
                 document.getElementById("see-all-reviews").innerHTML = 'Vezi toate evaluările (' + responseReview.result.count + ')';
             }
@@ -1102,6 +1105,98 @@ Global site tag (gtag.js) - Google Analytics
             $('[href=#' + hash + ']').tab('show');
 
     }
+
+    /* Radar/spider chart: built but not shipped yet, keeping for later.
+    var RADAR_SERIES_COLOR = '#2a78d6'; // dataviz reference palette, categorical slot 1
+    var RADAR_CATEGORIES = [
+        { key: 'avgRatingCoursesAndLecturers', icon: 'fa-graduation-cap', i18nKey: 'review-professors-and-courses' },
+        { key: 'avgRatingJobProspects', icon: 'fa-briefcase', i18nKey: 'review-career-opportunities' },
+        { key: 'avgRatingAccomodation', icon: 'fa-home', i18nKey: 'review-acommodation' },
+        { key: 'avgRatingStudentOrganisations', icon: 'fa-users', i18nKey: 'review-student-associations' },
+        { key: 'avgRatingFacultyFacilities', icon: 'fa-building', i18nKey: 'review-facilities' },
+        { key: 'avgRatingTimeBalance', icon: 'fa-clock-o', i18nKey: 'review-study-time-vs-free-time' }
+    ];
+
+    function renderFacultyRadarChart(faculty) {
+        var container = document.getElementById("faculty-profile-radar-chart");
+        if (!container) {
+            return;
+        }
+
+        var size = 320;
+        var center = size / 2;
+        var maxRadius = 95;
+        var maxValue = 5;
+        var numAxes = RADAR_CATEGORIES.length;
+        var angleStep = (2 * Math.PI) / numAxes;
+
+        function angleFor(index) {
+            return -Math.PI / 2 + index * angleStep;
+        }
+        function pointAtRadius(index, radius) {
+            var angle = angleFor(index);
+            return { x: center + radius * Math.cos(angle), y: center + radius * Math.sin(angle) };
+        }
+        function pointForValue(index, value) {
+            return pointAtRadius(index, (value / maxValue) * maxRadius);
+        }
+
+        // Gridline rings at 1..5 — hairline, recessive, never dashed.
+        var gridRingsSvg = "";
+        var a;
+        for (var ring = 1; ring <= maxValue; ring++) {
+            var ringPoints = [];
+            for (a = 0; a < numAxes; a++) {
+                var ringPoint = pointForValue(a, ring);
+                ringPoints.push(ringPoint.x + ',' + ringPoint.y);
+            }
+            gridRingsSvg += '<polygon points="' + ringPoints.join(' ') + '" fill="none" stroke="#e1e0d9" stroke-width="1"/>';
+        }
+
+        // Axis spokes + category labels.
+        var axesSvg = "";
+        var labelsHtml = "";
+        for (a = 0; a < numAxes; a++) {
+            var outerPoint = pointAtRadius(a, maxRadius);
+            axesSvg += '<line x1="' + center + '" y1="' + center + '" x2="' + outerPoint.x + '" y2="' + outerPoint.y + '" stroke="#c3c2b7" stroke-width="1"/>';
+
+            var labelPoint = pointAtRadius(a, maxRadius + 32);
+            var category = RADAR_CATEGORIES[a];
+            labelsHtml +=
+                '<div style="position: absolute; width: 80px; left: ' + labelPoint.x + 'px; top: ' + labelPoint.y + 'px; transform: translate(-50%, -50%); text-align: center; font-size: 11px; color: #52514e;">'
+                +	'<i class="fa ' + category.icon + '" style="color: #898781;"></i><br>'
+                +	'<span data-i18n-key="' + category.i18nKey + '"></span>'
+                + '</div>';
+        }
+
+        // Single-series polygon (this faculty only — no legend needed for one series).
+        var polygonPoints = [];
+        var verticesSvg = "";
+        for (a = 0; a < numAxes; a++) {
+            var rawValue = faculty[RADAR_CATEGORIES[a].key];
+            var value = rawValue ? rawValue : 0;
+            var vertexPoint = pointForValue(a, value);
+            polygonPoints.push(vertexPoint.x + ',' + vertexPoint.y);
+            var displayValue = rawValue ? rawValue.toFixed(1) : "N/A";
+            verticesSvg += '<circle cx="' + vertexPoint.x + '" cy="' + vertexPoint.y + '" r="4" fill="' + RADAR_SERIES_COLOR + '" stroke="#fcfcfb" stroke-width="2"><title>' + displayValue + '</title></circle>';
+        }
+        var seriesSvg =
+            '<polygon points="' + polygonPoints.join(' ') + '" fill="' + RADAR_SERIES_COLOR + '" fill-opacity="0.1" stroke="' + RADAR_SERIES_COLOR + '" stroke-width="2"/>'
+            + verticesSvg;
+
+        container.innerHTML =
+            '<div style="position: relative; width: ' + size + 'px; max-width: 100%; margin: 0 auto;">'
+            +	'<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '" style="max-width: 100%; height: auto;">'
+            +		gridRingsSvg
+            +		axesSvg
+            +		seriesSvg
+            +	'</svg>'
+            +	labelsHtml
+            + '</div>';
+
+        translatePage();
+    }
+    */
 
     function loadGeneralPresentationCard(response) {
 

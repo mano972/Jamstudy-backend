@@ -1298,7 +1298,11 @@ function initiateAutocomplete() {
 			})
 		},
 		renderResult: (result, props) => {
-			return ' <li ' + props + '>	<div>	 ' + escapeHtml(result.facultyName) + '	</div>	<small class="text-muted">	' + escapeHtml(result.universityName) + '	</small></li>	'
+			var logoSrc = backendUrlRoot + "/v1/faculty/" + result.facultyId + "/logo";
+			return ' <li ' + props + ' style="display: flex; align-items: center;">'
+				+ '<img src="' + logoSrc + '" style="height: 32px; width: 32px; object-fit: contain; margin-right: 10px; flex-shrink: 0;">'
+				+ '<div><div>' + escapeHtml(result.facultyName) + '</div><small class="text-muted">' + escapeHtml(result.universityName) + '</small></div>'
+				+ '</li>'
 		},
 		getResultValue: result => result.facultyName,
 		onSubmit: result => {
@@ -2301,6 +2305,10 @@ const ro_json = {
                   "compare-suggestions": "Sugestii de comparație",
                   "compare-add-faculty": "Adaugă o facultate pentru a începe",
                   "compare-search-faculties": "Caută Facultăți",
+                  "compare-search-placeholder": "Caută o facultate pentru a o adăuga în tabel...",
+                  "compare-search-no-results": "Nu au fost găsite rezultate",
+                  "compare-radar-title": "Comparație vizuală",
+                  "compare-radar-first-three": "Graficul arată primele 3 facultăți din tabel",
                   "contact-us": "Contactează-ne",
                   "contact-subtitle": "Spune-ne ce părere ai despre platforma Unistart, raportează un bug sau, pur și simplu, lasă-ne un mesaj.",
                   "contact-name": "Nume",
@@ -2536,6 +2544,10 @@ const en_json = {
                   "compare-suggestions": "Comparison suggestions",
                   "compare-add-faculty": "Add a faculty to start",
                   "compare-search-faculties": "Search for Faculties",
+                  "compare-search-placeholder": "Search for a faculty to add it to the table...",
+                  "compare-search-no-results": "No results were found",
+                  "compare-radar-title": "Visual comparison",
+                  "compare-radar-first-three": "The chart shows the first 3 faculties from the table",
                   "contact-us": "Contact us",
                   "contact-subtitle": "Tell us what you think about the Unistart platform, report a bug, or simply leave us a message.",
                   "contact-name": "Name",
@@ -2771,6 +2783,10 @@ const lt_json = {
                   "compare-suggestions": "Palyginimo pasiūlymai",
                   "compare-add-faculty": "Norėdami pradėti, pridėkite kolegiją",
                   "compare-search-faculties": "Fakultetų paieška",
+                  "compare-search-placeholder": "Ieškokite fakulteto, kad pridėtumėte jį į lentelę...",
+                  "compare-search-no-results": "Rezultatų nerasta",
+                  "compare-radar-title": "Vaizdinis palyginimas",
+                  "compare-radar-first-three": "Diagramoje rodomi pirmieji 3 fakultetai iš lentelės",
                   "contact-us": "Susisiekite su mumis",
                   "contact-subtitle": "Pasakykite mums savo nuomonę apie Unistart platformą, praneškite apie klaidą arba tiesiog palikite žinutę.",
                   "contact-name": "Vardas",
