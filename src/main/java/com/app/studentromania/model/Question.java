@@ -32,6 +32,9 @@ public class Question extends ParentEntity {
 	private String userEmail;
 
 	@Field
+	private String title;
+
+	@Field
 	private String questionText;
 
 	@Field
@@ -90,6 +93,14 @@ public class Question extends ParentEntity {
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getQuestionText() {

@@ -40,7 +40,7 @@ public class QuestionRepo {
 	@LogParameters
 	public List<Question> findByQuestionId(String questionId) {
 		String query = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
-				+ Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET + " WHERE docType = $1 ";
+				+ Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET + " WHERE docType = $1 AND questionId = $2 ";
 
 		return template.findByN1QL(
 				N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.QUESTION.getValue(), questionId)),

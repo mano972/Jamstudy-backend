@@ -19,6 +19,10 @@ public class AuthResponseDTO {
 
 	private List<String> likedReviews;
 
+	private List<String> likedQuestions;
+
+	private List<String> likedAnswers;
+
 	private List<UserProfileReview> addedReviews;
 
 	private String jwtToken;
@@ -69,6 +73,22 @@ public class AuthResponseDTO {
 
 	public void setLikedReviews(List<String> likedReviews) {
 		this.likedReviews = likedReviews;
+	}
+
+	public List<String> getLikedQuestions() {
+		return likedQuestions;
+	}
+
+	public void setLikedQuestions(List<String> likedQuestions) {
+		this.likedQuestions = likedQuestions;
+	}
+
+	public List<String> getLikedAnswers() {
+		return likedAnswers;
+	}
+
+	public void setLikedAnswers(List<String> likedAnswers) {
+		this.likedAnswers = likedAnswers;
 	}
 
 	public List<UserProfileReview> getAddedReviews() {

@@ -106,11 +106,15 @@ function loadUser() {
 				}
 				var savedCompaniesIds =  response.result.favoriteCompanies; // list of ids
 				var likedReviewsIds = userResponse.likedReviews;
+				var likedQuestionsIds = userResponse.likedQuestions;
+				var likedAnswersIds = userResponse.likedAnswers;
 				var addedReviews = userResponse.addedReviews;
-				
+
 				setUField("usf", savedFacultiesIds);
 				setUField("usc", savedCompaniesIds);
 				setUField("ulr", likedReviewsIds);
+				setUField("ulq", likedQuestionsIds);
+				setUField("ula", likedAnswersIds);
 				setUField("uar", addedReviews);
 				
 
@@ -262,12 +266,16 @@ function loginWithSocialMediaAccount(userData, registerType) {
 			}
 			var savedCompaniesIds =  response.result.favoriteCompanies; // list of ids
 			var likedReviewsIds = response.result.likedReviews;
+			var likedQuestionsIds = response.result.likedQuestions;
+			var likedAnswersIds = response.result.likedAnswers;
 			var addedReviews = response.result.addedReviews;
-			
+
 			setUField("ut", jwtToken);
 			setUField("usf", savedFacultiesIds);
 			setUField("usc", savedCompaniesIds);
 			setUField("ulr", likedReviewsIds);
+			setUField("ulq", likedQuestionsIds);
+			setUField("ula", likedAnswersIds);
 			setUField("uar", addedReviews);
 
 			redirectAfterLogin();
@@ -402,12 +410,16 @@ function login(e) {
 			}
 			var savedCompaniesIds =  response.result.favoriteCompanies; // list of ids
 			var likedReviewsIds = response.result.likedReviews;
+			var likedQuestionsIds = response.result.likedQuestions;
+			var likedAnswersIds = response.result.likedAnswers;
 			var addedReviews = response.result.addedReviews;
-			
+
 			setUField("ut", jwtToken);
 			setUField("usf", savedFacultiesIds);
 			setUField("usc", savedCompaniesIds);
 			setUField("ulr", likedReviewsIds);
+			setUField("ulq", likedQuestionsIds);
+			setUField("ula", likedAnswersIds);
 			setUField("uar", addedReviews);
 
 			redirectAfterLogin();
@@ -854,6 +866,18 @@ function goToAddReview(el, facultyId) {
 
 	var addReviewRedirectUrl = "./review.html?faculty=" + facultyId;
 	location.href = addReviewRedirectUrl;
+}
+
+function goToAskQuestion(el, facultyId) {
+	var jwtToken = getUField("ut");
+	if (!jwtToken) {
+		el.setAttribute("data-toggle", 'modal');
+		el.setAttribute("data-target", '#login-modal');
+		return false;
+	}
+
+	var askQuestionRedirectUrl = "./ask-question.html?faculty=" + facultyId;
+	location.href = askQuestionRedirectUrl;
 }
 
 function addToCompare(button, facultyId, hasText) {
@@ -2133,6 +2157,15 @@ const ro_json = {
                   "sort": "Sortare",
                   "add-review": "Adaugă evaluare",
                   "add-review-tooltip": "Adaugă evaluare 100% anonim",
+                  "qa-tab": "Q&A",
+                  "qa-sort-newest": "Cea mai recentă",
+                  "qa-sort-oldest": "Cea mai veche",
+                  "qa-sort-most-voted": "Cea mai votată",
+                  "qa-ask-question": "Pune o întrebare",
+                  "qa-answer": "Răspunde",
+                  "qa-no-questions": "Nu au fost găsite întrebări",
+                  "qa-show-more-answers-prefix": "Vezi încă",
+                  "qa-show-more-answers-suffix": "răspunsuri",
                   "see-all": "+ Vezi tot",
                   "see-all-v2": "Vezi tot",
                   "see-less": "- Vezi mai puțin",
@@ -2316,6 +2349,13 @@ const ro_json = {
                   "add-review-agree-to-terms-and-policy-3": "și cu",
                   "add-review-agree-to-terms-and-policy-4": " Termenii și Condițiile ",
                   "add-review-agree-to-terms-and-policy-5": " Politica de Confidențialitate ",
+                  "add-question-agree-to-terms-and-policy-1": "Prin adăugarea acestei întrebări declar că sunt de acord cu",
+                  "qa-ask-question-title-label": "Titlu",
+                  "qa-ask-question-text-label": "Întrebare",
+                  "qa-ask-question-title-placeholder": "Scrie titlul întrebării tale aici. Minim 5, maxim 150 de caractere.",
+                  "qa-ask-question-text-placeholder": "Scrie întrebarea ta aici. Minim 10, maxim 1000 de caractere.",
+                  "qa-post-question": "Postează întrebarea",
+                  "qa-post-answer": "Postează răspunsul",
                   "add-review-general-review-placeholder": "Descrie experiența ta în cel puțin 30 de caractere...",
                   "add-review-professors-and-courses-placeholder": "Cum sunt profesorii? Cum se desfasoară orele? Cum sunt materialele de studiu?",
                   "add-review-career-opportunities-placeholder": "Fie că ai terminat facultatea sau ești încă student, descrie experiența ta legată de oportunitățile de angajare...",
@@ -2352,6 +2392,15 @@ const en_json = {
                   "sort": "Sort",
                   "add-review": "Add Review",
                   "add-review-tooltip": "Add 100% anonymous review",
+                  "qa-tab": "Q&A",
+                  "qa-sort-newest": "Newest",
+                  "qa-sort-oldest": "Oldest",
+                  "qa-sort-most-voted": "Most voted",
+                  "qa-ask-question": "Ask a question",
+                  "qa-answer": "Answer",
+                  "qa-no-questions": "No questions were found",
+                  "qa-show-more-answers-prefix": "Show",
+                  "qa-show-more-answers-suffix": "more answers",
                   "see-all": "+ See all",
                   "see-all-v2": "See all",
                   "see-less": "- See less",
@@ -2535,6 +2584,13 @@ const en_json = {
                   "add-review-agree-to-terms-and-policy-3": "and the",
                   "add-review-agree-to-terms-and-policy-4": " Terms and Conditions ",
                   "add-review-agree-to-terms-and-policy-5": " Privacy Policy ",
+                  "add-question-agree-to-terms-and-policy-1": "By adding this question, I agree to the",
+                  "qa-ask-question-title-label": "Title",
+                  "qa-ask-question-text-label": "Question",
+                  "qa-ask-question-title-placeholder": "Write your question's title here. Minimum 5, maximum 150 characters.",
+                  "qa-ask-question-text-placeholder": "Write your question here. Minimum 10, maximum 1000 characters.",
+                  "qa-post-question": "Post the question",
+                  "qa-post-answer": "Post the answer",
                   "add-review-general-review-placeholder": "Describe your experience in at least 30 characters...",
                   "add-review-professors-and-courses-placeholder": "What are the professors like? How are the classes conducted? What are the study materials like?",
                   "add-review-career-opportunities-placeholder": "Whether you have graduated or are still a student, describe your experience with employment opportunities...",
@@ -2571,6 +2627,15 @@ const lt_json = {
                   "sort": "Rūšiavimas",
                   "add-review": "Pridėti atsiliepimą",
                   "add-review-tooltip": "Pridėkite 100% anonimišką atsiliepimą",
+                  "qa-tab": "Q&A",
+                  "qa-sort-newest": "Naujausi",
+                  "qa-sort-oldest": "Seniausi",
+                  "qa-sort-most-voted": "Daugiausiai balsuoti",
+                  "qa-ask-question": "Užduokite klausimą",
+                  "qa-answer": "Atsakyti",
+                  "qa-no-questions": "Klausimų nerasta",
+                  "qa-show-more-answers-prefix": "Peržiūrėti dar",
+                  "qa-show-more-answers-suffix": "atsakymus",
                   "see-all": "+ Peržiūrėti viską",
                   "see-all-v2": "Peržiūrėti viską",
                   "see-less": "- Mažiau matyti",
@@ -2754,6 +2819,13 @@ const lt_json = {
                   "add-review-agree-to-terms-and-policy-3": "ir",
                   "add-review-agree-to-terms-and-policy-4": " Paslaugų teikimo sąlygomis ",
                   "add-review-agree-to-terms-and-policy-5": " Privatumo politika ",
+                  "add-question-agree-to-terms-and-policy-1": "Pridėdamas šį klausimą, sutinku",
+                  "qa-ask-question-title-label": "Pavadinimas",
+                  "qa-ask-question-text-label": "Klausimas",
+                  "qa-ask-question-title-placeholder": "Parašykite savo klausimo pavadinimą čia. Minimum 5, maksimum 150 simbolių.",
+                  "qa-ask-question-text-placeholder": "Parašykite savo klausimą čia. Minimum 10, maksimum 1000 simbolių.",
+                  "qa-post-question": "Paskelbti klausimą",
+                  "qa-post-answer": "Paskelbti atsakymą",
                   "add-review-general-review-placeholder": "Apibūdinkite savo patirtį bent 30 simbolių...",
                   "add-review-professors-and-courses-placeholder": "Kokie yra dėstytojai? Kaip vyksta paskaitos? Kokie yra mokymosi medžiagos?",
                   "add-review-career-opportunities-placeholder": "Nesvarbu, ar baigėte universitetą, ar vis dar esate studentas, apibūdinkite savo patirtį su įsidarbinimo galimybėmis...",

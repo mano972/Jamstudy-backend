@@ -89,6 +89,12 @@ public class UserProfile extends ParentEntity {
 	private List<String> likedReviews = new ArrayList<>();
 
 	@Field
+	private List<String> likedQuestions = new ArrayList<>();
+
+	@Field
+	private List<String> likedAnswers = new ArrayList<>();
+
+	@Field
 	private List<UserProfileReview> addedReviews = new ArrayList<>();
 
 	@Field
@@ -290,6 +296,22 @@ public class UserProfile extends ParentEntity {
 
 	public void setLikedReviews(List<String> likedReviews) {
 		this.likedReviews = likedReviews;
+	}
+
+	public List<String> getLikedQuestions() {
+		return likedQuestions;
+	}
+
+	public void setLikedQuestions(List<String> likedQuestions) {
+		this.likedQuestions = likedQuestions;
+	}
+
+	public List<String> getLikedAnswers() {
+		return likedAnswers;
+	}
+
+	public void setLikedAnswers(List<String> likedAnswers) {
+		this.likedAnswers = likedAnswers;
 	}
 
 	public List<UserProfileReview> getAddedReviews() {

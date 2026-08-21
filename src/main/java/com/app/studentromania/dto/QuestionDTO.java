@@ -8,6 +8,8 @@ public class QuestionDTO {
 
 	private String userId;
 
+	private String title;
+
 	private String questionText;
 
 	private String category;
@@ -41,6 +43,14 @@ public class QuestionDTO {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getQuestionText() {

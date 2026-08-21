@@ -9910,6 +9910,20 @@ $ct-series-colors: (
 	padding: 7px;
 }
 
+.qa-answers-list {
+	margin-top: 10px;
+	padding-left: 15px;
+	border-left: 2px solid #eee;
+}
+
+.qa-answer-entry {
+	padding: 8px 0;
+}
+
+.qa-answer-entry + .qa-answer-entry {
+	border-top: 1px solid #eee;
+}
+
 .card-review-brief {
   border-radius: 0;
   box-shadow: 0 3px 10px rgba(204, 197, 185, .5);

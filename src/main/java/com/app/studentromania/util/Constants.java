@@ -52,6 +52,12 @@ public class Constants {
     public static final int REVIEW_MIN_LENGTH = 30;
     public static final int REVIEW_MAX_LENGTH = 1400;
     public static final int MAX_FAVORITE_COMPANIES = 20;
+    public static final int QUESTION_TITLE_MIN_LENGTH = 5;
+    public static final int QUESTION_TITLE_MAX_LENGTH = 150;
+    public static final int QUESTION_MIN_LENGTH = 10;
+    public static final int QUESTION_MAX_LENGTH = 1000;
+    public static final int ANSWER_MIN_LENGTH = 10;
+    public static final int ANSWER_MAX_LENGTH = 1000;
 
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile(

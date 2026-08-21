@@ -3,13 +3,13 @@ package com.app.studentromania.dto;
 import java.util.Date;
 import java.util.List;
 
-import com.app.studentromania.model.Answer;
-
 public class QuestionResponseDTO {
 
 	private String questionId;
 
 	private String facultyId;
+
+	private String title;
 
 	private String questionText;
 
@@ -19,7 +19,9 @@ public class QuestionResponseDTO {
 
 	private Date questionDate;
 
-	private List<Answer> answers;
+	private String formattedQuestionDate;
+
+	private List<AnswerResponseDTO> answers;
 
 	public String getQuestionId() {
 		return questionId;
@@ -35,6 +37,14 @@ public class QuestionResponseDTO {
 
 	public void setFacultyId(String facultyId) {
 		this.facultyId = facultyId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getQuestionText() {
@@ -69,11 +79,19 @@ public class QuestionResponseDTO {
 		this.questionDate = questionDate;
 	}
 
-	public List<Answer> getAnswers() {
+	public String getFormattedQuestionDate() {
+		return formattedQuestionDate;
+	}
+
+	public void setFormattedQuestionDate(String formattedQuestionDate) {
+		this.formattedQuestionDate = formattedQuestionDate;
+	}
+
+	public List<AnswerResponseDTO> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(List<Answer> answers) {
+	public void setAnswers(List<AnswerResponseDTO> answers) {
 		this.answers = answers;
 	}
 

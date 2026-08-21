@@ -200,7 +200,7 @@ Global site tag (gtag.js) - Google Analytics
                                                 <div class="list-options col-lg-12 col-lg-offset-0 col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0 col-xs-12">
                                                     <div class="content">
                                                         <div class="col-md-6 col-md-offset-0 col-sm-6 col-xs-12">
-                                                            <span><b>Căutare</b></span><br>
+                                                            <span><b data-i18n-key="search-v2">Căutare</b></span><br>
                                                             <fieldset class="search-fieldset">
                                                                 <input id="search-question-keyword" class="form-control"
                                                                        type="text" value=""
@@ -212,17 +212,31 @@ Global site tag (gtag.js) - Google Analytics
                                                             </fieldset>
                                                         </div>
                                                         <div class="col-lg-offset-0 col-lg-6 col-md-offset-0 col-md-6 col-sm-6 col-xs-12">
-                                                            <span><b>Sortare</b></span><br>
+                                                            <span><b data-i18n-key="sort">Sortare</b></span><br>
                                                             <select id="questions-sorting" class="selectpicker"
                                                                     data-style="form-control" data-menu-style=""
                                                                     onchange="getQA(false)">
-                                                                <option value="questionDate,desc">Cea mai recentă
+                                                                <option value="questionDate,desc" data-i18n-key="qa-sort-newest">Cea mai recentă
                                                                 </option>
-                                                                <option value="questionDate,asc">Cea mai veche</option>
-                                                                <option value="upvotes,desc">Cea mai votată</option>
+                                                                <option value="questionDate,asc" data-i18n-key="qa-sort-oldest">Cea mai veche</option>
+                                                                <option value="upvotes,desc" data-i18n-key="qa-sort-most-voted">Cea mai votată</option>
                                                             </select>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="faculty-review-card-fixed col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-8 col-lg-offset-0">
+                                    <div class="card">
+                                        <div class="content">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <button id="ask-question-button" class="btn btn-info btn-fill btn-block" onclick="goToAskQuestion(this, facultyId)"><i class="fas fa-question-circle fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="qa-ask-question">Pune o întrebare</span></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -400,6 +414,7 @@ Global site tag (gtag.js) - Google Analytics
     var currentlyVisibleReviewsNo = 0;
     var currentlyVisibleQuestionsNo = 0;
     var facultyDescription;
+    var ANSWERS_PAGE_SIZE = 3;
 
     $(document).ready(function() {
 
@@ -725,7 +740,7 @@ Global site tag (gtag.js) - Google Analytics
                         +							'<li class="active"><a href="#profile" data-toggle="tab" onclick="addHash(this)"><span data-i18n-key="profile">Profil</span></a></li>'
                         +							'<li><a id="reviews-tab" href="#reviews" data-toggle="tab" onclick="addHash(this)"><span data-i18n-key="reviews-v1">Evaluări</span></a></li>'
                         +							'<li><a id="faculty-programs-tab" href="#faculty-programs" data-toggle="tab" onclick="addHash(this)"><span data-i18n-key="study-programs">Programe de studiu</span></a></li>'
-    <!--					+							'<li><a id="q&a-tab" href="#qa" data-toggle="tab" onclick="addHash(this)">Q&A</a></li>'-->
+                        +							'<li><a id="qa-tab" href="#qa" data-toggle="tab" onclick="addHash(this)"><span data-i18n-key="qa-tab">Q&A</span></a></li>'
                         <!-- +							'<li><a href="#statistics" data-toggle="tab" onclick="addHash(this)">Statistici</a></li>' -->
                         +						'</ul>'
                         +						'</div>'
@@ -1759,10 +1774,14 @@ Global site tag (gtag.js) - Google Analytics
     }
 
     function loadQATab(response, loadMore) {
+        if (document.getElementById("qa-tab")) {
+            document.getElementById("qa-tab").innerHTML = '<span data-i18n-key="qa-tab">Q&A</span> (' + response.result.count + ')';
+        }
+
         if (loadMore) {
             currentlyVisibleQuestionsNo += response.result.questions.length;
         } else {
-            document.getElementById("faculty-profile-question-entries").innerHTML = '';
+            document.getElementById("faculty-profile-questions-entries").innerHTML = '';
             currentlyVisibleQuestionsNo = response.result.questions.length;
         }
 
@@ -1772,15 +1791,318 @@ Global site tag (gtag.js) - Google Analytics
             document.getElementById("load-more-questions-main").innerHTML = '<div class="card">'
                                                                         + '<div class="content"> '
                                                                             + '<div class="text-center row"> '
-                                                                                + '<button id="load-more-questions" class="btn btn-info btn-fill" type="submit" onclick="loadMoreQA()">Încarcă mai multe rezultate</button>'
+                                                                                + '<button id="load-more-questions" class="btn btn-info btn-fill" type="submit" onclick="loadMoreQA()" data-i18n-key="load-more">Încarcă mai multe rezultate</button>'
                                                                             + '</div> '
                                                                         + '</div> '
                                                                     + '</div>';
         }
 
-        if (response.result.questions.length == 0) {
-            document.getElementById("faculty-profile-question-entries").innerHTML = '<div class="text-center text-muted"> <h4>Nu au fost găsite rezultate</h4> </div>';
+        if (response.result.questions.length == 0 && !loadMore) {
+            document.getElementById("faculty-profile-questions-entries").innerHTML = '<div class="text-center text-muted"> <h4 data-i18n-key="qa-no-questions">Nu au fost găsite întrebări</h4> </div>';
+            return;
         }
+
+        var upvotedQuestionsIds = getUField("ulq") || [];
+        var upvotedAnswersIds = getUField("ula") || [];
+
+        var questionsHtml = "";
+        for (var i in response.result.questions) {
+            var question = response.result.questions[i];
+            var questionId = question.questionId;
+            var questionTitle = escapeHtml(question.title);
+            var questionText = escapeHtml(question.questionText);
+            var formattedQuestionDate = question.formattedQuestionDate ? question.formattedQuestionDate : "";
+            var questionUpvotes = question.upvotes ? question.upvotes : 0;
+            var questionUpvoteClass = upvotedQuestionsIds.includes(questionId)
+                ? "fas fa-thumbs-up like-review align"
+                : "far fa-thumbs-up like-review align";
+
+            var answersHtml = "";
+            var extraAnswersHtml = "";
+            var answers = question.answers || [];
+            for (var j in answers) {
+                var answer = answers[j];
+                var answerId = answer.answerId;
+                var answerText = escapeHtml(answer.answerText);
+                var formattedAnswerDate = answer.formattedAnswerDate ? answer.formattedAnswerDate : "";
+                var answerUpvotes = answer.upvotes ? answer.upvotes : 0;
+                var answerUpvoteClass = upvotedAnswersIds.includes(answerId)
+                    ? "fas fa-thumbs-up like-review align"
+                    : "far fa-thumbs-up like-review align";
+
+                var answerEntryHtml =
+                    '<div class="qa-answer-entry">'
+                    +   '<p>' + answerText + '</p>'
+                    +   '<div class="row">'
+                    +       '<div class="col-xs-6">'
+                    +           '<small class="text-muted"><i>' + formattedAnswerDate + '</i></small>'
+                    +       '</div>'
+                    +       '<div class="col-xs-6 text-right">'
+                    +           '<i class="' + answerUpvoteClass + '" style="margin-right: 7px;" onclick="upvoteAnswer(this, &quot;' + questionId + '&quot;, &quot;' + answerId + '&quot;)"></i><span class="align" style="margin-right: 15px;">' + answerUpvotes + '</span>'
+                    +           '<i data-toggle="tooltip" title="Raportează" class="far fa-flag report align" onclick="reportAnswer(this, &quot;' + questionId + '&quot;, &quot;' + answerId + '&quot;)"></i>'
+                    +       '</div>'
+                    +   '</div>'
+                    + '</div>';
+
+                if (j < ANSWERS_PAGE_SIZE) {
+                    answersHtml += answerEntryHtml;
+                } else {
+                    extraAnswersHtml += answerEntryHtml;
+                }
+            }
+
+            var showMoreAnswersHtml = "";
+            if (extraAnswersHtml) {
+                var extraAnswersCount = answers.length - ANSWERS_PAGE_SIZE;
+                showMoreAnswersHtml =
+                    '<div id="extra-answers-' + i + '" style="display: none;">' + extraAnswersHtml + '</div>'
+                    + '<button id="show-more-answers-' + i + '" class="btn btn-simple btn-info btn-block" onclick="showMoreAnswers(' + i + ')">'
+                    +   '<span data-i18n-key="qa-show-more-answers-prefix">Vezi încă</span> ' + extraAnswersCount + ' <span data-i18n-key="qa-show-more-answers-suffix">răspunsuri</span>'
+                    + '</button>';
+            }
+
+            questionsHtml +=
+                '<div class="card">'
+                +   '<div class="content">'
+                +       '<div class="row">'
+                +           '<div class="col-xs-12">'
+                +               '<h5>' + questionTitle + '</h5>'
+                +               '<p>' + questionText + '</p>'
+                +               '<small class="text-muted"><i>' + formattedQuestionDate + '</i></small>'
+                +           '</div>'
+                +       '</div>'
+                +       '<div class="row" style="margin-top: 10px;">'
+                +           '<div class="col-xs-6">'
+                +               '<button id="answer-button-' + i + '" class="btn btn-simple btn-info" onclick="answerQuestionButton(this, ' + i + ', &quot;' + questionId + '&quot;)"><span data-i18n-key="qa-answer">Răspunde</span></button>'
+                +           '</div>'
+                +           '<div class="col-xs-6 text-right">'
+                +               '<i class="' + questionUpvoteClass + '" style="margin-right: 7px;" onclick="upvoteQuestion(this, &quot;' + questionId + '&quot;)"></i><span class="align" style="margin-right: 20px;">' + questionUpvotes + '</span>'
+                +               '<i data-toggle="tooltip" title="Raportează" class="far fa-flag report align" onclick="reportQuestion(this, &quot;' + questionId + '&quot;)"></i>'
+                +           '</div>'
+                +       '</div>'
+                +       '<div id="answer-area-' + i + '" class="row"></div>'
+                +       (answersHtml ? '<div class="qa-answers-list">' + answersHtml + showMoreAnswersHtml + '</div>' : '')
+                +   '</div>'
+                + '</div>';
+        }
+
+        document.getElementById("faculty-profile-questions-entries").innerHTML += questionsHtml;
+    }
+
+    function showMoreAnswers(i) {
+        document.getElementById("extra-answers-" + i).style.display = "";
+        document.getElementById("show-more-answers-" + i).style.display = "none";
+    }
+
+    function answerQuestionButton(el, i, questionId) {
+        var jwtToken = getUField("ut");
+        if (!jwtToken) {
+            el.setAttribute("data-toggle", 'modal');
+            el.setAttribute("data-target", '#login-modal');
+            return false;
+        }
+        document.getElementById("answer-area-" + i).innerHTML = (
+            '<div class="form-group col-xs-12">'
+            +   '<textarea id="answer-text-' + i + '" class="form-control" rows="3" maxlength="1000" placeholder="Scrie răspunsul tău aici. Minim 10, maxim 1000 de caractere." spellcheck="false"></textarea>'
+            + '</div>'
+            + '<div class="col-xs-12">'
+            +   '<button class="btn btn-success btn-fill" onclick="submitAnswer(' + i + ', &quot;' + questionId + '&quot;)"><span data-i18n-key="qa-post-answer">Postează răspunsul</span></button>'
+            + '</div>'
+        );
+    }
+
+    function submitAnswer(i, questionId) {
+        var answerText = document.getElementById("answer-text-" + i).value;
+
+        var backendUrl = new URL(backendUrlRoot + "/v1/question/" + questionId + "/answer");
+
+        var data = {
+            "answerText": answerText
+        };
+
+        $.ajax({
+            url: backendUrl,
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json',
+            crossDomain: true,
+            data: JSON.stringify(data),
+            success: function(response) {
+                getQA(false);
+            },
+            error: function(error) {
+                if (checkLoggedInUser(error.status)) {
+                    $("#general-modal").modal();
+                    document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+                    var errorDescription = (error.responseJSON && error.responseJSON.control) ? error.responseJSON.control.errorDescription : "Răspunsul nu a putut fi adăugat";
+                    document.getElementById('modal-text').innerHTML = errorDescription;
+                }
+            }
+        });
+    }
+
+    function upvoteQuestion(el, questionId) {
+        var jwtToken = getUField("ut");
+        if (!jwtToken) {
+            el.setAttribute("data-toggle", 'modal');
+            el.setAttribute("data-target", '#login-modal');
+            return false;
+        }
+
+        var regularIcon = "far";
+        var solidIcon = "fas";
+
+        var upvote = $(el).hasClass(regularIcon);
+        var upvotesValue = parseInt(el.nextSibling.innerHTML);
+
+        var backendUrl = new URL(backendUrlRoot + "/v1/question/" + questionId + "/upvote");
+
+        $(el).addClass("fa-disabled");
+
+        $.ajax({
+            url: backendUrl,
+            type: 'PUT',
+            dataType: 'json',
+            contentType: 'application/json',
+            crossDomain: true,
+            data: JSON.stringify({ upvote: upvote }),
+            success: function (data) {
+                var upvotedQuestionsIds = getUField("ulq") || [];
+                if (upvote) {
+                    $(el).removeClass(regularIcon).addClass(solidIcon);
+                    el.nextSibling.innerHTML = (upvotesValue + 1);
+                    upvotedQuestionsIds.push(questionId);
+                } else {
+                    $(el).removeClass(solidIcon).addClass(regularIcon);
+                    el.nextSibling.innerHTML = (upvotesValue - 1);
+                    upvotedQuestionsIds = upvotedQuestionsIds.filter(function(value) { return questionId != value; });
+                }
+                setUField("ulq", upvotedQuestionsIds);
+            },
+            error: function(error) {
+                if (checkLoggedInUser(error.status)) {
+                    $("#general-modal").modal();
+                    document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+                    document.getElementById('modal-text').innerHTML = "Întrebarea nu a putut fi votată";
+                }
+            },
+            complete: function(data) {
+                $(el).removeClass("fa-disabled");
+            }
+        });
+    }
+
+    function upvoteAnswer(el, questionId, answerId) {
+        var jwtToken = getUField("ut");
+        if (!jwtToken) {
+            el.setAttribute("data-toggle", 'modal');
+            el.setAttribute("data-target", '#login-modal');
+            return false;
+        }
+
+        var regularIcon = "far";
+        var solidIcon = "fas";
+
+        var upvote = $(el).hasClass(regularIcon);
+        var upvotesValue = parseInt(el.nextSibling.innerHTML);
+
+        var backendUrl = new URL(backendUrlRoot + "/v1/question/" + questionId + "/upvoteanswer/" + answerId);
+
+        $(el).addClass("fa-disabled");
+
+        $.ajax({
+            url: backendUrl,
+            type: 'PUT',
+            dataType: 'json',
+            contentType: 'application/json',
+            crossDomain: true,
+            data: JSON.stringify({ upvote: upvote }),
+            success: function (data) {
+                var upvotedAnswersIds = getUField("ula") || [];
+                if (upvote) {
+                    $(el).removeClass(regularIcon).addClass(solidIcon);
+                    el.nextSibling.innerHTML = (upvotesValue + 1);
+                    upvotedAnswersIds.push(answerId);
+                } else {
+                    $(el).removeClass(solidIcon).addClass(regularIcon);
+                    el.nextSibling.innerHTML = (upvotesValue - 1);
+                    upvotedAnswersIds = upvotedAnswersIds.filter(function(value) { return answerId != value; });
+                }
+                setUField("ula", upvotedAnswersIds);
+            },
+            error: function(error) {
+                if (checkLoggedInUser(error.status)) {
+                    $("#general-modal").modal();
+                    document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+                    document.getElementById('modal-text').innerHTML = "Răspunsul nu a putut fi votat";
+                }
+            },
+            complete: function(data) {
+                $(el).removeClass("fa-disabled");
+            }
+        });
+    }
+
+    function reportQuestion(el, questionId) {
+        var regularIcon = "far";
+        var solidIcon = "fas";
+
+        if (!$(el).hasClass(regularIcon)) {
+            return;
+        }
+
+        var backendUrl = new URL(backendUrlRoot + "/v1/question/" + questionId + "/report");
+        $.ajax({
+            url: backendUrl,
+            type: 'PUT',
+            dataType: 'json',
+            contentType: 'application/json',
+            crossDomain: true,
+            success: function () {
+                $("#general-modal").modal();
+                document.getElementById('modal-text').innerHTML = "Întrebarea a fost raportată";
+                $(el).removeClass(regularIcon);
+                $(el).addClass(solidIcon);
+            },
+            error: function(error) {
+                if (checkLoggedInUser(error.status)) {
+                    $("#general-modal").modal();
+                    document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+                    document.getElementById('modal-text').innerHTML = "Întrebarea nu a putut fi raportată";
+                }
+            }
+        });
+    }
+
+    function reportAnswer(el, questionId, answerId) {
+        var regularIcon = "far";
+        var solidIcon = "fas";
+
+        if (!$(el).hasClass(regularIcon)) {
+            return;
+        }
+
+        var backendUrl = new URL(backendUrlRoot + "/v1/question/" + questionId + "/reportanswer/" + answerId);
+        $.ajax({
+            url: backendUrl,
+            type: 'PUT',
+            dataType: 'json',
+            contentType: 'application/json',
+            crossDomain: true,
+            success: function () {
+                $("#general-modal").modal();
+                document.getElementById('modal-text').innerHTML = "Răspunsul a fost raportat";
+                $(el).removeClass(regularIcon);
+                $(el).addClass(solidIcon);
+            },
+            error: function(error) {
+                if (checkLoggedInUser(error.status)) {
+                    $("#general-modal").modal();
+                    document.getElementById('modal-header-text').innerHTML = '<i class="fas fa-exclamation-triangle fa-3x"></i>';
+                    document.getElementById('modal-text').innerHTML = "Răspunsul nu a putut fi raportat";
+                }
+            }
+        });
     }
 
     function loadFacultyProgramsTab(response) {

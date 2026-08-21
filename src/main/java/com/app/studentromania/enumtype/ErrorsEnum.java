@@ -42,9 +42,14 @@ public enum ErrorsEnum {
 
     // Question
     QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "Întrebarea nu a fost gasită.", -50),
+    QUESTION_LENGTH_ERROR(HttpStatus.NOT_ACCEPTABLE, "Lungimea întrebării nu este corectă.", -51),
+    QUESTION_ALREADY_UPVOTED(HttpStatus.NOT_ACCEPTABLE, "Această întrebare a fost deja votată.", -52),
+    QUESTION_TITLE_LENGTH_ERROR(HttpStatus.NOT_ACCEPTABLE, "Lungimea titlului întrebării nu este corectă.", -53),
 
     // Answer
     ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND, "Raspunsul nu a fost gasit.", -60),
+    ANSWER_LENGTH_ERROR(HttpStatus.NOT_ACCEPTABLE, "Lungimea răspunsului nu este corectă.", -61),
+    ANSWER_ALREADY_UPVOTED(HttpStatus.NOT_ACCEPTABLE, "Acest răspuns a fost deja votat.", -62),
 
     // UserProfile
     USERPROFILE_NOT_FOUND(HttpStatus.NOT_FOUND, "Nu există user cu acest email.", -70),

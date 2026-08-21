@@ -71,7 +71,8 @@ public class QuestionFilter {
 		if (StringUtils.isEmpty(searchBy)) {
 			return StringUtils.EMPTY;
 		}
-		return " and (UPPER(questionText) LIKE '%" + searchBy.toUpperCase() + "%') ";
+		String normalizedSearchBy = searchBy.toUpperCase().trim();
+		return " and (UPPER(title) LIKE '%" + normalizedSearchBy + "%' or UPPER(questionText) LIKE '%" + normalizedSearchBy + "%') ";
 	}
 
 	public String getOrderByClause() {
@@ -79,7 +80,7 @@ public class QuestionFilter {
 			return " order by " + DEFAULT_SORT_FIELD + " " + DEFAULT_SORT_DIRECTION;
 		}
 		String[] sortInfo = orderBy.split(SORT_SPLIT_CHARACTER);
-		return " order by q." + sortInfo[0] + " " + sortInfo[1];
+		return " order by " + sortInfo[0] + " " + sortInfo[1];
 	}
 
 	@Override

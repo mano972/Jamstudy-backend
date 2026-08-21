@@ -1,20 +1,16 @@
-package com.app.studentromania.model;
+package com.app.studentromania.dto;
 
 import java.util.Date;
 
-public class Answer {
+public class AnswerResponseDTO {
 
 	private String answerId;
 
 	private String questionId;
 
-	private String userId;
-
 	private String answerText;
 
 	private int upvotes;
-
-	private int reports;
 
 	private Date answerDate;
 
@@ -36,14 +32,6 @@ public class Answer {
 		this.questionId = questionId;
 	}
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
 	public String getAnswerText() {
 		return answerText;
 	}
@@ -58,14 +46,6 @@ public class Answer {
 
 	public void setUpvotes(int upvotes) {
 		this.upvotes = upvotes;
-	}
-
-	public int getReports() {
-		return reports;
-	}
-
-	public void setReports(int reports) {
-		this.reports = reports;
 	}
 
 	public Date getAnswerDate() {

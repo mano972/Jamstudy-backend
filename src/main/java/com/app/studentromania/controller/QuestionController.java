@@ -57,6 +57,7 @@ public class QuestionController {
 	@PutMapping("/{questionId}/upvote")
 	@RestCall
 	@Auth
+	@VerifyLoggedIn
 	public ResponseEntity<String> upvoteQuestion(@PathVariable String questionId,
 			@RequestBody QuestionDTO questionDTO) {
 		questionDTO.setQuestionId(questionId);
@@ -66,11 +67,26 @@ public class QuestionController {
 	@PutMapping("/{questionId}/upvoteanswer/{answerId}")
 	@RestCall
 	@Auth
+	@VerifyLoggedIn
 	public ResponseEntity<String> upvoteAnswer(@PathVariable String questionId, @PathVariable String answerId,
 			@RequestBody AnswerDTO answerDTO) {
 		answerDTO.setQuestionId(questionId);
 		answerDTO.setAnswerId(answerId);
 		return questionService.upvoteAnswer(answerDTO).createRestResponse();
+	}
+
+	@PutMapping("/{questionId}/report")
+	@RestCall
+	@Auth
+	public ResponseEntity<String> reportQuestion(@PathVariable String questionId) {
+		return questionService.reportQuestion(questionId).createRestResponse();
+	}
+
+	@PutMapping("/{questionId}/reportanswer/{answerId}")
+	@RestCall
+	@Auth
+	public ResponseEntity<String> reportAnswer(@PathVariable String questionId, @PathVariable String answerId) {
+		return questionService.reportAnswer(questionId, answerId).createRestResponse();
 	}
 
 	@DeleteMapping
