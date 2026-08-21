@@ -682,6 +682,74 @@ select {
 	}
 }
 
+/*       Faculty profile nav-tabs         */
+
+#faculty-profile-header .nav-tabs-navigation {
+	border-bottom: 1px solid #eef0f3;
+	margin-bottom: 0;
+}
+
+#faculty-profile-header .nav-tabs-wrapper {
+	display: block;
+	width: 100%;
+	margin: 0;
+}
+
+#faculty-profile-header .nav-tabs {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#faculty-profile-header .nav-tabs > li {
+	float: none;
+}
+
+#faculty-profile-header .nav-tabs > li > a {
+	padding: 12px 18px;
+	border: 0 none;
+	border-bottom: 5px solid transparent;
+	color: #A49E93;
+	transition: color .15s ease, border-color .15s ease;
+}
+
+#faculty-profile-header .nav-tabs > li > a i {
+	color: #A49E93;
+	margin-right: 6px;
+}
+
+#faculty-profile-header .nav-tabs > li > a:hover {
+	color: #66615b;
+}
+
+#faculty-profile-header .nav-tabs > li > a:hover i {
+	color: #66615b;
+}
+
+#faculty-profile-header .nav-tabs > li.active > a,
+#faculty-profile-header .nav-tabs > li.active > a:hover,
+#faculty-profile-header .nav-tabs > li.active > a:focus {
+	color: #e8931c;
+	background-color: transparent;
+	border-bottom-color: #e8931c;
+}
+
+#faculty-profile-header .nav-tabs > li.active > a i,
+#faculty-profile-header .nav-tabs > li.active > a:hover i {
+	color: #e8931c;
+}
+
+#faculty-profile-header .nav-tabs > li.active > a:after,
+#faculty-profile-header .nav-tabs > li.active > a:before {
+	display: none;
+}
+
+@media (max-width:480px) {
+	#faculty-profile-header .nav-tabs > li > a {
+		padding: 10px 10px;
+		font-size: 14px;
+	}
+}
+
 
 /*       Radio buttons         */
 
@@ -6736,7 +6804,7 @@ body > .navbar-collapse.collapse {
   background-color: transparent;
   border: 0 none;
 }
-.nav-tabs > li.active :after {
+.nav-tabs > li.active > a:after {
   border-bottom: 11px solid orange;
   border-left: 11px solid transparent;
   border-right: 11px solid transparent;
@@ -6746,7 +6814,7 @@ body > .navbar-collapse.collapse {
   right: 40%;
   bottom: -1px;
 }
-.nav-tabs > li.active :before {
+.nav-tabs > li.active > a:before {
   border-bottom: 11px solid #F1EAE0;
   border-left: 11px solid transparent;
   border-right: 11px solid transparent;
@@ -9761,12 +9829,15 @@ $ct-series-colors: (
 	min-width: 180px;
 	background-color: #EEAE27 !important;
 	border-color: #D0A242 !important;
+	transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
 }
 
 .add-review-button:hover, .add-review-button:focus, .add-review-button:active {
 	min-width: 180px;
 	background-color: #ECA30A  !important;
 	border-color: #CE9725  !important;
+	transform: translateY(-1px);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
 }
 
 .visit-website-button {
@@ -9861,7 +9932,88 @@ $ct-series-colors: (
 }
 
 .review-card-category-item {
-	margin-bottom:7px;
+	padding: 12px 0;
+	border-top: 1px solid #eef0f3;
+}
+
+.review-card-category-item:first-child {
+	border-top: 0;
+	padding-top: 0;
+}
+
+.review-entry-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	margin-bottom: 10px;
+}
+
+.review-author {
+	margin: 0;
+}
+
+.review-meta {
+	font-size: 14px;
+	font-weight: 500;
+	margin-top: 2px;
+}
+
+.review-header-date {
+	white-space: nowrap;
+	margin-top: 3px;
+}
+
+.review-badges-row {
+	margin-bottom: 12px;
+}
+
+.review-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	border-radius: 12px;
+	font-size: 12px;
+	font-weight: 600;
+	margin-right: 8px;
+	margin-bottom: 6px;
+}
+
+.review-badge i {
+	margin-right: 5px;
+}
+
+.review-badge.recommend {
+	background-color: #e6f7ec;
+	color: #0CAA41;
+}
+
+.review-badge.not-recommend {
+	background-color: #fdeceb;
+	color: #EB4133;
+}
+
+.review-badge.neutral {
+	background-color: #f4f3f1;
+	color: #707070;
+}
+
+.review-general-rating {
+	background-color: #fbf9f6;
+	border-radius: 8px;
+	padding: 12px 15px;
+	margin: 0 -15px 15px -15px;
+}
+
+.review-general-rating p {
+	margin: 8px 0 0;
+}
+
+.review-footer-row {
+	border-top: 1px solid #eef0f3;
+	padding-top: 12px;
+	margin-top: 4px;
+	align-items: center;
 }
 
 @media (min-width:992px) {
@@ -9972,7 +10124,7 @@ $ct-series-colors: (
 }
 
 .review-entry {
-  padding: 10px;
+  padding: 15px;
 }
 
 @media (min-width:992px) {

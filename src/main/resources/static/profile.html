@@ -464,7 +464,7 @@ Global site tag (gtag.js) - Google Analytics
 
     var facultyId;
     var currentlyVisibleReviewsNo = 0;
-    var allReviewsExpanded = false;
+    var allReviewsExpanded = true;
     var currentlyVisibleQuestionsNo = 0;
     var facultyDescription;
     var ANSWERS_PAGE_SIZE = 3;
@@ -803,6 +803,17 @@ Global site tag (gtag.js) - Google Analytics
                 }
                 accessWebisteUrl = escapeHtml(accessWebisteUrl);
 
+                var hasWebsite = !!response.result.facultyWebsite;
+                var websiteButtonHtml = '';
+                if (hasWebsite) {
+                    websiteButtonHtml = (
+                                '<div class="col-md-6 col-xs-12" style="margin-bottom: 10px;">'
+                            +		'<a data-toggle="tooltip" title="' + accessWebisteUrl + '" href="' + accessWebisteUrl + '" target="_blank" class="btn btn-simple btn-info btn-block visit-website-button"><i class="fas fa-external-link-alt fa-lg" style="margin-right: 7px"></i><span data-i18n-key="access-website">Accesează website</span></a>'
+                            +	'</div>'
+                    );
+                }
+                var addReviewColClass = hasWebsite ? "col-md-6 col-xs-12" : "col-md-12 col-xs-12";
+
                 document.getElementById("faculty-profile-header").innerHTML = '';
                 var facultyProfileHeaderString = (
                             '<div class="card round-bottom">'
@@ -840,22 +851,20 @@ Global site tag (gtag.js) - Google Analytics
                         +			'</div>'
                         +			'<br>'
                         +			'<div class="row">	'
-                        +				'<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-3 col-lg-offset-9">'
-                        +					'<a data-toggle="tooltip" title="' + accessWebisteUrl + '" href="' + accessWebisteUrl + '" target="_blank" class="btn btn-success btn-fill btn-block visit-website-button"><i class="fas fa-external-link-alt fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="access-website">Accesează website</span></a>'
+                        +				websiteButtonHtml
+                        +				'<div class="' + addReviewColClass + '" style="margin-bottom: 10px;">'
+                        +					'<a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-pen fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="add-review">Adaugă evaluare</span></a>'
                         +				'</div>'
                         +			'</div>'
                         +			'<div class="row nav-row-faculty-profile">	'
-                        +				'<div class="col-xs-10 col-xs-offset-1 col-sm-5 col-sm-push-6 col-md-5 col-md-push-6 col-lg-3 col-lg-push-8">'
-                        +					'<a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="add-review">Adaugă evaluare</span></a>'
-                        +				'</div>'
-                        +				'<div class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-6 col-md-pull-6 col-lg-6 col-lg-pull-4">'
+                        +				'<div class="col-xs-12">'
                         +					'<div class="nav-tabs-navigation">'
                         +						'<div class="nav-tabs-wrapper">'
                         +						'<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">'
-                        +							'<li class="active"><a href="#profile" data-toggle="tab" onclick="addHash(this)"><span data-i18n-key="profile">Profil</span></a></li>'
-                        +							'<li><a id="reviews-tab" href="#reviews" data-toggle="tab" onclick="addHash(this)"><span data-i18n-key="reviews-v1">Evaluări</span></a></li>'
-                        +							'<li><a id="faculty-programs-tab" href="#faculty-programs" data-toggle="tab" onclick="addHash(this)"><span data-i18n-key="study-programs">Programe de studiu</span></a></li>'
-                        +							'<li><a id="qa-tab" href="#qa" data-toggle="tab" onclick="addHash(this)"><span data-i18n-key="qa-tab">Q&A</span></a></li>'
+                        +							'<li class="active"><a href="#profile" data-toggle="tab" onclick="addHash(this)"><i class="fas fa-user"></i><span data-i18n-key="profile">Profil</span></a></li>'
+                        +							'<li><a id="reviews-tab" href="#reviews" data-toggle="tab" onclick="addHash(this)"><i class="fa fa-comments"></i><span data-i18n-key="reviews-v1">Evaluări</span></a></li>'
+                        +							'<li><a id="faculty-programs-tab" href="#faculty-programs" data-toggle="tab" onclick="addHash(this)"><i class="fas fa-graduation-cap"></i><span data-i18n-key="study-programs">Programe de studiu</span></a></li>'
+                        +							'<li><a id="qa-tab" href="#qa" data-toggle="tab" onclick="addHash(this)"><i class="fas fa-question-circle"></i><span data-i18n-key="qa-tab">Q&A</span></a></li>'
                         <!-- +							'<li><a href="#statistics" data-toggle="tab" onclick="addHash(this)">Statistici</a></li>' -->
                         +						'</ul>'
                         +						'</div>'
@@ -970,7 +979,7 @@ Global site tag (gtag.js) - Google Analytics
 
                                 var reviewsCount = responseReview.result.count;
                                 if (document.getElementById("reviews-tab")) {
-                                    document.getElementById("reviews-tab").innerHTML = '<span data-i18n-key="reviews-v1">Evaluări</span> (' + reviewsCount + ')';
+                                    document.getElementById("reviews-tab").innerHTML = '<i class="fa fa-comments"></i><span data-i18n-key="reviews-v1">Evaluări</span> (' + reviewsCount + ')';
                                 }
 
                                 var reviewsCtaString;
@@ -1681,7 +1690,7 @@ Global site tag (gtag.js) - Google Analytics
             } else {
                 document.getElementById("faculty-profile-review-entries").innerHTML = '';
                 currentlyVisibleReviewsNo = response.result.reviews.length;
-                allReviewsExpanded = false;
+                allReviewsExpanded = true;
             }
 
             if  (currentlyVisibleReviewsNo >= response.result.count) {
@@ -1746,18 +1755,13 @@ Global site tag (gtag.js) - Google Analytics
                 }
                 var wouldRecommendAndDifficultyRowString;
                 if (wouldRecommendText || difficulty) {
+                    var recommendBadgeClass = wouldRecommend === true ? 'recommend' : (wouldRecommend === false ? 'not-recommend' : 'neutral');
+                    var recommendBadgeIcon = wouldRecommend === true ? 'fa-thumbs-up' : (wouldRecommend === false ? 'fa-thumbs-down' : '');
                     wouldRecommendAndDifficultyRowString =
-                                                                    '<br>'
-                    +'													<div class="row">'
-                    +'														<div  class="col-xs-6">'
-                    +'															<div class="'+ wouldRecommendBoxClass + '">'
-                    +'															</div>'
-                    +'															<span class=' + wouldRecommendTextClass + ' data-i18n-key=' + wouldRecommendTranslation + '>&nbsp&nbsp' + wouldRecommendText + '</span>'
-                    +'														</div>'
-                    +'													<div  class="col-xs-6">'
-                    +'															<span style="color: #707070;" data-i18n-key="difficulty">&nbsp&nbsp Dificultate</span><span style="color: #707070;">' + difficultyText + '</span>'
-                    +'														</div>'
-                    +'													</div>';
+                        '<div class="review-badges-row">'
+                        + (wouldRecommendText ? '<span class="review-badge ' + recommendBadgeClass + '"><i class="fa ' + recommendBadgeIcon + '"></i><span data-i18n-key=' + wouldRecommendTranslation + '>' + wouldRecommendText + '</span></span>' : '')
+                        +'<span class="review-badge neutral"><span data-i18n-key="difficulty">Dificultate</span>' + difficultyText + '</span>'
+                        +'</div>';
                 } else {
                     wouldRecommendAndDifficultyRowString = "";
                 }
@@ -1831,62 +1835,58 @@ Global site tag (gtag.js) - Google Analytics
                                                 '<div class="card">'
         +'											<div class="content">'
         +'												<div data-reviewid=' + reviewId + ' class="review-entry">'
-        +'													<div class="row">'
-        +'														<div  class="col-xs-12">'
-        +'															<h5 id="reviewer-details">' + userName + '</h5> '
-        +'															<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6> '
-        +'															<small id="review-date" class="text-muted"><i>' + formattedReviewDate + '</i></small> 	'
+        +'													<div class="review-entry-header">'
+        +'														<div>'
+        +'															<h5 class="review-author" id="reviewer-details">' + userName + '</h5> '
+        +'															<div class="review-meta" style="text-transform: capitalize;">' + userDetailsString + '</div> '
         +'														</div>'
+        +'														<small id="review-date" class="text-muted review-header-date"><i>' + formattedReviewDate + '</i></small> 	'
         +'													</div>													'
         +													wouldRecommendAndDifficultyRowString
-        +'													<br>'
-        +'													<div class="row">'
-        +'														<div class="col-xs-12">		'
+        +'													<div class="review-general-rating">'
         +'															<i class="fa fa-star" style="color: orange"></i>'
         +'															<strong style="color: orange">&nbsp' + generalRating + '</strong>													'
         +'															<p>' + reviewText + '</p>'
-        +'														</div>'
         +'													</div>'
-        +'													<br>'
         +'													<div id="view-more-text-' + i + '" style="display: none">'
-        +'														<div class="row">'
-        +'															<div class="review-card-category-item col-md-6 col-xs-12">		'
-        +'																<i class="fa fa-star" style="color: orange"></i>'
-        +'																<strong style="color: orange">&nbsp' + coursesAndLecturersReviewRating + '</strong>  <span><b>&nbsp&nbspProfesori și cursuri</b></span>'
-        +'																<p>' + coursesAndLecturersReviewText + '</p>'
-        +'															</div>'
-        +'															<div class="review-card-category-item col-md-6 col-xs-12">			'
-        +'																<i class="fa fa-star" style="color: orange"></i>'
-        +'																<strong style="color: orange">&nbsp' + jobProspectsReviewRating + '</strong> <span><b>&nbsp&nbspOportunități în carieră</b></span>													'
-        +'																<p>' + jobProspectsReviewText + '</p>'
-        +'															</div>'
+        +'														<div class="review-card-category-item">'
+        +'															<i class="fa fa-star" style="color: orange"></i>'
+        +'															<strong style="color: orange">&nbsp' + coursesAndLecturersReviewRating + '</strong>'
+        +'															<i class="fa fa-graduation-cap" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Profesori și cursuri</b></span>'
+        +'															<p>' + coursesAndLecturersReviewText + '</p>'
         +'														</div>'
-        +'														<div class="row">'
-        +'															<div class="review-card-category-item col-md-6 col-xs-12">			'
-        +'																<i class="fa fa-star" style="color: orange"></i>'
-        +'																<strong style="color: orange">&nbsp' + accomodationReviewRating + '</strong> <span><b>&nbsp&nbspAcomodare</b></span>'
-        +'																<p>' + accomodationReviewText + '</p>'
-        +'															</div>'
-        +'															<div class="review-card-category-item col-md-6 col-xs-12">	'
-        +'																<i class="fa fa-star" style="color: orange"></i>'
-        +'																<strong style="color: orange">&nbsp' + studentOrganisationsReviewRating + '</strong> <span><b>&nbsp&nbspAsociații studențești</b></span>													'
-        +'																<p>' + studentOrganisationsReviewText + '</p>'
-        +'															</div>'
-        +'														</div>	'
-        +'														<div class="row">'
-        +'															<div class="review-card-category-item col-md-6 col-xs-12">		'
-        +'																<i class="fa fa-star" style="color: orange"></i>'
-        +'																<strong style="color: orange">&nbsp' + facultyFacilitiesReviewRating + '</strong> <span><b>&nbsp&nbspFacilități</b></span>'
-        +'																<p>' + facultyFacilitiesReviewText + '</p>'
-        +'															</div>'
-        +'															<div class="review-card-category-item col-md-6 col-xs-12">		'
-        +'																<i class="fa fa-star" style="color: orange"></i>'
-        +'																<strong style="color: orange">&nbsp' + timeBalanceReviewRating + '</strong> <span><b>&nbsp&nbspTimp la facultate vs. timp liber</b></span>													'
-        +'																<p>' + timeBalanceReviewText + '</p>'
-        +'															</div>'
+        +'														<div class="review-card-category-item">'
+        +'															<i class="fa fa-star" style="color: orange"></i>'
+        +'															<strong style="color: orange">&nbsp' + jobProspectsReviewRating + '</strong>'
+        +'															<i class="fa fa-briefcase" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Oportunități în carieră</b></span>'
+        +'															<p>' + jobProspectsReviewText + '</p>'
+        +'														</div>'
+        +'														<div class="review-card-category-item">'
+        +'															<i class="fa fa-star" style="color: orange"></i>'
+        +'															<strong style="color: orange">&nbsp' + accomodationReviewRating + '</strong>'
+        +'															<i class="fa fa-home" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Acomodare</b></span>'
+        +'															<p>' + accomodationReviewText + '</p>'
+        +'														</div>'
+        +'														<div class="review-card-category-item">'
+        +'															<i class="fa fa-star" style="color: orange"></i>'
+        +'															<strong style="color: orange">&nbsp' + studentOrganisationsReviewRating + '</strong>'
+        +'															<i class="fa fa-users" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Asociații studențești</b></span>'
+        +'															<p>' + studentOrganisationsReviewText + '</p>'
+        +'														</div>'
+        +'														<div class="review-card-category-item">'
+        +'															<i class="fa fa-star" style="color: orange"></i>'
+        +'															<strong style="color: orange">&nbsp' + facultyFacilitiesReviewRating + '</strong>'
+        +'															<i class="fa fa-building" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Facilități</b></span>'
+        +'															<p>' + facultyFacilitiesReviewText + '</p>'
+        +'														</div>'
+        +'														<div class="review-card-category-item">'
+        +'															<i class="fa fa-star" style="color: orange"></i>'
+        +'															<strong style="color: orange">&nbsp' + timeBalanceReviewRating + '</strong>'
+        +'															<i class="fa fa-clock-o" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Timp la facultate vs. timp liber</b></span>'
+        +'															<p>' + timeBalanceReviewText + '</p>'
         +'														</div>'
         +'													</div>'
-        +'													<div class="row">'
+        +'													<div class="row review-footer-row">'
         +'														<div class="col-md-3 col-md-offset-0 col-sm-3 col-sm-offset-0 col-xs-4 col-xs-offset-0">'
         +'															<button class="btn btn-simple btn-info" onclick="viewMore(' + i +')" id="view-more-button-' + i + '" data-i18n-key="see-all">+ Vezi tot</button>'
         +'														</div>'
