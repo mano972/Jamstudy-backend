@@ -80,6 +80,27 @@ Global site tag (gtag.js) - Google Analytics
                                                             <option value="generalRating,asc">Rating ascendent</option>
                                                         </select>
                                                     </div>
+                                                    <div class="col-md-12 col-xs-12" style="margin-top: 15px;">
+                                                        <span><b data-i18n-key="review-filter-user-status">Filtrează după tipul autorului</b></span><br>
+                                                        <div style="display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between;">
+                                                            <div class="radio-toolbar chip-toolbar" onchange="getReviews(false)">
+                                                                <input type="checkbox" id="status-filter-student" name="user-status-filter" value="STUDENT">
+                                                                <label for="status-filter-student" data-i18n-key="student">Student</label>
+
+                                                                <input type="checkbox" id="status-filter-master" name="user-status-filter" value="MASTERAND">
+                                                                <label for="status-filter-master" data-i18n-key="master-student">Masterand</label>
+
+                                                                <input type="checkbox" id="status-filter-alumni" name="user-status-filter" value="ABSOLVENT">
+                                                                <label for="status-filter-alumni" data-i18n-key="alumni">Absolvent</label>
+
+                                                                <input type="checkbox" id="status-filter-drop" name="user-status-filter" value="DROP-OUT">
+                                                                <label for="status-filter-drop" data-i18n-key="retired">M-am retras</label>
+                                                            </div>
+                                                            <button id="toggle-expand-all-button" class="btn btn-simple btn-info" onclick="toggleExpandAllReviews()">
+                                                                <span data-i18n-key="expand-all-reviews">+ Extinde toate evaluările</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -211,6 +232,7 @@ Global site tag (gtag.js) - Google Analytics
     });
 
     var currentlyVisibleReviewsNo = 0;
+    var allReviewsExpanded = false;
 
     $(document).ready(function() {
         getPageHeader();
@@ -263,6 +285,10 @@ Global site tag (gtag.js) - Google Analytics
         if (searchKeyword) {
             backendUrlReviews.searchParams.append("searchBy", searchKeyword);
         }
+        var userStatusFilter = Array.prototype.slice.call(document.querySelectorAll('input[name="user-status-filter"]:checked')).map(function(el) { return el.value; });
+        if (userStatusFilter.length > 0) {
+            backendUrlReviews.searchParams.append("userStatus", userStatusFilter.join(","));
+        }
 
         $.ajax({
             url: backendUrlReviews,
@@ -295,6 +321,7 @@ Global site tag (gtag.js) - Google Analytics
         } else {
             document.getElementById("review-entries").innerHTML = '';
             currentlyVisibleReviewsNo = response.result.reviews.length;
+            allReviewsExpanded = false;
         }
 
         if  (currentlyVisibleReviewsNo >= response.result.count) {
@@ -584,6 +611,7 @@ Global site tag (gtag.js) - Google Analytics
                     document.getElementById("review-entries").innerHTML += finalReviewCard;
                     translatePage();
                 }
+                applyExpandAllState();
             } else {
                     console.log(facultyResponse.control.errorDescription);
                 }
@@ -612,6 +640,46 @@ Global site tag (gtag.js) - Google Analytics
         }
 
         translateElement(btnText);
+    }
+
+    function toggleExpandAllReviews() {
+        allReviewsExpanded = !allReviewsExpanded;
+        applyExpandAllState();
+    }
+
+    // Master switch for viewMore(i): forces every currently rendered review card
+    // to the same expanded/collapsed state, rather than toggling each one's own
+    // state independently. Re-applied after every render (including load more)
+    // so newly appended cards stay in sync with the last chosen state.
+    function applyExpandAllState() {
+        var moreTexts = document.querySelectorAll('[id^="view-more-text-"]');
+        var moreButtons = document.querySelectorAll('[id^="view-more-button-"]');
+        var i;
+        for (i = 0; i < moreTexts.length; i++) {
+            moreTexts[i].style.display = allReviewsExpanded ? "inline" : "none";
+        }
+        for (i = 0; i < moreButtons.length; i++) {
+            if (allReviewsExpanded) {
+                moreButtons[i].innerHTML = "- Vezi mai putin";
+                moreButtons[i].setAttribute("data-i18n-key", "see-less");
+            } else {
+                moreButtons[i].innerHTML = "+ Vezi tot";
+                moreButtons[i].setAttribute("data-i18n-key", "see-all");
+            }
+            translateElement(moreButtons[i]);
+        }
+
+        var toggleButtonLabel = document.querySelector("#toggle-expand-all-button span");
+        if (toggleButtonLabel) {
+            if (allReviewsExpanded) {
+                toggleButtonLabel.innerHTML = "- Restrânge toate evaluările";
+                toggleButtonLabel.setAttribute("data-i18n-key", "collapse-all-reviews");
+            } else {
+                toggleButtonLabel.innerHTML = "+ Extinde toate evaluările";
+                toggleButtonLabel.setAttribute("data-i18n-key", "expand-all-reviews");
+            }
+            translateElement(toggleButtonLabel);
+        }
     }
 
     function getRecentlyViewedFaculties() {

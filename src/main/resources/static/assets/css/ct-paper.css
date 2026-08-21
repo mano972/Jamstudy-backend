@@ -685,7 +685,7 @@ select {
 
 /*       Radio buttons         */
 
-.radio-toolbar input[type="radio"] {
+.radio-toolbar input[type="radio"], .radio-toolbar input[type="checkbox"] {
   display: none;
 }
 
@@ -709,9 +709,29 @@ select {
 	background-color: #ebf3ff;
 }
 
-.radio-toolbar input[type="radio"]:checked+label {
+.radio-toolbar input[type="radio"]:checked+label, .radio-toolbar input[type="checkbox"]:checked+label {
   color: white;
   background: transparent linear-gradient(272deg, #4991FD 0%, #61A0FF 100%) 0% 0% no-repeat padding-box;
+}
+
+.radio-toolbar.chip-toolbar label {
+  width: auto;
+  height: auto;
+  padding: 6px 14px;
+  font-size: 13px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  color: #52514e;
+  border-color: #e6e2d3;
+}
+
+.radio-toolbar.chip-toolbar label:hover {
+  background-color: #f7f6f2;
+}
+
+.radio-toolbar.chip-toolbar input[type="checkbox"]:checked+label {
+  color: #ffffff;
+  background: #898781;
 }
 
 

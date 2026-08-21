@@ -1,5 +1,7 @@
 package com.app.studentromania.util;
 
+import java.util.List;
+
 import com.couchbase.client.java.document.json.JsonArray;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,19 +18,21 @@ public class ReviewFilter {
 	private Double ratingFrom;
 	private Double ratingTo;
 	private String countryCode;
+	private List<String> userStatus;
 	private String orderBy;
 	private Integer limit;
 	private Integer pageNumber;
 	private Integer offset;
 	private boolean join;
 
-	public ReviewFilter(String searchBy, Double ratingFrom, Double ratingTo, String countryCode, String orderBy, Integer limit,
-			Integer pageNumber, Integer offset) {
+	public ReviewFilter(String searchBy, Double ratingFrom, Double ratingTo, String countryCode, List<String> userStatus,
+			String orderBy, Integer limit, Integer pageNumber, Integer offset) {
 		super();
 		this.searchBy = searchBy;
 		this.ratingFrom = ratingFrom;
 		this.ratingTo = ratingTo;
 		this.countryCode = countryCode;
+		this.userStatus = userStatus;
 		this.orderBy = orderBy;
 		this.limit = limit;
 		this.pageNumber = pageNumber;
@@ -65,6 +69,14 @@ public class ReviewFilter {
 
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
+	}
+
+	public List<String> getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(List<String> userStatus) {
+		this.userStatus = userStatus;
 	}
 
 	public String getOrderBy() {
@@ -149,6 +161,13 @@ public class ReviewFilter {
 		return " and " + (isJoin() ? "r." : "") + "countryCode IN " + JsonArray.from(countryCode);
 	}
 
+	public String getUserStatusClause() {
+		if (userStatus == null || userStatus.isEmpty()) {
+			return StringUtils.EMPTY;
+		}
+		return " and " + (isJoin() ? "r." : "") + "userStatus IN " + JsonArray.from(userStatus);
+	}
+
 	public String getOrderByClause() {
 		if (StringUtils.isEmpty(orderBy)) {
 			return " order by " + (isJoin() ? DEFAULT_SORT_FIELD_JOIN : DEFAULT_SORT_FIELD) + " " + DEFAULT_SORT_DIRECTION;
@@ -177,6 +196,7 @@ public class ReviewFilter {
 				", ratingFrom=" + ratingFrom +
 				", ratingTo=" + ratingTo +
 				", countryCode='" + countryCode + '\'' +
+				", userStatus=" + userStatus +
 				", orderBy='" + orderBy + '\'' +
 				", limit=" + limit +
 				", pageNumber=" + pageNumber +
