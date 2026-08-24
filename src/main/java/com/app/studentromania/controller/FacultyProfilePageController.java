@@ -97,8 +97,43 @@ public class FacultyProfilePageController {
         html = html.replace(DESCRIPTION_TAG,
                 "<meta name=\"description\" content=\"" + escapeHtml(description) + "\">");
         html = html.replace("</head>",
-                "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n</head>");
+                "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n"
+                + "<script type=\"application/ld+json\">" + buildJsonLd(faculty, canonicalUrl) + "</script>\n</head>");
         return html;
+    }
+
+    /**
+     * schema.org CollegeOrUniversity + AggregateRating, so eligible faculty pages
+     * can show star ratings in Google search results. aggregateRating is only
+     * included when there is at least one real review — Google flags a rating
+     * with zero backing reviews as invalid structured data.
+     */
+    private String buildJsonLd(Faculty faculty, String canonicalUrl) {
+        StringBuilder json = new StringBuilder();
+        json.append("{");
+        json.append("\"@context\":\"https://schema.org\",");
+        json.append("\"@type\":\"CollegeOrUniversity\",");
+        json.append("\"name\":\"").append(escapeJson(faculty.getFacultyName())).append("\",");
+        json.append("\"url\":\"").append(escapeJson(canonicalUrl)).append("\"");
+
+        if (StringUtils.isNotEmpty(faculty.getUniversityName())) {
+            json.append(",\"parentOrganization\":{\"@type\":\"CollegeOrUniversity\",\"name\":\"")
+                    .append(escapeJson(faculty.getUniversityName())).append("\"}");
+        }
+
+        if (StringUtils.isNotEmpty(faculty.getFacultyCity())) {
+            json.append(",\"address\":{\"@type\":\"PostalAddress\",\"addressLocality\":\"")
+                    .append(escapeJson(faculty.getFacultyCity())).append("\"}");
+        }
+
+        if (faculty.getAvgRating() != null && faculty.getCountRev() != null && faculty.getCountRev() > 0) {
+            json.append(",\"aggregateRating\":{\"@type\":\"AggregateRating\",\"ratingValue\":\"")
+                    .append(faculty.getAvgRating()).append("\",\"reviewCount\":\"")
+                    .append(faculty.getCountRev()).append("\",\"bestRating\":\"5\",\"worstRating\":\"1\"}");
+        }
+
+        json.append("}");
+        return json.toString();
     }
 
     private String loadClasspathResource(String path) throws IOException {
@@ -120,6 +155,15 @@ public class FacultyProfilePageController {
         }
         String escaped = input.replace("\\", "\\\\").replace("\"", "\\\"").replace("<", "\\u003C").replace(">", "\\u003E");
         return "\"" + escaped + "\"";
+    }
+
+    private static String escapeJson(String input) {
+        if (input == null) {
+            return "";
+        }
+        return input.replace("\\", "\\\\").replace("\"", "\\\"")
+                .replace("\n", " ").replace("\r", " ")
+                .replace("<", "\\u003C").replace(">", "\\u003E");
     }
 
 }
