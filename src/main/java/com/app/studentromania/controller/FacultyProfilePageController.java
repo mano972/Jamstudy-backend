@@ -32,6 +32,7 @@ import com.app.studentromania.model.Faculty;
 public class FacultyProfilePageController {
 
     private static final String TITLE_TAG = "<title>Unistart - Profil Facultate</title>";
+    private static final String DESCRIPTION_TAG = "<meta name=\"description\" content=\"Unistart | Evaluari facultati. Alege facultatea potrivita pentru tine.\">";
 
     @Autowired
     private FacultyDAO facultyDAO;
@@ -86,9 +87,14 @@ public class FacultyProfilePageController {
     private String renderProfileHtml(Faculty faculty, String universitySlug, String facultySlug, String origin) {
         String canonicalUrl = origin + "/facultate/" + universitySlug + "/" + facultySlug;
         String title = faculty.getFacultyName() + " - Unistart";
+        String description = "Vezi evaluări, rating și detalii despre " + faculty.getFacultyName()
+                + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " (" + faculty.getUniversityName() + ")" : "")
+                + ". Alege facultatea potrivită pentru tine pe Unistart.";
 
         String html = profileHtmlTemplate.replace(TITLE_TAG,
                 "<title>" + escapeHtml(title) + "</title>\n    <link rel=\"canonical\" href=\"" + canonicalUrl + "\">");
+        html = html.replace(DESCRIPTION_TAG,
+                "<meta name=\"description\" content=\"" + escapeHtml(description) + "\">");
         html = html.replace("</head>",
                 "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n</head>");
         return html;
