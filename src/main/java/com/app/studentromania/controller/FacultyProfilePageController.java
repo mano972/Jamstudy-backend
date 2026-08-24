@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.app.studentromania.dao.FacultyDAO;
 import com.app.studentromania.model.Faculty;
+import com.app.studentromania.util.RequestUtils;
 
 /**
  * Serves the faculty profile page at the SEO-friendly path
@@ -57,7 +58,7 @@ public class FacultyProfilePageController {
             return;
         }
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(renderProfileHtml(facultyOpt.get(), universitySlug, facultySlug, requestOrigin(request)));
+        response.getWriter().write(renderProfileHtml(facultyOpt.get(), universitySlug, facultySlug, RequestUtils.getOrigin(request)));
     }
 
     /**
@@ -98,15 +99,6 @@ public class FacultyProfilePageController {
         html = html.replace("</head>",
                 "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n</head>");
         return html;
-    }
-
-    /**
-     * The site is served from multiple domains (unistart.ro, unistart.lt) — the
-     * canonical URL must reflect whichever one the request actually came in on,
-     * not a single hardcoded domain.
-     */
-    private static String requestOrigin(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName();
     }
 
     private String loadClasspathResource(String path) throws IOException {
