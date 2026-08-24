@@ -2,6 +2,7 @@
 <html lang="ro">
 <head>
     <meta charset="utf-8"/>
+    <base href="/">
     <link rel="icon" type="image/png" href="./assets/img/graduation_cap_small.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="description" content="Unistart | Evaluari facultati. Alege facultatea potrivita pentru tine.">
@@ -477,7 +478,7 @@ Global site tag (gtag.js) - Google Analytics
         getLoginModal();
         getRegisterModal();
         var queryParams = new URLSearchParams(window.location.search);
-        facultyId = queryParams.get("id");
+        facultyId = (typeof window.__FACULTY_ID__ !== "undefined" && window.__FACULTY_ID__) ? window.__FACULTY_ID__ : queryParams.get("id");
         loadUser();
         getFaculty();
         getReviews(false);
@@ -755,6 +756,10 @@ Global site tag (gtag.js) - Google Analytics
                 coverImage.src = new URL(backendUrlRoot + "/v1/faculty/" + facultyId + "/cover");
 
                 var facultyName = response.result.facultyName;
+
+                if (facultyName) {
+                    document.title = facultyName + " - Unistart";
+                }
 
                 if (typeof gtag === 'function') {
                     gtag('event', 'faculty_profile', {

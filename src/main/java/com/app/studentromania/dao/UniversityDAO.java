@@ -31,6 +31,10 @@ public class UniversityDAO {
 		return universityRepo.findByUniversityId(universityId).stream().findFirst();
 	}
 
+	public boolean existsByUniversitySlug(String universitySlug) {
+		return !universityRepo.findByUniversitySlug(universitySlug).isEmpty();
+	}
+
 	public void createUniversity(University university) {
 		universityRepo.save(university);
 		logUtils.logMessage(LOGGER, "University " + university.getUniversityId() + " was created!");

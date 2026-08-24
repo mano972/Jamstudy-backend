@@ -24,6 +24,12 @@ public class Faculty extends ParentEntity {
     private String universityName;
 
     @Field
+    private String facultySlug;
+
+    @Field
+    private String universitySlug;
+
+    @Field
     private Integer availablePlacesLicense;
 
     @Field
@@ -269,6 +275,22 @@ public class Faculty extends ParentEntity {
 
     public void setUniversityName(String universityName) {
         this.universityName = universityName;
+    }
+
+    public String getFacultySlug() {
+        return facultySlug;
+    }
+
+    public void setFacultySlug(String facultySlug) {
+        this.facultySlug = facultySlug;
+    }
+
+    public String getUniversitySlug() {
+        return universitySlug;
+    }
+
+    public void setUniversitySlug(String universitySlug) {
+        this.universitySlug = universitySlug;
     }
 
     public Integer getAvailablePlacesLicense() {

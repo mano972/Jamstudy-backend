@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,15 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.studentromania.annotation.RestCall;
 import com.app.studentromania.annotation.VerifyAdmin;
 import com.app.studentromania.dao.ConfigDAO;
+import com.app.studentromania.dao.FacultyDAO;
 import com.app.studentromania.dao.UniversityDAO;
 import com.app.studentromania.dto.FacultyDTO;
 import com.app.studentromania.dto.UniversityDTO;
 import com.app.studentromania.enumtype.ProgramTypeEnum;
+import com.app.studentromania.model.Faculty;
 import com.app.studentromania.model.FacultyProgram;
 import com.app.studentromania.model.University;
 import com.app.studentromania.service.FacultyService;
 import com.app.studentromania.service.UniversityService;
 import com.app.studentromania.util.Constants;
+import com.app.studentromania.util.SlugUtils;
+import org.apache.commons.lang3.StringUtils;
 
 @RestController
 @RequestMapping("${base.path}/init")
@@ -62,6 +67,48 @@ public class InitController {
 
 	@Autowired
 	private UniversityDAO universityDAO;
+
+	@Autowired
+	private FacultyDAO facultyDAO;
+
+	@PostMapping(value = "backfillslugs", produces = "application/json; charset=ISO-8859-2")
+	@RestCall
+	@VerifyAdmin
+	public void backfillSlugs() {
+		List<University> universities = universityDAO.getAllUniversities();
+		for (University university : universities) {
+			if (StringUtils.isEmpty(university.getUniversitySlug())) {
+				String baseSlug = SlugUtils.toSlug(StringUtils.isNotEmpty(university.getUniversityShortname())
+						? university.getUniversityShortname() : university.getUniversityName());
+				university.setUniversitySlug(SlugUtils.findAvailableSlug(baseSlug, universityDAO::existsByUniversitySlug));
+				universityDAO.updateUniversity(university);
+			}
+		}
+
+		List<Faculty> faculties = facultyDAO.getAllFaculties();
+		for (Faculty faculty : faculties) {
+			boolean needsFacultySlug = StringUtils.isEmpty(faculty.getFacultySlug());
+			boolean needsUniversitySlug = StringUtils.isEmpty(faculty.getUniversitySlug());
+			if (!needsFacultySlug && !needsUniversitySlug) {
+				continue;
+			}
+			Optional<University> universityOpt = universityDAO.getByUniversityId(faculty.getUniversityId());
+			if (!universityOpt.isPresent()) {
+				continue;
+			}
+			if (needsUniversitySlug) {
+				faculty.setUniversitySlug(universityOpt.get().getUniversitySlug());
+			}
+			if (needsFacultySlug) {
+				String universityId = faculty.getUniversityId();
+				String baseFacultySlug = SlugUtils.toSlug(StringUtils.isNotEmpty(faculty.getFacultyShortname())
+						? faculty.getFacultyShortname() : faculty.getFacultyName());
+				faculty.setFacultySlug(SlugUtils.findAvailableSlug(baseFacultySlug,
+						candidate -> facultyDAO.existsByUniversityIdAndFacultySlug(universityId, candidate)));
+			}
+			facultyDAO.updateFaculty(faculty);
+		}
+	}
 
 	@PostMapping(value = "inituniv", consumes = "application/json; charset=ISO-8859-2", produces = "application/json; charset=ISO-8859-2")
 	@RestCall

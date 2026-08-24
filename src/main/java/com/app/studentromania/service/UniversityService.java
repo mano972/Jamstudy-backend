@@ -19,6 +19,7 @@ import com.app.studentromania.dto.UniversityResponseDTO;
 import com.app.studentromania.enumtype.ErrorsEnum;
 import com.app.studentromania.model.University;
 import com.app.studentromania.util.Constants;
+import com.app.studentromania.util.SlugUtils;
 
 @Service
 public class UniversityService {
@@ -63,6 +64,9 @@ public class UniversityService {
 		university.setUniversityId(generatedId);
 		university.setCountryCode(customRequestContext.getCountryCode());
 		mapToUniversity(universityDTO, university);
+		String baseUniversitySlug = SlugUtils.toSlug(StringUtils.isNotEmpty(university.getUniversityShortname())
+				? university.getUniversityShortname() : university.getUniversityName());
+		university.setUniversitySlug(SlugUtils.findAvailableSlug(baseUniversitySlug, universityDAO::existsByUniversitySlug));
 		universityDAO.createUniversity(university);
 		UniversityResponseDTO universityResponseDTO = new UniversityResponseDTO();
 		universityResponseDTO.setUniversityId(university.getUniversityId());

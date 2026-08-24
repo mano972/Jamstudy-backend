@@ -16,6 +16,9 @@ public class University extends ParentEntity {
 	private String universityId;
 
 	@Field
+	private String universitySlug;
+
+	@Field
 	private String accreditation;
 
 	/*
@@ -63,6 +66,14 @@ public class University extends ParentEntity {
 
 	public void setUniversityId(String universityId) {
 		this.universityId = universityId;
+	}
+
+	public String getUniversitySlug() {
+		return universitySlug;
+	}
+
+	public void setUniversitySlug(String universitySlug) {
+		this.universitySlug = universitySlug;
 	}
 
 	public String getAccreditation() {

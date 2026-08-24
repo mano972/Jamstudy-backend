@@ -59,6 +59,30 @@ public class FacultyRepo {
     @Query
     @LogExecutionTime
     @LogParameters
+    public List<Faculty> findByUniversitySlugAndFacultySlug(String universitySlug, String facultySlug) {
+        String query = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
+                + Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET
+                + " WHERE docType = $1 AND universitySlug = $2 AND facultySlug = $3 ";
+
+        return template.findByN1QL(N1qlQuery.parameterized(query,
+                JsonArray.from(DocTypeEnum.FACULTY.getValue(), universitySlug, facultySlug)), Faculty.class);
+    }
+
+    @Query
+    @LogExecutionTime
+    @LogParameters
+    public List<Faculty> findByUniversityIdAndFacultySlug(String universityId, String facultySlug) {
+        String query = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
+                + Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET
+                + " WHERE docType = $1 AND universityId = $2 AND facultySlug = $3 ";
+
+        return template.findByN1QL(N1qlQuery.parameterized(query,
+                JsonArray.from(DocTypeEnum.FACULTY.getValue(), universityId, facultySlug)), Faculty.class);
+    }
+
+    @Query
+    @LogExecutionTime
+    @LogParameters
     public List<Faculty> getFilteredFaculties(FacultyFilter facultyFilter) {
         facultyFilter.setJoin(false);
         String selectStatement = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("

@@ -16,6 +16,7 @@ import com.app.studentromania.model.University;
 import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.FacultyFilter;
 import com.app.studentromania.util.LogUtils;
+import com.app.studentromania.util.SlugUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -272,7 +273,13 @@ public class FacultyService {
         String generatedId = configDAO.generateDocumentId(Constants.FACULTY_PREFIX_ID);
         faculty.setFacultyId(generatedId);
         faculty.setUniversityName(universityOpt.get().getUniversityName());
+        faculty.setUniversitySlug(universityOpt.get().getUniversitySlug());
         mapToFaculty(facultyDTO, faculty);
+        String facultyUniversityId = facultyDTO.getUniversityId();
+        String baseFacultySlug = SlugUtils.toSlug(StringUtils.isNotEmpty(facultyDTO.getFacultyShortname())
+                ? facultyDTO.getFacultyShortname() : facultyDTO.getFacultyName());
+        faculty.setFacultySlug(SlugUtils.findAvailableSlug(baseFacultySlug,
+                candidate -> facultyDAO.existsByUniversityIdAndFacultySlug(facultyUniversityId, candidate)));
         faculty.setCountryCode(customRequestContext.getCountryCode());
         facultyDAO.createFaculty(faculty);
         FacultyResponseDTO facultyResponseDTO = new FacultyResponseDTO();

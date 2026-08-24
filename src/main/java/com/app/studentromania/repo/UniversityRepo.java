@@ -45,6 +45,19 @@ public class UniversityRepo {
 				University.class);
 	}
 
+	@Query
+	@LogExecutionTime
+	@LogParameters
+	public List<University> findByUniversitySlug(String universitySlug) {
+		String query = "SELECT " + Constants.BUCKET + ".*, meta(" + Constants.BUCKET + ").cas AS _CAS, meta("
+				+ Constants.BUCKET + ").id AS _ID FROM " + Constants.BUCKET
+				+ " WHERE docType = $1 AND universitySlug = $2 ";
+
+		return template.findByN1QL(
+				N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.UNIVERSITY.getValue(), universitySlug)),
+				University.class);
+	}
+
 	public void save(University university) {
 		template.save(university);
 	}

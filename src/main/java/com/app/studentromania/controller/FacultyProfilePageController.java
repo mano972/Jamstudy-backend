@@ -1,0 +1,127 @@
+package com.app.studentromania.controller;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Optional;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.app.studentromania.dao.FacultyDAO;
+import com.app.studentromania.model.Faculty;
+
+/**
+ * Serves the faculty profile page at the SEO-friendly path
+ * /facultate/{universitySlug}/{facultySlug}, and 301-redirects the legacy
+ * /profile.html?id=X links to it. No templating engine is used: the static
+ * profile.html/error.html files are loaded once at startup and injected via
+ * plain string replacement.
+ */
+@Controller
+public class FacultyProfilePageController {
+
+    private static final String TITLE_TAG = "<title>Unistart - Profil Facultate</title>";
+
+    @Autowired
+    private FacultyDAO facultyDAO;
+
+    private String profileHtmlTemplate;
+    private String errorHtmlTemplate;
+
+    @PostConstruct
+    public void init() throws IOException {
+        profileHtmlTemplate = loadClasspathResource("static/profile.html");
+        errorHtmlTemplate = loadClasspathResource("static/error.html");
+    }
+
+    @GetMapping("/facultate/{universitySlug}/{facultySlug}")
+    public void servePublicProfile(@PathVariable String universitySlug, @PathVariable String facultySlug,
+            HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Optional<Faculty> facultyOpt = facultyDAO.getByUniversitySlugAndFacultySlug(universitySlug, facultySlug);
+        response.setContentType("text/html;charset=UTF-8");
+        if (!facultyOpt.isPresent()) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.getWriter().write(errorHtmlTemplate);
+            return;
+        }
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write(renderProfileHtml(facultyOpt.get(), universitySlug, facultySlug, requestOrigin(request)));
+    }
+
+    /**
+     * Registering this mapping shadows Spring's default static-file serving of
+     * /profile.html, so the no-id / not-found / pre-backfill cases must fall
+     * through to the plain cached template to keep bare /profile.html working.
+     */
+    @GetMapping("/profile.html")
+    public void serveLegacyProfile(@RequestParam(value = "id", required = false) String id,
+            HttpServletResponse response) throws IOException {
+        if (StringUtils.isNotEmpty(id)) {
+            Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(id);
+            if (facultyOpt.isPresent()) {
+                Faculty faculty = facultyOpt.get();
+                if (StringUtils.isNotEmpty(faculty.getUniversitySlug()) && StringUtils.isNotEmpty(faculty.getFacultySlug())) {
+                    response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
+                    response.setHeader("Location", "/facultate/" + faculty.getUniversitySlug() + "/" + faculty.getFacultySlug());
+                    return;
+                }
+            }
+        }
+        response.setContentType("text/html;charset=UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write(profileHtmlTemplate);
+    }
+
+    private String renderProfileHtml(Faculty faculty, String universitySlug, String facultySlug, String origin) {
+        String canonicalUrl = origin + "/facultate/" + universitySlug + "/" + facultySlug;
+        String title = faculty.getFacultyName() + " - Unistart";
+
+        String html = profileHtmlTemplate.replace(TITLE_TAG,
+                "<title>" + escapeHtml(title) + "</title>\n    <link rel=\"canonical\" href=\"" + canonicalUrl + "\">");
+        html = html.replace("</head>",
+                "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n</head>");
+        return html;
+    }
+
+    /**
+     * The site is served from multiple domains (unistart.ro, unistart.lt) — the
+     * canonical URL must reflect whichever one the request actually came in on,
+     * not a single hardcoded domain.
+     */
+    private static String requestOrigin(HttpServletRequest request) {
+        return request.getScheme() + "://" + request.getServerName();
+    }
+
+    private String loadClasspathResource(String path) throws IOException {
+        try (InputStream in = new ClassPathResource(path).getInputStream()) {
+            return IOUtils.toString(in, StandardCharsets.UTF_8);
+        }
+    }
+
+    private static String escapeHtml(String input) {
+        if (input == null) {
+            return "";
+        }
+        return input.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;");
+    }
+
+    private static String toJsStringLiteral(String input) {
+        if (input == null) {
+            return "\"\"";
+        }
+        String escaped = input.replace("\\", "\\\\").replace("\"", "\\\"").replace("<", "\\u003C").replace(">", "\\u003E");
+        return "\"" + escaped + "\"";
+    }
+
+}

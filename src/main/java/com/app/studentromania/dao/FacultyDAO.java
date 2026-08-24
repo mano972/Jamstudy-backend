@@ -73,6 +73,14 @@ public class FacultyDAO {
 		return facultyRepo.findByUniversityId(universityId);
 	}
 
+	public Optional<Faculty> getByUniversitySlugAndFacultySlug(String universitySlug, String facultySlug) {
+		return facultyRepo.findByUniversitySlugAndFacultySlug(universitySlug, facultySlug).stream().findFirst();
+	}
+
+	public boolean existsByUniversityIdAndFacultySlug(String universityId, String facultySlug) {
+		return !facultyRepo.findByUniversityIdAndFacultySlug(universityId, facultySlug).isEmpty();
+	}
+
 	public void createFaculty(Faculty faculty) {
 		facultyRepo.save(faculty);
 		logUtils.logMessage(LOGGER, "Faculty " + faculty.getFacultyId() + " was created!");
