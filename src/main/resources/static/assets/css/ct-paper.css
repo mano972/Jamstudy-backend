@@ -248,10 +248,26 @@ body.loading .modal {
 
 .comparison-table {
 	overflow: auto;
-	border: 2px solid black;
 	max-width: 0px;
-	box-shadow: 0px 1px 5px rgba(204, 197, 185, 0.5);
 	background-color: #fffffc;
+}
+
+.card .content.comparison-table-card-content {
+	padding: 8px;
+}
+
+#comparison-radar-chart {
+	padding: 20px 20px 0 20px;
+}
+
+.comparison-table-top-scroll {
+	overflow-x: auto;
+	overflow-y: hidden;
+	height: 17px;
+}
+
+.comparison-table-top-scroll > div {
+	height: 1px;
 }
 
 .comparison-cell {

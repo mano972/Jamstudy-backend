@@ -33,9 +33,9 @@ function myAccount(el) {
 function myAccountText() {
 	var jwtToken = getUField("ut");
 	if (jwtToken) {
-		document.getElementById('myaccount').innerHTML = '<i class="far fa-user" style="margin-right: 7px" data-i18n-key="header-footer-my-account"></i>Contul meu';
+		document.getElementById('myaccount').innerHTML = '<i class="far fa-user" style="margin-right: 7px"></i><span data-i18n-key="header-footer-my-account">Contul meu</span>';
 	} else {
-		document.getElementById('myaccount').innerHTML = '<i class="far fa-user" style="margin-right: 7px" data-i18n-key="header-footer-login"></i>Autentificare';
+		document.getElementById('myaccount').innerHTML = '<i class="far fa-user" style="margin-right: 7px"></i><span data-i18n-key="header-footer-login">Autentificare</span>';
 	}
 }
 
@@ -1301,7 +1301,7 @@ function initiateAutocomplete() {
 			var logoSrc = backendUrlRoot + "/v1/faculty/" + result.facultyId + "/logo";
 			return ' <li ' + props + ' style="display: flex; align-items: center;">'
 				+ '<img src="' + logoSrc + '" style="height: 32px; width: 32px; object-fit: contain; margin-right: 10px; flex-shrink: 0;">'
-				+ '<div><div>' + escapeHtml(result.facultyName) + '</div><small class="text-muted">' + escapeHtml(result.universityName) + '</small></div>'
+				+ '<div><div><b>' + escapeHtml(result.facultyName) + '</b></div><small class="text-muted">' + escapeHtml(result.universityName) + '</small></div>'
 				+ '</li>'
 		},
 		getResultValue: result => result.facultyName,
@@ -2020,7 +2020,7 @@ function getPageHeader() {
 		'                <a href="./contact.html" class="btn btn-simple" data-i18n-key="header-footer-contact">Contact</a>\n' +
 		'            </li>\n' +
 		'			<li>\n' +
-		'                <a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)" data-i18n-key="header-footer-login"><i class="far fa-user" style="margin-right: 7px"></i>Contul meu</a>\n' +
+		'                <a id="myaccount" class="btn myaccount-button" onclick="myAccount(this)"><i class="far fa-user" style="margin-right: 7px"></i><span data-i18n-key="header-footer-login">Contul meu</span></a>\n' +
 		'            </li>\n' +
         '            <li style="margin-top: 7px; margin-left: 10px">\n' +
                         getLocaleFlags() +
@@ -2313,7 +2313,8 @@ const ro_json = {
                   "compare-search-placeholder": "Caută o facultate pentru a o adăuga în tabel...",
                   "compare-search-no-results": "Nu au fost găsite rezultate",
                   "compare-radar-title": "Comparație vizuală",
-                  "compare-radar-first-three": "Graficul arată primele 3 facultăți din tabel",
+                  "compare-table-title": "Tabel comparativ",
+                  "compare-radar-max-faculties": "Notă: graficul arată doar primele 5 facultăți (maxim) din tabel",
                   "featured-review-label": "Ce spun studenții",
                   "review-filter-user-status": "Filtrează după tipul autorului",
                   "expand-all-reviews": "+ Extinde toate evaluările",
@@ -2562,7 +2563,8 @@ const en_json = {
                   "compare-search-placeholder": "Search for a faculty to add it to the table...",
                   "compare-search-no-results": "No results were found",
                   "compare-radar-title": "Visual comparison",
-                  "compare-radar-first-three": "The chart shows the first 3 faculties from the table",
+                  "compare-table-title": "Comparison table",
+                  "compare-radar-max-faculties": "Note: the chart shows only the first 5 faculties (max) from the table",
                   "featured-review-label": "What students say",
                   "review-filter-user-status": "Filter by author type",
                   "expand-all-reviews": "+ Expand all reviews",
@@ -2811,7 +2813,8 @@ const lt_json = {
                   "compare-search-placeholder": "Ieškokite fakulteto, kad pridėtumėte jį į lentelę...",
                   "compare-search-no-results": "Rezultatų nerasta",
                   "compare-radar-title": "Vaizdinis palyginimas",
-                  "compare-radar-first-three": "Diagramoje rodomi pirmieji 3 fakultetai iš lentelės",
+                  "compare-table-title": "Palyginimo lentelė",
+                  "compare-radar-max-faculties": "Pastaba: diagrama rodo tik pirmuosius 5 fakultetus (daugiausiai) iš lentelės",
                   "featured-review-label": "Ką sako studentai",
                   "review-filter-user-status": "Filtruoti pagal autoriaus tipą",
                   "expand-all-reviews": "+ Išskleisti visus atsiliepimus",

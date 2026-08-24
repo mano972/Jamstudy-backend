@@ -51,38 +51,48 @@ Global site tag (gtag.js) - Google Analytics
 				<div id="comparison-container" class="row">
 					
 					<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-xs-offset-0">
-					
-						<div class="row">
-							<div class="motto col-xs-12">
-								<h3 class="title" data-i18n-key="compare-faculties">Compară facultăți</h3>
+
+						<div class="card">
+							<div class="content">
+								<div class="row">
+									<div class="motto col-xs-12">
+										<h3 class="title" data-i18n-key="compare-faculties">Compară facultăți</h3>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6 col-md-offset-0 col-sm-8 col-xs-12">
+										<fieldset id="compare-search-fieldset" class="search-fieldset">
+											<input id="compare-search-input" class="form-control" type="text" value="" placeholder="" spellcheck="false" autocomplete="off"/>
+											<i id="compare-search-button" class="fa fa-search inner-icon" onclick="searchFacultiesToCompare()" aria-hidden="true"></i>
+											<ul id="compare-search-results" class="autocomplete-result-list" style="display: none; position: absolute; width: 100%; top: 100%; left: 0;"></ul>
+										</fieldset>
+									</div>
+								</div>
+							</div>
+
+							<div id="comparison-radar-chart" class="row" style="display: none;">
+								<!-- populated dynamically -->
+							</div>
+
+							<hr>
+
+							<div class="content comparison-table-card-content">
+								<h4 class="text-center" data-i18n-key="compare-table-title">Tabel comparativ</h4>
+								<div class="text-center">
+									<div id="loading" class='uil-reload-css reload-background' style=''><div></div></div>
+								</div>
+
+								<div id="comparison-table-top-scroll" class="comparison-table-top-scroll">
+									<div id="comparison-table-top-scroll-spacer"></div>
+								</div>
+
+								<div id="comparison-table" class="comparison-table">
+									<!-- populated dynamically -->
+								</div>
 							</div>
 						</div>
 
-						<div class="row">
-							<div class="col-md-6 col-md-offset-0 col-sm-8 col-xs-12">
-								<fieldset id="compare-search-fieldset" class="search-fieldset">
-									<input id="compare-search-input" class="form-control" type="text" value="" placeholder="" spellcheck="false" autocomplete="off"/>
-									<i id="compare-search-button" class="fa fa-search inner-icon" onclick="searchFacultiesToCompare()" aria-hidden="true"></i>
-									<ul id="compare-search-results" class="autocomplete-result-list" style="display: none; position: absolute; width: 100%; top: 100%; left: 0;"></ul>
-								</fieldset>
-							</div>
-						</div>
-						<br>
-
-						<!-- Radar/spider chart: built but not shipped yet, keeping for later.
-						<div id="comparison-radar-chart" class="row" style="display: none;">
-							(populated dynamically)
-						</div>
-						-->
-
-						<div class="text-center">
-							<div id="loading" class='uil-reload-css reload-background' style=''><div></div></div>
-						</div>
-
-						<div id="comparison-table" class="comparison-table">
-							<!-- populated dynamically -->
-						</div>
-	
 					</div>
 				</div>
 			</div>		
@@ -256,7 +266,7 @@ function getFaculties() {
 		document.getElementById("loading").style.display = "none";
 		var universityIds = ['UNI_JBCh5VDZkN', 'UNI_2pdZxarJlM', 'UNI_7qEOSdaLJ7', 'UNI_88N6eRLyXm', "UNI_ossXtvkhcj"]; // default recommended universityIds
 		getRecommendedFaculties(universityIds, facultyIds);
-		// renderComparisonRadarChart([]); // radar chart not shipped yet, keeping for later
+		renderComparisonRadarChart([]);
 		translatePage();
 		return;
 	}
@@ -286,7 +296,7 @@ function getFaculties() {
 			}).sort().map(function(j) { return j[1] });
 			constructTable();
 			loadComparisonTableContent(sortedResponse);
-			// renderComparisonRadarChart(sortedResponse); // radar chart not shipped yet, keeping for later
+			renderComparisonRadarChart(sortedResponse);
 		} else {
 			console.log(response.control.errorDescription);
 		}
@@ -303,12 +313,21 @@ function getFaculties() {
 	});
 }
 
-/* Radar/spider chart: built but not shipped yet, keeping for later.
-// First 3 slots of the dataviz reference categorical palette — the only slots
-// validated pairwise-distinct (CVD-safe) for an "all pairs can be neighbors"
-// chart like an overlaid radar, so the chart caps at 3 series by design.
-var RADAR_SERIES_COLORS = ['#2a78d6', '#eb6834', '#1baf7a'];
-var RADAR_MAX_SERIES = 3;
+// First 5 slots of the dataviz reference categorical palette. Only the first
+// 3 pass all-pairs CVD validation on their own (this is an overlaid radar,
+// where any two series can end up neighbors) — slots 4-5 fail the normal-vision
+// and CVD floors against the others (validated via the dataviz skill's
+// validate_palette.js), so they carry a stroke-dasharray as a secondary,
+// color-independent identity cue. The always-visible legend (color + name)
+// and the full data table elsewhere on the page are the required "relief"
+// for the sub-3:1-contrast slots (aqua, yellow, magenta).
+var RADAR_SERIES_COLORS = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4'];
+var RADAR_SERIES_DASH = ['', '', '', '7,4', '2,3'];
+var RADAR_MAX_SERIES = 5;
+// Hover state for the radar chart tooltip, populated by renderComparisonRadarChart().
+// One entry per axis, each listing every faculty plotted on that axis — indices are
+// referenced by the inline on* handlers below and stay valid until the next render.
+var radarTooltipData = [];
 var RADAR_CATEGORIES = [
 	{ key: 'avgRatingCoursesAndLecturers', icon: 'fa-graduation-cap', i18nKey: 'review-professors-and-courses' },
 	{ key: 'avgRatingJobProspects', icon: 'fa-briefcase', i18nKey: 'review-career-opportunities' },
@@ -337,6 +356,7 @@ function renderComparisonRadarChart(faculties) {
 	var maxValue = 5;
 	var numAxes = RADAR_CATEGORIES.length;
 	var angleStep = (2 * Math.PI) / numAxes;
+	var a, s;
 
 	function angleFor(index) {
 		return -Math.PI / 2 + index * angleStep;
@@ -349,11 +369,27 @@ function renderComparisonRadarChart(faculties) {
 		return pointAtRadius(index, (value / maxValue) * maxRadius);
 	}
 
+	// Precompute every series' value/position per axis once, shared by the polygons
+	// below and by the hover tooltips (one tooltip per axis, listing every faculty
+	// plotted on that axis so nearby/overlapping points never hide each other).
+	var axisData = [];
+	for (a = 0; a < numAxes; a++) {
+		var axisEntries = [];
+		for (s = 0; s < radarFaculties.length; s++) {
+			var faculty = radarFaculties[s];
+			var rawValue = faculty[RADAR_CATEGORIES[a].key];
+			var value = rawValue ? rawValue : 0;
+			var vertexPoint = pointForValue(a, value);
+			axisEntries.push({ facultyName: faculty.facultyName, value: rawValue, x: vertexPoint.x, y: vertexPoint.y, color: RADAR_SERIES_COLORS[s] });
+		}
+		axisData.push({ category: RADAR_CATEGORIES[a], entries: axisEntries });
+	}
+
 	// Gridline rings at 1..5 — hairline, recessive, never dashed.
 	var gridRingsSvg = "";
 	for (var ring = 1; ring <= maxValue; ring++) {
 		var ringPoints = [];
-		for (var a = 0; a < numAxes; a++) {
+		for (a = 0; a < numAxes; a++) {
 			var ringPoint = pointForValue(a, ring);
 			ringPoints.push(ringPoint.x + ',' + ringPoint.y);
 		}
@@ -376,32 +412,44 @@ function renderComparisonRadarChart(faculties) {
 			+ '</div>';
 	}
 
-	// One polygon + vertex dots per faculty, in the fixed CVD-safe slot order.
+	// One polygon per faculty, in the fixed CVD-safe slot order.
 	var seriesSvg = "";
 	var legendHtml = "";
-	for (var s = 0; s < radarFaculties.length; s++) {
+	for (s = 0; s < radarFaculties.length; s++) {
 		var faculty = radarFaculties[s];
 		var color = RADAR_SERIES_COLORS[s];
+		var dash = RADAR_SERIES_DASH[s];
 		var polygonPoints = [];
-		var verticesSvg = "";
 		for (a = 0; a < numAxes; a++) {
-			var rawValue = faculty[RADAR_CATEGORIES[a].key];
-			var value = rawValue ? rawValue : 0;
-			var vertexPoint = pointForValue(a, value);
-			polygonPoints.push(vertexPoint.x + ',' + vertexPoint.y);
-			var displayValue = rawValue ? rawValue.toFixed(1) : "N/A";
-			verticesSvg += '<circle cx="' + vertexPoint.x + '" cy="' + vertexPoint.y + '" r="4" fill="' + color + '" stroke="#fcfcfb" stroke-width="2"><title>' + escapeHtml(faculty.facultyName) + ': ' + displayValue + '</title></circle>';
+			var seriesEntry = axisData[a].entries[s];
+			polygonPoints.push(seriesEntry.x + ',' + seriesEntry.y);
 		}
-		seriesSvg +=
-			'<polygon points="' + polygonPoints.join(' ') + '" fill="' + color + '" fill-opacity="0.1" stroke="' + color + '" stroke-width="2"/>'
-			+ verticesSvg;
+		seriesSvg += '<polygon points="' + polygonPoints.join(' ') + '" fill="' + color + '" fill-opacity="0.1" stroke="' + color + '" stroke-width="2"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>';
 
 		if (radarFaculties.length > 1) {
+			var swatchBorder = dash ? 'border: 2px dashed ' + color + '; background: transparent;' : 'background: ' + color + ';';
 			legendHtml +=
 				'<span style="display: inline-flex; align-items: center; margin: 0 12px;">'
-				+	'<span style="display: inline-block; width: 12px; height: 12px; background: ' + color + '; border-radius: 2px; margin-right: 6px;"></span>'
+				+	'<span style="display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 6px; ' + swatchBorder + '"></span>'
 				+	'<span>' + escapeHtml(faculty.facultyName) + '</span>'
 				+ '</span>';
+		}
+	}
+
+	// Vertex dots (visible, colored) plus a larger invisible hover target on top of
+	// each one. Hovering any dot on an axis shows one tooltip listing every faculty
+	// plotted on that axis, so nearby/overlapping points never hide each other.
+	var dotsSvg = "";
+	var hoverSvg = "";
+	radarTooltipData = [];
+	for (a = 0; a < numAxes; a++) {
+		var axisEntries2 = axisData[a].entries;
+		var tooltipIndex = radarTooltipData.length;
+		radarTooltipData.push({ categoryI18nKey: axisData[a].category.i18nKey, entries: axisEntries2 });
+		for (var e = 0; e < axisEntries2.length; e++) {
+			var dotEntry = axisEntries2[e];
+			dotsSvg += '<circle cx="' + dotEntry.x + '" cy="' + dotEntry.y + '" r="4" fill="' + dotEntry.color + '" stroke="#fcfcfb" stroke-width="2" style="pointer-events: none;"/>';
+			hoverSvg += '<circle cx="' + dotEntry.x + '" cy="' + dotEntry.y + '" r="10" fill="transparent" style="pointer-events: all; cursor: pointer;" onmouseenter="showRadarTooltip(event, ' + tooltipIndex + ')" onmousemove="moveRadarTooltip(event)" onmouseleave="hideRadarTooltip()"></circle>';
 		}
 	}
 
@@ -410,31 +458,78 @@ function renderComparisonRadarChart(faculties) {
 		: '<h4 class="text-center" data-i18n-key="compare-radar-title">Comparație vizuală</h4>';
 
 	var extraNoteHtml = extraCount > 0
-		? '<p class="text-center text-muted"><small><span data-i18n-key="compare-radar-first-three">Graficul arată primele 3 facultăți din tabel</span></small></p>'
+		? '<p class="text-center text-muted"><small><span data-i18n-key="compare-radar-max-faculties">Notă: graficul arată doar primele 5 facultăți (maxim) din tabel</span></small></p>'
 		: '';
 
 	container.innerHTML =
 		'<div class="col-xs-12">'
-		+	'<div class="card">'
-		+		'<div class="content">'
 		+			titleHtml
 		+			'<div style="position: relative; width: ' + size + 'px; max-width: 100%; margin: 0 auto;">'
 		+				'<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '" style="max-width: 100%; height: auto;">'
 		+					gridRingsSvg
 		+					axesSvg
 		+					seriesSvg
+		+					dotsSvg
+		+					hoverSvg
 		+				'</svg>'
 		+				labelsHtml
+		+				'<div id="radar-tooltip" class="tooltip-inner" style="display: none; position: absolute; z-index: 20; pointer-events: none; text-align: left; white-space: nowrap; width: max-content; max-width: none;"></div>'
 		+			'</div>'
 		+			'<div class="text-center" style="margin-top: 10px;">' + legendHtml + '</div>'
 		+			extraNoteHtml
-		+		'</div>'
-		+	'</div>'
 		+ '</div>';
 
 	translatePage();
 }
-*/
+
+function showRadarTooltip(evt, index) {
+	var data = radarTooltipData[index];
+	var tooltip = document.getElementById('radar-tooltip');
+	if (!data || !tooltip) {
+		return;
+	}
+	var categoryLabel = translateKey(data.categoryI18nKey) || '';
+	var html = '<div style="font-weight: 600; margin-bottom: 4px;">' + escapeHtml(categoryLabel) + '</div>';
+	for (var i = 0; i < data.entries.length; i++) {
+		var entry = data.entries[i];
+		var displayValue = entry.value ? entry.value.toFixed(1) : 'N/A';
+		html +=
+			'<div style="display: flex; align-items: center; gap: 6px;">'
+			+	'<span style="width: 8px; height: 8px; border-radius: 50%; background: ' + entry.color + '; display: inline-block; flex: none;"></span>'
+			+	'<span>' + escapeHtml(entry.facultyName) + ': ' + displayValue + '</span>'
+			+ '</div>';
+	}
+	tooltip.innerHTML = html;
+	tooltip.style.display = 'block';
+	positionRadarTooltip(evt);
+}
+
+function moveRadarTooltip(evt) {
+	var tooltip = document.getElementById('radar-tooltip');
+	if (tooltip && tooltip.style.display === 'block') {
+		positionRadarTooltip(evt);
+	}
+}
+
+function positionRadarTooltip(evt) {
+	var tooltip = document.getElementById('radar-tooltip');
+	var wrapper = tooltip && tooltip.parentElement;
+	if (!tooltip || !wrapper) {
+		return;
+	}
+	var rect = wrapper.getBoundingClientRect();
+	var x = evt.clientX - rect.left;
+	var y = evt.clientY - rect.top;
+	tooltip.style.left = (x + 14) + 'px';
+	tooltip.style.top = (y - 14) + 'px';
+}
+
+function hideRadarTooltip() {
+	var tooltip = document.getElementById('radar-tooltip');
+	if (tooltip) {
+		tooltip.style.display = 'none';
+	}
+}
 
 function constructTable() {
 	var collColumnWidth = "col-xs-3";
@@ -445,6 +540,12 @@ function constructTable() {
 		});
 		$('.comparison-table').scroll(function() {
 			$(this).find('.comparison-header-cell-blank').css('left', $(this).scrollLeft());
+		});
+		$('.comparison-table').scroll(function() {
+			document.getElementById('comparison-table-top-scroll').scrollLeft = this.scrollLeft;
+		});
+		$('#comparison-table-top-scroll').scroll(function() {
+			document.getElementById('comparison-table').scrollLeft = this.scrollLeft;
 		});
 	}
 
@@ -548,7 +649,11 @@ function loadComparisonTableContent(sortedResponse) {
 	
 	var comparisonTableElement = document.getElementById('comparison-table');
 	comparisonTableElement.style.maxWidth = comparisonTableWidth + "px";
-	
+
+	var comparisonTableTopScrollElement = document.getElementById('comparison-table-top-scroll');
+	comparisonTableTopScrollElement.style.maxWidth = comparisonTableWidth + "px";
+	document.getElementById('comparison-table-top-scroll-spacer').style.width = comparisonRowWidth + "px";
+
 	var comparisonRowElements = document.getElementsByClassName('comparison-row');
 	var comparisonRowElementsLength = comparisonRowElements.length;
 	
