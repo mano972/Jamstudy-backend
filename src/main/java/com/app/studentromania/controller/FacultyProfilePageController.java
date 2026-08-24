@@ -127,8 +127,9 @@ public class FacultyProfilePageController {
         }
 
         if (faculty.getAvgRating() != null && faculty.getCountRev() != null && faculty.getCountRev() > 0) {
+            String ratingValue = String.format(java.util.Locale.US, "%.1f", faculty.getAvgRating());
             json.append(",\"aggregateRating\":{\"@type\":\"AggregateRating\",\"ratingValue\":\"")
-                    .append(faculty.getAvgRating()).append("\",\"reviewCount\":\"")
+                    .append(ratingValue).append("\",\"reviewCount\":\"")
                     .append(faculty.getCountRev()).append("\",\"bestRating\":\"5\",\"worstRating\":\"1\"}");
         }
 
