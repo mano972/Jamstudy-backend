@@ -899,7 +899,9 @@ function addToCompare(button, facultyId, hasText) {
 		icon.nextSibling.outerHTML = "<span data-i18n-key='see-comparison'>Vezi Comparaţii</span>";
 		translateElement(icon.nextSibling);
 	}
-	
+
+	showAddedToCompareTooltip(button);
+
 	if (typeof(Storage) !== "undefined") {
 		var facultyIdsString = localStorage.getItem("fci");
 		var facultyIds;
@@ -916,6 +918,43 @@ function addToCompare(button, facultyId, hasText) {
 	  // Sorry! No Web Storage support..
 	}
 
+}
+
+// Shown once, right after a faculty is added to comparisons — the button itself
+// only swaps an icon (and sometimes a text label), so this is often the only
+// feedback telling the user the click registered and what a second click does.
+// Appended to <body> with position:fixed so it escapes any overflow:hidden card
+// the button lives in, across all the different layouts that call addToCompare().
+function showAddedToCompareTooltip(button) {
+	var rect = button.getBoundingClientRect();
+
+	var tooltip = document.createElement("div");
+	tooltip.className = "tooltip-inner added-to-compare-tooltip";
+	tooltip.setAttribute("data-i18n-key", "compare-added-tooltip");
+	tooltip.innerText = translateKey("compare-added-tooltip") || "Facultatea a fost adăugată la comparații. Apasă din nou pentru a le vedea.";
+	tooltip.style.position = "fixed";
+	tooltip.style.top = (rect.bottom + 8) + "px";
+	tooltip.style.left = (rect.left + rect.width / 2) + "px";
+	tooltip.style.transform = "translateX(-50%)";
+	tooltip.style.zIndex = 2000;
+	tooltip.style.maxWidth = "220px";
+	tooltip.style.opacity = "0";
+	tooltip.style.transition = "opacity 0.25s ease";
+	tooltip.style.pointerEvents = "none";
+
+	document.body.appendChild(tooltip);
+	requestAnimationFrame(function() {
+		tooltip.style.opacity = "1";
+	});
+
+	setTimeout(function() {
+		tooltip.style.opacity = "0";
+		setTimeout(function() {
+			if (tooltip.parentNode) {
+				tooltip.parentNode.removeChild(tooltip);
+			}
+		}, 250);
+	}, 4000);
 }
 
 function addToFavorites(el, facultyId, hasText) {
@@ -2177,6 +2216,7 @@ const ro_json = {
                   "saved": "Salvată",
                   "compare": "Compară",
                   "see-comparison": "Vezi Comparaţii",
+                  "compare-added-tooltip": "Facultatea a fost adăugată la comparații. Apasă din nou pentru a le vedea.",
                   "compare-with-other-faculties": "Compară cu alte facultăți",
                   "see-description": "Vezi descriere",
                   "review-v1": "Evaluare",
@@ -2427,6 +2467,7 @@ const en_json = {
                   "saved": "Saved",
                   "compare": "Compare",
                   "see-comparison": "See Comparisons",
+                  "compare-added-tooltip": "Faculty added to comparisons. Click again to view them.",
                   "compare-with-other-faculties": "Compare with other faculties",
                   "see-description": "See description",
                   "review-v1": "Review",
@@ -2677,6 +2718,7 @@ const lt_json = {
                   "saved": "Išsaugota",
                   "compare": "Palyginti",
                   "see-comparison": "Peržiūrėti palyginimus",
+                  "compare-added-tooltip": "Fakultetas pridėtas prie palyginimų. Spustelėkite dar kartą, kad juos pamatytumėte.",
                   "compare-with-other-faculties": "Palygink su kitais fakultetais",
                   "see-description": "Žr. aprašymą",
                   "review-v1": "Atsiliepimas",
