@@ -18,6 +18,34 @@
     <link href="./assets/css/demo.css" rel="stylesheet"/>
     <link href="./assets/css/examples.css" rel="stylesheet"/>
 
+    <style>
+        .stats-bar-section {
+            padding-top: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .stat-tile {
+            margin-bottom: 20px;
+        }
+        .stat-tile .stat-icon {
+            font-size: 30px;
+            color: #F3BB45;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .stat-tile .stat-value {
+            font-size: 42px;
+            font-weight: 700;
+            color: #333333;
+            line-height: 1.1;
+        }
+        .stat-tile .stat-label {
+            font-size: 15px;
+            color: #777777;
+            margin-top: 4px;
+        }
+    </style>
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-W7XYVR8RJ0"></script>
     <script>
@@ -111,6 +139,27 @@
         </div>
     </div>
     <div class="main">
+        <div class="section section-white stats-bar-section">
+            <div class="container-fluid">
+                <div class="row text-center">
+                    <div class="col-md-4 col-sm-4 col-xs-12 stat-tile">
+                        <i class="fas fa-university stat-icon" aria-hidden="true"></i>
+                        <div class="stat-value" id="stat-universities">0</div>
+                        <div class="stat-label">universități</div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 stat-tile">
+                        <i class="fas fa-graduation-cap stat-icon" aria-hidden="true"></i>
+                        <div class="stat-value" id="stat-faculties">0</div>
+                        <div class="stat-label">facultăți</div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 stat-tile">
+                        <i class="fas fa-star stat-icon" aria-hidden="true"></i>
+                        <div class="stat-value" id="stat-reviews">0</div>
+                        <div class="stat-label">recenzii de la studenți</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="section section-white landing-section">
             <div class="container-fluid">
                 <div class="row">
@@ -335,6 +384,7 @@
         loadTopFaculties();
         initiateAutocomplete();
         homePageStatistic();
+        loadHomepageStatsBar();
         translatePage();
     });
 
@@ -616,6 +666,64 @@
                 checkLoggedInUser(error.status);
               }
             });
+    }
+
+
+    function loadHomepageStatsBar() {
+
+        $.ajax({
+            url: backendUrlRoot + "/v1/university",
+            type: "GET",
+            success: function(response) {
+                var universities = response.result.universities;
+                animateStatCount("stat-universities", universities ? universities.length : 0);
+            }
+        });
+
+        var backendUrlFaculty = new URL(backendUrlRoot + "/v1/faculty");
+        backendUrlFaculty.searchParams.append("limit", 1);
+        $.ajax({
+            url: backendUrlFaculty,
+            type: "GET",
+            success: function(response) {
+                animateStatCount("stat-faculties", response.result.count || 0);
+            }
+        });
+
+        var backendUrlReview = new URL(backendUrlRoot + "/v1/review");
+        backendUrlReview.searchParams.append("limit", 1);
+        $.ajax({
+            url: backendUrlReview,
+            type: "GET",
+            success: function(response) {
+                animateStatCount("stat-reviews", response.result.count || 0);
+            }
+        });
+    }
+
+    function animateStatCount(elementId, target) {
+        var el = document.getElementById(elementId);
+        if (!el || !target) {
+            return;
+        }
+        var duration = 1200;
+        var startTime = null;
+
+        function step(timestamp) {
+            if (!startTime) {
+                startTime = timestamp;
+            }
+            var progress = Math.min((timestamp - startTime) / duration, 1);
+            var value = Math.floor(progress * target);
+            el.textContent = value.toLocaleString('ro-RO');
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                el.textContent = target.toLocaleString('ro-RO');
+            }
+        }
+
+        window.requestAnimationFrame(step);
     }
 
 
