@@ -490,7 +490,7 @@ Global site tag (gtag.js) - Google Analytics
 
     function addHash(obj) {
         var hash = obj.href.split("#")[1];
-        history.replaceState(null, null, "#" + hash);
+        history.replaceState(null, null, window.location.pathname + window.location.search + "#" + hash);
         <!-- location.hash = hash; -->
         translatePage();
     }
@@ -505,7 +505,7 @@ Global site tag (gtag.js) - Google Analytics
         var reviewsTabLink = document.getElementById("reviews-tab");
         if (reviewsTabLink) {
             $(reviewsTabLink).tab('show');
-            history.replaceState(null, null, "#reviews");
+            history.replaceState(null, null, window.location.pathname + window.location.search + "#reviews");
             translatePage();
         }
     }
