@@ -44,6 +44,34 @@
             color: #777777;
             margin-top: 4px;
         }
+
+        .home-review-quote {
+            display: block;
+            background-color: #f9f9f7;
+            border-radius: 8px;
+            padding: 15px 18px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            color: inherit;
+        }
+        .home-review-quote .home-review-quote-icon {
+            color: #d9d6c9;
+            margin-right: 6px;
+        }
+        .home-review-quote .home-review-footer {
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .home-review-quote-empty {
+            background-color: #f9f9f7;
+            border-radius: 8px;
+            padding: 15px 18px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
     </style>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -519,7 +547,7 @@
 
                                     reviewTop.push(responseReview.result.reviews[i]);
 
-                                    cardReviewStr += '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>		<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6>											<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>												<div>	<i class="fa fa-star" style="color: orange"></i><strong style="color: orange">&nbsp' + generalRating + '</strong></div>		<br>											<p>' + reviewTextFront + '</p> <span class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal" data-i18n-key="see-all-v2">Vezi tot</span>	 										</div>											</div>';
+                                    cardReviewStr += '<div data-reviewid=' + reviewId + ' class="home-review-quote"><small class="text-muted" data-i18n-key="featured-review-label">Ce spun studenții</small><br><i class="fa fa-quote-left home-review-quote-icon"></i>' + reviewTextFront + '<div class="home-review-footer"><span><i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + generalRating + '</strong>' + (userStatus ? '<span class="text-muted" style="margin-left: 8px; text-transform: capitalize;">&mdash; ' + escapeHtml(userStatus) + '</span>' : '') + '</span><span class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal" data-i18n-key="see-all-v2">Vezi tot</span></div></div>';
                                 }
 
                                 <!-- var review = responseReview.result.reviews[0]; -->
@@ -568,16 +596,16 @@
 
                                 var secondRevCard;
                                 if ($(window).width() > 992) {
-                                    secondRevCard = '<div class="card-review-brief">												<div class="content" >													<h6></h6>													<small class="text-muted" data-i18n-key="no-more-reviews"><i>Nu mai există alte evaluări pentru această facultate</i></small>				</div>											</div>';
+                                    secondRevCard = '<div class="home-review-quote-empty"><small class="text-muted" data-i18n-key="no-more-reviews">Nu mai există alte evaluări pentru această facultate</small></div>';
                                 } else {
                                     secondRevCard = '';
                                 }
 
-                                cardReviewStr = '<div data-reviewid=' + reviewId + ' class="card-review-brief">												<div class="content" >													<h6>' + userName + '</h6>			<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6>										<small class="text-muted"><i>' + formattedReviewDate + '</i></small>													<br>													<br>													<i class="fa fa-star" style="color: orange"></i>													<strong style="color: orange">' + generalRating + '</strong>	<br>												<p>' + reviewTextFront + ' 	</p>		<span id="see-full-review" class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal" data-i18n-key="see-all-v2">Vezi tot</span>							</div>											</div>' + secondRevCard;
+                                cardReviewStr = '<div data-reviewid=' + reviewId + ' class="home-review-quote"><small class="text-muted" data-i18n-key="featured-review-label">Ce spun studenții</small><br><i class="fa fa-quote-left home-review-quote-icon"></i>' + reviewTextFront + '<div class="home-review-footer"><span><i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + generalRating + '</strong>' + (userStatus ? '<span class="text-muted" style="margin-left: 8px; text-transform: capitalize;">&mdash; ' + escapeHtml(userStatus) + '</span>' : '') + '</span><span id="see-full-review" class="btn btn-simple btn-info temp-display" onclick="seeFullReview(this, reviewTop)" data-toggle="modal" data-target="#review-modal" data-i18n-key="see-all-v2">Vezi tot</span></div></div>' + secondRevCard;
                             } else {
                                 var noReviewsText = "<span data-i18n-key='no-reviews'>Nu există evaluări</span>";
 
-                                cardReviewStr = '<div class="card-review-brief">			<div class="content" >			<p class="text-muted">' + noReviewsText + '</p>												</div>											</div>';
+                                cardReviewStr = '<div class="home-review-quote-empty"><p class="text-muted" style="margin: 0;">' + noReviewsText + '</p></div>';
                             }
 
                             document.getElementById("content-top-faculty").innerHTML += ('			<div class="img-first-place-banner">												<img src="./assets/img/trophy2_big.png" class="img-first-place-trophy"></img>												<span class="label label-warning" data-i18n-key="first-place">Primul Loc</span>											</div>								<div class="row">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + urlProfileRedirect + facultyIdTop +'">		<div class="img-faculty-logo-block-base img-faculty-home-logo-top-block">										<img src="' + logoSrcTop + '" class="img-faculty-logo-base img-faculty-logo-home-top center-logo-home"></img>	 </div>												</a>												</div>												<div class="col-md-9 col-xs-12 align" >													<a href="' + urlProfileRedirect + facultyIdTop + '">														<h5 id="top-faculty"><strong>' + facultyNameTop + '</strong></h5>													</a>						<a data-toggle="tooltip" title="Filtrează după universitate" onclick="searchByUniversityName(this)">							<h6 id="top-university"><strong>' +  universityNameTop + '</strong></h6>			</a>										<small id="top-city" class="text-muted">' + facultyCityTop + '</small>	<br>	<a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyIdTop+'&quot;)"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRatingTop + '</strong> <strong>' + countRevTextTop + '</strong> </a>																						</div>											</div>																	<div class="row margin-top-faculty-top">			<div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-8 col-md-offset-4 col-lg-5 col-lg-offset-7">													<a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyIdTop+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="add-review">Adaugă evaluare</span></a>												</div>						</div>																						' + cardReviewStr + '																<br>											<div class="row save-compare-home-top">												<div class="col-xs-4 save-top-faculty">													<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="' + favoriteClassTop + '" style="margin-right: 7px"></i><span>' + favoriteTextTop + '</span></button>											</div>												<div class="col-xs-4 col-xs-offset-4 col-md-4 col-md-offset-4 compare-top-faculty text-right">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span data-i18n-key="compare">Compară</span> </button>								</div>											</div>								');
@@ -875,52 +903,36 @@
             var userYear = review.userYear ? review.userYear : "";
             var userDetailsString = escapeHtml(userStatus + (userYear ? " - " + userYear : "") + (userDomainOfLicenseOrMaster ? " - " + userDomainOfLicenseOrMaster : "") + (userProgramName ? " - " + userProgramName : ""));
             var upvotes = review.upvotes ? review.upvotes : 0;
+
             var wouldRecommend = review.wouldRecommend;
-            var wouldRecommendText;
-            var wouldRecommendBoxClass;
-            var wouldRecommendTextClass;
+            var wouldRecommendText = "";
+            var recommendBadgeClass = "neutral";
+            var recommendBadgeIcon = "";
+            var wouldRecommendTranslation = "";
             if (wouldRecommend === true) {
                 wouldRecommendText = "Ar recomanda";
-                wouldRecommendBoxClass = "box green";
-                wouldRecommendTextClass = "would-recommend-text";
+                recommendBadgeClass = "recommend";
+                recommendBadgeIcon = "fa-thumbs-up";
+                wouldRecommendTranslation = "would-recommend";
             } else if (wouldRecommend === false) {
                 wouldRecommendText = "Nu ar recomanda";
-                wouldRecommendBoxClass = "box red";
-                wouldRecommendTextClass = "would-not-recommend-text";
-            } else {
-                wouldRecommendText = "";
-                wouldRecommendBoxClass = "";
-                wouldRecommendTextClass = "";
+                recommendBadgeClass = "not-recommend";
+                recommendBadgeIcon = "fa-thumbs-down";
+                wouldRecommendTranslation = "would-not-recommend";
             }
 
-            var difficulty = review.difficulty
-            var difficultyText;
-            if (difficulty) {
-                difficultyText = 'Dificultate:&nbsp' + difficulty + '/5';
-            } else {
-                difficultyText = "";
-            }
-            var wouldRecommendAndDifficultyRowString;
+            var difficulty = review.difficulty;
+            var difficultyText = difficulty ? (':&nbsp' + difficulty + '/5') : ": N/A";
+            var wouldRecommendAndDifficultyRowString = "";
             if (wouldRecommendText || difficulty) {
-                wouldRecommendAndDifficultyRowString =
-                                                                '<br>'
-                +'													<div class="row">'
-                +'														<div  class="col-xs-6">'
-                +'															<div class="'+ wouldRecommendBoxClass + '">'
-                +'															</div>'
-                +'															<span class=' + wouldRecommendTextClass + '>&nbsp&nbsp' + wouldRecommendText + '</span>'
-                +'														</div>'
-                +'													<div  class="col-xs-6">'
-                +'															<span style="color: #707070;">&nbsp&nbsp' + difficultyText + '</span>'
-                +'														</div>'
-                +'													</div>';
-            } else {
-                wouldRecommendAndDifficultyRowString = "";
+                wouldRecommendAndDifficultyRowString = '<div class="review-badges-row">'
+                    + (wouldRecommendText ? '<span class="review-badge ' + recommendBadgeClass + '"><i class="fa ' + recommendBadgeIcon + '"></i><span data-i18n-key="' + wouldRecommendTranslation + '">' + wouldRecommendText + '</span></span>' : '')
+                    + '<span class="review-badge neutral"><span data-i18n-key="difficulty">Dificultate</span>' + difficultyText + '</span>'
+                    + '</div>';
             }
 
             var upvotedReviewsIds = getUField("ulr");
             var upvotedRevClass;
-            var upvotedRevText;
             if (upvotedReviewsIds && upvotedReviewsIds.includes(reviewId)) {
                 upvotedRevClass = "fas fa-thumbs-up fa-lg like-review align";
             } else {
@@ -951,83 +963,69 @@
             var facultyFacilitiesReviewRating = (facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.generalRating) ? facultyFacilitiesReviewCategory.generalRating : "N/A";
             var facultyFacilitiesReviewText = escapeHtml((facultyFacilitiesReviewCategory && facultyFacilitiesReviewCategory.reviewText) ? facultyFacilitiesReviewCategory.reviewText : "");
 
-            var studentSupportReviewCategory = review.studentSupportReview;
-            var studentSupportReviewRating = (studentSupportReviewCategory && studentSupportReviewCategory.generalRating) ? studentSupportReviewCategory.generalRating : "N/A";
-            var studentSupportReviewText = escapeHtml((studentSupportReviewCategory && studentSupportReviewCategory.reviewText) ? studentSupportReviewCategory.reviewText : "");
-
             var timeBalanceReviewCategory = review.timeBalanceReview;
             var timeBalanceReviewRating = (timeBalanceReviewCategory && timeBalanceReviewCategory.generalRating) ? timeBalanceReviewCategory.generalRating : "N/A";
             var timeBalanceReviewText = escapeHtml((timeBalanceReviewCategory && timeBalanceReviewCategory.reviewText) ? timeBalanceReviewCategory.reviewText : "");
 
-
+            // Same markup/classes as the review cards in reviews.html (.review-entry-header,
+            // .review-badges-row, .review-general-rating, .review-card-category-item as plain
+            // stacked siblings), so the popup looks like a review card anywhere else on the site.
             var facultyReviewsString = (
-                                            <!-- '<div class="card">'		 -->
-    <!-- '											<div class="content">' -->
-    '												<div data-reviewid=' + reviewId + ' class="review-entry">'
-    +'													<div class="row">'
-    +'														<div  class="col-xs-12">'
-    +'															<h5 id="reviewer-details">' + userName + '</h5> '
-    +'															<h6 style="text-transform: capitalize;">' + userDetailsString + '</h6> '
-    +'															<small id="review-date" class="text-muted"><i>' + formattedReviewDate + '</i></small> 	'
-    +'														</div>'
-    +'													</div>													'
-    +													wouldRecommendAndDifficultyRowString
-    +'													<br>'
-    +'													<div class="row">'
-    +'														<div class="col-xs-12">		'
-    +'															<i class="fa fa-star align-orange"></i>'
-    +'															<strong class="align-orange">' + generalRating + '</strong>													'
-    +'															<p>' + reviewText + '</p>'
-    +'														</div>'
-    +'													</div>'
-    +'													<br>'
-    +'														<div class="row">'
-    +'															<div class="review-card-category-item col-md-6 col-xs-12">		'
-    +'																<i class="fa fa-star align-orange"></i>'
-    +'																<strong class="align-orange">' + coursesAndLecturersReviewRating + '</strong>  <span class="align"><b>&nbsp&nbspProfesori și cursuri</b></span>'
-    +'																<p>' + coursesAndLecturersReviewText + '</p>'
-    +'															</div>'
-    +'															<div class="review-card-category-item col-md-6 col-xs-12">			'
-    +'																<i class="fa fa-star align-orange"></i>'
-    +'																<strong class="align-orange">' + jobProspectsReviewRating + '</strong> <span class="align"><b>&nbsp&nbspOportunități în carieră</b></span>													'
-    +'																<p>' + jobProspectsReviewText + '</p>'
-    +'															</div>'
-    +'														</div>'
-    +'														<div class="row">'
-    +'															<div class="review-card-category-item col-md-6 col-xs-12">			'
-    +'																<i class="fa fa-star align-orange"></i>'
-    +'																<strong class="align-orange">' + accomodationReviewRating + '</strong> <span class="align"><b>&nbsp&nbspAcomodare</b></span>'
-    +'																<p>' + accomodationReviewText + '</p>'
-    +'															</div>'
-    +'															<div class="review-card-category-item col-md-6 col-xs-12">	'
-    +'																<i class="fa fa-star align-orange"></i>'
-    +'																<strong class="align-orange">' + studentOrganisationsReviewRating + '</strong> <span class="align"><b>&nbsp&nbspAsociații studențești</b></span>													'
-    +'																<p>' + studentOrganisationsReviewText + '</p>'
-    +'															</div>'
-    +'														</div>	'
-    +'														<div class="row">'
-    +'															<div class="review-card-category-item col-md-6 col-xs-12">		'
-    +'																<i class="fa fa-star align-orange"></i>'
-    +'																<strong class="align-orange">' + facultyFacilitiesReviewRating + '</strong> <span class="align"><b>&nbsp&nbspFacilități</b></span>'
-    +'																<p>' + facultyFacilitiesReviewText + '</p>'
-    +'															</div>'
-    +'															<div class="review-card-category-item col-md-6 col-xs-12">		'
-    +'																<i class="fa fa-star align-orange"></i>'
-    +'																<strong class="align-orange">' + timeBalanceReviewRating + '</strong> <span class="align"><b>&nbsp&nbspTimp la facultate vs. timp liber</b></span>													'
-    +'																<p>' + timeBalanceReviewText + '</p>'
-    +'															</div>'
-    +'														</div>'
-    +'														<br>'
-    +'													<div class="row">'
-    +'														<div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10 text-right">'
-    +'															<i class="' + upvotedRevClass + '" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align" style="margin-right: 20px;">' + upvotes + '</span>'
-    +'															<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report align" onclick="reportReview(this)" data-toggle="modal" data-target="#general-modal"></i>'
-    +'														</div>'
-    +'													</div>'
-    +'												</div>'
-    <!-- +'											</div>' -->
-    <!-- +'										</div>' -->
-
+                '<div data-reviewid=' + reviewId + ' class="review-entry">'
+                +'<div class="review-entry-header">'
+                +'<div><h5 class="review-author">' + userName + '</h5>'
+                + (userDetailsString ? '<div class="review-meta" style="text-transform: capitalize;">' + userDetailsString + '</div>' : '')
+                +'</div>'
+                +'<small class="text-muted review-header-date"><i>' + formattedReviewDate + '</i></small>'
+                +'</div>'
+                + wouldRecommendAndDifficultyRowString
+                +'<div class="review-general-rating">'
+                +'<i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">&nbsp' + generalRating + '</strong>'
+                +'<p>' + reviewText + '</p>'
+                +'</div>'
+                +'<div class="review-card-category-item">'
+                +'<i class="fa fa-star" style="color: orange"></i>'
+                +'<strong style="color: orange">&nbsp' + coursesAndLecturersReviewRating + '</strong>'
+                +'<i class="fa fa-graduation-cap" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Profesori și cursuri</b></span>'
+                +'<p>' + coursesAndLecturersReviewText + '</p>'
+                +'</div>'
+                +'<div class="review-card-category-item">'
+                +'<i class="fa fa-star" style="color: orange"></i>'
+                +'<strong style="color: orange">&nbsp' + jobProspectsReviewRating + '</strong>'
+                +'<i class="fa fa-briefcase" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Oportunități în carieră</b></span>'
+                +'<p>' + jobProspectsReviewText + '</p>'
+                +'</div>'
+                +'<div class="review-card-category-item">'
+                +'<i class="fa fa-star" style="color: orange"></i>'
+                +'<strong style="color: orange">&nbsp' + accomodationReviewRating + '</strong>'
+                +'<i class="fa fa-home" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Acomodare</b></span>'
+                +'<p>' + accomodationReviewText + '</p>'
+                +'</div>'
+                +'<div class="review-card-category-item">'
+                +'<i class="fa fa-star" style="color: orange"></i>'
+                +'<strong style="color: orange">&nbsp' + studentOrganisationsReviewRating + '</strong>'
+                +'<i class="fa fa-users" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Asociații studențești</b></span>'
+                +'<p>' + studentOrganisationsReviewText + '</p>'
+                +'</div>'
+                +'<div class="review-card-category-item">'
+                +'<i class="fa fa-star" style="color: orange"></i>'
+                +'<strong style="color: orange">&nbsp' + facultyFacilitiesReviewRating + '</strong>'
+                +'<i class="fa fa-building" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Facilități</b></span>'
+                +'<p>' + facultyFacilitiesReviewText + '</p>'
+                +'</div>'
+                +'<div class="review-card-category-item">'
+                +'<i class="fa fa-star" style="color: orange"></i>'
+                +'<strong style="color: orange">&nbsp' + timeBalanceReviewRating + '</strong>'
+                +'<i class="fa fa-clock-o" style="margin-left: 10px; margin-right: 6px; color: #898781;"></i><span><b>Timp la facultate vs. timp liber</b></span>'
+                +'<p>' + timeBalanceReviewText + '</p>'
+                +'</div>'
+                +'<div class="row review-footer-row">'
+                +'<div class="col-xs-4 col-xs-offset-8 col-md-2 col-md-offset-10 text-right">'
+                +'<i class="' + upvotedRevClass + '" style="margin-right: 7px;" onclick="upvoteReview(this)"></i><span id="upvotes-value" class="align" style="margin-right: 20px;">' + upvotes + '</span>'
+                +'<i data-toggle="tooltip" title="Raportează" class="far fa-flag fa-lg report align" onclick="reportReview(this)" data-toggle="modal" data-target="#general-modal"></i>'
+                +'</div>'
+                +'</div>'
+                +'</div>'
             );
 
             document.getElementById('review-modal-text').innerHTML = facultyReviewsString;
