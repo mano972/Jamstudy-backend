@@ -52,6 +52,9 @@ public class QuestionFilter {
 	}
 
 	public Integer getOffset() {
+		if (offset == null || offset == 0) {
+			return 0;
+		}
 		return offset;
 	}
 
