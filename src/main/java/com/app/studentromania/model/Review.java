@@ -1,6 +1,7 @@
 package com.app.studentromania.model;
 
 import com.app.studentromania.enumtype.DocTypeEnum;
+import com.app.studentromania.util.HtmlSanitizer;
 import com.couchbase.client.java.repository.annotation.Field;
 import org.springframework.data.couchbase.core.mapping.Document;
 
@@ -179,7 +180,7 @@ public class Review extends ParentEntity {
     }
 
     public void setReviewText(String reviewText) {
-        this.reviewText = reviewText;
+        this.reviewText = HtmlSanitizer.stripHtml(reviewText);
     }
 
     public String getReviewAnswerText() {
@@ -187,7 +188,7 @@ public class Review extends ParentEntity {
     }
 
     public void setReviewAnswerText(String reviewAnswerText) {
-        this.reviewAnswerText = reviewAnswerText;
+        this.reviewAnswerText = HtmlSanitizer.stripHtml(reviewAnswerText);
     }
 
     public CategoryReview getJobProspectsReview() {

@@ -2,6 +2,8 @@ package com.app.studentromania.model;
 
 import java.util.Date;
 
+import com.app.studentromania.util.HtmlSanitizer;
+
 public class Answer {
 
 	private String answerId;
@@ -49,7 +51,7 @@ public class Answer {
 	}
 
 	public void setAnswerText(String answerText) {
-		this.answerText = answerText;
+		this.answerText = HtmlSanitizer.stripHtml(answerText);
 	}
 
 	public int getUpvotes() {

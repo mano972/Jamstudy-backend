@@ -1,5 +1,7 @@
 package com.app.studentromania.model;
 
+import com.app.studentromania.util.HtmlSanitizer;
+
 public class CategoryReview {
 
 	private Integer generalRating;
@@ -19,7 +21,7 @@ public class CategoryReview {
 	}
 
 	public void setReviewText(String reviewText) {
-		this.reviewText = reviewText;
+		this.reviewText = HtmlSanitizer.stripHtml(reviewText);
 	}
 
 	@Override

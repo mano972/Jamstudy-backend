@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.data.couchbase.core.mapping.Document;
 
 import com.app.studentromania.enumtype.DocTypeEnum;
+import com.app.studentromania.util.HtmlSanitizer;
 import com.couchbase.client.java.repository.annotation.Field;
 
 @Document
@@ -100,7 +101,7 @@ public class Question extends ParentEntity {
 	}
 
 	public void setTitle(String title) {
-		this.title = title;
+		this.title = HtmlSanitizer.stripHtml(title);
 	}
 
 	public String getQuestionText() {
@@ -108,7 +109,7 @@ public class Question extends ParentEntity {
 	}
 
 	public void setQuestionText(String questionText) {
-		this.questionText = questionText;
+		this.questionText = HtmlSanitizer.stripHtml(questionText);
 	}
 
 	public int getUpvotes() {
