@@ -34,6 +34,8 @@ public class FacultyProfilePageController {
 
     private static final String TITLE_TAG = "<title>Unistart - Profil Facultate</title>";
     private static final String DESCRIPTION_TAG = "<meta name=\"description\" content=\"Unistart | Evaluari facultati. Alege facultatea potrivita pentru tine.\">";
+    private static final String SOCIAL_META_START = "<!-- SOCIAL_META_START -->";
+    private static final String SOCIAL_META_END = "<!-- SOCIAL_META_END -->";
 
     @Autowired
     private FacultyDAO facultyDAO;
@@ -58,7 +60,8 @@ public class FacultyProfilePageController {
             return;
         }
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(renderProfileHtml(facultyOpt.get(), universitySlug, facultySlug, RequestUtils.getOrigin(request)));
+        response.getWriter().write(renderProfileHtml(facultyOpt.get(), universitySlug, facultySlug,
+                RequestUtils.getOrigin(request), RequestUtils.resolveCountryCode(request)));
     }
 
     /**
@@ -85,7 +88,8 @@ public class FacultyProfilePageController {
         response.getWriter().write(profileHtmlTemplate);
     }
 
-    private String renderProfileHtml(Faculty faculty, String universitySlug, String facultySlug, String origin) {
+    private String renderProfileHtml(Faculty faculty, String universitySlug, String facultySlug, String origin,
+            String countryCode) {
         String canonicalUrl = origin + "/facultate/" + universitySlug + "/" + facultySlug;
         String title = faculty.getFacultyName() + " - Unistart";
         String description = "Vezi evaluări, rating și detalii despre " + faculty.getFacultyName()
@@ -96,10 +100,61 @@ public class FacultyProfilePageController {
                 "<title>" + escapeHtml(title) + "</title>\n    <link rel=\"canonical\" href=\"" + canonicalUrl + "\">");
         html = html.replace(DESCRIPTION_TAG,
                 "<meta name=\"description\" content=\"" + escapeHtml(description) + "\">");
+        html = replaceSocialMeta(html, buildSocialMetaTags(faculty, description, canonicalUrl, origin, countryCode));
         html = html.replace("</head>",
                 "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n"
                 + "<script type=\"application/ld+json\">" + buildJsonLd(faculty, canonicalUrl) + "</script>\n</head>");
         return html;
+    }
+
+    /**
+     * Open Graph + Twitter Card tags. These decide how a faculty link unfurls when
+     * it is pasted into WhatsApp, Messenger, Facebook, Discord, iMessage, etc. —
+     * which is how these pages actually get shared, with or without an in-app share
+     * button. og:image points at the faculty cover endpoint, which always resolves
+     * (it falls back to a default cover), so a shared link is never imageless.
+     */
+    private String buildSocialMetaTags(Faculty faculty, String description, String canonicalUrl, String origin,
+            String countryCode) {
+        String socialTitle = faculty.getFacultyName()
+                + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " — " + faculty.getUniversityName() : "");
+        String imageUrl = origin + "/Jamstudy/v1/faculty/" + faculty.getFacultyId() + "/cover";
+        String locale = "LT".equalsIgnoreCase(countryCode) ? "lt_LT" : "ro_RO";
+
+        String t = escapeHtml(socialTitle);
+        String d = escapeHtml(description);
+        String u = escapeHtml(canonicalUrl);
+        String img = escapeHtml(imageUrl);
+        String alt = escapeHtml(faculty.getFacultyName());
+
+        return "<meta property=\"og:type\" content=\"website\">\n    "
+                + "<meta property=\"og:site_name\" content=\"Unistart\">\n    "
+                + "<meta property=\"og:locale\" content=\"" + locale + "\">\n    "
+                + "<meta property=\"og:title\" content=\"" + t + "\">\n    "
+                + "<meta property=\"og:description\" content=\"" + d + "\">\n    "
+                + "<meta property=\"og:url\" content=\"" + u + "\">\n    "
+                + "<meta property=\"og:image\" content=\"" + img + "\">\n    "
+                + "<meta property=\"og:image:alt\" content=\"" + alt + "\">\n    "
+                + "<meta name=\"twitter:card\" content=\"summary_large_image\">\n    "
+                + "<meta name=\"twitter:title\" content=\"" + t + "\">\n    "
+                + "<meta name=\"twitter:description\" content=\"" + d + "\">\n    "
+                + "<meta name=\"twitter:image\" content=\"" + img + "\">";
+    }
+
+    /**
+     * Swaps the default OG/Twitter block in profile.html (everything between the
+     * SOCIAL_META markers, markers included) for the per-faculty tags. If the
+     * markers aren't found — e.g. the template drifted — it injects the tags
+     * before &lt;/head&gt; instead, so the page degrades rather than silently
+     * shipping the generic block.
+     */
+    private String replaceSocialMeta(String html, String socialTags) {
+        int start = html.indexOf(SOCIAL_META_START);
+        int end = html.indexOf(SOCIAL_META_END);
+        if (start >= 0 && end > start) {
+            return html.substring(0, start) + socialTags + html.substring(end + SOCIAL_META_END.length());
+        }
+        return html.replace("</head>", socialTags + "\n</head>");
     }
 
     /**
