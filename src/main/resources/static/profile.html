@@ -462,6 +462,12 @@ Global site tag (gtag.js) - Google Analytics
      crawlers see real review text (and it backs the JSON-LD review array). Left
      empty on the plain /profile.html fallback. Keep the marker exactly as-is. -->
 
+<!-- SSR_RELATED_FACULTIES -->
+<!-- Replaced by FacultyProfilePageController with server-rendered <a> links to
+     other faculties at the same university and in the same domain, so crawlers
+     get real internal links (the JS #other-faculties carousel is client-only and
+     uses redirecting ?id= URLs). Left empty on the plain /profile.html fallback. -->
+
 </body>
 <script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
 <script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>

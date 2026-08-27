@@ -5,9 +5,12 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +29,7 @@ import com.app.studentromania.dao.FacultyDAO;
 import com.app.studentromania.dao.ReviewDAO;
 import com.app.studentromania.model.Faculty;
 import com.app.studentromania.model.Review;
+import com.app.studentromania.util.FacultyFilter;
 import com.app.studentromania.util.RequestUtils;
 import com.app.studentromania.util.ReviewFilter;
 
@@ -44,6 +48,7 @@ public class FacultyProfilePageController {
     private static final String SOCIAL_META_START = "<!-- SOCIAL_META_START -->";
     private static final String SOCIAL_META_END = "<!-- SOCIAL_META_END -->";
     private static final String TOP_REVIEWS_MARKER = "<!-- SSR_TOP_REVIEWS -->";
+    private static final String RELATED_MARKER = "<!-- SSR_RELATED_FACULTIES -->";
 
     /** Rows pulled from Couchbase; a few extra so we can skip text-less reviews. */
     private static final int TOP_REVIEWS_FETCH = 12;
@@ -51,6 +56,12 @@ public class FacultyProfilePageController {
     private static final int TOP_REVIEWS_RENDER = 5;
     /** Cap on a single review's body in the markup, matching what the page shows. */
     private static final int REVIEW_BODY_MAX_CHARS = 1200;
+    /** Sibling faculties linked in the "same university" group. */
+    private static final int RELATED_SAME_UNIVERSITY = 8;
+    /** Faculties linked in the "same domain" group (cross-university). */
+    private static final int RELATED_SAME_DOMAIN = 6;
+    /** How many same-domain rows to pull before filtering out self / already-listed. */
+    private static final int DOMAIN_FETCH_LIMIT = 20;
 
     @Autowired
     private FacultyDAO facultyDAO;
@@ -150,6 +161,7 @@ public class FacultyProfilePageController {
                 "<meta name=\"description\" content=\"" + escapeHtml(description) + "\">");
         html = replaceSocialMeta(html, buildSocialMetaTags(faculty, description, canonicalUrl, origin, countryCode));
         html = replaceTopReviews(html, buildTopReviewsHtml(faculty, topReviews));
+        html = replaceMarker(html, RELATED_MARKER, buildRelatedFacultiesHtml(faculty, countryCode));
         html = html.replace("</head>",
                 "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n"
                 + "<script type=\"application/ld+json\">" + buildJsonLd(faculty, canonicalUrl, topReviews) + "</script>\n</head>");
@@ -258,6 +270,152 @@ public class FacultyProfilePageController {
 
     private static String isoDate(Date date) {
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    }
+
+    // ---- related faculties (internal linking) --------------------------
+
+    /**
+     * A server-rendered block of {@code <a>} links to other faculties — same
+     * university, and same first licence domain across universities — so a crawler
+     * fetching /facultate/{u}/{f} gets real internal links with canonical slug
+     * URLs and faculty-name anchor text. The page's JS {@code #other-faculties}
+     * carousel is client-only and links via redirecting {@code ?id=} URLs; this is
+     * the crawlable layer. Rendered near the end of the body (see the marker in
+     * profile.html), outside the JS-hidden #wrapper.
+     */
+    private String buildRelatedFacultiesHtml(Faculty faculty, String countryCode) {
+        List<Faculty> sameUni = sameUniversityFaculties(faculty);
+
+        Set<String> shown = new LinkedHashSet<>();
+        shown.add(faculty.getFacultyId());
+        for (Faculty f : sameUni) {
+            shown.add(f.getFacultyId());
+        }
+        List<Faculty> sameDomain = sameDomainFaculties(faculty, countryCode, shown);
+
+        if (sameUni.isEmpty() && sameDomain.isEmpty()) {
+            return "";
+        }
+
+        StringBuilder html = new StringBuilder();
+        html.append("<div class=\"section section-white\">\n");
+        html.append("  <div class=\"container-fluid\">\n");
+        html.append("    <div class=\"row\">\n");
+        html.append("      <div class=\"col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12\">\n");
+        html.append("        <nav id=\"ssr-related-faculties\" class=\"card\" aria-label=\"Facultăți similare\">\n");
+        html.append("          <div class=\"content\">\n");
+
+        if (!sameUni.isEmpty()) {
+            html.append("            <h2 style=\"font-size:19px;\">Alte facultăți la ")
+                    .append(escapeHtml(nvl(faculty.getUniversityName(), "aceeași universitate")))
+                    .append("</h2>\n");
+            appendFacultyList(html, sameUni, false);
+        }
+
+        if (!sameDomain.isEmpty()) {
+            String domain = primaryDomain(faculty);
+            html.append("            <h2 style=\"font-size:19px;margin-top:22px;\">")
+                    .append(domain != null ? "Facultăți de " + escapeHtml(domain) : "Facultăți din același domeniu")
+                    .append("</h2>\n");
+            appendFacultyList(html, sameDomain, true);
+        }
+
+        html.append("          </div>\n        </nav>\n      </div>\n    </div>\n  </div>\n</div>\n");
+        return html.toString();
+    }
+
+    private void appendFacultyList(StringBuilder html, List<Faculty> faculties, boolean showUniversity) {
+        html.append("            <ul style=\"list-style:none;padding:0;margin:0;\">\n");
+        for (Faculty f : faculties) {
+            html.append("              <li style=\"padding:7px 0;border-top:1px solid #efefef;\">")
+                    .append("<a href=\"/facultate/").append(f.getUniversitySlug()).append("/").append(f.getFacultySlug())
+                    .append("\">").append(escapeHtml(f.getFacultyName())).append("</a>");
+            if (showUniversity && StringUtils.isNotEmpty(f.getUniversityName())) {
+                html.append(" <span style=\"color:#999;font-size:13px;\">— ")
+                        .append(escapeHtml(f.getUniversityName())).append("</span>");
+            }
+            html.append("</li>\n");
+        }
+        html.append("            </ul>\n");
+    }
+
+    private List<Faculty> sameUniversityFaculties(Faculty faculty) {
+        try {
+            List<Faculty> out = new ArrayList<>();
+            for (Faculty f : facultyDAO.getByUniversityId(faculty.getUniversityId())) {
+                if (!f.getFacultyId().equals(faculty.getFacultyId()) && hasSlug(f)) {
+                    out.add(f);
+                }
+            }
+            out.sort((a, b) -> {
+                int ra = a.getCountRev() != null ? a.getCountRev() : 0;
+                int rb = b.getCountRev() != null ? b.getCountRev() : 0;
+                if (ra != rb) {
+                    return rb - ra;
+                }
+                double aa = a.getAvgRating() != null ? a.getAvgRating() : 0;
+                double ab = b.getAvgRating() != null ? b.getAvgRating() : 0;
+                if (Double.compare(ab, aa) != 0) {
+                    return Double.compare(ab, aa);
+                }
+                return nvl(a.getFacultyName(), "").compareToIgnoreCase(nvl(b.getFacultyName(), ""));
+            });
+            return out.size() > RELATED_SAME_UNIVERSITY ? out.subList(0, RELATED_SAME_UNIVERSITY) : out;
+        } catch (RuntimeException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    private List<Faculty> sameDomainFaculties(Faculty faculty, String countryCode, Set<String> excludeIds) {
+        String domain = primaryDomain(faculty);
+        if (domain == null) {
+            return new ArrayList<>();
+        }
+        try {
+            FacultyFilter filter = new FacultyFilter(null, null, null, null,
+                    Collections.singletonList(domain), null, null, null, countryCode, null,
+                    DOMAIN_FETCH_LIMIT, null, null);
+            List<Faculty> out = new ArrayList<>();
+            for (Faculty f : facultyDAO.getFilteredFaculties(filter)) {
+                if (excludeIds.contains(f.getFacultyId()) || !hasSlug(f)) {
+                    continue;
+                }
+                out.add(f);
+                if (out.size() == RELATED_SAME_DOMAIN) {
+                    break;
+                }
+            }
+            return out;
+        } catch (RuntimeException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    private String primaryDomain(Faculty faculty) {
+        List<String> domains = faculty.getFacultyDomainsLicense();
+        if (domains == null || domains.isEmpty()) {
+            return null;
+        }
+        return StringUtils.isNotBlank(domains.get(0)) ? domains.get(0).trim() : null;
+    }
+
+    private static boolean hasSlug(Faculty f) {
+        return StringUtils.isNotEmpty(f.getUniversitySlug()) && StringUtils.isNotEmpty(f.getFacultySlug());
+    }
+
+    private static String nvl(String value, String fallback) {
+        return StringUtils.isNotBlank(value) ? value : fallback;
+    }
+
+    /** Marker replace with a fall back to inserting before &lt;/body&gt;. */
+    private String replaceMarker(String html, String marker, String content) {
+        if (html.contains(marker)) {
+            return html.replace(marker, content);
+        }
+        if (content.isEmpty()) {
+            return html;
+        }
+        return html.replace("</body>", content + "</body>");
     }
 
     /**
