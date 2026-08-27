@@ -24,13 +24,20 @@ import org.springframework.stereotype.Component;
  * 304 when the file is unchanged) rather than silently reusing an old copy.
  *
  * Images/fonts are left alone — they rarely change on a deploy and the existing
- * heuristic caching is a reasonable default for them.
+ * heuristic caching is a reasonable default for them. Likewise the faculty-logo
+ * endpoint (…/{facultyId}/logo): it has no file extension but serves an image that
+ * is effectively immutable and sets its own long-lived Cache-Control, so this
+ * filter must not clobber it with no-cache.
  */
 @Component
 public class NoCacheFilter implements Filter {
 
     private static final String[] CACHEABLE_EXTENSIONS = {
             ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".woff", ".woff2", ".ttf", ".eot"
+    };
+
+    private static final String[] CACHEABLE_PATH_SUFFIXES = {
+            "/logo"
     };
 
     @Override
@@ -43,7 +50,7 @@ public class NoCacheFilter implements Filter {
             throws IOException, ServletException {
         if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
             String uri = ((HttpServletRequest) request).getRequestURI().toLowerCase(Locale.ROOT);
-            if (!hasCacheableExtension(uri)) {
+            if (!hasCacheableExtension(uri) && !hasCacheablePathSuffix(uri)) {
                 ((HttpServletResponse) response).setHeader("Cache-Control", "no-cache");
             }
         }
@@ -58,6 +65,15 @@ public class NoCacheFilter implements Filter {
     private boolean hasCacheableExtension(String uri) {
         for (String extension : CACHEABLE_EXTENSIONS) {
             if (uri.endsWith(extension)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasCacheablePathSuffix(String uri) {
+        for (String suffix : CACHEABLE_PATH_SUFFIXES) {
+            if (uri.endsWith(suffix)) {
                 return true;
             }
         }

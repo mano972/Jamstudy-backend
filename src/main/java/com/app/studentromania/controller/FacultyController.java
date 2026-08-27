@@ -7,6 +7,7 @@ import com.app.studentromania.annotation.VerifyEntityAdmin;
 import com.app.studentromania.dto.FacultyDTO;
 import com.app.studentromania.dto.ResponseDTO;
 import com.app.studentromania.service.FacultyService;
+import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.FacultyFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -90,7 +91,7 @@ public class FacultyController {
         if (responseDTO.getJsonObject() != null) {
             return responseDTO.createRestResponse();
         }
-        return responseDTO.createMediaRestResponse();
+        return responseDTO.createCacheableMediaRestResponse(Constants.FACULTY_LOGO_CACHE_MAX_AGE_SECONDS);
     }
 
     @GetMapping(value = "/{facultyId}/cover", produces = {MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE})

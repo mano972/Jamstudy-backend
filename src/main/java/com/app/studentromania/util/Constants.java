@@ -17,6 +17,10 @@ public class Constants {
     public static final String LOGO_PATH_ROOT = "C:\\logos_jamstudy\\";
     public static final String LOGO_IMAGE_TYPE = ".png";
     public static final String DEFAULT_IMAGE = "default_image";
+    // Faculty logos are effectively immutable, so let browsers/CDNs hold onto them for a
+    // while instead of re-fetching one per faculty card on every page view. If a logo is
+    // ever replaced it will take up to this long to refresh (URLs carry no version param).
+    public static final long FACULTY_LOGO_CACHE_MAX_AGE_SECONDS = 7L * 24 * 60 * 60;
     public static final String COVER_PATH_ROOT = "C:\\covers_jamstudy\\";
     public static final String DEFAULT_COVER_IMAGE = "university_building6";
 

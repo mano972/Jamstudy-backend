@@ -1,6 +1,7 @@
 package com.app.studentromania.dto;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -41,6 +42,12 @@ public class ResponseDTO {
 	public ResponseEntity<byte[]> createMediaRestResponse() {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setCacheControl(CacheControl.noCache().getHeaderValue());
+		return new ResponseEntity<>(this.getMedia(), headers, this.getHttpStatus());
+	}
+
+	public ResponseEntity<byte[]> createCacheableMediaRestResponse(long maxAgeSeconds) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setCacheControl(CacheControl.maxAge(maxAgeSeconds, TimeUnit.SECONDS).cachePublic().getHeaderValue());
 		return new ResponseEntity<>(this.getMedia(), headers, this.getHttpStatus());
 	}
 
