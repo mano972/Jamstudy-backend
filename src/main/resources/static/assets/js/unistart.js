@@ -2005,7 +2005,7 @@ function getRegisterModal() {
                         '								<small id="error-register" class="error-message"></small>'+
 
                         '								<div>'+
-                        '									<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox"><span data-i18n-key="register-terms-and-conditions">Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal</span></label>'+
+                        '									<label class="checkbox" for="policy-check"><input type="checkbox" name="policy" value="" id="policy-check" data-toggle="checkbox"><span data-i18n-key="register-terms-prefix">Am citit și înțeles</span> <a href="./terms.html" target="_blank" rel="noopener" style="text-decoration: underline;" data-i18n-key="register-terms-link">Termenii și condițiile de utilizare</a> <span data-i18n-key="register-terms-conjunction">și</span> <a href="./policy.html" target="_blank" rel="noopener" style="text-decoration: underline;" data-i18n-key="register-policy-link">Politica de prelucrare a datelor cu caracter personal</a></label>'+
                         '									<label class="checkbox" for="newsletter-check"><input type="checkbox" name="news" value="" id="newsletter-check" data-toggle="checkbox"><span data-i18n-key="register-subscribe">Vreau să fiu la curent cu ultimele noutăți</span></label>'+
                         '								</div>'+
 
@@ -2022,7 +2022,13 @@ function getRegisterModal() {
 
                         document.getElementById('register-card').innerHTML = registerModal;
 
-
+                        // ct-paper draws the visible checkbox as a decoration span the plugin
+                        // inserts on init. Its DOM-ready pass already ran before this modal HTML
+                        // was injected, so the two checkboxes (terms, newsletter) stay invisible
+                        // until the first click lazily initializes them. Decorate them now.
+                        if ($.fn.checkbox) {
+                            $('#register-card [data-toggle="checkbox"]').checkbox();
+                        }
 }
 
 function getPageHeader() {
@@ -2373,6 +2379,10 @@ const ro_json = {
                   "register-header": "Creare cont nou",
                   "register-confirm-password": "Confirmă Parola",
                   "register-terms-and-conditions": "Am citit și înțeles Termenii și condițiile de utilizare și Politica de prelucrare a datelor cu caracter personal",
+                  "register-terms-prefix": "Am citit și înțeles",
+                  "register-terms-link": "Termenii și condițiile de utilizare",
+                  "register-terms-conjunction": "și",
+                  "register-policy-link": "Politica de prelucrare a datelor cu caracter personal",
                   "register-subscribe": "Vreau să fiu la curent cu ultimele noutăți",
                   "register-button-message": "Înregistrare",
                   "register-send-to-login": "Ai deja cont? Autentifică-te",
@@ -2624,6 +2634,10 @@ const en_json = {
                   "register-header": "Create new account",
                   "register-confirm-password": "Confirm Password",
                   "register-terms-and-conditions": "I have read and understood the Terms and Conditions of use and the Privacy Policy",
+                  "register-terms-prefix": "I have read and understood the",
+                  "register-terms-link": "Terms and Conditions of use",
+                  "register-terms-conjunction": "and the",
+                  "register-policy-link": "Privacy Policy",
                   "register-subscribe": "I want to be informed of the latest news",
                   "register-button-message": "Register",
                   "register-send-to-login": "Already have an account? Log in",
@@ -2875,6 +2889,10 @@ const lt_json = {
                   "register-header": "Sukurti naują paskyrą",
                   "register-confirm-password": "Patvirtinkite slaptažodį",
                   "register-terms-and-conditions": "Perskaičiau ir sutinku su naudojimosi sąlygomis ir asmens duomenų apdorojimo politika",
+                  "register-terms-prefix": "Perskaičiau ir sutinku su",
+                  "register-terms-link": "naudojimosi sąlygomis",
+                  "register-terms-conjunction": "ir",
+                  "register-policy-link": "asmens duomenų apdorojimo politika",
                   "register-subscribe": "Noriu gauti naujienas",
                   "register-button-message": "Registruotis",
                   "register-send-to-login": "Jau turite paskyrą? Prisijunkite",
