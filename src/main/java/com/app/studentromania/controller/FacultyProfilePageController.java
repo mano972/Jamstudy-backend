@@ -3,6 +3,10 @@ package com.app.studentromania.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
@@ -19,8 +23,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.app.studentromania.dao.FacultyDAO;
+import com.app.studentromania.dao.ReviewDAO;
 import com.app.studentromania.model.Faculty;
+import com.app.studentromania.model.Review;
 import com.app.studentromania.util.RequestUtils;
+import com.app.studentromania.util.ReviewFilter;
 
 /**
  * Serves the faculty profile page at the SEO-friendly path
@@ -36,9 +43,20 @@ public class FacultyProfilePageController {
     private static final String DESCRIPTION_TAG = "<meta name=\"description\" content=\"Unistart | Evaluari facultati. Alege facultatea potrivita pentru tine.\">";
     private static final String SOCIAL_META_START = "<!-- SOCIAL_META_START -->";
     private static final String SOCIAL_META_END = "<!-- SOCIAL_META_END -->";
+    private static final String TOP_REVIEWS_MARKER = "<!-- SSR_TOP_REVIEWS -->";
+
+    /** Rows pulled from Couchbase; a few extra so we can skip text-less reviews. */
+    private static final int TOP_REVIEWS_FETCH = 12;
+    /** Reviews actually rendered into the page and the JSON-LD. */
+    private static final int TOP_REVIEWS_RENDER = 5;
+    /** Cap on a single review's body in the markup, matching what the page shows. */
+    private static final int REVIEW_BODY_MAX_CHARS = 1200;
 
     @Autowired
     private FacultyDAO facultyDAO;
+
+    @Autowired
+    private ReviewDAO reviewDAO;
 
     private String profileHtmlTemplate;
     private String errorHtmlTemplate;
@@ -59,9 +77,39 @@ public class FacultyProfilePageController {
             response.getWriter().write(errorHtmlTemplate);
             return;
         }
+        String countryCode = RequestUtils.resolveCountryCode(request);
+        Faculty faculty = facultyOpt.get();
+        List<Review> topReviews = fetchTopReviews(faculty.getFacultyId(), countryCode);
+
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(renderProfileHtml(facultyOpt.get(), universitySlug, facultySlug,
-                RequestUtils.getOrigin(request), RequestUtils.resolveCountryCode(request)));
+        response.getWriter().write(renderProfileHtml(faculty, universitySlug, facultySlug,
+                RequestUtils.getOrigin(request), countryCode, topReviews));
+    }
+
+    /**
+     * The most up-voted reviews for the faculty that actually carry review text,
+     * capped at {@link #TOP_REVIEWS_RENDER}. Text-less reviews (rating only) are
+     * skipped because they add nothing to either the rendered block or the
+     * structured data. Country-scoped like every other public review listing.
+     */
+    private List<Review> fetchTopReviews(String facultyId, String countryCode) {
+        ReviewFilter filter = new ReviewFilter(null, null, null, countryCode, null, "upvotes,desc",
+                TOP_REVIEWS_FETCH, null, null);
+        List<Review> withText = new ArrayList<>();
+        try {
+            for (Review review : reviewDAO.getFilteredReviewsByFacultyId(facultyId, filter)) {
+                if (StringUtils.isNotBlank(review.getReviewText())) {
+                    withText.add(review);
+                }
+                if (withText.size() == TOP_REVIEWS_RENDER) {
+                    break;
+                }
+            }
+        } catch (RuntimeException e) {
+            // A profile page must still render if the review query fails.
+            return new ArrayList<>();
+        }
+        return withText;
     }
 
     /**
@@ -89,7 +137,7 @@ public class FacultyProfilePageController {
     }
 
     private String renderProfileHtml(Faculty faculty, String universitySlug, String facultySlug, String origin,
-            String countryCode) {
+            String countryCode, List<Review> topReviews) {
         String canonicalUrl = origin + "/facultate/" + universitySlug + "/" + facultySlug;
         String title = faculty.getFacultyName() + " - Unistart";
         String description = "Vezi evaluări, rating și detalii despre " + faculty.getFacultyName()
@@ -101,10 +149,115 @@ public class FacultyProfilePageController {
         html = html.replace(DESCRIPTION_TAG,
                 "<meta name=\"description\" content=\"" + escapeHtml(description) + "\">");
         html = replaceSocialMeta(html, buildSocialMetaTags(faculty, description, canonicalUrl, origin, countryCode));
+        html = replaceTopReviews(html, buildTopReviewsHtml(faculty, topReviews));
         html = html.replace("</head>",
                 "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n"
-                + "<script type=\"application/ld+json\">" + buildJsonLd(faculty, canonicalUrl) + "</script>\n</head>");
+                + "<script type=\"application/ld+json\">" + buildJsonLd(faculty, canonicalUrl, topReviews) + "</script>\n</head>");
         return html;
+    }
+
+    /**
+     * A plain, always-visible list of the top reviews, rendered into the page
+     * body so a crawler sees real review text without running the SPA's JS. It
+     * sits below the JS-driven review tab that real users interact with; the two
+     * show the same reviews. schema.org policy requires the reviews carried in
+     * the JSON-LD {@code review} array to be visible on the page — this is what
+     * makes that true.
+     */
+    private String buildTopReviewsHtml(Faculty faculty, List<Review> topReviews) {
+        if (topReviews.isEmpty()) {
+            return "";
+        }
+        String heading = "Evaluări de la studenți despre " + faculty.getFacultyName()
+                + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " (" + faculty.getUniversityName() + ")" : "");
+
+        StringBuilder html = new StringBuilder();
+        html.append("<div class=\"section section-white\">\n");
+        html.append("  <div class=\"container-fluid\">\n");
+        html.append("    <div class=\"row\">\n");
+        html.append("      <div class=\"col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12\">\n");
+        html.append("        <section id=\"ssr-top-reviews\" class=\"card\">\n");
+        html.append("          <div class=\"content\">\n");
+        html.append("            <h2 style=\"font-size:20px;\">").append(escapeHtml(heading)).append("</h2>\n");
+        for (Review review : topReviews) {
+            html.append("            <article style=\"border-top:1px solid #e5e5e5;padding:14px 0;\">\n");
+            html.append("              <p style=\"margin:0 0 6px;color:#666;font-size:14px;\"><strong>")
+                    .append(escapeHtml(authorLabel(review))).append("</strong>");
+            if (review.getGeneralRating() != null) {
+                html.append(" &middot; ").append(review.getGeneralRating()).append("/5");
+            }
+            String dateText = reviewDisplayDate(review);
+            if (!dateText.isEmpty()) {
+                html.append(" &middot; ").append(escapeHtml(dateText));
+            }
+            html.append("</p>\n");
+            html.append("              <p style=\"margin:0;\">").append(escapeHtml(reviewBody(review))).append("</p>\n");
+            html.append("            </article>\n");
+        }
+        html.append("          </div>\n");
+        html.append("        </section>\n");
+        html.append("      </div>\n");
+        html.append("    </div>\n");
+        html.append("  </div>\n");
+        html.append("</div>\n");
+        return html.toString();
+    }
+
+    /**
+     * Replaces the {@link #TOP_REVIEWS_MARKER} placeholder in profile.html with
+     * the rendered reviews (or nothing, when the faculty has none). Falls back to
+     * inserting before &lt;/body&gt; if the marker was removed from the template.
+     */
+    private String replaceTopReviews(String html, String topReviewsHtml) {
+        if (html.contains(TOP_REVIEWS_MARKER)) {
+            return html.replace(TOP_REVIEWS_MARKER, topReviewsHtml);
+        }
+        if (topReviewsHtml.isEmpty()) {
+            return html;
+        }
+        return html.replace("</body>", topReviewsHtml + "</body>");
+    }
+
+    private String authorLabel(Review review) {
+        String status = review.getUserStatus();
+        if (status == null) {
+            return "Student";
+        }
+        switch (status.trim().toUpperCase()) {
+            case "MASTERAND":
+                return "Masterand";
+            case "ABSOLVENT":
+            case "GRADUATE":
+                return "Absolvent";
+            case "ELEV":
+                return "Elev";
+            case "STUDENT":
+            default:
+                return "Student";
+        }
+    }
+
+    private String reviewBody(Review review) {
+        String text = review.getReviewText();
+        if (text == null) {
+            return "";
+        }
+        text = text.trim();
+        if (text.length() > REVIEW_BODY_MAX_CHARS) {
+            return text.substring(0, REVIEW_BODY_MAX_CHARS).trim() + "…";
+        }
+        return text;
+    }
+
+    private String reviewDisplayDate(Review review) {
+        if (StringUtils.isNotBlank(review.getFormattedReviewDate())) {
+            return review.getFormattedReviewDate().trim();
+        }
+        return review.getReviewDate() != null ? isoDate(review.getReviewDate()) : "";
+    }
+
+    private static String isoDate(Date date) {
+        return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }
 
     /**
@@ -158,12 +311,15 @@ public class FacultyProfilePageController {
     }
 
     /**
-     * schema.org CollegeOrUniversity + AggregateRating, so eligible faculty pages
-     * can show star ratings in Google search results. aggregateRating is only
-     * included when there is at least one real review — Google flags a rating
-     * with zero backing reviews as invalid structured data.
+     * schema.org CollegeOrUniversity + AggregateRating + a short {@code review}
+     * array, so eligible faculty pages can show star ratings and review snippets
+     * in Google search results. aggregateRating is only included when there is at
+     * least one real review — Google flags a rating with zero backing reviews as
+     * invalid structured data. The reviews listed here are the same ones rendered
+     * into the page body by {@link #buildTopReviewsHtml}, which Google's policy
+     * requires (the marked-up reviews must be visible on the page).
      */
-    private String buildJsonLd(Faculty faculty, String canonicalUrl) {
+    private String buildJsonLd(Faculty faculty, String canonicalUrl, List<Review> topReviews) {
         StringBuilder json = new StringBuilder();
         json.append("{");
         json.append("\"@context\":\"https://schema.org\",");
@@ -186,6 +342,30 @@ public class FacultyProfilePageController {
             json.append(",\"aggregateRating\":{\"@type\":\"AggregateRating\",\"ratingValue\":\"")
                     .append(ratingValue).append("\",\"reviewCount\":\"")
                     .append(faculty.getCountRev()).append("\",\"bestRating\":\"5\",\"worstRating\":\"1\"}");
+        }
+
+        if (!topReviews.isEmpty()) {
+            json.append(",\"review\":[");
+            for (int i = 0; i < topReviews.size(); i++) {
+                Review review = topReviews.get(i);
+                if (i > 0) {
+                    json.append(",");
+                }
+                json.append("{\"@type\":\"Review\"");
+                json.append(",\"author\":{\"@type\":\"Person\",\"name\":\"")
+                        .append(escapeJson(authorLabel(review))).append("\"}");
+                if (review.getReviewDate() != null) {
+                    json.append(",\"datePublished\":\"").append(isoDate(review.getReviewDate())).append("\"");
+                }
+                if (review.getGeneralRating() != null) {
+                    json.append(",\"reviewRating\":{\"@type\":\"Rating\",\"ratingValue\":\"")
+                            .append(review.getGeneralRating())
+                            .append("\",\"bestRating\":\"5\",\"worstRating\":\"1\"}");
+                }
+                json.append(",\"reviewBody\":\"").append(escapeJson(reviewBody(review))).append("\"");
+                json.append("}");
+            }
+            json.append("]");
         }
 
         json.append("}");
