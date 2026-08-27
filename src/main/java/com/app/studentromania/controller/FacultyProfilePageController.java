@@ -150,7 +150,9 @@ public class FacultyProfilePageController {
     private String renderProfileHtml(Faculty faculty, String universitySlug, String facultySlug, String origin,
             String countryCode, List<Review> topReviews) {
         String canonicalUrl = origin + "/facultate/" + universitySlug + "/" + facultySlug;
-        String title = faculty.getFacultyName() + " - Unistart";
+        String title = faculty.getFacultyName()
+                + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " (" + faculty.getUniversityName() + ")" : "")
+                + " — păreri și evaluări de la studenți | Unistart";
         String description = "Vezi evaluări, rating și detalii despre " + faculty.getFacultyName()
                 + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " (" + faculty.getUniversityName() + ")" : "")
                 + ". Alege facultatea potrivită pentru tine pe Unistart.";
