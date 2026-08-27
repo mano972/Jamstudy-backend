@@ -384,7 +384,12 @@
 </body>
 
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-<script src="https://accounts.google.com/gsi/client?hl=ro" async></script>
+<!-- Google Sign-In SDK is loaded on demand by googleButtonClick() in unistart.js, after
+     the login modal (#g_id_onload / .g_id_signin) has been injected. Pre-loading it here
+     races the async modal injection: the library initializes with no #g_id_onload in the
+     DOM, never renders a button, and clickRenderedGoogleButton() then has nothing to
+     click — so the "Sign in with Google" button does nothing. -->
+<!-- <script src="https://accounts.google.com/gsi/client?hl=ro" async></script> -->
 <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
 
 <script>
