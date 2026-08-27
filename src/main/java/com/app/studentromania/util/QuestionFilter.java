@@ -1,5 +1,9 @@
 package com.app.studentromania.util;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 
 public class QuestionFilter {
@@ -7,7 +11,7 @@ public class QuestionFilter {
 	private static final int DEFAULT_LIMIT = 25;
 	private static final String DEFAULT_SORT_FIELD = "questionDate";
 	private static final String DEFAULT_SORT_DIRECTION = "desc";
-	private static final String SORT_SPLIT_CHARACTER = ",";
+	private static final Set<String> ALLOWED_SORT_FIELDS = new HashSet<>(Arrays.asList("questionDate", "upvotes"));
 
 	private String searchBy;
 	private String orderBy;
@@ -74,16 +78,13 @@ public class QuestionFilter {
 		if (StringUtils.isEmpty(searchBy)) {
 			return StringUtils.EMPTY;
 		}
-		String normalizedSearchBy = searchBy.toUpperCase().trim();
+		String normalizedSearchBy = N1qlUtils.escapeStringLiteral(searchBy.toUpperCase().trim());
 		return " and (UPPER(title) LIKE '%" + normalizedSearchBy + "%' or UPPER(questionText) LIKE '%" + normalizedSearchBy + "%') ";
 	}
 
 	public String getOrderByClause() {
-		if (StringUtils.isEmpty(orderBy)) {
-			return " order by " + DEFAULT_SORT_FIELD + " " + DEFAULT_SORT_DIRECTION;
-		}
-		String[] sortInfo = orderBy.split(SORT_SPLIT_CHARACTER);
-		return " order by " + sortInfo[0] + " " + sortInfo[1];
+		return N1qlUtils.sanitizeOrderByClause(orderBy, ALLOWED_SORT_FIELDS, "",
+				" order by " + DEFAULT_SORT_FIELD + " " + DEFAULT_SORT_DIRECTION);
 	}
 
 	@Override

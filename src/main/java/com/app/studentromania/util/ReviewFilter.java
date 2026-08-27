@@ -1,6 +1,9 @@
 package com.app.studentromania.util;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.couchbase.client.java.document.json.JsonArray;
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +15,8 @@ public class ReviewFilter {
 	private static final String DEFAULT_SORT_FIELD = "reviewDate";
 	private static final String DEFAULT_SORT_FIELD_JOIN = "r.reviewDate";
 	private static final String DEFAULT_SORT_DIRECTION = "desc";
-	private static final String SORT_SPLIT_CHARACTER = ",";
+	private static final Set<String> ALLOWED_SORT_FIELDS = new HashSet<>(
+			Arrays.asList("reviewDate", "upvotes", "generalRating"));
 
 	private String searchBy;
 	private Double ratingFrom;
@@ -129,7 +133,7 @@ public class ReviewFilter {
 		if (StringUtils.isEmpty(searchBy)) {
 			return StringUtils.EMPTY;
 		}
-		String normalizedSearchBy = normalizeDiacritics(searchBy).toUpperCase().trim();
+		String normalizedSearchBy = N1qlUtils.escapeStringLiteral(normalizeDiacritics(searchBy).toUpperCase().trim());
 		if (isJoin()) {
 			return " and (UPPER(" + diacriticsInsensitive("r.reviewText") + ") LIKE '%" + normalizedSearchBy + "%'"
 					+ " or UPPER(" + diacriticsInsensitive("f.facultyName") + ") LIKE '%" + normalizedSearchBy + "%'"
@@ -169,11 +173,9 @@ public class ReviewFilter {
 	}
 
 	public String getOrderByClause() {
-		if (StringUtils.isEmpty(orderBy)) {
-			return " order by " + (isJoin() ? DEFAULT_SORT_FIELD_JOIN : DEFAULT_SORT_FIELD) + " " + DEFAULT_SORT_DIRECTION;
-		}
-		String[] sortInfo = orderBy.split(SORT_SPLIT_CHARACTER);
-		return " order by " + (isJoin() ? "r." : "") + sortInfo[0] + " " + sortInfo[1];
+		String defaultClause = " order by " + (isJoin() ? DEFAULT_SORT_FIELD_JOIN : DEFAULT_SORT_FIELD) + " "
+				+ DEFAULT_SORT_DIRECTION;
+		return N1qlUtils.sanitizeOrderByClause(orderBy, ALLOWED_SORT_FIELDS, isJoin() ? "r." : "", defaultClause);
 	}
 
 	// Some faculties/reviews store ș/ț with the legacy cedilla forms (ş/ţ) instead of
