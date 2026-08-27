@@ -705,31 +705,13 @@
     function loadHomepageStatsBar() {
 
         $.ajax({
-            url: backendUrlRoot + "/v1/university",
+            url: backendUrlRoot + "/v1/stats",
             type: "GET",
             success: function(response) {
-                var universities = response.result.universities;
-                animateStatCount("stat-universities", universities ? universities.length : 0);
-            }
-        });
-
-        var backendUrlFaculty = new URL(backendUrlRoot + "/v1/faculty");
-        backendUrlFaculty.searchParams.append("limit", 1);
-        $.ajax({
-            url: backendUrlFaculty,
-            type: "GET",
-            success: function(response) {
-                animateStatCount("stat-faculties", response.result.count || 0);
-            }
-        });
-
-        var backendUrlReview = new URL(backendUrlRoot + "/v1/review");
-        backendUrlReview.searchParams.append("limit", 1);
-        $.ajax({
-            url: backendUrlReview,
-            type: "GET",
-            success: function(response) {
-                animateStatCount("stat-reviews", response.result.count || 0);
+                var stats = response.result;
+                animateStatCount("stat-universities", stats.universities || 0);
+                animateStatCount("stat-faculties", stats.faculties || 0);
+                animateStatCount("stat-reviews", stats.reviews || 0);
             }
         });
     }
