@@ -291,10 +291,8 @@ public class ReviewService {
             return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
         }
         Review review = reviewOpt.get();
-        int reports = review.getReports();
-        review.setReports(++reports);
+        reviewDAO.adjustReviewCounter(review.getId(), "reports", 1);
         logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was reported!");
-        reviewDAO.updateReview(review);
 
         return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
     }
@@ -302,43 +300,41 @@ public class ReviewService {
     public ResponseDTO upvoteReview(ReviewDTO reviewDTO) {
         String userId = customRequestContext.getUserId();
 
-        Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
-        if (!userProfileOpt.isPresent()) {
-            return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+        UserProfile userProfile = customRequestContext.getUserProfile();
+        if (userProfile == null) {
+            Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+            if (!userProfileOpt.isPresent()) {
+                return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+            }
+            userProfile = userProfileOpt.get();
         }
-        UserProfile userProfile = userProfileOpt.get();
 
         Optional<Review> reviewOpt = reviewDAO.getByReviewId(reviewDTO.getReviewId());
         if (!reviewOpt.isPresent()) {
             return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_NOT_FOUND);
         }
         Review review = reviewOpt.get();
-        int upvotes = review.getUpvotes();
+        long newUpvotes;
         if (reviewDTO.getUpvote()) {
             if (userProfile.getLikedReviews().contains(reviewDTO.getReviewId())) {
                 return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_ALREADY_UPVOTED);
             }
-            review.setUpvotes(++upvotes);
+            newUpvotes = reviewDAO.adjustReviewCounter(review.getId(), "upvotes", 1);
             userProfile.getLikedReviews().add(reviewDTO.getReviewId());
             logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was upvoted!");
         } else {
             if (!userProfile.getLikedReviews().contains(reviewDTO.getReviewId())) {
                 return ResponseDTO.createErrorResponse(ErrorsEnum.REVIEW_ALREADY_UPVOTED);
             }
-            if (upvotes == 0) {
-                review.setUpvotes(0);
-            } else {
-                review.setUpvotes(--upvotes);
-            }
+            newUpvotes = reviewDAO.adjustReviewCounter(review.getId(), "upvotes", -1);
             userProfile.getLikedReviews().remove(reviewDTO.getReviewId());
             logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was downvoted!");
         }
-        reviewDAO.updateReview(review);
         userProfileDAO.updateUserProfile(userProfile);
         ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO();
         reviewResponseDTO.setReviewId(review.getReviewId());
         reviewResponseDTO.setFacultyId(review.getFacultyId());
-        reviewResponseDTO.setUpvotes(review.getUpvotes());
+        reviewResponseDTO.setUpvotes((int) newUpvotes);
 
         return ResponseDTO.createSuccessResponse(new JSONObject(reviewResponseDTO));
     }

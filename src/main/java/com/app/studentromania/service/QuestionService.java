@@ -74,11 +74,14 @@ public class QuestionService {
 	public ResponseDTO createQuestion(QuestionDTO questionDTO) {
 		String userId = customRequestContext.getUserId();
 
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
-		if (!userProfileOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		UserProfile userProfile = customRequestContext.getUserProfile();
+		if (userProfile == null) {
+			Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+			if (!userProfileOpt.isPresent()) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+			}
+			userProfile = userProfileOpt.get();
 		}
-		UserProfile userProfile = userProfileOpt.get();
 
 		Optional<Faculty> facultyOpt = facultyDAO.getByFacultyId(questionDTO.getFacultyId());
 		if (!facultyOpt.isPresent()) {
@@ -117,11 +120,14 @@ public class QuestionService {
 	public ResponseDTO createAnswer(AnswerDTO answerDTO) {
 		String userId = customRequestContext.getUserId();
 
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
-		if (!userProfileOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		UserProfile userProfile = customRequestContext.getUserProfile();
+		if (userProfile == null) {
+			Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+			if (!userProfileOpt.isPresent()) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+			}
+			userProfile = userProfileOpt.get();
 		}
-		UserProfile userProfile = userProfileOpt.get();
 
 		Optional<Question> questionOpt = questionDAO.getByQuestionId(answerDTO.getQuestionId());
 		if (!questionOpt.isPresent()) {
@@ -154,43 +160,41 @@ public class QuestionService {
 	public ResponseDTO upvoteQuestion(QuestionDTO questionDTO) {
 		String userId = customRequestContext.getUserId();
 
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
-		if (!userProfileOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		UserProfile userProfile = customRequestContext.getUserProfile();
+		if (userProfile == null) {
+			Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+			if (!userProfileOpt.isPresent()) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+			}
+			userProfile = userProfileOpt.get();
 		}
-		UserProfile userProfile = userProfileOpt.get();
 
 		Optional<Question> questionOpt = questionDAO.getByQuestionId(questionDTO.getQuestionId());
 		if (!questionOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.QUESTION_NOT_FOUND);
 		}
 		Question question = questionOpt.get();
-		int upvotes = question.getUpvotes();
+		long newUpvotes;
 		if (questionDTO.getUpvote()) {
 			if (userProfile.getLikedQuestions().contains(questionDTO.getQuestionId())) {
 				return ResponseDTO.createErrorResponse(ErrorsEnum.QUESTION_ALREADY_UPVOTED);
 			}
-			question.setUpvotes(++upvotes);
+			newUpvotes = questionDAO.adjustQuestionCounter(question.getId(), "upvotes", 1);
 			userProfile.getLikedQuestions().add(questionDTO.getQuestionId());
 			logUtils.logMessage(LOGGER, "Question " + question.getQuestionId() + " was upvoted!");
 		} else {
 			if (!userProfile.getLikedQuestions().contains(questionDTO.getQuestionId())) {
 				return ResponseDTO.createErrorResponse(ErrorsEnum.QUESTION_ALREADY_UPVOTED);
 			}
-			if (upvotes == 0) {
-				question.setUpvotes(0);
-			} else {
-				question.setUpvotes(--upvotes);
-			}
+			newUpvotes = questionDAO.adjustQuestionCounter(question.getId(), "upvotes", -1);
 			userProfile.getLikedQuestions().remove(questionDTO.getQuestionId());
 			logUtils.logMessage(LOGGER, "Question " + question.getQuestionId() + " was downvoted!");
 		}
-		questionDAO.updateQuestion(question);
 		userProfileDAO.updateUserProfile(userProfile);
 		QuestionResponseDTO questionResponseDTO = new QuestionResponseDTO();
 		questionResponseDTO.setQuestionId(question.getQuestionId());
 		questionResponseDTO.setFacultyId(question.getFacultyId());
-		questionResponseDTO.setUpvotes(question.getUpvotes());
+		questionResponseDTO.setUpvotes((int) newUpvotes);
 
 		return ResponseDTO.createSuccessResponse(new JSONObject(questionResponseDTO));
 	}
@@ -198,44 +202,39 @@ public class QuestionService {
 	public ResponseDTO upvoteAnswer(AnswerDTO answerDTO) {
 		String userId = customRequestContext.getUserId();
 
-		Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
-		if (!userProfileOpt.isPresent()) {
-			return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+		UserProfile userProfile = customRequestContext.getUserProfile();
+		if (userProfile == null) {
+			Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
+			if (!userProfileOpt.isPresent()) {
+				return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+			}
+			userProfile = userProfileOpt.get();
 		}
-		UserProfile userProfile = userProfileOpt.get();
 
 		Optional<Question> questionOpt = questionDAO.getByQuestionId(answerDTO.getQuestionId());
 		if (!questionOpt.isPresent()) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.QUESTION_NOT_FOUND);
 		}
 		Question question = questionOpt.get();
-		Optional<Answer> answerOpt = question.getAnswers().stream()
-				.filter(answer -> answerDTO.getAnswerId().equals(answer.getAnswerId())).findAny();
-		if (!answerOpt.isPresent()) {
+		int answerIndex = indexOfAnswer(question, answerDTO.getAnswerId());
+		if (answerIndex < 0) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.ANSWER_NOT_FOUND);
 		}
-		Answer answer = answerOpt.get();
-		int upvotes = answer.getUpvotes();
 		if (answerDTO.getUpvote()) {
 			if (userProfile.getLikedAnswers().contains(answerDTO.getAnswerId())) {
 				return ResponseDTO.createErrorResponse(ErrorsEnum.ANSWER_ALREADY_UPVOTED);
 			}
-			answer.setUpvotes(++upvotes);
+			questionDAO.adjustAnswerCounter(question.getId(), answerIndex, "upvotes", 1);
 			userProfile.getLikedAnswers().add(answerDTO.getAnswerId());
-			logUtils.logMessage(LOGGER, "Answer " + answer.getAnswerId() + " was upvoted!");
+			logUtils.logMessage(LOGGER, "Answer " + answerDTO.getAnswerId() + " was upvoted!");
 		} else {
 			if (!userProfile.getLikedAnswers().contains(answerDTO.getAnswerId())) {
 				return ResponseDTO.createErrorResponse(ErrorsEnum.ANSWER_ALREADY_UPVOTED);
 			}
-			if (upvotes == 0) {
-				answer.setUpvotes(0);
-			} else {
-				answer.setUpvotes(--upvotes);
-			}
+			questionDAO.adjustAnswerCounter(question.getId(), answerIndex, "upvotes", -1);
 			userProfile.getLikedAnswers().remove(answerDTO.getAnswerId());
-			logUtils.logMessage(LOGGER, "Answer " + answer.getAnswerId() + " was downvoted!");
+			logUtils.logMessage(LOGGER, "Answer " + answerDTO.getAnswerId() + " was downvoted!");
 		}
-		questionDAO.updateQuestion(question);
 		userProfileDAO.updateUserProfile(userProfile);
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
@@ -247,10 +246,8 @@ public class QuestionService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.QUESTION_NOT_FOUND);
 		}
 		Question question = questionOpt.get();
-		int reports = question.getReports();
-		question.setReports(++reports);
+		questionDAO.adjustQuestionCounter(question.getId(), "reports", 1);
 		logUtils.logMessage(LOGGER, "Question " + question.getQuestionId() + " was reported!");
-		questionDAO.updateQuestion(question);
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
@@ -261,16 +258,12 @@ public class QuestionService {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.QUESTION_NOT_FOUND);
 		}
 		Question question = questionOpt.get();
-		Optional<Answer> answerOpt = question.getAnswers().stream()
-				.filter(answer -> answerId.equals(answer.getAnswerId())).findAny();
-		if (!answerOpt.isPresent()) {
+		int answerIndex = indexOfAnswer(question, answerId);
+		if (answerIndex < 0) {
 			return ResponseDTO.createErrorResponse(ErrorsEnum.ANSWER_NOT_FOUND);
 		}
-		Answer answer = answerOpt.get();
-		int reports = answer.getReports();
-		answer.setReports(++reports);
-		logUtils.logMessage(LOGGER, "Answer " + answer.getAnswerId() + " was reported!");
-		questionDAO.updateQuestion(question);
+		questionDAO.adjustAnswerCounter(question.getId(), answerIndex, "reports", 1);
+		logUtils.logMessage(LOGGER, "Answer " + answerId + " was reported!");
 
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
 	}
@@ -278,6 +271,18 @@ public class QuestionService {
 	public ResponseDTO deleteAllQuestions() {
 		questionDAO.deleteAllQuestions();
 		return ResponseDTO.createSuccessResponse(ResponseDTO.JSON_SUCCESS);
+	}
+
+	// Position of an answer inside question.answers — the sub-document counter ops
+	// address embedded answers by array index (answers[i].upvotes), not by answerId.
+	private int indexOfAnswer(Question question, String answerId) {
+		List<Answer> answers = question.getAnswers();
+		for (int i = 0; i < answers.size(); i++) {
+			if (answerId.equals(answers.get(i).getAnswerId())) {
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	private void mapToAnswer(AnswerDTO answerDTO, Answer answer) {

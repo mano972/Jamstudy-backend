@@ -13,6 +13,7 @@ import com.app.studentromania.enumtype.DocTypeEnum;
 import com.app.studentromania.model.Faculty;
 import com.app.studentromania.model.Question;
 import com.app.studentromania.util.Constants;
+import com.app.studentromania.util.CouchbaseCounters;
 import com.app.studentromania.util.QuestionFilter;
 import com.couchbase.client.java.document.json.JsonArray;
 import com.couchbase.client.java.query.N1qlQuery;
@@ -97,6 +98,15 @@ public class QuestionRepo {
 
 	public void save(Question question) {
 		template.save(question);
+	}
+
+	/**
+	 * Atomically add {@code delta} to a numeric field inside the question document —
+	 * e.g. {@code "upvotes"} on the question itself, or {@code "answers[2].reports"}
+	 * on one embedded answer.
+	 */
+	public long adjustCounter(String docId, String path, long delta) {
+		return CouchbaseCounters.adjust(template.getCouchbaseBucket(), docId, path, delta);
 	}
 
 	@LogExecutionTime

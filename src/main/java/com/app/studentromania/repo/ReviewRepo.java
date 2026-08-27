@@ -14,6 +14,7 @@ import com.app.studentromania.annotation.LogParameters;
 import com.app.studentromania.enumtype.DocTypeEnum;
 import com.app.studentromania.model.Review;
 import com.app.studentromania.util.Constants;
+import com.app.studentromania.util.CouchbaseCounters;
 import com.app.studentromania.util.ReviewFilter;
 import com.couchbase.client.java.document.json.JsonArray;
 import com.couchbase.client.java.query.N1qlQuery;
@@ -255,6 +256,11 @@ public class ReviewRepo {
 
 	public void save(Review review) {
 		template.save(review);
+	}
+
+	/** Atomically add {@code delta} to a top-level numeric field of the review document. */
+	public long adjustCounter(String docId, String field, long delta) {
+		return CouchbaseCounters.adjust(template.getCouchbaseBucket(), docId, field, delta);
 	}
 
 	@LogExecutionTime

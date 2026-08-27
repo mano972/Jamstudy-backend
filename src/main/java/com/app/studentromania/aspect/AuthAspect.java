@@ -63,6 +63,7 @@ public class AuthAspect {
 
         customRequestContext.setUserId(null);
         customRequestContext.setEntityProfileId(null);
+        customRequestContext.setUserProfile(null);
         customRequestContext.setTraceId(Utilities.getTraceId());
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
@@ -91,15 +92,21 @@ public class AuthAspect {
                 final String endPointName = proceedingJoinPoint.getSignature().getName();
                 logUtils.logAuth(LOGGER, endPointName, userId);
 
+                // Look the subject up as an end user first — that's the common case — and
+                // only fall back to the entity-profile lookup when it isn't one, instead
+                // of always paying for both N1QL queries.
                 Optional<UserProfile> userProfileOpt = userProfileDAO.getByUserId(userId);
-                Optional<EntityProfile> entityProfileOpt = entityProfileDAO.getByEntityId(userId);
-                if (!userProfileOpt.isPresent() && !entityProfileOpt.isPresent()) {
-                    logUtils.logMessage(LOGGER, "Error when verifying JWT token. User/EntityProfile with id does not exist: " + userId);
-                    return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
-                } else if (userProfileOpt.isPresent()) {
+                if (userProfileOpt.isPresent()) {
                     customRequestContext.setUserId(userId);
+                    customRequestContext.setUserProfile(userProfileOpt.get());
                 } else {
-                    customRequestContext.setEntityProfileId(userId);
+                    Optional<EntityProfile> entityProfileOpt = entityProfileDAO.getByEntityId(userId);
+                    if (entityProfileOpt.isPresent()) {
+                        customRequestContext.setEntityProfileId(userId);
+                    } else {
+                        logUtils.logMessage(LOGGER, "Error when verifying JWT token. User/EntityProfile with id does not exist: " + userId);
+                        return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+                    }
                 }
 
                 if (isTokenExpired(decodedJwtToken)) {

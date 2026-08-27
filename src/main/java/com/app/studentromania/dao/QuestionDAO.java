@@ -47,6 +47,16 @@ public class QuestionDAO {
 		LOGGER.info("Question " + question.getQuestionId() + " was updated!");
 	}
 
+	/** Atomically bump a question counter (upvotes/reports) without rewriting the whole document. */
+	public long adjustQuestionCounter(String docId, String field, long delta) {
+		return questionRepo.adjustCounter(docId, field, delta);
+	}
+
+	/** Atomically bump a counter on one embedded answer, addressed by its position in {@code answers}. */
+	public long adjustAnswerCounter(String docId, int answerIndex, String field, long delta) {
+		return questionRepo.adjustCounter(docId, "answers[" + answerIndex + "]." + field, delta);
+	}
+
 	public void deleteAllQuestions() {
 		questionRepo.deleteAll();
 	}

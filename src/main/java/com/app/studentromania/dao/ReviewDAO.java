@@ -155,6 +155,11 @@ public class ReviewDAO {
 		logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was updated!");
 	}
 
+	/** Atomically bump a review counter (e.g. upvotes/reports) without rewriting the whole document. */
+	public long adjustReviewCounter(String docId, String field, long delta) {
+		return reviewRepo.adjustCounter(docId, field, delta);
+	}
+
 	public void deleteReview(Review review) {
 		reviewRepo.delete(review);
 		logUtils.logMessage(LOGGER, "Review " + review.getReviewId() + " was deleted!");
