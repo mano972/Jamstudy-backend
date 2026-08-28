@@ -13,8 +13,37 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class RequestUtils {
 
+    /**
+     * The canonical origin for the request's domain: always https, and the host
+     * normalised to one form per domain so link / crawl / ranking signals don't
+     * split. Everything server-rendered — {@code <link rel="canonical">}, og:url,
+     * sitemap {@code <loc>}, breadcrumb links — is built from this.
+     * {@link com.app.studentromania.filter.CanonicalHostFilter} 301s the other
+     * form to match.
+     */
     public static String getOrigin(HttpServletRequest request) {
-        return request.getScheme() + "://" + request.getServerName();
+        return "https://" + canonicalHost(request.getServerName());
+    }
+
+    /**
+     * Canonical host for a given request host:
+     * <ul>
+     *   <li><b>unistart.ro</b> — bare domain (a leading {@code www.} is stripped);
+     *       the TLS cert and Google's selected canonical are on the bare host.</li>
+     *   <li><b>unistart.lt</b> — {@code www.unistart.lt}; only that host has a TLS
+     *       certificate, so it has to be the canonical one.</li>
+     *   <li>anything else (e.g. localhost) — returned unchanged.</li>
+     * </ul>
+     */
+    public static String canonicalHost(String host) {
+        if (host == null || host.isEmpty()) {
+            return "unistart.ro";
+        }
+        boolean hasWww = host.regionMatches(true, 0, "www.", 0, 4);
+        if (host.toLowerCase().contains("unistart.lt")) {
+            return hasWww ? host : "www." + host;
+        }
+        return hasWww ? host.substring(4) : host;
     }
 
     public static String resolveCountryCode(HttpServletRequest request) {

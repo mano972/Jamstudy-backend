@@ -750,9 +750,9 @@ function loadFaculty(){
 			var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";	
 			<!-- var defaultErrorImg = "'C://logos_jamstudy/default_image.png'"; -->
 			
-			var urlProfileRedirect = "./profile.html?id=" + facultyId;
+			var urlProfileRedirect = facultyProfileUrl(response.result);
 
-			
+
 			document.getElementById("review-faculty-main").innerHTML = '';
 			
 			document.getElementById("review-faculty-main").innerHTML += (	
@@ -1108,8 +1108,7 @@ function postReview(){
 						clearPendingReviewDraft(facultyId);
 					document.getElementById('add-review-modal-text').innerHTML = translateKey('add-review-success-message');
 					$("#add-review-modal").on("hidden.bs.modal", function () {
-						var urlProfileRedirect = "./profile.html?id=" + facultyId;
-						window.location.replace(urlProfileRedirect);
+						window.location.replace(facultyProfileUrl(facultyId));
 					});
 				},
 				error: function(error) {
@@ -1128,8 +1127,7 @@ function postReview(){
 					}
 					
 					$("#add-review-modal").on("hidden.bs.modal", function () {
-						var urlProfileRedirect = "./profile.html?id=" + facultyId;
-						window.location.replace(urlProfileRedirect);
+						window.location.replace(facultyProfileUrl(facultyId));
 					});
 			}
 			});
@@ -1150,8 +1148,7 @@ function postReview(){
 
 					document.getElementById('add-review-modal-text').innerHTML = "Evaluarea a fost editată cu succes. ";
 					$("#add-review-modal").on("hidden.bs.modal", function () {
-						var urlProfileRedirect = "./profile.html?id=" + facultyId;
-						window.location.replace(urlProfileRedirect);
+						window.location.replace(facultyProfileUrl(facultyId));
 					});
 				},
 				error: function(error) {
@@ -1170,8 +1167,7 @@ function postReview(){
 					}
 					
 					$("#add-review-modal").on("hidden.bs.modal", function () {
-						var urlProfileRedirect = "./profile.html?id=" + facultyId;
-						window.location.replace(urlProfileRedirect);
+						window.location.replace(facultyProfileUrl(facultyId));
 					});
 			}
 			});

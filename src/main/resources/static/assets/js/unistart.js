@@ -6,6 +6,19 @@ $.ajaxSetup({
   }
 });
 
+// Canonical faculty profile URL. Uses the SEO slug path (/facultate/{uni}/{fac})
+// when the faculty carries slugs, else falls back to the legacy ?id= URL — which
+// 301s to the slug path server-side. Accepts a faculty object or a bare id.
+function facultyProfileUrl(faculty) {
+	if (faculty && typeof faculty === "object") {
+		if (faculty.universitySlug && faculty.facultySlug) {
+			return "/facultate/" + faculty.universitySlug + "/" + faculty.facultySlug;
+		}
+		return "./profile.html?id=" + (faculty.facultyId || "");
+	}
+	return "./profile.html?id=" + (faculty || "");
+}
+
 // Escapes user/API-supplied text before it is concatenated into an HTML string
 // and assigned via innerHTML/.html() elsewhere in this file and in the static pages.
 function escapeHtml(value) {
@@ -1345,8 +1358,7 @@ function initiateAutocomplete() {
 		},
 		getResultValue: result => result.facultyName,
 		onSubmit: result => {
-			var urlProfileRedirect = "./profile.html?id=" + result.facultyId;
-			location.href = urlProfileRedirect;
+			location.href = facultyProfileUrl(result);
 		}
 	
 	
@@ -1367,8 +1379,7 @@ function initiateAutocomplete() {
 }
 
 function goToReviews(facultyId) {
-	var urlFacultyRedirect = "./profile.html?id=" + facultyId + "#reviews";
-	location.href = urlFacultyRedirect;
+	location.href = facultyProfileUrl(facultyId) + "#reviews";
 }
 
 

@@ -32,6 +32,10 @@ public class FacultyResponseDTO {
 
     private String facultyShortname;
 
+    private String universitySlug;
+
+    private String facultySlug;
+
     private String facultyWebsite;
 
     private String facultyDescription;
@@ -208,6 +212,22 @@ public class FacultyResponseDTO {
 
     public void setFacultyShortname(String facultyShortname) {
         this.facultyShortname = facultyShortname;
+    }
+
+    public String getUniversitySlug() {
+        return universitySlug;
+    }
+
+    public void setUniversitySlug(String universitySlug) {
+        this.universitySlug = universitySlug;
+    }
+
+    public String getFacultySlug() {
+        return facultySlug;
+    }
+
+    public void setFacultySlug(String facultySlug) {
+        this.facultySlug = facultySlug;
     }
 
     public String getFacultyWebsite() {

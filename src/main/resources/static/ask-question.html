@@ -234,7 +234,7 @@ function loadFaculty() {
 		if (response.control.errorCode === 0) {
 			var facultyName = escapeHtml(response.result.facultyName);
 			var logoSrc = backendUrlRoot + "/v1/faculty/" + response.result.facultyId + "/logo";
-			var urlProfileRedirect = "./profile.html?id=" + facultyId;
+			var urlProfileRedirect = facultyProfileUrl(response.result);
 
 			document.getElementById("ask-question-faculty-main").innerHTML = (
 							'<div class="row">'
@@ -289,8 +289,7 @@ function postQuestion() {
 		success: function (data) {
 			document.getElementById('ask-question-modal-text').innerHTML = "Întrebarea a fost adăugată cu succes.";
 			$("#ask-question-modal").on("hidden.bs.modal", function () {
-				var urlProfileRedirect = "./profile.html?id=" + facultyId + "#qa";
-				window.location.replace(urlProfileRedirect);
+				window.location.replace(facultyProfileUrl(facultyId) + "#qa");
 			});
 		},
 		error: function(error) {
