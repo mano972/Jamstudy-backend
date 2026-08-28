@@ -33,7 +33,9 @@ param(
 
     # Wait for the scanner's .deployed / .failed verdict.
     [int]    $TimeoutSec             = 360,
-    [int]    $ServiceStopTimeoutSec  = 120,
+    # WildFly's graceful shutdown often hangs on a non-daemon thread; after this
+    # long the script kills the JVM (it's about to cold-restart anyway).
+    [int]    $ServiceStopTimeoutSec  = 45,
     [int]    $ServiceStartTimeoutSec = 240,
 
     # Optional smoke test after a successful deploy.
@@ -133,6 +135,12 @@ function Show-ServerLogTail {
     }
 }
 
+function Get-WildflyProcess {
+    Get-CimInstance Win32_Process -Filter "Name = 'java.exe'" -ErrorAction SilentlyContinue |
+        Where-Object { $_.CommandLine -and $_.CommandLine -match 'jboss-modules|org\.jboss\.as\.standalone' } |
+        Select-Object -First 1
+}
+
 function Restart-WildflyService([string] $reason) {
     if (-not $ServiceName) {
         throw "Cannot recover ($reason): -ServiceName was not provided, so the WildFly service can't be restarted. Restart it by hand on the VM."
@@ -141,12 +149,25 @@ function Restart-WildflyService([string] $reason) {
 
     Write-Step "Stopping service '$ServiceName' ($reason)"
     if ((Get-Service -Name $ServiceName).Status -ne 'Stopped') {
-        Stop-Service -Name $ServiceName -Force
+        # sc.exe returns immediately; we do the waiting ourselves so a hung
+        # shutdown can't block the script forever (Stop-Service -Force does).
+        & sc.exe stop $ServiceName | Out-Null
     }
     $deadline = (Get-Date).AddSeconds($ServiceStopTimeoutSec)
     while ((Get-Service -Name $ServiceName).Status -ne 'Stopped') {
-        if ((Get-Date) -gt $deadline) { throw "Service '$ServiceName' did not stop within ${ServiceStopTimeoutSec}s." }
-        Start-Sleep -Seconds 2
+        if ((Get-Date) -gt $deadline) {
+            $proc = Get-WildflyProcess
+            if ($proc) {
+                Write-Warning "Service '$ServiceName' didn't stop in ${ServiceStopTimeoutSec}s - killing PID $($proc.ProcessId)."
+                Stop-Process -Id $proc.ProcessId -Force -ErrorAction SilentlyContinue
+                Start-Sleep -Seconds 5
+            }
+            if ((Get-Service -Name $ServiceName).Status -ne 'Stopped') {
+                throw "Service '$ServiceName' could not be stopped (even after killing the JVM)."
+            }
+            break
+        }
+        Start-Sleep -Seconds 3
     }
     Write-Step "Service stopped."
 

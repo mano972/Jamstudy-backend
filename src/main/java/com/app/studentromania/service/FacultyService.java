@@ -341,6 +341,10 @@ public class FacultyService {
     public void updateAllFacultiesReviewDetails() {
         List<Faculty> faculties = facultyDAO.getAllFaculties();
         for (Faculty faculty : faculties) {
+            if (Thread.currentThread().isInterrupted()) {
+                LOGGER.info("Interrupted - stopping faculty review-details recompute mid-pass");
+                return;
+            }
             reviewService.updateFacultyReviewDetails(faculty);
         }
     }
