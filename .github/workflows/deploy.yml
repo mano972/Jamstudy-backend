@@ -14,8 +14,8 @@ env:
   DEPLOY_NAME: Jamstudy.war
   DEPLOY_DIR: C:\Wildfly\wildfly-22.0.0.Final\standalone\deployments
   # WildFly Windows service name — used to fully restart WildFly if a hot deploy fails.
-  # Set this to the real name: Get-Service | ? { $_.Name -match 'wildfly|jboss' }
-  SERVICE_NAME: WildFly
+  # Find it with: Get-Service | ? { $_.Name -match 'wildfly|jboss' }
+  SERVICE_NAME: Wildfly
 
 jobs:
   build-and-deploy:
