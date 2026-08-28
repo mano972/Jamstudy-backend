@@ -68,6 +68,12 @@ Global site tag (gtag.js) - Google Analytics
 
 <div id="wrapper" class="wrapper loading">
 
+    <!-- SSR_BREADCRUMB -->
+    <!-- FacultyProfilePageController replaces this with a server-rendered breadcrumb
+         (Acasă › oraș › universitate › facultate) + BreadcrumbList JSON-LD. Inside
+         #wrapper, so it follows .wrapper.loading{opacity:0}. Left as a comment on the
+         plain /profile.html fallback. Keep the marker as-is. -->
+
     <div class="section section-profile faculty-profile-header-background">
         <div class="container-fluid">
             <div class="row">

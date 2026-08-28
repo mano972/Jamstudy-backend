@@ -49,6 +49,7 @@ public class FacultyProfilePageController {
     private static final String SOCIAL_META_END = "<!-- SOCIAL_META_END -->";
     private static final String TOP_REVIEWS_MARKER = "<!-- SSR_TOP_REVIEWS -->";
     private static final String RELATED_MARKER = "<!-- SSR_RELATED_FACULTIES -->";
+    private static final String BREADCRUMB_MARKER = "<!-- SSR_BREADCRUMB -->";
 
     /** Rows pulled from Couchbase; a few extra so we can skip text-less reviews. */
     private static final int TOP_REVIEWS_FETCH = 12;
@@ -175,10 +176,12 @@ public class FacultyProfilePageController {
                 "<meta name=\"description\" content=\"" + escapeHtml(description) + "\">");
         html = replaceSocialMeta(html, buildSocialMetaTags(faculty, description, canonicalUrl, origin, countryCode));
         html = replaceTopReviews(html, buildTopReviewsHtml(faculty, topReviews));
+        html = replaceMarker(html, BREADCRUMB_MARKER, buildBreadcrumbHtml(faculty, origin));
         html = replaceMarker(html, RELATED_MARKER, buildRelatedFacultiesHtml(faculty, countryCode));
         html = html.replace("</head>",
                 "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n"
-                + "<script type=\"application/ld+json\">" + buildJsonLd(faculty, canonicalUrl, topReviews) + "</script>\n</head>");
+                + "<script type=\"application/ld+json\">" + buildJsonLd(faculty, canonicalUrl, topReviews) + "</script>\n"
+                + "<script type=\"application/ld+json\">" + buildBreadcrumbJsonLd(faculty, canonicalUrl, origin) + "</script>\n</head>");
         return html;
     }
 
@@ -471,6 +474,72 @@ public class FacultyProfilePageController {
 
     private static String nvl(String value, String fallback) {
         return StringUtils.isNotBlank(value) ? value : fallback;
+    }
+
+    // ---- breadcrumb -----------------------------------------------------
+
+    /**
+     * Server-rendered breadcrumb (Acasă › oraș › universitate › facultate) placed
+     * inside #wrapper, so a crawler gets the city / university anchor text and the
+     * trail paints with the page. There are no city / university hub pages, so
+     * those crumbs point at the search page pre-filled with the term — the same
+     * thing the page's own searchByUniversityName() does. The last crumb is not a
+     * link. Paired with {@link #buildBreadcrumbJsonLd}.
+     */
+    private String buildBreadcrumbHtml(Faculty faculty, String origin) {
+        String city = cityShortName(faculty);
+        String uni = nvl(faculty.getUniversityName(), "");
+
+        StringBuilder html = new StringBuilder();
+        html.append("<nav aria-label=\"breadcrumb\" class=\"ssr-breadcrumb\" ")
+                .append("style=\"max-width:960px;margin:0 auto;padding:10px 15px;font-size:13px;color:#999;\">\n");
+        html.append("  <a href=\"").append(escapeHtml(origin)).append("/\" style=\"color:#999;\">Acasă</a>\n");
+        if (StringUtils.isNotEmpty(city)) {
+            html.append("  <span> &rsaquo; </span>\n  <a href=\"").append(escapeHtml(origin))
+                    .append("/search.html?q=").append(urlEncode(city)).append("\" style=\"color:#999;\">")
+                    .append(escapeHtml(city)).append("</a>\n");
+        }
+        if (StringUtils.isNotEmpty(uni)) {
+            html.append("  <span> &rsaquo; </span>\n  <a href=\"").append(escapeHtml(origin))
+                    .append("/search.html?q=").append(urlEncode(uni)).append("\" style=\"color:#999;\">")
+                    .append(escapeHtml(uni)).append("</a>\n");
+        }
+        html.append("  <span> &rsaquo; </span>\n  <span style=\"color:#666;\">")
+                .append(escapeHtml(faculty.getFacultyName())).append("</span>\n");
+        html.append("</nav>\n");
+        return html.toString();
+    }
+
+    private String buildBreadcrumbJsonLd(Faculty faculty, String canonicalUrl, String origin) {
+        StringBuilder json = new StringBuilder();
+        json.append("{\"@context\":\"https://schema.org\",\"@type\":\"BreadcrumbList\",\"itemListElement\":[");
+        int pos = 1;
+        json.append(breadcrumbItem(pos++, "Acasă", origin + "/"));
+        String city = cityShortName(faculty);
+        if (StringUtils.isNotEmpty(city)) {
+            json.append(",").append(breadcrumbItem(pos++, city, origin + "/search.html?q=" + urlEncode(city)));
+        }
+        if (StringUtils.isNotEmpty(faculty.getUniversityName())) {
+            json.append(",").append(breadcrumbItem(pos++, faculty.getUniversityName(),
+                    origin + "/search.html?q=" + urlEncode(faculty.getUniversityName())));
+        }
+        json.append(",").append(breadcrumbItem(pos, faculty.getFacultyName(), canonicalUrl));
+        json.append("]}");
+        return json.toString();
+    }
+
+    private String breadcrumbItem(int position, String name, String url) {
+        return "{\"@type\":\"ListItem\",\"position\":" + position
+                + ",\"name\":\"" + escapeJson(name) + "\""
+                + ",\"item\":\"" + escapeJson(url) + "\"}";
+    }
+
+    private static String urlEncode(String value) {
+        try {
+            return java.net.URLEncoder.encode(value, "UTF-8");
+        } catch (java.io.UnsupportedEncodingException e) {
+            return value;
+        }
     }
 
     /** Marker replace with a fall back to inserting before &lt;/body&gt;. */
