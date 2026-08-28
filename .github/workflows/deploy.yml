@@ -13,6 +13,9 @@ concurrency:
 env:
   DEPLOY_NAME: Jamstudy.war
   DEPLOY_DIR: C:\Wildfly\wildfly-22.0.0.Final\standalone\deployments
+  # WildFly Windows service name — used to fully restart WildFly if a hot deploy fails.
+  # Set this to the real name: Get-Service | ? { $_.Name -match 'wildfly|jboss' }
+  SERVICE_NAME: WildFly
 
 jobs:
   build-and-deploy:
@@ -43,7 +46,9 @@ jobs:
           .\scripts\deploy-wildfly.ps1 `
             -WarSource "target\${{ env.DEPLOY_NAME }}" `
             -DeployDir "${{ env.DEPLOY_DIR }}" `
-            -DeployName "${{ env.DEPLOY_NAME }}"
+            -DeployName "${{ env.DEPLOY_NAME }}" `
+            -ServiceName "${{ env.SERVICE_NAME }}" `
+            -AlwaysRestart
 
       - name: Upload WAR on failure (for debugging)
         if: failure()

@@ -3,44 +3,47 @@
   Deploy a freshly built WAR to a local WildFly instance via the deployment scanner.
 
 .DESCRIPTION
-  Copies the WAR into WildFly's standalone/deployments directory using an atomic
-  rename, triggers a (re)deploy with a .dodeploy marker, and waits for WildFly to
-  write .deployed (success) or .failed (failure). On failure it rolls back to the
-  previously deployed WAR. No service restart is needed - WildFly hot-swaps the
-  app through the scanner.
+  Copies the WAR into WildFly's standalone/deployments directory, triggers a
+  (re)deploy with a .dodeploy marker, and waits for WildFly to write .deployed
+  (success) or .failed (failure).
 
-  Intended to be run by a self-hosted GitHub Actions runner installed on the same
-  machine as WildFly, but it also works when run by hand.
+  WildFly's deployment scanner reliably hot-swaps a WAR only a couple of times
+  before its deployment subsystem gets wedged. So on ANY failure (an explicit
+  .failed, or a timeout with no verdict) this script does NOT attempt another hot
+  swap: it restores the previous WAR, fully stops the WildFly Windows service,
+  clears standalone/tmp, starts the service again, and waits for the clean-boot
+  deploy. That path needs -ServiceName.
+
+  Intended for a self-hosted GitHub Actions runner on the same machine as WildFly.
 
 .EXAMPLE
-  .\deploy-wildfly.ps1
-  .\deploy-wildfly.ps1 -HealthUrl "http://localhost:8080/Jamstudy/stats" -TimeoutSec 300
+  .\deploy-wildfly.ps1 -ServiceName "WildFly"
+  .\deploy-wildfly.ps1 -ServiceName "WildFly" -HealthUrl "http://localhost:8080/Jamstudy/v1/stats"
 #>
 [CmdletBinding()]
 param(
-    # Path to the WAR produced by the build.
-    [string] $WarSource        = "$PSScriptRoot\..\target\Jamstudy.war",
+    [string] $WarSource              = "$PSScriptRoot\..\target\Jamstudy.war",
+    [string] $DeployDir              = "C:\Wildfly\wildfly-22.0.0.Final\standalone\deployments",
+    [string] $DeployName             = "Jamstudy.war",
 
-    # WildFly's deployment-scanner directory.
-    [string] $DeployDir        = "C:\Wildfly\wildfly-22.0.0.Final\standalone\deployments",
+    # WildFly Windows service name. REQUIRED for the restart-based recovery on a
+    # failed deploy. Find it with:
+    #   Get-Service | Where-Object { $_.Name -match 'wildfly|jboss' } | Select-Object Name,DisplayName
+    [string] $ServiceName            = "",
 
-    # Name the WAR must have inside the deployments dir. Drives the app's URL
-    # context path, so keep it identical to whatever is deployed today.
-    [string] $DeployName       = "Jamstudy.war",
+    # Wait for the scanner's .deployed / .failed verdict.
+    [int]    $TimeoutSec             = 360,
+    [int]    $ServiceStopTimeoutSec  = 120,
+    [int]    $ServiceStartTimeoutSec = 240,
 
-    # How long to wait for the scanner's .deployed / .failed verdict.
-    [int]    $TimeoutSec       = 240,
+    # Optional smoke test after a successful deploy.
+    [string] $HealthUrl             = "",
+    [int]    $HealthTimeoutSec      = 90,
 
-    # Optional: URL to GET after deploy; non-2xx/3xx (or no response) fails the run.
-    [string] $HealthUrl        = "",
-    [int]    $HealthTimeoutSec = 90,
+    [int]    $KeepBackups           = 5,
 
-    # How many previous WARs to retain under _deploy-backups.
-    [int]    $KeepBackups      = 5,
-
-    # Optional nuclear option: bounce the Windows service after deploying.
-    [switch] $RestartService,
-    [string] $ServiceName      = ""
+    # Bounce the service even when the hot deploy succeeded (clean-restart every time).
+    [switch] $AlwaysRestart
 )
 
 $ErrorActionPreference = 'Stop'
@@ -48,10 +51,14 @@ Set-StrictMode -Version Latest
 
 function Write-Step($msg) { Write-Host "==> $msg" }
 
-# --- resolve paths --------------------------------------------------------------
+# --- resolve paths ---------------------------------------------------------
 if (-not (Test-Path -LiteralPath $WarSource)) { throw "Source WAR not found: $WarSource" }
 $WarSource = (Resolve-Path -LiteralPath $WarSource).Path
 if (-not (Test-Path -LiteralPath $DeployDir)) { throw "Deployments directory not found: $DeployDir" }
+
+$standaloneDir = Split-Path -Parent $DeployDir          # ...\standalone
+$tmpDir        = Join-Path $standaloneDir "tmp"
+$logFile       = Join-Path $standaloneDir "log\server.log"
 
 $target       = Join-Path $DeployDir $DeployName
 $deployedMark = "$target.deployed"
@@ -68,7 +75,7 @@ $srcInfo = Get-Item -LiteralPath $WarSource
 Write-Step ("Source WAR : {0}  ({1} MB, built {2})" -f $WarSource, [math]::Round($srcInfo.Length/1MB,1), $srcInfo.LastWriteTime)
 Write-Step "Target     : $target"
 
-# --- back up the currently deployed WAR ---------------------------------------
+# --- back up the currently deployed WAR --------------------------------------
 $backupPath = $null
 if (Test-Path -LiteralPath $target) {
     New-Item -ItemType Directory -Force -Path $backupDir | Out-Null
@@ -82,15 +89,15 @@ if (Test-Path -LiteralPath $target) {
         Remove-Item -Force -ErrorAction SilentlyContinue
 }
 
-# --- helpers ------------------------------------------------------------------
+# --- helpers -------------------------------------------------------------
 function Clear-Markers {
     foreach ($m in @($deployedMark, $failedMark, $doDeployMark, $isDeployMark, $pendingMark, $undeployMark, $skipMark)) {
         Remove-Item -LiteralPath $m -Force -ErrorAction SilentlyContinue
     }
 }
 
-function Wait-ForDeploy([string] $context) {
-    $deadline = (Get-Date).AddSeconds($TimeoutSec)
+function Wait-ForDeploy([string] $context, [int] $timeout) {
+    $deadline = (Get-Date).AddSeconds($timeout)
     while ((Get-Date) -lt $deadline) {
         if (Test-Path -LiteralPath $failedMark) {
             $reason = Get-Content -LiteralPath $failedMark -Raw -ErrorAction SilentlyContinue
@@ -99,10 +106,53 @@ function Wait-ForDeploy([string] $context) {
         if (Test-Path -LiteralPath $deployedMark) { return }
         Start-Sleep -Seconds 2
     }
-    throw "Timed out after ${TimeoutSec}s waiting for WildFly to deploy $context."
+    throw "Timed out after ${timeout}s waiting for WildFly to deploy $context."
 }
 
-# --- deploy -----------------------------------------------------------------
+function Show-ServerLogTail {
+    if (Test-Path -LiteralPath $logFile) {
+        Write-Step "--- last 60 lines of server.log ---------------------------------"
+        Get-Content -LiteralPath $logFile -Tail 60 | ForEach-Object { Write-Host "    $_" }
+        Write-Step "----------------------------------------------------------------"
+    }
+}
+
+function Restart-WildflyService([string] $reason) {
+    if (-not $ServiceName) {
+        throw "Cannot recover ($reason): -ServiceName was not provided, so the WildFly service can't be restarted. Restart it by hand on the VM."
+    }
+    $null = Get-Service -Name $ServiceName -ErrorAction Stop  # fail early if the name is wrong
+
+    Write-Step "Stopping service '$ServiceName' ($reason)"
+    if ((Get-Service -Name $ServiceName).Status -ne 'Stopped') {
+        Stop-Service -Name $ServiceName -Force
+    }
+    $deadline = (Get-Date).AddSeconds($ServiceStopTimeoutSec)
+    while ((Get-Service -Name $ServiceName).Status -ne 'Stopped') {
+        if ((Get-Date) -gt $deadline) { throw "Service '$ServiceName' did not stop within ${ServiceStopTimeoutSec}s." }
+        Start-Sleep -Seconds 2
+    }
+    Write-Step "Service stopped."
+
+    # The JVM can hold file locks for a moment after the service reports Stopped.
+    Start-Sleep -Seconds 5
+    if (Test-Path -LiteralPath $tmpDir) {
+        Write-Step "Clearing $tmpDir"
+        Get-ChildItem -LiteralPath $tmpDir -Force -ErrorAction SilentlyContinue |
+            Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+    }
+
+    Write-Step "Starting service '$ServiceName'"
+    Start-Service -Name $ServiceName
+    $deadline = (Get-Date).AddSeconds($ServiceStartTimeoutSec)
+    while ((Get-Service -Name $ServiceName).Status -ne 'Running') {
+        if ((Get-Date) -gt $deadline) { throw "Service '$ServiceName' did not reach Running within ${ServiceStartTimeoutSec}s." }
+        Start-Sleep -Seconds 2
+    }
+    Write-Step "Service running."
+}
+
+# --- deploy ------------------------------------------------------------
 try {
     Write-Step "Staging new WAR"
     Copy-Item -LiteralPath $WarSource -Destination $staging -Force
@@ -110,43 +160,56 @@ try {
     Clear-Markers
     Write-Step "Swapping WAR into place"
     Move-Item -LiteralPath $staging -Destination $target -Force
-
-    Write-Step "Writing .dodeploy marker"
     New-Item -ItemType File -Path $doDeployMark -Force | Out-Null
 
-    Write-Step "Waiting for WildFly (timeout ${TimeoutSec}s)..."
-    Wait-ForDeploy "new deployment"
+    if ($AlwaysRestart) {
+        # This app leaks class metadata on hot redeploy (Metaspace fills after a
+        # swap or two), so don't hot-deploy at all — bounce the JVM and let it
+        # deploy on boot.
+        Restart-WildflyService "-AlwaysRestart (clean deploy)"
+        Write-Step "Waiting for boot deploy (timeout ${TimeoutSec}s)..."
+        Wait-ForDeploy "new deployment after restart" $TimeoutSec
+    }
+    else {
+        Write-Step "Waiting for WildFly hot deploy (timeout ${TimeoutSec}s)..."
+        Wait-ForDeploy "new deployment" $TimeoutSec
+    }
     Write-Step "WildFly reports DEPLOYED."
 }
 catch {
     $err = $_.Exception.Message
     Write-Warning "Deploy failed: $err"
     Remove-Item -LiteralPath $staging -Force -ErrorAction SilentlyContinue
+    Show-ServerLogTail
 
+    # WildFly's scanner is unreliable after a failed hot swap, so don't try
+    # another one. Restore the last-good WAR and bounce the service so it
+    # deploys from a clean JVM.
     if ($backupPath -and (Test-Path -LiteralPath $backupPath)) {
-        Write-Step "Rolling back to previous WAR"
-        try {
-            Clear-Markers
-            Copy-Item -LiteralPath $backupPath -Destination $target -Force
-            New-Item -ItemType File -Path $doDeployMark -Force | Out-Null
-            Wait-ForDeploy "rollback"
-            Write-Step "Rollback DEPLOYED - server is back on the previous build."
-        }
-        catch {
-            Write-Error "ROLLBACK ALSO FAILED: $($_.Exception.Message)"
-        }
+        Write-Step "Restoring previous WAR: $backupPath"
+        Clear-Markers
+        Copy-Item -LiteralPath $backupPath -Destination $target -Force
+        New-Item -ItemType File -Path $doDeployMark -Force | Out-Null
     }
+    else {
+        Write-Warning "No backup WAR to restore — restarting with whatever is in $DeployDir."
+    }
+
+    try {
+        Restart-WildflyService "deployment failed"
+        Wait-ForDeploy "rollback after restart" $TimeoutSec
+        Write-Step "Server is back on the PREVIOUS build (rolled back via restart)."
+    }
+    catch {
+        Show-ServerLogTail
+        Write-Error "RECOVERY FAILED: $($_.Exception.Message)"
+        Write-Error "The site is likely DOWN — manual intervention needed on the WildFly VM."
+    }
+
     throw "Deployment failed: $err"
 }
 
-# --- optional service restart -----------------------------------------------
-if ($RestartService) {
-    if (-not $ServiceName) { throw "-RestartService requires -ServiceName." }
-    Write-Step "Restarting service '$ServiceName'"
-    Restart-Service -Name $ServiceName -Force
-}
-
-# --- optional health check -------------------------------------------------
+# --- optional health check --------------------------------------------
 if ($HealthUrl) {
     Write-Step "Health check: $HealthUrl"
     $deadline = (Get-Date).AddSeconds($HealthTimeoutSec)
