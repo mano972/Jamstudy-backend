@@ -65,9 +65,12 @@ jobs:
       - name: Deploy to WildFly
         shell: powershell
         run: |
+          # Hot deploy via the scanner. The runner account can't stop the WildFly
+          # service, so -AlwaysRestart can't do a clean restart anyway; -ServiceName
+          # is still passed so failure-recovery can try. Metaspace is now 512M and
+          # the app shuts down cleanly, so hot deploys survive many more cycles.
           .\scripts\deploy-wildfly.ps1 `
             -WarSource "artifact\${{ env.DEPLOY_NAME }}" `
             -DeployDir "${{ env.DEPLOY_DIR }}" `
             -DeployName "${{ env.DEPLOY_NAME }}" `
-            -ServiceName "${{ env.SERVICE_NAME }}" `
-            -AlwaysRestart
+            -ServiceName "${{ env.SERVICE_NAME }}"

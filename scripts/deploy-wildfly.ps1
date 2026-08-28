@@ -141,52 +141,67 @@ function Get-WildflyProcess {
         Select-Object -First 1
 }
 
-function Restart-WildflyService([string] $reason) {
-    if (-not $ServiceName) {
-        throw "Cannot recover ($reason): -ServiceName was not provided, so the WildFly service can't be restarted. Restart it by hand on the VM."
-    }
-    $null = Get-Service -Name $ServiceName -ErrorAction Stop  # fail early if the name is wrong
+# Tries to stop the service. Returns $true if it reached Stopped, $false otherwise.
+# Never throws - a stop we can't do just degrades to a hot deploy.
+function Stop-WildflyService {
+    if ((Get-Service -Name $ServiceName).Status -eq 'Stopped') { return $true }
 
-    Write-Step "Stopping service '$ServiceName' ($reason)"
-    if ((Get-Service -Name $ServiceName).Status -ne 'Stopped') {
-        # sc.exe returns immediately; we do the waiting ourselves so a hung
-        # shutdown can't block the script forever (Stop-Service -Force does).
-        & sc.exe stop $ServiceName | Out-Null
-    }
+    Write-Step "Stopping service '$ServiceName'"
+    $out = (& sc.exe stop $ServiceName 2>&1 | Out-String).Trim()
+    Write-Host "    sc.exe stop -> exit $LASTEXITCODE $(if ($out) { "| $out" })"
+
     $deadline = (Get-Date).AddSeconds($ServiceStopTimeoutSec)
     while ((Get-Service -Name $ServiceName).Status -ne 'Stopped') {
         if ((Get-Date) -gt $deadline) {
             $proc = Get-WildflyProcess
             if ($proc) {
-                Write-Warning "Service '$ServiceName' didn't stop in ${ServiceStopTimeoutSec}s - killing PID $($proc.ProcessId)."
-                Stop-Process -Id $proc.ProcessId -Force -ErrorAction SilentlyContinue
-                Start-Sleep -Seconds 5
-            }
-            if ((Get-Service -Name $ServiceName).Status -ne 'Stopped') {
-                throw "Service '$ServiceName' could not be stopped (even after killing the JVM)."
+                Write-Warning "Not stopped in ${ServiceStopTimeoutSec}s - trying to kill PID $($proc.ProcessId)."
+                try { Stop-Process -Id $proc.ProcessId -Force -ErrorAction Stop; Start-Sleep -Seconds 5 }
+                catch { Write-Warning "Kill failed: $($_.Exception.Message)" }
             }
             break
         }
         Start-Sleep -Seconds 3
     }
-    Write-Step "Service stopped."
+    $stopped = (Get-Service -Name $ServiceName).Status -eq 'Stopped'
+    if ($stopped) { Write-Step "Service stopped." } else { Write-Warning "Could not stop '$ServiceName'." }
+    return $stopped
+}
 
-    # The JVM can hold file locks for a moment after the service reports Stopped.
-    Start-Sleep -Seconds 5
+function Start-WildflyService {
+    Start-Sleep -Seconds 5   # let the JVM release file locks
     if (Test-Path -LiteralPath $tmpDir) {
         Write-Step "Clearing $tmpDir"
         Get-ChildItem -LiteralPath $tmpDir -Force -ErrorAction SilentlyContinue |
             Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
     }
-
-    Write-Step "Starting service '$ServiceName'"
-    Start-Service -Name $ServiceName
+    if ((Get-Service -Name $ServiceName).Status -ne 'Running') {
+        Write-Step "Starting service '$ServiceName'"
+        Start-Service -Name $ServiceName
+    }
     $deadline = (Get-Date).AddSeconds($ServiceStartTimeoutSec)
     while ((Get-Service -Name $ServiceName).Status -ne 'Running') {
         if ((Get-Date) -gt $deadline) { throw "Service '$ServiceName' did not reach Running within ${ServiceStartTimeoutSec}s." }
         Start-Sleep -Seconds 2
     }
     Write-Step "Service running."
+}
+
+# Full restart when possible; degrades to leaving the running server alone (the
+# scanner will hot-deploy the already-swapped WAR) when we can't stop it.
+function Restart-WildflyService([string] $reason) {
+    if (-not $ServiceName) {
+        Write-Warning "No -ServiceName ($reason) - can't restart; relying on the deployment scanner."
+        return
+    }
+    $null = Get-Service -Name $ServiceName -ErrorAction Stop
+    Write-Step "Restarting service '$ServiceName' ($reason)"
+    if (Stop-WildflyService) {
+        Start-WildflyService
+    }
+    else {
+        Write-Warning "Falling back to a hot deploy - the scanner already has the new WAR."
+    }
 }
 
 # --- deploy ------------------------------------------------------------
