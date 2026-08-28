@@ -5,26 +5,21 @@ on:
     branches: [master]
   workflow_dispatch: {}   # lets you re-run a deploy manually from the Actions tab
 
-# Never let two deploys touch the deployments folder at once.
-concurrency:
-  group: wildfly-deploy
-  cancel-in-progress: false
-
 env:
   DEPLOY_NAME: Jamstudy.war
   DEPLOY_DIR: C:\Wildfly\wildfly-22.0.0.Final\standalone\deployments
-  # WildFly Windows service name — used to fully restart WildFly if a hot deploy fails.
+  # WildFly Windows service name — used to fully restart WildFly on a failed deploy.
   # Find it with: Get-Service | ? { $_.Name -match 'wildfly|jboss' }
   SERVICE_NAME: Wildfly
 
 jobs:
-  build-and-deploy:
-    # Runs on the self-hosted runner installed on the WildFly VM.
-    # Add a custom label at runner-config time and swap it in here if you ever
-    # register more than one self-hosted runner.
+  build:
     runs-on: [self-hosted, Windows]
-    timeout-minutes: 30
-
+    timeout-minutes: 25
+    # A newer push cancels an in-progress (or queued) build — killing mvn is harmless.
+    concurrency:
+      group: jamstudy-build
+      cancel-in-progress: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,21 +35,39 @@ jobs:
         shell: cmd
         run: mvnw.cmd -B clean package -DskipTests
 
+      - name: Upload WAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: jamstudy-war
+          path: target/Jamstudy.war
+          retention-days: 3
+          if-no-files-found: error
+
+  deploy:
+    needs: build
+    runs-on: [self-hosted, Windows]
+    timeout-minutes: 20
+    # An in-flight deploy is NEVER cancelled — the next one queues behind it and
+    # then deploys the newer build.
+    concurrency:
+      group: jamstudy-deploy
+      cancel-in-progress: false
+    steps:
+      - name: Checkout (for the deploy script)
+        uses: actions/checkout@v4
+
+      - name: Download WAR
+        uses: actions/download-artifact@v4
+        with:
+          name: jamstudy-war
+          path: artifact
+
       - name: Deploy to WildFly
         shell: powershell
         run: |
           .\scripts\deploy-wildfly.ps1 `
-            -WarSource "target\${{ env.DEPLOY_NAME }}" `
+            -WarSource "artifact\${{ env.DEPLOY_NAME }}" `
             -DeployDir "${{ env.DEPLOY_DIR }}" `
             -DeployName "${{ env.DEPLOY_NAME }}" `
             -ServiceName "${{ env.SERVICE_NAME }}" `
             -AlwaysRestart
-
-      - name: Upload WAR on failure (for debugging)
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Jamstudy-war-${{ github.run_id }}
-          path: target/Jamstudy.war
-          retention-days: 5
-          if-no-files-found: ignore

@@ -56,6 +56,22 @@ if (-not (Test-Path -LiteralPath $WarSource)) { throw "Source WAR not found: $Wa
 $WarSource = (Resolve-Path -LiteralPath $WarSource).Path
 if (-not (Test-Path -LiteralPath $DeployDir)) { throw "Deployments directory not found: $DeployDir" }
 
+# Never let a truncated / mid-build WAR overwrite the running deployment.
+$srcLen = (Get-Item -LiteralPath $WarSource).Length
+if ($srcLen -lt 1MB) {
+    throw "Source WAR is only $srcLen bytes - looks empty or mid-build. Aborting before it touches the live deployment."
+}
+try {
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $zip = [System.IO.Compression.ZipFile]::OpenRead($WarSource)
+    $entryCount = $zip.Entries.Count
+    $zip.Dispose()
+    if ($entryCount -lt 1) { throw "no entries" }
+}
+catch {
+    throw "Source WAR is not a readable zip ($($_.Exception.Message)). Aborting before it touches the live deployment."
+}
+
 $standaloneDir = Split-Path -Parent $DeployDir          # ...\standalone
 $tmpDir        = Join-Path $standaloneDir "tmp"
 $logFile       = Join-Path $standaloneDir "log\server.log"
@@ -164,7 +180,7 @@ try {
 
     if ($AlwaysRestart) {
         # This app leaks class metadata on hot redeploy (Metaspace fills after a
-        # swap or two), so don't hot-deploy at all — bounce the JVM and let it
+        # swap or two), so don't hot-deploy at all - bounce the JVM and let it
         # deploy on boot.
         Restart-WildflyService "-AlwaysRestart (clean deploy)"
         Write-Step "Waiting for boot deploy (timeout ${TimeoutSec}s)..."
@@ -192,7 +208,7 @@ catch {
         New-Item -ItemType File -Path $doDeployMark -Force | Out-Null
     }
     else {
-        Write-Warning "No backup WAR to restore — restarting with whatever is in $DeployDir."
+        Write-Warning "No backup WAR to restore - restarting with whatever is in $DeployDir."
     }
 
     try {
@@ -203,7 +219,7 @@ catch {
     catch {
         Show-ServerLogTail
         Write-Error "RECOVERY FAILED: $($_.Exception.Message)"
-        Write-Error "The site is likely DOWN — manual intervention needed on the WildFly VM."
+        Write-Error "The site is likely DOWN - manual intervention needed on the WildFly VM."
     }
 
     throw "Deployment failed: $err"
