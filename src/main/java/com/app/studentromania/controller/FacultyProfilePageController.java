@@ -52,10 +52,14 @@ public class FacultyProfilePageController {
 
     /** Rows pulled from Couchbase; a few extra so we can skip text-less reviews. */
     private static final int TOP_REVIEWS_FETCH = 12;
-    /** Reviews actually rendered into the page and the JSON-LD. */
-    private static final int TOP_REVIEWS_RENDER = 5;
-    /** Cap on a single review's body in the markup, matching what the page shows. */
-    private static final int REVIEW_BODY_MAX_CHARS = 1200;
+    /** Review quotes rendered into the social-proof card and the JSON-LD. */
+    private static final int TOP_REVIEWS_RENDER = 4;
+    /**
+     * Cap on a single quote's body. The visible card and the JSON-LD
+     * {@code reviewBody} both go through {@link #reviewBody}, so they stay in
+     * sync — Google requires the marked-up text to be the text shown on the page.
+     */
+    private static final int REVIEW_BODY_MAX_CHARS = 220;
     /** Sibling faculties linked in the "same university" group. */
     private static final int RELATED_SAME_UNIVERSITY = 8;
     /** Faculties linked in the "same domain" group (cross-university). */
@@ -171,46 +175,53 @@ public class FacultyProfilePageController {
     }
 
     /**
-     * A plain, always-visible list of the top reviews, rendered into the page
-     * body so a crawler sees real review text without running the SPA's JS. It
-     * sits below the JS-driven review tab that real users interact with; the two
-     * show the same reviews. schema.org policy requires the reviews carried in
-     * the JSON-LD {@code review} array to be visible on the page — this is what
-     * makes that true.
+     * A compact, server-rendered "what students say" card holding up to
+     * {@link #TOP_REVIEWS_RENDER} short review quotes. The marker it replaces
+     * lives inside #wrapper (just above the JS-built review summary), so:
+     *   - crawlers get real review text straight from the HTML, and it backs the
+     *     JSON-LD {@code review} array (schema.org requires the marked-up reviews
+     *     to be visible on the page);
+     *   - for humans it is hidden during load by {@code .wrapper.loading{opacity:0}}
+     *     and shown, in place, once the page is ready — no separate JS teardown.
+     * This replaces the old client-only "featured-review-quote".
      */
     private String buildTopReviewsHtml(Faculty faculty, List<Review> topReviews) {
         if (topReviews.isEmpty()) {
             return "";
         }
-        String heading = "Evaluări de la studenți despre " + faculty.getFacultyName()
-                + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " (" + faculty.getUniversityName() + ")" : "");
 
         StringBuilder html = new StringBuilder();
-        html.append("<div class=\"section section-white\">\n");
-        html.append("  <div class=\"container-fluid\">\n");
-        html.append("    <div class=\"row\">\n");
-        html.append("      <div class=\"col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12\">\n");
-        html.append("        <section id=\"ssr-top-reviews\" class=\"card\">\n");
-        html.append("          <div class=\"content\">\n");
-        html.append("            <h2 style=\"font-size:20px;\">").append(escapeHtml(heading)).append("</h2>\n");
+        html.append("<div class=\"card\" id=\"ssr-top-reviews\">\n");
+        html.append("  <div class=\"content\">\n");
+        html.append("    <h2 style=\"font-size:18px;margin-top:0;\">")
+                .append("<i class=\"fa fa-comments\" style=\"margin-right:10px;color:#898781;\"></i>")
+                .append("<span data-i18n-key=\"featured-review-label\">Ce spun studenții</span></h2>\n");
+
         for (Review review : topReviews) {
-            html.append("            <article style=\"border-top:1px solid #e5e5e5;padding:14px 0;\">\n");
-            html.append("              <p style=\"margin:0 0 6px;color:#666;font-size:14px;\"><strong>")
-                    .append(escapeHtml(authorLabel(review))).append("</strong>");
+            html.append("    <a href=\"#reviews\" onclick=\"goToReviewsTab(); return false;\"")
+                    .append(" style=\"display:block;color:inherit;text-decoration:none;background-color:#f9f9f7;")
+                    .append("border-radius:8px;padding:12px 16px;margin-bottom:10px;\">\n");
+            html.append("      <i class=\"fa fa-quote-left\" style=\"color:#d9d6c9;margin-right:6px;\"></i>")
+                    .append(escapeHtml(reviewBody(review))).append("\n");
+            html.append("      <div style=\"margin-top:6px;color:#666;font-size:13px;\">");
             if (review.getGeneralRating() != null) {
-                html.append(" &middot; ").append(review.getGeneralRating()).append("/5");
+                html.append("<i class=\"fa fa-star\" style=\"color:orange;\"></i> ")
+                        .append("<strong style=\"color:orange;\">").append(review.getGeneralRating()).append("</strong>")
+                        .append(" &middot; ");
             }
-            String dateText = reviewDisplayDate(review);
-            if (!dateText.isEmpty()) {
-                html.append(" &middot; ").append(escapeHtml(dateText));
-            }
-            html.append("</p>\n");
-            html.append("              <p style=\"margin:0;\">").append(escapeHtml(reviewBody(review))).append("</p>\n");
-            html.append("            </article>\n");
+            html.append(escapeHtml(authorLabel(review)));
+            html.append("</div>\n");
+            html.append("    </a>\n");
         }
-        html.append("          </div>\n");
-        html.append("        </section>\n");
-        html.append("      </div>\n");
+
+        html.append("    <div class=\"text-center\" style=\"margin-top:12px;\">\n");
+        html.append("      <a href=\"#reviews\" class=\"btn btn-warning\" style=\"color:orange;\"")
+                .append(" onclick=\"goToReviewsTab(); return false;\">")
+                .append("<span data-i18n-key=\"see-all-reviews\">Vezi toate evaluările</span>");
+        if (faculty.getCountRev() != null && faculty.getCountRev() > 0) {
+            html.append(" (").append(faculty.getCountRev()).append(")");
+        }
+        html.append("</a>\n");
         html.append("    </div>\n");
         html.append("  </div>\n");
         html.append("</div>\n");
@@ -219,17 +230,16 @@ public class FacultyProfilePageController {
 
     /**
      * Replaces the {@link #TOP_REVIEWS_MARKER} placeholder in profile.html with
-     * the rendered reviews (or nothing, when the faculty has none). Falls back to
-     * inserting before &lt;/body&gt; if the marker was removed from the template.
+     * the rendered card (or nothing, when the faculty has no text reviews). The
+     * marker is expected to be present; if it was removed from the template the
+     * html is returned unchanged rather than appended elsewhere, since the card
+     * must sit inside #wrapper.
      */
     private String replaceTopReviews(String html, String topReviewsHtml) {
         if (html.contains(TOP_REVIEWS_MARKER)) {
             return html.replace(TOP_REVIEWS_MARKER, topReviewsHtml);
         }
-        if (topReviewsHtml.isEmpty()) {
-            return html;
-        }
-        return html.replace("</body>", topReviewsHtml + "</body>");
+        return html;
     }
 
     private String authorLabel(Review review) {
@@ -263,13 +273,6 @@ public class FacultyProfilePageController {
         return text;
     }
 
-    private String reviewDisplayDate(Review review) {
-        if (StringUtils.isNotBlank(review.getFormattedReviewDate())) {
-            return review.getFormattedReviewDate().trim();
-        }
-        return review.getReviewDate() != null ? isoDate(review.getReviewDate()) : "";
-    }
-
     private static String isoDate(Date date) {
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }
@@ -282,8 +285,9 @@ public class FacultyProfilePageController {
      * fetching /facultate/{u}/{f} gets real internal links with canonical slug
      * URLs and faculty-name anchor text. The page's JS {@code #other-faculties}
      * carousel is client-only and links via redirecting {@code ?id=} URLs; this is
-     * the crawlable layer. Rendered near the end of the body (see the marker in
-     * profile.html), outside the JS-hidden #wrapper.
+     * the crawlable layer. The marker sits inside #wrapper (just after the JS
+     * #other-faculties carousel), so it's hidden during load by
+     * {@code .wrapper.loading{opacity:0}} and appears in place with the page.
      */
     private String buildRelatedFacultiesHtml(Faculty faculty, String countryCode) {
         List<Faculty> sameUni = sameUniversityFaculties(faculty);
@@ -414,10 +418,9 @@ public class FacultyProfilePageController {
         if (html.contains(marker)) {
             return html.replace(marker, content);
         }
-        if (content.isEmpty()) {
-            return html;
-        }
-        return html.replace("</body>", content + "</body>");
+        // Marker expected to be present. If it was removed, drop the content rather
+        // than append it before </body> — these blocks must stay inside #wrapper.
+        return html;
     }
 
     /**
