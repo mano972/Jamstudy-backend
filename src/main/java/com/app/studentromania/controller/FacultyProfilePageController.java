@@ -66,6 +66,10 @@ public class FacultyProfilePageController {
     private static final int RELATED_SAME_DOMAIN = 6;
     /** How many same-domain rows to pull before filtering out self / already-listed. */
     private static final int DOMAIN_FETCH_LIMIT = 20;
+    /** Faculties linked in the "same city" group (cross-university). */
+    private static final int RELATED_SAME_CITY = 6;
+    /** How many same-city rows to pull before filtering out self / already-listed. */
+    private static final int CITY_FETCH_LIMIT = 20;
 
     @Autowired
     private FacultyDAO facultyDAO;
@@ -154,11 +158,15 @@ public class FacultyProfilePageController {
     private String renderProfileHtml(Faculty faculty, String universitySlug, String facultySlug, String origin,
             String countryCode, List<Review> topReviews) {
         String canonicalUrl = origin + "/facultate/" + universitySlug + "/" + facultySlug;
+        String cityShort = cityShortName(faculty);
+        String uniParen = StringUtils.isNotEmpty(faculty.getUniversityName())
+                ? " (" + faculty.getUniversityName() + ")" : "";
         String title = faculty.getFacultyName()
-                + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " (" + faculty.getUniversityName() + ")" : "")
+                + (StringUtils.isNotEmpty(cityShort) ? ", " + cityShort : "")
+                + uniParen
                 + " — păreri și evaluări de la studenți | Unistart";
-        String description = "Vezi evaluări, rating și detalii despre " + faculty.getFacultyName()
-                + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " (" + faculty.getUniversityName() + ")" : "")
+        String description = "Vezi evaluări, rating și detalii despre " + faculty.getFacultyName() + uniParen
+                + (StringUtils.isNotEmpty(cityShort) ? " din " + cityShort : "")
                 + ". Alege facultatea potrivită pentru tine pe Unistart.";
 
         String html = profileHtmlTemplate.replace(TITLE_TAG,
@@ -297,9 +305,15 @@ public class FacultyProfilePageController {
         for (Faculty f : sameUni) {
             shown.add(f.getFacultyId());
         }
+
+        List<Faculty> sameCity = sameCityFaculties(faculty, countryCode, shown);
+        for (Faculty f : sameCity) {
+            shown.add(f.getFacultyId());
+        }
+
         List<Faculty> sameDomain = sameDomainFaculties(faculty, countryCode, shown);
 
-        if (sameUni.isEmpty() && sameDomain.isEmpty()) {
+        if (sameUni.isEmpty() && sameCity.isEmpty() && sameDomain.isEmpty()) {
             return "";
         }
 
@@ -316,6 +330,13 @@ public class FacultyProfilePageController {
                     .append(escapeHtml(nvl(faculty.getUniversityName(), "aceeași universitate")))
                     .append("</h2>\n");
             appendFacultyList(html, sameUni, false);
+        }
+
+        if (!sameCity.isEmpty()) {
+            html.append("            <h2 style=\"font-size:19px;margin-top:22px;\">Facultăți în ")
+                    .append(escapeHtml(cityShortName(faculty)))
+                    .append("</h2>\n");
+            appendFacultyList(html, sameCity, true);
         }
 
         if (!sameDomain.isEmpty()) {
@@ -397,12 +418,51 @@ public class FacultyProfilePageController {
         }
     }
 
+    /**
+     * Other faculties in the same city (any university), so "facultate {domeniu}
+     * {oraș}" style queries have a crawlable internal cluster. Filters on the
+     * stored {@code facultyCity} value verbatim (e.g. "Braşov, Braşov").
+     */
+    private List<Faculty> sameCityFaculties(Faculty faculty, String countryCode, Set<String> excludeIds) {
+        if (StringUtils.isBlank(faculty.getFacultyCity())) {
+            return new ArrayList<>();
+        }
+        try {
+            FacultyFilter filter = new FacultyFilter(null, null, null,
+                    Collections.singletonList(faculty.getFacultyCity()), null, null, null, null, countryCode, null,
+                    CITY_FETCH_LIMIT, null, null);
+            List<Faculty> out = new ArrayList<>();
+            for (Faculty f : facultyDAO.getFilteredFaculties(filter)) {
+                if (excludeIds.contains(f.getFacultyId()) || !hasSlug(f)) {
+                    continue;
+                }
+                out.add(f);
+                if (out.size() == RELATED_SAME_CITY) {
+                    break;
+                }
+            }
+            return out;
+        } catch (RuntimeException e) {
+            return new ArrayList<>();
+        }
+    }
+
     private String primaryDomain(Faculty faculty) {
         List<String> domains = faculty.getFacultyDomainsLicense();
         if (domains == null || domains.isEmpty()) {
             return null;
         }
         return StringUtils.isNotBlank(domains.get(0)) ? domains.get(0).trim() : null;
+    }
+
+    /** The city label without the trailing county, e.g. "Braşov, Braşov" -> "Braşov". */
+    private static String cityShortName(Faculty faculty) {
+        String city = faculty.getFacultyCity();
+        if (StringUtils.isBlank(city)) {
+            return "";
+        }
+        int comma = city.indexOf(',');
+        return (comma > 0 ? city.substring(0, comma) : city).trim();
     }
 
     private static boolean hasSlug(Faculty f) {

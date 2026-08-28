@@ -794,7 +794,15 @@ Global site tag (gtag.js) - Google Analytics
                 var facultyName = response.result.facultyName;
 
                 if (facultyName) {
-                    document.title = facultyName + " - Unistart";
+                    // Mirror the server-rendered <title> (FacultyProfilePageController.renderProfileHtml)
+                    // so the SSR title isn't downgraded, and the legacy /profile.html?id= path still
+                    // gets a descriptive, city-bearing title.
+                    var titleCityShort = (response.result.facultyCity || "").split(",")[0].trim();
+                    var titleUniName = response.result.universityName || "";
+                    document.title = facultyName
+                        + (titleCityShort ? ", " + titleCityShort : "")
+                        + (titleUniName ? " (" + titleUniName + ")" : "")
+                        + " — păreri și evaluări de la studenți | Unistart";
                 }
 
                 if (typeof gtag === 'function') {
