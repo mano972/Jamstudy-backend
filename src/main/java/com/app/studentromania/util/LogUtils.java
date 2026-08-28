@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import com.app.studentromania.service.CustomRequestContext;
 
@@ -74,6 +75,9 @@ public class LogUtils {
 	}
 
 	private String getUserId() {
+		if (!isRequestScopeActive()) {
+			return "scheduler";
+		}
 		if (StringUtils.isNotBlank(customRequestContext.getUserId())) {
 			return customRequestContext.getUserId();
 		} else {
@@ -82,7 +86,17 @@ public class LogUtils {
 	}
 
 	private String getTraceId() {
+		if (!isRequestScopeActive()) {
+			return "no-request";
+		}
 		return customRequestContext.getTraceId();
+	}
+
+	// The logging aspects fire on repo/DAO methods that also run outside an HTTP
+	// request (e.g. JobSchedulersService). CustomRequestContext is request-scoped,
+	// so touching it there throws "No thread-bound request found".
+	private boolean isRequestScopeActive() {
+		return RequestContextHolder.getRequestAttributes() != null;
 	}
 
 }
