@@ -234,28 +234,26 @@ catch {
     Remove-Item -LiteralPath $staging -Force -ErrorAction SilentlyContinue
     Show-ServerLogTail
 
-    # WildFly's scanner is unreliable after a failed hot swap, so don't try
-    # another one. Restore the last-good WAR and bounce the service so it
-    # deploys from a clean JVM.
+    # Roll back: put the last-good WAR back and let the scanner redeploy it.
     if ($backupPath -and (Test-Path -LiteralPath $backupPath)) {
         Write-Step "Restoring previous WAR: $backupPath"
         Clear-Markers
         Copy-Item -LiteralPath $backupPath -Destination $target -Force
         New-Item -ItemType File -Path $doDeployMark -Force | Out-Null
+
+        try {
+            if ($AlwaysRestart) { Restart-WildflyService "deployment failed" }
+            Wait-ForDeploy "rollback" $TimeoutSec
+            Write-Step "Server is back on the PREVIOUS build."
+        }
+        catch {
+            Show-ServerLogTail
+            Write-Error "ROLLBACK ALSO FAILED: $($_.Exception.Message)"
+            Write-Error "The site may be DOWN - restart WildFly by hand on the VM."
+        }
     }
     else {
-        Write-Warning "No backup WAR to restore - restarting with whatever is in $DeployDir."
-    }
-
-    try {
-        Restart-WildflyService "deployment failed"
-        Wait-ForDeploy "rollback after restart" $TimeoutSec
-        Write-Step "Server is back on the PREVIOUS build (rolled back via restart)."
-    }
-    catch {
-        Show-ServerLogTail
-        Write-Error "RECOVERY FAILED: $($_.Exception.Message)"
-        Write-Error "The site is likely DOWN - manual intervention needed on the WildFly VM."
+        Write-Warning "No backup WAR to roll back to. Leaving $DeployDir as-is."
     }
 
     throw "Deployment failed: $err"
