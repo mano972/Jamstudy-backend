@@ -17,7 +17,19 @@
     <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
     <link href="./assets/css/demo.css" rel="stylesheet" />
     <link href="./assets/css/examples.css" rel="stylesheet" />
-	
+
+	<style>
+		.radar-axis-label {
+			font-size: 12px;
+			line-height: 1.3;
+		}
+		@media (max-width: 480px) {
+			.radar-axis-label {
+				font-size: 9px;
+			}
+		}
+	</style>
+
 	<!-- Google Analytics disabled by default; loaded on demand by initCookieConsent()/loadGoogleAnalytics() in unistart.js after consent is given.
 Global site tag (gtag.js) - Google Analytics
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-W7XYVR8RJ0"></script>
@@ -405,9 +417,11 @@ function renderComparisonRadarChart(faculties) {
 		axesSvg += '<line x1="' + center + '" y1="' + center + '" x2="' + outerPoint.x + '" y2="' + outerPoint.y + '" stroke="#c3c2b7" stroke-width="1"/>';
 
 		var labelPoint = pointAtRadius(a, maxRadius + 44);
+		var labelXPercent = (labelPoint.x / size) * 100;
+		var labelYPercent = (labelPoint.y / size) * 100;
 		var category = RADAR_CATEGORIES[a];
 		labelsHtml +=
-			'<div style="position: absolute; width: 100px; left: ' + labelPoint.x + 'px; top: ' + labelPoint.y + 'px; transform: translate(-50%, -50%); text-align: center; font-size: 12px; color: #52514e;">'
+			'<div class="radar-axis-label" style="position: absolute; width: 24%; left: ' + labelXPercent + '%; top: ' + labelYPercent + '%; transform: translate(-50%, -50%); text-align: center; color: #52514e;">'
 			+	'<i class="fa ' + category.icon + '" style="color: #898781;"></i><br>'
 			+	'<span data-i18n-key="' + category.i18nKey + '"></span>'
 			+ '</div>';
