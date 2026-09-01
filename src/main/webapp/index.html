@@ -383,7 +383,16 @@
 
 </body>
 
+<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+
+
+<!-- Facebook login is not currently offered on the site — SDK init disabled (in
+     unistart.js) to avoid loading/talking to Facebook and setting cookies on every
+     page load. Loading the script itself, even inert, still pings connect.facebook.net
+     before any cookie consent — so leave it commented out too, not just its init call.
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+-->
 <!-- Google Sign-In SDK is loaded on demand by googleButtonClick() in unistart.js, after
      the login modal (#g_id_onload / .g_id_signin) has been injected. Pre-loading it here
      races the async modal injection: the library initializes with no #g_id_onload in the
@@ -1052,9 +1061,6 @@
 
 
 </script>
-
-<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
 
 <script src="./bootstrap3/js/bootstrap.js" type="text/javascript"></script>
 
