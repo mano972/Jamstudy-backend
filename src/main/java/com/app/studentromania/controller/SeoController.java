@@ -27,7 +27,7 @@ import com.app.studentromania.util.RequestUtils;
 public class SeoController {
 
     private static final String[] STATIC_PUBLIC_PAGES = {
-            "", "search.html", "comparison.html", "articles.html", "reviews.html",
+            "", "search.html", "comparison.html", "calculator-medie-facultate.html", "articles.html", "reviews.html",
             "contact.html", "terms.html", "policy.html"
     };
 

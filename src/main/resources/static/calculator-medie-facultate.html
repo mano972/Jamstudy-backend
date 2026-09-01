@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="ro">
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" type="image/png" href="./assets/img/graduation_cap_small.png">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="description" content="Calculează gratuit media generală din facultate: introdu notele și creditele ECTS și află imediat media ponderată, pentru orice universitate din România.">
+	<meta name="keywords" content="calculator medie facultate, calculator medie ponderata, calculator ects, medie generala facultate, calculator nota medie universitate, medie an universitar, ce sunt creditele ects">
+	<meta name="robots" content="index, follow">
+
+	<title>Calculator Medie Facultate (ECTS) - Unistart</title>
+	<link rel="canonical" href="/calculator-medie-facultate.html">
+
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Unistart">
+	<meta property="og:locale" content="ro_RO">
+	<meta property="og:title" content="Calculator medie facultate (ECTS)">
+	<meta property="og:description" content="Calculează gratuit media generală din facultate: introdu notele și creditele ECTS și află imediat media ponderată, pentru orice universitate din România.">
+	<meta property="og:url" content="https://unistart.ro/calculator-medie-facultate.html">
+	<meta property="og:image" content="https://unistart.ro/assets/img/unistart_logo_huge.png">
+	<meta property="og:image:alt" content="Unistart">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Calculator medie facultate (ECTS)">
+	<meta name="twitter:description" content="Calculează gratuit media generală din facultate: introdu notele și creditele ECTS și află imediat media ponderată, pentru orice universitate din România.">
+	<meta name="twitter:image" content="https://unistart.ro/assets/img/unistart_logo_huge.png">
+
+	<script type="application/ld+json">
+	{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+		{"@type":"ListItem","position":1,"name":"Acasă","item":"https://unistart.ro/"},
+		{"@type":"ListItem","position":2,"name":"Calculator medie facultate","item":"https://unistart.ro/calculator-medie-facultate.html"}
+	]}
+	</script>
+
+	<script type="application/ld+json">
+	{"@context":"https://schema.org","@type":"WebApplication","name":"Calculator medie facultate (ECTS)","description":"Calculează gratuit media generală din facultate: introdu notele și creditele ECTS și află imediat media ponderată, pentru orice universitate din România.","url":"https://unistart.ro/calculator-medie-facultate.html","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":"ro","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"RON"},"publisher":{"@type":"Organization","name":"Unistart","url":"https://unistart.ro/"}}
+	</script>
+
+	<script type="application/ld+json">
+	{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+		{"@type":"Question","name":"Cum se calculează media generală la facultate?","acceptedAnswer":{"@type":"Answer","text":"Majoritatea universităților din România și din Europa folosesc sistemul de credite ECTS: fiecare materie are un număr de credite proporțional cu volumul de muncă alocat, iar media generală se calculează ca o medie ponderată — nota fiecărei materii înmulțită cu numărul ei de credite, totul împărțit la numărul total de credite."}},
+		{"@type":"Question","name":"Ce sunt creditele ECTS?","acceptedAnswer":{"@type":"Answer","text":"Fiecare materie are alocat un număr de credite ECTS proporțional cu volumul de muncă necesar — cursuri, seminarii, teme, examen. Un semestru universitar are, de regulă, 30 de credite ECTS, iar un an universitar complet, 60. Sistemul e comun majorității universităților din Europa, ceea ce face media ușor de recunoscut și în afara țării (de exemplu, pentru un schimb Erasmus)."}},
+		{"@type":"Question","name":"Media calculată aici este cea oficială a facultății mele?","acceptedAnswer":{"@type":"Answer","text":"Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei — verifică regulamentul facultății tale pentru rezultatul oficial."}}
+	]}
+	</script>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet" />
+    <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
+    <link href="./assets/css/demo.css" rel="stylesheet" />
+    <link href="./assets/css/examples.css" rel="stylesheet" />
+
+	<style>
+		.calculator-row {
+			margin-bottom: 10px;
+		}
+		.calculator-row .form-control {
+			margin-bottom: 0;
+		}
+		.calculator-row-delete {
+			text-align: center;
+			padding-top: 8px;
+			font-size: 18px;
+		}
+		.calculator-result-value {
+			font-size: 48px;
+			font-weight: 700;
+			line-height: 1.2;
+		}
+		.calculator-result-label {
+			font-size: 14px;
+			color: #898781;
+		}
+		.calculator-formula {
+			display: inline-block;
+			background: #f5f4ef;
+			padding: 6px 14px;
+			border-radius: 4px;
+			font-size: 15px;
+		}
+		.calculator-row .form-control.calculator-input-invalid {
+			border-color: #d9534f;
+			background-color: #fdf2f2;
+		}
+		/* .title has no font-size of its own (relies on the tag's default) — these
+		   keep the page's h1/h2 visually matching the rest of the site's h3/h4
+		   "title" headings while using the semantically-correct tag for SEO. */
+		h1.title {
+			font-size: 24px;
+		}
+		h2.title {
+			font-size: 18px;
+		}
+		.calculator-faq-question {
+			margin-top: 20px;
+			margin-bottom: 6px;
+		}
+		.calculator-related-links a {
+			margin-right: 16px;
+		}
+		/* Review CTA — deliberately louder than the plain white cards around it
+		   (warm gradient reused from .homepage-header-background/.faculty-profile-header-background,
+		   so it stays on-brand instead of introducing a new accent color). */
+		.calculator-review-cta {
+			background-image: linear-gradient(to bottom, #fff5c4, #ffffff);
+		}
+		.calculator-review-cta-icon {
+			font-size: 34px;
+			color: #eda100;
+		}
+		.calculator-review-cta h2.title {
+			font-size: 24px;
+			margin-top: 12px;
+			margin-bottom: 6px;
+		}
+		.calculator-review-cta-badge {
+			display: inline-block;
+			background: #ffffff;
+			border: 1px solid #eda100;
+			color: #eda100;
+			border-radius: 20px;
+			padding: 4px 14px;
+			font-size: 12px;
+			font-weight: 600;
+			margin-top: 12px;
+		}
+		.calculator-review-cta .search-fieldset {
+			margin-top: 20px;
+		}
+		.calculator-review-cta .search-fieldset .form-control {
+			height: 46px;
+			font-size: 16px;
+			border: 2px solid #252422;
+		}
+		.calculator-review-cta .inner-icon {
+			font-size: 18px;
+			top: 7px;
+		}
+		@media (max-width: 767px) {
+			.calculator-row-delete {
+				text-align: right;
+				padding-top: 0;
+			}
+		}
+	</style>
+
+	<!-- Google Analytics disabled by default; loaded on demand by initCookieConsent()/loadGoogleAnalytics() in unistart.js after consent is given.
+Global site tag (gtag.js) - Google Analytics
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-W7XYVR8RJ0"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-W7XYVR8RJ0');
+	</script>
+-->
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/6f635d9dad.js" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
+		<!-- populated dynamically -->
+	</nav>
+
+    <div id="wrapper" class="wrapper loading">
+
+        <div class="section-white" >
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+
+						<div class="card">
+							<div class="content">
+								<div class="row">
+									<div class="motto col-xs-12">
+										<h1 class="title" data-i18n-key="calculator-medie-title">Calculator medie facultate</h1>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-xs-12">
+										<p class="text-muted" data-i18n-key="calculator-medie-intro">Introdu fiecare materie cu nota obținută și numărul de credite ECTS, iar media se recalculează automat. Funcționează pentru orice facultate din România sau din Europa care folosește sistemul de credite ECTS.</p>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-xs-12">
+										<label class="checkbox" for="calculator-weighted-toggle">
+											<input type="checkbox" id="calculator-weighted-toggle" data-toggle="checkbox" checked onchange="onWeightedToggleChange()">
+											<span data-i18n-key="calculator-medie-weighted-toggle">Calculează media ponderată cu credite ECTS (recomandat)</span>
+										</label>
+									</div>
+								</div>
+
+								<hr>
+
+								<div class="row calculator-row hidden-xs">
+									<div class="col-sm-6">
+										<b data-i18n-key="calculator-medie-subject-header">Materie</b>
+									</div>
+									<div class="col-sm-3">
+										<b data-i18n-key="calculator-medie-grade-header">Notă</b>
+									</div>
+									<div id="calculator-credits-header" class="col-sm-2">
+										<b data-i18n-key="calculator-medie-credits-header">Credite ECTS</b>
+									</div>
+									<div class="col-sm-1"></div>
+								</div>
+
+								<div id="calculator-rows">
+									<!-- populated dynamically -->
+								</div>
+
+								<div class="row" style="margin-top: 10px;">
+									<div class="col-xs-12">
+										<button type="button" class="btn btn-simple" onclick="addCalculatorRow()">
+											<i class="fas fa-plus-circle fa-lg" style="margin-right: 7px;"></i><span data-i18n-key="calculator-medie-add-row">Adaugă materie</span>
+										</button>
+										<button type="button" class="btn btn-simple" onclick="resetCalculator()">
+											<i class="fa fa-undo" style="margin-right: 7px;"></i><span data-i18n-key="calculator-medie-reset">Resetează</span>
+										</button>
+									</div>
+								</div>
+
+								<hr>
+
+								<div class="row">
+									<div class="col-xs-12 text-center">
+										<div class="calculator-result-label" data-i18n-key="calculator-medie-result-label">Media ta generală</div>
+										<div id="calculator-result" class="calculator-result-value align-orange">—</div>
+										<div id="calculator-result-credits" class="text-muted"></div>
+									</div>
+								</div>
+
+								<div class="row" style="margin-top: 15px;">
+									<div class="col-xs-12">
+										<p class="text-center text-muted"><small data-i18n-key="calculator-medie-disclaimer">Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei — verifică regulamentul facultății tale pentru rezultatul oficial.</small></p>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="section-white" >
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+
+						<div class="card calculator-review-cta">
+							<div class="content">
+								<div class="row">
+									<div class="col-xs-12 text-center">
+										<i class="fa fa-pencil calculator-review-cta-icon" aria-hidden="true"></i>
+										<h2 class="title" data-i18n-key="calculator-medie-review-cta-title">Ai media? Ajută alți studenți cu o evaluare</h2>
+										<p class="text-muted" data-i18n-key="calculator-medie-review-cta-text">Scrie o evaluare 100% anonimă despre facultatea ta — durează un minut și ajută pe cineva care alege acum unde să studieze.</p>
+										<span class="calculator-review-cta-badge"><i class="fa fa-clock-o" aria-hidden="true"></i> <span data-i18n-key="calculator-medie-review-cta-badge">Durează 1 minut · 100% anonim</span></span>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+										<fieldset id="review-cta-search-fieldset" class="search-fieldset">
+											<input id="review-cta-search-input" class="form-control" type="text" value="" placeholder="" spellcheck="false" autocomplete="off"/>
+											<i id="review-cta-search-button" class="fa fa-search inner-icon" onclick="searchFacultiesForReview()" aria-hidden="true"></i>
+											<ul id="review-cta-search-results" class="autocomplete-result-list" style="display: none; position: absolute; width: 100%; top: 100%; left: 0;"></ul>
+										</fieldset>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="section-white" >
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+
+						<div class="card">
+							<div class="content">
+								<div class="row">
+									<div class="col-xs-12">
+										<h2 class="title" data-i18n-key="calculator-medie-faq-section-title">Întrebări frecvente</h2>
+
+										<h3 class="calculator-faq-question" data-i18n-key="calculator-medie-faq-title">Cum se calculează media generală la facultate?</h3>
+										<p data-i18n-key="calculator-medie-faq-formula">Majoritatea universităților din România și din Europa folosesc sistemul de credite ECTS: fiecare materie are un număr de credite proporțional cu volumul de muncă alocat, iar media generală se calculează ca o medie ponderată — nota fiecărei materii înmulțită cu numărul ei de credite, totul împărțit la numărul total de credite.</p>
+										<p class="text-center"><span class="calculator-formula">Media = Σ (Notă × Credite) / Σ Credite</span></p>
+
+										<h3 class="calculator-faq-question" data-i18n-key="calculator-medie-faq-q2">Ce sunt creditele ECTS?</h3>
+										<p data-i18n-key="calculator-medie-faq-a2">Fiecare materie are alocat un număr de credite ECTS proporțional cu volumul de muncă necesar — cursuri, seminarii, teme, examen. Un semestru universitar are, de regulă, 30 de credite ECTS, iar un an universitar complet, 60. Sistemul e comun majorității universităților din Europa, ceea ce face media ușor de recunoscut și în afara țării (de exemplu, pentru un schimb Erasmus).</p>
+
+										<h3 class="calculator-faq-question" data-i18n-key="calculator-medie-faq-q3">Media calculată aici este cea oficială a facultății mele?</h3>
+										<p data-i18n-key="calculator-medie-faq-note">Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei — verifică regulamentul facultății tale pentru rezultatul oficial.</p>
+
+										<hr>
+										<p class="calculator-related-links">
+											<a href="./comparison.html" data-i18n-key="header-footer-compare">Compară</a>
+											<a href="./search.html" data-i18n-key="header-footer-faculties">Facultăți</a>
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="floating-button">
+			<a href="./contact.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
+		</div>
+
+	</div>
+
+	<footer class="footer" id="footer">
+		<!-- populated dynamically -->
+	</footer>
+
+			<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 1051">
+			  <div class="modal-dialog">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<div id="modal-header-text">
+						<i class="far fa-envelope fa-2x"></i>
+					</div>
+				  </div>
+				  <div id="modal-text" class="modal-body modal-info text-center">
+					&nbsp;
+				  </div>
+				  <div id="general-modal-footer" class="modal-footer">
+					   <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+			<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-login">
+					<div class="modal-content">
+						<div id="login-card" class="login-card">
+							<!-- populated dynamically -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				 <div class="modal-dialog-register">
+					<div class="modal-content">
+						<div id="register-card" class="register-card">
+							<!-- populated dynamically -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="main-loading" class="text-center">
+				<div class='uil-reload-css reload-background' style=''><div></div></div>
+			</div>
+
+</body>
+
+<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+
+<script>
+
+const backendUrlRoot = "https://unistart.ro/Jamstudy";
+
+$wrapper = $("#wrapper");
+$(document).on({
+    ajaxStop: function() {
+		$wrapper.removeClass("loading");
+		document.getElementById("main-loading").style.display = "none";
+	}
+});
+
+$(document).ready(function() {
+
+	getPageHeader();
+	getPageFooter();
+	myAccountText();
+	getLoginModal();
+	getRegisterModal();
+	loadUser();
+
+	loadCalculatorFromStorage();
+
+	document.getElementById("review-cta-search-input").addEventListener("keyup", function(event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+		}
+		searchFacultiesForReview();
+	});
+
+	document.addEventListener("click", function(event) {
+		var searchFieldset = document.getElementById("review-cta-search-fieldset");
+		if (searchFieldset && !searchFieldset.contains(event.target)) {
+			document.getElementById("review-cta-search-results").style.display = "none";
+		}
+	});
+
+	$wrapper.removeClass("loading");
+	document.getElementById("main-loading").style.display = "none";
+
+});
+
+window.onload = function() {
+	var reviewCtaInput = document.getElementById("review-cta-search-input");
+	if (reviewCtaInput) {
+		reviewCtaInput.setAttribute("placeholder", translateKey("calculator-medie-review-cta-placeholder") || "Caută facultatea ta...");
+	}
+};
+
+// Same "type at least 3 characters, fetch top matches" search used by the
+// compare-faculties autocomplete on comparison.html — reused here so a visitor
+// can jump straight into writing a review for their own faculty without first
+// going through search.html.
+function searchFacultiesForReview() {
+	var input = document.getElementById("review-cta-search-input").value;
+	var resultsList = document.getElementById("review-cta-search-results");
+
+	if (!input || input.length < 3) {
+		resultsList.innerHTML = "";
+		resultsList.style.display = "none";
+		return;
+	}
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
+	backendUrl.searchParams.append("searchBy", input);
+	backendUrl.searchParams.append("orderBy", "viewsCount,desc");
+	backendUrl.searchParams.append("limit", 15);
+
+	fetch(backendUrl, {
+		method: "GET",
+		headers: {
+			"Code": window.location.href.includes("unistart.lt") ? "LT" : "RO",
+		}
+	})
+	.then(function(response) { return response.json(); })
+	.then(function(data) {
+		renderReviewCtaSearchResults(data.result ? data.result.faculties : []);
+	})
+	.catch(function(error) {
+		console.log(error);
+	});
+}
+
+function renderReviewCtaSearchResults(faculties) {
+	var resultsList = document.getElementById("review-cta-search-results");
+	var topFaculties = (faculties || []).slice(0, 7);
+
+	if (topFaculties.length === 0) {
+		resultsList.innerHTML = '<li class="autocomplete-result" data-i18n-key="compare-search-no-results">Nu au fost găsite rezultate</li>';
+		resultsList.style.display = "block";
+		translatePage();
+		return;
+	}
+
+	var resultsHtml = "";
+	var i;
+	for (i = 0; i < topFaculties.length; i++) {
+		var faculty = topFaculties[i];
+		var facultyName = escapeHtml(faculty.facultyName);
+		var universityName = escapeHtml(faculty.universityName);
+		var logoSrc = backendUrlRoot + "/v1/faculty/" + faculty.facultyId + "/logo";
+
+		resultsHtml +=
+			'<li class="autocomplete-result" onclick="goToReviewFromSearch(&quot;' + faculty.facultyId + '&quot;)">'
+			+	'<img src="' + logoSrc + '" style="height: 24px; width: 24px; object-fit: contain; margin-right: 8px; vertical-align: middle;">'
+			+	'<b>' + facultyName + '</b> <span class="text-muted">' + universityName + '</span>'
+			+ '</li>';
+	}
+
+	resultsList.innerHTML = resultsHtml;
+	resultsList.style.display = "block";
+	translatePage();
+}
+
+function goToReviewFromSearch(facultyId) {
+	goToAddReview(document.getElementById("review-cta-search-input"), facultyId);
+}
+
+// Each row: { id, materie, nota, credite }. Persisted to localStorage so a
+// returning visitor doesn't lose what they typed (same pattern as the "fci"
+// compare-list key used on comparison.html).
+var calculatorRows = [];
+var calculatorRowIdCounter = 0;
+
+function loadCalculatorFromStorage() {
+	var storedRows;
+	var storedWeighted;
+	if (typeof(Storage) !== "undefined") {
+		try {
+			var rowsJson = localStorage.getItem("cmr");
+			if (rowsJson) {
+				storedRows = JSON.parse(rowsJson);
+			}
+			storedWeighted = localStorage.getItem("cmw");
+		} catch (e) {
+			storedRows = null;
+		}
+	}
+
+	if (storedWeighted === "0") {
+		document.getElementById("calculator-weighted-toggle").checked = false;
+	}
+
+	if (storedRows && storedRows.length > 0) {
+		var i;
+		for (i = 0; i < storedRows.length; i++) {
+			calculatorRowIdCounter++;
+			storedRows[i].id = calculatorRowIdCounter;
+		}
+		calculatorRows = storedRows;
+	} else {
+		// Start with 3 blank rows — a typical semester has more, but this is enough
+		// to show the shape of the table without overwhelming a first-time visitor.
+		calculatorRows = [];
+		addCalculatorRow();
+		addCalculatorRow();
+		addCalculatorRow();
+		return;
+	}
+
+	renderCalculatorRows();
+	recalculateAverage();
+}
+
+function saveCalculatorToStorage() {
+	if (typeof(Storage) === "undefined") {
+		return;
+	}
+	try {
+		localStorage.setItem("cmr", JSON.stringify(calculatorRows));
+		localStorage.setItem("cmw", document.getElementById("calculator-weighted-toggle").checked ? "1" : "0");
+	} catch (e) {
+		// Storage full or unavailable — the calculator still works, it just won't persist.
+	}
+}
+
+function addCalculatorRow() {
+	calculatorRowIdCounter++;
+	calculatorRows.push({ id: calculatorRowIdCounter, materie: "", nota: "", credite: 5 });
+	renderCalculatorRows();
+	recalculateAverage();
+}
+
+function removeCalculatorRow(rowId) {
+	calculatorRows = calculatorRows.filter(function(row) { return row.id !== rowId; });
+	if (calculatorRows.length === 0) {
+		addCalculatorRow();
+		return;
+	}
+	renderCalculatorRows();
+	recalculateAverage();
+}
+
+// Romanian grading scale: 1-10. Credits per course: 1-30 (a full semester is 30
+// ECTS, so a single course reasonably tops out there). Blank counts as "not yet
+// filled in" rather than invalid — only a non-blank, out-of-range value is flagged.
+function isValidNota(value) {
+	var n = parseFloat(value);
+	return !isNaN(n) && n >= 1 && n <= 10;
+}
+function isValidCredite(value) {
+	var n = parseFloat(value);
+	return !isNaN(n) && n >= 1 && n <= 30;
+}
+
+// type="number" is only a soft hint — some mobile keyboards/browsers still let
+// paste (and, on a few, direct typing) put non-numeric characters like "e" or a
+// stray letter into the field. Strip anything but digits (and, for nota, one
+// decimal point) before it's ever stored or calculated with, regardless of what
+// the browser let through.
+function sanitizeNumericInput(value, allowDecimal) {
+	var cleaned = allowDecimal ? value.replace(/[^0-9.]/g, "") : value.replace(/[^0-9]/g, "");
+	if (allowDecimal) {
+		var firstDot = cleaned.indexOf(".");
+		if (firstDot !== -1) {
+			cleaned = cleaned.slice(0, firstDot + 1) + cleaned.slice(firstDot + 1).replace(/\./g, "");
+		}
+	}
+	return cleaned;
+}
+
+function updateCalculatorRow(rowId, field, value, inputEl) {
+	if (field === "nota" || field === "credite") {
+		if (field === "nota") {
+			// Romanian keyboards/habits use a comma as the decimal separator — treat
+			// it the same as a dot rather than stripping it as an invalid character.
+			value = value.replace(",", ".");
+		}
+		var sanitized = sanitizeNumericInput(value, field === "nota");
+		if (sanitized !== value) {
+			value = sanitized;
+			if (inputEl) {
+				inputEl.value = sanitized;
+			}
+		}
+	}
+
+	var i;
+	for (i = 0; i < calculatorRows.length; i++) {
+		if (calculatorRows[i].id === rowId) {
+			calculatorRows[i][field] = value;
+			break;
+		}
+	}
+
+	if (inputEl) {
+		var blank = value === "";
+		if (field === "nota") {
+			inputEl.classList.toggle("calculator-input-invalid", !blank && !isValidNota(value));
+		} else if (field === "credite") {
+			inputEl.classList.toggle("calculator-input-invalid", !blank && !isValidCredite(value));
+		}
+	}
+
+	recalculateAverage();
+}
+
+function onWeightedToggleChange() {
+	renderCalculatorRows();
+	recalculateAverage();
+}
+
+function renderCalculatorRows() {
+	var weighted = document.getElementById("calculator-weighted-toggle").checked;
+	document.getElementById("calculator-credits-header").style.visibility = weighted ? "visible" : "hidden";
+
+	var subjectPlaceholder = translateKey("calculator-medie-subject-placeholder") || "ex: Analiză matematică";
+	// Shown as placeholders on the number inputs too (not just the desktop column
+	// header) since that header row is hidden on mobile (.hidden-xs below).
+	var gradePlaceholder = translateKey("calculator-medie-grade-header") || "Notă";
+	var creditsPlaceholder = translateKey("calculator-medie-credits-header") || "Credite ECTS";
+
+	var notaTitle = "Introdu o notă între 1 și 10";
+	var crediteTitle = "Introdu un număr de credite între 1 și 30";
+
+	var rowsHtml = "";
+	var i;
+	for (i = 0; i < calculatorRows.length; i++) {
+		var row = calculatorRows[i];
+		var notaInvalidClass = (row.nota !== "" && !isValidNota(row.nota)) ? " calculator-input-invalid" : "";
+		var crediteInvalidClass = (row.credite !== "" && !isValidCredite(row.credite)) ? " calculator-input-invalid" : "";
+		rowsHtml +=
+			'<div class="row calculator-row">'
+			+	'<div class="col-sm-6 col-xs-12">'
+			+		'<input type="text" class="form-control" placeholder="' + escapeHtml(subjectPlaceholder) + '" value="' + escapeHtml(row.materie) + '" oninput="updateCalculatorRow(' + row.id + ', &quot;materie&quot;, this.value)">'
+			+	'</div>'
+			+	'<div class="col-sm-3 col-xs-6">'
+			+		'<input type="number" class="form-control' + notaInvalidClass + '" title="' + notaTitle + '" placeholder="' + escapeHtml(gradePlaceholder) + '" min="1" max="10" step="0.01" value="' + escapeHtml(String(row.nota)) + '" oninput="updateCalculatorRow(' + row.id + ', &quot;nota&quot;, this.value, this)">'
+			+	'</div>'
+			+	'<div class="col-sm-2 col-xs-6" style="visibility: ' + (weighted ? "visible" : "hidden") + ';">'
+			+		'<input type="number" class="form-control' + crediteInvalidClass + '" title="' + crediteTitle + '" placeholder="' + escapeHtml(creditsPlaceholder) + '" min="1" max="30" step="1" value="' + escapeHtml(String(row.credite)) + '" oninput="updateCalculatorRow(' + row.id + ', &quot;credite&quot;, this.value, this)">'
+			+	'</div>'
+			+	'<div class="col-sm-1 col-xs-12 calculator-row-delete">'
+			+		'<i class="fa fa-close close" onclick="removeCalculatorRow(' + row.id + ')"></i>'
+			+	'</div>'
+			+ '</div>';
+	}
+	document.getElementById("calculator-rows").innerHTML = rowsHtml;
+}
+
+function recalculateAverage() {
+	var weighted = document.getElementById("calculator-weighted-toggle").checked;
+
+	var weightedSum = 0;
+	var totalCredits = 0;
+	var simpleSum = 0;
+	var validCount = 0;
+
+	var i;
+	for (i = 0; i < calculatorRows.length; i++) {
+		// Out-of-range values (already flagged red by updateCalculatorRow/renderCalculatorRows)
+		// are excluded here too, the same as a blank row — never silently averaged in.
+		if (!isValidNota(calculatorRows[i].nota)) {
+			continue;
+		}
+		if (weighted && !isValidCredite(calculatorRows[i].credite)) {
+			continue;
+		}
+		var nota = parseFloat(calculatorRows[i].nota);
+		var credite = parseFloat(calculatorRows[i].credite);
+		validCount++;
+		simpleSum += nota;
+		if (weighted) {
+			weightedSum += nota * credite;
+			totalCredits += credite;
+		}
+	}
+
+	var resultElement = document.getElementById("calculator-result");
+	var creditsElement = document.getElementById("calculator-result-credits");
+
+	if (validCount === 0 || (weighted && totalCredits === 0)) {
+		resultElement.innerText = "—";
+		creditsElement.innerText = translateKey("calculator-medie-empty-state") || "";
+	} else if (weighted) {
+		var average = weightedSum / totalCredits;
+		resultElement.innerText = average.toFixed(2);
+		creditsElement.innerText = totalCredits + " " + (translateKey("calculator-medie-total-credits") || "credite totale");
+	} else {
+		var simpleAverage = simpleSum / validCount;
+		resultElement.innerText = simpleAverage.toFixed(2);
+		creditsElement.innerText = "";
+	}
+
+	saveCalculatorToStorage();
+}
+
+function resetCalculator() {
+	calculatorRows = [];
+	if (typeof(Storage) !== "undefined") {
+		localStorage.removeItem("cmr");
+		localStorage.removeItem("cmw");
+	}
+	document.getElementById("calculator-weighted-toggle").checked = true;
+	addCalculatorRow();
+	addCalculatorRow();
+	addCalculatorRow();
+}
+
+</script>
+
+<script src="./bootstrap3/js/bootstrap.js" type="text/javascript"></script>
+
+<!--  Plugins -->
+<script src="./assets/js/ct-paper-checkbox.js"></script>
+<script src="./assets/js/ct-paper-radio.js"></script>
+<script src="./assets/js/bootstrap-select.js"></script>
+<script src="./assets/js/bootstrap-datepicker.js"></script>
+<script src="./assets/js/unistart.js"></script>
+
+<script src="./assets/js/ct-paper.js"></script>
+
+</html>

@@ -2072,6 +2072,9 @@ function getPageHeader() {
 		'			<li>\n' +
 		'				<a href="./comparison.html" class="btn btn-simple" data-i18n-key="header-footer-compare">Compară</a>\n' +
 		'			</li>\n' +
+		'			<li>\n' +
+		'				<a href="./calculator-medie-facultate.html" class="btn btn-simple" data-i18n-key="header-footer-calculator">Calculator medie</a>\n' +
+		'			</li>\n' +
 		'            <li>\n' +
 		'                <a href="./contact.html" class="btn btn-simple" data-i18n-key="header-footer-contact">Contact</a>\n' +
 		'            </li>\n' +
@@ -2112,6 +2115,11 @@ function getPageFooter() {
 		'                        <li>\n' +
 		'                            <a href="./comparison.html" data-i18n-key="header-footer-compare">\n' +
 		'                                Compară\n' +
+		'                            </a>\n' +
+		'                        </li>\n' +
+		'                        <li>\n' +
+		'                            <a href="./calculator-medie-facultate.html" data-i18n-key="header-footer-calculator">\n' +
+		'                                Calculator medie\n' +
 		'                            </a>\n' +
 		'                        </li>\n' +
 		'                        <li>\n' +
@@ -2463,7 +2471,32 @@ const ro_json = {
                   "user-profile-my-reviews-empty": "Nu ai adăugat nicio evaluare",
                   "user-profile-saved-companies": "Companii salvate",
                   "user-profile-saved-companies-empty": "Nu ai salvat nicio companie",
-                  "user-profile-sign-out": "Ieși din cont"
+                  "user-profile-sign-out": "Ieși din cont",
+                  "header-footer-calculator": "Calculator medie",
+                  "calculator-medie-title": "Calculator medie facultate",
+                  "calculator-medie-intro": "Introdu fiecare materie cu nota obținută și numărul de credite ECTS, iar media se recalculează automat. Funcționează pentru orice facultate din România sau din Europa care folosește sistemul de credite ECTS.",
+                  "calculator-medie-weighted-toggle": "Calculează media ponderată cu credite ECTS (recomandat)",
+                  "calculator-medie-subject-header": "Materie",
+                  "calculator-medie-grade-header": "Notă",
+                  "calculator-medie-credits-header": "Credite ECTS",
+                  "calculator-medie-subject-placeholder": "ex: Analiză matematică",
+                  "calculator-medie-add-row": "Adaugă materie",
+                  "calculator-medie-reset": "Resetează",
+                  "calculator-medie-result-label": "Media ta generală",
+                  "calculator-medie-total-credits": "credite totale",
+                  "calculator-medie-empty-state": "Adaugă cel puțin o materie pentru a-ți calcula media",
+                  "calculator-medie-disclaimer": "Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei — verifică regulamentul facultății tale pentru rezultatul oficial.",
+                  "calculator-medie-faq-title": "Cum se calculează media generală la facultate?",
+                  "calculator-medie-faq-formula": "Majoritatea universităților din România și din Europa folosesc sistemul de credite ECTS: fiecare materie are un număr de credite proporțional cu volumul de muncă alocat, iar media generală se calculează ca o medie ponderată — nota fiecărei materii înmulțită cu numărul ei de credite, totul împărțit la numărul total de credite.",
+                  "calculator-medie-faq-note": "Câteva facultăți (mai ales la medicină) folosesc reguli proprii de calcul al mediei sau al clasamentului — dacă e cazul facultății tale, tratează rezultatul de mai sus ca pe o estimare și verifică regulamentul oficial.",
+                  "calculator-medie-faq-section-title": "Întrebări frecvente",
+                  "calculator-medie-faq-q2": "Ce sunt creditele ECTS?",
+                  "calculator-medie-faq-a2": "Fiecare materie are alocat un număr de credite ECTS proporțional cu volumul de muncă necesar — cursuri, seminarii, teme, examen. Un semestru universitar are, de regulă, 30 de credite ECTS, iar un an universitar complet, 60. Sistemul e comun majorității universităților din Europa, ceea ce face media ușor de recunoscut și în afara țării (de exemplu, pentru un schimb Erasmus).",
+                  "calculator-medie-faq-q3": "Media calculată aici este cea oficială a facultății mele?",
+                  "calculator-medie-review-cta-title": "Ai media? Ajută alți studenți cu o evaluare",
+                  "calculator-medie-review-cta-text": "Scrie o evaluare 100% anonimă despre facultatea ta — durează un minut și ajută pe cineva care alege acum unde să studieze.",
+                  "calculator-medie-review-cta-placeholder": "Caută facultatea ta...",
+                  "calculator-medie-review-cta-badge": "Durează 1 minut · 100% anonim"
                 };
 
 const en_json = {
@@ -2718,7 +2751,32 @@ const en_json = {
                   "user-profile-my-reviews-empty": "You have not added any reviews",
                   "user-profile-saved-companies": "Saved companies",
                   "user-profile-saved-companies-empty": "You have not saved any companies",
-                  "user-profile-sign-out": "Sign out"
+                  "user-profile-sign-out": "Sign out",
+                  "header-footer-calculator": "GPA calculator",
+                  "calculator-medie-title": "College GPA Calculator",
+                  "calculator-medie-intro": "Add each course with its grade and ECTS credits, and the average recalculates automatically. Works for any faculty in Romania or Europe that uses the ECTS credit system.",
+                  "calculator-medie-weighted-toggle": "Calculate the credit-weighted average (recommended)",
+                  "calculator-medie-subject-header": "Course",
+                  "calculator-medie-grade-header": "Grade",
+                  "calculator-medie-credits-header": "ECTS credits",
+                  "calculator-medie-subject-placeholder": "e.g. Calculus",
+                  "calculator-medie-add-row": "Add course",
+                  "calculator-medie-reset": "Reset",
+                  "calculator-medie-result-label": "Your overall average",
+                  "calculator-medie-total-credits": "total credits",
+                  "calculator-medie-empty-state": "Add at least one course to calculate your average",
+                  "calculator-medie-disclaimer": "This result is an estimate. Some faculties (medical schools, for example) use their own formula for computing the average — check your faculty's official regulation for the definitive figure.",
+                  "calculator-medie-faq-title": "How is the college GPA calculated?",
+                  "calculator-medie-faq-formula": "Most universities in Romania and Europe use the ECTS credit system: each course carries a number of credits proportional to its workload, and the overall average is a weighted average — each grade multiplied by its credits, divided by the total number of credits.",
+                  "calculator-medie-faq-note": "Some faculties (particularly medical schools) use their own rules for computing the average or class ranking — if that applies to your faculty, treat the result above as an estimate and check the official regulation.",
+                  "calculator-medie-faq-section-title": "Frequently asked questions",
+                  "calculator-medie-faq-q2": "What are ECTS credits?",
+                  "calculator-medie-faq-a2": "Each course carries a number of ECTS credits proportional to the workload it requires — lectures, seminars, assignments, the exam. A university semester is typically worth 30 ECTS credits, and a full academic year, 60. The system is shared by most European universities, which makes the average easy to recognize abroad too (for an Erasmus exchange, for example).",
+                  "calculator-medie-faq-q3": "Is the average calculated here my faculty's official figure?",
+                  "calculator-medie-review-cta-title": "Got your average? Help other students with a review",
+                  "calculator-medie-review-cta-text": "Write a 100% anonymous review of your faculty — it takes a minute and helps someone who's choosing where to study right now.",
+                  "calculator-medie-review-cta-placeholder": "Search for your faculty...",
+                  "calculator-medie-review-cta-badge": "Takes 1 minute · 100% anonymous"
                 };
 
 const lt_json = {
@@ -2973,7 +3031,32 @@ const lt_json = {
                   "user-profile-my-reviews-empty": "Nesate pridėję jokių apžvalgų",
                   "user-profile-saved-companies": "Išsaugotos įmonės",
                   "user-profile-saved-companies-empty": "Nesate išsaugoję jokių įmonių",
-                  "user-profile-sign-out": "Atsijungti"
+                  "user-profile-sign-out": "Atsijungti",
+                  "header-footer-calculator": "Vidurkio skaičiuoklė",
+                  "calculator-medie-title": "Vidurkio skaičiuoklė",
+                  "calculator-medie-intro": "Įveskite kiekvieną dalyką su gautu pažymiu ir ECTS kreditais, o vidurkis bus perskaičiuojamas automatiškai. Tinka bet kuriam fakultetui Rumunijoje ar Europoje, naudojančiam ECTS kreditų sistemą.",
+                  "calculator-medie-weighted-toggle": "Skaičiuoti svertinį vidurkį pagal ECTS kreditus (rekomenduojama)",
+                  "calculator-medie-subject-header": "Dalykas",
+                  "calculator-medie-grade-header": "Pažymys",
+                  "calculator-medie-credits-header": "ECTS kreditai",
+                  "calculator-medie-subject-placeholder": "pvz. Matematinė analizė",
+                  "calculator-medie-add-row": "Pridėti dalyką",
+                  "calculator-medie-reset": "Atstatyti",
+                  "calculator-medie-result-label": "Jūsų bendras vidurkis",
+                  "calculator-medie-total-credits": "kreditų iš viso",
+                  "calculator-medie-empty-state": "Pridėkite bent vieną dalyką, kad apskaičiuotumėte vidurkį",
+                  "calculator-medie-disclaimer": "Rezultatas yra orientacinis. Kai kurie fakultetai (pavyzdžiui, medicinos) gali naudoti savo vidurkio skaičiavimo formulę — patikrinkite savo fakulteto oficialias taisykles.",
+                  "calculator-medie-faq-title": "Kaip skaičiuojamas bendras vidurkis universitete?",
+                  "calculator-medie-faq-formula": "Dauguma universitetų Rumunijoje ir Europoje naudoja ECTS kreditų sistemą: kiekvienas dalykas turi kreditų skaičių, proporcingą darbo krūviui, o bendras vidurkis skaičiuojamas kaip svertinis vidurkis — kiekvienas pažymys padauginamas iš jo kreditų, o rezultatas padalinamas iš bendro kreditų skaičiaus.",
+                  "calculator-medie-faq-note": "Kai kurie fakultetai (ypač medicinos) naudoja savo taisykles vidurkiui ar reitingui skaičiuoti — jei tai taikoma jūsų fakultetui, laikykite aukščiau pateiktą rezultatą orientaciniu ir patikrinkite oficialias taisykles.",
+                  "calculator-medie-faq-section-title": "Dažniausiai užduodami klausimai",
+                  "calculator-medie-faq-q2": "Kas yra ECTS kreditai?",
+                  "calculator-medie-faq-a2": "Kiekvienas dalykas turi ECTS kreditų skaičių, proporcingą reikalaujamam darbo krūviui — paskaitoms, seminarams, užduotims, egzaminui. Universiteto semestras paprastai vertas 30 ECTS kreditų, o visi mokslo metai — 60. Šią sistemą naudoja dauguma Europos universitetų, todėl vidurkis lengvai atpažįstamas ir užsienyje (pavyzdžiui, Erasmus mainams).",
+                  "calculator-medie-faq-q3": "Ar čia apskaičiuotas vidurkis yra oficialus mano fakulteto rezultatas?",
+                  "calculator-medie-review-cta-title": "Jau žinai savo vidurkį? Padėk kitiems studentams su atsiliepimu",
+                  "calculator-medie-review-cta-text": "Parašyk 100% anonimišką atsiliepimą apie savo fakultetą — tai užtrunka minutę ir padeda tam, kuris dabar renkasi, kur studijuoti.",
+                  "calculator-medie-review-cta-placeholder": "Ieškok savo fakulteto...",
+                  "calculator-medie-review-cta-badge": "Užtrunka 1 minutę · 100% anonimiškai"
                 };
 
 /* ---------------- Cookie consent (Google Analytics) ----------------
