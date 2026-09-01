@@ -162,11 +162,14 @@ public class FacultyProfilePageController {
         String cityShort = cityShortName(faculty);
         String uniParen = StringUtils.isNotEmpty(faculty.getUniversityName())
                 ? " (" + faculty.getUniversityName() + ")" : "";
+        String shortnameParen = StringUtils.isNotEmpty(faculty.getFacultyShortname())
+                ? " (" + faculty.getFacultyShortname() + ")" : "";
         String title = faculty.getFacultyName()
+                + shortnameParen
                 + (StringUtils.isNotEmpty(cityShort) ? ", " + cityShort : "")
                 + uniParen
                 + " — păreri și evaluări de la studenți | Unistart";
-        String description = "Vezi evaluări, rating și detalii despre " + faculty.getFacultyName() + uniParen
+        String description = "Vezi evaluări, rating și detalii despre " + faculty.getFacultyName() + shortnameParen + uniParen
                 + (StringUtils.isNotEmpty(cityShort) ? " din " + cityShort : "")
                 + ". Alege facultatea potrivită pentru tine pe Unistart.";
 
@@ -180,7 +183,7 @@ public class FacultyProfilePageController {
         html = replaceMarker(html, RELATED_MARKER, buildRelatedFacultiesHtml(faculty, countryCode));
         html = html.replace("</head>",
                 "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n"
-                + "<script type=\"application/ld+json\">" + buildJsonLd(faculty, canonicalUrl, topReviews) + "</script>\n"
+                + "<script type=\"application/ld+json\">" + buildJsonLd(faculty, canonicalUrl, origin, topReviews) + "</script>\n"
                 + "<script type=\"application/ld+json\">" + buildBreadcrumbJsonLd(faculty, canonicalUrl, origin) + "</script>\n</head>");
         return html;
     }
@@ -562,6 +565,7 @@ public class FacultyProfilePageController {
     private String buildSocialMetaTags(Faculty faculty, String description, String canonicalUrl, String origin,
             String countryCode) {
         String socialTitle = faculty.getFacultyName()
+                + (StringUtils.isNotEmpty(faculty.getFacultyShortname()) ? " (" + faculty.getFacultyShortname() + ")" : "")
                 + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " — " + faculty.getUniversityName() : "");
         String imageUrl = origin + "/Jamstudy/v1/faculty/" + faculty.getFacultyId() + "/cover";
         String locale = "LT".equalsIgnoreCase(countryCode) ? "lt_LT" : "ro_RO";
@@ -611,13 +615,18 @@ public class FacultyProfilePageController {
      * into the page body by {@link #buildTopReviewsHtml}, which Google's policy
      * requires (the marked-up reviews must be visible on the page).
      */
-    private String buildJsonLd(Faculty faculty, String canonicalUrl, List<Review> topReviews) {
+    private String buildJsonLd(Faculty faculty, String canonicalUrl, String origin, List<Review> topReviews) {
         StringBuilder json = new StringBuilder();
         json.append("{");
         json.append("\"@context\":\"https://schema.org\",");
         json.append("\"@type\":\"CollegeOrUniversity\",");
         json.append("\"name\":\"").append(escapeJson(faculty.getFacultyName())).append("\",");
-        json.append("\"url\":\"").append(escapeJson(canonicalUrl)).append("\"");
+        if (StringUtils.isNotEmpty(faculty.getFacultyShortname())) {
+            json.append("\"alternateName\":\"").append(escapeJson(faculty.getFacultyShortname())).append("\",");
+        }
+        json.append("\"url\":\"").append(escapeJson(canonicalUrl)).append("\",");
+        json.append("\"image\":{\"@type\":\"ImageObject\",\"url\":\"")
+                .append(escapeJson(origin + "/Jamstudy/v1/faculty/" + faculty.getFacultyId() + "/cover")).append("\"}");
 
         if (StringUtils.isNotEmpty(faculty.getUniversityName())) {
             json.append(",\"parentOrganization\":{\"@type\":\"CollegeOrUniversity\",\"name\":\"")
