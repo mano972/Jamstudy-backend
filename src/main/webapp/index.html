@@ -72,6 +72,47 @@
             margin-bottom: 15px;
             text-align: center;
         }
+
+        /* Hero-adjacent "add a review" banner — the sticky corner CTA
+           (renderStickyAddReviewCta() in unistart.js) is a good persistent
+           reminder while scrolling, but on the homepage specifically it should
+           also be seen immediately, above the fold, without relying on a small
+           corner badge someone might not notice on first load. */
+        .home-review-cta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: linear-gradient(to right, #fff5c4, #fffdf5);
+            border: 1px solid #f0dfa0;
+            border-radius: 4px;
+            padding: 14px 20px;
+            margin: 10px 0 0;
+            color: #4a3c00;
+            text-decoration: none;
+        }
+        .home-review-cta:hover, .home-review-cta:focus {
+            color: #4a3c00;
+            text-decoration: none;
+            background: linear-gradient(to right, #fff0ac, #fff8e6);
+        }
+        .home-review-cta-icon {
+            font-size: 22px;
+            color: #eda100;
+            flex: none;
+        }
+        .home-review-cta-arrow {
+            margin-left: auto;
+            color: #b8a355;
+            flex: none;
+        }
+        @media (max-width: 480px) {
+            .home-review-cta {
+                flex-wrap: wrap;
+            }
+            .home-review-cta-arrow {
+                display: none;
+            }
+        }
     </style>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -167,6 +208,22 @@
         </div>
     </div>
     <div class="main">
+        <div class="section-white" style="padding: 15px 0 0;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-10 col-lg-offset-1 col-xs-12">
+                        <a href="./review.html" class="home-review-cta">
+                            <i class="fas fa-pen home-review-cta-icon" aria-hidden="true"></i>
+                            <span>
+                                <strong data-i18n-key="home-review-cta-title">Ai studiat sau studiezi la o facultate?</strong>
+                                <span data-i18n-key="home-review-cta-text"> Spune-ți părerea într-o evaluare anonimă — durează un minut.</span>
+                            </span>
+                            <i class="fa fa-chevron-right home-review-cta-arrow" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="section section-white stats-bar-section">
             <div class="container-fluid">
                 <div class="row text-center">
@@ -621,7 +678,7 @@
                                 cardReviewStr = '<div class="home-review-quote-empty"><p class="text-muted" style="margin: 0;">' + noReviewsText + '</p></div>';
                             }
 
-                            document.getElementById("content-top-faculty").innerHTML += ('			<div class="img-first-place-banner">												<img src="./assets/img/trophy2_big.png" class="img-first-place-trophy"></img>												<span class="label label-warning" data-i18n-key="first-place">Primul Loc</span>											</div>								<div class="row">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + facultyUrlTop +'">		<div class="img-faculty-logo-block-base img-faculty-home-logo-top-block">										<img src="' + logoSrcTop + '" class="img-faculty-logo-base img-faculty-logo-home-top center-logo-home"></img>	 </div>												</a>												</div>												<div class="col-md-9 col-xs-12 align" >													<a href="' + facultyUrlTop + '">														<h5 id="top-faculty"><strong>' + facultyNameTop + '</strong></h5>													</a>						<a data-toggle="tooltip" title="Filtrează după universitate" onclick="searchByUniversityName(this)">							<h6 id="top-university"><strong>' +  universityNameTop + '</strong></h6>			</a>										<small id="top-city" class="text-muted">' + facultyCityTop + '</small>	<br>	<a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyIdTop+'&quot;)"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRatingTop + '</strong> <strong>' + countRevTextTop + '</strong> </a>																						</div>											</div>																	<div class="row margin-top-faculty-top">			<div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-8 col-md-offset-4 col-lg-5 col-lg-offset-7">													<a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyIdTop+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="add-review">Adaugă evaluare</span></a>												</div>						</div>																						' + cardReviewStr + '																<br>											<div class="row save-compare-home-top">												<div class="col-xs-4 save-top-faculty">													<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="' + favoriteClassTop + '" style="margin-right: 7px"></i><span>' + favoriteTextTop + '</span></button>											</div>												<div class="col-xs-4 col-xs-offset-4 col-md-4 col-md-offset-4 compare-top-faculty text-right">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span data-i18n-key="compare">Compară</span> </button>								</div>											</div>								');
+                            document.getElementById("content-top-faculty").innerHTML += ('			<div class="img-first-place-banner">												<img src="./assets/img/trophy2_big.png" class="img-first-place-trophy"></img>												<span class="label label-warning" data-i18n-key="first-place">Primul Loc</span>											</div>								<div class="row">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + facultyUrlTop +'">		<div class="img-faculty-logo-block-base img-faculty-home-logo-top-block">										<img src="' + logoSrcTop + '" class="img-faculty-logo-base img-faculty-logo-home-top center-logo-home"></img>	 </div>												</a>												</div>												<div class="col-md-9 col-xs-12 align" >													<a href="' + facultyUrlTop + '">														<h5 id="top-faculty"><strong>' + facultyNameTop + '</strong></h5>													</a>						<a data-toggle="tooltip" title="Filtrează după universitate" onclick="searchByUniversityName(this)">							<h6 id="top-university"><strong>' +  universityNameTop + '</strong></h6>			</a>										<small id="top-city" class="text-muted">' + facultyCityTop + '</small>	<br>	<a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyIdTop+'&quot;)"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRatingTop + '</strong> <strong>' + countRevTextTop + '</strong> </a>																						</div>											</div>																	<div class="row margin-top-faculty-top">			<div class="col-xs-12 col-xs-offset-0 col-sm-12 col-sm-offset-0 col-md-8 col-md-offset-4 col-lg-5 col-lg-offset-7">													<a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyIdTop+'&quot;)"><i class="fas fa-pen fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="add-review">Adaugă evaluare</span></a>												</div>						</div>																						' + cardReviewStr + '																<br>											<div class="row save-compare-home-top">												<div class="col-xs-4 save-top-faculty">													<button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="' + favoriteClassTop + '" style="margin-right: 7px"></i><span>' + favoriteTextTop + '</span></button>											</div>												<div class="col-xs-4 col-xs-offset-4 col-md-4 col-md-offset-4 compare-top-faculty text-right">													<button class="compare btn btn-simple" onclick="addToCompare(this, &quot;'+facultyIdTop+'&quot;, true)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span data-i18n-key="compare">Compară</span> </button>								</div>											</div>								');
 
                        translatePage();
                        },
@@ -699,7 +756,7 @@
                         searchCompareString2 = '<div class="row save-compare-search-list"> <div class="col-xs-6"> <button class="btn-danger btn btn-simple save" onclick="addToFavorites(this, &quot;'+facultyIdTop+'&quot;, false)"><i class="' + favoriteClass + '" style="margin-right: 7px"></i><span>' + favoriteText + '</span></button> </div> <div class="col-xs-6 text-right" > <button class="btn btn-simple compare" onclick="addToCompare(this, &quot;'+facultyId+'&quot;, false)"><i class="fas fa-plus-circle fa-lg" style="margin-right: 7px; "></i><span data-i18n-key="compare">Compară</span> </button></div> </div>	';
                     }
 
-                    document.getElementById("content-runner-up-faculties").innerHTML += ('<div class="row" style="margin-bottom: 8px;">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + facultyUrl +'">	<div class="img-faculty-logo-block-base img-faculty-home-logo-block">													<img src="' + logoSrc + '"  class="img-faculty-logo-base img-faculty-logo-home center-logo-home" ></img>								</div>					</a>												</div>												<div class="col-md-9 col-xs-12 align" >					<div>								<a href="' + facultyUrl + '">														<h5><strong>' + facultyName + '</strong></h5>													</a>						<a data-toggle="tooltip" title="Filtrează după universitate" onclick="searchByUniversityName(this)">							<h6><strong>' + universityName + '</strong></h6>					</a>								<small class="text-muted">' + facultyCity + '</small>													<br>		<a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </a>  </div>	<div class="row margin-top-faculty-runnerups">	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-5">													<a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-plus fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="add-review">Adaugă evaluare</span></a>		' + searchCompareString2 + '		</div>						</div>										</div>						'+ searchCompareString1 + '		</div>');
+                    document.getElementById("content-runner-up-faculties").innerHTML += ('<div class="row" style="margin-bottom: 8px;">												<div class="col-lg-2 col-md-2 col-md-offset-0 col-sm-4 col-sm-offset-4 col-xs-4 col-xs-offset-4">													<a href="' + facultyUrl +'">	<div class="img-faculty-logo-block-base img-faculty-home-logo-block">													<img src="' + logoSrc + '"  class="img-faculty-logo-base img-faculty-logo-home center-logo-home" ></img>								</div>					</a>												</div>												<div class="col-md-9 col-xs-12 align" >					<div>								<a href="' + facultyUrl + '">														<h5><strong>' + facultyName + '</strong></h5>													</a>						<a data-toggle="tooltip" title="Filtrează după universitate" onclick="searchByUniversityName(this)">							<h6><strong>' + universityName + '</strong></h6>					</a>								<small class="text-muted">' + facultyCity + '</small>													<br>		<a data-toggle="tooltip" title="Vezi evaluări" onclick="goToReviews(&quot;'+facultyId+'&quot;)"> <i class="fa fa-star" style="color: orange"></i> <strong style="color: orange">' + avgRating + '</strong> <strong>' + countRevText + '</strong> </a>  </div>	<div class="row margin-top-faculty-runnerups">	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-5">													<a data-toggle="tooltip" title="Adaugă evaluare 100% anonim" class="btn btn-warning btn-fill btn-block add-review-button" onclick="goToAddReview(this, &quot;'+facultyId+'&quot;)"><i class="fas fa-pen fa-lg" style="color: white; margin-right: 7px"></i><span data-i18n-key="add-review">Adaugă evaluare</span></a>		' + searchCompareString2 + '		</div>						</div>										</div>						'+ searchCompareString1 + '		</div>');
 
                 }
 

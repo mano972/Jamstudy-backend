@@ -2496,7 +2496,10 @@ const ro_json = {
                   "calculator-medie-review-cta-title": "Ai media? Ajută alți studenți cu o evaluare",
                   "calculator-medie-review-cta-text": "Scrie o evaluare 100% anonimă despre facultatea ta — durează un minut și ajută pe cineva care alege acum unde să studieze.",
                   "calculator-medie-review-cta-placeholder": "Caută facultatea ta...",
-                  "calculator-medie-review-cta-badge": "Durează 1 minut · 100% anonim"
+                  "calculator-medie-review-cta-badge": "Durează 1 minut · 100% anonim",
+                  "review-pick-faculty-placeholder": "Caută facultatea pentru care vrei să lași o evaluare...",
+                  "home-review-cta-title": "Ai studiat sau studiezi la o facultate?",
+                  "home-review-cta-text": " Spune-ți părerea într-o evaluare anonimă — durează un minut."
                 };
 
 const en_json = {
@@ -2776,7 +2779,10 @@ const en_json = {
                   "calculator-medie-review-cta-title": "Got your average? Help other students with a review",
                   "calculator-medie-review-cta-text": "Write a 100% anonymous review of your faculty — it takes a minute and helps someone who's choosing where to study right now.",
                   "calculator-medie-review-cta-placeholder": "Search for your faculty...",
-                  "calculator-medie-review-cta-badge": "Takes 1 minute · 100% anonymous"
+                  "calculator-medie-review-cta-badge": "Takes 1 minute · 100% anonymous",
+                  "review-pick-faculty-placeholder": "Search for the faculty you want to review...",
+                  "home-review-cta-title": "Did you study or are you studying at a university?",
+                  "home-review-cta-text": " Share your opinion in an anonymous review — it takes a minute."
                 };
 
 const lt_json = {
@@ -3056,7 +3062,10 @@ const lt_json = {
                   "calculator-medie-review-cta-title": "Jau žinai savo vidurkį? Padėk kitiems studentams su atsiliepimu",
                   "calculator-medie-review-cta-text": "Parašyk 100% anonimišką atsiliepimą apie savo fakultetą — tai užtrunka minutę ir padeda tam, kuris dabar renkasi, kur studijuoti.",
                   "calculator-medie-review-cta-placeholder": "Ieškok savo fakulteto...",
-                  "calculator-medie-review-cta-badge": "Užtrunka 1 minutę · 100% anonimiškai"
+                  "calculator-medie-review-cta-badge": "Užtrunka 1 minutę · 100% anonimiškai",
+                  "review-pick-faculty-placeholder": "Ieškokite fakulteto, apie kurį norite palikti atsiliepimą...",
+                  "home-review-cta-title": "Studijavote ar studijuojate universitete?",
+                  "home-review-cta-text": " Pasidalykite nuomone anonimiškame atsiliepime — tai užtrunka minutę."
                 };
 
 /* ---------------- Cookie consent (Google Analytics, Consent Mode v2 "Advanced") ----------------
@@ -3342,9 +3351,60 @@ function isAdminPortalPage() {
 	return window.location.pathname.indexOf('admin-portal') !== -1;
 }
 
+/* ---------------- Sticky "Add review" CTA ----------------
+   A small always-visible corner button linking straight to review.html (no
+   ?faculty=), so writing a review is never gated behind first being on a specific
+   faculty's page. Left out of search.html and the faculty profile page itself
+   (both /profile.html and its canonical /facultate/{uni}/{fac} form) since both
+   already have their own faculty-specific "add review" entry points in context —
+   a second, generic one there would be redundant, not additive. review.html
+   itself handles arriving with no facultyId (a faculty search picker takes over
+   the spot the read-only faculty field would otherwise occupy — see
+   renderFacultyPicker() there). */
+
+function isStickyReviewCtaExcludedPage() {
+	var path = window.location.pathname;
+	return path.indexOf('search.html') !== -1
+		|| path.indexOf('profile.html') !== -1
+		|| path.indexOf('/facultate/') !== -1
+		|| path.indexOf('review.html') !== -1;
+}
+
+function renderStickyAddReviewCta() {
+	if (isStickyReviewCtaExcludedPage() || document.getElementById('sticky-add-review-cta')) {
+		return;
+	}
+
+	// Positioning only — color, border and hover all come from the same
+	// .add-review-button styling (ct-paper.css) the "Adaugă evaluare" button
+	// already uses on a faculty's own profile page, so this looks like the same
+	// button everywhere instead of a one-off custom style.
+	if (!document.getElementById('sticky-add-review-cta-style')) {
+		var style = document.createElement('style');
+		style.id = 'sticky-add-review-cta-style';
+		style.textContent =
+			'#sticky-add-review-cta{position:fixed;left:20px;bottom:20px;z-index:900;' +
+			'box-shadow:0 2px 10px rgba(0,0,0,.25);}' +
+			'@media (max-width:480px){#sticky-add-review-cta span{display:none;}' +
+			'#sticky-add-review-cta i{margin-right:0 !important;}' +
+			'#sticky-add-review-cta{min-width:0;padding-left:14px;padding-right:14px;}}';
+		document.head.appendChild(style);
+	}
+
+	var cta = document.createElement('a');
+	cta.id = 'sticky-add-review-cta';
+	cta.href = './review.html';
+	cta.className = 'btn btn-warning btn-fill add-review-button';
+	cta.setAttribute('data-toggle', 'tooltip');
+	cta.setAttribute('title', 'Adaugă evaluare 100% anonim');
+	cta.innerHTML = '<i class="fas fa-pen fa-lg" style="color: white; margin-right: 7px" aria-hidden="true"></i><span data-i18n-key="add-review">Adaugă evaluare</span>';
+	document.body.appendChild(cta);
+}
+
 $(function() {
 	// Internal admin tool, not public-facing — no analytics/consent banner there.
 	if (!isAdminPortalPage()) {
 		initCookieConsent();
+		renderStickyAddReviewCta();
 	}
 });

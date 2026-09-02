@@ -659,6 +659,14 @@ $(document).ready(function() {
 
 	loadFaculty();
 
+	document.addEventListener("click", function(event) {
+		var fieldset = document.getElementById("review-faculty-search-fieldset");
+		var resultsList = document.getElementById("review-faculty-search-results");
+		if (fieldset && resultsList && !fieldset.contains(event.target)) {
+			resultsList.style.display = "none";
+		}
+	});
+
 	if (reviewId) {
 		checkEditReviewAllowed();
 		loadReview();
@@ -724,6 +732,18 @@ function checkEditReviewAllowed() {
 function loadFaculty(){
 	<!-- document.getElementById("loading").style.display = "inline-block"; -->
 
+	// No faculty chosen yet (arrived via the generic "Add review" CTA rather than
+	// from a specific faculty page) and not editing an existing review (which
+	// always carries its own facultyId) — show a search picker in the same spot
+	// instead of calling the API with an empty id.
+	if (!facultyId && !reviewId) {
+		renderFacultyPicker();
+		return;
+	}
+	if (!facultyId) {
+		return;
+	}
+
 	var backendUrl = new URL(backendUrlRoot + "/v1/faculty/" + facultyId);
 
 	$.ajax({
@@ -759,9 +779,13 @@ function loadFaculty(){
 											+'			</a>'
 											+'	</div>'
 											+'	<div class="form-group col-md-6 col-md-offset-3 col-xs-12" style="margin-top: 15px;">'
-											+'		<div class="review-faculty-search-field">'
-											+'			<input id="review-faculty-name" type="text" value="' + facultyName + '" placeholder="" class="form-control" required oninvalid="this.setCustomValidity(\'Câmp obligatoriu\')" readonly/>'
-											+'			<i class="fa fa-search inner-icon" aria-hidden="true"></i>'
+											+'		<div style="display: flex; align-items: center; gap: 8px;">'
+											+'			<div class="review-faculty-search-field" style="flex: 1 1 auto; min-width: 0;">'
+											+'				<input id="review-faculty-name" type="text" value="' + facultyName + '" placeholder="" class="form-control" required oninvalid="this.setCustomValidity(\'Câmp obligatoriu\')" readonly/>'
+											+'			</div>'
+											+'			<div class="close" style="flex: none; font-size: 20px;">'
+											+'				<i class="fa fa-close" title="Schimbă facultatea" onclick="clearFacultySelection()"></i>'
+											+'			</div>'
 											+'		</div>'
 											+'	</div>'
 											+'</div>'
@@ -818,6 +842,123 @@ function loadFaculty(){
 		<!-- document.getElementById("loading").style.display = "none"; -->
 	  }
 	});
+}
+
+// Faculty search picker — shown in #review-faculty-main in place of the
+// (normally read-only) faculty field when the page was opened with no
+// facultyId. Same "type 3+ chars, top 7 matches" pattern used by the compare
+// search on comparison.html and the review CTA on calculator-medie-facultate.html.
+function renderFacultyPicker() {
+	var placeholder = translateKey("review-pick-faculty-placeholder") || "Caută facultatea pentru care vrei să lași o evaluare...";
+	document.getElementById("review-faculty-main").innerHTML = (
+		'<div class="row" style="min-height: 200px; display: flex; align-items: center;">'
+		+	'<div class="col-md-8 col-md-offset-2 col-xs-12">'
+		+		'<fieldset id="review-faculty-search-fieldset" class="search-fieldset">'
+		+			'<input id="review-faculty-search-input" type="text" class="form-control" value="" placeholder="' + escapeHtml(placeholder) + '" spellcheck="false" autocomplete="off"/>'
+		+			'<i class="fa fa-search inner-icon" aria-hidden="true"></i>'
+		+			'<ul id="review-faculty-search-results" class="autocomplete-result-list" style="display: none; position: absolute; width: 100%; top: 100%; left: 0;"></ul>'
+		+		'</fieldset>'
+		+	'</div>'
+		+ '</div>'
+	);
+
+	document.getElementById("review-faculty-search-input").addEventListener("keyup", function(event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+		}
+		searchFacultyForReviewPicker();
+	});
+}
+
+function searchFacultyForReviewPicker() {
+	var input = document.getElementById("review-faculty-search-input");
+	var resultsList = document.getElementById("review-faculty-search-results");
+	if (!input || !resultsList) {
+		return;
+	}
+
+	var value = input.value;
+	if (!value || value.length < 3) {
+		resultsList.innerHTML = "";
+		resultsList.style.display = "none";
+		return;
+	}
+
+	var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
+	backendUrl.searchParams.append("searchBy", value);
+	backendUrl.searchParams.append("orderBy", "viewsCount,desc");
+	backendUrl.searchParams.append("limit", 15);
+
+	fetch(backendUrl, {
+		method: "GET",
+		headers: {
+			"Code": window.location.href.includes("unistart.lt") ? "LT" : "RO",
+		}
+	})
+	.then(function(response) { return response.json(); })
+	.then(function(data) {
+		renderFacultySearchResults(data.result ? data.result.faculties : []);
+	})
+	.catch(function(error) {
+		console.log(error);
+	});
+}
+
+function renderFacultySearchResults(faculties) {
+	var resultsList = document.getElementById("review-faculty-search-results");
+	if (!resultsList) {
+		return;
+	}
+	var topFaculties = (faculties || []).slice(0, 7);
+
+	if (topFaculties.length === 0) {
+		resultsList.innerHTML = '<li class="autocomplete-result" data-i18n-key="compare-search-no-results">Nu au fost găsite rezultate</li>';
+		resultsList.style.display = "block";
+		translatePage();
+		return;
+	}
+
+	var resultsHtml = "";
+	var i;
+	for (i = 0; i < topFaculties.length; i++) {
+		var faculty = topFaculties[i];
+		var facultyName = escapeHtml(faculty.facultyName);
+		var universityName = escapeHtml(faculty.universityName);
+		var logoSrc = backendUrlRoot + "/v1/faculty/" + faculty.facultyId + "/logo";
+
+		resultsHtml +=
+			'<li class="autocomplete-result" onclick="selectFacultyForReview(&quot;' + faculty.facultyId + '&quot;)">'
+			+	'<img src="' + logoSrc + '" style="height: 24px; width: 24px; object-fit: contain; margin-right: 8px; vertical-align: middle;">'
+			+	'<b>' + facultyName + '</b> <span class="text-muted">' + universityName + '</span>'
+			+ '</li>';
+	}
+
+	resultsList.innerHTML = resultsHtml;
+	resultsList.style.display = "block";
+	translatePage();
+}
+
+// Picking a result hands the id back to the exact same rendering path a
+// ?faculty=<id> URL already uses — loadFaculty() overwrites #review-faculty-main
+// with the normal read-only faculty card, so the field naturally becomes
+// "disabled" the moment a faculty is chosen, same as arriving with one in the URL.
+function selectFacultyForReview(pickedFacultyId) {
+	facultyId = pickedFacultyId;
+	try {
+		history.replaceState(null, '', './review.html?faculty=' + pickedFacultyId);
+	} catch (e) {}
+	loadFaculty();
+}
+
+// The "×" on the read-only faculty field (however it got set — a ?faculty= URL or
+// a prior pick here) drops back to the search picker so the user can choose a
+// different faculty instead of having to restart the whole page.
+function clearFacultySelection() {
+	facultyId = null;
+	try {
+		history.replaceState(null, '', './review.html');
+	} catch (e) {}
+	renderFacultyPicker();
 }
 
 <!-- function loadFields() { -->
