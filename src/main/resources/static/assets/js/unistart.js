@@ -3059,12 +3059,18 @@ const lt_json = {
                   "calculator-medie-review-cta-badge": "Užtrunka 1 minutę · 100% anonimiškai"
                 };
 
-/* ---------------- Cookie consent (Google Analytics) ----------------
+/* ---------------- Cookie consent (Google Analytics, Consent Mode v2 "Advanced") ----------------
    Strictly necessary cookies (session/auth) are unaffected by this and always load.
-   Google Analytics only loads after the user explicitly accepts via the banner below,
-   or has previously done so. Google Sign-In is handled separately, on demand, in
-   googleButtonClick()/loadGoogleSignInScript() above — clicking that button is itself
-   the consent action for loading it. */
+   gtag.js itself now loads on every page, unconditionally — but the very first thing
+   pushed to it (initGoogleTag(), below) is a 'consent default' of denied, set before
+   the script tag is even added. Until the user accepts, gtag sends Google only
+   anonymous, cookieless pings (no _ga cookie, no identifiable hit) — enough for
+   Google's own modeling to estimate the gap, without tracking that visitor. Accepting
+   flips it live via 'consent update', no reload needed. This is what makes it
+   "Advanced" mode rather than "Basic" (Basic would mean not loading gtag.js at all
+   until consent, which is what this used to do). Google Sign-In is unrelated, handled
+   separately in googleButtonClick()/loadGoogleSignInScript() above — clicking that
+   button is itself the consent action for loading it. */
 
 var COOKIE_CONSENT_STORAGE_KEY = "cookieConsent"; // "accepted" | "rejected"
 var GA_MEASUREMENT_ID = "G-W7XYVR8RJ0";
@@ -3083,12 +3089,41 @@ function setCookieConsent(value) {
 	} catch (e) {}
 }
 
+// Sets the Consent Mode default (denied, unless a prior "accepted" choice is already
+// stored) and only then loads gtag.js — order matters, the default must be queued
+// before the library starts sending anything. No Google Ads usage on this site, so
+// the ad_* signals stay permanently denied; only analytics_storage ever changes.
+function initGoogleTag() {
+	if (document.getElementById('ga-gtag-script')) {
+		return;
+	}
+
+	window.dataLayer = window.dataLayer || [];
+	window.gtag = window.gtag || function() { dataLayer.push(arguments); };
+
+	var alreadyAccepted = getCookieConsent() === "accepted";
+	gtag('consent', 'default', {
+		analytics_storage: alreadyAccepted ? 'granted' : 'denied',
+		ad_storage: 'denied',
+		ad_user_data: 'denied',
+		ad_personalization: 'denied'
+	});
+
+	var script = document.createElement('script');
+	script.id = 'ga-gtag-script';
+	script.async = true;
+	script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+	document.head.appendChild(script);
+
+	gtag('js', new Date());
+	gtag('config', GA_MEASUREMENT_ID);
+}
+
 function initCookieConsent() {
+	initGoogleTag();
 	renderCookieConsentBanner();
 	var consent = getCookieConsent();
-	if (consent === "accepted") {
-		loadGoogleAnalytics();
-	} else if (consent !== "rejected") {
+	if (consent !== "accepted" && consent !== "rejected") {
 		showCookieConsentBanner();
 	}
 }
@@ -3148,12 +3183,13 @@ function hideCookieConsentBanner() {
 function acceptCookieConsent() {
 	setCookieConsent('accepted');
 	hideCookieConsentBanner();
-	loadGoogleAnalytics();
+	gtag('consent', 'update', { analytics_storage: 'granted' });
 }
 
 function rejectCookieConsent() {
 	setCookieConsent('rejected');
 	hideCookieConsentBanner();
+	gtag('consent', 'update', { analytics_storage: 'denied' });
 }
 
 function openCookieSettings(e) {
@@ -3161,22 +3197,6 @@ function openCookieSettings(e) {
 		e.preventDefault();
 	}
 	showCookieConsentBanner();
-}
-
-function loadGoogleAnalytics() {
-	if (document.getElementById('ga-gtag-script')) {
-		return;
-	}
-	var script = document.createElement('script');
-	script.id = 'ga-gtag-script';
-	script.async = true;
-	script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
-	document.head.appendChild(script);
-
-	window.dataLayer = window.dataLayer || [];
-	window.gtag = window.gtag || function() { dataLayer.push(arguments); };
-	gtag('js', new Date());
-	gtag('config', GA_MEASUREMENT_ID);
 }
 
 /* ---------------- Deselectable radio buttons ----------------
