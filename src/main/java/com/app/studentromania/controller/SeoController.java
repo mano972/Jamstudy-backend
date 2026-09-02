@@ -62,6 +62,9 @@ public class SeoController {
             if (StringUtils.isEmpty(faculty.getUniversitySlug()) || StringUtils.isEmpty(faculty.getFacultySlug())) {
                 continue;
             }
+            if (!hasIndexableContent(faculty)) {
+                continue;
+            }
             xml.append("  <url><loc>").append(origin).append("/facultate/")
                     .append(faculty.getUniversitySlug()).append("/").append(faculty.getFacultySlug())
                     .append("</loc></url>\n");
@@ -71,6 +74,29 @@ public class SeoController {
 
         response.setContentType("application/xml;charset=UTF-8");
         response.getWriter().write(xml.toString());
+    }
+
+    /**
+     * Whether a faculty page carries enough unique content to be worth listing in
+     * the sitemap. Every profile page is generated from one template, so a faculty
+     * with no description, no programs and no reviews renders as near-boilerplate -
+     * Google clusters those and reports them as "Duplicate, Google chose different
+     * canonical than user". Those pages stay reachable and crawlable; they're just
+     * not advertised here, so crawl budget goes to pages that can actually rank.
+     */
+    private boolean hasIndexableContent(Faculty faculty) {
+        if (StringUtils.isNotBlank(faculty.getFacultyDescription())
+                || StringUtils.isNotBlank(faculty.getFacultyPresentation())) {
+            return true;
+        }
+        if (faculty.getCountRev() != null && faculty.getCountRev() > 0) {
+            return true;
+        }
+        return isNotEmpty(faculty.getLicensePrograms()) || isNotEmpty(faculty.getMasterPrograms());
+    }
+
+    private static boolean isNotEmpty(List<?> list) {
+        return list != null && !list.isEmpty();
     }
 
     @GetMapping(value = "/robots.txt", produces = "text/plain;charset=UTF-8")
