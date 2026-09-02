@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.app.studentromania.dao.FacultyDAO;
 import com.app.studentromania.dao.ReviewDAO;
 import com.app.studentromania.model.Faculty;
+import com.app.studentromania.model.FacultyProgram;
 import com.app.studentromania.model.Review;
 import com.app.studentromania.util.FacultyFilter;
 import com.app.studentromania.util.RequestUtils;
@@ -50,6 +51,7 @@ public class FacultyProfilePageController {
     private static final String TOP_REVIEWS_MARKER = "<!-- SSR_TOP_REVIEWS -->";
     private static final String RELATED_MARKER = "<!-- SSR_RELATED_FACULTIES -->";
     private static final String BREADCRUMB_MARKER = "<!-- SSR_BREADCRUMB -->";
+    private static final String OVERVIEW_MARKER = "<!-- SSR_FACULTY_OVERVIEW -->";
 
     /** Rows pulled from Couchbase; a few extra so we can skip text-less reviews. */
     private static final int TOP_REVIEWS_FETCH = 12;
@@ -180,6 +182,7 @@ public class FacultyProfilePageController {
         html = replaceSocialMeta(html, buildSocialMetaTags(faculty, description, canonicalUrl, origin, countryCode));
         html = replaceTopReviews(html, buildTopReviewsHtml(faculty, topReviews));
         html = replaceMarker(html, BREADCRUMB_MARKER, buildBreadcrumbHtml(faculty, origin));
+        html = replaceMarker(html, OVERVIEW_MARKER, buildFacultyOverviewHtml(faculty));
         html = replaceMarker(html, RELATED_MARKER, buildRelatedFacultiesHtml(faculty, countryCode));
         html = html.replace("</head>",
                 "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n"
@@ -289,6 +292,125 @@ public class FacultyProfilePageController {
 
     private static String isoDate(Date date) {
         return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    }
+
+    // ---- faculty overview (main unique SSR content) --------------------
+
+    /**
+     * Server-rendered faculty overview: an {@code <h1>}, the faculty description,
+     * a key-facts list and the licence / master programs tables. This is the
+     * page's main unique content — without it the pre-JS HTML is near-identical
+     * across every faculty (shared template + client-only data load), which is
+     * what makes Google report "Duplicate, Google chose different canonical than
+     * user". Sits inside #wrapper (so {@code .wrapper.loading{opacity:0}} hides it
+     * while the page loads) and is removed by {@code getFaculty()} in profile.html
+     * once the interactive render is ready, so users only ever see the JS version.
+     * Rows with no value are dropped, so thin faculties don't all render the same
+     * "N/A" boilerplate.
+     */
+    private String buildFacultyOverviewHtml(Faculty faculty) {
+        StringBuilder html = new StringBuilder();
+        html.append("<div class=\"section section-white\" id=\"ssr-faculty-overview\">\n");
+        html.append("  <div class=\"container-fluid\">\n    <div class=\"row\">\n");
+        html.append("      <div class=\"col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12\">\n");
+        html.append("        <div class=\"card\">\n          <div class=\"content\">\n");
+
+        String cityShort = cityShortName(faculty);
+        StringBuilder h1 = new StringBuilder(nvl(faculty.getFacultyName(), ""));
+        if (StringUtils.isNotEmpty(faculty.getFacultyShortname())) {
+            h1.append(" (").append(faculty.getFacultyShortname()).append(")");
+        }
+        if (StringUtils.isNotEmpty(faculty.getUniversityName())) {
+            h1.append(" — ").append(faculty.getUniversityName());
+        }
+        if (StringUtils.isNotEmpty(cityShort)) {
+            h1.append(", ").append(cityShort);
+        }
+        html.append("            <h1 style=\"font-size:24px;margin-top:0;\">").append(escapeHtml(h1.toString())).append("</h1>\n");
+
+        if (StringUtils.isNotBlank(faculty.getFacultyDescription())) {
+            html.append("            <p style=\"white-space:pre-line;\">")
+                    .append(escapeHtml(faculty.getFacultyDescription().trim())).append("</p>\n");
+        }
+
+        List<String[]> facts = new ArrayList<>();
+        addFact(facts, "Oraș", cityShort);
+        addFact(facts, "Adresă", faculty.getFacultyAddress());
+        addFact(facts, "Website", faculty.getFacultyWebsite());
+        addFact(facts, "Tip", faculty.getFacultyType());
+        addFact(facts, "Durata studiilor (ani)", faculty.getNoOfYears());
+        addFact(facts, "Locuri licență", faculty.getAvailablePlacesLicense());
+        addFact(facts, "Locuri buget licență", faculty.getBudgetPlacesLicense());
+        addFact(facts, "Locuri taxă licență", faculty.getTaxPlacesLicense());
+        addFact(facts, "Locuri masterat", faculty.getAvailablePlacesMaster());
+        addFact(facts, "Studenți înscriși (licență)", faculty.getEnrolledStudentsLicence());
+        addFact(facts, "Număr profesori", faculty.getNoOfProfessors());
+        if (!facts.isEmpty()) {
+            html.append("            <ul style=\"list-style:none;padding:0;margin:12px 0;\">\n");
+            for (String[] fact : facts) {
+                html.append("              <li style=\"padding:5px 0;border-top:1px solid #efefef;\"><strong>")
+                        .append(escapeHtml(fact[0])).append(":</strong> ").append(escapeHtml(fact[1])).append("</li>\n");
+            }
+            html.append("            </ul>\n");
+        }
+
+        appendProgramsTable(html, "Programe de licență", faculty.getLicensePrograms());
+        appendProgramsTable(html, "Programe de masterat", faculty.getMasterPrograms());
+
+        html.append("          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n");
+        return html.toString();
+    }
+
+    private static void addFact(List<String[]> facts, String label, Object value) {
+        if (value == null) {
+            return;
+        }
+        String s = String.valueOf(value).trim();
+        if (s.isEmpty() || "0".equals(s)) {
+            return;
+        }
+        facts.add(new String[] { label, s });
+    }
+
+    private void appendProgramsTable(StringBuilder html, String heading, List<FacultyProgram> programs) {
+        if (programs == null || programs.isEmpty()) {
+            return;
+        }
+        html.append("            <h2 style=\"font-size:18px;margin-top:22px;\">").append(escapeHtml(heading)).append("</h2>\n");
+        html.append("            <div style=\"overflow-x:auto;\">\n");
+        html.append("            <table style=\"width:100%;border-collapse:collapse;font-size:14px;\">\n");
+        html.append("              <thead><tr>");
+        for (String col : new String[] { "Program", "Domeniu", "Locuri", "Taxă anuală", "Candidați/loc", "Admitere", "Acreditare" }) {
+            html.append("<th style=\"text-align:left;padding:6px;border-bottom:1px solid #ddd;\">").append(escapeHtml(col)).append("</th>");
+        }
+        html.append("</tr></thead>\n            <tbody>\n");
+        for (FacultyProgram program : programs) {
+            if (program == null) {
+                continue;
+            }
+            html.append("              <tr>")
+                    .append(td(program.getProgramName()))
+                    .append(td(firstNonBlank(program.getProgramDomain(), program.getDomainOfLicenseOrMaster())))
+                    .append(td(program.getProgramAvailablePlaces() != null ? String.valueOf(program.getProgramAvailablePlaces()) : null))
+                    .append(td(program.getAnnualTax() != null ? program.getAnnualTax() + " lei/an" : null))
+                    .append(td(program.getCandidatesPerPlace() != null ? String.valueOf(program.getCandidatesPerPlace()) : null))
+                    .append(td(program.getAdmissionType()))
+                    .append(td(program.getProgramAccreditation()))
+                    .append("</tr>\n");
+        }
+        html.append("            </tbody>\n            </table>\n            </div>\n");
+    }
+
+    private static String td(String value) {
+        return "<td style=\"padding:6px;border-bottom:1px solid #f0f0f0;\">"
+                + escapeHtml(StringUtils.isNotBlank(value) ? value.trim() : "—") + "</td>";
+    }
+
+    private static String firstNonBlank(String a, String b) {
+        if (StringUtils.isNotBlank(a)) {
+            return a;
+        }
+        return StringUtils.isNotBlank(b) ? b : "";
     }
 
     // ---- related faculties (internal linking) --------------------------

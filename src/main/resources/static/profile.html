@@ -89,6 +89,15 @@
         </div>
     </div>
 
+    <!-- SSR_FACULTY_OVERVIEW -->
+    <!-- On /facultate/{university}/{faculty}, FacultyProfilePageController replaces
+         this marker with a server-rendered overview (h1 + description + key facts +
+         programs table) - the page's main unique content, so crawlers get it
+         without running JS. #ssr-faculty-overview is removed by getFaculty() once
+         the interactive version has rendered, and until then it sits inside
+         #wrapper.loading{opacity:0}, so users never see it. Left as a comment on
+         the plain /profile.html fallback. Keep the marker as-is. -->
+
     <div class="section section-white">
         <div class="container-fluid">
             <div class="row">
@@ -652,6 +661,13 @@
                     loadFacultyProgramsTab(response);
                     getCompanies(response.result.companyIds);
                     getOtherFacultiesFromSameUniversity(response.result.universityId);
+
+                    // The interactive profile is now built; drop the SSR overview
+                    // so its content isn't shown twice once #wrapper becomes visible.
+                    var ssrOverview = document.getElementById("ssr-faculty-overview");
+                    if (ssrOverview && ssrOverview.parentNode) {
+                        ssrOverview.parentNode.removeChild(ssrOverview);
+                    }
 
                 } else {
                     console.log(response.control.errorDescription);
