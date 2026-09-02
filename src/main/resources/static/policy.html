@@ -8,6 +8,20 @@
 
     <title>Politica de confidențialitate - Unistart</title>
     <link rel="canonical" href="/policy.html">
+    <script>
+        /* Absolute per-domain canonical - see the comment in webapp/index.html.
+           Served on unistart.ro and unistart.lt (+ www variants), so a relative
+           canonical points each host at itself. Mirrors RequestUtils.canonicalHost(). */
+        (function () {
+            var h = (location.hostname || '').toLowerCase(), c, www = h.lastIndexOf('www.', 0) === 0;
+            if (h.indexOf('unistart.lt') !== -1) c = www ? h : 'www.' + h;
+            else if (h.indexOf('unistart.ro') !== -1) c = www ? h.slice(4) : h;
+            else return;
+            var l = document.querySelector('link[rel="canonical"]');
+            if (!l) { l = document.createElement('link'); l.rel = 'canonical'; document.head.appendChild(l); }
+            l.href = 'https://' + c + location.pathname.replace(/\/index\.html$/, '/');
+        })();
+    </script>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>

@@ -9,6 +9,23 @@
           content="universitatea, politehnica, electronica, medicina, Babes Bolyai, upb, ubb, ase, snspa, upt, drept, management, administratie, stiinte politice, inginerie, compara facultati, pareri facultate, admitere, cum e la facultate">
 
     <title data-i18n-key="app-title">Unistart - Evaluări facultăți</title>
+    <link rel="canonical" href="/">
+    <script>
+        /* Absolute per-domain canonical. This file is served on unistart.ro and
+           unistart.lt (+ their www variants), so the relative <link> above points
+           each host at itself and Google keeps flagging "Duplicate without
+           user-selected canonical". Mirrors RequestUtils.canonicalHost():
+           unistart.ro canonical bare, unistart.lt canonical www. */
+        (function () {
+            var h = (location.hostname || '').toLowerCase(), c, www = h.lastIndexOf('www.', 0) === 0;
+            if (h.indexOf('unistart.lt') !== -1) c = www ? h : 'www.' + h;
+            else if (h.indexOf('unistart.ro') !== -1) c = www ? h.slice(4) : h;
+            else return;
+            var l = document.querySelector('link[rel="canonical"]');
+            if (!l) { l = document.createElement('link'); l.rel = 'canonical'; document.head.appendChild(l); }
+            l.href = 'https://' + c + location.pathname.replace(/\/index\.html$/, '/');
+        })();
+    </script>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
