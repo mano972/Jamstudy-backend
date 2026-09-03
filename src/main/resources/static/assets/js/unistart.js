@@ -3128,6 +3128,28 @@ function initGoogleTag() {
 	gtag('config', GA_MEASUREMENT_ID);
 }
 
+// Umami — self-hosted, privacy-friendly analytics at treisurse.ro/umami. It is
+// cookieless and stores no personal data, so unlike gtag it is NOT gated on cookie
+// consent; it loads on every public page. script.js derives its own collect
+// endpoint (.../umami/api/send) from this src, so the /umami path prefix is fine.
+// data-domains keeps localhost / staging hits out of the dashboard.
+var UMAMI_SRC = "https://treisurse.ro/umami/script.js";
+var UMAMI_WEBSITE_ID = "144d4f8f-453d-4e6b-bd88-f649d4405e62";
+
+function initUmami() {
+	if (!UMAMI_WEBSITE_ID || document.getElementById('umami-script')) {
+		return;
+	}
+	var script = document.createElement('script');
+	script.id = 'umami-script';
+	script.async = true;
+	script.defer = true;
+	script.src = UMAMI_SRC;
+	script.setAttribute('data-website-id', UMAMI_WEBSITE_ID);
+	script.setAttribute('data-domains', 'unistart.ro,www.unistart.ro');
+	document.head.appendChild(script);
+}
+
 function initCookieConsent() {
 	initGoogleTag();
 	renderCookieConsentBanner();
@@ -3405,6 +3427,7 @@ $(function() {
 	// Internal admin tool, not public-facing — no analytics/consent banner there.
 	if (!isAdminPortalPage()) {
 		initCookieConsent();
+		initUmami();
 		renderStickyAddReviewCta();
 	}
 });
