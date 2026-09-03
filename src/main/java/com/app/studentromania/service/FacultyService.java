@@ -17,6 +17,7 @@ import com.app.studentromania.util.Constants;
 import com.app.studentromania.util.FacultyFilter;
 import com.app.studentromania.util.LogUtils;
 import com.app.studentromania.util.SlugUtils;
+import com.app.studentromania.util.SocialCardImage;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -39,7 +40,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class FacultyService {
@@ -234,6 +237,46 @@ public class FacultyService {
         tmpDir = new File(coverPath);
         InputStream in = getClass().getClassLoader().getResourceAsStream(coverPath);
         return ResponseDTO.createMediaSuccessResponse(IOUtils.toByteArray(in));
+    }
+
+    /** 1200x630 renders of faculty covers, keyed by facultyId. Covers change rarely. */
+    private final Map<String, byte[]> socialCoverCache = new ConcurrentHashMap<>();
+
+    /**
+     * A 1200x630 version of the faculty cover for use as an {@code og:image}. The
+     * stored covers are wide, short banners that unfurl badly on Messenger /
+     * Facebook (a tiny cropped strip, or no image at all); this normalises the
+     * size so the large link card renders and the dimensions can be declared in
+     * the meta tags. Results are cached in memory. Falls back to the generic
+     * {@code unistart-og.png} share image if the cover can't be processed, and to
+     * the raw cover bytes as a last resort.
+     */
+    public ResponseDTO getFacultyCoverSocialCard(String facultyId) throws IOException {
+        byte[] cached = socialCoverCache.get(facultyId);
+        if (cached != null) {
+            return ResponseDTO.createMediaSuccessResponse(cached);
+        }
+        ResponseDTO cover = getFacultyCover(facultyId);
+        if (cover.getJsonObject() != null) {
+            return cover; // faculty not found - propagate the error response
+        }
+        byte[] card = SocialCardImage.render(cover.getMedia());
+        if (card == null) {
+            card = readClasspathBytes("static/assets/img/unistart-og.png");
+        }
+        if (card != null) {
+            socialCoverCache.put(facultyId, card);
+            return ResponseDTO.createMediaSuccessResponse(card);
+        }
+        return cover;
+    }
+
+    private byte[] readClasspathBytes(String path) {
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream(path)) {
+            return stream == null ? null : IOUtils.toByteArray(stream);
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     public void saveFacultyCover(String facultyId, MultipartFile file) throws Exception {
