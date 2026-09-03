@@ -104,21 +104,6 @@ public class FacultyController {
         return responseDTO.createMediaRestResponse();
     }
 
-    /**
-     * 1200x630 render of the cover, used as the og:image for the SSR faculty page
-     * so shared links unfurl with a proper large card. Cacheable - the render is
-     * deterministic and covers rarely change.
-     */
-    @GetMapping(value = "/{facultyId}/cover/social", produces = MediaType.IMAGE_PNG_VALUE)
-    @RestCall
-    public @ResponseBody ResponseEntity<?> getFacultyCoverSocialCard(@PathVariable String facultyId) throws IOException {
-        ResponseDTO responseDTO = facultyService.getFacultyCoverSocialCard(facultyId);
-        if (responseDTO.getJsonObject() != null) {
-            return responseDTO.createRestResponse();
-        }
-        return responseDTO.createCacheableMediaRestResponse(Constants.FACULTY_LOGO_CACHE_MAX_AGE_SECONDS);
-    }
-
     @PostMapping(value = "/{facultyId}/cover")
     @RestCall
     @Auth

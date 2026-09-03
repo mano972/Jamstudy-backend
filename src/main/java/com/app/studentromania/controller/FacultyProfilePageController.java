@@ -681,18 +681,17 @@ public class FacultyProfilePageController {
      * Open Graph + Twitter Card tags. These decide how a faculty link unfurls when
      * it is pasted into WhatsApp, Messenger, Facebook, Discord, iMessage, etc. —
      * which is how these pages actually get shared, with or without an in-app share
-     * button. og:image points at the faculty cover's /cover/social render — a
-     * fixed 1200x630 PNG (declared via og:image:width/height) so Messenger and
-     * Facebook draw the large card on the first scrape. That endpoint always
-     * resolves (default cover, then generic share image), so a shared link is
-     * never imageless.
+     * button. og:image is the shared branded card (alege-facultatea-potrivita.png,
+     * 1940x824, declared via og:image:width/height) so Messenger and Facebook draw
+     * the large card on the first scrape. It's a static asset that always
+     * resolves, so a shared link is never imageless.
      */
     private String buildSocialMetaTags(Faculty faculty, String description, String canonicalUrl, String origin,
             String countryCode) {
         String socialTitle = faculty.getFacultyName()
                 + (StringUtils.isNotEmpty(faculty.getFacultyShortname()) ? " (" + faculty.getFacultyShortname() + ")" : "")
                 + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " — " + faculty.getUniversityName() : "");
-        String imageUrl = origin + "/Jamstudy/v1/faculty/" + faculty.getFacultyId() + "/cover/social";
+        String imageUrl = origin + "/assets/img/alege-facultatea-potrivita.png";
         String locale = "LT".equalsIgnoreCase(countryCode) ? "lt_LT" : "ro_RO";
 
         String t = escapeHtml(socialTitle);
@@ -709,8 +708,8 @@ public class FacultyProfilePageController {
                 + "<meta property=\"og:url\" content=\"" + u + "\">\n    "
                 + "<meta property=\"og:image\" content=\"" + img + "\">\n    "
                 + "<meta property=\"og:image:type\" content=\"image/png\">\n    "
-                + "<meta property=\"og:image:width\" content=\"1200\">\n    "
-                + "<meta property=\"og:image:height\" content=\"630\">\n    "
+                + "<meta property=\"og:image:width\" content=\"1940\">\n    "
+                + "<meta property=\"og:image:height\" content=\"824\">\n    "
                 + "<meta property=\"og:image:alt\" content=\"" + alt + "\">\n    "
                 + "<meta name=\"twitter:card\" content=\"summary_large_image\">\n    "
                 + "<meta name=\"twitter:title\" content=\"" + t + "\">\n    "
