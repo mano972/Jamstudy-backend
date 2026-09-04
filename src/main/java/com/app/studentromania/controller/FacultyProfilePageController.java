@@ -357,6 +357,14 @@ public class FacultyProfilePageController {
         appendProgramsTable(html, "Programe de licență", faculty.getLicensePrograms());
         appendProgramsTable(html, "Programe de masterat", faculty.getMasterPrograms());
 
+        // Raw-HTML internal links to the tool pages. The site nav/footer is built by
+        // unistart.js, so without this the calculator / comparison pages have no
+        // crawlable inbound link and Google is slow to index them. Faculty pages are
+        // the most-crawled URLs, so this is where the link does the most good.
+        html.append("            <p style=\"margin-top:14px;font-size:13px;color:#66615b;\">Resurse: ")
+                .append("<a href=\"/calculator-medie-facultate.html\">Calculator medie facultate (ECTS)</a> &middot; ")
+                .append("<a href=\"/comparison.html\">Compară facultăți</a></p>\n");
+
         html.append("          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n");
         return html.toString();
     }

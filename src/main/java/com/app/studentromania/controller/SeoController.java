@@ -49,6 +49,15 @@ public class SeoController {
      */
     private static final LocalDate FACULTY_CONTENT_LASTMOD = LocalDate.parse("2026-09-04");
 
+    /**
+     * <lastmod> for the static public pages. Same idea as {@link #FACULTY_CONTENT_LASTMOD}:
+     * bump it when one of those pages gets a real content change (e.g. a new tool
+     * page like the medie calculator, or a rewritten landing page). Without any
+     * lastmod a brand-new static page sits in the sitemap with no freshness signal
+     * and Google is slow to index it.
+     */
+    private static final String STATIC_PAGES_LASTMOD = "2026-09-04";
+
     private static final String[] DISALLOWED_PAGES = {
             "/login.html", "/register.html", "/forgot.html", "/change.html",
             "/admin-portal.html", "/admin-portal-login.html", "/user.html",
@@ -71,7 +80,8 @@ public class SeoController {
         xml.append("<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
 
         for (String page : STATIC_PUBLIC_PAGES) {
-            xml.append("  <url><loc>").append(origin).append("/").append(page).append("</loc></url>\n");
+            xml.append("  <url><loc>").append(origin).append("/").append(page)
+                    .append("</loc><lastmod>").append(STATIC_PAGES_LASTMOD).append("</lastmod></url>\n");
         }
 
         Map<String, Date> latestReviewByFaculty = reviewDAO.getLatestReviewDateByFaculty();
