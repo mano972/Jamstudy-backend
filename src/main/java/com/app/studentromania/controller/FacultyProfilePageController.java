@@ -484,7 +484,11 @@ public class FacultyProfilePageController {
         for (Faculty f : faculties) {
             html.append("              <li style=\"padding:7px 0;border-top:1px solid #efefef;\">")
                     .append("<a href=\"/facultate/").append(f.getUniversitySlug()).append("/").append(f.getFacultySlug())
-                    .append("\">").append(escapeHtml(f.getFacultyName())).append("</a>");
+                    .append("\">").append(escapeHtml(f.getFacultyName()));
+            if (StringUtils.isNotEmpty(f.getFacultyShortname())) {
+                html.append(" (").append(escapeHtml(f.getFacultyShortname())).append(")");
+            }
+            html.append("</a>");
             if (showUniversity && StringUtils.isNotEmpty(f.getUniversityName())) {
                 html.append(" <span style=\"color:#999;font-size:13px;\">— ")
                         .append(escapeHtml(f.getUniversityName())).append("</span>");

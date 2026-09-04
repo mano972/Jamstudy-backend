@@ -31,6 +31,16 @@ public class SeoController {
             "contact.html", "terms.html", "policy.html"
     };
 
+    /**
+     * <lastmod> stamped on every faculty URL. The profile pages are generated from
+     * Couchbase and the model carries no per-row modified timestamp, so this is a
+     * single site-wide date, bumped by hand whenever a batch change lands that
+     * Google needs to recrawl (shortname rollouts, template/SSR changes, program
+     * imports). It is deliberately not "today" on every request — a sitemap that
+     * always claims everything changed yesterday gets its lastmod ignored.
+     */
+    private static final String FACULTY_PAGES_LASTMOD = "2026-09-04";
+
     private static final String[] DISALLOWED_PAGES = {
             "/login.html", "/register.html", "/forgot.html", "/change.html",
             "/admin-portal.html", "/admin-portal-login.html", "/user.html",
@@ -67,7 +77,7 @@ public class SeoController {
             }
             xml.append("  <url><loc>").append(origin).append("/facultate/")
                     .append(faculty.getUniversitySlug()).append("/").append(faculty.getFacultySlug())
-                    .append("</loc></url>\n");
+                    .append("</loc><lastmod>").append(FACULTY_PAGES_LASTMOD).append("</lastmod></url>\n");
         }
 
         xml.append("</urlset>\n");
