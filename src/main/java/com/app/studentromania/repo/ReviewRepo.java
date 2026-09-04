@@ -214,6 +214,20 @@ public class ReviewRepo {
 		return result;
 	}
 
+	/**
+	 * facultyId -> most recent reviewDate across that faculty's reviews. Feeds the
+	 * sitemap: it decides which review-only faculties are worth listing and stamps
+	 * a real &lt;lastmod&gt; so Google recrawls a page when a new review lands.
+	 */
+	@LogExecutionTime
+	public N1qlQueryResult getLatestReviewDateByFaculty() {
+		String query = "SELECT facultyId, MAX(reviewDate) AS lastReviewDate FROM " + Constants.BUCKET
+				+ " WHERE docType = $1 AND facultyId IS NOT MISSING AND reviewDate IS NOT MISSING"
+				+ " GROUP BY facultyId";
+
+		return template.queryN1QL(N1qlQuery.parameterized(query, JsonArray.from(DocTypeEnum.REVIEW.getValue())));
+	}
+
 	@LogExecutionTime
 	@LogParameters
 	public N1qlQueryResult getWouldRecommendPercentage(String facultyId) {

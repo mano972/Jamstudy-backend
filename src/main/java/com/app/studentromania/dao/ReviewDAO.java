@@ -1,7 +1,11 @@
 package com.app.studentromania.dao;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -16,6 +20,7 @@ import com.app.studentromania.util.LogUtils;
 import com.app.studentromania.util.ReviewFilter;
 import com.couchbase.client.java.document.json.JsonObject;
 import com.couchbase.client.java.query.N1qlQueryResult;
+import com.couchbase.client.java.query.N1qlQueryRow;
 
 @Component
 public class ReviewDAO {
@@ -167,6 +172,59 @@ public class ReviewDAO {
 
 	public void deleteAllReviews() {
 		reviewRepo.deleteAll();
+	}
+
+	/**
+	 * facultyId -> date of its most recent review. Faculties with no reviews are
+	 * absent from the map. Used by the sitemap; a query failure yields an empty
+	 * map so the sitemap still renders (falling back to the static lastmod).
+	 */
+	public Map<String, Date> getLatestReviewDateByFaculty() {
+		Map<String, Date> out = new HashMap<>();
+		try {
+			N1qlQueryResult result = reviewRepo.getLatestReviewDateByFaculty();
+			for (N1qlQueryRow row : result.allRows()) {
+				JsonObject value = row.value();
+				String facultyId = value.getString("facultyId");
+				if (facultyId == null || value.get("lastReviewDate") == null) {
+					continue;
+				}
+				Date date = toDate(value.get("lastReviewDate"));
+				if (date != null) {
+					out.put(facultyId, date);
+				}
+			}
+		} catch (RuntimeException e) {
+			logUtils.logMessage(LOGGER, "getLatestReviewDateByFaculty failed; sitemap falls back to static lastmod: "
+					+ e.getMessage());
+		}
+		return out;
+	}
+
+	/** reviewDate comes back as epoch millis (Spring Data stores Date as a long); tolerate ISO strings too. */
+	private static Date toDate(Object raw) {
+		if (raw instanceof Number) {
+			return new Date(((Number) raw).longValue());
+		}
+		if (raw instanceof String) {
+			String s = ((String) raw).trim();
+			try {
+				return new Date(Long.parseLong(s));
+			} catch (NumberFormatException ignored) {
+				// not epoch millis
+			}
+			try {
+				return Date.from(Instant.parse(s));
+			} catch (RuntimeException ignored) {
+				// not an ISO instant
+			}
+			try {
+				return Date.from(OffsetDateTime.parse(s).toInstant());
+			} catch (RuntimeException ignored) {
+				// give up
+			}
+		}
+		return null;
 	}
 
 }

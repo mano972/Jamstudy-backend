@@ -1,7 +1,12 @@
 package com.app.studentromania.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.app.studentromania.dao.FacultyDAO;
+import com.app.studentromania.dao.ReviewDAO;
 import com.app.studentromania.model.Faculty;
 import com.app.studentromania.util.RequestUtils;
 
@@ -32,14 +38,16 @@ public class SeoController {
     };
 
     /**
-     * <lastmod> stamped on every faculty URL. The profile pages are generated from
-     * Couchbase and the model carries no per-row modified timestamp, so this is a
-     * single site-wide date, bumped by hand whenever a batch change lands that
-     * Google needs to recrawl (shortname rollouts, template/SSR changes, program
-     * imports). It is deliberately not "today" on every request — a sitemap that
-     * always claims everything changed yesterday gets its lastmod ignored.
+     * Floor for a faculty page's <lastmod>. The Faculty model carries no per-row
+     * modified timestamp, so structural edits (shortname rollouts, SSR/template
+     * changes, program imports) can't be dated individually — bump this by hand
+     * when such a batch lands. Per-faculty review activity is layered on top: a
+     * page whose newest review is more recent than this date reports that review's
+     * date instead (see {@link #sitemap}). Deliberately not "today" on every
+     * request — a sitemap that always claims everything changed yesterday gets its
+     * lastmod ignored.
      */
-    private static final String FACULTY_PAGES_LASTMOD = "2026-09-04";
+    private static final LocalDate FACULTY_CONTENT_LASTMOD = LocalDate.parse("2026-09-04");
 
     private static final String[] DISALLOWED_PAGES = {
             "/login.html", "/register.html", "/forgot.html", "/change.html",
@@ -49,6 +57,9 @@ public class SeoController {
 
     @Autowired
     private FacultyDAO facultyDAO;
+
+    @Autowired
+    private ReviewDAO reviewDAO;
 
     @GetMapping(value = "/sitemap.xml", produces = "application/xml;charset=UTF-8")
     public void sitemap(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -63,6 +74,8 @@ public class SeoController {
             xml.append("  <url><loc>").append(origin).append("/").append(page).append("</loc></url>\n");
         }
 
+        Map<String, Date> latestReviewByFaculty = reviewDAO.getLatestReviewDateByFaculty();
+
         List<Faculty> faculties = facultyDAO.getAllFaculties();
         for (Faculty faculty : faculties) {
             String facultyCountry = StringUtils.isNotEmpty(faculty.getCountryCode()) ? faculty.getCountryCode() : "RO";
@@ -72,12 +85,14 @@ public class SeoController {
             if (StringUtils.isEmpty(faculty.getUniversitySlug()) || StringUtils.isEmpty(faculty.getFacultySlug())) {
                 continue;
             }
-            if (!hasIndexableContent(faculty)) {
+            Date latestReview = latestReviewByFaculty.get(faculty.getFacultyId());
+            // A page with reviews is never boilerplate, even with no description/programs.
+            if (latestReview == null && !hasIndexableContent(faculty)) {
                 continue;
             }
             xml.append("  <url><loc>").append(origin).append("/facultate/")
                     .append(faculty.getUniversitySlug()).append("/").append(faculty.getFacultySlug())
-                    .append("</loc><lastmod>").append(FACULTY_PAGES_LASTMOD).append("</lastmod></url>\n");
+                    .append("</loc><lastmod>").append(lastmodFor(latestReview)).append("</lastmod></url>\n");
         }
 
         xml.append("</urlset>\n");
@@ -107,6 +122,21 @@ public class SeoController {
 
     private static boolean isNotEmpty(List<?> list) {
         return list != null && !list.isEmpty();
+    }
+
+    /**
+     * A faculty URL's <lastmod>: the later of {@link #FACULTY_CONTENT_LASTMOD} and
+     * the date of its most recent review (when it has one), as {@code yyyy-MM-dd}.
+     */
+    private static String lastmodFor(Date latestReview) {
+        LocalDate date = FACULTY_CONTENT_LASTMOD;
+        if (latestReview != null) {
+            LocalDate reviewDay = latestReview.toInstant().atZone(ZoneOffset.UTC).toLocalDate();
+            if (reviewDay.isAfter(date)) {
+                date = reviewDay;
+            }
+        }
+        return date.format(DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
     @GetMapping(value = "/robots.txt", produces = "text/plain;charset=UTF-8")
