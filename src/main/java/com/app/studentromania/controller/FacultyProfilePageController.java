@@ -53,6 +53,42 @@ public class FacultyProfilePageController {
     private static final String BREADCRUMB_MARKER = "<!-- SSR_BREADCRUMB -->";
     private static final String OVERVIEW_MARKER = "<!-- SSR_FACULTY_OVERVIEW -->";
 
+    /**
+     * Faculties under this university slug get the sticky "Calculator admitere"
+     * CTA (a UNIBUC-only admission-average calculator lives at
+     * /calculator-admitere-unibuc.html).
+     */
+    private static final String UNIBUC_UNIVERSITY_SLUG = "universitatea-din-bucuresti-unibuc";
+
+    /**
+     * Sticky corner CTA to the UNIBUC admission-average calculator, injected only
+     * on Universitatea din Bucureşti faculty profile pages. Sits just before
+     * {@code </body>} (outside #wrapper, so {@code getFaculty()}'s SSR teardown
+     * never touches it) and takes the fixed bottom-left slot the generic sticky
+     * "add review" CTA deliberately leaves free on profile pages. Dark blue so it
+     * reads as a distinct action from the yellow "Adaugă evaluare" button.
+     * Server-rendered rather than JS-added, so the internal link to the
+     * calculator is in the crawled HTML of every UNIBUC faculty page.
+     */
+    private static final String ADMISSION_CALCULATOR_CTA_HTML =
+            "<style>"
+            + "#sticky-admission-calc-cta{position:fixed;left:20px;bottom:20px;z-index:900;"
+            + "display:inline-block;background:#1e2f6b;color:#fff;font-weight:600;font-size:15px;"
+            + "padding:13px 20px;border-radius:24px;text-decoration:none;"
+            + "box-shadow:0 2px 10px rgba(0,0,0,.25);}"
+            + "#sticky-admission-calc-cta:hover,#sticky-admission-calc-cta:focus"
+            + "{background:#162456;color:#fff;text-decoration:none;}"
+            + "#sticky-admission-calc-cta i{margin-right:8px;}"
+            + "@media (max-width:480px){#sticky-admission-calc-cta span{display:none;}"
+            + "#sticky-admission-calc-cta i{margin-right:0;}"
+            + "#sticky-admission-calc-cta{width:46px;height:46px;line-height:46px;padding:0;"
+            + "text-align:center;border-radius:50%;left:16px;bottom:16px;}}"
+            + "</style>"
+            + "<a id=\"sticky-admission-calc-cta\" href=\"/calculator-admitere-unibuc.html\""
+            + " title=\"Calculator admitere UNIBUC 2026 - calculează-ți media de admitere pe facultate\">"
+            + "<i class=\"fas fa-calculator fa-lg\" aria-hidden=\"true\"></i>"
+            + "<span>Calculator admitere</span></a>\n";
+
     /** Rows pulled from Couchbase; a few extra so we can skip text-less reviews. */
     private static final int TOP_REVIEWS_FETCH = 12;
     /** Review quotes rendered into the social-proof card and the JSON-LD. */
@@ -188,6 +224,9 @@ public class FacultyProfilePageController {
                 "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n"
                 + "<script type=\"application/ld+json\">" + buildJsonLd(faculty, canonicalUrl, origin, topReviews) + "</script>\n"
                 + "<script type=\"application/ld+json\">" + buildBreadcrumbJsonLd(faculty, canonicalUrl, origin) + "</script>\n</head>");
+        if (UNIBUC_UNIVERSITY_SLUG.equals(universitySlug)) {
+            html = html.replace("</body>", ADMISSION_CALCULATOR_CTA_HTML + "</body>");
+        }
         return html;
     }
 

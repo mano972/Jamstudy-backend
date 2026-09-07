@@ -2075,6 +2075,9 @@ function getPageHeader() {
 		'			<li>\n' +
 		'				<a href="./calculator-medie-facultate.html" class="btn btn-simple" data-i18n-key="header-footer-calculator">Calculator medie</a>\n' +
 		'			</li>\n' +
+		'			<li>\n' +
+		'				<a href="./calculator-admitere-unibuc.html" class="btn btn-simple" data-i18n-key="header-footer-calculator-admitere">Calculator admitere</a>\n' +
+		'			</li>\n' +
 		'            <li>\n' +
 		'                <a href="./contact.html" class="btn btn-simple" data-i18n-key="header-footer-contact">Contact</a>\n' +
 		'            </li>\n' +
@@ -2473,6 +2476,7 @@ const ro_json = {
                   "user-profile-saved-companies-empty": "Nu ai salvat nicio companie",
                   "user-profile-sign-out": "Ieși din cont",
                   "header-footer-calculator": "Calculator medie",
+                  "header-footer-calculator-admitere": "Calculator admitere",
                   "calculator-medie-title": "Calculator medie facultate",
                   "calculator-medie-intro": "Introdu fiecare materie cu nota obținută și numărul de credite ECTS, iar media se recalculează automat. Funcționează pentru orice facultate din România sau din Europa care folosește sistemul de credite ECTS.",
                   "calculator-medie-weighted-toggle": "Calculează media ponderată cu credite ECTS (recomandat)",
@@ -2756,6 +2760,7 @@ const en_json = {
                   "user-profile-saved-companies-empty": "You have not saved any companies",
                   "user-profile-sign-out": "Sign out",
                   "header-footer-calculator": "GPA calculator",
+                  "header-footer-calculator-admitere": "Admission calculator",
                   "calculator-medie-title": "College GPA Calculator",
                   "calculator-medie-intro": "Add each course with its grade and ECTS credits, and the average recalculates automatically. Works for any faculty in Romania or Europe that uses the ECTS credit system.",
                   "calculator-medie-weighted-toggle": "Calculate the credit-weighted average (recommended)",
@@ -3039,6 +3044,7 @@ const lt_json = {
                   "user-profile-saved-companies-empty": "Nesate išsaugoję jokių įmonių",
                   "user-profile-sign-out": "Atsijungti",
                   "header-footer-calculator": "Vidurkio skaičiuoklė",
+                  "header-footer-calculator-admitere": "Priėmimo skaičiuoklė",
                   "calculator-medie-title": "Vidurkio skaičiuoklė",
                   "calculator-medie-intro": "Įveskite kiekvieną dalyką su gautu pažymiu ir ECTS kreditais, o vidurkis bus perskaičiuojamas automatiškai. Tinka bet kuriam fakultetui Rumunijoje ar Europoje, naudojančiam ECTS kreditų sistemą.",
                   "calculator-medie-weighted-toggle": "Skaičiuoti svertinį vidurkį pagal ECTS kreditus (rekomenduojama)",

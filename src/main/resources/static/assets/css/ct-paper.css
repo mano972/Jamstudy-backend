@@ -10977,3 +10977,23 @@ input[type="color"]::-moz-color-swatch {
 .active-rich {
   background-color: #e0e9ff;
 }
+/* ---------------------------------------------------------------------------
+   Header fit: the top nav now carries an extra tool page ("Calculator
+   admitere"). Pull the UNISTART brand left of the container gutter and
+   tighten the nav-link horizontal spacing so every item stays on one line
+   at desktop widths. Below 768px the navbar collapses to a hamburger, so
+   this only applies there.
+   --------------------------------------------------------------------------- */
+@media (min-width: 768px) {
+	.navbar > .container .navbar-brand,
+	.navbar > .container-fluid .navbar-brand {
+		margin-left: -18px;
+		padding-left: 0;
+	}
+	.navbar .navbar-nav > li > a.btn {
+		margin-left: 1px;
+		margin-right: 1px;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}

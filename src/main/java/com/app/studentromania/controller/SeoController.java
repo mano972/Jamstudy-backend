@@ -33,7 +33,8 @@ import com.app.studentromania.util.RequestUtils;
 public class SeoController {
 
     private static final String[] STATIC_PUBLIC_PAGES = {
-            "", "search.html", "comparison.html", "calculator-medie-facultate.html", "articles.html", "reviews.html",
+            "", "search.html", "comparison.html", "calculator-medie-facultate.html",
+            "calculator-admitere-unibuc.html", "articles.html", "reviews.html",
             "contact.html", "terms.html", "policy.html"
     };
 
@@ -56,7 +57,7 @@ public class SeoController {
      * lastmod a brand-new static page sits in the sitemap with no freshness signal
      * and Google is slow to index it.
      */
-    private static final String STATIC_PAGES_LASTMOD = "2026-09-04";
+    private static final String STATIC_PAGES_LASTMOD = "2026-09-07";
 
     private static final String[] DISALLOWED_PAGES = {
             "/login.html", "/register.html", "/forgot.html", "/change.html",
