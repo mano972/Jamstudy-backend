@@ -27,6 +27,16 @@ public class FacultyProgram {
 
 	private String admissionType;
 
+	/*
+	 * Free-form text. admissionFormula = the admission-average formula as shown
+	 * to candidates (official weighting + explanatory note joined with " — ").
+	 * admissionTax = the one-off application/registration fee, e.g. "250 RON" or
+	 * "300 RON (1 specializare) / 400 RON (2) / 500 RON (3)".
+	 */
+	private String admissionTax;
+
+	private String admissionFormula;
+
 	private String programAccreditation;
 
 	/*
@@ -129,6 +139,22 @@ public class FacultyProgram {
 
 	public void setAdmissionType(String admissionType) {
 		this.admissionType = admissionType;
+	}
+
+	public String getAdmissionTax() {
+		return admissionTax;
+	}
+
+	public void setAdmissionTax(String admissionTax) {
+		this.admissionTax = admissionTax;
+	}
+
+	public String getAdmissionFormula() {
+		return admissionFormula;
+	}
+
+	public void setAdmissionFormula(String admissionFormula) {
+		this.admissionFormula = admissionFormula;
 	}
 
 	public String getProgramAccreditation() {

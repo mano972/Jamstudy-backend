@@ -1553,6 +1553,8 @@
                     var programBudgetPlaces = licenseProgram.programBudgetPlaces ? licenseProgram.programBudgetPlaces : "N/A";
                     var programTaxPlaces = licenseProgram.programTaxPlaces ? licenseProgram.programTaxPlaces : "N/A";
                     var annualTax = licenseProgram.annualTax ? escapeHtml(licenseProgram.annualTax) : "N/A";
+                    var admissionTax = licenseProgram.admissionTax ? escapeHtml(licenseProgram.admissionTax) : "N/A";
+                    var admissionFormula = licenseProgram.admissionFormula ? escapeHtml(licenseProgram.admissionFormula) : "";
                     var lastGrade = licenseProgram.lastGrade ? licenseProgram.lastGrade.toFixed(1) : "N/A";
                     var candidatesPerPlace = licenseProgram.candidatesPerPlace ? licenseProgram.candidatesPerPlace.toFixed(1) : "N/A";
                     var programType = licenseProgram.programType;
@@ -1575,7 +1577,18 @@
                         + programFieldRow('study-programs-tax-places', 'Locuri taxă', programTaxPlaces,
                                         'study-programs-last-grade', 'Ultima notă', lastGrade)
                         + programFieldRow('study-programs-candidates-per-place', 'Candidați pe loc', candidatesPerPlace,
-                                        'study-programs-annual-tax', 'Taxa anuală', annualTax);
+                                        'study-programs-annual-tax', 'Taxa anuală', annualTax)
+                        + programFieldRow('study-programs-admission-tax', 'Taxă înscriere', admissionTax,
+                                        'study-programs-admission-tax', '', '');
+
+                    if (admissionFormula) {
+                        programRowsString +=
+                            '<div class="row general-presentation-row">'
+                            + '<div class="col-xs-12" style="padding-top:6px;line-height:1.4;">'
+                            + '<label><span data-i18n-key="study-programs-admission-formula">Formulă admitere</span>: </label>'
+                            + '<span>' + admissionFormula + '</span>'
+                            + '</div></div>';
+                    }
 
                     var facultyRowString = (
     '												<div class="col-md-6 col-xs-12" style="margin-bottom: 15px;">'
