@@ -70,7 +70,7 @@ public class FacultyDTO {
 
     private String accreditation;
 
-    private Integer annualTax;
+    private String annualTax;
 
     private List<String> companyIds;
 
@@ -330,11 +330,11 @@ public class FacultyDTO {
         this.accreditation = accreditation;
     }
 
-    public Integer getAnnualTax() {
+    public String getAnnualTax() {
         return annualTax;
     }
 
-    public void setAnnualTax(Integer annualTax) {
+    public void setAnnualTax(String annualTax) {
         this.annualTax = annualTax;
     }
 

@@ -439,7 +439,7 @@ public class FacultyProfilePageController {
                     .append(td(program.getProgramName()))
                     .append(td(firstNonBlank(program.getProgramDomain(), program.getDomainOfLicenseOrMaster())))
                     .append(td(program.getProgramAvailablePlaces() != null ? String.valueOf(program.getProgramAvailablePlaces()) : null))
-                    .append(td(program.getAnnualTax() != null ? program.getAnnualTax() + " lei/an" : null))
+                    .append(td(program.getAnnualTax()))
                     .append(td(program.getCandidatesPerPlace() != null ? String.valueOf(program.getCandidatesPerPlace()) : null))
                     .append(td(program.getAdmissionType()))
                     .append(td(program.getProgramAccreditation()))

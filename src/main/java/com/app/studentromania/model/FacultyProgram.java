@@ -29,7 +29,15 @@ public class FacultyProgram {
 
 	private String programAccreditation;
 
-	private Integer annualTax;
+	/*
+	 * Free-form text: amount + currency + unit, with an optional per-year
+	 * breakdown when the tax is not flat across the study years, e.g.
+	 * "5500 RON/an" or
+	 * "8800 RON (anul I), 8750 RON (anul II), 8240 RON (anul III), 7550 RON (anul IV)".
+	 * Was Integer; legacy documents still hold a bare number, which Jackson
+	 * coerces to String on read.
+	 */
+	private String annualTax;
 
 	private Integer noOfYears;
 
@@ -131,11 +139,11 @@ public class FacultyProgram {
 		this.programAccreditation = programAccreditation;
 	}
 
-	public Integer getAnnualTax() {
+	public String getAnnualTax() {
 		return annualTax;
 	}
 
-	public void setAnnualTax(Integer annualTax) {
+	public void setAnnualTax(String annualTax) {
 		this.annualTax = annualTax;
 	}
 

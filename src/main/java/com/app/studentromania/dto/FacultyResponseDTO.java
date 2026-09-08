@@ -74,7 +74,7 @@ public class FacultyResponseDTO {
 
     private String accreditation;
 
-    private Integer annualTax;
+    private String annualTax;
 
     private Double avgRating;
 
@@ -382,11 +382,11 @@ public class FacultyResponseDTO {
         this.accreditation = accreditation;
     }
 
-    public Integer getAnnualTax() {
+    public String getAnnualTax() {
         return annualTax;
     }
 
-    public void setAnnualTax(Integer annualTax) {
+    public void setAnnualTax(String annualTax) {
         this.annualTax = annualTax;
     }
 

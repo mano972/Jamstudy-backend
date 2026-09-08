@@ -1552,7 +1552,7 @@
                     var programAvailablePlaces = licenseProgram.programAvailablePlaces ? licenseProgram.programAvailablePlaces : "N/A";
                     var programBudgetPlaces = licenseProgram.programBudgetPlaces ? licenseProgram.programBudgetPlaces : "N/A";
                     var programTaxPlaces = licenseProgram.programTaxPlaces ? licenseProgram.programTaxPlaces : "N/A";
-                    var annualTax = licenseProgram.annualTax ? licenseProgram.annualTax : "N/A";
+                    var annualTax = licenseProgram.annualTax ? escapeHtml(licenseProgram.annualTax) : "N/A";
                     var lastGrade = licenseProgram.lastGrade ? licenseProgram.lastGrade.toFixed(1) : "N/A";
                     var candidatesPerPlace = licenseProgram.candidatesPerPlace ? licenseProgram.candidatesPerPlace.toFixed(1) : "N/A";
                     var programType = licenseProgram.programType;

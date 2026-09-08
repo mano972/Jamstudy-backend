@@ -315,13 +315,14 @@ public class InitController {
 		} catch (NumberFormatException e) {
 			prog.setLastGrade(null);
 		}
-		try {
-			String annualTax = column[6];
-			annualTax = annualTax.replace(".", "");
-			annualTax = annualTax.replace("lei", "").trim();
-			prog.setAnnualTax(Integer.parseInt(annualTax));
-		} catch (NumberFormatException e) {
+		// annualTax is free-form text now; the legacy CSV holds a bare number
+		String annualTax = column[6].replace(".", "").replace("lei", "").trim();
+		if (annualTax.isEmpty()) {
 			prog.setAnnualTax(null);
+		} else if (annualTax.matches("\\d+")) {
+			prog.setAnnualTax(annualTax + " RON/an");
+		} else {
+			prog.setAnnualTax(annualTax);
 		}
 		if (fac.getLicensePrograms() == null) {
 			fac.setLicensePrograms(new ArrayList<>());
