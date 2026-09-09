@@ -207,9 +207,10 @@ public class FacultyProfilePageController {
                 + (StringUtils.isNotEmpty(cityShort) ? ", " + cityShort : "")
                 + uniParen
                 + " — păreri și evaluări de la studenți | Unistart";
-        String description = "Vezi evaluări, rating și detalii despre " + faculty.getFacultyName() + shortnameParen + uniParen
-                + (StringUtils.isNotEmpty(cityShort) ? " din " + cityShort : "")
-                + ". Alege facultatea potrivită pentru tine pe Unistart.";
+        String description = faculty.getFacultyName() + shortnameParen
+                + (StringUtils.isNotEmpty(cityShort) ? " din " + cityShort : "") + uniParen
+                + ": programe de licență și master, locuri la buget și taxă, taxe de școlarizare"
+                + " și de înscriere, formula de admitere și evaluări de la studenți.";
 
         String html = profileHtmlTemplate.replace(TITLE_TAG,
                 "<title>" + escapeHtml(title) + "</title>\n    <link rel=\"canonical\" href=\"" + canonicalUrl + "\">");
@@ -393,8 +394,11 @@ public class FacultyProfilePageController {
             html.append("            </ul>\n");
         }
 
-        appendProgramsTable(html, "Programe de licență", faculty.getLicensePrograms());
-        appendProgramsTable(html, "Programe de masterat", faculty.getMasterPrograms());
+        String facName = nvl(faculty.getFacultyName(), "");
+        appendProgramsTable(html, "Programe de licență la " + facName
+                + ": locuri, taxe de școlarizare și de înscriere, formula de admitere", faculty.getLicensePrograms());
+        appendProgramsTable(html, "Programe de masterat la " + facName
+                + ": locuri, taxe de școlarizare și de înscriere, formula de admitere", faculty.getMasterPrograms());
 
         // Raw-HTML internal links to the tool pages. The site nav/footer is built by
         // unistart.js, so without this the calculator / comparison pages have no

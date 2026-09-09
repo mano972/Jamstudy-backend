@@ -766,6 +766,53 @@ select {
 	}
 }
 
+/* Mobile: render the 4 profile tabs as a clear 2x2 switcher of equal cards,
+   with the active one filled orange so it's obvious you can tap to change. */
+@media (max-width:767px) {
+	#faculty-profile-header .nav-tabs-navigation {
+		border-bottom: 0;
+	}
+	#faculty-profile-header .nav-tabs {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 6px;
+	}
+	#faculty-profile-header .nav-tabs > li > a {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 4px;
+		min-height: 60px;
+		padding: 8px 6px;
+		text-align: center;
+		white-space: normal;
+		line-height: 1.2;
+		font-size: 13px;
+		font-weight: 600;
+		color: #66615b;
+		background: #faf9f7;
+		border: 1px solid #e6e2d8;
+		border-radius: 10px;
+	}
+	#faculty-profile-header .nav-tabs > li > a i {
+		margin-right: 0;
+		font-size: 18px;
+	}
+	#faculty-profile-header .nav-tabs > li.active > a,
+	#faculty-profile-header .nav-tabs > li.active > a:hover,
+	#faculty-profile-header .nav-tabs > li.active > a:focus {
+		color: #ffffff;
+		background: #e8931c;
+		border-color: #e8931c;
+		border-bottom-color: #e8931c;
+	}
+	#faculty-profile-header .nav-tabs > li.active > a i,
+	#faculty-profile-header .nav-tabs > li.active > a:hover i {
+		color: #ffffff;
+	}
+}
+
 
 /*       Radio buttons         */
 

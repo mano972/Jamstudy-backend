@@ -1946,7 +1946,11 @@ function translatePage() {
 function translateElement(element) {
   const key = element.getAttribute("data-i18n-key");
   const translation = translations[key];
-  element.innerText = translation;
+  // Missing key: keep the element's hardcoded fallback text instead of
+  // blanking it to the string "undefined".
+  if (translation != null) {
+    element.innerText = translation;
+  }
 }
 
 function translateKey(key) {
@@ -2372,6 +2376,9 @@ const ro_json = {
                   "study-programs-last-grade": "Ultima notă",
                   "study-programs-candidates-per-place": "Candidați pe loc",
                   "study-programs-annual-tax": "Taxa anuală",
+                  "study-programs-admission-tax": "Taxă înscriere",
+                  "study-programs-admission-formula": "Formulă admitere",
+                  "go-to-study-programs": "Vezi programele de studiu",
                   "no-reviews": "Nu există evaluări",
                   "no-more-reviews": "Nu mai există alte evaluări pentru această facultate",
                   "compare-faculties": "Compară facultăți",
@@ -2656,6 +2663,9 @@ const en_json = {
                   "study-programs-last-grade": "Last grade",
                   "study-programs-candidates-per-place": "Candidates per place",
                   "study-programs-annual-tax": "Annual tax",
+                  "study-programs-admission-tax": "Application fee",
+                  "study-programs-admission-formula": "Admission formula",
+                  "go-to-study-programs": "See study programs",
                   "no-reviews": "There are no reviews",
                   "no-more-reviews": "There are no more reviews for this faculty",
                   "compare-faculties": "Compare faculties",
@@ -2940,6 +2950,9 @@ const lt_json = {
                   "study-programs-last-grade": "Paskutinis balas",
                   "study-programs-candidates-per-place": "Kandidatai vienai vietai",
                   "study-programs-annual-tax": "Metinė mokestis",
+                  "study-programs-admission-tax": "Stojimo mokestis",
+                  "study-programs-admission-formula": "Priėmimo formulė",
+                  "go-to-study-programs": "Žiūrėti studijų programas",
                   "no-reviews": "Atsiliepimų nėra",
                   "no-more-reviews": "Daugiau atsiliepimų apie šį fakultetą nėra",
                   "compare-faculties": "Palyginti fakultetus",
