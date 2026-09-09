@@ -1535,6 +1535,15 @@
                 facultyProgramsLicenseAndMaster = facultyProgramsLicenseAndMaster.concat(licensePrograms);
                 facultyProgramsLicenseAndMaster = facultyProgramsLicenseAndMaster.concat(masterPrograms);
 
+                // UNIBUC-only: link to /calculator-admitere-unibuc.html under the
+                // admission formula. Slug matches admSlugify() on that page.
+                var isUnibucFaculty = /unibuc/i.test(response.result.universityName || "");
+                var unibucCalcSlug = (response.result.facultyName || "")
+                    .replace(/^Facultatea de\s+/i, "").toLowerCase()
+                    .replace(/ă/g, "a").replace(/â/g, "a").replace(/î/g, "i")
+                    .replace(/ș/g, "s").replace(/ş/g, "s").replace(/ț/g, "t").replace(/ţ/g, "t")
+                    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
                 function programFieldRow(labelKeyA, labelTextA, valueA, labelKeyB, labelTextB, valueB) {
                     return (
                                                     '<div class="row general-presentation-row">'
@@ -1613,11 +1622,22 @@
                         + programFieldRow('study-programs-tax-places', 'Locuri taxă', programTaxPlaces,
                                         'study-programs-last-grade', 'Ultima notă', lastGrade)
                         + programFieldRow('study-programs-candidates-per-place', 'Candidați pe loc', candidatesPerPlace,
-                                        'study-programs-admission-tax', 'Taxă înscriere', admissionTax);
+                                        'study-programs-annual-tax', 'Taxa anuală', annualTax);
 
                     programRowsString +=
-                        fullWidthProgramRow('study-programs-annual-tax', 'Taxa anuală', annualTax)
+                        fullWidthProgramRow('study-programs-admission-tax', 'Taxă înscriere', admissionTax)
                         + fullWidthProgramRow('study-programs-admission-formula', 'Formulă admitere', admissionFormula);
+
+                    if (isUnibucFaculty) {
+                        programRowsString +=
+                            '<div class="row general-presentation-row">'
+                            + '<div class="col-md-12 col-md-offset-0 col-xs-12">'
+                            + '<div class="col-xs-12" style="padding-top:2px;">'
+                            + '<a href="/calculator-admitere-unibuc.html?fac=' + unibucCalcSlug + '" class="btn btn-simple btn-info" style="padding:2px 0;font-size:12px;font-weight:400;"><span data-i18n-key="go-to-admission-calculator">Calculator admitere</span></a>'
+                            + '</div>'
+                            + '</div>'
+                            + '</div>';
+                    }
 
                     var facultyRowString = (
     '												<div class="col-md-6 col-xs-12" style="margin-bottom: 15px;">'
