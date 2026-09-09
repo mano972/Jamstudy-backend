@@ -772,10 +772,21 @@ select {
 	#faculty-profile-header .nav-tabs-navigation {
 		border-bottom: 0;
 	}
+	/* space below the tab grid so it doesn't sit on the card's bottom border */
+	#faculty-profile-header .nav-row-faculty-profile {
+		padding-bottom: 14px;
+	}
 	#faculty-profile-header .nav-tabs {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 6px;
+	}
+	/* Bootstrap's .nav clearfix pseudo-elements would each take a grid cell and
+	   shove the first tab into column 2 — drop them here. */
+	#faculty-profile-header .nav-tabs::before,
+	#faculty-profile-header .nav-tabs::after {
+		content: none;
+		display: none;
 	}
 	#faculty-profile-header .nav-tabs > li > a {
 		display: flex;
