@@ -431,7 +431,7 @@ public class FacultyProfilePageController {
         html.append("            <div style=\"overflow-x:auto;\">\n");
         html.append("            <table style=\"width:100%;border-collapse:collapse;font-size:14px;\">\n");
         html.append("              <thead><tr>");
-        for (String col : new String[] { "Program", "Domeniu", "Locuri", "Taxă anuală", "Taxă înscriere", "Candidați/loc", "Admitere", "Formulă admitere", "Acreditare" }) {
+        for (String col : new String[] { "Program", "Domeniu", "Locuri", "Taxă înscriere", "Taxă anuală", "Candidați/loc", "Admitere", "Formulă admitere", "Acreditare" }) {
             html.append("<th style=\"text-align:left;padding:6px;border-bottom:1px solid #ddd;\">").append(escapeHtml(col)).append("</th>");
         }
         html.append("</tr></thead>\n            <tbody>\n");
@@ -443,8 +443,8 @@ public class FacultyProfilePageController {
                     .append(td(program.getProgramName()))
                     .append(td(firstNonBlank(program.getProgramDomain(), program.getDomainOfLicenseOrMaster())))
                     .append(td(program.getProgramAvailablePlaces() != null ? String.valueOf(program.getProgramAvailablePlaces()) : null))
-                    .append(td(program.getAnnualTax()))
                     .append(td(program.getAdmissionTax()))
+                    .append(td(program.getAnnualTax()))
                     .append(td(program.getCandidatesPerPlace() != null ? String.valueOf(program.getCandidatesPerPlace()) : null))
                     .append(td(program.getAdmissionType()))
                     .append(td(program.getAdmissionFormula()))

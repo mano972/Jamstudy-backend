@@ -1494,10 +1494,8 @@
     +'												</div>'
     +'												<br>'
     +												generalPresentationContentString
-    +'												<div class="row" style="margin-top: 18px;">'
-    +'													<div class="col-md-6 col-md-offset-3 col-xs-12">'
-    +'														<a class="btn btn-info btn-fill btn-block" onclick="goToProgramsTab()"><i class="fa fa-graduation-cap" style="margin-right: 8px;"></i><span data-i18n-key="go-to-study-programs">Vezi programele de studiu</span><i class="fa fa-arrow-right" style="margin-left: 8px;"></i></a>'
-    +'													</div>'
+    +'												<div class="text-center" style="margin-top: 18px;">'
+    +'													<a class="btn btn-info" onclick="goToProgramsTab(); return false;"><span data-i18n-key="go-to-study-programs">Vezi programele de studiu</span></a>'
     +'												</div>'
     +'											</div>'
     +'										</div>'
@@ -1560,6 +1558,23 @@
                     );
                 }
 
+                // Single-column row for values that can be long (formula, annual
+                // tax). Nested the same 2 levels as programFieldRow's label cell so
+                // the label lines up with the rows above; explicit space after the
+                // "label:" so the value never sticks to it.
+                function fullWidthProgramRow(labelKey, labelText, value) {
+                    return (
+                                                    '<div class="row general-presentation-row">'
+    +'													<div class="col-md-12 col-md-offset-0 col-xs-12">'
+    +'														<div class="col-xs-12" style="padding-top:6px;line-height:1.4;">'
+    +'															<label><span data-i18n-key="' + labelKey + '">' + labelText + '</span>:</label> '
+    +'															<span>' + value + '</span>'
+    +'														</div>'
+    +'													</div>'
+    +'												</div>'
+                    );
+                }
+
                 var facultyProfileProgramsString = '';
                 var i;
                 for (i in facultyProgramsLicenseAndMaster) {
@@ -1598,19 +1613,11 @@
                         + programFieldRow('study-programs-tax-places', 'Locuri taxă', programTaxPlaces,
                                         'study-programs-last-grade', 'Ultima notă', lastGrade)
                         + programFieldRow('study-programs-candidates-per-place', 'Candidați pe loc', candidatesPerPlace,
-                                        'study-programs-annual-tax', 'Taxa anuală', annualTax);
+                                        'study-programs-admission-tax', 'Taxă înscriere', admissionTax);
 
                     programRowsString +=
-                        '<div class="row general-presentation-row">'
-                        + '<div class="col-xs-12" style="padding-top:6px;line-height:1.4;">'
-                        + '<label><span data-i18n-key="study-programs-admission-tax">Taxă înscriere</span>: </label>'
-                        + '<span>' + admissionTax + '</span>'
-                        + '</div></div>'
-                        + '<div class="row general-presentation-row">'
-                        + '<div class="col-xs-12" style="padding-top:6px;line-height:1.4;">'
-                        + '<label><span data-i18n-key="study-programs-admission-formula">Formulă admitere</span>: </label>'
-                        + '<span>' + admissionFormula + '</span>'
-                        + '</div></div>';
+                        fullWidthProgramRow('study-programs-annual-tax', 'Taxa anuală', annualTax)
+                        + fullWidthProgramRow('study-programs-admission-formula', 'Formulă admitere', admissionFormula);
 
                     var facultyRowString = (
     '												<div class="col-md-6 col-xs-12" style="margin-bottom: 15px;">'
