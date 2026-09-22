@@ -2130,6 +2130,16 @@ function getPageFooter() {
 		'                            </a>\n' +
 		'                        </li>\n' +
 		'                        <li>\n' +
+		'                            <a href="./calculator-admitere-unibuc.html" data-i18n-key="header-footer-calculator-admitere">\n' +
+		'                                Calculator admitere\n' +
+		'                            </a>\n' +
+		'                        </li>\n' +
+		'                        <li>\n' +
+		'                            <a href="./calculator-medie-umfcd.html" data-i18n-key="header-footer-calculator-umfcd">\n' +
+		'                                Calculator medie UMFCD\n' +
+		'                            </a>\n' +
+		'                        </li>\n' +
+		'                        <li>\n' +
 		'                            <a href="./contact.html" data-i18n-key="header-footer-contact">\n' +
 		'                               Contact\n' +
 		'                            </a>\n' +
@@ -2185,7 +2195,32 @@ function getPageFooter() {
 		'    </div>';
 
 	document.getElementById('footer').innerHTML = footerString;
+	syncFooterSpacing();
 }
+
+// The footer is position:absolute/bottom:0 with only a min-height (it grows to
+// fit its own links, which vary by page and viewport - e.g. wrapping to more
+// lines on narrow screens), so .wrapper needs a matching padding-bottom or the
+// footer either overlaps page content (padding too small) or leaves a gap
+// (padding too big). Re-measured on load and on resize/orientation change
+// rather than hardcoded, so adding/removing a footer link never silently
+// breaks this again.
+function syncFooterSpacing() {
+	var footer = document.getElementById('footer');
+	var wrapper = document.querySelector('.wrapper');
+	if (!footer || !wrapper) {
+		return;
+	}
+	wrapper.style.paddingBottom = footer.offsetHeight + 'px';
+}
+
+(function() {
+	var resizeTimer;
+	window.addEventListener('resize', function() {
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(syncFooterSpacing, 150);
+	});
+})();
 
 function getUField(key) {
 	var u = localStorage.getItem("u");
@@ -2485,6 +2520,7 @@ const ro_json = {
                   "user-profile-sign-out": "Ieși din cont",
                   "header-footer-calculator": "Calculator medie",
                   "header-footer-calculator-admitere": "Calculator admitere",
+                  "header-footer-calculator-umfcd": "Calculator medie UMFCD",
                   "calculator-medie-title": "Calculator medie facultate",
                   "calculator-medie-intro": "Introdu fiecare materie cu nota obținută și numărul de credite ECTS, iar media se recalculează automat. Funcționează pentru orice facultate din România sau din Europa care folosește sistemul de credite ECTS.",
                   "calculator-medie-weighted-toggle": "Calculează media ponderată cu credite ECTS (recomandat)",
@@ -2773,6 +2809,7 @@ const en_json = {
                   "user-profile-sign-out": "Sign out",
                   "header-footer-calculator": "GPA calculator",
                   "header-footer-calculator-admitere": "Admission calculator",
+                  "header-footer-calculator-umfcd": "UMFCD GPA calculator",
                   "calculator-medie-title": "College GPA Calculator",
                   "calculator-medie-intro": "Add each course with its grade and ECTS credits, and the average recalculates automatically. Works for any faculty in Romania or Europe that uses the ECTS credit system.",
                   "calculator-medie-weighted-toggle": "Calculate the credit-weighted average (recommended)",
@@ -3061,6 +3098,7 @@ const lt_json = {
                   "user-profile-sign-out": "Atsijungti",
                   "header-footer-calculator": "Vidurkio skaičiuoklė",
                   "header-footer-calculator-admitere": "Priėmimo skaičiuoklė",
+                  "header-footer-calculator-umfcd": "UMFCD vidurkio skaičiuoklė",
                   "calculator-medie-title": "Vidurkio skaičiuoklė",
                   "calculator-medie-intro": "Įveskite kiekvieną dalyką su gautu pažymiu ir ECTS kreditais, o vidurkis bus perskaičiuojamas automatiškai. Tinka bet kuriam fakultetui Rumunijoje ar Europoje, naudojančiam ECTS kreditų sistemą.",
                   "calculator-medie-weighted-toggle": "Skaičiuoti svertinį vidurkį pagal ECTS kreditus (rekomenduojama)",

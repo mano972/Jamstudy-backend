@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="ro">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/png" href="./assets/img/graduation_cap_small.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="description"
+          content="Calculator medie UMFCD: alege Medicină Generală sau Medicină Dentară și anul de studiu, introdu notele la fiecare materie din planul de învățământ oficial și afli media ponderată pe credite.">
+    <meta name="keywords"
+          content="calculator medie umfcd, calculator medie medicina generala umfcd, calculator medie medicina dentara umfcd, media ponderata umfcd, plan de invatamant umfcd, calculator umfcd, medie facultate medicina bucuresti">
+    <meta name="robots" content="index, follow">
+
+    <title>Calculator Medie UMFCD (Medicină Generală / Dentară) - Unistart</title>
+    <link rel="canonical" href="/calculator-medie-umfcd.html">
+    <script>
+        /* Absolute per-domain canonical - see the comment in webapp/index.html.
+           Served on unistart.ro and unistart.lt (+ www variants), so a relative
+           canonical points each host at itself. Mirrors RequestUtils.canonicalHost(). */
+        (function () {
+            var h = (location.hostname || '').toLowerCase(), c, www = h.lastIndexOf('www.', 0) === 0;
+            if (h.indexOf('unistart.lt') !== -1) c = www ? h : 'www.' + h;
+            else if (h.indexOf('unistart.ro') !== -1) c = www ? h.slice(4) : h;
+            else return;
+            var l = document.querySelector('link[rel="canonical"]');
+            if (!l) { l = document.createElement('link'); l.rel = 'canonical'; document.head.appendChild(l); }
+            l.href = 'https://' + c + location.pathname.replace(/\/index\.html$/, '/');
+        })();
+    </script>
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Unistart">
+    <meta property="og:locale" content="ro_RO">
+    <meta property="og:title" content="Calculator medie UMFCD - Medicină Generală și Medicină Dentară">
+    <meta property="og:description"
+          content="Alege facultatea (Medicină Generală / Medicină Dentară) și anul de studiu, introdu notele la fiecare materie din planul de învățământ oficial UMFCD și afli media ponderată pe credite.">
+    <meta property="og:url" content="https://unistart.ro/calculator-medie-umfcd.html">
+    <meta property="og:image" content="https://unistart.ro/assets/img/alege-facultatea-potrivita.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1940">
+    <meta property="og:image:height" content="824">
+    <meta property="og:image:alt" content="Unistart">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Calculator medie UMFCD">
+    <meta name="twitter:description"
+          content="Alege facultatea și anul de studiu, introdu notele și afli media ponderată pe credite, după planul de învățământ oficial UMFCD.">
+    <meta name="twitter:image" content="https://unistart.ro/assets/img/alege-facultatea-potrivita.png">
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Acasă",
+                    "item": "https://unistart.ro/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Calculator medie UMFCD",
+                    "item": "https://unistart.ro/calculator-medie-umfcd.html"
+                }
+            ]
+        }
+    </script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Calculator Medie UMFCD",
+            "description": "Calculează media ponderată pentru Medicină Generală sau Medicină Dentară la UMFCD, materie cu materie, după planul de învățământ oficial.",
+            "url": "https://unistart.ro/calculator-medie-umfcd.html",
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "Any",
+            "inLanguage": "ro",
+            "isAccessibleForFree": true,
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "RON"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "Unistart",
+                "url": "https://unistart.ro/"
+            }
+        }
+    </script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "Cum se calculează media la UMFCD?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "La fel ca la majoritatea facultăților din România, printr-o medie ponderată pe credite: nota fiecărei materii înmulțită cu numărul ei de credite ECTS, totul împărțit la suma creditelor. Fiecare an de studiu la UMFCD (Medicină Generală sau Medicină Dentară) însumează 60 de credite transferabile, împărțite pe un plan de învățământ fix, cu materii obligatorii și opționale."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "De ce nu introduc eu creditele, ca la calculatorul general?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Pentru că la UMFCD planul de învățământ e fix pe an și pe facultate (Medicină Generală sau Medicină Dentară) - materiile și creditele lor sunt stabilite de universitate, nu variază de la un student la altul. Calculatorul le are deja completate din planurile de învățământ oficiale UMFCD 2025-2026; tu introduci doar nota la fiecare materie promovată."
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "Media calculată aici este cea oficială?",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Rezultatul este orientativ, calculat după formula standard de medie ponderată pe credite, pe baza planurilor de învățământ publicate de UMFCD. Pentru situația oficială (inclusiv burse, an modular, discipline reprogramate), verifică secretariatul facultății tale."
+                    }
+                }
+            ]
+        }
+    </script>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+    <meta name="viewport" content="width=device-width"/>
+
+    <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet"/>
+    <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
+    <link href="./assets/css/demo.css" rel="stylesheet"/>
+    <link href="./assets/css/examples.css" rel="stylesheet"/>
+
+    <style>
+        .umf-select {
+            margin-bottom: 10px;
+        }
+        /* The site's .form-control reset strips the native select arrow with no
+           replacement, so without this a <select> looks like a plain text field -
+           nothing hints it's a dropdown. Same chevron on all three selects here
+           (facultate, an, notă per materie). */
+        #umf-faculty, #umf-year, .umf-course-grade select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%23666'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 34px;
+        }
+        .umf-progress {
+            font-size: 13px;
+            color: #898781;
+            margin: 10px 0 4px;
+        }
+        .umf-course-row {
+            border: 1px solid #e5e3dc;
+            border-radius: 4px;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+        }
+        .umf-course-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .umf-course-credits {
+            font-size: 12px;
+            color: #898781;
+        }
+        .umf-course-grade {
+            margin-top: 6px;
+        }
+        .umf-course-grade select {
+            height: 34px;
+            padding: 4px 8px;
+        }
+        .umf-result-label {
+            font-size: 14px;
+            color: #898781;
+        }
+        .umf-result-value {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .umf-result-caption {
+            font-size: 13px;
+            color: #898781;
+            margin-top: 4px;
+        }
+        .umf-faq-question {
+            margin-top: 20px;
+            margin-bottom: 6px;
+        }
+        .umf-related-links a {
+            margin-right: 16px;
+        }
+        .calculator-switch {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .calculator-switch a {
+            display: inline-block;
+            padding: 10px 22px;
+            margin: 4px;
+            border-radius: 24px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+        }
+        .calculator-switch a.calculator-switch-active {
+            background: #252422;
+            color: #fff;
+        }
+        .calculator-switch a.calculator-switch-link {
+            background: #f5f4ef;
+            color: #252422;
+            border: 1px solid #e5e3dc;
+        }
+        .calculator-switch a.calculator-switch-link:hover {
+            background: #ebe9e0;
+            color: #252422;
+        }
+        .umf-feedback-note {
+            margin-top: 10px;
+        }
+        /* Review CTA - same warm gradient as calculator-medie-facultate.html. */
+        .umf-review-cta {
+            background-image: linear-gradient(to bottom, #fff5c4, #ffffff);
+        }
+        .umf-review-cta-icon {
+            font-size: 34px;
+            color: #eda100;
+        }
+        .umf-review-cta h2.title {
+            font-size: 24px;
+            margin-top: 12px;
+            margin-bottom: 6px;
+        }
+        .umf-review-cta-badge {
+            display: inline-block;
+            background: #ffffff;
+            border: 1px solid #eda100;
+            color: #eda100;
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+        .umf-review-cta .search-fieldset {
+            margin-top: 20px;
+        }
+        .umf-review-cta .search-fieldset .form-control {
+            height: 46px;
+            font-size: 16px;
+            border: 2px solid #252422;
+        }
+        .umf-review-cta .inner-icon {
+            font-size: 18px;
+            top: 7px;
+        }
+    </style>
+
+    <!-- Google Analytics loads unconditionally via initGoogleTag() in unistart.js, with a denied Consent Mode v2 default until the cookie banner is accepted (see the "Cookie consent" comment there). -->
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+    <script src="https://kit.fontawesome.com/6f635d9dad.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
+    <!-- populated dynamically -->
+</nav>
+
+<div id="wrapper" class="wrapper loading">
+
+    <div class="section-white">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+
+                    <div class="card">
+                        <div class="content">
+                            <div class="row">
+                                <div class="motto col-xs-12">
+                                    <h1 class="title">Calculator medie UMFCD</h1>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 calculator-switch">
+                                    <a href="./calculator-medie-facultate.html" class="calculator-switch-link">Calculator
+                                        general</a>
+                                    <a href="./calculator-medie-umfcd.html" class="calculator-switch-active">Calculator
+                                        UMFCD</a>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p class="text-muted">Alege facultatea (Medicină Generală sau Medicină Dentară) și
+                                        anul de studiu. Materiile și creditele ECTS sunt deja completate după planul de
+                                        învățământ oficial UMFCD — tu introduci doar nota la fiecare materie
+                                        promovată.</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p style="background:#f5f4ef;padding:6px 14px;border-radius:4px;font-size:14px;">Nu
+                                        ești la Medicină Generală sau Medicină Dentară UMFCD? Încearcă <a
+                                                href="./calculator-medie-facultate.html"><b>calculatorul general</b></a>,
+                                        valabil pentru orice facultate din România.</p>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-6 umf-select">
+                                    <label for="umf-faculty"><b>Facultatea</b></label>
+                                    <select id="umf-faculty" class="form-control"></select>
+                                </div>
+                                <div class="col-sm-6 umf-select">
+                                    <label for="umf-year"><b>Anul de studiu</b></label>
+                                    <select id="umf-year" class="form-control"></select>
+                                </div>
+                            </div>
+
+                            <div id="umf-progress" class="umf-progress"></div>
+
+                            <div id="umf-courses"><!-- populated dynamically --></div>
+
+                            <div class="row" style="margin-top: 6px;">
+                                <div class="col-xs-12">
+                                    <button type="button" class="btn btn-simple" onclick="umfResetGrades()">
+                                        <i class="fa fa-undo" style="margin-right: 7px;"></i>Resetează notele
+                                    </button>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <div class="umf-result-label">Media ta ponderată</div>
+                                    <div id="umf-result" class="umf-result-value align-orange">&mdash;</div>
+                                    <div id="umf-result-caption" class="umf-result-caption"></div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 15px;">
+                                <div class="col-xs-12">
+                                    <p class="text-center text-muted"><small>Rezultatul este orientativ, calculat după
+                                        planul de învățământ oficial UMFCD 2025-2026. Unele materii din anul modular pot
+                                        fi reprogramate de facultate — verifică secretariatul pentru situația
+                                        oficială.</small></p>
+                                    <p class="text-center umf-feedback-note"><small>Ai observat o greșeală? <a
+                                            href="./contact.html">Scrie-ne</a>.</small></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-white">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+
+                    <div class="card umf-review-cta">
+                        <div class="content">
+                            <div class="row">
+                                <div class="col-xs-12 text-center">
+                                    <i class="fas fa-pen umf-review-cta-icon" aria-hidden="true"></i>
+                                    <h2 class="title">Ești deja la UMFCD? Ajută alți studenți</h2>
+                                    <p class="text-muted">Scrie o evaluare 100% anonimă despre facultatea ta &mdash;
+                                        durează un minut și ajută pe cineva care alege acum unde să studieze.</p>
+                                    <span class="umf-review-cta-badge"><i class="fa fa-clock-o" aria-hidden="true"></i> Durează 1 minut &middot; 100% anonim</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                                    <fieldset id="review-cta-search-fieldset" class="search-fieldset">
+                                        <input id="review-cta-search-input" class="form-control" type="text" value=""
+                                               placeholder="Caută facultatea ta..." spellcheck="false"
+                                               autocomplete="off"/>
+                                        <i id="review-cta-search-button" class="fa fa-search inner-icon"
+                                           onclick="searchFacultiesForReview()" aria-hidden="true"></i>
+                                        <ul id="review-cta-search-results" class="autocomplete-result-list"
+                                            style="display: none; position: absolute; width: 100%; top: 100%; left: 0;"></ul>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-white">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+
+                    <div class="card">
+                        <div class="content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h2 class="title">Planul de învățământ UMFCD, an cu an</h2>
+                                    <p>Materiile și creditele din calculator sunt preluate din planurile de învățământ
+                                        oficiale publicate de Universitatea de Medicină și Farmacie „Carol Davila" din
+                                        București (UMFCD) pentru anul universitar 2025-2026, atât pentru Medicină
+                                        Generală, cât și pentru Medicină Dentară.</p>
+                                    <p>Indiferent de facultate sau de an, planul de învățământ UMFCD însumează mereu <b>60
+                                        de credite transferabile pe an</b> — 30 pe semestru, împărțite între discipline
+                                        obligatorii (fundamentale, de domeniu, de specialitate, complementare) și
+                                        discipline opționale, la alegerea studentului dintr-un pachet propus de
+                                        facultate. Educația fizică apare separat, cu credite bonus care nu se transferă
+                                        în cele 60.</p>
+                                    <p>Selectează facultatea și anul tău mai sus ca să vezi lista completă de materii —
+                                        de la Anul I (Anatomie, Biochimie, Fiziologie, Histologie) până la Anul VI (Boli
+                                        infecțioase, Medicină de familie, sau, la Medicină Dentară, Endodonție,
+                                        Parodontologie, Protetică dentară).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-white">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
+
+                    <div class="card">
+                        <div class="content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h2 class="title">Întrebări frecvente</h2>
+
+                                    <h3 class="umf-faq-question">Cum se calculează media la UMFCD?</h3>
+                                    <p>La fel ca la majoritatea facultăților din România, printr-o medie ponderată pe
+                                        credite: nota fiecărei materii înmulțită cu numărul ei de credite ECTS, totul
+                                        împărțit la suma creditelor.</p>
+                                    <p class="text-center"><span class="calculator-formula"
+                                                                 style="display:inline-block;background:#f5f4ef;padding:6px 14px;border-radius:4px;font-size:15px;">Media = Σ (Notă × Credite) / Σ Credite</span>
+                                    </p>
+                                    <p>Fiecare an de studiu la UMFCD (Medicină Generală sau Medicină Dentară) însumează
+                                        60 de credite transferabile.</p>
+
+                                    <h3 class="umf-faq-question">De ce nu introduc eu creditele, ca la calculatorul
+                                        general?</h3>
+                                    <p>Pentru că la UMFCD planul de învățământ e fix pe an și pe facultate — materiile
+                                        și creditele lor sunt stabilite de universitate, nu variază de la un student la
+                                        altul. Calculatorul le are deja completate din planurile de învățământ oficiale
+                                        UMFCD 2025-2026; tu introduci doar nota la fiecare materie promovată.</p>
+
+                                    <h3 class="umf-faq-question">Media calculată aici este cea oficială?</h3>
+                                    <p>Rezultatul este orientativ. Pentru situația oficială (inclusiv burse, an modular,
+                                        discipline reprogramate), verifică secretariatul facultății tale.</p>
+
+                                    <hr>
+                                    <p class="umf-related-links">
+                                        <a href="./calculator-medie-facultate.html">Calculator medie facultate
+                                            (ECTS)</a>
+                                        <a href="./calculator-admitere-unibuc.html">Calculator admitere UNIBUC</a>
+                                        <a href="./search.html" data-i18n-key="header-footer-faculties">Facultăți</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-button">
+        <a href="./contact.html" class="btn btn-danger btn-block btn-fill">Lasă-ne feedback</a>
+    </div>
+
+</div>
+
+<footer class="footer" id="footer">
+    <!-- populated dynamically -->
+</footer>
+
+<div class="modal fade" id="general-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+     style="z-index: 1051">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div id="modal-header-text">
+                    <i class="far fa-envelope fa-2x"></i>
+                </div>
+            </div>
+            <div id="modal-text" class="modal-body modal-info text-center">
+                &nbsp;
+            </div>
+            <div id="general-modal-footer" class="modal-footer">
+                <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog-login">
+        <div class="modal-content">
+            <div id="login-card" class="login-card">
+                <!-- populated dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog-register">
+        <div class="modal-content">
+            <div id="register-card" class="register-card">
+                <!-- populated dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="main-loading" class="text-center">
+    <div class='uil-reload-css reload-background' style=''>
+        <div></div>
+    </div>
+</div>
+
+</body>
+
+<script src="./assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="./assets/js/jquery-ui-1.10.4.custom.min.js" type="text/javascript"></script>
+
+<script>
+
+    const backendUrlRoot = "https://unistart.ro/Jamstudy";
+
+    $wrapper = $("#wrapper");
+    $(document).on({
+        ajaxStop: function() {
+            $wrapper.removeClass("loading");
+            document.getElementById("main-loading").style.display = "none";
+        }
+    });
+
+    $(document).ready(function() {
+
+        getPageHeader();
+        getPageFooter();
+        myAccountText();
+        getLoginModal();
+        getRegisterModal();
+        loadUser();
+
+        umfInit();
+
+        document.getElementById("review-cta-search-input").addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+            }
+            searchFacultiesForReview();
+        });
+
+        document.addEventListener("click", function(event) {
+            var searchFieldset = document.getElementById("review-cta-search-fieldset");
+            if (searchFieldset && !searchFieldset.contains(event.target)) {
+                document.getElementById("review-cta-search-results").style.display = "none";
+            }
+        });
+
+        $wrapper.removeClass("loading");
+        document.getElementById("main-loading").style.display = "none";
+
+    });
+
+    // Same "type at least 3 characters, fetch top matches" search used by the
+    // compare-faculties autocomplete on comparison.html - reused here so a visitor
+    // can jump straight into writing a review for their own faculty.
+    function searchFacultiesForReview() {
+        var input = document.getElementById("review-cta-search-input").value;
+        var resultsList = document.getElementById("review-cta-search-results");
+
+        if (!input || input.length < 3) {
+            resultsList.innerHTML = "";
+            resultsList.style.display = "none";
+            return;
+        }
+
+        var backendUrl = new URL(backendUrlRoot + "/v1/faculty");
+        backendUrl.searchParams.append("searchBy", input);
+        backendUrl.searchParams.append("orderBy", "viewsCount,desc");
+        backendUrl.searchParams.append("limit", 15);
+
+        fetch(backendUrl, {
+            method: "GET",
+            headers: {
+                "Code": window.location.href.includes("unistart.lt") ? "LT" : "RO",
+            }
+        })
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+            renderReviewCtaSearchResults(data.result ? data.result.faculties : []);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+
+    function renderReviewCtaSearchResults(faculties) {
+        var resultsList = document.getElementById("review-cta-search-results");
+        var topFaculties = (faculties || []).slice(0, 7);
+
+        if (topFaculties.length === 0) {
+            resultsList.innerHTML = '<li class="autocomplete-result" data-i18n-key="compare-search-no-results">Nu au fost găsite rezultate</li>';
+            resultsList.style.display = "block";
+            translatePage();
+            return;
+        }
+
+        var resultsHtml = "";
+        var i;
+        for (i = 0; i < topFaculties.length; i++) {
+            var faculty = topFaculties[i];
+            var facultyName = escapeHtml(faculty.facultyName);
+            var universityName = escapeHtml(faculty.universityName);
+            var logoSrc = backendUrlRoot + "/v1/faculty/" + faculty.facultyId + "/logo";
+
+            resultsHtml +=
+                '<li class="autocomplete-result" onclick="goToReviewFromSearch(&quot;' + faculty.facultyId + '&quot;)">'
+                +	'<img src="' + logoSrc + '" style="height: 24px; width: 24px; object-fit: contain; margin-right: 8px; vertical-align: middle;">'
+                +	'<b>' + facultyName + '</b> <span class="text-muted">' + universityName + '</span>'
+                + '</li>';
+        }
+
+        resultsList.innerHTML = resultsHtml;
+        resultsList.style.display = "block";
+        translatePage();
+    }
+
+    function goToReviewFromSearch(facultyId) {
+        goToAddReview(document.getElementById("review-cta-search-input"), facultyId);
+    }
+
+    // Per-year materie+credite catalogs, transcribed from UMFCD's own official
+    // "plan de învățământ 2025-2026" PDFs (umfcd.ro/wp-content/uploads/2025/PLANURI_INVATAMANT/...),
+    // Medicină an III from the 2024-2025 plan (2025-2026 wasn't published under the
+    // same URL pattern at transcription time). Every year sums to exactly 60
+    // transferable ECTS credits — Educație fizică and "disciplină facultativă" rows
+    // are deliberately left out since their credits are explicitly non-transferable
+    // bonus credits in the official plans, not part of the 60.
+    var UMF_FACULTIES = [
+        { slug: "medicina-generala", name: "Medicină Generală", years: [
+            { an: 1, courses: [
+                { n: "Anatomie și embriologie I", c: 5 }, { n: "Anatomie și embriologie II", c: 5 },
+                { n: "Biofizică", c: 5 }, { n: "Biochimie II", c: 4 }, { n: "Biochimie I", c: 4 },
+                { n: "Genetică", c: 4 }, { n: "Biologie celulară și moleculară", c: 5 }, { n: "Fiziologie", c: 5 },
+                { n: "Psihologie medicală și comunicare medicală", c: 5 }, { n: "Marketing și tehnologie medicală", c: 2 },
+                { n: "Limba engleză/Limba română I", c: 4 }, { n: "Etică și integritate academică", c: 3 },
+                { n: "Elemente juridice și malpraxis", c: 3 }, { n: "Disciplină opțională - pachet 1", c: 2 },
+                { n: "Disciplină opțională - pachet 2", c: 2 }, { n: "Practica de specialitate de vară", c: 2 }
+            ] },
+            { an: 2, courses: [
+                { n: "Anatomie și embriologie I", c: 5 }, { n: "Anatomie și embriologie II", c: 5 },
+                { n: "Histologie I", c: 5 }, { n: "Histologie II", c: 5 },
+                { n: "Microbiologie - Bacteriologie I", c: 5 }, { n: "Microbiologie - Bacteriologie II", c: 3 },
+                { n: "Fiziologie - Neuroștiințe", c: 5 }, { n: "Fiziologie medicală", c: 5 },
+                { n: "Biochimie clinică", c: 4 }, { n: "Informatică medicală și biostatistică", c: 4 },
+                { n: "Științele comportamentului uman și Sociologie medicală", c: 3 }, { n: "Istoria medicinei", c: 2 },
+                { n: "Limba engleză/română II", c: 3 }, { n: "Disciplină opțională - pachet 1", c: 2 },
+                { n: "Disciplină opțională - pachet 2", c: 2 }, { n: "Practica de specialitate de vară", c: 2 }
+            ] },
+            { an: 3, courses: [
+                { n: "Semiologie medicală I", c: 8 }, { n: "Semiologie medicală II", c: 8 },
+                { n: "Farmacologie", c: 8 }, { n: "Fiziopatologie I", c: 4 }, { n: "Fiziopatologie II", c: 4 },
+                { n: "Imunologie", c: 4 }, { n: "Anatomie patologică I", c: 4 }, { n: "Anatomie patologică II", c: 4 },
+                { n: "Igienă", c: 4 }, { n: "Microbiologie - Virusologie", c: 4 }, { n: "Microbiologie - Parazitologie", c: 2 },
+                { n: "Etica medicală. Elemente de deontologie și bioetică", c: 2 }, { n: "Disciplină opțională", c: 2 },
+                { n: "Abilități practice - Practica de vară", c: 2 }
+            ] },
+            { an: 4, courses: [
+                { n: "Medicină internă - Cardiologie și Chirurgie cardiovasculară", c: 10 },
+                { n: "Pneumologie, ftiziologie, boli profesionale-medicina muncii și chirurgie toracică", c: 9 },
+                { n: "Medicină internă - Gastroenterologie", c: 5 },
+                { n: "Chirurgie generală - Semiologie chirurgicală și chirurgie oncologică", c: 7 },
+                { n: "Ortopedie și traumatologie", c: 5 }, { n: "Chirurgie pediatrică și ortopedie pediatrică", c: 5 },
+                { n: "Oncologie medicală și îngrijiri paleative", c: 4 },
+                { n: "Sănătate comunitară. Asistența primară a stării de sănătate", c: 3 },
+                { n: "Radiologie și Imagistică Medicală", c: 4 }, { n: "Metodologia cercetării științifice", c: 2 },
+                { n: "Farmacologie clinică", c: 2 }, { n: "Disciplină opțională", c: 2 },
+                { n: "Abilități practice - Practica de vară", c: 2 }
+            ] },
+            { an: 5, courses: [
+                { n: "Medicină internă - Reumatologie", c: 5 }, { n: "Medicină internă - Nefrologie", c: 5 },
+                { n: "Pediatrie și puericultură", c: 9 }, { n: "Chirurgie generală", c: 6 },
+                { n: "Neurologie, neurologie pediatrică și neurochirurgie", c: 7 }, { n: "Urologie", c: 5 },
+                { n: "Endocrinologie și Diabet zaharat, nutriție și boli metabolice", c: 5 },
+                { n: "Geriatrie și Gerontologie", c: 5 }, { n: "Sănătate publică și management sanitar", c: 5 },
+                { n: "Toxicologie", c: 4 }, { n: "Disciplină opțională", c: 2 },
+                { n: "Abilități practice - Practica de vară", c: 2 }
+            ] },
+            { an: 6, courses: [
+                { n: "Boli infecțioase", c: 6 }, { n: "Epidemiologie", c: 3 }, { n: "Oftalmologie", c: 3 },
+                { n: "Psihiatrie și Psihiatria copilului și adolescentului", c: 5 }, { n: "Otorinolaringologie (O.R.L.)", c: 4 },
+                { n: "Dermatovenerologie", c: 4 }, { n: "Obstetrică-Ginecologie și Neonatologie", c: 6 },
+                { n: "Medicină legală", c: 4 }, { n: "Medicină de familie", c: 5 }, { n: "Hematologie", c: 5 },
+                { n: "Chirurgie plastică, estetică și microchirurgie reconstructivă", c: 3 },
+                { n: "Anestezie și terapie intensivă (A.T.I.)", c: 3 }, { n: "Medicină Fizică și de Reabilitare", c: 2 },
+                { n: "Medicină de urgență și prim ajutor", c: 3 }, { n: "Disciplină opțională", c: 2 },
+                { n: "Pregătire lucrare licență", c: 2 }
+            ] }
+        ] },
+        { slug: "medicina-dentara", name: "Medicină Dentară", years: [
+            { an: 1, courses: [
+                { n: "Anatomie I", c: 5 }, { n: "Biochimie", c: 4 }, { n: "Fiziologie I", c: 4 },
+                { n: "Biologie celulară și moleculară", c: 3 }, { n: "Embriologie", c: 5 },
+                { n: "Morfologia dinților și arcadelor dentare", c: 5 }, { n: "Limba română - Limba engleză I", c: 2 },
+                { n: "Anatomie II", c: 5 }, { n: "Biochimia cavității orale", c: 4 }, { n: "Fiziologie II", c: 5 },
+                { n: "Histologie", c: 5 }, { n: "Biofizică", c: 4 }, { n: "Informatică medicală și biostatistică", c: 3 },
+                { n: "Practică de specialitate", c: 2 }, { n: "Disciplină opțională - pachet 1", c: 2 },
+                { n: "Disciplină opțională - pachet 2", c: 2 }
+            ] },
+            { an: 2, courses: [
+                { n: "Tehnologia protezelor dentare I", c: 5 }, { n: "Semiologie medicală", c: 3 },
+                { n: "Fiziopatologie", c: 5 }, { n: "Metodologia cercetării științifice", c: 5 },
+                { n: "Radiologie - imagistică medicală", c: 2 },
+                { n: "Psihologie medicală. Sociologie medicală. Comunicare medicală", c: 2 },
+                { n: "Aspecte sociale ale practicii stomatologice", c: 2 }, { n: "Științe comportamentale", c: 4 },
+                { n: "Tehnologia protezelor dentare II", c: 5 }, { n: "Imunologie", c: 4 }, { n: "Genetică", c: 5 },
+                { n: "Limba română - Limba engleză II", c: 2 }, { n: "Anatomie patologică", c: 5 }, { n: "Microbiologie", c: 5 },
+                { n: "Practică de specialitate", c: 2 }, { n: "Disciplină opțională - pachet 1", c: 2 },
+                { n: "Disciplină opțională - pachet 2", c: 2 }
+            ] },
+            { an: 3, courses: [
+                { n: "Stomatologie preventivă I", c: 5 }, { n: "Odontoterapie restauratoare I", c: 5 },
+                { n: "Psihiatrie", c: 4 }, { n: "Ocluzologie și microproteze", c: 5 },
+                { n: "Deontologie medicală. Bioetică", c: 4 }, { n: "Farmacologie", c: 5 },
+                { n: "Stomatologie preventivă II", c: 5 }, { n: "Materiale dentare", c: 4 },
+                { n: "Semiologie chirurgicală. Chirurgie generală. Anestezie și terapie intensivă", c: 5 },
+                { n: "Oftalmologie", c: 3 }, { n: "Medicină internă", c: 2 },
+                { n: "Prim ajutor medical. Urgențe medico-chirurgicale în stomatologie", c: 2 },
+                { n: "Endocrinologie", c: 3 }, { n: "Dermato-venerologie", c: 2 }, { n: "Practică de specialitate", c: 2 },
+                { n: "Disciplină opțională - pachet 1", c: 2 }, { n: "Disciplină opțională - pachet 2", c: 2 }
+            ] },
+            { an: 4, courses: [
+                { n: "Odontoterapie restauratoare II", c: 5 }, { n: "Pedodonție I", c: 5 }, { n: "Otorinolaringologie", c: 5 },
+                { n: "Igienă", c: 2 }, { n: "Neurologie", c: 4 }, { n: "Stomatologie regenerativă", c: 2 },
+                { n: "Radiologie - imagistică în stomatologie", c: 5 },
+                { n: "Anestezie și sedare în stomatologie. Chirurgie orală și maxilo-facială I", c: 5 },
+                { n: "Protetică dentară I", c: 5 }, { n: "Gerodontologie", c: 4 },
+                { n: "Pediatrie. Obstetrică-Ginecologie", c: 3 }, { n: "Alergologie și imunologie clinică", c: 2 },
+                { n: "Boli infecțioase. Epidemiologie", c: 4 }, { n: "Medicină legală", c: 3 },
+                { n: "Practică de specialitate", c: 2 }, { n: "Disciplină opțională - pachet 1", c: 2 },
+                { n: "Disciplină opțională - pachet 2", c: 2 }
+            ] },
+            { an: 5, courses: [
+                { n: "Chirurgie O.M.F. II", c: 9 }, { n: "Endodonție I", c: 8 }, { n: "Parodontologie I", c: 5 },
+                { n: "Managementul cabinetului dentar", c: 2 },
+                { n: "Organizare profesională și legislație medicală-malpraxis", c: 4 }, { n: "Fizioterapie", c: 2 },
+                { n: "Bioetică", c: 2 }, { n: "Ortodonție și ortopedie dento-facială I", c: 8 },
+                { n: "Protetică dentară II", c: 8 }, { n: "Pedodonție II", c: 6 }, { n: "Sănătate publică", c: 2 },
+                { n: "Practică de specialitate", c: 2 }, { n: "Disciplină opțională", c: 2 }
+            ] },
+            { an: 6, courses: [
+                { n: "Reabilitare orală", c: 3 }, { n: "Parodontologie II", c: 3 }, { n: "Sănătate orală", c: 2 },
+                { n: "Ortodonție și ortopedie dento-facială II", c: 9 }, { n: "Protetică dentară III", c: 7 },
+                { n: "Terapie implanto-protetică", c: 6 }, { n: "Reabilitare orală - stagiu profesional", c: 5 },
+                { n: "Parodontologie - stagiu profesional", c: 4 }, { n: "Stomatologie comunitară - stagiu profesional", c: 2 },
+                { n: "Endodonție II", c: 7 }, { n: "Estetică în medicina dentară", c: 4 }, { n: "Patologie orală", c: 4 },
+                { n: "Elaborarea lucrării de disertație", c: 2 }, { n: "Disciplină opțională", c: 2 }
+            ] }
+        ] }
+    ];
+
+    var umfCurFaculty = 0;
+    var umfCurYear = 0;
+    var umfGrades = {};
+
+    function umfInit() {
+        var facultySelect = document.getElementById("umf-faculty");
+        var html = "";
+        var i;
+        for (i = 0; i < UMF_FACULTIES.length; i++) {
+            html += '<option value="' + i + '">' + escapeHtml(UMF_FACULTIES[i].name) + '</option>';
+        }
+        facultySelect.innerHTML = html;
+
+        facultySelect.addEventListener("change", function() {
+            umfCurFaculty = parseInt(this.value, 10) || 0;
+            umfCurYear = 0;
+            umfGrades = {};
+            umfRenderYearSelect();
+            umfRenderCourses();
+            umfUpdateUrl();
+        });
+        document.getElementById("umf-year").addEventListener("change", function() {
+            umfCurYear = parseInt(this.value, 10) || 0;
+            umfGrades = {};
+            umfRenderCourses();
+            umfUpdateUrl();
+        });
+
+        umfRestoreSelection();
+        facultySelect.value = String(umfCurFaculty);
+        umfRenderYearSelect();
+        document.getElementById("umf-year").value = String(umfCurYear);
+        umfRenderCourses();
+    }
+
+    function umfRestoreSelection() {
+        // URL (?facultate=slug&an=N) wins, then localStorage, then default (0, an 1).
+        var params = new URLSearchParams(window.location.search);
+        var facParam = params.get("facultate");
+        var anParam = params.get("an");
+        var matched = false;
+
+        if (facParam) {
+            var j;
+            for (j = 0; j < UMF_FACULTIES.length; j++) {
+                if (UMF_FACULTIES[j].slug === facParam) {
+                    umfCurFaculty = j;
+                    matched = true;
+                    break;
+                }
+            }
+        }
+        if (matched && anParam !== null) {
+            var an = parseInt(anParam, 10);
+            var years = UMF_FACULTIES[umfCurFaculty].years;
+            var k;
+            for (k = 0; k < years.length; k++) {
+                if (years[k].an === an) {
+                    umfCurYear = k;
+                    break;
+                }
+            }
+        }
+
+        if (!matched && typeof(Storage) !== "undefined") {
+            try {
+                var stored = JSON.parse(localStorage.getItem("cmu") || "null");
+                if (stored && typeof stored.f === "number" && stored.f >= 0 && stored.f < UMF_FACULTIES.length) {
+                    umfCurFaculty = stored.f;
+                    if (typeof stored.y === "number" && stored.y >= 0 && stored.y < UMF_FACULTIES[umfCurFaculty].years.length) {
+                        umfCurYear = stored.y;
+                    }
+                }
+            } catch (e) { /* ignore */ }
+        }
+    }
+
+    function umfUpdateUrl() {
+        if (!window.history || !window.history.replaceState) {
+            return;
+        }
+        var faculty = UMF_FACULTIES[umfCurFaculty];
+        var year = faculty.years[umfCurYear];
+        var query = "?facultate=" + faculty.slug + "&an=" + year.an;
+        window.history.replaceState(null, "", window.location.pathname + query);
+        umfSaveSelection();
+    }
+
+    function umfSaveSelection() {
+        if (typeof(Storage) === "undefined") {
+            return;
+        }
+        try {
+            localStorage.setItem("cmu", JSON.stringify({ f: umfCurFaculty, y: umfCurYear }));
+        } catch (e) { /* storage full/unavailable */ }
+    }
+
+    function umfRenderYearSelect() {
+        var yearSelect = document.getElementById("umf-year");
+        var years = UMF_FACULTIES[umfCurFaculty].years;
+        var html = "";
+        var i;
+        for (i = 0; i < years.length; i++) {
+            html += '<option value="' + i + '">Anul ' + years[i].an + '</option>';
+        }
+        yearSelect.innerHTML = html;
+    }
+
+    function umfRenderCourses() {
+        var year = UMF_FACULTIES[umfCurFaculty].years[umfCurYear];
+        var container = document.getElementById("umf-courses");
+        var totalCredits = 0;
+        var html = "";
+        var i, j;
+
+        for (i = 0; i < year.courses.length; i++) {
+            totalCredits += year.courses[i].c;
+            var grade = umfGrades[i] || "";
+            var options = '<option value="">—</option>';
+            for (j = 1; j <= 10; j++) {
+                options += '<option value="' + j + '"' + (String(j) === grade ? " selected" : "") + '>' + j + '</option>';
+            }
+            html +=
+                '<div class="umf-course-row">'
+                +	'<div class="row">'
+                +		'<div class="col-sm-8 col-xs-12">'
+                +			'<div class="umf-course-name">' + escapeHtml(year.courses[i].n) + '</div>'
+                +			'<div class="umf-course-credits">' + year.courses[i].c + ' credite</div>'
+                +		'</div>'
+                +		'<div class="col-sm-4 col-xs-12 umf-course-grade">'
+                +			'<select class="form-control" onchange="umfUpdateGrade(' + i + ', this.value)">' + options + '</select>'
+                +		'</div>'
+                +	'</div>'
+                + '</div>';
+        }
+        container.innerHTML = html;
+
+        document.getElementById("umf-progress").innerText = "Plan de învățământ: " + totalCredits + " credite / an";
+
+        umfRecalculate();
+    }
+
+    function umfUpdateGrade(courseIndex, value) {
+        if (value === "") {
+            delete umfGrades[courseIndex];
+        } else {
+            umfGrades[courseIndex] = value;
+        }
+        umfRecalculate();
+    }
+
+    function umfRecalculate() {
+        var year = UMF_FACULTIES[umfCurFaculty].years[umfCurYear];
+        var weightedSum = 0;
+        var gradedCredits = 0;
+        var gradedCount = 0;
+        var i;
+
+        for (i = 0; i < year.courses.length; i++) {
+            if (!umfGrades[i]) {
+                continue;
+            }
+            var grade = parseFloat(umfGrades[i]);
+            var credits = year.courses[i].c;
+            weightedSum += grade * credits;
+            gradedCredits += credits;
+            gradedCount++;
+        }
+
+        var resultElement = document.getElementById("umf-result");
+        var captionElement = document.getElementById("umf-result-caption");
+
+        if (gradedCount === 0) {
+            resultElement.innerText = "—";
+            captionElement.innerText = "";
+        } else {
+            var average = weightedSum / gradedCredits;
+            resultElement.innerText = average.toFixed(2);
+            captionElement.innerText = gradedCredits + " din " + year.courses.reduce(function(sum, c) { return sum + c.c; }, 0) + " credite introduse";
+        }
+
+        umfSaveSelection();
+    }
+
+    function umfResetGrades() {
+        umfGrades = {};
+        umfRenderCourses();
+    }
+
+</script>
+
+<script src="./bootstrap3/js/bootstrap.js" type="text/javascript"></script>
+
+<!--  Plugins -->
+<script src="./assets/js/ct-paper-checkbox.js"></script>
+<script src="./assets/js/ct-paper-radio.js"></script>
+<script src="./assets/js/bootstrap-select.js"></script>
+<script src="./assets/js/bootstrap-datepicker.js"></script>
+<script src="./assets/js/unistart.js"></script>
+
+<script src="./assets/js/ct-paper.js"></script>
+
+</html>

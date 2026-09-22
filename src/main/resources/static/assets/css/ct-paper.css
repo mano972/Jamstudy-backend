@@ -6368,12 +6368,13 @@ body > .navbar-collapse.collapse {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 157px;
+  min-height: 157px;
   border: 2px solid black;
+  box-sizing: border-box;
 }
 @media (max-width:992px) {
   .footer {
-    height: 226px;
+    min-height: 226px;
   }
 }
 .footer .links {

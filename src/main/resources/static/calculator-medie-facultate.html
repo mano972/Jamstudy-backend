@@ -118,6 +118,32 @@
 		.calculator-related-links a {
 			margin-right: 16px;
 		}
+		.calculator-switch {
+			text-align: center;
+			margin-bottom: 16px;
+		}
+		.calculator-switch a {
+			display: inline-block;
+			padding: 10px 22px;
+			margin: 4px;
+			border-radius: 24px;
+			font-weight: 600;
+			font-size: 14px;
+			text-decoration: none;
+		}
+		.calculator-switch a.calculator-switch-active {
+			background: #252422;
+			color: #fff;
+		}
+		.calculator-switch a.calculator-switch-link {
+			background: #f5f4ef;
+			color: #252422;
+			border: 1px solid #e5e3dc;
+		}
+		.calculator-switch a.calculator-switch-link:hover {
+			background: #ebe9e0;
+			color: #252422;
+		}
 		/* Review CTA — deliberately louder than the plain white cards around it
 		   (warm gradient reused from .homepage-header-background/.faculty-profile-header-background,
 		   so it stays on-brand instead of introducing a new accent color). */
@@ -198,8 +224,21 @@
 								</div>
 
 								<div class="row">
+									<div class="col-xs-12 calculator-switch">
+										<a href="./calculator-medie-facultate.html" class="calculator-switch-active">Calculator general</a>
+										<a href="./calculator-medie-umfcd.html" class="calculator-switch-link">Calculator UMFCD</a>
+									</div>
+								</div>
+
+								<div class="row">
 									<div class="col-xs-12">
 										<p class="text-muted" data-i18n-key="calculator-medie-intro">Introdu fiecare materie cu nota obținută și numărul de credite ECTS, iar media se recalculează automat. Funcționează pentru orice facultate din România sau din Europa care folosește sistemul de credite ECTS.</p>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-xs-12">
+										<p class="calculator-formula" style="display:block;">Ești la UMFCD (Medicină Generală sau Medicină Dentară)? Ai un <a href="./calculator-medie-umfcd.html"><b>calculator dedicat</b></a>, cu materiile și creditele deja completate din planul de învățământ oficial.</p>
 									</div>
 								</div>
 
@@ -255,6 +294,7 @@
 								<div class="row" style="margin-top: 15px;">
 									<div class="col-xs-12">
 										<p class="text-center text-muted"><small data-i18n-key="calculator-medie-disclaimer">Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei — verifică regulamentul facultății tale pentru rezultatul oficial.</small></p>
+										<p class="text-center"><small>Ai observat o greșeală? <a href="./contact.html">Scrie-ne</a>.</small></p>
 									</div>
 								</div>
 
@@ -319,11 +359,12 @@
 										<p data-i18n-key="calculator-medie-faq-a2">Fiecare materie are alocat un număr de credite ECTS proporțional cu volumul de muncă necesar — cursuri, seminarii, teme, examen. Un semestru universitar are, de regulă, 30 de credite ECTS, iar un an universitar complet, 60. Sistemul e comun majorității universităților din Europa, ceea ce face media ușor de recunoscut și în afara țării (de exemplu, pentru un schimb Erasmus).</p>
 
 										<h3 class="calculator-faq-question" data-i18n-key="calculator-medie-faq-q3">Media calculată aici este cea oficială a facultății mele?</h3>
-										<p data-i18n-key="calculator-medie-faq-note">Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei — verifică regulamentul facultății tale pentru rezultatul oficial.</p>
+										<p data-i18n-key="calculator-medie-faq-note">Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei — verifică regulamentul facultății tale pentru rezultatul oficial. Ești la UMFCD (Medicină Generală sau Medicină Dentară)? Ai un <a href="./calculator-medie-umfcd.html">calculator dedicat, cu materiile și creditele deja completate</a>.</p>
 
 										<hr>
 										<p class="calculator-related-links">
 											<a href="./calculator-admitere-unibuc.html" data-i18n-key="header-footer-calculator-admitere">Calculator admitere</a>
+											<a href="./calculator-medie-umfcd.html">Calculator medie UMFCD</a>
 											<a href="./comparison.html" data-i18n-key="header-footer-compare">Compară</a>
 											<a href="./search.html" data-i18n-key="header-footer-faculties">Facultăți</a>
 										</p>

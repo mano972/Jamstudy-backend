@@ -61,6 +61,17 @@ public class FacultyProfilePageController {
     private static final String UNIBUC_UNIVERSITY_SLUG = "universitatea-din-bucuresti-unibuc";
 
     /**
+     * Faculties under this university slug get the sticky "Calculator medie
+     * UMFCD" CTA (a UMFCD-only weighted-average calculator, pre-populated per
+     * faculty/year from the official plan de învățământ, lives at
+     * /calculator-medie-umfcd.html). Applies to every UMFCD faculty, not just
+     * Medicină/Medicină Dentară (the only two the calculator currently covers) -
+     * a visitor from another UMFCD faculty just lands on the calculator's own
+     * faculty picker, which only offers those two.
+     */
+    private static final String UMFCD_UNIVERSITY_SLUG = "universitatea-de-medicina-si-farmacie-carol-davila-din-bucuresti";
+
+    /**
      * Sticky corner CTA to the UNIBUC admission-average calculator, injected only
      * on Universitatea din Bucureşti faculty profile pages. Sits just before
      * {@code </body>} (outside #wrapper, so {@code getFaculty()}'s SSR teardown
@@ -88,6 +99,31 @@ public class FacultyProfilePageController {
             + " title=\"Calculator admitere UNIBUC 2026 - calculează-ți media de admitere pe facultate\">"
             + "<i class=\"fas fa-calculator fa-lg\" aria-hidden=\"true\"></i>"
             + "<span>Calculator admitere</span></a>\n";
+
+    /**
+     * Sticky corner CTA to the UMFCD weighted-average calculator, injected only
+     * on UMFCD faculty profile pages. Same slot/style as {@link #ADMISSION_CALCULATOR_CTA_HTML}
+     * (the two never render together - a faculty matches at most one university
+     * slug) so it reuses the id rather than adding a second fixed-position element.
+     */
+    private static final String UMFCD_CALCULATOR_CTA_HTML =
+            "<style>"
+            + "#sticky-admission-calc-cta{position:fixed;left:20px;bottom:20px;z-index:900;"
+            + "display:inline-block;background:#1e2f6b;color:#fff;font-weight:600;font-size:15px;"
+            + "padding:13px 20px;border-radius:24px;text-decoration:none;"
+            + "box-shadow:0 2px 10px rgba(0,0,0,.25);}"
+            + "#sticky-admission-calc-cta:hover,#sticky-admission-calc-cta:focus"
+            + "{background:#162456;color:#fff;text-decoration:none;}"
+            + "#sticky-admission-calc-cta i{margin-right:8px;}"
+            + "@media (max-width:480px){#sticky-admission-calc-cta span{display:none;}"
+            + "#sticky-admission-calc-cta i{margin-right:0;}"
+            + "#sticky-admission-calc-cta{width:46px;height:46px;line-height:46px;padding:0;"
+            + "text-align:center;border-radius:50%;left:16px;bottom:16px;}}"
+            + "</style>"
+            + "<a id=\"sticky-admission-calc-cta\" href=\"/calculator-medie-umfcd.html\""
+            + " title=\"Calculator medie UMFCD - calculează-ți media ponderată pe an și facultate\">"
+            + "<i class=\"fas fa-calculator fa-lg\" aria-hidden=\"true\"></i>"
+            + "<span>Calculator medie</span></a>\n";
 
     /** Rows pulled from Couchbase; a few extra so we can skip text-less reviews. */
     private static final int TOP_REVIEWS_FETCH = 12;
@@ -227,6 +263,8 @@ public class FacultyProfilePageController {
                 + "<script type=\"application/ld+json\">" + buildBreadcrumbJsonLd(faculty, canonicalUrl, origin) + "</script>\n</head>");
         if (UNIBUC_UNIVERSITY_SLUG.equals(universitySlug)) {
             html = html.replace("</body>", ADMISSION_CALCULATOR_CTA_HTML + "</body>");
+        } else if (UMFCD_UNIVERSITY_SLUG.equals(universitySlug)) {
+            html = html.replace("</body>", UMFCD_CALCULATOR_CTA_HTML + "</body>");
         }
         return html;
     }
