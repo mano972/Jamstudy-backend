@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -43,6 +45,8 @@ import com.app.studentromania.util.ReviewFilter;
  */
 @Controller
 public class FacultyProfilePageController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FacultyProfilePageController.class);
 
     private static final String TITLE_TAG = "<title>Unistart - Profil Facultate</title>";
     private static final String DESCRIPTION_TAG = "<meta name=\"description\" content=\"Unistart | Evaluari facultati. Alege facultatea potrivita pentru tine.\">";
@@ -164,20 +168,78 @@ public class FacultyProfilePageController {
     @GetMapping("/facultate/{universitySlug}/{facultySlug}")
     public void servePublicProfile(@PathVariable String universitySlug, @PathVariable String facultySlug,
             HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Optional<Faculty> facultyOpt = facultyDAO.getByUniversitySlugAndFacultySlug(universitySlug, facultySlug);
         response.setContentType("text/html;charset=UTF-8");
+
+        Optional<Faculty> facultyOpt;
+        try {
+            facultyOpt = lookupFacultyWithRetry(universitySlug, facultySlug);
+        } catch (RuntimeException e) {
+            serveUnavailable(universitySlug, facultySlug, e, response);
+            return;
+        }
+
         if (!facultyOpt.isPresent()) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.getWriter().write(errorHtmlTemplate);
             return;
         }
+
         String countryCode = RequestUtils.resolveCountryCode(request);
         Faculty faculty = facultyOpt.get();
         List<Review> topReviews = fetchTopReviews(faculty.getFacultyId(), countryCode);
 
+        String renderedHtml;
+        try {
+            renderedHtml = renderProfileHtml(faculty, universitySlug, facultySlug,
+                    RequestUtils.getOrigin(request), countryCode, topReviews);
+        } catch (RuntimeException e) {
+            serveUnavailable(universitySlug, facultySlug, e, response);
+            return;
+        }
+
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().write(renderProfileHtml(faculty, universitySlug, facultySlug,
-                RequestUtils.getOrigin(request), countryCode, topReviews));
+        response.getWriter().write(renderedHtml);
+    }
+
+    /**
+     * The slug lookup hits Couchbase's N1QL query/index service directly and,
+     * unlike every other DAO call in this flow, has no fallback around it - seen
+     * live taking down otherwise-perfectly-valid faculty pages with a raw 500:
+     * "Index not ready for serving queries" and, separately, the query-service
+     * TCP connection being forcibly closed mid-request. Both read as momentary
+     * blips on an overloaded/rebuilding index rather than a sustained outage, so
+     * one immediate retry - with a short pause, since "index not ready" needs at
+     * least a little time to clear - resolves most of them without the caller
+     * ever seeing an error.
+     */
+    private Optional<Faculty> lookupFacultyWithRetry(String universitySlug, String facultySlug) {
+        try {
+            return facultyDAO.getByUniversitySlugAndFacultySlug(universitySlug, facultySlug);
+        } catch (RuntimeException first) {
+            LOGGER.warn("Faculty lookup failed for {}/{}, retrying once: {}", universitySlug, facultySlug,
+                    first.toString());
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+            }
+            return facultyDAO.getByUniversitySlugAndFacultySlug(universitySlug, facultySlug);
+        }
+    }
+
+    /**
+     * 503, not 500: this is a known-transient Couchbase hiccup, not a missing or
+     * broken page, and the distinction matters to both visitors and Google - a
+     * 500 that renders the same static page as a real 404 risks the URL getting
+     * treated as gone if it recurs across crawls, where a 503 (+ Retry-After)
+     * is the correct "come back later" signal for a temporary outage.
+     */
+    private void serveUnavailable(String universitySlug, String facultySlug, RuntimeException e,
+            HttpServletResponse response) throws IOException {
+        LOGGER.error("Faculty profile page failed for {}/{} after retry", universitySlug, facultySlug, e);
+        response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+        response.setHeader("Retry-After", "30");
+        response.getWriter().write(errorHtmlTemplate);
     }
 
     /**

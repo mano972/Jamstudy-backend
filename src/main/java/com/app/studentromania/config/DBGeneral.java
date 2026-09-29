@@ -46,6 +46,14 @@ public class DBGeneral extends AbstractCouchbaseConfiguration {
 	 * threads drain quickly when the Spring context closes — otherwise the JVM
 	 * lingers after a WildFly stop and the Windows service hangs in "Stopping".
 	 * Spring Data already registers {@code shutdown} as this bean's destroy method.
+	 *
+	 * {@code keepAliveInterval} (default 30s) is shortened too: the query
+	 * endpoint's connections have been observed going idle/inactive well inside
+	 * that window ("Got notified from Channel as inactive, attempting reconnect"
+	 * logged continuously, and occasionally a query loses the race and fails
+	 * with the connection "forcibly closed" instead) — whatever is closing them
+	 * server-side, the SDK should notice and recycle a dead connection faster
+	 * than requests are likely to try reusing it.
 	 */
 	@Override
 	protected CouchbaseEnvironment getEnvironment() {
@@ -54,6 +62,7 @@ public class DBGeneral extends AbstractCouchbaseConfiguration {
 				.connectTimeout(TimeUnit.SECONDS.toMillis(10))
 				.kvTimeout(TimeUnit.SECONDS.toMillis(5))
 				.queryTimeout(TimeUnit.SECONDS.toMillis(30))
+				.keepAliveInterval(TimeUnit.SECONDS.toMillis(10))
 				.build();
 	}
 
