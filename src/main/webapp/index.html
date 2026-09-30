@@ -35,7 +35,7 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Unistart">
     <meta property="og:locale" content="ro_RO">
-    <meta property="og:title" content="Unistart — Evaluări facultăți">
+    <meta property="og:title" content="Unistart - Evaluări facultăți">
     <meta property="og:description" content="Alege facultatea potrivită pentru tine. Evaluări reale de la studenți, comparații și răspunsuri de la studenți actuali.">
     <meta property="og:url" content="https://unistart.ro/">
     <meta property="og:image" content="https://unistart.ro/assets/img/alege-facultatea-potrivita.png">
@@ -44,17 +44,32 @@
     <meta property="og:image:height" content="824">
     <meta property="og:image:alt" content="Unistart">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Unistart — Evaluări facultăți">
+    <meta name="twitter:title" content="Unistart - Evaluări facultăți">
     <meta name="twitter:description" content="Alege facultatea potrivită pentru tine. Evaluări reale de la studenți, comparații și răspunsuri de la studenți actuali.">
     <meta name="twitter:image" content="https://unistart.ro/assets/img/alege-facultatea-potrivita.png">
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
 
+    <script>
+        /* Applies a stored manual dark/light preference before CSS paints, so
+           the page doesn't flash the wrong theme. No stored preference means
+           light mode - dark mode never follows the OS, only the manual toggle sets it. */
+        (function () {
+            try {
+                var stored = localStorage.getItem('theme');
+                if (stored === 'light' || stored === 'dark') {
+                    document.documentElement.setAttribute('data-theme', stored);
+                }
+            } catch (e) { /* storage unavailable */ }
+        })();
+    </script>
+
     <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet"/>
     <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
     <link href="./assets/css/demo.css" rel="stylesheet"/>
     <link href="./assets/css/examples.css" rel="stylesheet"/>
+    <link href="./assets/css/dark-mode.css" rel="stylesheet"/>
 
     <style>
         .stats-bar-section {
@@ -254,7 +269,7 @@
                             <i class="fas fa-pen home-review-cta-icon" aria-hidden="true"></i>
                             <span>
                                 <strong data-i18n-key="home-review-cta-title">Ai studiat sau studiezi la o facultate?</strong>
-                                <span data-i18n-key="home-review-cta-text"> Spune-ți părerea într-o evaluare anonimă — durează un minut.</span>
+                                <span data-i18n-key="home-review-cta-text"> Spune-ți părerea într-o evaluare anonimă - durează un minut.</span>
                             </span>
                             <i class="fa fa-chevron-right home-review-cta-arrow" aria-hidden="true"></i>
                         </a>
@@ -1165,6 +1180,7 @@
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
 <script src="./assets/js/unistart.js"></script>
+<script src="./assets/js/theme-toggle.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
 

@@ -1,0 +1,512 @@
+/* Dark mode - light-charcoal palette with the brand's amber as the accent/link
+   color (blue link text loses contrast on charcoal, amber doesn't and it ties
+   the theme back to the navbar/footer band, which stays amber in both modes).
+
+   How it switches:
+   - Default is always light, regardless of OS/browser preference.
+   - User clicks the toggle -> explicit html[data-theme="dark"|"light"] wins,
+     see assets/js/theme-toggle.js.
+
+   Rules below are unconditional and read the --ut-* custom properties, which
+   flip value in the two blocks at the top. Every dark-mode rule is prefixed
+   with .wrapper (or targets modals directly) so the amber navbar/footer band
+   is never touched, and its extra class still outranks both ct-paper.css and
+   each page's own inline <style> block without needing !important. Use the
+   CLASS here, not #wrapper - every page's content div carries class="wrapper",
+   but only some of them also have id="wrapper", and a rule scoped to the id
+   silently matches nothing (and the toggle looks like it does nothing) on the
+   pages that don't. */
+
+:root {
+    --ut-page-bg: #ffffff;
+    --ut-surface: #ffffff;
+    --ut-surface-alt: #f5f4ef;
+    --ut-surface-alt-hover: #ebe9e0;
+    --ut-card-bg: #fffffc;
+    --ut-border: #000000;
+    --ut-border-soft: #e5e3dc;
+    --ut-shadow: rgba(204, 197, 185, 0.5);
+    --ut-ink: #252422;
+    --ut-body-text: #3d3c3a;
+    --ut-ink-muted: #898781;
+    --ut-link: #2d7ee0;
+    --ut-accent: #eda100;
+    --ut-input-bg: #fffdfa;
+    --ut-input-border: #e6e2d3;
+    --ut-input-focus-border: #f5d487;
+    --ut-error-bg: #fdf2f2;
+    --ut-modal-bg: #ffffff;
+    --ut-cta-gradient-top: #fff5c4;
+    --ut-cta-gradient-bottom: #ffffff;
+    --ut-autocomplete-bg: #ffffff;
+    --ut-autocomplete-border: #eaeaea;
+    --ut-autocomplete-hover: #f5d487;
+    --ut-cat-purple: #8e00c2;
+    --ut-cat-pink: #E50063;
+    --ut-label-muted: #646669;
+    --ut-radar-label: #52514e;
+    --ut-badge-green-bg: #e6f7ec;
+    --ut-badge-red-bg: #fdeceb;
+    --ut-home-cta-text: #4a3c00;
+    --ut-home-cta-border: #f0dfa0;
+    --ut-chip-bg: rgba(255, 255, 255, 0.9);
+}
+
+html[data-theme="dark"] {
+    --ut-page-bg: #201f1c;
+    --ut-surface: #201f1c;
+    --ut-surface-alt: #34322c;
+    --ut-surface-alt-hover: #3d3b34;
+    --ut-card-bg: #2b2a26;
+    --ut-border: #4a4844;
+    --ut-border-soft: #46443e;
+    --ut-shadow: rgba(0, 0, 0, 0.45);
+    --ut-ink: #f0ece2;
+    --ut-body-text: #d9d4c8;
+    --ut-ink-muted: #a89f8f;
+    --ut-link: #ffb84d;
+    --ut-accent: #ffc247;
+    --ut-input-bg: #26241f;
+    --ut-input-border: #4a4844;
+    --ut-input-focus-border: #ffc247;
+    --ut-error-bg: rgba(217, 83, 79, 0.18);
+    --ut-modal-bg: #2b2a26;
+    --ut-cta-gradient-top: rgba(255, 178, 41, 0.16);
+    --ut-cta-gradient-bottom: #2b2a26;
+    --ut-autocomplete-bg: #2b2a26;
+    --ut-autocomplete-border: #46443e;
+    --ut-autocomplete-hover: #3d3b34;
+    --ut-cat-purple: #c77dff;
+    --ut-cat-pink: #ff6fae;
+    --ut-label-muted: #a89f8f;
+    --ut-radar-label: #a89f8f;
+    --ut-badge-green-bg: rgba(12, 170, 65, 0.18);
+    --ut-badge-red-bg: rgba(235, 65, 51, 0.18);
+    --ut-home-cta-text: #f0ece2;
+    --ut-home-cta-border: #46443e;
+    --ut-chip-bg: #e1d286;
+    color-scheme: dark;
+}
+
+body {
+    color: var(--ut-body-text);
+}
+
+.wrapper {
+    background-color: var(--ut-page-bg);
+}
+
+.wrapper .section-white,
+.wrapper .section-nude,
+.wrapper .section-gray,
+.wrapper .section-white-gray,
+.wrapper .section-nude-gray {
+    background-color: var(--ut-surface);
+}
+
+/* Deliberately the bare element selector, matching ct-paper.css's own
+   `a { color: #2d7ee0; }` exactly (same specificity - dark-mode.css just
+   loads after it, so this wins the tie on source order). Scoping this to
+   `.wrapper a` instead breaks the cascade every other, more-specific-looking
+   anchor rule (.carousel-control, .navbar-default .navbar-nav a, footer
+   links, .btn's own color) relies on to still win - they're almost all
+   exactly one class more specific than bare `a`, not more specific than
+   `.wrapper a`. */
+a {
+    color: var(--ut-link);
+}
+
+.wrapper hr {
+    border-color: var(--ut-border-soft);
+}
+
+.wrapper .text-muted {
+    color: var(--ut-ink-muted);
+}
+
+.wrapper .card {
+    background-color: var(--ut-card-bg);
+    color: var(--ut-ink);
+    border-color: var(--ut-border);
+    box-shadow: 0 1px 5px var(--ut-shadow);
+}
+.wrapper .card .title {
+    color: var(--ut-ink);
+}
+/* ct-paper.css hardcodes `strong { color: #403D39; }` globally - a direct
+   rule on the element itself always wins over an inherited color no matter
+   how much less specific it is, so every <strong> (faculty names, review
+   counts, etc.) stayed dark regardless of the .card color above.
+   color: inherit seemed right here but isn't: a faculty name is usually
+   wrapped in <a><h5><strong>, and inheriting would pick up the *link*
+   color instead, turning plain bold text blue. #403D39 was never meant to
+   track the nearest ancestor - give it the theme's own fixed ink color,
+   same as the original independent-of-context behavior. */
+.wrapper strong {
+    color: var(--ut-ink);
+}
+/* .card-review-categories (profile.html) is a standalone yellow-gradient
+   block with its own baked-in dark text, deliberately left untouched like
+   the navbar/footer/login-card - excluded here so the strong-ink rule above
+   doesn't repaint its category names light-on-yellow in dark mode. */
+.wrapper .card-review-categories strong {
+    color: #403D39;
+}
+/* Same trap as .card-review-categories above, just via a class instead of an
+   ancestor: comparison.html and profile.html rate faculties with
+   <strong class="align-orange">, and adding an element selector (strong) to
+   a class-only rule (.align-orange, one class) makes .wrapper strong more
+   specific even though it looks more generic. Restore the orange. */
+.wrapper strong.align-orange {
+    color: orange;
+}
+/* Carousels (recently-viewed faculties, comparison suggestions) hardcode a
+   white track behind their charcoal-bordered item cards. */
+.wrapper .carousel-inner {
+    background-color: var(--ut-card-bg);
+}
+/* review.html's search-bar strip at the top of the review-form card
+   (#review-faculty-main, ct-paper.css) hardcodes a cream background nearly
+   matching the light-mode card - matches --ut-card-bg here for the same
+   near-seamless look. */
+.wrapper #review-faculty-main {
+    background-color: var(--ut-card-bg);
+}
+
+/* Only the truly neutral buttons (.btn / .btn-simple with no color modifier,
+   e.g. "Resetează notele") should go dark-ink here. .btn-fill always sets
+   its own explicit color regardless of variant (even the colorless one:
+   ct-paper.css's ".btn.btn-fill { color: #FFFFFF; }"), and each semantic
+   variant (.btn-danger/-warning/-info/-success/-primary) sets its own color
+   at the SAME specificity as base .btn, winning only via being later in
+   ct-paper.css's own source order - since dark-mode.css loads after that
+   whole file, matching their specificity here would let this rule win the
+   tie instead and repaint every one of them dark-ink. Excluding them by
+   name is the only way to leave them alone. Also exclude .form-control:
+   bootstrap-select (the "Toate domeniile"/"Toate orașele" filters) renders
+   its toggle as <button class="btn ... form-control">, meant to look like a
+   plain input - this rule's 6 :not() clauses make it far more specific than
+   the .form-control rule below, so left uncovered it painted every one of
+   those dropdowns with this rule's black button border instead. */
+.wrapper .btn:not(.form-control):not(.btn-fill):not(.btn-danger):not(.btn-warning):not(.btn-info):not(.btn-success):not(.btn-primary) {
+    color: var(--ut-ink);
+    border-color: var(--ut-border);
+}
+.wrapper .btn:not(.form-control):not(.btn-fill):not(.btn-danger):not(.btn-warning):not(.btn-info):not(.btn-success):not(.btn-primary):hover,
+.wrapper .btn:not(.form-control):not(.btn-fill):not(.btn-danger):not(.btn-warning):not(.btn-info):not(.btn-success):not(.btn-primary):focus,
+.wrapper .btn:not(.form-control):not(.btn-fill):not(.btn-danger):not(.btn-warning):not(.btn-info):not(.btn-success):not(.btn-primary):active {
+    background-color: var(--ut-surface-alt-hover);
+    color: var(--ut-ink);
+}
+
+.wrapper .form-control {
+    background-color: var(--ut-input-bg);
+    border-color: var(--ut-input-border);
+    color: var(--ut-ink);
+}
+.wrapper .form-control:focus {
+    background-color: var(--ut-input-bg);
+    border-color: var(--ut-input-focus-border);
+}
+.wrapper .input-group-addon {
+    background-color: var(--ut-input-bg);
+}
+
+.wrapper .autocomplete-result-list {
+    background-color: var(--ut-autocomplete-bg);
+    border-color: var(--ut-autocomplete-border);
+}
+.wrapper .autocomplete-result:hover,
+.wrapper .autocomplete-result[aria-selected="true"] {
+    background-color: var(--ut-autocomplete-hover);
+}
+
+.modal-content {
+    background-color: var(--ut-modal-bg);
+    color: var(--ut-ink);
+}
+.modal-header {
+    border-bottom-color: var(--ut-border-soft);
+}
+.modal-footer {
+    border-top-color: var(--ut-border-soft);
+}
+.modal-content a {
+    color: var(--ut-link);
+}
+
+/* Calculator switch pills, shared by both calculator pages */
+.wrapper .calculator-switch a.calculator-switch-active {
+    background: var(--ut-accent);
+    color: var(--ut-ink);
+}
+.wrapper .calculator-switch a.calculator-switch-link {
+    background: var(--ut-surface-alt);
+    color: var(--ut-ink);
+    border-color: var(--ut-border-soft);
+}
+.wrapper .calculator-switch a.calculator-switch-link:hover {
+    background: var(--ut-surface-alt-hover);
+    color: var(--ut-ink);
+}
+
+/* Soft inline note/formula boxes */
+.wrapper .calc-note,
+.wrapper .calculator-formula,
+.wrapper .adm-formula {
+    background: var(--ut-surface-alt);
+}
+.wrapper .adm-formula b,
+.wrapper .calculator-formula b {
+    color: var(--ut-ink);
+}
+
+/* The three calculator pages (general/.calculator-, UMFCD/.umf-, UNIBUC
+   admission/.adm-) each ship the same handful of bespoke pieces under their
+   own class prefix - same rules, three prefixes. */
+.wrapper .calculator-result-label,
+.wrapper .umf-progress,
+.wrapper .umf-course-credits,
+.wrapper .umf-result-label,
+.wrapper .umf-result-caption,
+.wrapper .adm-programs,
+.wrapper .adm-note,
+.wrapper .adm-result-label,
+.wrapper .adm-result-caption {
+    color: var(--ut-ink-muted);
+}
+.wrapper .umf-course-row,
+.wrapper .adm-process {
+    border-color: var(--ut-border-soft);
+}
+.wrapper .calculator-review-cta,
+.wrapper .umf-review-cta,
+.wrapper .adm-review-cta {
+    background-image: linear-gradient(to bottom, var(--ut-cta-gradient-top), var(--ut-cta-gradient-bottom));
+}
+.wrapper .calculator-review-cta-badge,
+.wrapper .umf-review-cta-badge,
+.wrapper .adm-review-cta-badge,
+.wrapper .adm-input-estimate {
+    background: var(--ut-card-bg);
+    border-color: var(--ut-accent);
+    color: var(--ut-accent);
+}
+.wrapper .calculator-input-invalid,
+.wrapper .adm-input-invalid {
+    background-color: var(--ut-error-bg);
+}
+
+/* All three review CTA cards use a dark charcoal border on their search box -
+   swap it for the light ink tone so it stays visible on a dark card. */
+.wrapper .calculator-review-cta .search-fieldset .form-control,
+.wrapper .umf-review-cta .search-fieldset .form-control,
+.wrapper .adm-review-cta .search-fieldset .form-control {
+    border-color: var(--ut-ink);
+}
+
+/* review.html colors each review-category heading inline (7 categories, each
+   its own hue for quick scanning). Most keep enough contrast on a dark card;
+   #8e00c2 (purple) and #E50063 (pink) don't, so brighten just those two in
+   dark mode. Inline style="" always wins over a stylesheet regardless of
+   selector specificity, so !important is the only way to override it. */
+.wrapper .review-form-category-title[style*="#8e00c2"] {
+    color: var(--ut-cat-purple) !important;
+}
+.wrapper .review-form-category-title[style*="#E50063"] {
+    color: var(--ut-cat-pink) !important;
+}
+
+/* Review-card pieces (shown on reviews.html, user.html, profile.html, and
+   review.html's own preview): the "general rating" excerpt box, the
+   recommend/not-recommend/neutral badges, and the footer divider all
+   hardcode light-mode-only colors. */
+.wrapper .review-general-rating {
+    background-color: var(--ut-surface-alt);
+}
+.wrapper .review-badge.recommend {
+    background-color: var(--ut-badge-green-bg);
+}
+.wrapper .review-badge.not-recommend {
+    background-color: var(--ut-badge-red-bg);
+}
+.wrapper .review-badge.neutral {
+    background-color: var(--ut-surface-alt);
+    color: var(--ut-ink-muted);
+}
+.wrapper .review-footer-row {
+    border-top-color: var(--ut-border-soft);
+}
+.wrapper .review-card-category-item {
+    border-top-color: var(--ut-border-soft);
+}
+
+/* profile.html builds these two job-listing boxes with an inline light
+   background/border (JS template strings) - without an override the row's
+   text, which correctly inherits the card's light ink color in dark mode,
+   would sit on a near-white box left over from light mode and disappear. */
+.wrapper .company-job-role-row {
+    background-color: var(--ut-surface-alt) !important;
+}
+.wrapper .company-opportunity-card {
+    border-color: var(--ut-border-soft) !important;
+}
+.wrapper .comparison-row-label-muted {
+    color: var(--ut-label-muted);
+}
+
+/* comparison.html's radar chart is hand-drawn SVG with hairline grid colors
+   tuned for a white background - a CSS rule beats an SVG presentation
+   attribute (fill=/stroke=) without needing !important, unlike an inline
+   style="" attribute, so no exception to the no-!important rule here. */
+.wrapper .radar-grid-ring,
+.wrapper .radar-grid-axis {
+    stroke: var(--ut-border-soft);
+}
+.wrapper .radar-dot {
+    stroke: var(--ut-card-bg);
+}
+.wrapper .radar-axis-label {
+    color: var(--ut-radar-label);
+}
+
+/* comparison.html's actual comparison table (as opposed to the radar chart
+   above it) is a whole separate hand-built component in ct-paper.css with
+   its own light-only palette - none of it was covered by the generic .card
+   rule since every piece sets its own background/color/border. */
+.wrapper .comparison-table {
+    background-color: var(--ut-card-bg);
+}
+.wrapper .comparison-header-cell {
+    background-color: var(--ut-surface-alt);
+    color: var(--ut-ink);
+    border-right-color: var(--ut-border-soft);
+}
+.wrapper .comparison-header-cell-blank {
+    background-color: var(--ut-card-bg);
+    border-right-color: var(--ut-border-soft);
+}
+.wrapper .comparison-row {
+    border-bottom-color: var(--ut-border-soft);
+}
+.wrapper .comparison-cell {
+    border-left-color: var(--ut-border-soft);
+}
+.wrapper .comparison-cell-standard:hover {
+    background-color: var(--ut-surface-alt-hover);
+}
+.wrapper .comparison-even-row {
+    background-color: var(--ut-card-bg);
+}
+.wrapper .comparison-odd-row {
+    background-color: var(--ut-surface-alt);
+}
+.wrapper .comparison-row-label-icon {
+    color: var(--ut-ink-muted);
+}
+.wrapper .comparison-value-badge {
+    background-color: var(--ut-surface-alt);
+    color: var(--ut-ink);
+}
+.wrapper .comparison-value-empty {
+    color: var(--ut-ink-muted);
+}
+.wrapper .comparison-cell-action:hover {
+    background-color: var(--ut-surface-alt-hover);
+}
+
+/* Homepage (webapp/index.html) and the faculty profile header share the same
+   cream-fading-to-transparent hero gradient (ct-paper.css) - it sits directly
+   on .wrapper, so the transparent end normally reveals .wrapper's own white
+   background. In dark mode that would reveal charcoal instead of white,
+   which still works (a warm glow fading into the dark page), but the top of
+   the gradient is a hardcoded opaque cream that needs to fade into the dark
+   background too, not stay opaque cream on a dark page. */
+.wrapper .homepage-header-background {
+    background-image: linear-gradient(to bottom, var(--ut-cta-gradient-top), var(--ut-page-bg));
+}
+.wrapper .faculty-profile-header-background {
+    background-image: linear-gradient(to bottom, var(--ut-cta-gradient-top), var(--ut-page-bg)) !important;
+}
+
+/* Homepage stat bar (universities/faculties/reviews counters) - colors are
+   hardcoded in index.html's own <style>, not ct-paper.css. */
+.wrapper .stats-bar-section {
+    border-bottom-color: var(--ut-border-soft);
+}
+.wrapper .stat-tile .stat-value {
+    color: var(--ut-ink);
+}
+.wrapper .stat-tile .stat-label {
+    color: var(--ut-ink-muted);
+}
+
+/* Homepage featured-review quote cards (top faculty section) - same soft-box
+   pattern as the calculator note boxes, plus a muted quote-mark icon that's
+   deliberately near-invisible against its own box in both themes. */
+.wrapper .home-review-quote,
+.wrapper .home-review-quote-empty {
+    background-color: var(--ut-surface-alt);
+}
+.wrapper .home-review-quote .home-review-quote-icon {
+    color: var(--ut-ink-muted);
+}
+
+/* Homepage "Ai studiat sau studiezi la o facultate?" banner - its own cream
+   gradient + warm-brown text, reusing the review-CTA gradient vars so it
+   matches the calculator/review CTA cards elsewhere on the site. The <strong>
+   inside picks up --ut-ink from the global strong rule already (fine against
+   this gradient), but the plain descriptive text needs its own var since the
+   light value (#4a3c00) is a deliberate warm brown, not the neutral ink. */
+.wrapper .home-review-cta {
+    background-image: linear-gradient(to right, var(--ut-cta-gradient-top), var(--ut-card-bg));
+    border-color: var(--ut-home-cta-border);
+    color: var(--ut-home-cta-text);
+}
+.wrapper .home-review-cta:hover,
+.wrapper .home-review-cta:focus {
+    background-image: linear-gradient(to right, var(--ut-surface-alt-hover), var(--ut-card-bg));
+    color: var(--ut-home-cta-text);
+}
+
+/* Homepage "study domains" / "cities" filter chips (.ks-cboxtags, only used
+   here) - the unchecked state keeps its own blue border/text (#1464dd,
+   ct-paper.css) in every theme, which only reads clearly on a light
+   background - a "dark but still lighter" gray tested unreadable, so the
+   dark value here is a deliberately light gold pill, by design floating
+   lighter than the page around it rather than trying to go full dark like
+   everything else. The checked state is solid blue + white text either way,
+   so it's left alone. */
+.wrapper .ks-cboxtags li label {
+    background-color: var(--ut-chip-bg);
+}
+
+/* Theme toggle: injected by assets/js/theme-toggle.js as the last item in the
+   header nav (far right, next to the language flags). It lives in the amber
+   navbar, which stays amber in both themes by design (see the file header
+   comment), so it just needs to look like the icon-only sibling of the other
+   .btn-simple nav links - no dark-mode color swap needed here. */
+#theme-toggle-btn {
+    padding: 7px 12px;
+}
+#theme-toggle-btn i {
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+/* Not a dark-mode rule - a layout fix needed because the toggle above adds a
+   10th item to the header nav on every page, which was already tight and
+   wraps to a second row on narrower desktop widths without this. Bootstrap
+   already pulls the brand -15px to cancel the container's own padding
+   (bootstrap.css, ".navbar > .container .navbar-brand"); go further and
+   shrink the logo itself so the nav list has more room beside it. */
+@media (min-width: 768px) {
+    #demo-navbar .navbar-brand {
+        padding-left: 0;
+        padding-right: 8px;
+        margin-left: -25px;
+    }
+    #demo-navbar .main-logo {
+        height: 32px;
+    }
+}

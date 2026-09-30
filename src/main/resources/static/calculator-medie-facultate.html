@@ -54,19 +54,34 @@
 
 	<script type="application/ld+json">
 	{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-		{"@type":"Question","name":"Cum se calculează media generală la facultate?","acceptedAnswer":{"@type":"Answer","text":"Majoritatea universităților din România și din Europa folosesc sistemul de credite ECTS: fiecare materie are un număr de credite proporțional cu volumul de muncă alocat, iar media generală se calculează ca o medie ponderată — nota fiecărei materii înmulțită cu numărul ei de credite, totul împărțit la numărul total de credite."}},
-		{"@type":"Question","name":"Ce sunt creditele ECTS?","acceptedAnswer":{"@type":"Answer","text":"Fiecare materie are alocat un număr de credite ECTS proporțional cu volumul de muncă necesar — cursuri, seminarii, teme, examen. Un semestru universitar are, de regulă, 30 de credite ECTS, iar un an universitar complet, 60. Sistemul e comun majorității universităților din Europa, ceea ce face media ușor de recunoscut și în afara țării (de exemplu, pentru un schimb Erasmus)."}},
-		{"@type":"Question","name":"Media calculată aici este cea oficială a facultății mele?","acceptedAnswer":{"@type":"Answer","text":"Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei — verifică regulamentul facultății tale pentru rezultatul oficial."}}
+		{"@type":"Question","name":"Cum se calculează media generală la facultate?","acceptedAnswer":{"@type":"Answer","text":"Majoritatea universităților din România și din Europa folosesc sistemul de credite ECTS: fiecare materie are un număr de credite proporțional cu volumul de muncă alocat, iar media generală se calculează ca o medie ponderată - nota fiecărei materii înmulțită cu numărul ei de credite, totul împărțit la numărul total de credite."}},
+		{"@type":"Question","name":"Ce sunt creditele ECTS?","acceptedAnswer":{"@type":"Answer","text":"Fiecare materie are alocat un număr de credite ECTS proporțional cu volumul de muncă necesar - cursuri, seminarii, teme, examen. Un semestru universitar are, de regulă, 30 de credite ECTS, iar un an universitar complet, 60. Sistemul e comun majorității universităților din Europa, ceea ce face media ușor de recunoscut și în afara țării (de exemplu, pentru un schimb Erasmus)."}},
+		{"@type":"Question","name":"Media calculată aici este cea oficială a facultății mele?","acceptedAnswer":{"@type":"Answer","text":"Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei - verifică regulamentul facultății tale pentru rezultatul oficial."}}
 	]}
 	</script>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
+    <script>
+        /* Applies a stored manual dark/light preference before CSS paints, so
+           the page doesn't flash the wrong theme. No stored preference means
+           light mode - dark mode never follows the OS, only the manual toggle sets it. */
+        (function () {
+            try {
+                var stored = localStorage.getItem('theme');
+                if (stored === 'light' || stored === 'dark') {
+                    document.documentElement.setAttribute('data-theme', stored);
+                }
+            } catch (e) { /* storage unavailable */ }
+        })();
+    </script>
+
     <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet" />
     <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
     <link href="./assets/css/demo.css" rel="stylesheet" />
     <link href="./assets/css/examples.css" rel="stylesheet" />
+    <link href="./assets/css/dark-mode.css" rel="stylesheet"/>
 
 	<style>
 		.calculator-row {
@@ -286,14 +301,14 @@
 								<div class="row">
 									<div class="col-xs-12 text-center">
 										<div class="calculator-result-label" data-i18n-key="calculator-medie-result-label">Media ta generală</div>
-										<div id="calculator-result" class="calculator-result-value align-orange">—</div>
+										<div id="calculator-result" class="calculator-result-value align-orange">-</div>
 										<div id="calculator-result-credits" class="text-muted"></div>
 									</div>
 								</div>
 
 								<div class="row" style="margin-top: 15px;">
 									<div class="col-xs-12">
-										<p class="text-center text-muted"><small data-i18n-key="calculator-medie-disclaimer">Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei — verifică regulamentul facultății tale pentru rezultatul oficial.</small></p>
+										<p class="text-center text-muted"><small data-i18n-key="calculator-medie-disclaimer">Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei - verifică regulamentul facultății tale pentru rezultatul oficial.</small></p>
 										<p class="text-center"><small>Ai observat o greșeală? <a href="./contact.html">Scrie-ne</a>.</small></p>
 									</div>
 								</div>
@@ -318,7 +333,7 @@
 									<div class="col-xs-12 text-center">
 										<i class="fas fa-pen calculator-review-cta-icon" aria-hidden="true"></i>
 										<h2 class="title" data-i18n-key="calculator-medie-review-cta-title">Ai media? Ajută alți studenți cu o evaluare</h2>
-										<p class="text-muted" data-i18n-key="calculator-medie-review-cta-text">Scrie o evaluare 100% anonimă despre facultatea ta — durează un minut și ajută pe cineva care alege acum unde să studieze.</p>
+										<p class="text-muted" data-i18n-key="calculator-medie-review-cta-text">Scrie o evaluare 100% anonimă despre facultatea ta - durează un minut și ajută pe cineva care alege acum unde să studieze.</p>
 										<span class="calculator-review-cta-badge"><i class="fa fa-clock-o" aria-hidden="true"></i> <span data-i18n-key="calculator-medie-review-cta-badge">Durează 1 minut · 100% anonim</span></span>
 									</div>
 								</div>
@@ -352,14 +367,14 @@
 										<h2 class="title" data-i18n-key="calculator-medie-faq-section-title">Întrebări frecvente</h2>
 
 										<h3 class="calculator-faq-question" data-i18n-key="calculator-medie-faq-title">Cum se calculează media generală la facultate?</h3>
-										<p data-i18n-key="calculator-medie-faq-formula">Majoritatea universităților din România și din Europa folosesc sistemul de credite ECTS: fiecare materie are un număr de credite proporțional cu volumul de muncă alocat, iar media generală se calculează ca o medie ponderată — nota fiecărei materii înmulțită cu numărul ei de credite, totul împărțit la numărul total de credite.</p>
+										<p data-i18n-key="calculator-medie-faq-formula">Majoritatea universităților din România și din Europa folosesc sistemul de credite ECTS: fiecare materie are un număr de credite proporțional cu volumul de muncă alocat, iar media generală se calculează ca o medie ponderată - nota fiecărei materii înmulțită cu numărul ei de credite, totul împărțit la numărul total de credite.</p>
 										<p class="text-center"><span class="calculator-formula">Media = Σ (Notă × Credite) / Σ Credite</span></p>
 
 										<h3 class="calculator-faq-question" data-i18n-key="calculator-medie-faq-q2">Ce sunt creditele ECTS?</h3>
-										<p data-i18n-key="calculator-medie-faq-a2">Fiecare materie are alocat un număr de credite ECTS proporțional cu volumul de muncă necesar — cursuri, seminarii, teme, examen. Un semestru universitar are, de regulă, 30 de credite ECTS, iar un an universitar complet, 60. Sistemul e comun majorității universităților din Europa, ceea ce face media ușor de recunoscut și în afara țării (de exemplu, pentru un schimb Erasmus).</p>
+										<p data-i18n-key="calculator-medie-faq-a2">Fiecare materie are alocat un număr de credite ECTS proporțional cu volumul de muncă necesar - cursuri, seminarii, teme, examen. Un semestru universitar are, de regulă, 30 de credite ECTS, iar un an universitar complet, 60. Sistemul e comun majorității universităților din Europa, ceea ce face media ușor de recunoscut și în afara țării (de exemplu, pentru un schimb Erasmus).</p>
 
 										<h3 class="calculator-faq-question" data-i18n-key="calculator-medie-faq-q3">Media calculată aici este cea oficială a facultății mele?</h3>
-										<p data-i18n-key="calculator-medie-faq-note">Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei — verifică regulamentul facultății tale pentru rezultatul oficial. Ești la UMFCD (Medicină Generală sau Medicină Dentară)? Ai un <a href="./calculator-medie-umfcd.html">calculator dedicat, cu materiile și creditele deja completate</a>.</p>
+										<p data-i18n-key="calculator-medie-faq-note">Rezultatul este orientativ. Unele facultăți (de exemplu, universitățile de medicină) pot folosi o formulă proprie de calcul al mediei - verifică regulamentul facultății tale pentru rezultatul oficial. Ești la UMFCD (Medicină Generală sau Medicină Dentară)? Ai un <a href="./calculator-medie-umfcd.html">calculator dedicat, cu materiile și creditele deja completate</a>.</p>
 
 										<hr>
 										<p class="calculator-related-links">
@@ -768,7 +783,7 @@ function recalculateAverage() {
 	var creditsElement = document.getElementById("calculator-result-credits");
 
 	if (validCount === 0 || (weighted && totalCredits === 0)) {
-		resultElement.innerText = "—";
+		resultElement.innerText = "-";
 		creditsElement.innerText = translateKey("calculator-medie-empty-state") || "";
 	} else if (weighted) {
 		var average = weightedSum / totalCredits;
@@ -805,6 +820,7 @@ function resetCalculator() {
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
 <script src="./assets/js/unistart.js"></script>
+<script src="./assets/js/theme-toggle.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
 

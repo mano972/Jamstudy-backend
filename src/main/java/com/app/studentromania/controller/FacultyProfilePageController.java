@@ -304,7 +304,7 @@ public class FacultyProfilePageController {
                 + shortnameParen
                 + (StringUtils.isNotEmpty(cityShort) ? ", " + cityShort : "")
                 + uniParen
-                + " — păreri și evaluări de la studenți | Unistart";
+                + " - păreri și evaluări de la studenți | Unistart";
         String description = faculty.getFacultyName() + shortnameParen
                 + (StringUtils.isNotEmpty(cityShort) ? " din " + cityShort : "") + uniParen
                 + ": programe de licență și master, locuri la buget și taxă, taxe de școlarizare"
@@ -461,7 +461,7 @@ public class FacultyProfilePageController {
             h1.append(" (").append(faculty.getFacultyShortname()).append(")");
         }
         if (StringUtils.isNotEmpty(faculty.getUniversityName())) {
-            h1.append(" — ").append(faculty.getUniversityName());
+            h1.append(" - ").append(faculty.getUniversityName());
         }
         if (StringUtils.isNotEmpty(cityShort)) {
             h1.append(", ").append(cityShort);
@@ -556,7 +556,7 @@ public class FacultyProfilePageController {
 
     private static String td(String value) {
         return "<td style=\"padding:6px;border-bottom:1px solid #f0f0f0;\">"
-                + escapeHtml(StringUtils.isNotBlank(value) ? value.trim() : "—") + "</td>";
+                + escapeHtml(StringUtils.isNotBlank(value) ? value.trim() : "-") + "</td>";
     }
 
     private static String firstNonBlank(String a, String b) {
@@ -643,7 +643,7 @@ public class FacultyProfilePageController {
             }
             html.append("</a>");
             if (showUniversity && StringUtils.isNotEmpty(f.getUniversityName())) {
-                html.append(" <span style=\"color:#999;font-size:13px;\">— ")
+                html.append(" <span style=\"color:#999;font-size:13px;\">- ")
                         .append(escapeHtml(f.getUniversityName())).append("</span>");
             }
             html.append("</li>\n");
@@ -847,7 +847,7 @@ public class FacultyProfilePageController {
             String countryCode) {
         String socialTitle = faculty.getFacultyName()
                 + (StringUtils.isNotEmpty(faculty.getFacultyShortname()) ? " (" + faculty.getFacultyShortname() + ")" : "")
-                + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " — " + faculty.getUniversityName() : "");
+                + (StringUtils.isNotEmpty(faculty.getUniversityName()) ? " - " + faculty.getUniversityName() : "");
         String imageUrl = origin + "/assets/img/alege-facultatea-potrivita.png";
         String locale = "LT".equalsIgnoreCase(countryCode) ? "lt_LT" : "ro_RO";
 

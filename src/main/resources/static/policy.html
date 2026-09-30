@@ -42,10 +42,25 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
 
+    <script>
+        /* Applies a stored manual dark/light preference before CSS paints, so
+           the page doesn't flash the wrong theme. No stored preference means
+           light mode - dark mode never follows the OS, only the manual toggle sets it. */
+        (function () {
+            try {
+                var stored = localStorage.getItem('theme');
+                if (stored === 'light' || stored === 'dark') {
+                    document.documentElement.setAttribute('data-theme', stored);
+                }
+            } catch (e) { /* storage unavailable */ }
+        })();
+    </script>
+
     <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet"/>
     <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
     <link href="./assets/css/demo.css" rel="stylesheet"/>
     <link href="./assets/css/examples.css" rel="stylesheet"/>
+    <link href="./assets/css/dark-mode.css" rel="stylesheet"/>
 
     <!-- Google Analytics loads unconditionally via initGoogleTag() in unistart.js, with a denied Consent Mode v2 default until the cookie banner is accepted (see the "Cookie consent" comment there). -->
 
@@ -301,7 +316,7 @@
                                             Login), pentru înregistrarea/autentificarea rapidă a Utilizatorilor prin
                                             intermediul contului Facebook.
                                             <br>
-                                            <strong>e.</strong> Umami — instrument de analiză web privind traficul,
+                                            <strong>e.</strong> Umami - instrument de analiză web privind traficul,
                                             găzduit pe infrastructura proprie a Companiei (nu pe serverele unui
                                             furnizor terț). Colectează exclusiv date agregate și anonime despre
                                             utilizarea Site-ului, nu folosește cookie-uri, nu creează profiluri și nu
@@ -659,6 +674,7 @@
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
 <script src="./assets/js/unistart.js"></script>
+<script src="./assets/js/theme-toggle.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
 <script src="./assets/js/demo.js"></script>

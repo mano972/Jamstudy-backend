@@ -27,6 +27,20 @@
         })();
     </script>
 
+    <script>
+        /* Applies a stored manual dark/light preference before CSS paints, so
+           the page doesn't flash the wrong theme. No stored preference means
+           light mode - dark mode never follows the OS, only the manual toggle sets it. */
+        (function () {
+            try {
+                var stored = localStorage.getItem('theme');
+                if (stored === 'light' || stored === 'dark') {
+                    document.documentElement.setAttribute('data-theme', stored);
+                }
+            } catch (e) { /* storage unavailable */ }
+        })();
+    </script>
+
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Unistart">
     <meta property="og:locale" content="ro_RO">
@@ -130,6 +144,7 @@
     <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
     <link href="./assets/css/demo.css" rel="stylesheet"/>
     <link href="./assets/css/examples.css" rel="stylesheet"/>
+    <link href="./assets/css/dark-mode.css" rel="stylesheet"/>
 
     <style>
         .umf-select {
@@ -224,6 +239,19 @@
         .umf-feedback-note {
             margin-top: 10px;
         }
+        .calc-note {
+            background: #f5f4ef;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .calculator-formula {
+            display: inline-block;
+            background: #f5f4ef;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 15px;
+        }
         /* Review CTA - same warm gradient as calculator-medie-facultate.html. */
         .umf-review-cta {
             background-image: linear-gradient(to bottom, #fff5c4, #ffffff);
@@ -276,7 +304,7 @@
 <body>
 
 <nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
-    <!-- populated dynamically -->
+    <!-- populated dynamically - theme-toggle.js adds the dark/light switch as the last nav item -->
 </nav>
 
 <div id="wrapper" class="wrapper loading">
@@ -307,14 +335,14 @@
                                 <div class="col-xs-12">
                                     <p class="text-muted">Alege facultatea (Medicină Generală sau Medicină Dentară) și
                                         anul de studiu. Materiile și creditele ECTS sunt deja completate după planul de
-                                        învățământ oficial UMFCD — tu introduci doar nota la fiecare materie
+                                        învățământ oficial UMFCD - tu introduci doar nota la fiecare materie
                                         promovată.</p>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <p style="background:#f5f4ef;padding:6px 14px;border-radius:4px;font-size:14px;">Nu
+                                    <p class="calc-note">Nu
                                         ești la Medicină Generală sau Medicină Dentară UMFCD? Încearcă <a
                                                 href="./calculator-medie-facultate.html"><b>calculatorul general</b></a>,
                                         valabil pentru orice facultate din România.</p>
@@ -360,7 +388,7 @@
                                 <div class="col-xs-12">
                                     <p class="text-center text-muted"><small>Rezultatul este orientativ, calculat după
                                         planul de învățământ oficial UMFCD 2025-2026. Unele materii din anul modular pot
-                                        fi reprogramate de facultate — verifică secretariatul pentru situația
+                                        fi reprogramate de facultate - verifică secretariatul pentru situația
                                         oficială.</small></p>
                                     <p class="text-center umf-feedback-note"><small>Ai observat o greșeală? <a
                                             href="./contact.html">Scrie-ne</a>.</small></p>
@@ -427,12 +455,12 @@
                                         București (UMFCD) pentru anul universitar 2025-2026, atât pentru Medicină
                                         Generală, cât și pentru Medicină Dentară.</p>
                                     <p>Indiferent de facultate sau de an, planul de învățământ UMFCD însumează mereu <b>60
-                                        de credite transferabile pe an</b> — 30 pe semestru, împărțite între discipline
+                                        de credite transferabile pe an</b> - 30 pe semestru, împărțite între discipline
                                         obligatorii (fundamentale, de domeniu, de specialitate, complementare) și
                                         discipline opționale, la alegerea studentului dintr-un pachet propus de
                                         facultate. Educația fizică apare separat, cu credite bonus care nu se transferă
                                         în cele 60.</p>
-                                    <p>Selectează facultatea și anul tău mai sus ca să vezi lista completă de materii —
+                                    <p>Selectează facultatea și anul tău mai sus ca să vezi lista completă de materii -
                                         de la Anul I (Anatomie, Biochimie, Fiziologie, Histologie) până la Anul VI (Boli
                                         infecțioase, Medicină de familie, sau, la Medicină Dentară, Endodonție,
                                         Parodontologie, Protetică dentară).</p>
@@ -461,15 +489,14 @@
                                     <p>La fel ca la majoritatea facultăților din România, printr-o medie ponderată pe
                                         credite: nota fiecărei materii înmulțită cu numărul ei de credite ECTS, totul
                                         împărțit la suma creditelor.</p>
-                                    <p class="text-center"><span class="calculator-formula"
-                                                                 style="display:inline-block;background:#f5f4ef;padding:6px 14px;border-radius:4px;font-size:15px;">Media = Σ (Notă × Credite) / Σ Credite</span>
+                                    <p class="text-center"><span class="calculator-formula">Media = Σ (Notă × Credite) / Σ Credite</span>
                                     </p>
                                     <p>Fiecare an de studiu la UMFCD (Medicină Generală sau Medicină Dentară) însumează
                                         60 de credite transferabile.</p>
 
                                     <h3 class="umf-faq-question">De ce nu introduc eu creditele, ca la calculatorul
                                         general?</h3>
-                                    <p>Pentru că la UMFCD planul de învățământ e fix pe an și pe facultate — materiile
+                                    <p>Pentru că la UMFCD planul de învățământ e fix pe an și pe facultate - materiile
                                         și creditele lor sunt stabilite de universitate, nu variază de la un student la
                                         altul. Calculatorul le are deja completate din planurile de învățământ oficiale
                                         UMFCD 2025-2026; tu introduci doar nota la fiecare materie promovată.</p>
@@ -915,7 +942,7 @@
         for (i = 0; i < year.courses.length; i++) {
             totalCredits += year.courses[i].c;
             var grade = umfGrades[i] || "";
-            var options = '<option value="">—</option>';
+            var options = '<option value="">-</option>';
             for (j = 1; j <= 10; j++) {
                 options += '<option value="' + j + '"' + (String(j) === grade ? " selected" : "") + '>' + j + '</option>';
             }
@@ -970,7 +997,7 @@
         var captionElement = document.getElementById("umf-result-caption");
 
         if (gradedCount === 0) {
-            resultElement.innerText = "—";
+            resultElement.innerText = "-";
             captionElement.innerText = "";
         } else {
             var average = weightedSum / gradedCredits;
@@ -996,6 +1023,7 @@
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
 <script src="./assets/js/unistart.js"></script>
+<script src="./assets/js/theme-toggle.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
 

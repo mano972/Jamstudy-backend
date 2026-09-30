@@ -11,10 +11,25 @@
     <meta name="viewport" content="width=device-width" />
 	<meta name="google-signin-client_id" content="801355334630-8i08j4vg23mh4b1eogrs5c0jrm5etb2n.apps.googleusercontent.com">
     
+    <script>
+        /* Applies a stored manual dark/light preference before CSS paints, so
+           the page doesn't flash the wrong theme. No stored preference means
+           light mode - dark mode never follows the OS, only the manual toggle sets it. */
+        (function () {
+            try {
+                var stored = localStorage.getItem('theme');
+                if (stored === 'light' || stored === 'dark') {
+                    document.documentElement.setAttribute('data-theme', stored);
+                }
+            } catch (e) { /* storage unavailable */ }
+        })();
+    </script>
+
     <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet" />
     <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
     <link href="./assets/css/demo.css" rel="stylesheet" />
     <link href="./assets/css/examples.css" rel="stylesheet" />
+    <link href="./assets/css/dark-mode.css" rel="stylesheet"/>
 	
 	<!-- Google Analytics loads unconditionally via initGoogleTag() in unistart.js, with a denied Consent Mode v2 default until the cookie banner is accepted (see the "Cookie consent" comment there). -->
         
@@ -143,6 +158,7 @@
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
 <script src="./assets/js/unistart.js"></script>
+<script src="./assets/js/theme-toggle.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
 <script src="./assets/js/demo.js"></script>

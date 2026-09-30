@@ -25,6 +25,20 @@
 		})();
 	</script>
 
+	<script>
+		/* Applies a stored manual dark/light preference before CSS paints, so
+		   the page doesn't flash the wrong theme. No stored preference means
+		   light mode - dark mode never follows the OS, only the manual toggle sets it. */
+		(function () {
+			try {
+				var stored = localStorage.getItem('theme');
+				if (stored === 'light' || stored === 'dark') {
+					document.documentElement.setAttribute('data-theme', stored);
+				}
+			} catch (e) { /* storage unavailable */ }
+		})();
+	</script>
+
 	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="Unistart">
 	<meta property="og:locale" content="ro_RO">
@@ -69,6 +83,7 @@
 	<link href="./assets/css/ct-paper.css" rel="stylesheet"/>
 	<link href="./assets/css/demo.css" rel="stylesheet" />
 	<link href="./assets/css/examples.css" rel="stylesheet" />
+	<link href="./assets/css/dark-mode.css" rel="stylesheet" />
 
 	<style>
 		h1.title { font-size: 24px; }
@@ -243,7 +258,7 @@
 <body>
 
 	<nav class="navbar navbar-default" role="navigation-demo" id="demo-navbar">
-		<!-- populated dynamically -->
+		<!-- populated dynamically - theme-toggle.js adds the dark/light switch as the last nav item -->
 	</nav>
 
 	<div id="wrapper" class="wrapper loading">
@@ -823,7 +838,7 @@ var ADM_FACULTIES = [
 			formula: "Nota la proba scrisă de gândire critică (tip grilă)",
 			inputs: [ { id: "P", label: "Nota (estimată) la proba scrisă de gândire critică (grilă)" } ], calc: function(v) { return v.P; } },
 		{ cycle: "Licență", programs: "Pedagogie, Psihopedagogie specială", tier: "det",
-			formula: "Concurs de dosare — 100% × Media generală a examenului de bacalaureat",
+			formula: "Concurs de dosare - 100% × Media generală a examenului de bacalaureat",
 			inputs: [ "MB" ], calc: function(v) { return v.MB; } },
 		{ cycle: "Licență", programs: "Pedagogia Învățământului Primar (și Preșcolar) și Educație Timpurie – București / Buzău / Focșani / CREDIS", tier: "det",
 			note: "Se susține mai întâi o probă de aptitudini eliminatorie, notată admis/respins.",
@@ -834,7 +849,7 @@ var ADM_FACULTIES = [
 			formula: "Nota la proba orală din tematică",
 			inputs: [ "PO" ], calc: function(v) { return v.PO; } },
 		{ cycle: "Master", programs: "Psihologie – „Psihologie organizațională și managementul resurselor umane”, „Psihologia muncii, transporturilor și serviciilor”", tier: "det",
-			formula: "Concurs de dosare — 100% × Media anilor de studii de licență",
+			formula: "Concurs de dosare - 100% × Media anilor de studii de licență",
 			inputs: [ "MAL" ], calc: function(v) { return v.MAL; } },
 		{ cycle: "Master", programs: "Științe ale educației – majoritatea programelor", tier: "det",
 			formula: "60% × Media examenului de licență + 40% × Media anilor de studii de licență",
@@ -874,7 +889,7 @@ var ADM_FACULTIES = [
 	] },
 	{ name: "Teologie Ortodoxă", groups: [
 		{ cycle: "Licență", programs: "Artă Sacră, Teologie Ortodoxă Asistență Socială / Didactică / Pastorală", tier: "est",
-			note: "Interviul evaluează aptitudini socio-umane și dogmatică (la Artă Sacră — și o probă practică; la Pastorală — dicție și aptitudini muzicale). Ponderea exactă a componentelor nu e publicată; calculatorul presupune 50%–50%.",
+			note: "Interviul evaluează aptitudini socio-umane și dogmatică (la Artă Sacră - și o probă practică; la Pastorală - dicție și aptitudini muzicale). Ponderea exactă a componentelor nu e publicată; calculatorul presupune 50%–50%.",
 			formula: "(Nota la interviu + Media de la bacalaureat) / 2",
 			inputs: [ "I", "MB" ], calc: function(v) { return (v.I + v.MB) / 2; } },
 		{ cycle: "Master", programs: "toate programele de master", tier: "det",
@@ -894,7 +909,7 @@ var ADM_FACULTIES = [
 	] },
 	{ name: "Studii Interdisciplinare", groups: [
 		{ cycle: "Licență", programs: "Servicii și politici de sănătate publică (Public Health), Sănătate și stil de viață", tier: "det",
-			formula: "Concurs de dosare — 100% × Media obținută la examenul de bacalaureat",
+			formula: "Concurs de dosare - 100% × Media obținută la examenul de bacalaureat",
 			inputs: [ "MB" ], calc: function(v) { return v.MB; } },
 		{ cycle: "Master", programs: "Managementul Organizațiilor Publice și Neguvernamentale, Managementul stilului de viață", tier: "det",
 			formula: "(Media examenului de licență + Media anilor de studii de licență) / 2",
@@ -903,9 +918,9 @@ var ADM_FACULTIES = [
 ];
 
 var ADM_TIER_CAPTION = {
-	det:  "Formula oficială UNIBUC 2026 — rezultatul e media ta de admitere.",
-	est:  "Estimare — o parte din notă vine de la o probă sau un interviu pe care îl estimezi.",
-	info: "Estimare — media de admitere e dată de o probă proprie a facultății sau de un interviu; introdu o notă presupusă."
+	det:  "Formula oficială UNIBUC 2026 - rezultatul e media ta de admitere.",
+	est:  "Estimare - o parte din notă vine de la o probă sau un interviu pe care îl estimezi.",
+	info: "Estimare - media de admitere e dată de o probă proprie a facultății sau de un interviu; introdu o notă presupusă."
 };
 
 var admCurFaculty = 0;
@@ -1050,7 +1065,7 @@ function admRenderGroup() {
 	// The <option> text gets clipped when the select is closed (long program
 	// lists, tight on mobile), so spell the scope out in a line under the picker.
 	var programsEl = document.getElementById("adm-programs");
-	programsEl.innerHTML = "<b>Se aplică la:</b> " + escapeHtml(g.cycle + " — " + g.programs);
+	programsEl.innerHTML = "<b>Se aplică la:</b> " + escapeHtml(g.cycle + " - " + g.programs);
 	programsEl.style.display = "block";
 
 	var noteHtml = g.note ? ('<i class="fa fa-info-circle" style="margin-right: 6px;"></i>' + escapeHtml(g.note)) : "";
@@ -1161,14 +1176,14 @@ function admRecalculate() {
 	}
 
 	if (!complete) {
-		resultEl.innerText = "—";
+		resultEl.innerText = "-";
 		captionEl.innerText = "Completează notele de mai sus pentru a-ți calcula media.";
 		return;
 	}
 
 	var media = g.calc(v);
 	if (isNaN(media)) {
-		resultEl.innerText = "—";
+		resultEl.innerText = "-";
 		captionEl.innerText = "";
 		return;
 	}
@@ -1214,6 +1229,7 @@ function admRenderAllFormulas() {
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
 <script src="./assets/js/unistart.js"></script>
+<script src="./assets/js/theme-toggle.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
 

@@ -16,8 +16,9 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Unistart">
     <meta property="og:locale" content="ro_RO">
-    <meta property="og:title" content="Unistart — Evaluări facultăți">
-    <meta property="og:description" content="Alege facultatea potrivită pentru tine. Evaluări reale de la studenți, comparații și răspunsuri de la studenți actuali.">
+    <meta property="og:title" content="Unistart - Evaluări facultăți">
+    <meta property="og:description"
+          content="Alege facultatea potrivită pentru tine. Evaluări reale de la studenți, comparații și răspunsuri de la studenți actuali.">
     <meta property="og:url" content="https://unistart.ro/">
     <meta property="og:image" content="https://unistart.ro/assets/img/alege-facultatea-potrivita.png">
     <meta property="og:image:type" content="image/png">
@@ -25,8 +26,9 @@
     <meta property="og:image:height" content="824">
     <meta property="og:image:alt" content="Unistart">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Unistart — Evaluări facultăți">
-    <meta name="twitter:description" content="Alege facultatea potrivită pentru tine. Evaluări reale de la studenți, comparații și răspunsuri de la studenți actuali.">
+    <meta name="twitter:title" content="Unistart - Evaluări facultăți">
+    <meta name="twitter:description"
+          content="Alege facultatea potrivită pentru tine. Evaluări reale de la studenți, comparații și răspunsuri de la studenți actuali.">
     <meta name="twitter:image" content="https://unistart.ro/assets/img/alege-facultatea-potrivita.png">
     <!-- SOCIAL_META_END -->
 
@@ -35,10 +37,25 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
 
+    <script>
+        /* Applies a stored manual dark/light preference before CSS paints, so
+           the page doesn't flash the wrong theme. No stored preference means
+           light mode - dark mode never follows the OS, only the manual toggle sets it. */
+        (function () {
+            try {
+                var stored = localStorage.getItem('theme');
+                if (stored === 'light' || stored === 'dark') {
+                    document.documentElement.setAttribute('data-theme', stored);
+                }
+            } catch (e) { /* storage unavailable */ }
+        })();
+    </script>
+
     <link href="./bootstrap3/css/bootstrap.css" rel="stylesheet"/>
     <link href="./assets/css/ct-paper.css" rel="stylesheet"/>
     <link href="./assets/css/demo.css" rel="stylesheet"/>
     <link href="./assets/css/examples.css" rel="stylesheet"/>
+    <link href="./assets/css/dark-mode.css" rel="stylesheet"/>
 
     <!-- Google Analytics loads unconditionally via initGoogleTag() in unistart.js, with a denied Consent Mode v2 default until the cookie banner is accepted (see the "Cookie consent" comment there). -->
 
@@ -837,7 +854,7 @@
                         + (titleShortname ? " (" + titleShortname + ")" : "")
                         + (titleCityShort ? ", " + titleCityShort : "")
                         + (titleUniName ? " (" + titleUniName + ")" : "")
-                        + " — păreri și evaluări de la studenți | Unistart";
+                        + " - păreri și evaluări de la studenți | Unistart";
                 }
 
                 if (typeof gtag === 'function') {
@@ -1118,10 +1135,10 @@
     +'												</div>'
     +'												<div class="row" style="margin-top: 8px;">'
     +'													<div class="col-md-5 col-md-offset-1 col-xs-6 text-center">'
-    +															'<i class="fa fa-thumbs-o-up comparison-row-label-icon"></i><span style="color: #646669;" data-i18n-key="would-recommend-faculty">Ar recomanda facultatea</span>'
+    +															'<i class="fa fa-thumbs-o-up comparison-row-label-icon"></i><span class="comparison-row-label-muted" data-i18n-key="would-recommend-faculty">Ar recomanda facultatea</span>'
     +'													</div>'
     +'													<div class="col-md-5 col-md-offset-0 col-xs-6 text-center">'
-    +															'<i class="fa fa-tachometer comparison-row-label-icon"></i><span style="color: #646669;" data-i18n-key="difficulty">Dificultate</span>'
+    +															'<i class="fa fa-tachometer comparison-row-label-icon"></i><span class="comparison-row-label-muted" data-i18n-key="difficulty">Dificultate</span>'
     +'													</div>'
     +'												</div>'
     +'												<hr>'
@@ -1316,7 +1333,7 @@
                 var ringPoint = pointForValue(a, ring);
                 ringPoints.push(ringPoint.x + ',' + ringPoint.y);
             }
-            gridRingsSvg += '<polygon points="' + ringPoints.join(' ') + '" fill="none" stroke="#e1e0d9" stroke-width="1"/>';
+            gridRingsSvg += '<polygon class="radar-grid-ring" points="' + ringPoints.join(' ') + '" fill="none" stroke="#e1e0d9" stroke-width="1"/>';
         }
 
         // Axis spokes + category labels.
@@ -1324,12 +1341,12 @@
         var labelsHtml = "";
         for (a = 0; a < numAxes; a++) {
             var outerPoint = pointAtRadius(a, maxRadius);
-            axesSvg += '<line x1="' + center + '" y1="' + center + '" x2="' + outerPoint.x + '" y2="' + outerPoint.y + '" stroke="#c3c2b7" stroke-width="1"/>';
+            axesSvg += '<line class="radar-grid-axis" x1="' + center + '" y1="' + center + '" x2="' + outerPoint.x + '" y2="' + outerPoint.y + '" stroke="#c3c2b7" stroke-width="1"/>';
 
             var labelPoint = pointAtRadius(a, maxRadius + 38);
             var category = RADAR_CATEGORIES[a];
             labelsHtml +=
-                '<div style="position: absolute; width: 90px; left: ' + labelPoint.x + 'px; top: ' + labelPoint.y + 'px; transform: translate(-50%, -50%); text-align: center; font-size: 11px; color: #52514e;">'
+                '<div class="radar-axis-label" style="position: absolute; width: 90px; left: ' + labelPoint.x + 'px; top: ' + labelPoint.y + 'px; transform: translate(-50%, -50%); text-align: center; font-size: 11px;">'
                 +	'<i class="fa ' + category.icon + '" style="color: #898781;"></i><br>'
                 +	'<span data-i18n-key="' + category.i18nKey + '"></span>'
                 + '</div>';
@@ -1344,7 +1361,7 @@
             var vertexPoint = pointForValue(a, value);
             polygonPoints.push(vertexPoint.x + ',' + vertexPoint.y);
             var displayValue = rawValue ? rawValue.toFixed(1) : "N/A";
-            verticesSvg += '<circle cx="' + vertexPoint.x + '" cy="' + vertexPoint.y + '" r="4" fill="' + RADAR_SERIES_COLOR + '" stroke="#fcfcfb" stroke-width="2"><title>' + displayValue + '</title></circle>';
+            verticesSvg += '<circle class="radar-dot" cx="' + vertexPoint.x + '" cy="' + vertexPoint.y + '" r="4" fill="' + RADAR_SERIES_COLOR + '" stroke="#fcfcfb" stroke-width="2"><title>' + displayValue + '</title></circle>';
         }
         var seriesSvg =
             '<polygon points="' + polygonPoints.join(' ') + '" fill="' + RADAR_SERIES_COLOR + '" fill-opacity="0.1" stroke="' + RADAR_SERIES_COLOR + '" stroke-width="2"/>'
@@ -2906,6 +2923,7 @@
 <script src="./assets/js/bootstrap-select.js"></script>
 <script src="./assets/js/bootstrap-datepicker.js"></script>
 <script src="./assets/js/unistart.js"></script>
+<script src="./assets/js/theme-toggle.js"></script>
 
 <script src="./assets/js/ct-paper.js"></script>
 
