@@ -23,6 +23,7 @@
     --ut-surface-alt: #f5f4ef;
     --ut-surface-alt-hover: #ebe9e0;
     --ut-card-bg: #fffffc;
+    --ut-card-bg-rgb: 255, 255, 252;
     --ut-border: #000000;
     --ut-border-soft: #e5e3dc;
     --ut-shadow: rgba(204, 197, 185, 0.5);
@@ -58,6 +59,7 @@ html[data-theme="dark"] {
     --ut-surface-alt: #34322c;
     --ut-surface-alt-hover: #3d3b34;
     --ut-card-bg: #2b2a26;
+    --ut-card-bg-rgb: 43, 42, 38;
     --ut-border: #4a4844;
     --ut-border-soft: #46443e;
     --ut-shadow: rgba(0, 0, 0, 0.45);
@@ -132,6 +134,15 @@ a {
 }
 .wrapper .card .title {
     color: var(--ut-ink);
+}
+/* The star-rating widget's scrolling emoji-label reel (ct-paper.css .emoji-wrapper)
+   fades its top/bottom edges with a gradient hardcoded to opaque white, so it
+   blends into a light card - on a dark card it shows up as a bright white bar. */
+.wrapper .emoji-wrapper:before {
+    background: linear-gradient(to bottom, rgba(var(--ut-card-bg-rgb), 1) 0%, rgba(var(--ut-card-bg-rgb), 1) 35%, rgba(var(--ut-card-bg-rgb), 0) 100%);
+}
+.wrapper .emoji-wrapper:after {
+    background: linear-gradient(to top, rgba(var(--ut-card-bg-rgb), 1) 0%, rgba(var(--ut-card-bg-rgb), 1) 35%, rgba(var(--ut-card-bg-rgb), 0) 100%);
 }
 /* ct-paper.css hardcodes `strong { color: #403D39; }` globally - a direct
    rule on the element itself always wins over an inherited color no matter
