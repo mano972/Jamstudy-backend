@@ -3210,6 +3210,30 @@ function initUmami() {
 	document.head.appendChild(script);
 }
 
+// Pageviews (GSC, Umami) show people landing on a calculator page, not whether
+// they actually used it. This fires once per calculator per tab session - the
+// first time a page produces a real result - to measure actual usage rather
+// than just traffic. sessionStorage (not localStorage) is deliberate: it
+// survives the live recalculation re-running on every keystroke within a
+// visit, but still counts a visitor again on their next visit/tab, instead of
+// just the one time ever a bare "seen before" flag would give.
+function trackCalculatorUseOnce(calculatorName) {
+	var key = "calc_used_" + calculatorName;
+	try {
+		if (sessionStorage.getItem(key)) {
+			return;
+		}
+		sessionStorage.setItem(key, "1");
+	} catch (e) { /* storage unavailable (private mode, etc.) - track anyway */ }
+
+	if (typeof gtag === 'function') {
+		gtag('event', 'calculator_used', { calculator: calculatorName });
+	}
+	if (typeof umami !== 'undefined' && umami.track) {
+		umami.track('calculator_used', { calculator: calculatorName });
+	}
+}
+
 function initCookieConsent() {
 	initGoogleTag();
 	renderCookieConsentBanner();

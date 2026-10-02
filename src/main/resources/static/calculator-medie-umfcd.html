@@ -1003,6 +1003,7 @@
             var average = weightedSum / gradedCredits;
             resultElement.innerText = average.toFixed(2);
             captionElement.innerText = gradedCredits + " din " + year.courses.reduce(function(sum, c) { return sum + c.c; }, 0) + " credite introduse";
+            trackCalculatorUseOnce("umfcd");
         }
 
         umfSaveSelection();

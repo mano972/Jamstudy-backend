@@ -789,10 +789,12 @@ function recalculateAverage() {
 		var average = weightedSum / totalCredits;
 		resultElement.innerText = average.toFixed(2);
 		creditsElement.innerText = totalCredits + " " + (translateKey("calculator-medie-total-credits") || "credite totale");
+		trackCalculatorUseOnce("gpa");
 	} else {
 		var simpleAverage = simpleSum / validCount;
 		resultElement.innerText = simpleAverage.toFixed(2);
 		creditsElement.innerText = "";
+		trackCalculatorUseOnce("gpa");
 	}
 
 	saveCalculatorToStorage();

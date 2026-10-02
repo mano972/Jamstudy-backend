@@ -1190,6 +1190,7 @@ function admRecalculate() {
 	media = Math.max(1, Math.min(10, media));
 	resultEl.innerText = media.toFixed(2);
 	captionEl.innerText = ADM_TIER_CAPTION[g.tier] || "";
+	trackCalculatorUseOnce("admitere-unibuc");
 }
 
 function admResetInputs() {
