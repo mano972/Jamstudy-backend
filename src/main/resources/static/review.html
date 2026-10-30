@@ -673,6 +673,12 @@ $(document).ready(function() {
 	facultyId = queryParams.get("faculty");
 	reviewId = queryParams.get("review");
 
+	trackUmamiEvent('review_page_view', {
+		from: getAnalyticsReferrerName(),
+		mode: reviewId ? 'edit' : 'new',
+		faculty: facultyId ? 'preselected' : 'none'
+	});
+
 	loadFaculty();
 
 	document.addEventListener("click", function(event) {
@@ -1585,11 +1591,32 @@ function showTab(n) {
   fixProgressIndicator(n)
 }
 
+// One press of the shared next/post button - "Postează evaluarea" on the last tab,
+// "Pasul următor" before it. Counted on every press, valid or not; a press that
+// fails validation still shows intent. logged_in tells the press that triggers
+// the login prompt apart from the second press after logging in, so posted
+// reviews compare against logged_in:true presses.
+function trackReviewFormButton(tabIndex, tabCount, isValid) {
+	if (tabIndex >= tabCount - 1) {
+		trackUmamiEvent('review_post_click', {
+			valid: isValid,
+			mode: reviewId ? 'edit' : 'new',
+			logged_in: !!getUField("ut")
+		});
+	} else {
+		trackUmamiEvent('review_next_click', { step: tabIndex + 1, valid: isValid });
+	}
+}
+
 function nextPrev(n) {
   // This function will figure out which tab to display
   var x = document.getElementsByClassName("tab");
   
-  if (n == 1 && !validateForm()) return false;
+  if (n == 1) {
+	var isValid = validateForm();
+	trackReviewFormButton(currentTab, x.length, isValid);
+	if (!isValid) return false;
+  }
   var previousTab = currentTab;
   // Increase or decrease the current tab by 1:
   currentTab = currentTab + n;

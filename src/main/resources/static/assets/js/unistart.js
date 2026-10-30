@@ -876,6 +876,12 @@ function goToAddReview(el, facultyId) {
 		  'page_name': el.baseURI
 		});
 	}
+	// Only the real "Adaugă evaluare" buttons - the calculator pages' faculty-search
+	// CTA also comes through here (with its search input as el), but it arrives on
+	// review.html and is counted there, by review_page_view's "from".
+	if (el && el.classList && el.classList.contains('add-review-button')) {
+		trackUmamiEvent('add_review_click', { page: getAnalyticsPageName(window.location.pathname), button: 'inline' });
+	}
 
 	var addReviewRedirectUrl = "./review.html?faculty=" + facultyId;
 	location.href = addReviewRedirectUrl;
@@ -3207,7 +3213,60 @@ function initUmami() {
 	script.src = UMAMI_SRC;
 	script.setAttribute('data-website-id', UMAMI_WEBSITE_ID);
 	script.setAttribute('data-domains', 'unistart.ro,www.unistart.ro');
+	script.onload = flushUmamiPendingEvents;
 	document.head.appendChild(script);
+}
+
+// script.js loads async, so an event fired during page load (e.g. review.html's
+// review_page_view) can run before window.umami exists - those are queued here and
+// sent once the script loads. Umami's tracker sends with fetch keepalive, so an
+// event fired right before a navigation (the "Adaugă evaluare" buttons) still
+// goes out.
+var umamiPendingEvents = [];
+
+function trackUmamiEvent(eventName, eventData) {
+	if (typeof umami !== 'undefined' && umami.track) {
+		umami.track(eventName, eventData);
+	} else {
+		umamiPendingEvents.push([eventName, eventData]);
+	}
+}
+
+function flushUmamiPendingEvents() {
+	var pending = umamiPendingEvents;
+	umamiPendingEvents = [];
+	var i;
+	for (i = 0; i < pending.length; i++) {
+		trackUmamiEvent(pending[i][0], pending[i][1]);
+	}
+}
+
+// Short, stable page label for event properties - the raw path of a faculty page
+// would split one "faculty page" bucket into hundreds of one-visitor rows.
+function getAnalyticsPageName(path) {
+	if (path.indexOf('/facultate/') !== -1 || path.indexOf('profile.html') !== -1) {
+		return 'faculty';
+	}
+	var file = path.substring(path.lastIndexOf('/') + 1).replace('.html', '');
+	return (!file || file === 'index') ? 'home' : file;
+}
+
+// Where the visitor came from, as a page label for internal referrers, or
+// "external" / "direct". A return to review.html after logging in to post shows
+// up as "review" (the login modal reloads the same page).
+function getAnalyticsReferrerName() {
+	if (!document.referrer) {
+		return 'direct';
+	}
+	try {
+		var referrerUrl = new URL(document.referrer);
+		if (referrerUrl.hostname.replace(/^www\./, '') !== window.location.hostname.replace(/^www\./, '')) {
+			return 'external';
+		}
+		return getAnalyticsPageName(referrerUrl.pathname);
+	} catch (e) {
+		return 'external';
+	}
 }
 
 // Pageviews (GSC, Umami) show people landing on a calculator page, not whether
@@ -3504,6 +3563,9 @@ function renderStickyAddReviewCta() {
 	cta.setAttribute('data-toggle', 'tooltip');
 	cta.setAttribute('title', 'Adaugă evaluare 100% anonim');
 	cta.innerHTML = '<i class="fas fa-pen fa-lg" style="color: white; margin-right: 7px" aria-hidden="true"></i><span data-i18n-key="add-review">Adaugă evaluare</span>';
+	cta.addEventListener('click', function() {
+		trackUmamiEvent('add_review_click', { page: getAnalyticsPageName(window.location.pathname), button: 'sticky' });
+	});
 	document.body.appendChild(cta);
 }
 
