@@ -2329,7 +2329,7 @@ const ro_json = {
                   "retired": "M-am retras",
                   "other": "Altul",
                   "the-year": "Anul",
-                  "app-title": "Unistart - Evaluări facultăți",
+                  "app-title": "Păreri despre facultăți: evaluări de la studenți | Unistart",
                   "title": "Alege facultatea potrivită pentru tine",
                   "search-keywords": "Caută după cuvinte cheie",
                   "search-keywords-placeholder": "Facultate, Universitate, Oraș ....",

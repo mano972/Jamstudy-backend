@@ -300,15 +300,12 @@ public class FacultyProfilePageController {
                 ? " (" + faculty.getUniversityName() + ")" : "";
         String shortnameParen = StringUtils.isNotEmpty(faculty.getFacultyShortname())
                 ? " (" + faculty.getFacultyShortname() + ")" : "";
-        String title = faculty.getFacultyName()
-                + shortnameParen
-                + (StringUtils.isNotEmpty(cityShort) ? ", " + cityShort : "")
-                + uniParen
-                + " - păreri și evaluări de la studenți | Unistart";
-        String description = faculty.getFacultyName() + shortnameParen
+        String title = buildPageTitle(faculty);
+        String description = fixRoDiacritics(ratingSentence(faculty)
+                + faculty.getFacultyName() + shortnameParen
                 + (StringUtils.isNotEmpty(cityShort) ? " din " + cityShort : "") + uniParen
                 + ": programe de licență și master, locuri la buget și taxă, taxe de școlarizare"
-                + " și de înscriere, formula de admitere și evaluări de la studenți.";
+                + " și de înscriere, formula de admitere și evaluări de la studenți.");
 
         String html = profileHtmlTemplate.replace(TITLE_TAG,
                 "<title>" + escapeHtml(title) + "</title>\n    <link rel=\"canonical\" href=\"" + canonicalUrl + "\">");
@@ -748,6 +745,110 @@ public class FacultyProfilePageController {
         }
         int comma = city.indexOf(',');
         return (comma > 0 ? city.substring(0, comma) : city).trim();
+    }
+
+    // ---- <title> -------------------------------------------------------
+
+    /** An "(ASE)" / "(UBB)" / "(UTCN)" acronym anywhere in a university name. */
+    private static final java.util.regex.Pattern UNI_ACRONYM =
+            java.util.regex.Pattern.compile("\\(([A-ZĂÂÎȘȚ][A-Za-z0-9ĂÂÎȘȚăâîșț.\\-]{1,11})\\)");
+
+    /**
+     * Search-oriented page title, e.g.
+     * "Facultatea de Drept (UBB), Cluj-Napoca: păreri studenți, admitere | Unistart".
+     * Google shows ~60 characters, so the old form - full university name in the
+     * middle, "păreri" at character 100+ - never showed the word people search for.
+     * The university is reduced to its acronym when its name ends in one, otherwise
+     * to a short form of the name. Mirrored client-side in profile.html
+     * (loadProfileHeader) - keep the two in sync.
+     */
+    static String buildPageTitle(Faculty faculty) {
+        String uniName = fixRoDiacritics(nvl(faculty.getUniversityName(), "").trim());
+        String city = cityShortName(faculty);
+
+        List<String> tags = new ArrayList<>();
+        if (StringUtils.isNotBlank(faculty.getFacultyShortname())) {
+            tags.add(faculty.getFacultyShortname().trim());
+        }
+        String acronym = null;
+        java.util.regex.Matcher m = UNI_ACRONYM.matcher(uniName);
+        while (m.find()) {
+            if (m.group(1).replaceAll("[^A-ZĂÂÎȘȚ]", "").length() >= 2) {
+                acronym = m.group(1);
+                break;
+            }
+        }
+        String uniShort = "";
+        if (acronym != null) {
+            if (!tags.contains(acronym)) {
+                tags.add(acronym);
+            }
+        } else {
+            uniShort = shortUniversityName(uniName);
+        }
+
+        StringBuilder t = new StringBuilder(nvl(faculty.getFacultyName(), "").trim());
+        if (!tags.isEmpty()) {
+            t.append(" (").append(String.join(", ", tags)).append(")");
+        }
+        if (StringUtils.isNotEmpty(uniShort)) {
+            t.append(", ").append(uniShort);
+        }
+        if (StringUtils.isNotEmpty(city) && !StringUtils.containsIgnoreCase(fixRoDiacritics(uniShort), fixRoDiacritics(city))) {
+            t.append(", ").append(city);
+        }
+        t.append(": păreri studenți, admitere | Unistart");
+        return fixRoDiacritics(t.toString());
+    }
+
+    /**
+     * Short form of a university name without an acronym, e.g.
+     *   Universitatea "Dunărea de Jos" din Galați             -> Dunărea de Jos
+     *   Universitatea de Medicină și Farmacie "Carol Davila"... -> UMF Carol Davila
+     *   Fundația "Gaudeamus" - Universitatea "Tomis" din ...   -> Tomis
+     * The city is dropped here because the title adds it separately. Keeps the
+     * full name where shortening would leave something meaningless ("Universitatea
+     * din Craiova" stays as is); "Universitatea" is only dropped before a quoted name.
+     * Expects diacritics already normalised (fixRoDiacritics).
+     */
+    private static String shortUniversityName(String uniName) {
+        String s = uniName.replaceFirst("(?i)\\s+-\\s+(extensi[ae]|centr(u|ul))\\b.*$", "").trim();
+        s = s.replaceFirst("^Fundați[ae].*?\\s-\\s+", "");
+        String noCity = s.replaceFirst("(,|\\s+din)\\s+[^,()\"„”“]+$", "").trim();
+        if (noCity.split("\\s+").length >= 2) {
+            s = noCity;
+        }
+        s = s.replace("Universitatea de Medicină și Farmacie", "UMF")
+                .replace("Universitatea de Științe Agricole și Medicină Veterinară", "USAMV")
+                .replace("Universitatea de Științe Agronomice și Medicină Veterinară", "USAMV");
+        if (s.startsWith("Universitatea ")) {
+            String rest = s.substring("Universitatea ".length()).trim();
+            // Only before a quoted proper name: "Universitatea Tehnică" / "Națională" must stay whole.
+            if (!rest.isEmpty() && "\"„“”".indexOf(rest.charAt(0)) >= 0) {
+                s = rest;
+            }
+        }
+        return s.replaceAll("[\"„“”]", "").replaceAll("\\s+", " ").trim();
+    }
+
+    /** "Nota 4.5/5 din 12 evaluări. " - only when the faculty has reviews. */
+    private static String ratingSentence(Faculty faculty) {
+        Integer n = faculty.getCountRev();
+        Double avg = faculty.getAvgRating();
+        if (n == null || n <= 0 || avg == null) {
+            return "";
+        }
+        String count = n == 1 ? "1 evaluare" : (n < 20 ? n + " evaluări" : n + " de evaluări");
+        return "Nota " + String.format(java.util.Locale.ROOT, "%.1f", avg) + "/5 din " + count + ". ";
+    }
+
+    /** Old cedilla ş/ţ (from scraped data) -> correct comma-below ș/ț. */
+    static String fixRoDiacritics(String s) {
+        if (s == null) {
+            return null;
+        }
+        return s.replace('ş', 'ș').replace('Ş', 'Ș')
+                .replace('ţ', 'ț').replace('Ţ', 'Ț');
     }
 
     private static boolean hasSlug(Faculty f) {

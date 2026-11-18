@@ -48,7 +48,7 @@ public class SeoController {
      * request — a sitemap that always claims everything changed yesterday gets its
      * lastmod ignored.
      */
-    private static final LocalDate FACULTY_CONTENT_LASTMOD = LocalDate.parse("2026-09-04");
+    private static final LocalDate FACULTY_CONTENT_LASTMOD = LocalDate.parse("2026-11-18");
 
     /**
      * <lastmod> for the static public pages. Same idea as {@link #FACULTY_CONTENT_LASTMOD}:

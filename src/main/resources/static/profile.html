@@ -837,6 +837,46 @@
         getQA(true);
     }
 
+    // Same logic as FacultyProfilePageController.buildPageTitle - keep in sync.
+    function fixRoDiacritics(s) {
+        return (s || "").replace(/ş/g, "ș").replace(/Ş/g, "Ș").replace(/ţ/g, "ț").replace(/Ţ/g, "Ț");
+    }
+    function shortUniversityName(uniName) {
+        var s = uniName.replace(/\s+-\s+(extensi[ae]|centr(u|ul))\b.*$/i, "").trim();
+        s = s.replace(/^Fundați[ae].*?\s-\s+/, "");
+        var noCity = s.replace(/(,|\s+din)\s+[^,()"„”“]+$/, "").trim();
+        if (noCity.split(/\s+/).length >= 2) s = noCity;
+        s = s.replace("Universitatea de Medicină și Farmacie", "UMF")
+             .replace("Universitatea de Științe Agricole și Medicină Veterinară", "USAMV")
+             .replace("Universitatea de Științe Agronomice și Medicină Veterinară", "USAMV");
+        if (s.indexOf("Universitatea ") === 0) {
+            var rest = s.substring("Universitatea ".length).trim();
+            if (rest && "\"„“”".indexOf(rest.charAt(0)) >= 0) s = rest;
+        }
+        return s.replace(/["„“”]/g, "").replace(/\s+/g, " ").trim();
+    }
+    function buildFacultyPageTitle(f) {
+        var uniName = fixRoDiacritics((f.universityName || "").trim());
+        var city = (f.facultyCity || "").split(",")[0].trim();
+        var tags = [];
+        if (f.facultyShortname && f.facultyShortname.trim()) tags.push(f.facultyShortname.trim());
+        var acronym = null, re = /\(([A-ZĂÂÎȘȚ][A-Za-z0-9ĂÂÎȘȚăâîșț.\-]{1,11})\)/g, m;
+        while ((m = re.exec(uniName))) {
+            if (m[1].replace(/[^A-ZĂÂÎȘȚ]/g, "").length >= 2) { acronym = m[1]; break; }
+        }
+        var uniShort = "";
+        if (acronym) {
+            if (tags.indexOf(acronym) < 0) tags.push(acronym);
+        } else {
+            uniShort = shortUniversityName(uniName);
+        }
+        var t = (f.facultyName || "").trim();
+        if (tags.length) t += " (" + tags.join(", ") + ")";
+        if (uniShort) t += ", " + uniShort;
+        if (city && fixRoDiacritics(uniShort).toLowerCase().indexOf(fixRoDiacritics(city).toLowerCase()) < 0) t += ", " + city;
+        return fixRoDiacritics(t + ": păreri studenți, admitere | Unistart");
+    }
+
     function loadProfileHeader(response) {
                 var coverImage = document.getElementById("faculty-cover-image");
                 coverImage.src = new URL(backendUrlRoot + "/v1/faculty/" + facultyId + "/cover");
@@ -847,14 +887,7 @@
                     // Mirror the server-rendered <title> (FacultyProfilePageController.renderProfileHtml)
                     // so the SSR title isn't downgraded, and the legacy /profile.html?id= path still
                     // gets a descriptive, city-bearing title.
-                    var titleCityShort = (response.result.facultyCity || "").split(",")[0].trim();
-                    var titleUniName = response.result.universityName || "";
-                    var titleShortname = response.result.facultyShortname || "";
-                    document.title = facultyName
-                        + (titleShortname ? " (" + titleShortname + ")" : "")
-                        + (titleCityShort ? ", " + titleCityShort : "")
-                        + (titleUniName ? " (" + titleUniName + ")" : "")
-                        + " - păreri și evaluări de la studenți | Unistart";
+                    document.title = buildFacultyPageTitle(response.result);
                 }
 
                 if (typeof gtag === 'function') {
