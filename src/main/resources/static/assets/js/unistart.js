@@ -1568,7 +1568,7 @@ function getDomainsForHomePage() {
                 '<li><input type="checkbox" name="domeniu" id="d9" value="Științe Exacte"><label for="d9"><span data-i18n-key="domain-exact">Științe Exacte</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d10" value="Științe Sociale și Psihologie"><label for="d10"><span data-i18n-key="domain-social">Științe Sociale și Psihologie</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d11" value="Științe Agricole"><label for="d11"><span data-i18n-key="domain-agriculture">Științe Agricole</span></label></li>'+
-                '<li><input type="checkbox" name="domeniu" id="d12" value="Ştiința Sportului şi Educației Fizice"><label for="d12"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d12" value="Ştiinţa Sportului şi Educaţiei Fizice"><label for="d12"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică"><label for="d13"><span data-i18n-key="domain-military-v2">Științe Militare și de Informații</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d14" value="Teologie"><label for="d14"><span data-i18n-key="domain-theology">Teologie</span></label></li>';
 
@@ -1585,7 +1585,7 @@ function getDomainsForHomePage() {
                 '<li><input type="checkbox" name="domeniu" id="d9" value="Științe Exacte"><label for="d9"><span data-i18n-key="domain-exact">Științe Exacte</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d10" value="Științe Sociale și Psihologie"><label for="d10"><span data-i18n-key="domain-social">Științe Sociale și Psihologie</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d11" value="Științe Agricole"><label for="d11"><span data-i18n-key="domain-agriculture">Științe Agricole</span></label></li>'+
-                '<li><input type="checkbox" name="domeniu" id="d12" value="Ştiința Sportului şi Educației Fizice"><label for="d12"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d12" value="Ştiinţa Sportului şi Educaţiei Fizice"><label for="d12"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d13" value="Ştiinţe Militare Informaţii şi Ordine publică"><label for="d13"><span data-i18n-key="domain-military-v2">Științe Militare și de Informații</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d14" value="Teologie"><label for="d14"><span data-i18n-key="domain-theology">Teologie</span></label></li>';
 
@@ -2145,6 +2145,15 @@ function getPageFooter() {
 		'                                Calculator medie UMFCD\n' +
 		'                            </a>\n' +
 		'                        </li>\n' +
+		// Domain hub index (/facultati, DomainHubPageController) exists only on unistart.ro;
+		// it links to every /facultati/{slug} hub.
+		(window.location.hostname.indexOf('unistart.lt') === -1
+			? '                        <li>\n' +
+			  '                            <a href="/facultati" data-i18n-key="header-footer-hubs">\n' +
+			  '                                Facultăți pe domenii\n' +
+			  '                            </a>\n' +
+			  '                        </li>\n'
+			: '') +
 		'                        <li>\n' +
 		'                            <a href="./contact.html" data-i18n-key="header-footer-contact">\n' +
 		'                               Contact\n' +
@@ -2527,6 +2536,7 @@ const ro_json = {
                   "header-footer-calculator": "Calculator medie",
                   "header-footer-calculator-admitere": "Calculator admitere",
                   "header-footer-calculator-umfcd": "Calculator medie UMFCD",
+                  "header-footer-hubs": "Facultăți pe domenii",
                   "calculator-medie-title": "Calculator medie facultate",
                   "calculator-medie-intro": "Introdu fiecare materie cu nota obținută și numărul de credite ECTS, iar media se recalculează automat. Funcționează pentru orice facultate din România sau din Europa care folosește sistemul de credite ECTS.",
                   "calculator-medie-weighted-toggle": "Calculează media ponderată cu credite ECTS (recomandat)",
@@ -2816,6 +2826,7 @@ const en_json = {
                   "header-footer-calculator": "GPA calculator",
                   "header-footer-calculator-admitere": "Admission calculator",
                   "header-footer-calculator-umfcd": "UMFCD GPA calculator",
+                  "header-footer-hubs": "Faculties by field",
                   "calculator-medie-title": "College GPA Calculator",
                   "calculator-medie-intro": "Add each course with its grade and ECTS credits, and the average recalculates automatically. Works for any faculty in Romania or Europe that uses the ECTS credit system.",
                   "calculator-medie-weighted-toggle": "Calculate the credit-weighted average (recommended)",
@@ -3105,6 +3116,7 @@ const lt_json = {
                   "header-footer-calculator": "Vidurkio skaičiuoklė",
                   "header-footer-calculator-admitere": "Priėmimo skaičiuoklė",
                   "header-footer-calculator-umfcd": "UMFCD vidurkio skaičiuoklė",
+                  "header-footer-hubs": "Fakultetai pagal sritis",
                   "calculator-medie-title": "Vidurkio skaičiuoklė",
                   "calculator-medie-intro": "Įveskite kiekvieną dalyką su gautu pažymiu ir ECTS kreditais, o vidurkis bus perskaičiuojamas automatiškai. Tinka bet kuriam fakultetui Rumunijoje ar Europoje, naudojančiam ECTS kreditų sistemą.",
                   "calculator-medie-weighted-toggle": "Skaičiuoti svertinį vidurkį pagal ECTS kreditus (rekomenduojama)",

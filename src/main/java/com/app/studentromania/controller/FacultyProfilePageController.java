@@ -625,6 +625,12 @@ public class FacultyProfilePageController {
             appendFacultyList(html, sameDomain, true);
         }
 
+        DomainHubPageController.Hub hub = hubFor(faculty);
+        if (hub != null) {
+            html.append("            <p style=\"margin-top:14px;\"><a href=\"/facultati/").append(hub.slug).append("\">")
+                    .append("Vezi toate facultățile de ").append(escapeHtml(hub.label)).append(" din România &rsaquo;</a></p>\n");
+        }
+
         html.append("          </div>\n        </nav>\n      </div>\n    </div>\n  </div>\n</div>\n");
         return html.toString();
     }
@@ -727,6 +733,29 @@ public class FacultyProfilePageController {
         } catch (RuntimeException e) {
             return new ArrayList<>();
         }
+    }
+
+    /** The live domain hub (/facultati/{slug}) for any of this faculty's domains, if one exists. RO only. */
+    private static DomainHubPageController.Hub hubFor(Faculty faculty) {
+        String country = StringUtils.isNotEmpty(faculty.getCountryCode()) ? faculty.getCountryCode() : "RO";
+        if (!"RO".equalsIgnoreCase(country)) {
+            return null;
+        }
+        List<String> domains = new ArrayList<>();
+        if (faculty.getFacultyDomainsLicense() != null) {
+            domains.addAll(faculty.getFacultyDomainsLicense());
+        }
+        if (faculty.getFacultyDomainsMaster() != null) {
+            domains.addAll(faculty.getFacultyDomainsMaster());
+        }
+        for (DomainHubPageController.Hub hub : DomainHubPageController.HUBS.values()) {
+            for (String d : domains) {
+                if (d != null && fixRoDiacritics(d.trim()).equalsIgnoreCase(fixRoDiacritics(hub.domainValue))) {
+                    return hub;
+                }
+            }
+        }
+        return null;
     }
 
     private String primaryDomain(Faculty faculty) {

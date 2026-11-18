@@ -101,6 +101,17 @@ public class SeoController {
                     .append("</loc><lastmod>").append(STATIC_PAGES_LASTMOD).append("</lastmod></url>\n");
         }
 
+        // Domain hub pages (/facultati/{slug}) are Romania-only.
+        if ("RO".equalsIgnoreCase(countryCode)) {
+            String hubLastmod = FACULTY_CONTENT_LASTMOD.format(DateTimeFormatter.ISO_LOCAL_DATE);
+            xml.append("  <url><loc>").append(origin).append("/facultati</loc><lastmod>").append(hubLastmod)
+                    .append("</lastmod></url>\n");
+            for (String slug : DomainHubPageController.hubSlugs()) {
+                xml.append("  <url><loc>").append(origin).append("/facultati/").append(slug)
+                        .append("</loc><lastmod>").append(hubLastmod).append("</lastmod></url>\n");
+            }
+        }
+
         Map<String, Date> latestReviewByFaculty = reviewDAO.getLatestReviewDateByFaculty();
 
         List<Faculty> faculties = facultyDAO.getAllFaculties();
