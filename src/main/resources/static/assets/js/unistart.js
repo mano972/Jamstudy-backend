@@ -2150,7 +2150,7 @@ function getPageFooter() {
 		(window.location.hostname.indexOf('unistart.lt') === -1
 			? '                        <li>\n' +
 			  '                            <a href="/facultati" data-i18n-key="header-footer-hubs">\n' +
-			  '                                Facultăți pe domenii\n' +
+			  '                                Facultăți pe domenii și orașe\n' +
 			  '                            </a>\n' +
 			  '                        </li>\n'
 			: '') +
@@ -2536,7 +2536,7 @@ const ro_json = {
                   "header-footer-calculator": "Calculator medie",
                   "header-footer-calculator-admitere": "Calculator admitere",
                   "header-footer-calculator-umfcd": "Calculator medie UMFCD",
-                  "header-footer-hubs": "Facultăți pe domenii",
+                  "header-footer-hubs": "Facultăți pe domenii și orașe",
                   "calculator-medie-title": "Calculator medie facultate",
                   "calculator-medie-intro": "Introdu fiecare materie cu nota obținută și numărul de credite ECTS, iar media se recalculează automat. Funcționează pentru orice facultate din România sau din Europa care folosește sistemul de credite ECTS.",
                   "calculator-medie-weighted-toggle": "Calculează media ponderată cu credite ECTS (recomandat)",
@@ -2826,7 +2826,7 @@ const en_json = {
                   "header-footer-calculator": "GPA calculator",
                   "header-footer-calculator-admitere": "Admission calculator",
                   "header-footer-calculator-umfcd": "UMFCD GPA calculator",
-                  "header-footer-hubs": "Faculties by field",
+                  "header-footer-hubs": "Faculties by field and city",
                   "calculator-medie-title": "College GPA Calculator",
                   "calculator-medie-intro": "Add each course with its grade and ECTS credits, and the average recalculates automatically. Works for any faculty in Romania or Europe that uses the ECTS credit system.",
                   "calculator-medie-weighted-toggle": "Calculate the credit-weighted average (recommended)",
@@ -3116,7 +3116,7 @@ const lt_json = {
                   "header-footer-calculator": "Vidurkio skaičiuoklė",
                   "header-footer-calculator-admitere": "Priėmimo skaičiuoklė",
                   "header-footer-calculator-umfcd": "UMFCD vidurkio skaičiuoklė",
-                  "header-footer-hubs": "Fakultetai pagal sritis",
+                  "header-footer-hubs": "Fakultetai pagal sritis ir miestus",
                   "calculator-medie-title": "Vidurkio skaičiuoklė",
                   "calculator-medie-intro": "Įveskite kiekvieną dalyką su gautu pažymiu ir ECTS kreditais, o vidurkis bus perskaičiuojamas automatiškai. Tinka bet kuriam fakultetui Rumunijoje ar Europoje, naudojančiam ECTS kreditų sistemą.",
                   "calculator-medie-weighted-toggle": "Skaičiuoti svertinį vidurkį pagal ECTS kreditus (rekomenduojama)",

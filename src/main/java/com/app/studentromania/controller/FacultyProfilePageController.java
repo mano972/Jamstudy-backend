@@ -156,6 +156,9 @@ public class FacultyProfilePageController {
     @Autowired
     private ReviewDAO reviewDAO;
 
+    @Autowired
+    private DomainHubPageController domainHubPageController;
+
     private String profileHtmlTemplate;
     private String errorHtmlTemplate;
 
@@ -630,6 +633,11 @@ public class FacultyProfilePageController {
             html.append("            <p style=\"margin-top:14px;\"><a href=\"/facultati/").append(hub.slug).append("\">")
                     .append("Vezi toate facultățile de ").append(escapeHtml(hub.label)).append(" din România &rsaquo;</a></p>\n");
         }
+        String cityHubPath = domainHubPageController.cityHubPath(faculty);
+        if (cityHubPath != null) {
+            html.append("            <p style=\"margin-top:6px;\"><a href=\"").append(cityHubPath).append("\">")
+                    .append("Vezi toate facultățile din ").append(escapeHtml(cityShortName(faculty))).append(" &rsaquo;</a></p>\n");
+        }
 
         html.append("          </div>\n        </nav>\n      </div>\n    </div>\n  </div>\n</div>\n");
         return html.toString();
@@ -791,6 +799,18 @@ public class FacultyProfilePageController {
      * to a short form of the name. Mirrored client-side in profile.html
      * (loadProfileHeader) - keep the two in sync.
      */
+    /** "UBB", "UTCN", "UMF Iuliu Hațieganu", "Dunărea de Jos" - acronym if the name has one, else a short form. */
+    static String universityShortLabel(String universityName) {
+        String uniName = fixRoDiacritics(nvl(universityName, "").trim());
+        java.util.regex.Matcher m = UNI_ACRONYM.matcher(uniName);
+        while (m.find()) {
+            if (m.group(1).replaceAll("[^A-ZĂÂÎȘȚ]", "").length() >= 2) {
+                return m.group(1);
+            }
+        }
+        return shortUniversityName(uniName);
+    }
+
     static String buildPageTitle(Faculty faculty) {
         String uniName = fixRoDiacritics(nvl(faculty.getUniversityName(), "").trim());
         String city = cityShortName(faculty);
@@ -907,9 +927,8 @@ public class FacultyProfilePageController {
                 .append("style=\"max-width:960px;margin:0 auto;padding:10px 15px;font-size:13px;color:#999;\">\n");
         html.append("  <a href=\"").append(escapeHtml(origin)).append("/\" style=\"color:#999;\">Acasă</a>\n");
         if (StringUtils.isNotEmpty(city)) {
-            html.append("  <span> &rsaquo; </span>\n  <a href=\"").append(escapeHtml(origin))
-                    .append("/search.html?q=").append(urlEncode(city)).append("\" style=\"color:#999;\">")
-                    .append(escapeHtml(city)).append("</a>\n");
+            html.append("  <span> &rsaquo; </span>\n  <a href=\"").append(escapeHtml(origin + cityCrumbPath(faculty, city)))
+                    .append("\" style=\"color:#999;\">").append(escapeHtml(city)).append("</a>\n");
         }
         if (StringUtils.isNotEmpty(uni)) {
             html.append("  <span> &rsaquo; </span>\n  <a href=\"").append(escapeHtml(origin))
@@ -929,7 +948,7 @@ public class FacultyProfilePageController {
         json.append(breadcrumbItem(pos++, "Acasă", origin + "/"));
         String city = cityShortName(faculty);
         if (StringUtils.isNotEmpty(city)) {
-            json.append(",").append(breadcrumbItem(pos++, city, origin + "/search.html?q=" + urlEncode(city)));
+            json.append(",").append(breadcrumbItem(pos++, city, origin + cityCrumbPath(faculty, city)));
         }
         if (StringUtils.isNotEmpty(faculty.getUniversityName())) {
             json.append(",").append(breadcrumbItem(pos++, faculty.getUniversityName(),
@@ -938,6 +957,12 @@ public class FacultyProfilePageController {
         json.append(",").append(breadcrumbItem(pos, faculty.getFacultyName(), canonicalUrl));
         json.append("]}");
         return json.toString();
+    }
+
+    /** City crumb target: the city hub (/facultati/cluj-napoca) when there is one, else search pre-filled with the city. */
+    private String cityCrumbPath(Faculty faculty, String city) {
+        String hubPath = domainHubPageController.cityHubPath(faculty);
+        return hubPath != null ? hubPath : "/search.html?q=" + urlEncode(city);
     }
 
     private String breadcrumbItem(int position, String name, String url) {

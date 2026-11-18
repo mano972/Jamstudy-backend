@@ -87,6 +87,9 @@ public class SeoController {
     @Autowired
     private ReviewDAO reviewDAO;
 
+    @Autowired
+    private DomainHubPageController domainHubPageController;
+
     @GetMapping(value = "/sitemap.xml", produces = "application/xml;charset=UTF-8")
     public void sitemap(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String origin = RequestUtils.getOrigin(request);
@@ -106,7 +109,13 @@ public class SeoController {
             String hubLastmod = FACULTY_CONTENT_LASTMOD.format(DateTimeFormatter.ISO_LOCAL_DATE);
             xml.append("  <url><loc>").append(origin).append("/facultati</loc><lastmod>").append(hubLastmod)
                     .append("</lastmod></url>\n");
-            for (String slug : DomainHubPageController.hubSlugs()) {
+            List<String> hubSlugs = new java.util.ArrayList<>(DomainHubPageController.hubSlugs());
+            try {
+                hubSlugs.addAll(domainHubPageController.cityHubSlugs());
+            } catch (RuntimeException e) {
+                // City hubs need the faculty list; the sitemap still lists everything else.
+            }
+            for (String slug : hubSlugs) {
                 xml.append("  <url><loc>").append(origin).append("/facultati/").append(slug)
                         .append("</loc><lastmod>").append(hubLastmod).append("</lastmod></url>\n");
             }

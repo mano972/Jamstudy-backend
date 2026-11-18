@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -123,10 +122,16 @@ public class DomainHubPageController {
     public void serveHub(@PathVariable String domainSlug, HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Hub hub = HUBS.get(domainSlug.toLowerCase(Locale.ROOT));
-        if (hub == null || !"RO".equals(RequestUtils.resolveCountryCode(request))) {
+        if (!"RO".equals(RequestUtils.resolveCountryCode(request))) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.getWriter().write(errorHtml);
+            return;
+        }
+        Hub hub = HUBS.get(domainSlug.toLowerCase(Locale.ROOT));
+        if (hub == null) {
+            // Not a domain: maybe a city hub (/facultati/cluj-napoca). Domain and city
+            // slugs share the namespace; domain wins on a clash (none today).
+            serveCity(domainSlug.toLowerCase(Locale.ROOT), request, response);
             return;
         }
 
@@ -157,6 +162,259 @@ public class DomainHubPageController {
         response.getWriter().write(html);
     }
 
+    // ---- city hubs ------------------------------------------------------
+
+    /** A city gets its own hub from this many faculties up; below that the page is too thin. */
+    static final int MIN_CITY_FACULTIES = 5;
+
+    /** A city with enough faculties for a hub, keyed by ASCII slug ("targu-mures"). */
+    static final class CityHub {
+        final String slug;
+        final String name;
+        final List<Faculty> faculties;
+
+        CityHub(String slug, String name, List<Faculty> faculties) {
+            this.slug = slug;
+            this.name = name;
+            this.faculties = faculties;
+        }
+    }
+
+    /**
+     * City hubs, biggest first. Cities are grouped by slug, so "Piatra-Neamt" and
+     * "Piatra Neamt" (or "Reșița"/"Resita") are one city; the display name is the
+     * most common spelling, preferring one with diacritics.
+     */
+    Map<String, CityHub> cityHubs() {
+        Map<String, List<Faculty>> bySlug = new LinkedHashMap<>();
+        Map<String, Map<String, Integer>> spellings = new LinkedHashMap<>();
+        for (Faculty f : publicRoFaculties()) {
+            String name = cityName(f);
+            if (StringUtils.isEmpty(name)) {
+                continue;
+            }
+            String slug = slugify(name);
+            bySlug.computeIfAbsent(slug, k -> new ArrayList<>()).add(f);
+            spellings.computeIfAbsent(slug, k -> new LinkedHashMap<>()).merge(name, 1, Integer::sum);
+        }
+        List<CityHub> hubs = new ArrayList<>();
+        for (Map.Entry<String, List<Faculty>> e : bySlug.entrySet()) {
+            if (e.getValue().size() < MIN_CITY_FACULTIES || HUBS.containsKey(e.getKey())) {
+                continue;
+            }
+            String best = null;
+            int bestScore = -1;
+            for (Map.Entry<String, Integer> s : spellings.get(e.getKey()).entrySet()) {
+                boolean diacritics = !s.getKey().equals(Normalizer.normalize(s.getKey(), Normalizer.Form.NFD)
+                        .replaceAll("\\p{M}", ""));
+                int score = (diacritics ? 100000 : 0) + s.getValue();
+                if (score > bestScore) {
+                    bestScore = score;
+                    best = s.getKey();
+                }
+            }
+            hubs.add(new CityHub(e.getKey(), best, e.getValue()));
+        }
+        hubs.sort((a, b) -> a.faculties.size() != b.faculties.size()
+                ? b.faculties.size() - a.faculties.size()
+                : a.name.compareToIgnoreCase(b.name));
+        Map<String, CityHub> out = new LinkedHashMap<>();
+        for (CityHub c : hubs) {
+            out.put(c.slug, c);
+        }
+        return out;
+    }
+
+    /** "/facultati/cluj-napoca" if the faculty's city has a hub, else null. Used by faculty pages. */
+    String cityHubPath(Faculty faculty) {
+        String name = cityName(faculty);
+        if (StringUtils.isEmpty(name)) {
+            return null;
+        }
+        try {
+            CityHub hub = cityHubs().get(slugify(name));
+            return hub != null ? "/facultati/" + hub.slug : null;
+        } catch (RuntimeException e) {
+            return null;
+        }
+    }
+
+    /** City hub slugs, for the sitemap. */
+    List<String> cityHubSlugs() {
+        return new ArrayList<>(cityHubs().keySet());
+    }
+
+    private void serveCity(String slug, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Map<String, CityHub> cities;
+        try {
+            cities = cityHubs();
+        } catch (RuntimeException e) {
+            LOGGER.error("City hub /facultati/{} failed to load faculties", slug, e);
+            response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+            response.setHeader("Retry-After", "60");
+            response.getWriter().write(errorHtml);
+            return;
+        }
+        CityHub city = cities.get(slug);
+        if (city == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.getWriter().write(errorHtml);
+            return;
+        }
+
+        String origin = RequestUtils.getOrigin(request);
+        String canonicalUrl = origin + "/facultati/" + city.slug;
+        Map<String, List<Faculty>> byUni = groupByUniversity(city.faculties);
+        Map<Hub, Integer> domains = domainCounts(city.faculties);
+        List<String[]> faq = buildCityFaq(city, byUni, domains);
+
+        String title = "Facultăți în " + city.name + ": universități, programe, păreri studenți | Unistart";
+        String description = "Toate cele " + countPhrase(city.faculties.size(), "facultate", "facultăți") + " din "
+                + city.name + ", la " + countPhrase(byUni.size(), "universitate", "universități") + ": "
+                + topUniversities(byUni, 3) + ". Programe de licență și păreri de la studenți.";
+
+        StringBuilder h = new StringBuilder();
+        appendMeta(h, title, description, "Facultăți în " + city.name, origin, canonicalUrl);
+        h.append("\t<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"BreadcrumbList\",\"itemListElement\":[")
+                .append(crumb(1, "Acasă", origin + "/")).append(",")
+                .append(crumb(2, "Facultăți", origin + "/facultati")).append(",")
+                .append(crumb(3, city.name, canonicalUrl)).append("]}</script>\n");
+        h.append("\t<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"ItemList\",\"name\":\"")
+                .append(json("Facultăți în " + city.name)).append("\",\"numberOfItems\":").append(city.faculties.size())
+                .append(",\"itemListElement\":[");
+        int pos = 1;
+        for (List<Faculty> list : byUni.values()) {
+            for (Faculty f : list) {
+                if (pos > 1) {
+                    h.append(",");
+                }
+                h.append("{\"@type\":\"ListItem\",\"position\":").append(pos++)
+                        .append(",\"url\":\"").append(json(origin + facultyPath(f))).append("\"")
+                        .append(",\"name\":\"").append(json(fix(f.getFacultyName()))).append("\"}");
+            }
+        }
+        h.append("]}</script>\n");
+        appendFaqJsonLd(h, faq);
+
+        StringBuilder c = new StringBuilder();
+        c.append("<nav class=\"hub-breadcrumb\" aria-label=\"breadcrumb\"><a href=\"/\">Acasă</a> &rsaquo; ")
+                .append("<a href=\"/facultati\">Facultăți</a> &rsaquo; <span>").append(esc(city.name)).append("</span></nav>\n");
+        c.append("<h1>Facultăți în ").append(esc(city.name)).append("</h1>\n");
+        c.append("<p class=\"hub-subtitle\">").append(countPhrase(city.faculties.size(), "facultate", "facultăți"))
+                .append(" · ").append(countPhrase(byUni.size(), "universitate", "universități")).append("</p>\n");
+        c.append("<p class=\"hub-intro\">Aici găsești toate facultățile din ").append(esc(city.name))
+                .append(" listate pe Unistart, grupate pe universități. Cele mai multe sunt la ")
+                .append(esc(topUniversities(byUni, 3))).append(". Deschide o facultate ca să vezi programele de licență și master,")
+                .append(" locurile, taxele și părerile studenților.</p>\n");
+
+        c.append("<ul class=\"hub-cities\" aria-label=\"Universități\">\n");
+        for (Map.Entry<String, List<Faculty>> e : byUni.entrySet()) {
+            String shortLabel = StringUtils.defaultIfBlank(FacultyProfilePageController.universityShortLabel(e.getKey()), e.getKey());
+            c.append("  <li><a href=\"/facultati/").append(city.slug).append("#").append(uniAnchor(e.getValue().get(0)))
+                    .append("\" title=\"").append(esc(e.getKey())).append("\">").append(esc(shortLabel))
+                    .append(" (").append(e.getValue().size()).append(")</a></li>\n");
+        }
+        c.append("</ul>\n");
+
+        for (Map.Entry<String, List<Faculty>> e : byUni.entrySet()) {
+            c.append("<section class=\"hub-city\" id=\"").append(uniAnchor(e.getValue().get(0))).append("\">\n");
+            c.append("  <h2>").append(esc(e.getKey())).append("</h2>\n");
+            for (Faculty f : e.getValue()) {
+                appendFacultyCard(c, f, false);
+            }
+            c.append("</section>\n");
+        }
+
+        if (!domains.isEmpty()) {
+            // Domain hub links jump straight to this city's section of that hub.
+            c.append("<div class=\"hub-faq\">\n  <h2>Pe domenii în ").append(esc(city.name)).append("</h2>\n  <ul class=\"hub-cities\">\n");
+            for (Map.Entry<Hub, Integer> d : domains.entrySet()) {
+                c.append("    <li><a href=\"/facultati/").append(d.getKey().slug).append("#").append(anchorId(city.name))
+                        .append("\">").append(esc(d.getKey().label)).append(" (").append(d.getValue()).append(")</a></li>\n");
+            }
+            c.append("  </ul>\n</div>\n");
+        }
+
+        appendFaqHtml(c, faq);
+
+        c.append("<div class=\"hub-faq\">\n  <h2>Alte orașe</h2>\n  <ul class=\"hub-cities\">\n");
+        for (CityHub other : cities.values()) {
+            if (!other.slug.equals(city.slug)) {
+                c.append("    <li><a href=\"/facultati/").append(other.slug).append("\">").append(esc(other.name))
+                        .append(" (").append(other.faculties.size()).append(")</a></li>\n");
+            }
+        }
+        c.append("  </ul>\n</div>\n");
+        appendCta(c, "Ai studiat sau studiezi în " + city.name + "? Spune-le viitorilor studenți cum e de fapt.");
+
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write(template.replace(HEAD_MARKER, h.toString()).replace(CONTENT_MARKER, c.toString()));
+    }
+
+    /** University -> faculties, biggest university first; faculties by reviews, rating, name. */
+    private static Map<String, List<Faculty>> groupByUniversity(List<Faculty> faculties) {
+        Map<String, List<Faculty>> grouped = new LinkedHashMap<>();
+        for (Faculty f : faculties) {
+            String uni = fix(StringUtils.defaultIfBlank(f.getUniversityName(), "Alte facultăți")).trim();
+            grouped.computeIfAbsent(uni, k -> new ArrayList<>()).add(f);
+        }
+        return sortGroups(grouped);
+    }
+
+    /** How many of these faculties fall in each live domain hub, most first. */
+    private static Map<Hub, Integer> domainCounts(List<Faculty> faculties) {
+        List<Map.Entry<Hub, Integer>> counts = new ArrayList<>();
+        for (Hub hub : HUBS.values()) {
+            String wanted = fix(hub.domainValue);
+            int n = 0;
+            for (Faculty f : faculties) {
+                if (containsDomain(f.getFacultyDomainsLicense(), wanted) || containsDomain(f.getFacultyDomainsMaster(), wanted)) {
+                    n++;
+                }
+            }
+            if (n > 0) {
+                counts.add(new java.util.AbstractMap.SimpleEntry<>(hub, n));
+            }
+        }
+        counts.sort((a, b) -> b.getValue() - a.getValue());
+        Map<Hub, Integer> out = new LinkedHashMap<>();
+        for (Map.Entry<Hub, Integer> e : counts) {
+            out.put(e.getKey(), e.getValue());
+        }
+        return out;
+    }
+
+    private List<String[]> buildCityFaq(CityHub city, Map<String, List<Faculty>> byUni, Map<Hub, Integer> domains) {
+        List<String[]> faq = new ArrayList<>();
+        faq.add(new String[] {
+                "Câte facultăți sunt în " + city.name + "?",
+                "Pe Unistart sunt listate " + countPhrase(city.faculties.size(), "facultate", "facultăți") + " în "
+                        + city.name + ", la " + countPhrase(byUni.size(), "universitate", "universități") + "." });
+        List<String> unis = new ArrayList<>();
+        for (Map.Entry<String, List<Faculty>> e : byUni.entrySet()) {
+            unis.add(e.getKey() + " (" + countPhrase(e.getValue().size(), "facultate", "facultăți") + ")");
+        }
+        faq.add(new String[] {
+                "Ce universități sunt în " + city.name + "?",
+                "Universitățile din " + city.name + " listate pe Unistart sunt: " + String.join(", ", unis) + "." });
+        if (!domains.isEmpty()) {
+            List<String> parts = new ArrayList<>();
+            for (Map.Entry<Hub, Integer> d : domains.entrySet()) {
+                parts.add(d.getKey().label.toLowerCase(RO) + " (" + d.getValue() + ")");
+            }
+            faq.add(new String[] {
+                    "Ce se poate studia în " + city.name + "?",
+                    "În " + city.name + " sunt facultăți din domeniile: " + String.join(", ", parts)
+                            + ". Numărul arată câte facultăți au programe în fiecare domeniu; o facultate poate avea mai multe domenii." });
+        }
+        return faq;
+    }
+
+    private static String uniAnchor(Faculty f) {
+        String base = StringUtils.isNotBlank(f.getUniversitySlug()) ? f.getUniversitySlug() : slugify(fix(f.getUniversityName()));
+        return "univ-" + base;
+    }
+
     /** /facultati - index of every domain hub with its faculty count. */
     @GetMapping({"/facultati", "/facultati/"})
     public void serveIndex(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -184,15 +442,17 @@ public class DomainHubPageController {
 
         String origin = RequestUtils.getOrigin(request);
         String canonicalUrl = origin + "/facultati";
-        String title = "Facultăți din România pe domenii: medicină, drept, economie | Unistart";
+        Map<String, CityHub> cities = cityHubs();
+        String title = "Facultăți din România pe domenii și orașe | Unistart";
         String description = "Toate facultățile din România, grupate pe " + countPhrase(byHub.size(), "domeniu", "domenii")
-                + ": medicină, drept, economie, inginerie, informatică, psihologie și altele. Liste pe orașe și păreri de la studenți.";
+                + " (medicină, drept, economie, inginerie, informatică, psihologie...) și pe orașe (București, Cluj-Napoca, Iași,"
+                + " Timișoara...). Programe de licență și păreri de la studenți.";
 
         StringBuilder h = new StringBuilder();
-        appendMeta(h, title, description, "Facultăți din România, pe domenii", origin, canonicalUrl);
+        appendMeta(h, title, description, "Facultăți din România, pe domenii și orașe", origin, canonicalUrl);
         h.append("\t<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"BreadcrumbList\",\"itemListElement\":[")
                 .append(crumb(1, "Acasă", origin + "/")).append(",")
-                .append(crumb(2, "Facultăți pe domenii", canonicalUrl)).append("]}</script>\n");
+                .append(crumb(2, "Facultăți", canonicalUrl)).append("]}</script>\n");
         h.append("\t<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"ItemList\",\"itemListElement\":[");
         int pos = 1;
         for (Hub hub : byHub.keySet()) {
@@ -203,13 +463,21 @@ public class DomainHubPageController {
                     .append(",\"url\":\"").append(json(origin + "/facultati/" + hub.slug)).append("\"")
                     .append(",\"name\":\"").append(json("Facultăți de " + hub.label)).append("\"}");
         }
+        for (CityHub city : cities.values()) {
+            h.append(",{\"@type\":\"ListItem\",\"position\":").append(pos++)
+                    .append(",\"url\":\"").append(json(origin + "/facultati/" + city.slug)).append("\"")
+                    .append(",\"name\":\"").append(json("Facultăți în " + city.name)).append("\"}");
+        }
         h.append("]}</script>");
 
         StringBuilder c = new StringBuilder();
-        c.append("<nav class=\"hub-breadcrumb\" aria-label=\"breadcrumb\"><a href=\"/\">Acasă</a> &rsaquo; <span>Facultăți pe domenii</span></nav>\n");
-        c.append("<h1>Facultăți din România, pe domenii</h1>\n");
-        c.append("<p class=\"hub-intro\">Alege domeniul care te interesează ca să vezi toate facultățile lui, grupate pe orașe,")
+        c.append("<nav class=\"hub-breadcrumb\" aria-label=\"breadcrumb\"><a href=\"/\">Acasă</a> &rsaquo; <span>Facultăți</span></nav>\n");
+        c.append("<h1>Facultăți din România, pe domenii și orașe</h1>\n");
+        c.append("<p class=\"hub-intro\">Alege un domeniu sau un oraș ca să vezi toate facultățile lui,")
                 .append(" cu programele de licență și părerile studenților. O facultate poate apărea în mai multe domenii.</p>\n");
+        c.append("<ul class=\"hub-cities\" aria-label=\"Cuprins\"><li><a href=\"/facultati#pe-domenii\">Pe domenii</a></li>")
+                .append("<li><a href=\"/facultati#pe-orase\">Pe orașe</a></li></ul>\n");
+        c.append("<h2 id=\"pe-domenii\" class=\"hub-city\" style=\"font-size:21px;font-weight:600;\">Pe domenii</h2>\n");
         for (Map.Entry<Hub, List<Faculty>> e : byHub.entrySet()) {
             Hub hub = e.getKey();
             List<Faculty> list = e.getValue();
@@ -223,8 +491,15 @@ public class DomainHubPageController {
             }
             c.append("</div>\n");
         }
-        c.append("<div class=\"hub-cta\">\n  <p>Ai studiat sau studiezi la o facultate din România? Spune-le viitorilor studenți cum e de fapt.</p>\n")
-                .append("  <a href=\"/review.html\" class=\"btn btn-warning btn-fill\">Lasă o evaluare</a>\n</div>\n");
+        if (!cities.isEmpty()) {
+            c.append("<h2 id=\"pe-orase\" class=\"hub-city\" style=\"font-size:21px;font-weight:600;\">Pe orașe</h2>\n<ul class=\"hub-cities\">\n");
+            for (CityHub city : cities.values()) {
+                c.append("  <li><a href=\"/facultati/").append(city.slug).append("\">").append(esc(city.name))
+                        .append(" (").append(city.faculties.size()).append(")</a></li>\n");
+            }
+            c.append("</ul>\n");
+        }
+        appendCta(c, "Ai studiat sau studiezi la o facultate din România? Spune-le viitorilor studenți cum e de fapt.");
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(template.replace(HEAD_MARKER, h.toString()).replace(CONTENT_MARKER, c.toString()));
@@ -235,13 +510,21 @@ public class DomainHubPageController {
     private List<Faculty> facultiesInDomain(Hub hub) {
         String wanted = fix(hub.domainValue);
         List<Faculty> out = new ArrayList<>();
+        for (Faculty f : publicRoFaculties()) {
+            if (containsDomain(f.getFacultyDomainsLicense(), wanted) || containsDomain(f.getFacultyDomainsMaster(), wanted)) {
+                out.add(f);
+            }
+        }
+        return out;
+    }
+
+    /** Romanian faculties that have a public /facultate/... page. */
+    private List<Faculty> publicRoFaculties() {
+        List<Faculty> out = new ArrayList<>();
         for (Faculty f : allFaculties()) {
             String country = StringUtils.isNotEmpty(f.getCountryCode()) ? f.getCountryCode() : "RO";
-            if (!"RO".equalsIgnoreCase(country) || StringUtils.isEmpty(f.getUniversitySlug())
-                    || StringUtils.isEmpty(f.getFacultySlug())) {
-                continue;
-            }
-            if (containsDomain(f.getFacultyDomainsLicense(), wanted) || containsDomain(f.getFacultyDomainsMaster(), wanted)) {
+            if ("RO".equalsIgnoreCase(country) && StringUtils.isNotEmpty(f.getUniversitySlug())
+                    && StringUtils.isNotEmpty(f.getFacultySlug())) {
                 out.add(f);
             }
         }
@@ -273,11 +556,30 @@ public class DomainHubPageController {
 
     /** City -> faculties, cities by faculty count (desc) then name; faculties by reviews, rating, name. */
     private static Map<String, List<Faculty>> groupByCity(List<Faculty> faculties) {
-        Map<String, List<Faculty>> grouped = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        // Group by slug so "Piatra-Neamt"/"Piatra Neamt" merge; label with the best spelling.
+        Map<String, List<Faculty>> bySlug = new LinkedHashMap<>();
+        Map<String, String> label = new LinkedHashMap<>();
         for (Faculty f : faculties) {
             String city = cityName(f);
-            grouped.computeIfAbsent(StringUtils.isNotEmpty(city) ? city : "Alte orașe", k -> new ArrayList<>()).add(f);
+            if (StringUtils.isEmpty(city)) {
+                city = "Alte orașe";
+            }
+            String slug = slugify(city);
+            bySlug.computeIfAbsent(slug, k -> new ArrayList<>()).add(f);
+            String prev = label.get(slug);
+            if (prev == null || (!hasDiacritics(prev) && hasDiacritics(city))) {
+                label.put(slug, city);
+            }
         }
+        Map<String, List<Faculty>> grouped = new LinkedHashMap<>();
+        for (Map.Entry<String, List<Faculty>> e : bySlug.entrySet()) {
+            grouped.put(label.get(e.getKey()), e.getValue());
+        }
+        return sortGroups(grouped);
+    }
+
+    /** Groups biggest first (then by name); inside a group: most reviews, best rating, name. */
+    private static Map<String, List<Faculty>> sortGroups(Map<String, List<Faculty>> grouped) {
         List<Map.Entry<String, List<Faculty>>> entries = new ArrayList<>(grouped.entrySet());
         entries.sort((a, b) -> a.getValue().size() != b.getValue().size()
                 ? b.getValue().size() - a.getValue().size()
@@ -317,7 +619,7 @@ public class DomainHubPageController {
         // BreadcrumbList
         h.append("\t<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"BreadcrumbList\",\"itemListElement\":[")
                 .append(crumb(1, "Acasă", origin + "/")).append(",")
-                .append(crumb(2, "Facultăți pe domenii", origin + "/facultati")).append(",")
+                .append(crumb(2, "Facultăți", origin + "/facultati")).append(",")
                 .append(crumb(3, "Facultăți de " + hub.label, canonicalUrl))
                 .append("]}</script>\n");
 
@@ -338,17 +640,7 @@ public class DomainHubPageController {
         }
         h.append("]}</script>\n");
 
-        // FAQPage - same questions/answers as the visible FAQ block.
-        h.append("\t<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[");
-        List<String[]> faq = buildFaq(hub, faculties, byCity);
-        for (int i = 0; i < faq.size(); i++) {
-            if (i > 0) {
-                h.append(",");
-            }
-            h.append("{\"@type\":\"Question\",\"name\":\"").append(json(faq.get(i)[0]))
-                    .append("\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"").append(json(faq.get(i)[1])).append("\"}}");
-        }
-        h.append("]}</script>");
+        appendFaqJsonLd(h, buildFaq(hub, faculties, byCity));
         return h.toString();
     }
 
@@ -398,7 +690,7 @@ public class DomainHubPageController {
 
         StringBuilder html = new StringBuilder();
         html.append("<nav class=\"hub-breadcrumb\" aria-label=\"breadcrumb\"><a href=\"/\">Acasă</a> &rsaquo; ")
-                .append("<a href=\"/facultati\">Facultăți pe domenii</a> &rsaquo; <span>").append(esc(hub.label)).append("</span></nav>\n");
+                .append("<a href=\"/facultati\">Facultăți</a> &rsaquo; <span>").append(esc(hub.label)).append("</span></nav>\n");
         html.append("<h1>Facultăți de ").append(esc(hub.label)).append(" din România</h1>\n");
         html.append("<p class=\"hub-subtitle\">").append(countPhrase(faculties.size(), "facultate", "facultăți"))
                 .append(" · ").append(countPhrase(byCity.size(), "oraș", "orașe"))
@@ -426,20 +718,22 @@ public class DomainHubPageController {
         }
         html.append("</ul>\n");
 
+        Map<String, CityHub> cityHubsBySlug = cityHubs();
         for (Map.Entry<String, List<Faculty>> e : byCity.entrySet()) {
             html.append("<section class=\"hub-city\" id=\"").append(anchorId(e.getKey())).append("\">\n");
             html.append("  <h2>").append(esc(hub.label)).append(" în ").append(esc(e.getKey())).append("</h2>\n");
             for (Faculty f : e.getValue()) {
-                appendFacultyCard(html, f);
+                appendFacultyCard(html, f, true);
+            }
+            CityHub cityHub = cityHubsBySlug.get(slugify(e.getKey()));
+            if (cityHub != null) {
+                html.append("  <p class=\"hub-city-all\"><a href=\"/facultati/").append(cityHub.slug)
+                        .append("\">Toate facultățile din ").append(esc(cityHub.name)).append(" &rsaquo;</a></p>\n");
             }
             html.append("</section>\n");
         }
 
-        html.append("<div class=\"hub-faq\">\n  <h2>Întrebări frecvente</h2>\n");
-        for (String[] qa : buildFaq(hub, faculties, byCity)) {
-            html.append("  <h3>").append(esc(qa[0])).append("</h3>\n  <p>").append(esc(qa[1])).append("</p>\n");
-        }
-        html.append("</div>\n");
+        appendFaqHtml(html, buildFaq(hub, faculties, byCity));
 
         html.append("<div class=\"hub-faq\">\n  <h2>Alte domenii</h2>\n  <ul class=\"hub-cities\">\n");
         for (Hub other : HUBS.values()) {
@@ -450,12 +744,11 @@ public class DomainHubPageController {
         }
         html.append("  </ul>\n</div>\n");
 
-        html.append("<div class=\"hub-cta\">\n  <p>Ai studiat sau studiezi la una dintre aceste facultăți? Spune-le viitorilor studenți cum e de fapt.</p>\n")
-                .append("  <a href=\"/review.html\" class=\"btn btn-warning btn-fill\">Lasă o evaluare</a>\n</div>\n");
+        appendCta(html, "Ai studiat sau studiezi la una dintre aceste facultăți? Spune-le viitorilor studenți cum e de fapt.");
         return html.toString();
     }
 
-    private void appendFacultyCard(StringBuilder html, Faculty f) {
+    private void appendFacultyCard(StringBuilder html, Faculty f, boolean showUniversity) {
         html.append("  <div class=\"hub-fac\">\n");
         html.append("    <a class=\"hub-fac-name\" href=\"").append(esc(facultyPath(f))).append("\">")
                 .append(esc(fix(f.getFacultyName())));
@@ -463,7 +756,7 @@ public class DomainHubPageController {
             html.append(" (").append(esc(fix(f.getFacultyShortname().trim()))).append(")");
         }
         html.append("</a>\n");
-        if (StringUtils.isNotBlank(f.getUniversityName())) {
+        if (showUniversity && StringUtils.isNotBlank(f.getUniversityName())) {
             html.append("    <div class=\"hub-fac-uni\">").append(esc(fix(f.getUniversityName()))).append("</div>\n");
         }
 
@@ -473,7 +766,8 @@ public class DomainHubPageController {
             html.append("<i class=\"fa fa-star\" aria-hidden=\"true\"></i> <strong>")
                     .append(String.format(Locale.ROOT, "%.1f", f.getAvgRating())).append("/5</strong> · ")
                     .append(countPhrase(n, "evaluare", "evaluări"));
-            if (f.getPercentageWouldRecommend() != null) {
+            // A percentage from 1-2 reviews ("0% ar recomanda") says more about one person than the faculty.
+            if (f.getPercentageWouldRecommend() != null && n >= 3) {
                 html.append(" · ").append(f.getPercentageWouldRecommend()).append("% ar recomanda");
             }
         } else {
@@ -603,8 +897,23 @@ public class DomainHubPageController {
     }
 
     private static String topCities(Map<String, List<Faculty>> byCity, int n) {
+        return topGroups(byCity, n);
+    }
+
+    /** "UBB (21), UTCN (9) și USAMV (5)" - like topGroups, with short university names. */
+    private static String topUniversities(Map<String, List<Faculty>> byUni, int n) {
+        Map<String, List<Faculty>> shortNamed = new LinkedHashMap<>();
+        for (Map.Entry<String, List<Faculty>> e : byUni.entrySet()) {
+            String label = FacultyProfilePageController.universityShortLabel(e.getKey());
+            shortNamed.put(StringUtils.isNotBlank(label) && !shortNamed.containsKey(label) ? label : e.getKey(), e.getValue());
+        }
+        return topGroups(shortNamed, n);
+    }
+
+    /** "A (8), B (5) și C (4)" from the first n groups. */
+    private static String topGroups(Map<String, List<Faculty>> groups, int n) {
         List<String> parts = new ArrayList<>();
-        for (Map.Entry<String, List<Faculty>> e : byCity.entrySet()) {
+        for (Map.Entry<String, List<Faculty>> e : groups.entrySet()) {
             if (parts.size() == n) {
                 break;
             }
@@ -631,8 +940,43 @@ public class DomainHubPageController {
     }
 
     private static String anchorId(String city) {
-        String ascii = Normalizer.normalize(city, Normalizer.Form.NFD).replaceAll("\\p{M}", "");
-        return "oras-" + ascii.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", "-").replaceAll("(^-|-$)", "");
+        return "oras-" + slugify(city);
+    }
+
+    /** "Târgu Mureș" -> "targu-mures". */
+    static String slugify(String s) {
+        String ascii = Normalizer.normalize(StringUtils.defaultString(s), Normalizer.Form.NFD).replaceAll("\\p{M}", "");
+        return ascii.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]+", "-").replaceAll("(^-|-$)", "");
+    }
+
+    private static boolean hasDiacritics(String s) {
+        return !s.equals(Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("\\p{M}", ""));
+    }
+
+    private static void appendFaqHtml(StringBuilder html, List<String[]> faq) {
+        html.append("<div class=\"hub-faq\">\n  <h2>Întrebări frecvente</h2>\n");
+        for (String[] qa : faq) {
+            html.append("  <h3>").append(esc(qa[0])).append("</h3>\n  <p>").append(esc(qa[1])).append("</p>\n");
+        }
+        html.append("</div>\n");
+    }
+
+    /** FAQPage JSON-LD - must carry the same questions/answers as the visible FAQ block. */
+    private static void appendFaqJsonLd(StringBuilder h, List<String[]> faq) {
+        h.append("\t<script type=\"application/ld+json\">{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[");
+        for (int i = 0; i < faq.size(); i++) {
+            if (i > 0) {
+                h.append(",");
+            }
+            h.append("{\"@type\":\"Question\",\"name\":\"").append(json(faq.get(i)[0]))
+                    .append("\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"").append(json(faq.get(i)[1])).append("\"}}");
+        }
+        h.append("]}</script>");
+    }
+
+    private static void appendCta(StringBuilder html, String text) {
+        html.append("<div class=\"hub-cta\">\n  <p>").append(esc(text)).append("</p>\n")
+                .append("  <a href=\"/review.html\" class=\"btn btn-warning btn-fill\">Lasă o evaluare</a>\n</div>\n");
     }
 
     private static String fix(String s) {
