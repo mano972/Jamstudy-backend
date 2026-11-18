@@ -1339,9 +1339,16 @@
             return;
         }
 
-        var size = 360;
+        // Draw at the real available width (max 360). Scaling a 360px SVG down with
+        // max-width left the absolutely positioned labels at 360px coordinates, so on
+        // phones they stuck out sideways and covered the "Compară" button below.
+        var availableWidth = container.clientWidth || (container.parentNode && container.parentNode.clientWidth) || 360;
+        var size = Math.max(240, Math.min(360, Math.floor(availableWidth)));
+        var scale = size / 360;
         var center = size / 2;
-        var maxRadius = 110;
+        var maxRadius = 110 * scale;
+        var labelOffset = 38 * scale;
+        var labelWidth = Math.min(90, Math.round(size * 0.25));
         var maxValue = 5;
         var numAxes = RADAR_CATEGORIES.length;
         var angleStep = (2 * Math.PI) / numAxes;
@@ -1376,10 +1383,10 @@
             var outerPoint = pointAtRadius(a, maxRadius);
             axesSvg += '<line class="radar-grid-axis" x1="' + center + '" y1="' + center + '" x2="' + outerPoint.x + '" y2="' + outerPoint.y + '" stroke="#c3c2b7" stroke-width="1"/>';
 
-            var labelPoint = pointAtRadius(a, maxRadius + 38);
+            var labelPoint = pointAtRadius(a, maxRadius + labelOffset);
             var category = RADAR_CATEGORIES[a];
             labelsHtml +=
-                '<div class="radar-axis-label" style="position: absolute; width: 90px; left: ' + labelPoint.x + 'px; top: ' + labelPoint.y + 'px; transform: translate(-50%, -50%); text-align: center; font-size: 11px;">'
+                '<div class="radar-axis-label" style="position: absolute; width: ' + labelWidth + 'px; left: ' + labelPoint.x + 'px; top: ' + labelPoint.y + 'px; transform: translate(-50%, -50%); text-align: center; font-size: 11px;">'
                 +	'<i class="fa ' + category.icon + '" style="color: #898781;"></i><br>'
                 +	'<span data-i18n-key="' + category.i18nKey + '"></span>'
                 + '</div>';
@@ -1401,8 +1408,8 @@
             + verticesSvg;
 
         container.innerHTML =
-            '<div style="position: relative; width: ' + size + 'px; max-width: 100%; margin: 0 auto;">'
-            +	'<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '" style="max-width: 100%; height: auto;">'
+            '<div style="position: relative; width: ' + size + 'px; height: ' + size + 'px; margin: 0 auto;">'
+            +	'<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '" style="display: block;">'
             +		gridRingsSvg
             +		axesSvg
             +		seriesSvg
@@ -1411,7 +1418,28 @@
             + '</div>';
 
         translatePage();
+
+        // Re-fit on rotation / resize (only when the width actually changes).
+        container.setAttribute('data-radar-width', size);
+        lastRadarFaculty = faculty;
+        if (!radarResizeBound) {
+            radarResizeBound = true;
+            var radarResizeTimer;
+            window.addEventListener('resize', function () {
+                clearTimeout(radarResizeTimer);
+                radarResizeTimer = setTimeout(function () {
+                    var c = document.getElementById("faculty-profile-radar-chart");
+                    if (!c || !lastRadarFaculty) return;
+                    var w = Math.max(240, Math.min(360, Math.floor(c.clientWidth || 360)));
+                    if (String(w) !== c.getAttribute('data-radar-width')) {
+                        renderFacultyRadarChart(lastRadarFaculty);
+                    }
+                }, 150);
+            });
+        }
     }
+    var lastRadarFaculty = null;
+    var radarResizeBound = false;
 
     function loadGeneralPresentationCard(response) {
 
