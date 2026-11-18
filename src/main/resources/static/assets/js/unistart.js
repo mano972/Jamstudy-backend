@@ -1558,7 +1558,7 @@ function getDomainsForHomePage() {
     const currentUrl = window.location.href;
     var domainsString =
                 '<li><input type="checkbox" name="domeniu" id="d1" value="Științe Economice"><label for="d1"><span data-i18n-key="domain-economy">Științe Economice</span></label></li>'+
-                '<li><input type="checkbox" name="domeniu" id="d2" value="Științe Inginerești"><label for="d2"><span data-i18n-key="domain-politics">Științe Inginerești</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d2" value="Științe Inginerești"><label for="d2"><span data-i18n-key="domain-engineering">Științe Inginerești</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d3" value="Științe Politice și Comunicare"><label for="d3"><span data-i18n-key="domain-politics">Științe Politice și Comunicare</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d4" value="Științe Umaniste"><label for="d4"><span data-i18n-key="domain-humanities">Științe Umaniste</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d5" value="Științe Juridice"><label for="d5"><span data-i18n-key="domain-judicial">Științe Juridice</span></label></li>'+
@@ -1575,7 +1575,7 @@ function getDomainsForHomePage() {
     if (currentUrl.includes("unistart.ro")) {
         domainsString =
                 '<li><input type="checkbox" name="domeniu" id="d1" value="Științe Economice"><label for="d1"><span data-i18n-key="domain-economy">Științe Economice</span></label></li>'+
-                '<li><input type="checkbox" name="domeniu" id="d2" value="Științe Inginerești"><label for="d2"><span data-i18n-key="domain-politics">Științe Inginerești</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d2" value="Științe Inginerești"><label for="d2"><span data-i18n-key="domain-engineering">Științe Inginerești</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d3" value="Științe Politice și Comunicare"><label for="d3"><span data-i18n-key="domain-politics">Științe Politice și Comunicare</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d4" value="Științe Umaniste"><label for="d4"><span data-i18n-key="domain-humanities">Științe Umaniste</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d5" value="Științe Juridice"><label for="d5"><span data-i18n-key="domain-judicial">Științe Juridice</span></label></li>'+
@@ -1592,7 +1592,7 @@ function getDomainsForHomePage() {
     } else if (currentUrl.includes("unistart.lt")) {
         domainsString =
                 '<li><input type="checkbox" name="domeniu" id="d1" value="Ekonomikos mokslai"><label for="d1"><span data-i18n-key="domain-economy">Ekonomikos mokslai</span></label></li>'+
-                '<li><input type="checkbox" name="domeniu" id="d2" value="Inžinerijos mokslai"><label for="d2"><span data-i18n-key="domain-politics">Inžinerijos mokslai</span></label></li>'+
+                '<li><input type="checkbox" name="domeniu" id="d2" value="Inžinerijos mokslai"><label for="d2"><span data-i18n-key="domain-engineering">Inžinerijos mokslai</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d3" value="Politikos ir komunikacijos mokslai"><label for="d3"><span data-i18n-key="domain-politics">Politikos ir komunikacijos mokslai</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d4" value="Humanitariniai mokslai"><label for="d4"><span data-i18n-key="domain-humanities">Humanitariniai mokslai</span></label></li>'+
                 '<li><input type="checkbox" name="domeniu" id="d5" value="Teisės mokslai"><label for="d5"><span data-i18n-key="domain-judicial">Teisės mokslai</span></label></li>'+

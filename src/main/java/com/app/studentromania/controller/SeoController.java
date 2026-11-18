@@ -65,6 +65,22 @@ public class SeoController {
             "/review.html", "/ask-question.html"
     };
 
+    /**
+     * AI-training crawlers asked to stay out entirely. The well-behaved ones honour
+     * this; the rest are hard-blocked by a Cloudflare custom rule ("Block AI training
+     * crawlers") that matches the same list. Google-Extended and Applebot-Extended
+     * are robots.txt-only tokens (they reuse Googlebot/Applebot), so this is the only
+     * place they can be opted out without hurting Search. Never add Googlebot,
+     * Bingbot, Applebot or the search/user-fetch bots (OAI-SearchBot, ChatGPT-User,
+     * PerplexityBot, Claude-SearchBot, Claude-User) here.
+     */
+    private static final String[] AI_TRAINING_BOTS = {
+            "GPTBot", "ClaudeBot", "anthropic-ai", "CCBot", "Bytespider", "TikTokSpider",
+            "Amazonbot", "meta-externalagent", "FacebookBot", "Google-Extended",
+            "Applebot-Extended", "Google-CloudVertexBot", "cohere-ai", "Diffbot",
+            "Timpibot", "PetalBot", "Baiduspider"
+    };
+
     @Autowired
     private FacultyDAO facultyDAO;
 
@@ -159,6 +175,11 @@ public class SeoController {
         for (String disallowed : DISALLOWED_PAGES) {
             txt.append("Disallow: ").append(disallowed).append("\n");
         }
+        txt.append("\n");
+        for (String bot : AI_TRAINING_BOTS) {
+            txt.append("User-agent: ").append(bot).append("\n");
+        }
+        txt.append("Disallow: /\n");
         txt.append("\n");
         txt.append("Sitemap: ").append(origin).append("/sitemap.xml\n");
 
