@@ -1710,7 +1710,7 @@ function getDomainsForSearchPage() {
                 '<label class="checkbox checkbox-azure" for="d11"><input type="checkbox" name="domeniu" value="Științe Agricole" id="d11" data-toggle="checkbox"><span data-i18n-key="domain-agriculture">Științe Agricole</span></label>'+
                 '<label class="checkbox checkbox-azure" for="d12"><input type="checkbox" name="domeniu" value="Ştiinţa Sportului şi Educaţiei Fizice" id="d12" data-toggle="checkbox"><span data-i18n-key="domain-sports">Știința Sportului și Educației Fizice</span></label>'+
                 '<label class="checkbox checkbox-azure" for="d13"><input type="checkbox" name="domeniu" value="Ştiinţe Militare Informaţii şi Ordine publică" id="d13" data-toggle="checkbox"><span data-i18n-key="domain-military-v2">Științe Militare și de Informații</span></label>'+
-                '<label class="checkbox checkbox-azure" for="d14"><input type="checkbox" name="domeniu" value="Teologija" id="d14" data-toggle="checkbox"><span data-i18n-key="domain-theology">Teologija</span></label>';
+                '<label class="checkbox checkbox-azure" for="d14"><input type="checkbox" name="domeniu" value="Teologie" id="d14" data-toggle="checkbox"><span data-i18n-key="domain-theology">Teologie</span></label>';
 
     } else if (currentUrl.includes("unistart.lt")) {
         domainsString =
@@ -1727,7 +1727,7 @@ function getDomainsForSearchPage() {
                 '<label class="checkbox checkbox-azure" for="d11"><input type="checkbox" name="domeniu" value="Žemės ūkio mokslai" id="d11" data-toggle="checkbox"><span data-i18n-key="domain-agriculture">Žemės ūkio mokslai</span></label>'+
                 '<label class="checkbox checkbox-azure" for="d12"><input type="checkbox" name="domeniu" value="Sporto ir kūno kultūros mokslai" id="d12" data-toggle="checkbox"><span data-i18n-key="domain-sports">Sporto ir kūno kultūros mokslai</span></label>'+
                 '<label class="checkbox checkbox-azure" for="d13"><input type="checkbox" name="domeniu" value="Kariniai mokslai ir žvalgyba" id="d13" data-toggle="checkbox"><span data-i18n-key="domain-military-v2">Kariniai mokslai ir žvalgyba</span></label>'+
-                '<label class="checkbox checkbox-azure" for="d14"><input type="checkbox" name="domeniu" value="Teologie" id="d14" data-toggle="checkbox"><span data-i18n-key="domain-theology">Teologie</span></label>';
+                '<label class="checkbox checkbox-azure" for="d14"><input type="checkbox" name="domeniu" value="Teologija" id="d14" data-toggle="checkbox"><span data-i18n-key="domain-theology">Teologija</span></label>';
 
     }
     document.getElementById("domains-select").innerHTML = domainsString;
