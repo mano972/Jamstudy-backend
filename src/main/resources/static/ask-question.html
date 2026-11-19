@@ -293,6 +293,7 @@ function postQuestion() {
 		crossDomain: true,
 		data: JSON.stringify(question),
 		success: function (data) {
+			trackUmamiEvent('question_posted', { faculty_id: facultyId });
 			document.getElementById('ask-question-modal-text').innerHTML = "Întrebarea a fost adăugată cu succes.";
 			$("#ask-question-modal").on("hidden.bs.modal", function () {
 				window.location.replace(facultyProfileUrl(facultyId) + "#qa");

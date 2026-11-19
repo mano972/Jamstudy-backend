@@ -2262,6 +2262,7 @@
             crossDomain: true,
             data: JSON.stringify(data),
             success: function(response) {
+                trackUmamiEvent('answer_posted', { faculty_id: facultyId, question_id: questionId });
                 getQA(false);
             },
             error: function(error) {

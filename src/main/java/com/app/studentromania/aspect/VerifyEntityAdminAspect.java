@@ -35,7 +35,7 @@ public class VerifyEntityAdminAspect {
             final String endPointName = proceedingJoinPoint.getSignature().getName();
             logUtils.logMessage(LOGGER,
                     "Entity Admin is not logged in. Cannot access <" + endPointName + "> at [" + new Date() + "]");
-            return ResponseDTO.createErrorResponse(ErrorsEnum.USER_NOT_LOGGED_IN);
+            return ResponseDTO.createErrorResponse(ErrorsEnum.USER_NOT_LOGGED_IN).createRestResponse();
         }
 
         Object proceed = proceedingJoinPoint.proceed();

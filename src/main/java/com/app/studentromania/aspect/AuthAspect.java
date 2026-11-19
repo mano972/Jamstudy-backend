@@ -86,7 +86,7 @@ public class AuthAspect {
                 String userId = decodedJwtToken.getSubject();
                 if (StringUtils.isBlank(userId)) {
                     logUtils.logMessage(LOGGER, "Error when verifying JWT token. UserId is missing from the token");
-                    return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+                    return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND).createRestResponse();
                 }
 
                 final String endPointName = proceedingJoinPoint.getSignature().getName();
@@ -105,14 +105,14 @@ public class AuthAspect {
                         customRequestContext.setEntityProfileId(userId);
                     } else {
                         logUtils.logMessage(LOGGER, "Error when verifying JWT token. User/EntityProfile with id does not exist: " + userId);
-                        return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND);
+                        return ResponseDTO.createErrorResponse(ErrorsEnum.USERPROFILE_NOT_FOUND).createRestResponse();
                     }
                 }
 
                 if (isTokenExpired(decodedJwtToken)) {
                     logUtils.logMessage(LOGGER,
                             "Error when verifying JWT token. Token has expired for userId: " + userId);
-                    return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_EXPIRED);
+                    return ResponseDTO.createErrorResponse(ErrorsEnum.JWT_EXPIRED).createRestResponse();
                 }
             }
 
