@@ -860,6 +860,15 @@
         var typed = prefix + " " + proper;
         return typed.length <= 40 ? typed : proper;
     }
+
+    // "www.x.ro" -> "http://www.x.ro"; also repairs "http//x" / "https//x" (missing colon), which a
+    // plain includes("http") check let through as a relative link -> 404 on unistart.ro.
+    function normalizeWebsiteUrl(url) {
+        if (!url) return url;
+        url = url.trim().replace(/^(https?)\/\//i, "$1://");
+        return /^https?:\/\//i.test(url) ? url : "http://" + url.replace(/^\/+/, "");
+    }
+
     function buildFacultyPageTitle(f) {
         var uniName = fixRoDiacritics((f.universityName || "").trim());
         var city = (f.facultyCity || "").split(",")[0].trim();
@@ -940,9 +949,7 @@
                 }
 
                 var accessWebisteUrl = response.result.facultyWebsite;
-                if (accessWebisteUrl && !accessWebisteUrl.includes("http")) {
-                    accessWebisteUrl = 'http://' + accessWebisteUrl;
-                }
+                accessWebisteUrl = normalizeWebsiteUrl(accessWebisteUrl);
                 accessWebisteUrl = escapeHtml(accessWebisteUrl);
 
                 var hasWebsite = !!response.result.facultyWebsite;
@@ -1457,9 +1464,7 @@
                 var websiteString;
                 if (response.result.facultyWebsite) {
                     facultyWebsite = response.result.facultyWebsite;
-                    if (facultyWebsite && !facultyWebsite.includes("http")) {
-                        facultyWebsite = 'http://' + facultyWebsite;
-                    }
+                    facultyWebsite = normalizeWebsiteUrl(facultyWebsite);
                     facultyWebsite = escapeHtml(facultyWebsite);
                     websiteString = '<a class="website" data-toggle="tooltip" title="' + facultyWebsite + '" href="' + facultyWebsite + '" target="_blank"> <span data-i18n-key="access-website">Accesează website</span> </a>';
                 } else {
