@@ -1,0 +1,44 @@
+-- ============================================================================
+-- Extension faculties whose facultyCity is the main campus instead of the town
+-- named in the faculty itself ("- extensie Zalău" with city "Arad"). The city
+-- goes into the page title, breadcrumb and city hubs, so these showed the wrong
+-- town. Generated 2026-11-19 from the live API data. Slugs/URLs are unaffected.
+--
+-- SAFETY: back up first (scripts/backup-couchbase.ps1). Each statement should
+-- print exactly 1 FACULTY doc; zero rows means the id didn't match - check by hand.
+-- ============================================================================
+
+-- Vasile Goldiș, Științe Economice... - extensie Marghita
+UPDATE JamstudyBucket SET facultyCity = 'Marghita, Bihor'
+WHERE docType = 'FACULTY' AND facultyId = 'FAC_ACRn2zDTVb'
+RETURNING META().id, facultyName, facultyCity;
+
+-- Vasile Goldiș, Științe Economice... - extensie Satu Mare
+UPDATE JamstudyBucket SET facultyCity = 'Satu Mare, Satu Mare'
+WHERE docType = 'FACULTY' AND facultyId = 'FAC_VdBrpvV92d'
+RETURNING META().id, facultyName, facultyCity;
+
+-- Vasile Goldiș, Științe Economice... - extensie Zalău
+UPDATE JamstudyBucket SET facultyCity = 'Zalău, Sălaj'
+WHERE docType = 'FACULTY' AND facultyId = 'FAC_fYIec2qpuT'
+RETURNING META().id, facultyName, facultyCity;
+
+-- Univ. din Pitești, Științe ale Educației... - extensie Alexandria
+UPDATE JamstudyBucket SET facultyCity = 'Alexandria, Teleorman'
+WHERE docType = 'FACULTY' AND facultyId = 'FAC_Pi3bSavzy3'
+RETURNING META().id, facultyName, facultyCity;
+
+-- Univ. din Pitești, Științe ale Educației... - extensie Campulung
+UPDATE JamstudyBucket SET facultyCity = 'Câmpulung, Argeș'
+WHERE docType = 'FACULTY' AND facultyId = 'FAC_21i717iqs9'
+RETURNING META().id, facultyName, facultyCity;
+
+-- Univ. din Pitești, Științe ale Educației... - extensie Slatina
+UPDATE JamstudyBucket SET facultyCity = 'Slatina, Olt'
+WHERE docType = 'FACULTY' AND facultyId = 'FAC_mBl8rJAqm9'
+RETURNING META().id, facultyName, facultyCity;
+
+-- Eftimie Murgu, Științe Sociale - extensie la Caransebeș
+UPDATE JamstudyBucket SET facultyCity = 'Caransebeș, Caraș-Severin'
+WHERE docType = 'FACULTY' AND facultyId = 'FAC_tCQG0Nk6gY'
+RETURNING META().id, facultyName, facultyCity;

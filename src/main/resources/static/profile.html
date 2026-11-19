@@ -841,19 +841,24 @@
     function fixRoDiacritics(s) {
         return (s || "").replace(/ş/g, "ș").replace(/Ş/g, "Ș").replace(/ţ/g, "ț").replace(/Ţ/g, "Ț");
     }
+    // Same rules as FacultyProfilePageController.shortUniversityName - keep in sync.
     function shortUniversityName(uniName) {
         var s = uniName.replace(/\s+-\s+(extensi[ae]|centr(u|ul))\b.*$/i, "").trim();
-        s = s.replace(/^Fundați[ae].*?\s-\s+/, "");
-        var noCity = s.replace(/(,|\s+din)\s+[^,()"„”“]+$/, "").trim();
-        if (noCity.split(/\s+/).length >= 2) s = noCity;
-        s = s.replace("Universitatea de Medicină și Farmacie", "UMF")
-             .replace("Universitatea de Științe Agricole și Medicină Veterinară", "USAMV")
-             .replace("Universitatea de Științe Agronomice și Medicină Veterinară", "USAMV");
-        if (s.indexOf("Universitatea ") === 0) {
-            var rest = s.substring("Universitatea ".length).trim();
-            if (rest && "\"„“”".indexOf(rest.charAt(0)) >= 0) s = rest;
+        s = s.replace(/^Fundați[ae].*?\s-\s+/, "").trim();
+        var q = /["„“”]([^"„“”]+)["„“”]/.exec(s);
+        var proper = q ? q[1].replace(/\s+/g, " ").trim() : null;
+        var prefix = q ? s.substring(0, q.index).trim() : "";
+        var type = s.indexOf("Universitatea de Medicină și Farmacie") === 0 ? "UMF"
+            : /^Universitatea de Științe Agr(icole|onomice) și Medicină Veterinară/.test(s) ? "USAMV" : null;
+        if (type) {
+            if (proper) return type + " " + proper;
+            var city = s.replace(/^.*?\s+din\s+/, "").trim();
+            return city === s ? type : type + " " + city;
         }
-        return s.replace(/["„“”]/g, "").replace(/\s+/g, " ").trim();
+        if (!proper) return s.replace(/\s+/g, " ");
+        if (!prefix || prefix === "Universitatea") return proper;
+        var typed = prefix + " " + proper;
+        return typed.length <= 40 ? typed : proper;
     }
     function buildFacultyPageTitle(f) {
         var uniName = fixRoDiacritics((f.universityName || "").trim());
@@ -887,7 +892,9 @@
                     // Mirror the server-rendered <title> (FacultyProfilePageController.renderProfileHtml)
                     // so the SSR title isn't downgraded, and the legacy /profile.html?id= path still
                     // gets a descriptive, city-bearing title.
-                    document.title = buildFacultyPageTitle(response.result);
+                    // The server's title knows the universityShortname (not in the faculty API);
+                    // recompute only on the legacy path that has no server-rendered title.
+                    document.title = window.__PAGE_TITLE__ || buildFacultyPageTitle(response.result);
                 }
 
                 if (typeof gtag === 'function') {

@@ -109,6 +109,9 @@ public class DomainHubPageController {
     private String template;
     private String errorHtml;
 
+    @Autowired
+    private com.app.studentromania.dao.UniversityShortnames universityShortnames;
+
     private volatile List<Faculty> cachedFaculties;
     private volatile long cachedAt;
 
@@ -309,7 +312,7 @@ public class DomainHubPageController {
 
         c.append("<ul class=\"hub-cities\" aria-label=\"Universități\">\n");
         for (Map.Entry<String, List<Faculty>> e : byUni.entrySet()) {
-            String shortLabel = StringUtils.defaultIfBlank(FacultyProfilePageController.universityShortLabel(e.getKey()), e.getKey());
+            String shortLabel = StringUtils.defaultIfBlank(universityLabel(e.getValue().get(0)), e.getKey());
             c.append("  <li><a href=\"/facultati/").append(city.slug).append("#").append(uniAnchor(e.getValue().get(0)))
                     .append("\" title=\"").append(esc(e.getKey())).append("\">").append(esc(shortLabel))
                     .append(" (").append(e.getValue().size()).append(")</a></li>\n");
@@ -901,13 +904,19 @@ public class DomainHubPageController {
     }
 
     /** "UBB (21), UTCN (9) și USAMV (5)" - like topGroups, with short university names. */
-    private static String topUniversities(Map<String, List<Faculty>> byUni, int n) {
+    private String topUniversities(Map<String, List<Faculty>> byUni, int n) {
         Map<String, List<Faculty>> shortNamed = new LinkedHashMap<>();
         for (Map.Entry<String, List<Faculty>> e : byUni.entrySet()) {
-            String label = FacultyProfilePageController.universityShortLabel(e.getKey());
+            String label = universityLabel(e.getValue().get(0));
             shortNamed.put(StringUtils.isNotBlank(label) && !shortNamed.containsKey(label) ? label : e.getKey(), e.getValue());
         }
         return topGroups(shortNamed, n);
+    }
+
+    /** Short university label for a faculty: its universityShortname, else the acronym/short form of the name. */
+    private String universityLabel(Faculty f) {
+        return FacultyProfilePageController.universityShortLabel(
+                universityShortnames.forUniversityId(f.getUniversityId()), f.getUniversityName());
     }
 
     /** "A (8), B (5) și C (4)" from the first n groups. */

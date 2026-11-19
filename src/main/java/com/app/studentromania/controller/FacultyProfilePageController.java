@@ -159,6 +159,9 @@ public class FacultyProfilePageController {
     @Autowired
     private DomainHubPageController domainHubPageController;
 
+    @Autowired
+    private com.app.studentromania.dao.UniversityShortnames universityShortnames;
+
     private String profileHtmlTemplate;
     private String errorHtmlTemplate;
 
@@ -303,12 +306,19 @@ public class FacultyProfilePageController {
                 ? " (" + faculty.getUniversityName() + ")" : "";
         String shortnameParen = StringUtils.isNotEmpty(faculty.getFacultyShortname())
                 ? " (" + faculty.getFacultyShortname() + ")" : "";
-        String title = buildPageTitle(faculty);
-        String description = fixRoDiacritics(ratingSentence(faculty)
-                + faculty.getFacultyName() + shortnameParen
-                + (StringUtils.isNotEmpty(cityShort) ? " din " + cityShort : "") + uniParen
-                + ": programe de licență și master, locuri la buget și taxă, taxe de școlarizare"
-                + " și de înscriere, formula de admitere și evaluări de la studenți.");
+        String title = buildPageTitle(faculty, universityShortnames.forUniversityId(faculty.getUniversityId()));
+        // "Păreri / evaluări" first: Google cuts descriptions at ~155 chars, and the
+        // old form put "evaluări de la studenți" at the very end, so the snippet read
+        // like a plain directory listing. The full university name stays (no acronyms).
+        String rating = ratingSentence(faculty);
+        String facultyPart = faculty.getFacultyName() + shortnameParen
+                + (StringUtils.isNotEmpty(cityShort) ? " din " + cityShort : "") + uniParen;
+        String description = fixRoDiacritics(rating.isEmpty()
+                ? "Păreri și evaluări anonime de la studenți despre " + facultyPart
+                        + ": admitere, programe de licență și master, locuri la buget, taxe."
+                        + " Ai studiat aici? Lasă o evaluare."
+                : rating + "Păreri de la studenți despre " + facultyPart
+                        + ": admitere, programe de licență și master, locuri la buget, taxe.");
 
         String html = profileHtmlTemplate.replace(TITLE_TAG,
                 "<title>" + escapeHtml(title) + "</title>\n    <link rel=\"canonical\" href=\"" + canonicalUrl + "\">");
@@ -320,7 +330,7 @@ public class FacultyProfilePageController {
         html = replaceMarker(html, OVERVIEW_MARKER, buildFacultyOverviewHtml(faculty));
         html = replaceMarker(html, RELATED_MARKER, buildRelatedFacultiesHtml(faculty, countryCode));
         html = html.replace("</head>",
-                "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + ";</script>\n"
+                "<script>window.__FACULTY_ID__ = " + toJsStringLiteral(faculty.getFacultyId()) + "; window.__PAGE_TITLE__ = " + toJsStringLiteral(title) + ";</script>\n"
                 + "<script type=\"application/ld+json\">" + buildJsonLd(faculty, canonicalUrl, origin, topReviews) + "</script>\n"
                 + "<script type=\"application/ld+json\">" + buildBreadcrumbJsonLd(faculty, canonicalUrl, origin) + "</script>\n</head>");
         if (UNIBUC_UNIVERSITY_SLUG.equals(universitySlug)) {
@@ -799,19 +809,31 @@ public class FacultyProfilePageController {
      * to a short form of the name. Mirrored client-side in profile.html
      * (loadProfileHeader) - keep the two in sync.
      */
-    /** "UBB", "UTCN", "UMF Iuliu Hațieganu", "Dunărea de Jos" - acronym if the name has one, else a short form. */
-    static String universityShortLabel(String universityName) {
-        String uniName = fixRoDiacritics(nvl(universityName, "").trim());
-        java.util.regex.Matcher m = UNI_ACRONYM.matcher(uniName);
+    /**
+     * "UBB", "UTCN", "UMF Iuliu Hațieganu", "Dunărea de Jos": the university's
+     * universityShortname (UNIVERSITY doc) when set, else an "(ABC)" acronym in its
+     * name, else a short form of the name.
+     */
+    static String universityShortLabel(String universityShortname, String universityName) {
+        String acronym = universityAcronym(universityShortname, universityName);
+        return acronym != null ? acronym : shortUniversityName(fixRoDiacritics(nvl(universityName, "").trim()));
+    }
+
+    /** universityShortname when set, else the "(ABC)" acronym in the name, else null. */
+    static String universityAcronym(String universityShortname, String universityName) {
+        if (StringUtils.isNotBlank(universityShortname)) {
+            return fixRoDiacritics(universityShortname.trim());
+        }
+        java.util.regex.Matcher m = UNI_ACRONYM.matcher(fixRoDiacritics(nvl(universityName, "").trim()));
         while (m.find()) {
             if (m.group(1).replaceAll("[^A-ZĂÂÎȘȚ]", "").length() >= 2) {
                 return m.group(1);
             }
         }
-        return shortUniversityName(uniName);
+        return null;
     }
 
-    static String buildPageTitle(Faculty faculty) {
+    static String buildPageTitle(Faculty faculty, String universityShortname) {
         String uniName = fixRoDiacritics(nvl(faculty.getUniversityName(), "").trim());
         String city = cityShortName(faculty);
 
@@ -819,14 +841,7 @@ public class FacultyProfilePageController {
         if (StringUtils.isNotBlank(faculty.getFacultyShortname())) {
             tags.add(faculty.getFacultyShortname().trim());
         }
-        String acronym = null;
-        java.util.regex.Matcher m = UNI_ACRONYM.matcher(uniName);
-        while (m.find()) {
-            if (m.group(1).replaceAll("[^A-ZĂÂÎȘȚ]", "").length() >= 2) {
-                acronym = m.group(1);
-                break;
-            }
-        }
+        String acronym = universityAcronym(universityShortname, uniName);
         String uniShort = "";
         if (acronym != null) {
             if (!tags.contains(acronym)) {
@@ -843,7 +858,9 @@ public class FacultyProfilePageController {
         if (StringUtils.isNotEmpty(uniShort)) {
             t.append(", ").append(uniShort);
         }
-        if (StringUtils.isNotEmpty(city) && !StringUtils.containsIgnoreCase(fixRoDiacritics(uniShort), fixRoDiacritics(city))) {
+        // Skip the city when the university part already names it ("UMF Craiova", "Universitatea din Craiova").
+        String uniPart = fixRoDiacritics(acronym != null ? acronym : uniShort);
+        if (StringUtils.isNotEmpty(city) && !StringUtils.containsIgnoreCase(uniPart, fixRoDiacritics(city))) {
             t.append(", ").append(city);
         }
         t.append(": păreri studenți, admitere | Unistart");
@@ -851,33 +868,50 @@ public class FacultyProfilePageController {
     }
 
     /**
-     * Short form of a university name without an acronym, e.g.
-     *   Universitatea "Dunărea de Jos" din Galați             -> Dunărea de Jos
-     *   Universitatea de Medicină și Farmacie "Carol Davila"... -> UMF Carol Davila
-     *   Fundația "Gaudeamus" - Universitatea "Tomis" din ...   -> Tomis
-     * The city is dropped here because the title adds it separately. Keeps the
-     * full name where shortening would leave something meaningless ("Universitatea
-     * din Craiova" stays as is); "Universitatea" is only dropped before a quoted name.
-     * Expects diacritics already normalised (fixRoDiacritics).
+     * Short form of a university name that has no acronym in parentheses, e.g.
+     *   Universitatea "Vasile Alecsandri" din Bacău                    -> Vasile Alecsandri
+     *   Academia de Muzică "Gheorghe Dima" din Cluj-Napoca             -> Academia de Muzică Gheorghe Dima
+     *   Universitatea de Arhitectură și Urbanism "Ion Mincu", București -> Ion Mincu (type + name too long)
+     *   Universitatea de Medicină și Farmacie "Carol Davila" ...       -> UMF Carol Davila
+     *   Universitatea de Medicină și Farmacie din Craiova              -> UMF Craiova
+     *   Fundația "Gaudeamus" - Universitatea "Tomis" din Constanța     -> Tomis
+     *   Universitatea din Craiova / Universitatea Tehnică din Cluj-Napoca -> unchanged
+     * Rules, in order: drop extension/centre and foundation prefix; UMF / USAMV +
+     * quoted name (or city); a quoted proper name alone when the type is plain
+     * "Universitatea", type + name when that stays short, else the name alone;
+     * a generic name with no quoted part is kept whole, city included, because
+     * cutting it would make it ambiguous. The title skips the city when it is
+     * already in here. Expects diacritics already normalised (fixRoDiacritics).
+     * Mirrored in profile.html (shortUniversityName) - keep the two in sync.
      */
+    private static final int MAX_TYPED_UNIVERSITY_NAME = 40;
+    private static final java.util.regex.Pattern QUOTED_NAME =
+            java.util.regex.Pattern.compile("[\"„“”]([^\"„“”]+)[\"„“”]");
+
     private static String shortUniversityName(String uniName) {
         String s = uniName.replaceFirst("(?i)\\s+-\\s+(extensi[ae]|centr(u|ul))\\b.*$", "").trim();
-        s = s.replaceFirst("^Fundați[ae].*?\\s-\\s+", "");
-        String noCity = s.replaceFirst("(,|\\s+din)\\s+[^,()\"„”“]+$", "").trim();
-        if (noCity.split("\\s+").length >= 2) {
-            s = noCity;
-        }
-        s = s.replace("Universitatea de Medicină și Farmacie", "UMF")
-                .replace("Universitatea de Științe Agricole și Medicină Veterinară", "USAMV")
-                .replace("Universitatea de Științe Agronomice și Medicină Veterinară", "USAMV");
-        if (s.startsWith("Universitatea ")) {
-            String rest = s.substring("Universitatea ".length()).trim();
-            // Only before a quoted proper name: "Universitatea Tehnică" / "Națională" must stay whole.
-            if (!rest.isEmpty() && "\"„“”".indexOf(rest.charAt(0)) >= 0) {
-                s = rest;
+        s = s.replaceFirst("^Fundați[ae].*?\\s-\\s+", "").trim();
+        java.util.regex.Matcher q = QUOTED_NAME.matcher(s);
+        String proper = q.find() ? q.group(1).replaceAll("\\s+", " ").trim() : null;
+        String prefix = proper != null ? s.substring(0, q.start()).trim() : "";
+
+        String type = s.startsWith("Universitatea de Medicină și Farmacie") ? "UMF"
+                : s.matches("^Universitatea de Științe Agr(icole|onomice) și Medicină Veterinară.*") ? "USAMV" : null;
+        if (type != null) {
+            if (proper != null) {
+                return type + " " + proper;
             }
+            String city = s.replaceFirst("^.*?\\s+din\\s+", "").trim();
+            return city.equals(s) ? type : type + " " + city;
         }
-        return s.replaceAll("[\"„“”]", "").replaceAll("\\s+", " ").trim();
+        if (proper == null) {
+            return s.replaceAll("\\s+", " ");
+        }
+        if (prefix.isEmpty() || prefix.equals("Universitatea")) {
+            return proper;
+        }
+        String typed = prefix + " " + proper;
+        return typed.length() <= MAX_TYPED_UNIVERSITY_NAME ? typed : proper;
     }
 
     /** "Nota 4.5/5 din 12 evaluări. " - only when the faculty has reviews. */
